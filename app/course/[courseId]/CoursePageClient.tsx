@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, FileText, ChevronDown, ChevronUp, BookOpen, List } from 'lucide-react';
+import { ArrowLeft, Play, FileText, ChevronDown, ChevronUp, BookOpen, List, GraduationCap } from 'lucide-react';
+import CourseNotes from '@/components/Notes/CourseNotes';
 import VideoModal from '@/components/VideoModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
@@ -40,7 +41,7 @@ function getTimestampSeconds(ts: string): number {
 }
 
 export default function CoursePage({ courseId }: CoursePageProps) {
-  const [activeTab, setActiveTab] = useState<'videos' | 'papers'>('videos');
+  const [activeTab, setActiveTab] = useState<'notes' | 'papers'>('notes');
 
   // Lazy question loading
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[] | null>(null);
@@ -162,15 +163,15 @@ export default function CoursePage({ courseId }: CoursePageProps) {
         {/* Tabs */}
         <div className="flex gap-2 mb-8 border-b border-slate-800">
           <button
-            onClick={() => setActiveTab('videos')}
+            onClick={() => setActiveTab('notes')}
             className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px ${
-              activeTab === 'videos'
+              activeTab === 'notes'
                 ? 'text-emerald-500 border-emerald-500'
                 : 'text-slate-400 border-transparent hover:text-slate-300'
             }`}
           >
-            <Play className="h-4 w-4" />
-            Video Library
+            <GraduationCap className="h-4 w-4" />
+            Course Notes
           </button>
           <button
             onClick={() => setActiveTab('papers')}
@@ -186,16 +187,8 @@ export default function CoursePage({ courseId }: CoursePageProps) {
         </div>
 
         {/* Content */}
-        {activeTab === 'videos' ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
-            <div className="text-center py-12">
-              <Play className="h-12 w-12 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Video Library</h3>
-              <p className="text-slate-400">
-                Topic-by-topic video lessons will appear here.
-              </p>
-            </div>
-          </div>
+        {activeTab === 'notes' ? (
+          <CourseNotes courseId={courseId} />
         ) : config ? (
           <div className="space-y-6">
             {/* Loading overlay */}
