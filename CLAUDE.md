@@ -1,242 +1,287 @@
-# Clelland Maths - Next.js Website
+# Clelland Maths - Next.js Website (CLAUDE.md)
 
 ## Project Overview
-A modern Next.js 16 educational platform for Scottish SQA maths revision, replacing the vanilla JS app.
+Next.js 16 educational platform for Scottish SQA maths revision.
 
-**Tech Stack:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Lucide React icons, KaTeX (math rendering), qrcode (QR generation)
-
-**Deployment:** Netlify auto-deploy from `clellandmaths/maths-app` GitHub repo
+**Tech Stack:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Lucide React, KaTeX, qrcode
+**Repo:** `clellandmaths/maths-website` on GitHub
+**Deployment:** Cloudflare Pages — auto-deploys on push to `master`. Build: `npm run build`, output: `out/`
+**Static export:** `output: 'export'` in `next.config.ts` — no server-side features. All data loaded via dynamic imports.
 
 ---
 
 ## Design System
 
 - **Background:** Slate-950 (#020617)
-- **Cards:** Slate-900 (#0f172a)
-- **Borders:** Slate-800 (#1e293b)
-- **Text Primary:** Slate-50 (#f8fafc)
-- **Text Secondary:** Slate-400 (#94a3b8)
+- **Cards:** Slate-900 (#0f172a), borders Slate-800 (#1e293b)
+- **Text Primary:** Slate-50, Secondary: Slate-400
 - **Accent:** Emerald-500 (#10b981)
-- **Font:** Inter (Google Fonts, Next.js CSS variable)
-- **Navbar:** Glassmorphism (backdrop-blur, semi-transparent `.glass` class)
+- **Font:** Inter (Google Fonts, CSS variable `--font-inter`)
+- **Navbar:** Glassmorphism (`glass` class, `backdrop-blur`, fixed top-0)
+- **Page padding:** `p-4 sm:p-6 lg:p-8`, max-width `max-w-6xl mx-auto`
 
 ---
 
-## Courses (5 Total)
+## Courses
 
-| ID | Name | Color | Tier |
-|----|------|-------|------|
-| `n5` | National 5 | Cyan | 1 (full interactive) |
-| `higher` | Higher | Orange | 1 (full interactive) |
-| `ah` | Advanced Higher | Purple | 2 (playlists + PDFs) |
-| `n5-apps` | N5 Applications | Teal | 2 (playlists + PDFs) |
-| `higher-apps` | Higher Applications | Amber | 2 (playlists + PDFs) |
-
-### Tier System
-- **Tier 1** (N5, Higher): Full interactive explorer — topic filtering, worksheet builder, presenter, focus mode, print/PDF
-- **Tier 2** (AH, N5 Apps, Higher Apps): YouTube playlists + PDF past paper downloads (not yet implemented)
+| ID | Name | Color | Past Papers | Course Notes | Explorer |
+|----|------|-------|-------------|--------------|---------|
+| `n5` | National 5 | Cyan | ✅ 10 papers | ✅ Full | ✅ |
+| `higher` | Higher | Orange | ✅ 9 papers | ✅ Full | ✅ |
+| `higher-apps` | Higher Applications | Amber | ❌ | ✅ Full | ❌ |
+| `n5-apps` | N5 Applications | Teal | ❌ | ✅ Full | ❌ |
+| `ah` | Advanced Higher | Purple | ❌ | ⚠️ Stub | ❌ |
 
 ---
 
-## Page Structure
+## Page / Route Structure
 
-| Route | Description | Status |
-|-------|-------------|--------|
-| `/` | Home - Hero section, course grid (5 courses), feature highlights | Complete |
-| `/course/[courseId]` | Course hub - Video Library + Past Papers tabs | Placeholder |
-| `/explorer` | Topic Explorer - Course gate, filters, question cards, worksheet builder | Complete |
-| `/exam-hall` | Exam Hall - Warm up, checklists, countdown | Placeholder |
+| Route | Component | Status |
+|-------|-----------|--------|
+| `/` | `app/page.tsx` | ✅ Complete |
+| `/course/[courseId]` | `app/course/[courseId]/CoursePageClient.tsx` | ✅ Notes + Papers |
+| `/explorer` | `app/explorer/page.tsx` | ✅ N5 + Higher |
+| `/exam-hall` | `app/exam-hall/page.tsx` | ⚠️ Partial |
+
+`app/course/[courseId]/page.tsx` is a thin server wrapper with `generateStaticParams()` — it awaits params and renders `<CoursePageClient courseId={courseId} />`. Required for `output: 'export'` with dynamic routes.
 
 ---
 
-## Explorer Features (Main Feature)
+## Course Page (`/course/[courseId]`)
+
+Two tabs: **Course Notes** | **Past Paper Archive**
+
+### Course Notes tab
+Renders `<CourseNotes courseId={courseId} />`. Data loads dynamically on tab open.
+- Desktop: sticky sidebar (260px) + content
+- Mobile: slide-out overlay sidebar
+- Sidebar: expandable sections → topic list, active topic in emerald
+- Content: `<TopicView>` — video iframe, theory JSX, collapsible examples
+
+### Past Paper Archive tab
+Configured for `n5` and `higher` only (via `courseConfig` object in `CoursePageClient.tsx`). Shows papers grouped by year with: Watch Video, Start Paper (presenter), Focus Mode, Browse Questions buttons.
+
+---
+
+## Course Notes System
+
+### Data format
+Files in `src/notes/data/` export `Section[]` arrays (NOT Course objects — the loader wraps them):
+```tsx
+export const higherMathsData: Section[] = [
+  {
+    id: string,
+    title: string,
+    topics: [
+      {
+        id: string,
+        title: string,
+        videoUrl: string,          // YouTube embed URL or contains 'placeholder'
+        theory?: React.ReactNode,  // JSX — rendered directly
+        examples: [
+          { id: string, question: React.ReactNode, solution: React.ReactNode }
+        ]
+      }
+    ]
+  }
+]
+```
+
+### Math in notes
+Use `import { InlineMath, BlockMath } from '@/src/notes/math-components'` — NOT `react-katex`.
+`math-components.tsx` is a thin shim using the already-installed `katex` package. No extra dependency.
+
+### Illustrations
+Import SVG React components from `@/src/notes/illustrations`. Contains 100+ components: tree diagrams, Venn diagrams, geometry figures, graphs, etc.
+
+### Loader (`lib/notes-loader.ts`)
+`getNotesForCourse(courseId)` → dynamically imports the correct data file, wraps the `Section[]` in a `Course` object with hardcoded title/description, returns `Course | null`.
+
+### Adding notes content
+- Edit the relevant `src/notes/data/{course}Data.tsx` file
+- Follow the `Section[]` export pattern
+- Use `InlineMath`/`BlockMath` from `@/src/notes/math-components`
+- `videoUrl: 'https://www.youtube.com/embed/placeholder'` for topics without video yet
+
+---
+
+## Explorer Feature (`/explorer`)
 
 ### Course Selection Gate
-- Explorer opens to a `CourseSelector` screen — two cards (National 5 / Higher)
-- **No data loads until a course is chosen** (dynamic `import()` for performance)
-- `courseConfig` object maps each course to its `label`, `topicCategories`, `topics`, `availableYears`, `loadQuestions`
-- "Change Course" button in header returns to selection screen
-- `WorksheetProvider key={selectedCourse}` — worksheet resets when switching courses
-- **Strict course separation**: No mixing. An N5 student cannot add Higher questions to their worksheet.
+- Two cards: National 5 / Higher
+- No data loads until a course is chosen
+- `courseConfig` maps courseId → `{ label, topicCategories, topics, availableYears, loadQuestions }`
+- `WorksheetProvider key={selectedCourse}` — worksheet resets on course change
 
-### Guided Filters (NOT free-text search)
-- Topic + Subtopic checkboxes (two-level hierarchy from `topicCategories` prop)
-- **Topic search** input to filter the topic tree by name (auto-expands matches)
-- Year filter (multi-select checkboxes, per-course year list)
-- Paper filter: Paper 1 (Non-Calculator) / Paper 2 (Calculator)
-- `FilterSidebar` is generic — receives `topicCategories`, `topics`, `availableYears` as props (works for any course)
+### Filters (`FilterSidebar.tsx` — generic, driven by props)
+- Topic hierarchy (categories → main topics → subtopics — checkboxes)
+- Topic search input (auto-expands matches)
+- Year filter (multi-select checkboxes)
+- Paper filter (P1 / P2)
 
-### Question Cards (Browse Mode)
-- **Header**: Year/Paper/Q number prominent (e.g. "2024 Paper 1 Q9"), topic chips below (max 2)
-- **Text**: `text-sm` for compact scanning, no height limit
-- **Images**: Small thumbnails controlled by `.question-card img` CSS (max-height 5rem, max-width 10rem)
-- **Answer**: Collapsible Show/Hide toggle
-- **Worksheet indicator**: Emerald ring when question is in worksheet
-- No duplicate footer section (topics/Watch Solution removed from cards)
+### Browse Mode
+- Grid of `QuestionCard` — year/paper/Q header, topic chips, collapsible answer, Add to Worksheet
+- Bulk: "Add all X" / "Remove all X" when filters active
+- Active filters bar with X to remove individual filters
 
-### Worksheet Builder
-- **Tabs**: "Browse Questions" / "My Worksheet" (with badge count)
-- **Floating action button** (bottom-right, desktop only) showing count → switches to worksheet tab
-- **Reorder**: Up/down chevrons + jump to top/bottom (ChevronsUp/ChevronsDown)
-- **Visual feedback**: Emerald flash animation on reorder (`card-just-moved` CSS keyframes)
-- **Remove**: Individual trash icon per question
-- **Clear all**: With confirmation (3-second timeout)
-- **Bulk actions**: "Add all X to worksheet" / "Remove all X from worksheet" when filters active
-- **Export toggles**: Show answers, show QR codes
-- **Session-only** — no localStorage, resets on course change or page reload
+### Worksheet Mode
+- Add/remove/reorder questions (up/down/top/bottom chevrons)
+- Toggle answers + QR codes (print toggles)
+- Present (full-screen `QuestionPresenter`), Focus Mode, Print/PDF
+- Session-only — no localStorage, resets on course change
 
-### Presenter Mode (Full-Screen Slideshow)
-- Desktop (lg+): Split layout — text left (3fr), images right (2fr)
-- Images extracted from question HTML via `extractImageSrcs()` and rendered separately
-- Mobile: Standard single-column layout
-- Navigation: prev/next arrows, keyboard support (arrow keys, Escape)
-- Show/Hide answer toggle + Watch Solution button (opens VideoModal)
+### Presenter Mode (`QuestionPresenter.tsx`)
+- Desktop: 3fr text / 2fr images split layout
+- Images extracted from question HTML via `extractImageSrcs()`
+- Keyboard nav (arrow keys, Escape)
 
-### Focus Mode (Full-Screen Study)
-- Scrollable linear question list (no navigation — shows all questions)
-- Question number badges, year/paper/Q metadata, topic tags
+### Focus Mode (`FocusMode.tsx`)
+- Scrollable linear list, all questions visible
 - Per-question Show/Hide answer + Watch Solution
-- Escape key closes, body scroll locked
-- Alternative to Presenter for focused study without navigation
-
-### PDF Export / Print
-- Uses `window.print()` with `@media print` CSS — no jsPDF/html2canvas dependencies
-- A4 page, 1.5cm margins, white background, dark text
-- Print header: "Clelland Maths — [Course Name] Worksheet" + date + question count
-- Print footer: "Clelland Maths — www.clellandmaths.com"
-- Questions: white cards, border, break-inside avoid
-- Toggle answers and QR codes before printing
-- `.no-print` hides all UI controls; `.print-only` shows header/footer
-
-### Mobile Explorer UX
-- **Filter modal**: Full-screen overlay on mobile (`[&>aside]:w-full`), "Show X questions" done button
-- **Worksheet toolbar**: Fixed bottom bar on mobile with answer/QR toggles + clear all
-- **FAB**: Hidden on mobile (`hidden lg:block`) — tabs with badge handle navigation
-- **Padding**: `p-4 sm:p-6 lg:p-8` matches all pages
+- Escape to close
 
 ---
 
-## Topic Structure (Two Levels)
+## Past Paper Data
 
-Topics use two-level filtering with categories for visual grouping:
-```
-Category → Main Topic → Subtopics
-e.g., Algebra → Equations & Inequalities → [Linear equations, Simultaneous equations, ...]
-```
+### File locations
+- N5: `src/n5/pastpapers/pastpaper-YYYY.js` (10 files, 2014–2019 + 2022–2025)
+- Higher: `src/higher/pastpapers/higherpastpaper{YYYY}.js` (9 files, 2015–2019 + 2022–2025)
 
-- **N5**: 5 categories, ~30 main topics, ~100 subtopics — defined in `lib/n5-topics.ts`
-- **Higher**: 11 categories, ~15 main topics, 61 subtopics — defined in `lib/higher-topics.ts`
-- **Shared interface**: `TopicCategory` exported from `n5-topics.ts`, imported by both
-
----
-
-## Data Files
-
-### Location & Status
-| Course | Path | Files | Years | Status |
-|--------|------|-------|-------|--------|
-| N5 | `src/n5/pastpapers/pastpaper-YYYY.js` | 10 | 2014-2019, 2022-2025 | Tagged |
-| Higher | `src/higher/pastpapers/higherpastpaper{YYYY}.js` | 9 | 2015-2019, 2022-2025 | Tagged |
-
-Higher also has: `src/higher/topics/` (10 topic files) and `src/higher/specials/` (prelim special)
-
-### Data Loading
-- Both courses use **async dynamic imports** (`import()`) — data only loads when a course is selected
-- `getAllN5Questions()` and `getAllHigherQuestions()` in `data-loader.ts` use `Promise.all()` for parallel file loading
-- `flattenPastPapers()` converts nested structure to flat `QuestionWithMetadata[]`
-- `filterQuestions()` filters by subtopics, years, papers
-- `getAvailableN5Years()` / `getAvailableHigherYears()` are static (no import needed)
-
-### Question Format
-```typescript
-{
-  question: "HTML/LaTeX formatted question",
-  answer: "Answer text with LaTeX support",
-  videoId: "YOUTUBE_VIDEO_ID",
-  timestamp: "seconds_or_timestring",
-  topics: ["Subtopic1", "Subtopic2"]
+### File format
+```js
+export const pastPaper2025 = {
+  year: 2025,
+  papers: [
+    {
+      paperNumber: 1,
+      questions: [
+        { question: 'HTML string', answer: 'HTML string', videoId: 'YT_ID', timestamp: '1:23', topics: ['Subtopic'] }
+      ]
+    }
+  ]
 }
 ```
+- `question` and `answer` are HTML strings (may contain `$...$` for KaTeX via `MathRenderer`)
+- `topics` must match subtopic strings from `lib/n5-topics.ts` or `lib/higher-topics.ts`
+- Images: `<img src="/img/N5_Past_Papers/YYYY/..." alt="...">` — no inline classes
 
-### IMPORTANT: Image Tags in Data Files
-`<img>` tags in data files must be **clean** — no inline Tailwind classes:
-```html
-<!-- CORRECT -->
-<img src="img/N5_Past_Papers/2024/2024_P1_Q8.png" alt="Graph of y=a cos bx">
+### Video metadata
+Paper-level video IDs and question counts are in `lib/past-paper-videos.ts` — separate from question data. Used by the course page archive (thumbnails, Watch Video, question count).
 
-<!-- WRONG — do not bake styling into data -->
-<img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="..." alt="...">
+### Data loader (`lib/data-loader.ts`)
+- `getAllN5Questions()` / `getAllHigherQuestions()` — `Promise.all()` parallel import of all year files
+- `flattenPastPapers()` — converts nested structure to `QuestionWithMetadata[]`
+- `filterQuestions(questions, subtopics, years, papers)` — in-memory filter
+- `getAvailableN5Years()` / `getAvailableHigherYears()` — static arrays (no import needed)
+
+---
+
+## Topic Hierarchies
+
+### Explorer topics (`lib/n5-topics.ts`, `lib/higher-topics.ts`)
+Used for past paper filtering. Fine-grained subtopic strings that match `topics[]` in question data.
+```ts
+interface TopicCategory {
+  category: string;
+  topics: Record<string, string[]>;  // mainTopic → subtopics[]
+}
 ```
+- N5: 5 categories, ~30 main topics, ~100 subtopics
+- Higher: 11 categories, ~15 main topics, 61 subtopics
 
-When importing data files from the old vanilla JS app, **strip all class attributes** from img tags.
-
----
-
-## Image Styling Strategy
-
-All image sizing is controlled from `globals.css` using context CSS classes — **never** from Tailwind utilities on img tags or `[&_img]:` selectors on components.
-
-| Context | CSS Class | Max Height | Max Width |
-|---------|-----------|------------|-----------|
-| Browse cards | `.question-card img` | 5rem | 10rem |
-| Presenter / Worksheet | `.question-content img` | 400px | 100% |
-| Mobile (<768px) | `.question-content img` | 350px | 100% |
-| Mobile (<480px) | `.question-content img` | 220px | 100% |
-| Print | `.question-content img` | 280px | 85% |
-| Presenter desktop | Extracted separately | Fills column | `object-contain` |
-
-**Why not Tailwind utilities?** In Tailwind 4, all utilities are in `@layer utilities`. The globals.css rules are unlayered. Per CSS cascade spec, unlayered CSS always beats layered CSS.
-
-### Lazy Loading
-- **MathRenderer** injects `loading="lazy"` into all `<img>` tags via regex before setting `innerHTML` — images only download as they scroll into view
-- **QuestionPresenter** explicit `<img>` JSX tags also use `loading="lazy"`
-- All Explorer views are covered: browse grid, worksheet, presenter, focus mode
-- **IMPORTANT for future development**: Any new page or component rendering question images MUST either use MathRenderer (handles lazy loading automatically) or add `loading="lazy"` to explicit `<img>` tags. This applies to all future courses and pages.
-- Uses native browser `loading="lazy"` — no extra dependencies, graceful degradation
+### Exam Hall checklists (`lib/checklist-topics.ts`)
+Separate curriculum-level topic list for self-assessment. Not connected to past paper topic strings.
 
 ---
 
-## Key Files
+## Image Handling
+
+### Past paper images
+- Files in `public/img/N5_Past_Papers/YYYY/` and `public/img/Higher_Past_Papers/YYYY/`
+- Referenced in question HTML as `<img src="/img/..." alt="...">` — no inline classes
+- `MathRenderer` injects `loading="lazy"` via regex on all img tags
+
+### Image CSS (in `app/globals.css` — unlayered, beats Tailwind utilities)
+| Context | CSS Class | Max Height |
+|---------|-----------|------------|
+| Browse cards | `.question-card img` | 5rem |
+| Presenter / Worksheet | `.question-content img` | 400px |
+| Mobile <768px | `.question-content img` | 350px |
+| Mobile <480px | `.question-content img` | 220px |
+| Print | `.question-content img` | 280px |
+
+**Rule:** Never use `[&_img]:` Tailwind selectors to override these — unlayered CSS always wins.
+
+---
+
+## Math Rendering (Two Systems)
+
+### Past paper questions: `MathRenderer.tsx`
+- Takes HTML string input, processes `$$...$$` and `\(...\)` delimiters using KaTeX
+- Injects `loading="lazy"` on all img tags
+- Used in: QuestionCard, QuestionPresenter, FocusMode, WorksheetDrawer
+
+### Course notes: `src/notes/math-components.tsx`
+- `<InlineMath math="..." />` and `<BlockMath math="..." />`
+- Thin shim on installed `katex` package — no separate dependency
+- Used inside JSX content in `src/notes/data/*.tsx` files
+
+---
+
+## Key Files Reference
 
 | File | Purpose |
 |------|---------|
+| `app/page.tsx` | Homepage (hero, course grid, features) |
+| `app/course/[courseId]/page.tsx` | Server wrapper with `generateStaticParams` |
+| `app/course/[courseId]/CoursePageClient.tsx` | Course page client — tabs, notes, papers |
+| `app/explorer/page.tsx` | Full topic explorer |
+| `app/exam-hall/page.tsx` | Exam countdown + checklists |
+| `lib/notes-loader.ts` | `getNotesForCourse(courseId)` — dynamic import + Course wrapper |
+| `lib/data-loader.ts` | Past paper loading, flattening, filtering |
+| `lib/past-paper-videos.ts` | Paper-level YouTube IDs + question counts |
 | `lib/n5-topics.ts` | N5 topic hierarchy + shared `TopicCategory` interface |
-| `lib/higher-topics.ts` | Higher topic hierarchy (imports TopicCategory) |
-| `lib/data-loader.ts` | Async dynamic imports, flatten, filter, available years per course |
-| `lib/worksheet-context.tsx` | React Context: addItem, removeItem, clearAll, reorderItems, isInWorksheet |
-| `components/Navbar.tsx` | Fixed glassmorphism header, desktop links, mobile hamburger |
-| `components/MathRenderer.tsx` | KaTeX rendering for `$$..$$` and `\(...\)` math |
-| `components/VideoModal.tsx` | Full-screen YouTube iframe embed with timestamp |
-| `components/QRCodeImage.tsx` | QR code generator (qrcode package) |
-| `components/Explorer/FilterSidebar.tsx` | Generic filter panel (any course via props) |
-| `components/Explorer/QuestionCard.tsx` | Browse mode question card |
-| `components/Explorer/QuestionPresenter.tsx` | Full-screen presentation slideshow |
+| `lib/higher-topics.ts` | Higher topic hierarchy |
+| `lib/checklist-topics.ts` | Exam Hall curriculum checklists |
+| `lib/worksheet-context.tsx` | React Context — add/remove/reorder/clear worksheet |
+| `src/notes/types.ts` | Course, Section, Topic, Example interfaces |
+| `src/notes/math-components.tsx` | InlineMath + BlockMath shim |
+| `src/notes/illustrations.tsx` | 100+ SVG React diagram components |
+| `components/Notes/CourseNotes.tsx` | Notes sidebar + topic navigation |
+| `components/Notes/TopicView.tsx` | Video + theory + examples renderer |
+| `components/Navbar.tsx` | Fixed glassmorphism nav |
+| `components/MathRenderer.tsx` | KaTeX renderer for HTML strings |
+| `components/VideoModal.tsx` | YouTube iframe with timestamp |
+| `components/Explorer/FilterSidebar.tsx` | Generic filter panel |
+| `components/Explorer/QuestionPresenter.tsx` | Full-screen slideshow |
 | `components/Explorer/FocusMode.tsx` | Distraction-free study mode |
-| `components/Explorer/WorksheetFAB.tsx` | Floating action button (desktop only) |
-| `components/Explorer/WorksheetDrawer.tsx` | Slide-out worksheet panel |
-| `app/explorer/page.tsx` | Explorer with course gate, async loading, all modes |
-| `app/globals.css` | Image sizing, print styles, KaTeX fixes, animations |
+| `app/globals.css` | Image sizing, print styles, KaTeX CSS fixes |
+| `next.config.ts` | `output: 'export'` |
+| `tsconfig.json` | Excludes `node_modules`, `worksheet_generator`, `Course Notes` |
 
 ---
 
 ## Gotchas
 
-- **CSS layers**: In Tailwind 4, unlayered CSS in globals.css BEATS `@layer utilities`. Never use `[&_img]:` selectors to override `.question-content img` rules — use unlayered CSS classes in globals.css instead.
-- **Data file img tags**: Must be clean `<img src="..." alt="...">` with no classes. Strip classes from old app data files before importing.
-- **Next.js dev lock file**: Delete `.next/dev/lock` if server won't start.
-- **Tailwind 4 config**: Uses `@theme` directive (CSS-based), not `tailwind.config.js`.
-- **JS data files in TS project**: Need `"**/*.js"` in tsconfig `include` array.
-- **KaTeX CSS**: Imported via `@import "katex/dist/katex.min.css"` in globals.css.
-- **KaTeX compatibility**: N5 had 4 `eqnarray` → `aligned` conversions. Higher had zero issues.
-- **Worksheet state**: Session-only (resets on course change or page reload — intentional).
-- **DevTools mobile clipping**: Browser reflow quirk with sticky/fixed elements — doesn't happen on real devices.
+- **Static export + dynamic routes**: `/course/[courseId]` needs `generateStaticParams()` in a server component wrapper. The client component (`CoursePageClient.tsx`) receives `courseId` as a plain prop.
+- **Notes data exports `Section[]` not `Course`**: `lib/notes-loader.ts` wraps the array in a `Course` object. If adding a new data file, check the export type.
+- **`react-katex` is NOT installed**: Use `@/src/notes/math-components` for `InlineMath`/`BlockMath` in notes content.
+- **CSS layers**: Unlayered CSS in `globals.css` beats `@layer utilities`. Never use `[&_img]:` to override `.question-content img`.
+- **`tsconfig.json` excludes**: `worksheet_generator` and `Course Notes` are excluded. Any other co-located non-Next.js projects must be added here.
+- **Tailwind 4**: Uses `@theme` directive (CSS-based config), not `tailwind.config.js`.
+- **KaTeX CSS**: Imported via `@import "katex/dist/katex.min.css"` in `globals.css` — do not re-import in individual files.
+- **Worksheet state**: Session-only — intentional. No persistence across page reloads.
+- **`output: 'export'` limits**: No API routes, no server actions, no `next/image` optimization. All data must be statically importable or client-side dynamic imports.
 
 ---
 
 ## Not Yet Implemented
 
-- Course page tabs (Video Library, Past Paper Archive) — placeholder only
-- Exam Hall countdown — hardcoded, no date picker
-- Checklists / progress tracking — demo only
-- Tier 2 courses (AH, N5 Apps, Higher Apps) — no data loaded
-- Warm Up feature (random questions)
+- Past papers for AH, Higher Apps, N5 Apps
+- Full Explorer support for AH / Higher Apps / N5 Apps
+- Exam Hall countdown date picker (hardcoded date)
+- Exam Hall checklists persistence (demo only)
+- Advanced Higher course notes (stub exists, needs content)
+- Warm Up feature (random question practice)
+- User accounts / cross-device progress tracking
