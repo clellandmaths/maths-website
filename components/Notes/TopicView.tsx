@@ -13,7 +13,6 @@ interface Props {
   theme: CourseTheme;
   isCompleted: boolean;
   onToggleComplete: () => void;
-  onCompleteAndContinue: () => void;
   prevTitle?: string;
   nextTitle?: string;
   onPrev?: () => void;
@@ -28,7 +27,6 @@ export default function TopicView({
   theme,
   isCompleted,
   onToggleComplete,
-  onCompleteAndContinue,
   prevTitle,
   nextTitle,
   onPrev,
@@ -68,12 +66,18 @@ export default function TopicView({
               {topic.examples.length} worked example{topic.examples.length === 1 ? '' : 's'}
             </span>
           )}
-          {isCompleted && (
-            <span className={`inline-flex items-center gap-1.5 font-mono text-xs ${theme.text}`}>
-              <Check className="h-3.5 w-3.5" strokeWidth={3} />
-              Completed
-            </span>
-          )}
+          {/* Optional, lightweight — tracking is opt-in, never a course flow */}
+          <button
+            onClick={onToggleComplete}
+            className={`sm:ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border font-mono text-xs transition-colors ${
+              isCompleted
+                ? `${theme.border} ${theme.tint} ${theme.text}`
+                : 'border-border text-muted-foreground hover:text-foreground hover:border-white/25'
+            }`}
+          >
+            <Check className="h-3.5 w-3.5" strokeWidth={3} />
+            {isCompleted ? 'Done' : 'Mark as done'}
+          </button>
         </div>
       </div>
 
@@ -153,28 +157,8 @@ export default function TopicView({
           </section>
         )}
 
-        {/* Footer — completion + prev/next */}
+        {/* Footer — prev/next is the primary navigation */}
         <footer className="pt-2">
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
-            {isCompleted ? (
-              <button
-                onClick={onToggleComplete}
-                className={`inline-flex items-center justify-center gap-2 px-6 py-3 border ${theme.border} ${theme.text} font-semibold rounded-lg transition-colors hover:bg-white/5`}
-              >
-                <Check className="h-4 w-4" strokeWidth={3} />
-                Completed — tap to undo
-              </button>
-            ) : (
-              <button
-                onClick={onCompleteAndContinue}
-                className={`inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`}
-              >
-                {onNext ? 'Complete & continue' : 'Mark as complete'}
-                {onNext && <ArrowRight className="h-4 w-4" />}
-              </button>
-            )}
-          </div>
-
           <div className="grid sm:grid-cols-2 gap-3">
             {onPrev ? (
               <button

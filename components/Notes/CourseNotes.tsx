@@ -95,16 +95,6 @@ export default function CourseNotes({ courseId }: Props) {
     });
   }, [courseId]);
 
-  const completeAndContinue = useCallback(() => {
-    if (!current) return;
-    setCompleted(prevSet => {
-      const nextSet = new Set(prevSet).add(current.key);
-      saveCompleted(courseId, nextSet);
-      return nextSet;
-    });
-    if (next) selectTopic(next.sIdx, next.tIdx);
-  }, [current, next, courseId, selectTopic]);
-
   function toggleSection(idx: number) {
     setExpandedSections(prevSet => {
       const nextSet = new Set(prevSet);
@@ -273,7 +263,6 @@ export default function CourseNotes({ courseId }: Props) {
             theme={theme}
             isCompleted={completed.has(current.key)}
             onToggleComplete={() => toggleComplete(current.key)}
-            onCompleteAndContinue={completeAndContinue}
             prevTitle={prev?.topic.title}
             nextTitle={next?.topic.title}
             onPrev={prev ? () => selectTopic(prev.sIdx, prev.tIdx) : undefined}
