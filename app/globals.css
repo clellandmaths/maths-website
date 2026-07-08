@@ -102,18 +102,6 @@ body {
   to { stroke-dashoffset: 0; }
 }
 
-/* Filled shapes (e.g. the arrowhead) pop in once their stroke arrives */
-.geo-fill {
-  opacity: 0;
-  transform-origin: center;
-  animation: geo-fade 0.35s ease-out forwards;
-}
-
-@keyframes geo-fade {
-  from { opacity: 0; transform: scale(0.6); }
-  to { opacity: 1; transform: scale(1); }
-}
-
 /* Logo animation phases: fills fade in, construction lines fade out,
    wordmark stamps down with a slight overshoot */
 .geo-shape {
@@ -147,10 +135,6 @@ body {
   .geo-line {
     animation: none;
     stroke-dashoffset: 0;
-  }
-  .geo-fill {
-    animation: none;
-    opacity: 1;
   }
   /* show the finished logo immediately */
   .geo-shape {

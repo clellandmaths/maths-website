@@ -1,11 +1,11 @@
 // Animated recreation of the full Clelland Maths logo.
-// Phase 1: construction strokes draw the geometry (circle, diameter, square +
-// corner-to-corner arrow, triangle, notch, pi). Phase 2: shapes flood-fill mint
-// while the construction lines fade — knockouts stay as holes via an SVG mask.
-// Phase 3: the solid arrowhead pops at the square's corner. Phase 4: the real
-// raster wordmark (extracted from the logo file) stamps in on top.
-// Coordinate space matches the trimmed logo asset (836x536) exactly, so the
-// wordmark overlay needs no alignment.
+// Phase 1: construction strokes draw the geometry. Phase 2: the mint region
+// (circle UNION square UNION triangle, exactly as in the logo) flood-fills
+// while construction lines fade; the knockouts — pi, vertical diameter, square
+// frame, arrow shaft + solid arrowhead, notch — are held as holes by an SVG
+// mask. Phase 3: the real raster wordmark stamps in on top.
+// Coordinate space matches the trimmed logo asset (836x536) pixel-for-pixel,
+// so the wordmark overlay needs no alignment.
 const MINT = 'var(--signal-mint)';
 
 function anim(delay: number, duration?: number): React.CSSProperties {
@@ -23,49 +23,49 @@ export default function LogoAnimation({ className = '' }: { className?: string }
           <mask id="cm-knockouts">
             <rect x="0" y="0" width="836" height="536" fill="white" />
             {/* vertical diameter */}
-            <path d="M 483 33 L 483 377" stroke="black" strokeWidth="10" />
+            <path d="M 490 34 L 490 394" stroke="black" strokeWidth="16" />
             {/* square frame */}
-            <path d="M 483 205 L 483 45 L 643 45 L 643 205 Z" stroke="black" strokeWidth="9" />
-            {/* corner-to-corner arrow shaft */}
-            <path d="M 483 205 L 643 45" stroke="black" strokeWidth="10" />
+            <path d="M 490 214 L 490 29 L 675 29 L 675 214 Z" stroke="black" strokeWidth="14" />
+            {/* arrow shaft + solid arrowhead, tip at the square's corner */}
+            <path d="M 490 214 L 630 74" stroke="black" strokeWidth="16" />
+            <polygon points="665,39 644,96 608,60" fill="black" />
             {/* pi */}
-            <path d="M 352 115 Q 360 104 374 104 L 456 104" stroke="black" strokeWidth="22" strokeLinecap="round" />
-            <path d="M 392 104 L 392 196" stroke="black" strokeWidth="22" strokeLinecap="round" />
-            <path d="M 430 104 L 430 180 Q 430 196 446 193" stroke="black" strokeWidth="22" strokeLinecap="round" />
+            <path d="M 356 112 Q 364 100 379 100 L 461 100" stroke="black" strokeWidth="28" strokeLinecap="round" />
+            <path d="M 398 100 L 398 190" stroke="black" strokeWidth="28" strokeLinecap="round" />
+            <path d="M 436 100 L 436 174 Q 436 190 452 187" stroke="black" strokeWidth="28" strokeLinecap="round" />
             {/* notch square */}
-            <rect x="663" y="433" width="39" height="39" fill="black" />
+            <rect x="740" y="459" width="40" height="40" fill="black" />
           </mask>
         </defs>
 
-        {/* Phase 2 — mint fills with knockout holes */}
+        {/* Phase 2 — mint fill (circle + square + triangle) with knockout holes */}
         <g className="geo-shape" style={anim(1.5)} mask="url(#cm-knockouts)">
-          <path d="M 302 505 L 735 505 L 735 72 Z" fill={MINT} />
-          <circle cx="483" cy="205" r="172" fill={MINT} />
+          <path d="M 352 512 L 802 512 L 802 62 Z" fill={MINT} />
+          <rect x="490" y="29" width="185" height="185" fill={MINT} />
+          <circle cx="490" cy="214" r="180" fill={MINT} />
         </g>
 
-        {/* Phase 3 — solid arrowhead past the square's corner */}
-        <polygon points="672,16 662,54 634,26" fill={MINT} className="geo-fill" style={anim(2.15)} />
-
-        {/* Phase 1 — construction strokes (fade out as the fills arrive) */}
+        {/* Phase 1 — construction strokes (fade out as the fill arrives) */}
         <g className="geo-construction" style={{ ...anim(1.5), '--geo-len': 100 } as React.CSSProperties}>
-          <circle cx="483" cy="205" r="172" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0, 0.9)} />
-          <path d="M 302 505 L 735 505 L 735 72 Z" stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.15, 0.9)} />
-          <path d="M 483 33 L 483 377" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.5, 0.9)} />
-          <path d="M 483 205 L 483 45 L 643 45 L 643 205 Z" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.65, 0.9)} />
-          <path d="M 483 205 L 643 45" stroke={MINT} strokeWidth="2.5" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(0.8, 0.9)} />
-          <rect x="663" y="433" width="39" height="39" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.9, 0.9)} />
-          <path d="M 352 115 Q 360 104 374 104 L 456 104" stroke={MINT} strokeWidth="4" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(0.9, 0.9)} />
-          <path d="M 392 104 L 392 196" stroke={MINT} strokeWidth="4" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(1, 0.9)} />
-          <path d="M 430 104 L 430 180 Q 430 196 446 193" stroke={MINT} strokeWidth="4" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(1.1, 0.9)} />
+          <circle cx="490" cy="214" r="180" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0, 0.9)} />
+          <path d="M 352 512 L 802 512 L 802 62 Z" stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.15, 0.9)} />
+          <path d="M 490 34 L 490 394" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.5, 0.9)} />
+          <path d="M 490 214 L 490 29 L 675 29 L 675 214 Z" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.65, 0.9)} />
+          <path d="M 490 214 L 630 74" stroke={MINT} strokeWidth="2.5" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(0.8, 0.9)} />
+          <path d="M 665 39 L 644 96 L 608 60 Z" stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
+          <rect x="740" y="459" width="40" height="40" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.9, 0.9)} />
+          <path d="M 356 112 Q 364 100 379 100 L 461 100" stroke={MINT} strokeWidth="4" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(0.9, 0.9)} />
+          <path d="M 398 100 L 398 190" stroke={MINT} strokeWidth="4" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(1, 0.9)} />
+          <path d="M 436 100 L 436 174 Q 436 190 452 187" stroke={MINT} strokeWidth="4" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(1.1, 0.9)} />
         </g>
       </svg>
 
-      {/* Phase 4 — the real wordmark stamps in */}
+      {/* Phase 3 — the real wordmark stamps in */}
       <img
         src="/img/logo/wordmark.png"
         alt=""
         className="geo-stamp absolute inset-0 w-full h-full"
-        style={anim(2.4)}
+        style={anim(2.2)}
       />
     </div>
   );
