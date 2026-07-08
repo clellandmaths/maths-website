@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { ChevronDown, Check, ArrowLeft, ArrowRight, Play, FileText } from 'lucide-react';
 import type { Topic } from '@/src/notes/types';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -13,10 +14,10 @@ interface Props {
   theme: CourseTheme;
   isCompleted: boolean;
   onToggleComplete: () => void;
+  prevHref?: string;
   prevTitle?: string;
+  nextHref?: string;
   nextTitle?: string;
-  onPrev?: () => void;
-  onNext?: () => void;
 }
 
 export default function TopicView({
@@ -27,10 +28,10 @@ export default function TopicView({
   theme,
   isCompleted,
   onToggleComplete,
+  prevHref,
   prevTitle,
+  nextHref,
   nextTitle,
-  onPrev,
-  onNext,
 }: Props) {
   const [openExamples, setOpenExamples] = useState<Set<number>>(new Set());
 
@@ -160,9 +161,9 @@ export default function TopicView({
         {/* Footer — prev/next is the primary navigation */}
         <footer className="pt-2">
           <div className="grid sm:grid-cols-2 gap-3">
-            {onPrev ? (
-              <button
-                onClick={onPrev}
+            {prevHref ? (
+              <Link
+                href={prevHref}
                 className="group flex items-center gap-3 px-4 py-3 bg-card border border-border hover:border-white/20 rounded-xl text-left transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 text-muted-foreground group-hover:text-foreground shrink-0" />
@@ -170,11 +171,11 @@ export default function TopicView({
                   <span className="block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Previous</span>
                   <span className="block text-sm text-foreground/80 group-hover:text-foreground truncate">{prevTitle}</span>
                 </span>
-              </button>
+              </Link>
             ) : <span className="hidden sm:block" />}
-            {onNext && (
-              <button
-                onClick={onNext}
+            {nextHref && (
+              <Link
+                href={nextHref}
                 className="group flex items-center justify-end gap-3 px-4 py-3 bg-card border border-border hover:border-white/25 rounded-xl text-right transition-colors"
               >
                 <span className="min-w-0">
@@ -182,7 +183,7 @@ export default function TopicView({
                   <span className="block text-sm text-foreground/80 group-hover:text-foreground truncate">{nextTitle}</span>
                 </span>
                 <ArrowRight className={`h-4 w-4 ${theme.text} shrink-0`} />
-              </button>
+              </Link>
             )}
           </div>
         </footer>

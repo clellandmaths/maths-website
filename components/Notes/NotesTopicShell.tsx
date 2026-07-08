@@ -1,14 +1,31 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { ChevronDown, ChevronRight, Menu, X, Check } from 'lucide-react';
-import { getNotesForCourse } from '@/lib/notes-loader';
 import { getCourseTheme } from '@/lib/course-theme';
 import TopicView from './TopicView';
-import type { Course } from '@/src/notes/types';
+import type { Topic } from '@/src/notes/types';
+
+// Serializable curriculum model — ids and titles only, no JSX
+export interface NotesNav {
+  courseTitle: string;
+  sections: { id: string; title: string; topics: { id: string; title: string }[] }[];
+}
 
 interface Props {
   courseId: string;
+  nav: NotesNav;
+  sectionId: string;
+  topicId: string;
+  topic: Topic;
+  sectionTitle: string;
+  topicNumber: number;
+  topicCount: number;
+  prevHref?: string;
+  prevTitle?: string;
+  nextHref?: string;
+  nextTitle?: string;
 }
 
 const STORAGE_KEY = 'clellandMaths_notesProgress';
@@ -32,68 +49,47 @@ function saveCompleted(courseId: string, completed: Set<string>) {
   }
 }
 
-export default function CourseNotes({ courseId }: Props) {
+export default function NotesTopicShell({
+  courseId,
+  nav,
+  sectionId,
+  topicId,
+  topic,
+  sectionTitle,
+  topicNumber,
+  topicCount,
+  prevHref,
+  prevTitle,
+  nextHref,
+  nextTitle,
+}: Props) {
   const theme = getCourseTheme(courseId);
-  const [course, setCourse] = useState<Course | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedSection, setSelectedSection] = useState(0);
-  const [selectedTopic, setSelectedTopic] = useState(0);
-  const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0]));
+  const currentSectionIdx = nav.sections.findIndex(s => s.id === sectionId);
+  const [expandedSections, setExpandedSections] = useState<Set<number>>(
+    new Set([currentSectionIdx])
+  );
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [completed, setCompleted] = useState<Set<string>>(new Set());
 
+  // localStorage is read after mount to avoid hydration mismatch on static pages
   useEffect(() => {
-    setLoading(true);
-    setCourse(null);
-    setSelectedSection(0);
-    setSelectedTopic(0);
-    setExpandedSections(new Set([0]));
     setCompleted(loadCompleted(courseId));
-    getNotesForCourse(courseId).then(data => {
-      setCourse(data);
-      setLoading(false);
-    });
   }, [courseId]);
 
-  // Flat topic list — powers prev/next navigation and progress totals
-  const flatTopics = useMemo(() => {
-    if (!course) return [];
-    return course.sections.flatMap((section, sIdx) =>
-      section.topics.map((topic, tIdx) => ({
-        key: `${section.id}/${topic.id}`,
-        sIdx,
-        tIdx,
-        topic,
-        sectionTitle: section.title,
-      }))
-    );
-  }, [course]);
-
-  const flatIndex = flatTopics.findIndex(t => t.sIdx === selectedSection && t.tIdx === selectedTopic);
-  const current = flatIndex >= 0 ? flatTopics[flatIndex] : undefined;
-  const prev = flatIndex > 0 ? flatTopics[flatIndex - 1] : undefined;
-  const next = flatIndex >= 0 && flatIndex < flatTopics.length - 1 ? flatTopics[flatIndex + 1] : undefined;
-
-  const completedCount = flatTopics.filter(t => completed.has(t.key)).length;
+  const currentKey = `${sectionId}/${topicId}`;
+  const flatTopics = nav.sections.flatMap(s => s.topics.map(t => `${s.id}/${t.id}`));
+  const completedCount = flatTopics.filter(k => completed.has(k)).length;
   const pct = flatTopics.length > 0 ? Math.round((completedCount / flatTopics.length) * 100) : 0;
 
-  const selectTopic = useCallback((sIdx: number, tIdx: number) => {
-    setSelectedSection(sIdx);
-    setSelectedTopic(tIdx);
-    setExpandedSections(prevSet => new Set(prevSet).add(sIdx));
-    setSidebarOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
-  const toggleComplete = useCallback((key: string) => {
+  const toggleComplete = useCallback(() => {
     setCompleted(prevSet => {
       const nextSet = new Set(prevSet);
-      if (nextSet.has(key)) nextSet.delete(key);
-      else nextSet.add(key);
+      if (nextSet.has(currentKey)) nextSet.delete(currentKey);
+      else nextSet.add(currentKey);
       saveCompleted(courseId, nextSet);
       return nextSet;
     });
-  }, [courseId]);
+  }, [courseId, currentKey]);
 
   function toggleSection(idx: number) {
     setExpandedSections(prevSet => {
@@ -102,23 +98,6 @@ export default function CourseNotes({ courseId }: Props) {
       else nextSet.add(idx);
       return nextSet;
     });
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className={`h-8 w-8 border-4 ${theme.border} border-t-transparent rounded-full animate-spin mr-3`} />
-        <p className="text-muted-foreground">Loading course notes...</p>
-      </div>
-    );
-  }
-
-  if (!course) {
-    return (
-      <div className="text-center py-20">
-        <p className="text-muted-foreground">Course notes not available yet.</p>
-      </div>
-    );
   }
 
   const Sidebar = (
@@ -144,10 +123,10 @@ export default function CourseNotes({ courseId }: Props) {
 
       {/* Curriculum */}
       <nav className="p-2 space-y-0.5">
-        {course.sections.map((section, sIdx) => {
+        {nav.sections.map((section, sIdx) => {
           const isExpanded = expandedSections.has(sIdx);
           const sectionDone = section.topics.filter(
-            (t) => completed.has(`${section.id}/${t.id}`)
+            t => completed.has(`${section.id}/${t.id}`)
           ).length;
           return (
             <div key={section.id}>
@@ -171,15 +150,16 @@ export default function CourseNotes({ courseId }: Props) {
               </button>
               {isExpanded && (
                 <div className="mb-1">
-                  {section.topics.map((topic, tIdx) => {
-                    const key = `${section.id}/${topic.id}`;
-                    const isActive = sIdx === selectedSection && tIdx === selectedTopic;
+                  {section.topics.map(t => {
+                    const key = `${section.id}/${t.id}`;
+                    const isActive = section.id === sectionId && t.id === topicId;
                     const isDone = completed.has(key);
                     return (
-                      <button
-                        key={topic.id}
-                        onClick={() => selectTopic(sIdx, tIdx)}
-                        className={`w-full flex items-center gap-2.5 pl-4 pr-2.5 py-1.5 text-left text-sm border-l-2 transition-colors ${
+                      <Link
+                        key={t.id}
+                        href={`/course/${courseId}/notes/${section.id}/${t.id}`}
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center gap-2.5 pl-4 pr-2.5 py-1.5 text-left text-sm border-l-2 transition-colors ${
                           isActive
                             ? `${theme.border} ${theme.tint} ${theme.text} font-medium`
                             : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-white/5'
@@ -194,8 +174,8 @@ export default function CourseNotes({ courseId }: Props) {
                         >
                           {isDone && <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />}
                         </span>
-                        <span className="leading-snug">{topic.title}</span>
-                      </button>
+                        <span className="leading-snug">{t.title}</span>
+                      </Link>
                     );
                   })}
                 </div>
@@ -226,7 +206,7 @@ export default function CourseNotes({ courseId }: Props) {
           <div className="absolute left-0 top-0 bottom-0 w-80 max-w-[85vw] bg-card border-r border-border overflow-y-auto z-50">
             <div className={`h-1 bg-gradient-to-r ${theme.gradient}`} />
             <div className="flex items-center justify-between px-4 pt-3">
-              <span className="font-display font-semibold text-foreground">{course.title}</span>
+              <span className="font-display font-semibold text-foreground">{nav.courseTitle}</span>
               <button onClick={() => setSidebarOpen(false)} aria-label="Close topics">
                 <X className="h-5 w-5 text-muted-foreground" />
               </button>
@@ -247,28 +227,23 @@ export default function CourseNotes({ courseId }: Props) {
             <Menu className="h-4 w-4" />
             Topics
           </button>
-          {current && (
-            <span className="text-sm text-muted-foreground truncate">{current.topic.title}</span>
-          )}
+          <span className="text-sm text-muted-foreground truncate">{topic.title}</span>
           <span className="ml-auto font-mono text-xs text-muted-foreground tabular-nums shrink-0">{pct}%</span>
         </div>
 
-        {current && (
-          <TopicView
-            key={current.key}
-            topic={current.topic}
-            sectionTitle={current.sectionTitle}
-            topicNumber={current.tIdx + 1}
-            topicCount={course.sections[current.sIdx].topics.length}
-            theme={theme}
-            isCompleted={completed.has(current.key)}
-            onToggleComplete={() => toggleComplete(current.key)}
-            prevTitle={prev?.topic.title}
-            nextTitle={next?.topic.title}
-            onPrev={prev ? () => selectTopic(prev.sIdx, prev.tIdx) : undefined}
-            onNext={next ? () => selectTopic(next.sIdx, next.tIdx) : undefined}
-          />
-        )}
+        <TopicView
+          topic={topic}
+          sectionTitle={sectionTitle}
+          topicNumber={topicNumber}
+          topicCount={topicCount}
+          theme={theme}
+          isCompleted={completed.has(currentKey)}
+          onToggleComplete={toggleComplete}
+          prevHref={prevHref}
+          prevTitle={prevTitle}
+          nextHref={nextHref}
+          nextTitle={nextTitle}
+        />
       </div>
     </div>
   );

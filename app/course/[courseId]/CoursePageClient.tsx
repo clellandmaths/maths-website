@@ -3,7 +3,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, FileText, ChevronDown, ChevronUp, BookOpen, List, GraduationCap } from 'lucide-react';
-import CourseNotes from '@/components/Notes/CourseNotes';
 import VideoModal from '@/components/VideoModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
@@ -13,6 +12,8 @@ import { getAllN5Questions, getAllHigherQuestions, type QuestionWithMetadata } f
 
 interface CoursePageProps {
   courseId: string;
+  // Server-rendered notes index (crawlable hub of topic links)
+  notesIndex?: React.ReactNode;
 }
 
 const courseConfig: Record<string, {
@@ -41,7 +42,7 @@ function getTimestampSeconds(ts: string): number {
   return parseInt(ts, 10);
 }
 
-export default function CoursePage({ courseId }: CoursePageProps) {
+export default function CoursePage({ courseId, notesIndex }: CoursePageProps) {
   const [activeTab, setActiveTab] = useState<'notes' | 'papers'>('notes');
 
   // Lazy question loading
@@ -192,7 +193,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
 
         {/* Content */}
         {activeTab === 'notes' ? (
-          <CourseNotes courseId={courseId} />
+          notesIndex
         ) : config ? (
           <div className="space-y-6">
             {/* Loading overlay */}
