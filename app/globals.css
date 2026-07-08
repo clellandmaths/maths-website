@@ -114,6 +114,35 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* Logo animation phases: fills fade in, construction lines fade out,
+   wordmark stamps down with a slight overshoot */
+.geo-shape {
+  opacity: 0;
+  animation: geo-appear 0.6s ease-out forwards;
+}
+
+.geo-construction {
+  animation: geo-vanish 0.5s ease-out forwards;
+}
+
+.geo-stamp {
+  opacity: 0;
+  animation: geo-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes geo-appear {
+  to { opacity: 1; }
+}
+
+@keyframes geo-vanish {
+  to { opacity: 0; }
+}
+
+@keyframes geo-stamp {
+  from { opacity: 0; transform: scale(1.22); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .geo-line {
     animation: none;
@@ -122,6 +151,20 @@ body {
   .geo-fill {
     animation: none;
     opacity: 1;
+  }
+  /* show the finished logo immediately */
+  .geo-shape {
+    animation: none;
+    opacity: 1;
+  }
+  .geo-construction {
+    animation: none;
+    opacity: 0;
+  }
+  .geo-stamp {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 

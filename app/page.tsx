@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Compass } from 'lucide-react';
-import GeometricMotif from '@/components/GeometricMotif';
+import LogoAnimation from '@/components/LogoAnimation';
 import ExamCover, { type CourseCover } from '@/components/Home/ExamCover';
 import TryQuestion from '@/components/Home/TryQuestion';
 import CountdownTile from '@/components/Home/CountdownTile';
@@ -51,11 +51,10 @@ const courses: CourseCover[] = [
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero — editorial, left-aligned */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-24 lg:pb-16 overflow-hidden">
-        <GeometricMotif className="hidden lg:block absolute top-1/2 right-8 -translate-y-1/2 w-[400px] h-[400px] opacity-45 pointer-events-none" />
-
-        <div className="relative max-w-6xl mx-auto">
+      {/* Hero — editorial, left-aligned, animated logo on the right */}
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-20 lg:pb-16 overflow-hidden">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_420px] gap-12 items-center">
+          <div>
           <p className="font-mono text-xs uppercase tracking-widest text-signal-mint/80 mb-4">
             Scottish curriculum · N5 to Advanced Higher
           </p>
@@ -86,9 +85,12 @@ export default function Home() {
               Topic Explorer
             </Link>
           </div>
-          <p className="font-mono text-xs sm:text-sm text-muted-foreground">
-            5 courses · 19 years of past papers · 370+ solved questions · 100% free
-          </p>
+            <p className="font-mono text-xs sm:text-sm text-muted-foreground">
+              5 courses · 19 years of past papers · 370+ solved questions · 100% free
+            </p>
+          </div>
+
+          <LogoAnimation className="hidden lg:block w-full" />
         </div>
       </section>
 
