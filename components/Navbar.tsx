@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, BookOpen, Compass, GraduationCap, Home } from 'lucide-react';
+import { Menu, X, Compass, GraduationCap, Home } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
@@ -18,11 +18,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <BookOpen className="h-8 w-8 text-emerald-500 group-hover:text-emerald-400 transition-colors" />
-            <span className="text-xl font-bold text-slate-50">
-              Clelland <span className="text-emerald-500">Maths</span>
-            </span>
+          <Link href="/" className="flex items-center group">
+            <img
+              src="/img/logo/clelland-maths-logo.png"
+              alt="Clelland Maths"
+              className="h-11 w-auto group-hover:opacity-90 transition-opacity"
+            />
           </Link>
 
           {/* Desktop Navigation */}
