@@ -2,17 +2,19 @@
 // Geometry pixel-measured from the logo asset (836x536 trimmed canvas) using
 // a labelled coordinate-grid overlay compared directly against source pixels:
 // circle c(494.5,206.5) r192; square tangent to the circle (side = radius).
-// The arrow is ONE tapered wedge (not a shaft + separate head) — narrow at
-// the circle's centre, widening as it travels, with a straight inner edge
-// and a curved outer edge (a bulging bezier, matching the logo's single
-// curved barb) that both converge at a sharp tip just past the square's
-// corner. Confirmed against a zoomed reference crop of the real mark.
+// The arrow is a plain straight shaft plus a straight-edged filled triangle
+// head — no taper or curve of its own. What can look like a curved head in
+// a close-up crop is the circle's own arc (a separate knockout) passing
+// right next to the triangle; the two are distinct straight-edged shapes
+// that happen to sit close together. The square's own outline is what
+// frames the head — no extra border shape needed.
 // Pi is centred in the top-left quadrant, measured directly off the source
 // (bbox centre ~413,133, not the quadrant bounding-box centre — the glyph
 // sits closer to the circle's centre than a naive bbox-center placement).
 const MINT = 'var(--signal-mint)';
 
-const ARROW = 'M 487.4 199.4 L 501.6 213.6 Q 654 137 685 15 L 487.4 199.4 Z';
+const ARROW_SHAFT = 'M 494.5 206.5 L 630 71';
+const ARROW_HEAD = 'M 689 15 L 661 76 L 625 40 Z';
 
 function anim(delay: number, duration?: number): React.CSSProperties {
   return {
@@ -34,8 +36,9 @@ export default function LogoAnimation({ className = '' }: { className?: string }
             <rect x="494.5" y="14.5" width="192" height="192" stroke="black" strokeWidth="16" />
             {/* vertical diameter */}
             <path d="M 494.5 14.5 L 494.5 398.5" stroke="black" strokeWidth="17" />
-            {/* arrow — one tapered wedge, straight inner edge + curved outer edge */}
-            <path d={ARROW} fill="black" />
+            {/* arrow — straight shaft, then a straight-edged filled triangle head */}
+            <path d={ARROW_SHAFT} stroke="black" strokeWidth="16" />
+            <path d={ARROW_HEAD} fill="black" />
             {/* pi — centred in the top-left quadrant */}
             <path d="M 372 100 L 391 90 L 458 90" stroke="black" strokeWidth="28" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M 404 90 L 404 176" stroke="black" strokeWidth="28" strokeLinecap="round" />
@@ -67,7 +70,8 @@ export default function LogoAnimation({ className = '' }: { className?: string }
           <path d="M 351 514 L 802 514 L 802 63 Z" stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.15, 0.9)} />
           <path d="M 494.5 14.5 L 494.5 398.5" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.5, 0.9)} />
           <path d="M 494.5 206.5 L 686.5 206.5 L 686.5 14.5 L 494.5 14.5" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.65, 0.9)} />
-          <path d={ARROW} stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.8, 0.9)} />
+          <path d={ARROW_SHAFT} stroke={MINT} strokeWidth="2.5" strokeLinecap="round" pathLength={100} className="geo-line" style={anim(0.8, 0.9)} />
+          <path d={ARROW_HEAD} stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
           <path d="M 740 446 L 740 514" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.9, 0.9)} />
           <path d="M 732 454 L 802 454" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
           <path d="M 372 100 L 391 90 L 458 90" stroke={MINT} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
