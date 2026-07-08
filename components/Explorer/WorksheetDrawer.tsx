@@ -4,14 +4,16 @@ import { useState, useEffect } from 'react';
 import { X, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, FileText, Eye } from 'lucide-react';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { getMainTopic } from '@/lib/n5-topics';
+import type { CourseTheme } from '@/lib/course-theme';
 
 interface WorksheetDrawerProps {
+  theme: CourseTheme;
   isOpen: boolean;
   onClose: () => void;
   onViewOnWeb?: () => void;
 }
 
-export default function WorksheetDrawer({ isOpen, onClose, onViewOnWeb }: WorksheetDrawerProps) {
+export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }: WorksheetDrawerProps) {
   const { items, removeItem, clearAll, reorderItems } = useWorksheet();
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [lastMovedIndex, setLastMovedIndex] = useState<number | null>(null);
@@ -65,9 +67,9 @@ export default function WorksheetDrawer({ isOpen, onClose, onViewOnWeb }: Worksh
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-emerald-500" />
+            <FileText className={`h-5 w-5 ${theme.text}`} />
             <h2 className="text-lg font-semibold">My Worksheet</h2>
-            <span className="px-2 py-0.5 bg-emerald-600/20 text-emerald-400 text-sm rounded-full">
+            <span className={`px-2 py-0.5 ${theme.tint} ${theme.text} text-sm rounded-full`}>
               {items.length}
             </span>
           </div>
@@ -179,7 +181,7 @@ export default function WorksheetDrawer({ isOpen, onClose, onViewOnWeb }: Worksh
               {onViewOnWeb && (
                 <button
                   onClick={onViewOnWeb}
-                  className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
+                  className={`flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                 >
                   <Eye className="h-4 w-4" />
                   View &amp; Print Worksheet

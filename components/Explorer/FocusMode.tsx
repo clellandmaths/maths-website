@@ -5,6 +5,7 @@ import { X, Eye, EyeOff, Play, Check } from 'lucide-react';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
+import type { CourseTheme } from '@/lib/course-theme';
 
 function getTimestampSeconds(ts: string): number {
   if (ts.endsWith('s')) return parseInt(ts.replace('s', ''), 10);
@@ -42,11 +43,12 @@ function saveDoneSet(questions: QuestionWithMetadata[], doneSet: Set<number>) {
 }
 
 interface FocusModeProps {
+  theme: CourseTheme;
   questions: QuestionWithMetadata[];
   onClose: () => void;
 }
 
-export default function FocusMode({ questions, onClose }: FocusModeProps) {
+export default function FocusMode({ theme, questions, onClose }: FocusModeProps) {
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [doneSet, setDoneSet] = useState<Set<number>>(() => loadDoneSet(questions));
@@ -110,7 +112,7 @@ export default function FocusMode({ questions, onClose }: FocusModeProps) {
         <p className="text-slate-400 text-sm">
           Focus Mode &middot;{' '}
           {doneCount > 0 ? (
-            <span className="text-emerald-400">{doneCount}/{questions.length} done</span>
+            <span className={theme.text}>{doneCount}/{questions.length} done</span>
           ) : (
             <span className="text-slate-300">{questions.length} question{questions.length === 1 ? '' : 's'}</span>
           )}
@@ -127,7 +129,7 @@ export default function FocusMode({ questions, onClose }: FocusModeProps) {
             >
               {/* Question header */}
               <div className="flex items-center gap-3 mb-4 flex-wrap">
-                <span className="flex items-center justify-center w-8 h-8 bg-emerald-600/20 text-emerald-400 text-sm font-bold rounded-full shrink-0">
+                <span className={`flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full shrink-0`}>
                   {index + 1}
                 </span>
                 <span className="text-sm text-slate-500 shrink-0">
@@ -171,7 +173,7 @@ export default function FocusMode({ questions, onClose }: FocusModeProps) {
                     timestamp: getTimestampSeconds(q.timestamp),
                     title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
                   })}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30 rounded-lg text-sm font-medium transition-colors"
+                  className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                 >
                   <Play className="h-4 w-4" />
                   Watch Solution
@@ -180,14 +182,14 @@ export default function FocusMode({ questions, onClose }: FocusModeProps) {
                   onClick={() => toggleDone(index)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     doneSet.has(index)
-                      ? 'bg-emerald-600/20 text-emerald-400'
+                      ? `${theme.tint} ${theme.text}`
                       : 'bg-slate-800 hover:bg-slate-700 text-slate-400'
                   }`}
                 >
                   <div
                     className={`flex items-center justify-center h-5 w-5 rounded-full border-2 shrink-0 transition-colors ${
                       doneSet.has(index)
-                        ? 'bg-emerald-500 border-emerald-500'
+                        ? `${theme.bg} ${theme.border}`
                         : 'border-slate-500'
                     }`}
                   >
@@ -200,7 +202,7 @@ export default function FocusMode({ questions, onClose }: FocusModeProps) {
               {/* Answer section */}
               {revealedAnswers.has(index) && (
                 <div className="mt-4 bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
-                  <p className="text-sm font-medium text-emerald-400 mb-2">Answer:</p>
+                  <p className={`text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                   <MathRenderer
                     html={q.answer}
                     className="text-slate-300 answer-content"

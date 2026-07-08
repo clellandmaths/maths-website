@@ -6,6 +6,7 @@ import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
+import type { CourseTheme } from '@/lib/course-theme';
 
 
 export interface Question {
@@ -17,6 +18,7 @@ export interface Question {
 }
 
 interface QuestionCardProps {
+  theme: CourseTheme;
   question: Question;
   year: number;
   paperNumber: number;
@@ -25,6 +27,7 @@ interface QuestionCardProps {
 
 
 export default function QuestionCard({
+  theme,
   question,
   year,
   paperNumber,
@@ -55,8 +58,8 @@ export default function QuestionCard({
     <>
       <div className={`bg-slate-900 border rounded-xl p-5 transition-colors ${
         inWorksheet
-          ? 'border-emerald-500/50 ring-1 ring-emerald-500/20'
-          : 'border-slate-800 hover:border-emerald-500/30'
+          ? `${theme.border} ring-1 ring-white/10`
+          : 'border-slate-800 hover:border-white/20'
       }`}>
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
@@ -79,7 +82,7 @@ export default function QuestionCard({
             onClick={handleToggleWorksheet}
             className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${
               inWorksheet
-                ? 'bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30'
+                ? `${theme.tint} ${theme.text} hover:bg-white/10`
                 : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300'
             }`}
           >

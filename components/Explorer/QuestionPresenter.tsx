@@ -5,8 +5,10 @@ import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff } from 'lucide-react';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
+import type { CourseTheme } from '@/lib/course-theme';
 
 interface QuestionPresenterProps {
+  theme: CourseTheme;
   questions: QuestionWithMetadata[];
   startIndex?: number;
   onClose: () => void;
@@ -33,7 +35,7 @@ function getTimestampSeconds(ts: string): number {
   return parseInt(ts, 10);
 }
 
-export default function QuestionPresenter({ questions, startIndex = 0, onClose }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -91,7 +93,7 @@ export default function QuestionPresenter({ questions, startIndex = 0, onClose }
           </button>
           <div className="text-right">
             <p className="text-slate-400 text-sm">
-              Question <span className="text-emerald-400 font-medium">{currentIndex + 1}</span> of{' '}
+              Question <span className={`${theme.text} font-medium`}>{currentIndex + 1}</span> of{' '}
               <span className="text-slate-300">{questions.length}</span>
             </p>
             <p className="text-slate-500 text-xs mt-0.5">
@@ -172,7 +174,7 @@ export default function QuestionPresenter({ questions, startIndex = 0, onClose }
               </button>
               <button
                 onClick={() => setShowVideo(true)}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
               >
                 <Play className="h-5 w-5" />
                 Watch Solution
@@ -182,7 +184,7 @@ export default function QuestionPresenter({ questions, startIndex = 0, onClose }
             {/* Answer Section */}
             {showAnswer && (
               <div className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
-                <h3 className="text-sm font-medium text-emerald-400 mb-3">Answer:</h3>
+                <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={question.answer}
                   className="text-slate-200 answer-content text-lg leading-relaxed"

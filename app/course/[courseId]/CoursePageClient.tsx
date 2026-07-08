@@ -124,6 +124,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
   if (presenterQuestions) {
     return (
       <QuestionPresenter
+        theme={theme}
         questions={presenterQuestions}
         startIndex={presenterStartIndex}
         onClose={() => setPresenterQuestions(null)}
@@ -134,6 +135,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
   if (focusQuestions) {
     return (
       <FocusMode
+        theme={theme}
         questions={focusQuestions}
         onClose={() => setFocusQuestions(null)}
       />

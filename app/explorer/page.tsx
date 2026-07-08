@@ -16,6 +16,7 @@ import { getAllN5Questions, getAllHigherQuestions, filterQuestions, QuestionWith
 import { n5TopicCategories, n5Topics } from '@/lib/n5-topics';
 import { higherTopicCategories, higherTopics } from '@/lib/higher-topics';
 import { getAvailableN5Years, getAvailableHigherYears } from '@/lib/data-loader';
+import { getCourseTheme } from '@/lib/course-theme';
 
 type Course = 'n5' | 'higher';
 
@@ -47,6 +48,7 @@ function getTimestampSeconds(ts: string): number {
 
 function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeCourse: () => void }) {
   const config = courseConfig[course];
+  const theme = getCourseTheme(course);
 
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -135,6 +137,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
   // Shared FilterSidebar props
   const filterSidebarProps = {
+    theme,
     selectedSubtopics,
     onSubtopicsChange: setSelectedSubtopics,
     selectedYears,
@@ -151,7 +154,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <div className={`w-8 h-8 border-2 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto mb-4`} />
           <p className="text-slate-400">Loading {config.label} questions...</p>
         </div>
       </div>
@@ -175,7 +178,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
             <div className="p-4 border-t border-slate-800">
               <button
                 onClick={() => setShowMobileFilters(false)}
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                className={`w-full py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
               >
                 Show {hasFilters ? filteredQuestions.length : allQuestions.length} questions
               </button>
@@ -201,7 +204,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                 <ArrowLeft className="h-4 w-4" />
                 Change Course
               </button>
-              <span className="px-2.5 py-1 bg-emerald-600/20 text-emerald-400 text-xs font-semibold rounded-full uppercase tracking-wide">
+              <span className={`px-2.5 py-1 ${theme.tint} ${theme.text} text-xs font-semibold rounded-full uppercase tracking-wide`}>
                 {config.label}
               </span>
             </div>
@@ -217,7 +220,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               onClick={() => setViewMode('browse')}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 viewMode === 'browse'
-                  ? 'border-emerald-500 text-emerald-400'
+                  ? `${theme.border} ${theme.text}`
                   : 'border-transparent text-slate-400 hover:text-slate-300'
               }`}
             >
@@ -228,14 +231,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               onClick={() => setViewMode('worksheet')}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 viewMode === 'worksheet'
-                  ? 'border-emerald-500 text-emerald-400'
+                  ? `${theme.border} ${theme.text}`
                   : 'border-transparent text-slate-400 hover:text-slate-300'
               }`}
             >
               <ClipboardList className="h-4 w-4" />
               My Worksheet
               {worksheetItems.length > 0 && (
-                <span className="px-2 py-0.5 bg-emerald-600/20 text-emerald-400 text-xs rounded-full">
+                <span className={`px-2 py-0.5 ${theme.tint} ${theme.text} text-xs rounded-full`}>
                   {worksheetItems.length}
                 </span>
               )}
@@ -253,7 +256,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                 <Filter className="h-4 w-4" />
                 Filters
                 {hasFilters && (
-                  <span className="ml-1 px-2 py-0.5 bg-emerald-600/20 text-emerald-400 text-xs rounded-full">
+                  <span className={`ml-1 px-2 py-0.5 ${theme.tint} ${theme.text} text-xs rounded-full`}>
                     {selectedSubtopics.length + selectedYears.length + selectedPapers.length}
                   </span>
                 )}
@@ -264,7 +267,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                 <div className="mb-4 p-3 bg-slate-900/95 border border-slate-800 rounded-lg sticky top-[7.5rem] z-[9] backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-slate-400">
-                      <span className="text-emerald-400 font-medium">{filteredQuestions.length}</span> of {allQuestions.length} questions
+                      <span className={`${theme.text} font-medium`}>{filteredQuestions.length}</span> of {allQuestions.length} questions
                     </span>
                     <button
                       onClick={clearAllFilters}
@@ -297,12 +300,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <X className="h-3 w-3" />
                       </button>
                     ))}
-                    {/* Topic chips - emerald */}
+                    {/* Topic chips - course colour */}
                     {selectedSubtopics.map((subtopic) => (
                       <button
                         key={`af-topic-${subtopic}`}
                         onClick={() => removeSubtopic(subtopic)}
-                        className="shrink-0 px-2.5 py-1 bg-emerald-600/20 text-emerald-400 text-xs rounded-full flex items-center gap-1.5 hover:bg-emerald-600/30 transition-colors"
+                        className={`shrink-0 px-2.5 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1.5 hover:bg-white/10 transition-colors`}
                       >
                         {subtopic.length > 25 ? subtopic.slice(0, 25) + '...' : subtopic}
                         <X className="h-3 w-3" />
@@ -325,7 +328,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   </p>
                   <button
                     onClick={() => setShowMobileFilters(true)}
-                    className="lg:hidden inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                    className={`lg:hidden inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
                   >
                     <Filter className="h-4 w-4" />
                     Open Filters
@@ -348,7 +351,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                       filteredQuestions.every(q => isInWorksheet(q))
                         ? 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                        : 'bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30'
+                        : `${theme.tint} ${theme.text} hover:bg-white/10`
                     }`}
                   >
                     {filteredQuestions.every(q => isInWorksheet(q))
@@ -365,6 +368,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   {filteredQuestions.map((q) => (
                     <QuestionCard
                       key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
+                      theme={theme}
                       question={q}
                       year={q.year}
                       paperNumber={q.paperNumber}
@@ -404,7 +408,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   </p>
                   <button
                     onClick={() => setViewMode('browse')}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                    className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
                   >
                     <Search className="h-4 w-4" />
                     Browse Questions
@@ -437,7 +441,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showAnswersInView}
                             onChange={(e) => setShowAnswersInView(e.target.checked)}
-                            className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-emerald-500 focus:ring-emerald-500"
+                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
                           />
                           <span className="text-sm text-slate-400">Show answers</span>
                         </label>
@@ -446,7 +450,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showQRCodes}
                             onChange={(e) => setShowQRCodes(e.target.checked)}
-                            className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-emerald-500 focus:ring-emerald-500"
+                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
                           />
                           <span className="text-sm text-slate-400">QR codes</span>
                         </label>
@@ -466,7 +470,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         </button>
                         <button
                           onClick={() => window.print()}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
+                          className={`flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                         >
                           <Printer className="h-4 w-4" />
                           Print / Save PDF
@@ -498,7 +502,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       >
                         <div className="flex items-center gap-3 mb-4">
                           <div className="flex items-center gap-3 flex-1 flex-wrap">
-                            <span className="q-badge flex items-center justify-center w-8 h-8 bg-emerald-600/20 text-emerald-400 text-sm font-bold rounded-full">
+                            <span className={`q-badge flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
                             <span className="text-sm text-slate-500">
@@ -572,7 +576,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                         {showAnswersInView && (
                           <div className="answer-section mt-4 pt-4 border-t border-slate-800">
-                            <p className="answer-label text-sm font-medium text-emerald-400 mb-2">Answer:</p>
+                            <p className={`answer-label text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                             <MathRenderer
                               html={q.answer}
                               className="text-slate-300 answer-content"
@@ -595,7 +599,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                               timestamp: getTimestampSeconds(q.timestamp),
                               title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
                             })}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30 rounded-lg text-sm font-medium transition-colors"
+                            className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                           >
                             <Play className="h-4 w-4" />
                             Watch Solution
@@ -619,7 +623,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showAnswersInView}
                             onChange={(e) => setShowAnswersInView(e.target.checked)}
-                            className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-emerald-500 focus:ring-emerald-500"
+                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
                           />
                           <span className="text-sm text-slate-400">Answers</span>
                         </label>
@@ -628,7 +632,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showQRCodes}
                             onChange={(e) => setShowQRCodes(e.target.checked)}
-                            className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-emerald-500 focus:ring-emerald-500"
+                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
                           />
                           <span className="text-sm text-slate-400">QR</span>
                         </label>
@@ -662,7 +666,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       </button>
                       <button
                         onClick={() => window.print()}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
+                        className={`flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                       >
                         <Printer className="h-4 w-4" />
                         Print / Save PDF
@@ -679,12 +683,13 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {/* Worksheet FAB - only show in browse mode, desktop only (tabs handle mobile) */}
       {viewMode === 'browse' && (
         <div className="hidden lg:block">
-          <WorksheetFAB onClick={() => setViewMode('worksheet')} />
+          <WorksheetFAB theme={theme} onClick={() => setViewMode('worksheet')} />
         </div>
       )}
 
       {/* Worksheet Drawer */}
       <WorksheetDrawer
+        theme={theme}
         isOpen={showWorksheet}
         onClose={() => setShowWorksheet(false)}
         onViewOnWeb={() => {
@@ -696,6 +701,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {/* Full-screen Presentation Mode */}
       {presentStartIndex !== null && worksheetItems.length > 0 && (
         <QuestionPresenter
+          theme={theme}
           questions={worksheetItems}
           startIndex={presentStartIndex}
           onClose={() => setPresentStartIndex(null)}
@@ -705,6 +711,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {/* Full-screen Focus Mode */}
       {showFocusMode && worksheetItems.length > 0 && (
         <FocusMode
+          theme={theme}
           questions={worksheetItems}
           onClose={() => setShowFocusMode(false)}
         />
@@ -740,37 +747,41 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="text-center max-w-3xl w-full">
-        <GraduationCap className="h-16 w-16 mx-auto text-emerald-500 mb-6" />
-        <h1 className="text-3xl font-bold mb-3">Topic Explorer</h1>
+        <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
+        <h1 className="font-display text-3xl font-bold mb-3">Topic Explorer</h1>
         <p className="text-slate-400 mb-10 text-lg">
           Choose your course to start browsing past paper questions.
         </p>
         <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          {courseCards.map((course) => (
-            <div
-              key={course.id}
-              className="group flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-2xl hover:border-emerald-500/50 hover:scale-[1.02] transition-all"
-            >
-              <h2 className="text-2xl font-bold mb-1 group-hover:text-emerald-400 transition-colors">
-                {course.name}
-              </h2>
-              <p className="text-sm text-slate-500 mb-6">{course.subtitle}</p>
-              <ul className="space-y-3 text-left mb-8">
-                {explorerFeatures.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-slate-300">
-                    <Check className="h-5 w-5 text-emerald-500 shrink-0" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => onSelect(course.id)}
-                className="mt-auto w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg transition-colors"
+          {courseCards.map((course) => {
+            const cardTheme = getCourseTheme(course.id);
+            return (
+              <div
+                key={course.id}
+                className="group relative flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-white/20 hover:scale-[1.02] transition-all"
               >
-                Launch Explorer
-              </button>
-            </div>
-          ))}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cardTheme.gradient}`} />
+                <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
+                  {course.name}
+                </h2>
+                <p className="text-sm text-slate-500 mb-6">{course.subtitle}</p>
+                <ul className="space-y-3 text-left mb-8">
+                  {explorerFeatures.map((feature) => (
+                    <li key={feature} className="flex items-center gap-3 text-slate-300">
+                      <Check className={`h-5 w-5 ${cardTheme.text} shrink-0`} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => onSelect(course.id)}
+                  className={`mt-auto w-full py-3 bg-gradient-to-r ${cardTheme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`}
+                >
+                  Launch Explorer
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
