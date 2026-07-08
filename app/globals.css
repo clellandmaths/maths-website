@@ -1,17 +1,19 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
-/* Dark mode theme - Slate background, Emerald accents */
+/* Brand theme — grounded in the Clelland Maths logo (true black + signal magenta/mint) */
 :root {
-  --background: #020617;    /* slate-950 */
-  --foreground: #f8fafc;    /* slate-50 */
-  --card: #0f172a;          /* slate-900 */
-  --card-foreground: #f8fafc;
-  --border: #1e293b;        /* slate-800 */
-  --muted: #334155;         /* slate-700 */
-  --muted-foreground: #94a3b8; /* slate-400 */
-  --accent: #10b981;        /* emerald-500 */
-  --accent-hover: #059669;  /* emerald-600 */
+  --background: #0a0a0c;    /* ink — near-true-black, softened for full-page use */
+  --foreground: #f5f5f7;    /* paper */
+  --card: #16161a;          /* surface */
+  --card-foreground: #f5f5f7;
+  --border: #232328;
+  --muted: #333338;
+  --muted-foreground: #9a9aa2;
+  --accent: #10b981;        /* emerald-500 — kept as neutral UI accent (buttons, links) */
+  --accent-hover: #059669;
+  --signal-magenta: #ff00ed; /* exact brand hex, sampled from logo — reserved use only */
+  --signal-mint: #ccffed;    /* exact brand hex, sampled from logo — geometric motif only */
 }
 
 @theme inline {
@@ -23,7 +25,11 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-signal-magenta: var(--signal-magenta);
+  --color-signal-mint: var(--signal-mint);
   --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 body {
@@ -80,6 +86,33 @@ body {
   max-width: 10rem;
   margin: 0.5rem auto;
   border-radius: 0.375rem;
+}
+
+/* Geometric construction motif — hero signature element.
+   Strokes animate in once, like a compass-and-straightedge construction. */
+.geo-line {
+  stroke-dasharray: var(--geo-len, 1000);
+  stroke-dashoffset: var(--geo-len, 1000);
+  animation: geo-draw 1.4s ease-out forwards;
+}
+
+@keyframes geo-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geo-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Graph-paper texture — used on course cards, evokes a maths jotter */
+.graph-paper {
+  background-image:
+    linear-gradient(rgba(245, 245, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 245, 247, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
 /* Reorder flash — highlights a card that just moved */
