@@ -10,8 +10,12 @@
   --border: #232328;
   --muted: #333338;
   --muted-foreground: #9a9aa2;
-  --accent: #10b981;        /* emerald-500 — kept as neutral UI accent (buttons, links) */
-  --accent-hover: #059669;
+  /* Site-level action colour = the brand magenta from the wordmark.
+     Pair with DARK text (text-background) — white on this magenta fails
+     contrast (3.2:1), dark passes (6.6:1), and dark-on-magenta is the
+     logo's own pattern. Course-scoped UI uses lib/course-theme.ts instead. */
+  --accent: #ff00ed;
+  --accent-hover: #d600c8;
   --signal-magenta: #ff00ed; /* exact brand hex, sampled from logo — reserved use only */
   --signal-mint: #ccffed;    /* exact brand hex, sampled from logo — geometric motif only */
 }
@@ -162,7 +166,7 @@ body {
 
 /* Reorder flash — highlights a card that just moved */
 @keyframes card-flash {
-  0% { border-color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.3); }
+  0% { border-color: #ff00ed; box-shadow: 0 0 12px rgba(255, 0, 237, 0.3); }
   100% { border-color: #1e293b; box-shadow: none; }
 }
 

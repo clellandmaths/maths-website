@@ -73,7 +73,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-4 mb-10">
             <a
               href="#courses"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-white font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
             >
               Choose your course
             </a>

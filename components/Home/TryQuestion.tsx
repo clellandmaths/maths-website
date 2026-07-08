@@ -89,7 +89,7 @@ export default function TryQuestion() {
         <button
           onClick={() => setShowAnswer(s => !s)}
           disabled={loading || !question}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover disabled:opacity-40 text-white text-sm font-semibold rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover disabled:opacity-40 text-background text-sm font-bold rounded-lg transition-colors"
         >
           {showAnswer ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           {showAnswer ? 'Hide answer' : 'Show answer'}

@@ -8,6 +8,7 @@ import VideoModal from '@/components/VideoModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
 import { n5PaperVideos, higherPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
+import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
 
 interface CoursePageProps {
@@ -56,6 +57,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
 
   const courseName = courseNames[courseId] || 'Course';
   const config = courseConfig[courseId];
+  const theme = getCourseTheme(courseId);
 
   // Group papers by year (newest first)
   const papersByYear = useMemo(() => {
@@ -144,7 +146,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
         {/* Back Button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-emerald-400 mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-slate-400 hover:text-signal-magenta mb-8 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Home
@@ -153,7 +155,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            {courseName} <span className="text-emerald-500">Maths</span>
+            {courseName} <span className={theme.text}>Maths</span>
           </h1>
           <p className="text-slate-400">
             Video lessons, practice questions, and past paper archive
@@ -166,7 +168,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
             onClick={() => setActiveTab('notes')}
             className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px ${
               activeTab === 'notes'
-                ? 'text-emerald-500 border-emerald-500'
+                ? `${theme.text} ${theme.border}`
                 : 'text-slate-400 border-transparent hover:text-slate-300'
             }`}
           >
@@ -177,7 +179,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
             onClick={() => setActiveTab('papers')}
             className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px ${
               activeTab === 'papers'
-                ? 'text-emerald-500 border-emerald-500'
+                ? `${theme.text} ${theme.border}`
                 : 'text-slate-400 border-transparent hover:text-slate-300'
             }`}
           >
@@ -194,7 +196,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
             {/* Loading overlay */}
             {loadingQuestions && (
               <div className="flex items-center justify-center py-8">
-                <div className="h-8 w-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mr-3" />
+                <div className={`h-8 w-8 border-4 ${theme.border} border-t-transparent rounded-full animate-spin mr-3`} />
                 <p className="text-slate-400">Loading questions...</p>
               </div>
             )}
@@ -248,14 +250,14 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                   timestamp: 0,
                                   title: `${courseName} ${paper.year} Paper ${paper.paperNumber}`,
                                 })}
-                                className="flex items-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-colors"
+                                className={`flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white text-sm font-medium rounded-lg transition-all`}
                               >
                                 <Play className="h-4 w-4" />
                                 Watch Video
                               </button>
                               <button
                                 onClick={() => handleStartPaper(paper.year, paper.paperNumber)}
-                                className="flex items-center gap-1.5 px-3 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium rounded-lg transition-colors"
+                                className={`flex items-center gap-1.5 px-3 py-2 bg-card border ${theme.border} ${theme.text} hover:bg-white/5 text-sm font-medium rounded-lg transition-colors`}
                               >
                                 <BookOpen className="h-4 w-4" />
                                 Start Paper
@@ -298,7 +300,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                 {/* Question number */}
                                 <button
                                   onClick={() => handleStartPaper(paper.year, paper.paperNumber, idx)}
-                                  className="shrink-0 h-8 w-8 flex items-center justify-center bg-emerald-600/20 text-emerald-400 text-sm font-bold rounded-lg hover:bg-emerald-600/40 transition-colors"
+                                  className={`shrink-0 h-8 w-8 flex items-center justify-center ${theme.tint} ${theme.text} text-sm font-bold rounded-lg hover:bg-white/10 transition-colors`}
                                 >
                                   {q.questionIndex + 1}
                                 </button>
@@ -325,7 +327,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                     timestamp: getTimestampSeconds(q.timestamp),
                                     title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionIndex + 1}`,
                                   })}
-                                  className="shrink-0 flex items-center gap-1 px-2 py-1 text-emerald-400 hover:text-emerald-300 text-xs font-medium transition-colors"
+                                  className={`shrink-0 flex items-center gap-1 px-2 py-1 ${theme.text} hover:opacity-80 text-xs font-medium transition-opacity`}
                                 >
                                   <Play className="h-3 w-3" />
                                   Solution
@@ -338,7 +340,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                         {/* Loading state for expanded */}
                         {isExpanded && paperQuestions.length === 0 && loadingQuestions && (
                           <div className="border-t border-slate-800 p-4 text-center">
-                            <div className="h-6 w-6 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                            <div className={`h-6 w-6 border-3 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto`} />
                           </div>
                         )}
                       </div>
