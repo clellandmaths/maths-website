@@ -53,7 +53,7 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero — editorial, left-aligned */}
       <section className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-24 lg:pb-16 overflow-hidden">
-        <GeometricMotif className="hidden lg:block absolute top-1/2 right-8 -translate-y-1/2 w-[400px] h-[400px] opacity-30 pointer-events-none" />
+        <GeometricMotif className="hidden lg:block absolute top-1/2 right-8 -translate-y-1/2 w-[400px] h-[400px] opacity-45 pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto">
           <p className="font-mono text-xs uppercase tracking-widest text-signal-mint/80 mb-4">
