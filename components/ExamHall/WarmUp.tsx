@@ -5,6 +5,7 @@ import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, Flame, ArrowLeft } fro
 import { QuestionWithMetadata, getAllN5Questions, getAllHigherQuestions } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
+import { getCourseTheme } from '@/lib/course-theme';
 
 const DAILY_COUNT = 5;
 
@@ -76,6 +77,7 @@ interface WarmUpProps {
 }
 
 export default function WarmUp({ course, onBack }: WarmUpProps) {
+  const theme = getCourseTheme(course);
   const [questions, setQuestions] = useState<QuestionWithMetadata[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -156,7 +158,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           <span className="text-sm font-medium">Back to Dashboard</span>
         </button>
         <div className="flex flex-col items-center justify-center py-20">
-          <div className="h-10 w-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4" />
+          <div className={`h-10 w-10 border-4 ${theme.border} border-t-transparent rounded-full animate-spin mb-4`} />
           <p className="text-slate-400">Loading today&apos;s questions...</p>
         </div>
       </div>
@@ -185,7 +187,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           <p className="text-slate-500 text-sm mb-8">{dateString}</p>
           <button
             onClick={onBack}
-            className="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg transition-colors"
+            className={`px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`}
           >
             Back to Dashboard
           </button>
@@ -220,7 +222,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           </div>
           <div className="text-right">
             <p className="text-slate-400 text-sm">
-              Question <span className="text-emerald-400 font-medium">{currentIndex + 1}</span> of{' '}
+              Question <span className={`${theme.text} font-medium`}>{currentIndex + 1}</span> of{' '}
               <span className="text-slate-300">{questions!.length}</span>
             </p>
             <p className="text-slate-500 text-xs mt-0.5">
@@ -292,7 +294,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               </button>
               <button
                 onClick={() => setShowVideo(true)}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
               >
                 <Play className="h-5 w-5" />
                 Watch Solution
@@ -302,7 +304,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             {/* Answer Section */}
             {showAnswer && (
               <div className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
-                <h3 className="text-sm font-medium text-emerald-400 mb-3">Answer:</h3>
+                <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={question.answer}
                   className="text-slate-200 answer-content text-lg leading-relaxed"

@@ -5,6 +5,7 @@ import { GraduationCap, Flame, CheckSquare, Clock, ArrowLeft, Check, ChevronDown
 import { n5ChecklistCategories, higherChecklistCategories } from '@/lib/checklist-topics';
 import type { TopicCategory } from '@/lib/n5-topics';
 import WarmUp from '@/components/ExamHall/WarmUp';
+import { getCourseTheme } from '@/lib/course-theme';
 
 type Course = 'n5' | 'higher';
 
@@ -95,37 +96,41 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="text-center max-w-3xl w-full">
-        <GraduationCap className="h-16 w-16 mx-auto text-emerald-500 mb-6" />
-        <h1 className="text-3xl font-bold mb-3">Welcome to the Exam Hall</h1>
+        <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
+        <h1 className="font-display text-3xl font-bold mb-3">Welcome to the Exam Hall</h1>
         <p className="text-slate-400 mb-10 text-lg">
           Your distraction-free zone. Sync your exam countdown, track your topic checklist, and run timed warm-ups.
         </p>
         <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          {(Object.entries(courseInfo) as [Course, typeof courseInfo.n5][]).map(([id, info]) => (
-            <div
-              key={id}
-              className="group flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-2xl hover:border-emerald-500/50 hover:scale-[1.02] transition-all"
-            >
-              <h2 className="text-2xl font-bold mb-1 group-hover:text-emerald-400 transition-colors">
-                {info.label}
-              </h2>
-              <p className="text-sm text-slate-500 mb-6">{info.papers}</p>
-              <ul className="space-y-3 text-left mb-8">
-                {lobbyFeatures.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-slate-300">
-                    <Check className="h-5 w-5 text-emerald-500 shrink-0" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => onSelect(id)}
-                className="mt-auto w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg transition-colors"
+          {(Object.entries(courseInfo) as [Course, typeof courseInfo.n5][]).map(([id, info]) => {
+            const cardTheme = getCourseTheme(id);
+            return (
+              <div
+                key={id}
+                className="group relative flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-white/20 hover:scale-[1.02] transition-all"
               >
-                Enter Exam Hall
-              </button>
-            </div>
-          ))}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cardTheme.gradient}`} />
+                <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
+                  {info.label}
+                </h2>
+                <p className="text-sm text-slate-500 mb-6">{info.papers}</p>
+                <ul className="space-y-3 text-left mb-8">
+                  {lobbyFeatures.map((feature) => (
+                    <li key={feature} className="flex items-center gap-3 text-slate-300">
+                      <Check className={`h-5 w-5 ${cardTheme.text} shrink-0`} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => onSelect(id)}
+                  className={`mt-auto w-full py-3 bg-gradient-to-r ${cardTheme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`}
+                >
+                  Enter Exam Hall
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -136,6 +141,7 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
 
 function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void }) {
   const info = courseInfo[course];
+  const theme = getCourseTheme(course);
   const [checked, setChecked] = useState<Set<string>>(() => loadChecklist(course));
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
@@ -187,7 +193,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
         </p>
         <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
           <div
-            className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+            className={`h-full ${theme.progress} rounded-full transition-all duration-300`}
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -215,7 +221,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                   )}
                   <span className="text-lg font-semibold">{cat.category}</span>
                 </div>
-                <span className={`text-sm font-medium ${catChecked === catTotal ? 'text-emerald-400' : 'text-slate-500'}`}>
+                <span className={`text-sm font-medium ${catChecked === catTotal ? theme.text : 'text-slate-500'}`}>
                   {catChecked}/{catTotal}
                 </span>
               </button>
@@ -238,7 +244,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                               <div
                                 className={`flex items-center justify-center h-5 w-5 rounded-full border-2 shrink-0 transition-colors ${
                                   isChecked
-                                    ? 'bg-emerald-500 border-emerald-500'
+                                    ? `${theme.bg} ${theme.border}`
                                     : 'border-slate-600'
                                 }`}
                               >
@@ -267,6 +273,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
 
 function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeCourse: () => void }) {
   const info = courseInfo[course];
+  const theme = getCourseTheme(course);
   const [countdown, setCountdown] = useState(() => getCountdown(info.examDate));
   const [showChecklist, setShowChecklist] = useState(false);
   const [showWarmUp, setShowWarmUp] = useState(false);
@@ -300,7 +307,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             className="flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-colors"
           >
             <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium px-2 py-1 bg-emerald-600/20 text-emerald-400 rounded-md">
+            <span className={`text-sm font-medium px-2 py-1 ${theme.tint} ${theme.text} rounded-md`}>
               {info.label}
             </span>
           </button>
@@ -308,7 +315,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
 
         <div className="text-center mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            {info.label} <span className="text-emerald-500">Exam Hall</span>
+            {info.label} <span className={theme.text}>Exam Hall</span>
           </h1>
           <p className="text-slate-400 max-w-lg mx-auto">
             Focused revision mode. Countdown to your exam, warm up with quick questions, and track your progress.
@@ -316,10 +323,11 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
         </div>
 
         {/* Exam Countdown */}
-        <div className="bg-gradient-to-r from-emerald-600/20 to-cyan-600/20 border border-emerald-500/30 rounded-xl p-6 mb-8">
+        <div className={`relative overflow-hidden bg-slate-900 border border-slate-800 rounded-xl p-6 mb-8`}>
+          <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${theme.gradient}`} />
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-3">
-              <Clock className="h-6 w-6 text-emerald-400" />
+              <Clock className={`h-6 w-6 ${theme.text}`} />
               <p className="text-slate-300 font-medium">
                 {info.examDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}{', '}
                 {info.examDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true })}
@@ -328,7 +336,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             {countdown.passed ? (
               <p className="text-xl font-bold text-slate-400">Exam has passed</p>
             ) : (
-              <p className="text-2xl font-bold text-emerald-400">
+              <p className={`text-2xl font-bold ${theme.text}`}>
                 {countdown.days} days · {countdown.hours} hours to go
               </p>
             )}
@@ -345,7 +353,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             {/* Warm Up Card */}
             <div
               onClick={() => setShowWarmUp(true)}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/50 transition-all cursor-pointer group"
+              className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-white/25 transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 bg-orange-600/20 rounded-lg">
@@ -359,7 +367,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
               <p className="text-slate-400 mb-4">
                 5 daily questions from across all {info.label} topics. Same questions for everyone — resets at midnight.
               </p>
-              <span className="text-emerald-500 group-hover:text-emerald-400 font-medium">
+              <span className={`${theme.text} group-hover:opacity-80 font-medium transition-opacity`}>
                 Start Today&apos;s Warm Up →
               </span>
             </div>
@@ -367,7 +375,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             {/* Checklists Card */}
             <div
               onClick={() => setShowChecklist(true)}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/50 transition-all cursor-pointer group"
+              className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-white/25 transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 bg-cyan-600/20 rounded-lg">
@@ -383,11 +391,11 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
               </p>
               <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-4">
                 <div
-                  className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                  className={`h-full ${theme.progress} rounded-full transition-all duration-300`}
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <span className="text-emerald-500 group-hover:text-emerald-400 font-medium">
+              <span className={`${theme.text} group-hover:opacity-80 font-medium transition-opacity`}>
                 View {info.label} Checklists →
               </span>
             </div>
