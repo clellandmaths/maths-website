@@ -17,7 +17,10 @@ const MINT = 'var(--signal-mint)';
 
 const LUNE = 'M 494.5 14.5 L 686.5 14.5 L 686.5 206.5 A 192 192 0 0 0 494.5 14.5 Z';
 const DIAGONAL_SHAFT = 'M 494.5 206.5 L 686.5 14.5';
-const CORNER_BRACKET = 'M 630 14.5 L 686.5 14.5 L 686.5 71';
+// Corner bracket, extended: horizontal run stops just before the vertical
+// diameter's stroke (x=503); vertical run stops exactly where it meets the
+// triangle's hypotenuse (y = 865 - x, so y=178.5 at x=686.5).
+const CORNER_BRACKET = 'M 503 14.5 L 686.5 14.5 L 686.5 178.5';
 
 function anim(delay: number, duration?: number): React.CSSProperties {
   return {
