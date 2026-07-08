@@ -2,21 +2,22 @@
 // Geometry pixel-measured from the logo asset (836x536 trimmed canvas) using
 // a labelled coordinate-grid overlay compared directly against source pixels:
 // circle c(494.5,206.5) r192; square tangent to the circle (side = radius).
-// There is no separate "arrow" shape at all. The square's top and right
-// edges are outer silhouette boundaries (mint fill ending, no stroke drawn),
-// while its corner — the lune between the square's corner and the circle's
-// own arc — is simply left unfilled (black), which alone produces the
-// arrow-like point. The only internal divider strokes are the vertical
-// diameter (also the square's left edge) and the square's bottom edge.
+// The square's top and right edges are outer silhouette boundaries (mint
+// fill ending, no stroke drawn) EXCEPT right at the corner, where a short
+// mint bracket (same stroke width as the diagonal shaft) sits on top of the
+// lune — echoing, in mint-on-black, the same right-angle bracket motif used
+// in black-on-mint at the triangle's notch. The lune itself (the square's
+// corner region outside the circle, down to the arc) is left unfilled
+// black; the diagonal shaft (a straight line bisecting the circle from its
+// centre toward the corner) is a genuine internal divider and IS stroked.
 // Pi is centred in the top-left quadrant, measured directly off the source
 // (bbox centre ~413,133, not the quadrant bounding-box centre — the glyph
 // sits closer to the circle's centre than a naive bbox-center placement).
 const MINT = 'var(--signal-mint)';
 
-// Lune: square's corner region outside the circle — top edge, right edge,
-// then the circle's own arc back to the start. Filling this black (i.e.
-// NOT filling it mint) is the entire "arrow".
 const LUNE = 'M 494.5 14.5 L 686.5 14.5 L 686.5 206.5 A 192 192 0 0 0 494.5 14.5 Z';
+const DIAGONAL_SHAFT = 'M 494.5 206.5 L 686.5 14.5';
+const CORNER_BRACKET = 'M 630 14.5 L 686.5 14.5 L 686.5 71';
 
 function anim(delay: number, duration?: number): React.CSSProperties {
   return {
@@ -38,6 +39,8 @@ export default function LogoAnimation({ className = '' }: { className?: string }
             <path d="M 494.5 14.5 L 494.5 398.5" stroke="black" strokeWidth="17" />
             {/* square's bottom edge — internal divider between square and circle-quadrant fill */}
             <path d="M 494.5 206.5 L 686.5 206.5" stroke="black" strokeWidth="16" />
+            {/* diagonal shaft — straight line bisecting the circle, centre toward the corner */}
+            <path d={DIAGONAL_SHAFT} stroke="black" strokeWidth="17" />
             {/* pi — centred in the top-left quadrant */}
             <path d="M 372 100 L 391 90 L 458 90" stroke="black" strokeWidth="28" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M 404 90 L 404 176" stroke="black" strokeWidth="28" strokeLinecap="round" />
@@ -61,6 +64,8 @@ export default function LogoAnimation({ className = '' }: { className?: string }
           <g mask="url(#cm-notch)">
             <path d="M 351 514 L 802 514 L 802 63 Z" fill={MINT} />
           </g>
+          {/* mint corner bracket — sits on top of the black lune, same width as the shaft */}
+          <path d={CORNER_BRACKET} stroke={MINT} strokeWidth="17" fill="none" />
         </g>
 
         {/* Phase 1 — construction strokes (fade out as the fill arrives) */}
@@ -69,7 +74,9 @@ export default function LogoAnimation({ className = '' }: { className?: string }
           <path d="M 351 514 L 802 514 L 802 63 Z" stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.15, 0.9)} />
           <path d="M 494.5 14.5 L 494.5 398.5" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.5, 0.9)} />
           <path d="M 494.5 206.5 L 686.5 206.5" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.65, 0.9)} />
-          <path d={LUNE} stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.8, 0.9)} />
+          <path d={DIAGONAL_SHAFT} stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.8, 0.9)} />
+          <path d={LUNE} stroke={MINT} strokeWidth="2.5" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
+          <path d={CORNER_BRACKET} stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(1.1, 0.9)} />
           <path d="M 740 446 L 740 514" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.9, 0.9)} />
           <path d="M 732 454 L 802 454" stroke={MINT} strokeWidth="2.5" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
           <path d="M 372 100 L 391 90 L 458 90" stroke={MINT} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" pathLength={100} className="geo-line" style={anim(0.95, 0.9)} />
