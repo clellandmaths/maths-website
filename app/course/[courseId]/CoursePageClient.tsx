@@ -12,8 +12,9 @@ import { getAllN5Questions, getAllHigherQuestions, type QuestionWithMetadata } f
 
 interface CoursePageProps {
   courseId: string;
-  // Server-rendered notes index (crawlable hub of topic links)
-  notesIndex?: React.ReactNode;
+  // Direct link into the first notes topic (the all-topics hub is at
+  // /course/[courseId]/notes)
+  notesHref: string;
 }
 
 const courseConfig: Record<string, {
@@ -42,9 +43,7 @@ function getTimestampSeconds(ts: string): number {
   return parseInt(ts, 10);
 }
 
-export default function CoursePage({ courseId, notesIndex }: CoursePageProps) {
-  const [activeTab, setActiveTab] = useState<'notes' | 'papers'>('notes');
-
+export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   // Lazy question loading
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[] | null>(null);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
@@ -165,36 +164,25 @@ export default function CoursePage({ courseId, notesIndex }: CoursePageProps) {
           </p>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs — Course Notes navigates straight into the notes */}
         <div className="flex gap-2 mb-8 border-b border-slate-800">
-          <button
-            onClick={() => setActiveTab('notes')}
-            className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px ${
-              activeTab === 'notes'
-                ? `${theme.text} ${theme.border}`
-                : 'text-slate-400 border-transparent hover:text-slate-300'
-            }`}
+          <Link
+            href={notesHref}
+            className="flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px text-slate-400 border-transparent hover:text-slate-200"
           >
             <GraduationCap className="h-4 w-4" />
             Course Notes
-          </button>
-          <button
-            onClick={() => setActiveTab('papers')}
-            className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px ${
-              activeTab === 'papers'
-                ? `${theme.text} ${theme.border}`
-                : 'text-slate-400 border-transparent hover:text-slate-300'
-            }`}
+          </Link>
+          <span
+            className={`flex items-center gap-2 px-4 py-3 font-medium border-b-2 -mb-px ${theme.text} ${theme.border}`}
           >
             <FileText className="h-4 w-4" />
             Past Paper Archive
-          </button>
+          </span>
         </div>
 
         {/* Content */}
-        {activeTab === 'notes' ? (
-          notesIndex
-        ) : config ? (
+        {config ? (
           <div className="space-y-6">
             {/* Loading overlay */}
             {loadingQuestions && (

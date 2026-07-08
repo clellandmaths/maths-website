@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const courseId of COURSE_IDS) {
     entries.push({ url: `${BASE}/course/${courseId}`, lastModified: now, priority: 0.9 });
+    entries.push({ url: `${BASE}/course/${courseId}/notes`, lastModified: now, priority: 0.8 });
     const course = await getNotesForCourse(courseId);
     if (!course) continue;
     for (const section of course.sections) {
