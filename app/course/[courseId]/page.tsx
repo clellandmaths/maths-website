@@ -1,8 +1,39 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Play, FileText } from 'lucide-react';
 import CoursePageClient from './CoursePageClient';
 import { getNotesForCourse } from '@/lib/notes-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+
+const COURSE_META: Record<string, { title: string; description: string }> = {
+  n5: {
+    title: 'National 5 Maths — Notes, Past Papers & Video Solutions',
+    description: 'Free National 5 Maths revision: course notes with worked examples, past papers from 2014–2025 with video solutions, and a custom worksheet builder.',
+  },
+  higher: {
+    title: 'Higher Maths — Notes, Past Papers & Video Solutions',
+    description: 'Free Higher Maths revision: course notes with worked examples, past papers from 2015–2025 with video solutions, and a custom worksheet builder.',
+  },
+  ah: {
+    title: 'Advanced Higher Maths — Notes & Video Lessons',
+    description: 'Free Advanced Higher Maths revision: course notes with theory and worked examples, plus video lessons. Clelland Maths.',
+  },
+  'n5-apps': {
+    title: 'N5 Applications of Maths — Notes & Video Lessons',
+    description: 'Free National 5 Applications of Maths revision: course notes with theory and worked examples, plus video lessons. Clelland Maths.',
+  },
+  'higher-apps': {
+    title: 'Higher Applications of Maths — Notes & Video Lessons',
+    description: 'Free Higher Applications of Maths revision: course notes with theory and worked examples, plus video lessons. Clelland Maths.',
+  },
+};
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ courseId: string }> }
+): Promise<Metadata> {
+  const { courseId } = await params;
+  return COURSE_META[courseId] ?? {};
+}
 
 export function generateStaticParams() {
   return [
