@@ -9,6 +9,13 @@ export const examDiet = {
   estimated: true,
 };
 
+// Per-course exam dates — estimates until the official 2027 timetable is
+// published. Keep `estimated: true` so the UI labels them honestly.
+export const courseExamDates: Record<string, { date: Date; estimated: boolean }> = {
+  n5: { date: new Date('2027-04-30T09:00:00+01:00'), estimated: true },
+  higher: { date: new Date('2027-05-06T09:00:00+01:00'), estimated: true },
+};
+
 export function daysUntilDiet(now: Date = new Date()): number {
   const ms = examDiet.start.getTime() - now.getTime();
   return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));

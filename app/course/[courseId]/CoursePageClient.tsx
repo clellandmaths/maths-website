@@ -213,7 +213,12 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                           <div className="flex-1 p-4 sm:p-5 flex flex-col">
                             <div className="mb-3">
                               <h4 className="text-lg font-semibold text-slate-200">
-                                {year} Paper {paper.paperNumber}
+                                <Link
+                                  href={`/course/${courseId}/papers/${paper.year}/paper-${paper.paperNumber}`}
+                                  className="hover:text-white transition-colors"
+                                >
+                                  {year} Paper {paper.paperNumber}
+                                </Link>
                               </h4>
                               <p className="text-sm text-slate-500">
                                 {paper.questionCount} Questions

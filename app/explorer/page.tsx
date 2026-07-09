@@ -750,7 +750,9 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
         <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
         <h1 className="font-display text-3xl font-bold mb-3">Topic Explorer</h1>
         <p className="text-slate-400 mb-10 text-lg">
-          Choose your course to start browsing past paper questions.
+          Browse SQA past paper questions by topic and year, then build a custom
+          maths worksheet with answers, QR-coded video solutions and PDF export —
+          free for students and teachers. Choose your course to start.
         </p>
         <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
           {courseCards.map((course) => {

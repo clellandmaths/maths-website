@@ -6,19 +6,22 @@ import { n5ChecklistCategories, higherChecklistCategories } from '@/lib/checklis
 import type { TopicCategory } from '@/lib/n5-topics';
 import WarmUp from '@/components/ExamHall/WarmUp';
 import { getCourseTheme } from '@/lib/course-theme';
+import { courseExamDates } from '@/lib/exam-dates';
 
 type Course = 'n5' | 'higher';
 
-const courseInfo: Record<Course, { label: string; examDate: Date; papers: string; categories: TopicCategory[] }> = {
+const courseInfo: Record<Course, { label: string; examDate: Date; estimated: boolean; papers: string; categories: TopicCategory[] }> = {
   n5: {
     label: 'National 5',
-    examDate: new Date('2026-05-08T09:00:00'),
+    examDate: courseExamDates.n5.date,
+    estimated: courseExamDates.n5.estimated,
     papers: '10 Past Papers · 200+ Questions',
     categories: n5ChecklistCategories,
   },
   higher: {
     label: 'Higher',
-    examDate: new Date('2026-05-07T09:00:00'),
+    examDate: courseExamDates.higher.date,
+    estimated: courseExamDates.higher.estimated,
     papers: '9 Past Papers · 170+ Questions',
     categories: higherChecklistCategories,
   },
@@ -331,6 +334,9 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
               <p className="text-slate-300 font-medium">
                 {info.examDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}{', '}
                 {info.examDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true })}
+                {info.estimated && (
+                  <span className="ml-2 font-mono text-xs text-slate-500">est. — official timetable TBC</span>
+                )}
               </p>
             </div>
             {countdown.passed ? (
