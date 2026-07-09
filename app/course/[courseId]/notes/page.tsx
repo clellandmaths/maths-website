@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Play, FileText, ArrowRight } from 'lucide-react';
 import { getNotesForCourse } from '@/lib/notes-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+import CourseTabs from '@/components/CourseTabs';
 
 // Crawlable all-topics hub — every topic page linked from one URL.
 // Users normally enter the notes straight at a topic; this page is the
@@ -48,6 +49,7 @@ export default async function NotesHubPage(
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
+      <CourseTabs courseId={courseId} active="notes" />
       <div className="mb-10">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           Course notes

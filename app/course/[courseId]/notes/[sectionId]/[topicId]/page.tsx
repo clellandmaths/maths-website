@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getNotesForCourse } from '@/lib/notes-loader';
 import NotesTopicShell, { type NotesNav } from '@/components/Notes/NotesTopicShell';
+import CourseTabs from '@/components/CourseTabs';
 
 // Every notes topic is a statically generated, crawlable page:
 // /course/higher/notes/straight-line/gradient etc.
@@ -96,6 +97,7 @@ export default async function NotesTopicPage(
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
+      <CourseTabs courseId={courseId} active="notes" />
       <NotesTopicShell
         courseId={courseId}
         nav={nav}

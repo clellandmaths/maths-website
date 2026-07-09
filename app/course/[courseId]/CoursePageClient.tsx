@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, FileText, ChevronDown, ChevronUp, BookOpen, List, GraduationCap } from 'lucide-react';
+import { ArrowLeft, Play, FileText, ChevronDown, ChevronUp, BookOpen, List } from 'lucide-react';
+import CourseTabs from '@/components/CourseTabs';
 import VideoModal from '@/components/VideoModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
@@ -164,22 +165,8 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
           </p>
         </div>
 
-        {/* Tabs — Course Notes navigates straight into the notes */}
-        <div className="flex gap-2 mb-8 border-b border-slate-800">
-          <Link
-            href={notesHref}
-            className="flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px text-slate-400 border-transparent hover:text-slate-200"
-          >
-            <GraduationCap className="h-4 w-4" />
-            Course Notes
-          </Link>
-          <span
-            className={`flex items-center gap-2 px-4 py-3 font-medium border-b-2 -mb-px ${theme.text} ${theme.border}`}
-          >
-            <FileText className="h-4 w-4" />
-            Past Paper Archive
-          </span>
-        </div>
+        {/* Tabs — shared course-context navigation */}
+        <CourseTabs courseId={courseId} active="papers" notesHref={notesHref} />
 
         {/* Content */}
         {config ? (
