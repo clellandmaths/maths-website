@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getNotesForCourse } from '@/lib/notes-loader';
 import NotesTopicShell, { type NotesNav } from '@/components/Notes/NotesTopicShell';
 import CourseTabs from '@/components/CourseTabs';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 // Every notes topic is a statically generated, crawlable page:
 // /course/higher/notes/straight-line/gradient etc.
@@ -97,6 +98,13 @@ export default async function NotesTopicPage(
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: COURSE_NAMES[courseId] ?? course.title, href: `/course/${courseId}` },
+        { label: 'Notes', href: `/course/${courseId}/notes` },
+        { label: section.title },
+        { label: topic.title },
+      ]} />
       <CourseTabs courseId={courseId} active="notes" />
       <NotesTopicShell
         courseId={courseId}

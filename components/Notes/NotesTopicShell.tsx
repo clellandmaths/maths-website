@@ -104,9 +104,17 @@ export default function NotesTopicShell({
     <div>
       {/* Progress header */}
       <div className="px-4 pt-4 pb-3 border-b border-border">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-2">
-          Course notes
-        </p>
+        <div className="flex items-baseline justify-between mb-2">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            Course notes
+          </p>
+          <Link
+            href={`/course/${courseId}/notes`}
+            className={`font-mono text-[11px] ${theme.text} hover:opacity-80 transition-opacity`}
+          >
+            All topics
+          </Link>
+        </div>
         <div className="flex items-center gap-3">
           <div className="flex-1 h-1.5 bg-muted/40 rounded-full overflow-hidden">
             <div

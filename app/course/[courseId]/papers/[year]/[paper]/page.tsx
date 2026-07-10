@@ -4,6 +4,7 @@ import { getAllN5Questions, getAllHigherQuestions, type QuestionWithMetadata } f
 import { n5PaperVideos, higherPaperVideos } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
 import CourseTabs from '@/components/CourseTabs';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import MathHtml from '@/components/MathHtml';
 import WatchSolutionButton from '@/components/Papers/WatchSolutionButton';
 
@@ -89,6 +90,11 @@ export default async function PaperPage(
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: courseName, href: `/course/${courseId}` },
+        { label: `${year} Paper ${paperNumber}` },
+      ]} />
       <CourseTabs courseId={courseId} active="papers" />
 
       {/* Paper header */}

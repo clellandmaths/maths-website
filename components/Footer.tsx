@@ -17,26 +17,37 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <Link href="/explorer" className="hover:text-foreground transition-colors">Topic Explorer</Link>
-            <Link href="/exam-hall" className="hover:text-foreground transition-colors">Exam Hall</Link>
-            <a
-              href="https://app.clellandmaths.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
-            >
-              Revision App
-            </a>
-            <a
-              href="https://academy.clellandmaths.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
-            >
-              Academy
-            </a>
-          </nav>
+          <div className="flex flex-wrap gap-x-12 gap-y-6">
+            <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-1">Courses</span>
+              <Link href="/course/n5" className="hover:text-foreground transition-colors">National 5</Link>
+              <Link href="/course/higher" className="hover:text-foreground transition-colors">Higher</Link>
+              <Link href="/course/ah" className="hover:text-foreground transition-colors">Advanced Higher</Link>
+              <Link href="/course/n5-apps" className="hover:text-foreground transition-colors">N5 Applications</Link>
+              <Link href="/course/higher-apps" className="hover:text-foreground transition-colors">Higher Applications</Link>
+            </nav>
+            <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-1">Tools</span>
+              <Link href="/explorer" className="hover:text-foreground transition-colors">Topic Explorer</Link>
+              <Link href="/exam-hall" className="hover:text-foreground transition-colors">Exam Hall</Link>
+              <a
+                href="https://app.clellandmaths.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Revision App
+              </a>
+              <a
+                href="https://academy.clellandmaths.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Academy
+              </a>
+            </nav>
+          </div>
         </div>
 
         <p className="font-mono text-xs text-muted-foreground/70 mt-8">

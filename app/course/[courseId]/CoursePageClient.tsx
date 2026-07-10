@@ -2,8 +2,9 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, FileText, ChevronDown, ChevronUp, BookOpen, List } from 'lucide-react';
+import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap } from 'lucide-react';
 import CourseTabs from '@/components/CourseTabs';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import VideoModal from '@/components/VideoModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
@@ -146,14 +147,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Back Button */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-signal-magenta mb-8 transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Home
-        </Link>
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: `${courseName} Maths` }]} />
 
         {/* Header */}
         <div className="mb-8">
@@ -342,6 +336,40 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                 Past paper walkthroughs coming soon.
               </p>
             </div>
+          </div>
+        )}
+
+        {/* Cross-links — Explorer and Exam Hall support N5 and Higher */}
+        {config && (
+          <div className="grid sm:grid-cols-2 gap-4 mt-12">
+            <Link
+              href="/explorer"
+              className="group flex items-center gap-4 bg-slate-900 border border-slate-800 hover:border-white/25 rounded-xl p-5 transition-colors"
+            >
+              <div className={`p-3 ${theme.tint} rounded-lg shrink-0`}>
+                <Compass className={`h-6 w-6 ${theme.text}`} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-semibold text-slate-100">Practise by topic</h3>
+                <p className="text-sm text-slate-400">
+                  Filter these questions by topic and build a custom worksheet in the Explorer.
+                </p>
+              </div>
+            </Link>
+            <Link
+              href="/exam-hall"
+              className="group flex items-center gap-4 bg-slate-900 border border-slate-800 hover:border-white/25 rounded-xl p-5 transition-colors"
+            >
+              <div className={`p-3 ${theme.tint} rounded-lg shrink-0`}>
+                <GraduationCap className={`h-6 w-6 ${theme.text}`} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-semibold text-slate-100">Exam Hall</h3>
+                <p className="text-sm text-slate-400">
+                  Exam countdown, topic checklists and daily warm-up questions.
+                </p>
+              </div>
+            </Link>
           </div>
         )}
       </div>
