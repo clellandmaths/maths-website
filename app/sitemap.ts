@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getNotesForCourse } from '@/lib/notes-loader';
-import { getAllN5Questions, getAllHigherQuestions } from '@/lib/data-loader';
+import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions } from '@/lib/data-loader';
 
 const BASE = 'https://clellandmaths.com';
 const COURSE_IDS = ['n5', 'higher', 'ah', 'n5-apps', 'higher-apps'];
@@ -32,9 +32,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Past paper pages
-  for (const courseId of ['n5', 'higher'] as const) {
-    const questions = courseId === 'n5' ? await getAllN5Questions() : await getAllHigherQuestions();
+  // Past paper pages — all five courses
+  const paperLoaders = {
+    n5: getAllN5Questions,
+    higher: getAllHigherQuestions,
+    ah: getAllAHQuestions,
+    'n5-apps': getAllN5AppsQuestions,
+    'higher-apps': getAllHigherAppsQuestions,
+  } as const;
+  for (const [courseId, load] of Object.entries(paperLoaders)) {
+    const questions = await load();
     const combos = new Set(questions.map(q => `${q.year}/${q.paperNumber}`));
     for (const combo of combos) {
       const [year, paperNumber] = combo.split('/');

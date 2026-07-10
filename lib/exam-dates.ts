@@ -14,6 +14,9 @@ export const examDiet = {
 export const courseExamDates: Record<string, { date: Date; estimated: boolean }> = {
   n5: { date: new Date('2027-04-30T09:00:00+01:00'), estimated: true },
   higher: { date: new Date('2027-05-06T09:00:00+01:00'), estimated: true },
+  ah: { date: new Date('2027-05-04T09:00:00+01:00'), estimated: true },
+  'n5-apps': { date: new Date('2027-05-11T09:00:00+01:00'), estimated: true },
+  'higher-apps': { date: new Date('2027-05-11T09:00:00+01:00'), estimated: true },
 };
 
 export function daysUntilDiet(now: Date = new Date()): number {

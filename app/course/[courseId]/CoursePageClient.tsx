@@ -8,9 +8,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import VideoModal from '@/components/VideoModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
-import { n5PaperVideos, higherPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
+import { n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos, n5AppsPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
-import { getAllN5Questions, getAllHigherQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
+import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
 
 interface CoursePageProps {
   courseId: string;
@@ -26,6 +26,9 @@ const courseConfig: Record<string, {
 }> = {
   n5: { name: 'National 5', paperVideos: n5PaperVideos, loadQuestions: getAllN5Questions },
   higher: { name: 'Higher', paperVideos: higherPaperVideos, loadQuestions: getAllHigherQuestions },
+  ah: { name: 'Advanced Higher', paperVideos: ahPaperVideos, loadQuestions: getAllAHQuestions },
+  'n5-apps': { name: 'N5 Applications', paperVideos: n5AppsPaperVideos, loadQuestions: getAllN5AppsQuestions },
+  'higher-apps': { name: 'Higher Applications', paperVideos: higherAppsPaperVideos, loadQuestions: getAllHigherAppsQuestions },
 };
 
 const courseNames: Record<string, string> = {
@@ -61,17 +64,17 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   const config = courseConfig[courseId];
   const theme = getCourseTheme(courseId);
 
-  // Group papers by year (newest first)
+  // Group papers by year, preserving registry order (newest first,
+  // string years like "Specimen" at the end)
   const papersByYear = useMemo(() => {
     if (!config) return [];
-    const yearMap = new Map<number, PaperVideo[]>();
+    const yearMap = new Map<number | string, PaperVideo[]>();
     for (const paper of config.paperVideos) {
       const existing = yearMap.get(paper.year) || [];
       existing.push(paper);
       yearMap.set(paper.year, existing);
     }
     return Array.from(yearMap.entries())
-      .sort(([a], [b]) => b - a)
       .map(([year, papers]) => ({
         year,
         papers: papers.sort((a, b) => a.paperNumber - b.paperNumber),
@@ -90,12 +93,12 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   }, [allQuestions, config]);
 
   // Get questions for a specific paper
-  const getQuestionsForPaper = useCallback((questions: QuestionWithMetadata[], year: number, paperNumber: number) => {
+  const getQuestionsForPaper = useCallback((questions: QuestionWithMetadata[], year: number | string, paperNumber: number) => {
     return questions.filter(q => q.year === year && q.paperNumber === paperNumber);
   }, []);
 
   // Action handlers
-  const handleStartPaper = useCallback(async (year: number, paperNumber: number, startIndex = 0) => {
+  const handleStartPaper = useCallback(async (year: number | string, paperNumber: number, startIndex = 0) => {
     const questions = await ensureQuestionsLoaded();
     const paperQuestions = getQuestionsForPaper(questions, year, paperNumber);
     if (paperQuestions.length > 0) {
@@ -104,7 +107,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
     }
   }, [ensureQuestionsLoaded, getQuestionsForPaper]);
 
-  const handleFocusMode = useCallback(async (year: number, paperNumber: number) => {
+  const handleFocusMode = useCallback(async (year: number | string, paperNumber: number) => {
     const questions = await ensureQuestionsLoaded();
     const paperQuestions = getQuestionsForPaper(questions, year, paperNumber);
     if (paperQuestions.length > 0) {
@@ -112,7 +115,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
     }
   }, [ensureQuestionsLoaded, getQuestionsForPaper]);
 
-  const handleExpandPaper = useCallback(async (year: number, paperNumber: number) => {
+  const handleExpandPaper = useCallback(async (year: number | string, paperNumber: number) => {
     const key = `${year}-${paperNumber}`;
     if (expandedPaper === key) {
       setExpandedPaper(null);
@@ -194,12 +197,19 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                           {/* Thumbnail */}
                           <div className="sm:w-64 shrink-0">
                             <div className="relative aspect-video sm:h-full bg-slate-800">
-                              <img
-                                src={`https://img.youtube.com/vi/${paper.videoId}/mqdefault.jpg`}
-                                alt={`${courseName} ${paper.year} Paper ${paper.paperNumber}`}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
+                              {paper.videoId ? (
+                                <img
+                                  src={`https://img.youtube.com/vi/${paper.videoId}/mqdefault.jpg`}
+                                  alt={`${courseName} ${paper.year} Paper ${paper.paperNumber}`}
+                                  className="w-full h-full object-cover"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex flex-col items-center justify-center gap-1">
+                                  <FileText className={`h-8 w-8 ${theme.text}`} />
+                                  <span className="font-mono text-[11px] text-slate-500">Markscheme available</span>
+                                </div>
+                              )}
                             </div>
                           </div>
 
@@ -221,17 +231,19 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
 
                             {/* Action buttons */}
                             <div className="flex flex-wrap gap-2 mt-auto">
-                              <button
-                                onClick={() => setActiveVideo({
-                                  videoId: paper.videoId,
-                                  timestamp: 0,
-                                  title: `${courseName} ${paper.year} Paper ${paper.paperNumber}`,
-                                })}
-                                className={`flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white text-sm font-medium rounded-lg transition-all`}
-                              >
-                                <Play className="h-4 w-4" />
-                                Watch Video
-                              </button>
+                              {paper.videoId && (
+                                <button
+                                  onClick={() => setActiveVideo({
+                                    videoId: paper.videoId,
+                                    timestamp: 0,
+                                    title: `${courseName} ${paper.year} Paper ${paper.paperNumber}`,
+                                  })}
+                                  className={`flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white text-sm font-medium rounded-lg transition-all`}
+                                >
+                                  <Play className="h-4 w-4" />
+                                  Watch Video
+                                </button>
+                              )}
                               <button
                                 onClick={() => handleStartPaper(paper.year, paper.paperNumber)}
                                 className={`flex items-center gap-1.5 px-3 py-2 bg-card border ${theme.border} ${theme.text} hover:bg-white/5 text-sm font-medium rounded-lg transition-colors`}
@@ -298,17 +310,19 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                 </div>
 
                                 {/* Watch solution */}
-                                <button
-                                  onClick={() => setActiveVideo({
-                                    videoId: q.videoId,
-                                    timestamp: getTimestampSeconds(q.timestamp),
-                                    title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionIndex + 1}`,
-                                  })}
-                                  className={`shrink-0 flex items-center gap-1 px-2 py-1 ${theme.text} hover:opacity-80 text-xs font-medium transition-opacity`}
-                                >
-                                  <Play className="h-3 w-3" />
-                                  Solution
-                                </button>
+                                {q.videoId && (
+                                  <button
+                                    onClick={() => setActiveVideo({
+                                      videoId: q.videoId,
+                                      timestamp: getTimestampSeconds(q.timestamp),
+                                      title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionIndex + 1}`,
+                                    })}
+                                    className={`shrink-0 flex items-center gap-1 px-2 py-1 ${theme.text} hover:opacity-80 text-xs font-medium transition-opacity`}
+                                  >
+                                    <Play className="h-3 w-3" />
+                                    Solution
+                                  </button>
+                                )}
                               </div>
                             ))}
                           </div>

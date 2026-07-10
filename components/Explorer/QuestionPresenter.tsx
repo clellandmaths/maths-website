@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, BookOpen, Paperclip } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
+import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
+import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
@@ -42,6 +44,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [showBooklet, setShowBooklet] = useState(false);
+  const [showMarkscheme, setShowMarkscheme] = useState(false);
 
   const question = questions[currentIndex];
   const isFirst = currentIndex === 0;
@@ -201,13 +204,21 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
                   </>
                 )}
               </button>
-              {question.videoId && (
+              {question.videoId ? (
                 <button
                   onClick={() => setShowVideo(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
                 >
                   <Play className="h-5 w-5" />
                   Watch Solution
+                </button>
+              ) : hasMarkscheme(question.year, question.paperNumber) && (
+                <button
+                  onClick={() => setShowMarkscheme(true)}
+                  className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
+                >
+                  <ClipboardCheck className="h-5 w-5" />
+                  Markscheme
                 </button>
               )}
             </div>
@@ -266,6 +277,18 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
           year={question.year}
           theme={theme}
           onClose={() => setShowBooklet(false)}
+        />
+      )}
+
+      {/* AH marking instructions */}
+      {showMarkscheme && (
+        <MarkschemeModal
+          theme={theme}
+          year={question.year}
+          paperNumber={question.paperNumber}
+          questionHtml={question.question}
+          title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
+          onClose={() => setShowMarkscheme(false)}
         />
       )}
     </>

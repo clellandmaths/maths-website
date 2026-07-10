@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Eye, EyeOff, Play, Check, BookOpen, Paperclip } from 'lucide-react';
+import { X, Eye, EyeOff, Play, Check, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
+import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
+import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
@@ -54,6 +56,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
+  const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
   const [doneSet, setDoneSet] = useState<Set<number>>(() => loadDoneSet(questions));
   const toggleAnswer = (index: number) => {
     setRevealedAnswers((prev) => {
@@ -196,7 +199,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
                     Data Booklet
                   </button>
                 )}
-                {q.videoId && (
+                {q.videoId ? (
                   <button
                     onClick={() => setActiveVideo({
                       videoId: q.videoId,
@@ -207,6 +210,14 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
                   >
                     <Play className="h-4 w-4" />
                     Watch Solution
+                  </button>
+                ) : hasMarkscheme(q.year, q.paperNumber) && (
+                  <button
+                    onClick={() => setMarkschemeQ(q)}
+                    className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                  >
+                    <ClipboardCheck className="h-4 w-4" />
+                    Markscheme
                   </button>
                 )}
                 <button
@@ -264,6 +275,18 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
         year={bookletYear}
         theme={theme}
         onClose={() => setBookletYear(null)}
+      />
+    )}
+
+    {/* AH marking instructions */}
+    {markschemeQ && (
+      <MarkschemeModal
+        theme={theme}
+        year={markschemeQ.year}
+        paperNumber={markschemeQ.paperNumber}
+        questionHtml={markschemeQ.question}
+        title={`${markschemeQ.year} Paper ${markschemeQ.paperNumber} Q${markschemeQ.questionIndex + 1}`}
+        onClose={() => setMarkschemeQ(null)}
       />
     )}
   </>

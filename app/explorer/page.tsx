@@ -3,6 +3,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
+import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
+import { hasMarkscheme } from '@/lib/ah-markschemes';
+import { ClipboardCheck } from 'lucide-react';
 import FilterSidebar from '@/components/Explorer/FilterSidebar';
 import QuestionCard from '@/components/Explorer/QuestionCard';
 import WorksheetFAB from '@/components/Explorer/WorksheetFAB';
@@ -103,6 +106,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [lastMovedIndex, setLastMovedIndex] = useState<number | null>(null);
   const [showFocusMode, setShowFocusMode] = useState(false);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
+  const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
 
@@ -660,7 +664,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 Data Booklet
                               </button>
                             )}
-                            {q.videoId && (
+                            {q.videoId ? (
                               <button
                                 onClick={() => setActiveVideo({
                                   videoId: q.videoId,
@@ -671,6 +675,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                               >
                                 <Play className="h-4 w-4" />
                                 Watch Solution
+                              </button>
+                            ) : hasMarkscheme(q.year, q.paperNumber) && (
+                              <button
+                                onClick={() => setMarkschemeQ(q)}
+                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                              >
+                                <ClipboardCheck className="h-4 w-4" />
+                                Markscheme
                               </button>
                             )}
                           </div>
@@ -786,6 +798,18 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           onClose={() => setShowFocusMode(false)}
+        />
+      )}
+
+      {/* AH marking instructions for no-video questions */}
+      {markschemeQ && (
+        <MarkschemeModal
+          theme={theme}
+          year={markschemeQ.year}
+          paperNumber={markschemeQ.paperNumber}
+          questionHtml={markschemeQ.question}
+          title={`${markschemeQ.year} Paper ${markschemeQ.paperNumber} Q${markschemeQ.questionIndex + 1}`}
+          onClose={() => setMarkschemeQ(null)}
         />
       )}
 

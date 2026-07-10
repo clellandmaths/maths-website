@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, Flame, ArrowLeft } from 'lucide-react';
-import { QuestionWithMetadata, getAllN5Questions, getAllHigherQuestions } from '@/lib/data-loader';
+import { QuestionWithMetadata, getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
@@ -67,9 +67,12 @@ function extractImageSrcs(html: string): string[] {
 const loaders = {
   n5: getAllN5Questions,
   higher: getAllHigherQuestions,
+  ah: getAllAHQuestions,
+  'n5-apps': getAllN5AppsQuestions,
+  'higher-apps': getAllHigherAppsQuestions,
 };
 
-type Course = 'n5' | 'higher';
+type Course = 'n5' | 'higher' | 'ah' | 'n5-apps' | 'higher-apps';
 
 interface WarmUpProps {
   course: Course;
@@ -292,13 +295,15 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                   </>
                 )}
               </button>
-              <button
-                onClick={() => setShowVideo(true)}
-                className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
-              >
-                <Play className="h-5 w-5" />
-                Watch Solution
-              </button>
+              {question.videoId && (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
+                >
+                  <Play className="h-5 w-5" />
+                  Watch Solution
+                </button>
+              )}
             </div>
 
             {/* Answer Section */}

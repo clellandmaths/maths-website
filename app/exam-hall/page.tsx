@@ -3,12 +3,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import { GraduationCap, Flame, CheckSquare, Clock, ArrowLeft, Check, ChevronDown, ChevronRight } from 'lucide-react';
 import { n5ChecklistCategories, higherChecklistCategories } from '@/lib/checklist-topics';
+import { ahTopicCategories } from '@/lib/ah-topics';
+import { higherAppsTopicCategories } from '@/lib/higher-apps-topics';
+import { n5AppsTopicCategories } from '@/lib/n5-apps-topics';
 import type { TopicCategory } from '@/lib/n5-topics';
 import WarmUp from '@/components/ExamHall/WarmUp';
 import { getCourseTheme } from '@/lib/course-theme';
 import { courseExamDates } from '@/lib/exam-dates';
 
-type Course = 'n5' | 'higher';
+type Course = 'n5' | 'higher' | 'ah' | 'n5-apps' | 'higher-apps';
 
 const courseInfo: Record<Course, { label: string; examDate: Date; estimated: boolean; papers: string; categories: TopicCategory[] }> = {
   n5: {
@@ -24,6 +27,27 @@ const courseInfo: Record<Course, { label: string; examDate: Date; estimated: boo
     estimated: courseExamDates.higher.estimated,
     papers: '9 Past Papers · 170+ Questions',
     categories: higherChecklistCategories,
+  },
+  ah: {
+    label: 'Advanced Higher',
+    examDate: courseExamDates.ah.date,
+    estimated: courseExamDates.ah.estimated,
+    papers: '14 Past Papers · 230+ Questions',
+    categories: ahTopicCategories,
+  },
+  'n5-apps': {
+    label: 'N5 Applications',
+    examDate: courseExamDates['n5-apps'].date,
+    estimated: courseExamDates['n5-apps'].estimated,
+    papers: '14 Past Papers · 190+ Questions',
+    categories: n5AppsTopicCategories,
+  },
+  'higher-apps': {
+    label: 'Higher Applications',
+    examDate: courseExamDates['higher-apps'].date,
+    estimated: courseExamDates['higher-apps'].estimated,
+    papers: '5 Past Papers · Data Booklets & Files',
+    categories: higherAppsTopicCategories,
   },
 };
 
@@ -98,13 +122,13 @@ function countCategoryChecked(category: TopicCategory, checked: Set<string>): nu
 function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="text-center max-w-3xl w-full">
+      <div className="text-center max-w-5xl w-full">
         <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
         <h1 className="font-display text-3xl font-bold mb-3">Welcome to the Exam Hall</h1>
         <p className="text-slate-400 mb-10 text-lg">
           Your distraction-free zone. Sync your exam countdown, track your topic checklist, and run timed warm-ups.
         </p>
-        <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {(Object.entries(courseInfo) as [Course, typeof courseInfo.n5][]).map(([id, info]) => {
             const cardTheme = getCourseTheme(id);
             return (
@@ -418,7 +442,7 @@ export default function ExamHallPage() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(() => {
     if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('preferredCourse');
-    return saved === 'n5' || saved === 'higher' ? saved : null;
+    return saved && saved in courseInfo ? (saved as Course) : null;
   });
 
   const handleSelectCourse = (course: Course) => {
