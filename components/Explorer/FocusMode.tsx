@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Eye, EyeOff, Play, Check } from 'lucide-react';
+import { X, Eye, EyeOff, Play, Check, BookOpen, Paperclip } from 'lucide-react';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
@@ -44,13 +45,15 @@ function saveDoneSet(questions: QuestionWithMetadata[], doneSet: Set<number>) {
 
 interface FocusModeProps {
   theme: CourseTheme;
+  hasDataBooklet?: boolean;
   questions: QuestionWithMetadata[];
   onClose: () => void;
 }
 
-export default function FocusMode({ theme, questions, onClose }: FocusModeProps) {
+export default function FocusMode({ theme, hasDataBooklet = false, questions, onClose }: FocusModeProps) {
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
+  const [bookletYear, setBookletYear] = useState<number | string | null>(null);
   const [doneSet, setDoneSet] = useState<Set<number>>(() => loadDoneSet(questions));
   const toggleAnswer = (index: number) => {
     setRevealedAnswers((prev) => {
@@ -151,6 +154,23 @@ export default function FocusMode({ theme, questions, onClose }: FocusModeProps)
                 className="text-slate-200 question-content text-lg leading-relaxed"
               />
 
+              {/* Higher Apps data files */}
+              {q.attachments && q.attachments.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {q.attachments.map((file) => (
+                    <a
+                      key={file.url}
+                      href={file.url}
+                      download
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                    >
+                      <Paperclip className="h-3 w-3" />
+                      {file.name}
+                    </a>
+                  ))}
+                </div>
+              )}
+
               {/* Action buttons */}
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <button
@@ -158,7 +178,7 @@ export default function FocusMode({ theme, questions, onClose }: FocusModeProps)
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     revealedAnswers.has(index)
                       ? 'bg-slate-800 hover:bg-slate-700 text-slate-400'
-                      : 'bg-cyan-600/20 text-cyan-400 hover:bg-cyan-600/30'
+                      : `${theme.tint} ${theme.text} hover:bg-white/10`
                   }`}
                 >
                   {revealedAnswers.has(index) ? (
@@ -167,6 +187,15 @@ export default function FocusMode({ theme, questions, onClose }: FocusModeProps)
                     <><Eye className="h-4 w-4" /> Show Answer</>
                   )}
                 </button>
+                {hasDataBooklet && (
+                  <button
+                    onClick={() => setBookletYear(q.year)}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <BookOpen className="h-4 w-4" />
+                    Data Booklet
+                  </button>
+                )}
                 {q.videoId && (
                   <button
                     onClick={() => setActiveVideo({
@@ -226,6 +255,15 @@ export default function FocusMode({ theme, questions, onClose }: FocusModeProps)
         videoId={activeVideo.videoId}
         timestamp={activeVideo.timestamp}
         title={activeVideo.title}
+      />
+    )}
+
+    {/* Data Booklet (Higher Apps) */}
+    {bookletYear !== null && (
+      <DataBookletModal
+        year={bookletYear}
+        theme={theme}
+        onClose={() => setBookletYear(null)}
       />
     )}
   </>

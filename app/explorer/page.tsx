@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check } from 'lucide-react';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip } from 'lucide-react';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FilterSidebar from '@/components/Explorer/FilterSidebar';
 import QuestionCard from '@/components/Explorer/QuestionCard';
 import WorksheetFAB from '@/components/Explorer/WorksheetFAB';
@@ -101,6 +102,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [lastMovedIndex, setLastMovedIndex] = useState<number | null>(null);
   const [showFocusMode, setShowFocusMode] = useState(false);
+  const [bookletYear, setBookletYear] = useState<number | string | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
 
@@ -612,6 +614,23 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           className="text-slate-300 question-content text-lg leading-relaxed"
                         />
 
+                        {/* Higher Apps data files — needed to attempt the question */}
+                        {q.attachments && q.attachments.length > 0 && (
+                          <div className="no-print flex flex-wrap gap-2 mt-4">
+                            {q.attachments.map((file) => (
+                              <a
+                                key={file.url}
+                                href={file.url}
+                                download
+                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                              >
+                                <Paperclip className="h-3 w-3" />
+                                {file.name}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+
                         {showAnswersInView && (
                           <div className="answer-section mt-4 pt-4 border-t border-slate-800">
                             <p className={`answer-label text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
@@ -631,19 +650,30 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
                           </button>
-                          {q.videoId && (
-                            <button
-                              onClick={() => setActiveVideo({
-                                videoId: q.videoId,
-                                timestamp: getTimestampSeconds(q.timestamp),
-                                title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
-                              })}
-                              className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
-                            >
-                              <Play className="h-4 w-4" />
-                              Watch Solution
-                            </button>
-                          )}
+                          <div className="flex items-center gap-2">
+                            {config.hasDataBooklet && (
+                              <button
+                                onClick={() => setBookletYear(q.year)}
+                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.text} hover:opacity-80 rounded-lg text-sm font-medium transition-opacity`}
+                              >
+                                <BookOpen className="h-4 w-4" />
+                                Data Booklet
+                              </button>
+                            )}
+                            {q.videoId && (
+                              <button
+                                onClick={() => setActiveVideo({
+                                  videoId: q.videoId,
+                                  timestamp: getTimestampSeconds(q.timestamp),
+                                  title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
+                                })}
+                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                              >
+                                <Play className="h-4 w-4" />
+                                Watch Solution
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -742,6 +772,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {presentStartIndex !== null && worksheetItems.length > 0 && (
         <QuestionPresenter
           theme={theme}
+          hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           startIndex={presentStartIndex}
           onClose={() => setPresentStartIndex(null)}
@@ -752,8 +783,18 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {showFocusMode && worksheetItems.length > 0 && (
         <FocusMode
           theme={theme}
+          hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           onClose={() => setShowFocusMode(false)}
+        />
+      )}
+
+      {/* Data booklet for worksheet view (Higher Apps) */}
+      {bookletYear !== null && (
+        <DataBookletModal
+          year={bookletYear}
+          theme={theme}
+          onClose={() => setBookletYear(null)}
         />
       )}
 

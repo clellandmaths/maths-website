@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, BookOpen, Paperclip } from 'lucide-react';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
@@ -9,6 +10,7 @@ import type { CourseTheme } from '@/lib/course-theme';
 
 interface QuestionPresenterProps {
   theme: CourseTheme;
+  hasDataBooklet?: boolean;
   questions: QuestionWithMetadata[];
   startIndex?: number;
   onClose: () => void;
@@ -35,10 +37,11 @@ function getTimestampSeconds(ts: string): number {
   return parseInt(ts, 10);
 }
 
-export default function QuestionPresenter({ theme, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, hasDataBooklet = false, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [showBooklet, setShowBooklet] = useState(false);
 
   const question = questions[currentIndex];
   const isFirst = currentIndex === 0;
@@ -150,14 +153,40 @@ export default function QuestionPresenter({ theme, questions, startIndex = 0, on
               );
             })()}
 
+            {/* Higher Apps data files */}
+            {question.attachments && question.attachments.length > 0 && (
+              <div className="shrink-0 flex flex-wrap justify-center gap-2 mt-4">
+                {question.attachments.map((file) => (
+                  <a
+                    key={file.url}
+                    href={file.url}
+                    download
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                  >
+                    <Paperclip className="h-4 w-4" />
+                    {file.name}
+                  </a>
+                ))}
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="shrink-0 flex flex-col sm:flex-row justify-center items-center gap-3 mt-4">
+              {hasDataBooklet && (
+                <button
+                  onClick={() => setShowBooklet(true)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                >
+                  <BookOpen className="h-5 w-5" />
+                  Data Booklet
+                </button>
+              )}
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                   showAnswer
                     ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
-                    : 'bg-cyan-600 hover:bg-cyan-500 text-white'
+                    : `${theme.bg} ${theme.bgHover} text-white`
                 }`}
               >
                 {showAnswer ? (
@@ -230,6 +259,15 @@ export default function QuestionPresenter({ theme, questions, startIndex = 0, on
         timestamp={getTimestampSeconds(question.timestamp)}
         title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
       />
+
+      {/* Data Booklet (Higher Apps) */}
+      {showBooklet && (
+        <DataBookletModal
+          year={question.year}
+          theme={theme}
+          onClose={() => setShowBooklet(false)}
+        />
+      )}
     </>
   );
 }
