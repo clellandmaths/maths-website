@@ -1,0 +1,286 @@
+/**
+ * Higher Apps of Maths - 2026 Predicted Questions
+ * Topic: 2026 Data Book Questions
+ */
+
+export const higherAppsQuestions = [
+  {
+    questionNumber: 1,
+    topics: ["Finance"],
+    subtopics: ["Pay, Tax & National Insurance", "Financial Decision Making"],
+    dataBookletSection: [1, 2],
+    dataBookletLabel: ["Deductions from Salaries", "Mortgage products and affordability"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "Callum wants to buy a flat valued at £180,000. He has saved a deposit of £45,000.",
+        questionText: "Calculate Callum's Loan-to-Value (LTV) ratio and state whether he is likely to be offered the lowest possible interest rate by a lender.",
+        marks: 2,
+        answer: "Loan amount = £135,000. LTV = (135,000 / 180,000) * 100 = 75%. Unlikely to be offered the lowest rate as 75% > 60%."
+      },
+      {
+        part: "b",
+        context: "Callum’s gross annual salary is £48,000. He pays 6% of his gross annual salary into his workplace pension scheme.",
+        questionText: "Calculate Callum’s taxable monthly income.",
+        marks: 2,
+        answer: "Pension deduction = 6% of £48,000 = £2,880. Taxable annual = £45,120. Taxable monthly = £3,760."
+      },
+      {
+        part: "c",
+        context: null,
+        questionText: "Calculate his monthly National Insurance contribution for the 2025/26 tax year.",
+        marks: 3,
+        answer: "Gross monthly salary = £48,000 / 12 = £4,000. Earnings between £1,048 and £4,189 = £4,000 - £1,048 = £2,952. 8% of £2,952 = £236.16."
+      },
+      {
+        part: "d",
+        context: "Callum applies for a mortgage that will cost him £820 per month. He also pays £210 per month towards a car loan and £50 per month to clear a credit card. Lenders use the 28/36 rule to determine affordability, which assesses housing costs and total debt against taxable monthly income.",
+        questionText: "By carrying out appropriate calculations, determine if a lender is likely to approve Callum’s mortgage application based on the 28/36 rule.",
+        marks: 4,
+        answer: "28% limit = 0.28 * 3,760 = £1,052.80. 36% limit = 0.36 * 3,760 = £1,353.60. Housing costs (£820) < £1,052.80 and Total debt (£1,080) < £1,353.60. Yes, the lender is likely to approve."
+      }
+    ]
+  },
+  {
+    questionNumber: 2,
+    topics: ["Finance"],
+    subtopics: ["Financial Decision Making"],
+    dataBookletSection: [2],
+    dataBookletLabel: ["Mortgage products and affordability"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "Sarah bought her house 5 years ago for £240,000. Her initial mortgage loan was £192,000. Over the 5-year term of her fixed-rate mortgage, she has paid off £18,000 of the mortgage capital. The house has recently been revalued at £275,000. Her current fixed-rate deal is expiring, and she wishes to remortgage.",
+        questionText: "Calculate Sarah's current Loan-to-Value (LTV) ratio based on the new valuation of her house.",
+        marks: 2,
+        answer: "Outstanding loan = £192,000 - £18,000 = £174,000. LTV = (174,000 / 275,000) * 100 = 63.27%."
+      },
+      {
+        part: "b",
+        context: null,
+        questionText: "State, with reference to the pre-release material, whether Sarah is likely to be offered the lowest possible interest rate by lenders.",
+        marks: 1,
+        answer: "No, she will not be offered the lowest rate because her LTV (63.27%) is above the 60% threshold."
+      },
+      {
+        part: "c",
+        context: "Sarah decides to use her savings to make a lump-sum payment to reduce her outstanding mortgage balance so that her LTV is exactly 60%.",
+        questionText: "Calculate the lump-sum payment Sarah must make.",
+        marks: 2,
+        answer: "Target loan for 60% = 0.60 * 275,000 = £165,000. Lump-sum = 174,000 - 165,000 = £9,000."
+      },
+      {
+        part: "d",
+        context: "Sarah secures a new mortgage. The lender quotes a nominal interest rate of 4.8% per annum, compounded monthly.",
+        questionText: "Calculate the equivalent annual effective rate of interest for her new mortgage.",
+        marks: 2,
+        answer: "Formula: (1 + 0.048/12)^12 - 1. Annual effective rate = 4.91%."
+      }
+    ]
+  },
+  {
+    questionNumber: 3,
+    topics: ["Finance"],
+    subtopics: ["Pay, Tax & National Insurance", "Financial Decision Making"],
+    dataBookletSection: [1, 2],
+    dataBookletLabel: ["Deductions from Salaries", "Mortgage products and affordability"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "Emma and Liam are applying for a joint mortgage. In the 2025/26 tax year, Emma earns a gross annual salary of £78,000. She pays 8% of her gross annual salary into her workplace pension scheme.",
+        questionText: "Calculate Emma’s taxable annual income.",
+        marks: 1,
+        answer: "£78,000 * 0.92 = £71,760."
+      },
+      {
+        part: "b",
+        context: null,
+        questionText: "Calculate Emma’s annual income tax deduction using the Scottish tax bands for 2025/26.",
+        marks: 4,
+        answer: "Total Tax = 537.13 + 2418.80 + 3395.91 + 11801.16 = £18,153.00."
+      },
+      {
+        part: "c",
+        context: null,
+        questionText: "Calculate Emma’s monthly National Insurance contribution.",
+        marks: 3,
+        answer: "Total NI = 251.28 + 46.22 = £297.50."
+      },
+      {
+        part: "d",
+        context: "Liam's taxable monthly income is £1,950. Emma and Liam are considering a mortgage that will cost them £1,650 per month. In addition to the mortgage, Emma has a monthly car finance payment of £310 and a student loan repayment of £190. Liam has a monthly credit card repayment of £85. Lenders use the 28/36 rule to determine affordability.",
+        questionText: "By calculating their combined taxable monthly income, determine if a lender is likely to approve their joint mortgage application based on both criteria of the 28/36 rule.",
+        marks: 5,
+        answer: "Combined taxable monthly = (71,760 / 12) + 1,950 = £7,930. 28% limit = £2,220.40. 36% limit = £2,854.80. Total debt = £2,235. Mortgage < 28% limit, and Total debt < 36% limit. Likely to approve."
+      }
+    ]
+  },
+  {
+    questionNumber: 4,
+    topics: ["Mathematical Modelling", "Statistics & Probability", "Excel"],
+    subtopics: ["Recurrence Relations", "Statistical Diagrams"],
+    dataBookletSection: [3],
+    dataBookletLabel: ["Honeybees"],
+    includedFiles: ["Q4 Honeybees.xlsx"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "A commercial beekeeper sets up a new modern beehive with an initial colony of 35,000 honeybees. The beekeeper models the population of the colony using a recurrence relation. They estimate that at the end of each week: The population increases by 18% due to new bees hatching. 4,500 bees die due to reaching the end of their 6-week lifespan.",
+        questionText: "Complete the ‘Honeybee population’ worksheet to estimate the number of honeybees in the colony at the end of 10 weeks.",
+        marks: 3,
+        answer: "[Spreadsheet output expected]. At week 10, the population is approximately 77,338 honeybees."
+      },
+      {
+        part: "b",
+        context: "The beekeeper investigates the long-term population of the colony.",
+        questionText: "Extend the table in your worksheet to the end of 25 weeks. Construct a graph to show what will happen to the population of the colony. Your graph must include an appropriate title and axes labels.",
+        marks: 3,
+        answer: "[Spreadsheet graph expected]. The graph should show exponential growth curving upwards."
+      },
+      {
+        part: "c",
+        context: null,
+        questionText: "The pre-release material states that commercial beekeepers will not allow a single colony to have more than 100,000 honeybees. Explain whether the beekeeper will ever need to intervene to stop the colony exceeding this limit.",
+        marks: 1,
+        answer: "The multiplier is a = 1.18. Since a > 1, there is no limit to the recurrence relation. The population will grow indefinitely, therefore the beekeeper will need to intervene to prevent it exceeding 100,000."
+      }
+    ]
+  },
+  {
+    questionNumber: 5,
+    topics: ["Mathematical Modelling"],
+    subtopics: ["Units Of Measure", "Evaluating Models"],
+    dataBookletSection: [3],
+    dataBookletLabel: ["Honeybees"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "The data booklet states that a honeybee will normally collect nectar within a 3-kilometre radius, but may travel up to 10 kilometres when hungry.",
+        questionText: "Calculate the maximum possible area of land (in square kilometres) that a hungry honeybee colony could forage.",
+        marks: 2,
+        answer: "Max radius = 10 km. Area = π * 10^2. Max Area = 314.16 km²."
+      }
+    ]
+  },
+  {
+    questionNumber: 6,
+    topics: ["Mathematical Modelling"],
+    subtopics: ["Error & Tolerances", "Units Of Measure"],
+    dataBookletSection: [3],
+    dataBookletLabel: ["Honeybees"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "A hungry honeybee leaves its hive to forage for nectar in a field. The distance from the hive to the field is 8.5 km ± 0.2 km. The flying speed of the honeybee is measured at 22 km/h ± 1.5 km/h.",
+        questionText: "State, with reference to the pre-release material, whether the honeybee is within its normal foraging radius or its hungry foraging radius.",
+        marks: 1,
+        answer: "It is within its hungry foraging radius (8.5 km is between 3 km and 10 km)."
+      },
+      {
+        part: "b",
+        context: null,
+        questionText: "Calculate the maximum and minimum time, in minutes, it will take the honeybee to fly from the hive to the field.",
+        marks: 4,
+        answer: "Max Distance = 8.7 km, Min Speed = 20.5 km/h -> Max Time = 25.46 minutes. Min Distance = 8.3 km, Max Speed = 23.5 km/h -> Min Time = 21.19 minutes."
+      },
+      {
+        part: "c",
+        context: "Once the honeybees return, they store the nectar in the internal structures of a modern beehive. A commercial beekeeper uses standard frames for the honeybees to construct their honeycomb. A fully drawn frame holds 2.4 kg ± 2% of honey.",
+        questionText: "The beekeeper extracts honey from 12 fully drawn frames. Calculate the guaranteed minimum total mass of honey the beekeeper will extract.",
+        marks: 2,
+        answer: "Minimum mass per frame = 2.4 * 0.98 = 2.352 kg. Total min = 2.352 * 12 = 28.224 kg."
+      }
+    ]
+  },
+  {
+    questionNumber: 7,
+    topics: ["Statistics & Probability", "RStudio"],
+    subtopics: ["Descriptive Statistics", "Statistical Tests"],
+    dataBookletSection: [3, 4],
+    dataBookletLabel: ["Honeybees", "Some helpful R commands"],
+    includedFiles: ["Q7_Honey.csv"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "A researcher believes that traditional beehives yield a different amount of honey compared to modern beehives. They collect data from a random sample of 30 traditional hives and 30 modern hives. The honey yield (in kg) is found to be normally distributed.",
+        questionText: "Using appropriate statistical software, generate a comparative boxplot to show the honey yield for both types of hives.",
+        marks: 2,
+        answer: "[Software generated comparative boxplot expected]."
+      },
+      {
+        part: "b",
+        context: null,
+        questionText: "State appropriate null and alternative hypotheses to determine if there is a statistically significant difference in the mean honey yield between traditional and modern hives.",
+        marks: 1,
+        answer: "H0: There is no difference in the mean honey yield between traditional and modern hives. Ha: There is a difference in the mean honey yield between traditional and modern hives."
+      },
+      {
+        part: "c",
+        context: null,
+        questionText: "Perform an appropriate statistical test using software and state the p-value.",
+        marks: 2,
+        answer: "Two-sample t-test. [p-value < 2.2 * 10^-16 (or p ≈ 0)]."
+      },
+      {
+        part: "d",
+        context: null,
+        questionText: "Interpret the p-value and the result of your hypothesis test in the context of the researcher's claim.",
+        marks: 2,
+        answer: "Since p < 0.05, reject H0. There is a statistically significant difference in the mean honey yield between traditional and modern hives."
+      }
+    ]
+  },
+  {
+    questionNumber: 8,
+    topics: ["Statistics & Probability", "RStudio"],
+    subtopics: ["Descriptive Statistics", "Statistical Tests"],
+    dataBookletSection: [3, 4],
+    dataBookletLabel: ["Honeybees", "Some helpful R commands"],
+    videoId: "PLACEHOLDER_VIDEO_ID",
+    timestamp: "PLACEHOLDER_TIMESTAMP",
+    parts: [
+      {
+        part: "a",
+        context: "The data booklet states that commercial beekeepers will not allow a single colony to exceed 100,000 honeybees. A researcher believes there is a difference in the proportion of traditional beehives that exceed this 100,000 limit compared to modern beehives. They take a random sample of 85 traditional hives and find that 14 have exceeded the limit. They take a random sample of 110 modern hives and find that 8 have exceeded the limit.",
+        questionText: "State the name of the statistical test that should be used to determine if there is a statistically significant difference between the two proportions.",
+        marks: 1,
+        answer: "A 2-sample test for equality of proportions (or two-proportion z-test)."
+      },
+      {
+        part: "b",
+        context: null,
+        questionText: "Using the 'helpful R commands' from your data booklet, write down the exact code the researcher would type into R Studio to perform this test.",
+        marks: 1,
+        answer: "prop.test(x = c(14, 8), n = c(85, 110))"
+      },
+      {
+        part: "c",
+        context: null,
+        questionText: "State the appropriate null and alternative hypotheses for this test.",
+        marks: 2,
+        answer: "H0: There is no difference in the proportion of traditional and modern hives that exceed the 100,000 honeybee limit. Ha: There is a difference in the proportion of traditional and modern hives that exceed the 100,000 honeybee limit."
+      },
+      {
+        part: "d",
+        context: "The researcher performs the test using statistical software and generates a p-value of 0.038.",
+        questionText: "Interpret the p-value and the result of the hypothesis test in the context of the researcher's belief.",
+        marks: 2,
+        answer: "Since the p-value (0.038) is less than 0.05, we reject the null hypothesis. This suggests there is a statistically significant difference in the proportion of traditional and modern hives that exceed the 100,000 honeybee limit, supporting the researcher's belief."
+      }
+    ]
+  }
+];

@@ -172,13 +172,15 @@ export default function QuestionPresenter({ theme, questions, startIndex = 0, on
                   </>
                 )}
               </button>
-              <button
-                onClick={() => setShowVideo(true)}
-                className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
-              >
-                <Play className="h-5 w-5" />
-                Watch Solution
-              </button>
+              {question.videoId && (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
+                >
+                  <Play className="h-5 w-5" />
+                  Watch Solution
+                </button>
+              )}
             </div>
 
             {/* Answer Section */}

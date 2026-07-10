@@ -167,17 +167,19 @@ export default function FocusMode({ theme, questions, onClose }: FocusModeProps)
                     <><Eye className="h-4 w-4" /> Show Answer</>
                   )}
                 </button>
-                <button
-                  onClick={() => setActiveVideo({
-                    videoId: q.videoId,
-                    timestamp: getTimestampSeconds(q.timestamp),
-                    title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
-                  })}
-                  className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
-                >
-                  <Play className="h-4 w-4" />
-                  Watch Solution
-                </button>
+                {q.videoId && (
+                  <button
+                    onClick={() => setActiveVideo({
+                      videoId: q.videoId,
+                      timestamp: getTimestampSeconds(q.timestamp),
+                      title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
+                    })}
+                    className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                  >
+                    <Play className="h-4 w-4" />
+                    Watch Solution
+                  </button>
+                )}
                 <button
                   onClick={() => toggleDone(index)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${

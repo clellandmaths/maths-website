@@ -12,28 +12,64 @@ import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
 import QRCodeImage from '@/components/QRCodeImage';
 import { WorksheetProvider, useWorksheet } from '@/lib/worksheet-context';
-import { getAllN5Questions, getAllHigherQuestions, filterQuestions, QuestionWithMetadata } from '@/lib/data-loader';
+import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, filterQuestions, QuestionWithMetadata } from '@/lib/data-loader';
 import { n5TopicCategories, n5Topics } from '@/lib/n5-topics';
 import { higherTopicCategories, higherTopics } from '@/lib/higher-topics';
-import { getAvailableN5Years, getAvailableHigherYears } from '@/lib/data-loader';
+import { ahTopicCategories, ahTopics } from '@/lib/ah-topics';
+import { higherAppsTopicCategories, higherAppsTopics } from '@/lib/higher-apps-topics';
+import { n5AppsTopicCategories, n5AppsTopics } from '@/lib/n5-apps-topics';
+import { getAvailableN5Years, getAvailableHigherYears, getAvailableAHYears, getAvailableHigherAppsYears, getAvailableN5AppsYears } from '@/lib/data-loader';
 import { getCourseTheme } from '@/lib/course-theme';
 
-type Course = 'n5' | 'higher';
+type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
+
+const COURSE_IDS: Course[] = ['n5', 'higher', 'ah', 'higher-apps', 'n5-apps'];
 
 const courseConfig = {
   n5: {
     label: 'National 5',
     topicCategories: n5TopicCategories,
     topics: n5Topics,
-    availableYears: getAvailableN5Years(),
+    availableYears: getAvailableN5Years() as (number | string)[],
     loadQuestions: getAllN5Questions,
+    singlePaper: false,
+    hasDataBooklet: false,
   },
   higher: {
     label: 'Higher',
     topicCategories: higherTopicCategories,
     topics: higherTopics,
-    availableYears: getAvailableHigherYears(),
+    availableYears: getAvailableHigherYears() as (number | string)[],
     loadQuestions: getAllHigherQuestions,
+    singlePaper: false,
+    hasDataBooklet: false,
+  },
+  ah: {
+    label: 'Advanced Higher',
+    topicCategories: ahTopicCategories,
+    topics: ahTopics,
+    availableYears: getAvailableAHYears() as (number | string)[],
+    loadQuestions: getAllAHQuestions,
+    singlePaper: false,
+    hasDataBooklet: false,
+  },
+  'higher-apps': {
+    label: 'Higher Applications',
+    topicCategories: higherAppsTopicCategories,
+    topics: higherAppsTopics,
+    availableYears: getAvailableHigherAppsYears(),
+    loadQuestions: getAllHigherAppsQuestions,
+    singlePaper: true, // one paper per year — hide the paper filter
+    hasDataBooklet: true,
+  },
+  'n5-apps': {
+    label: 'N5 Applications',
+    topicCategories: n5AppsTopicCategories,
+    topics: n5AppsTopics,
+    availableYears: getAvailableN5AppsYears() as (number | string)[],
+    loadQuestions: getAllN5AppsQuestions,
+    singlePaper: false,
+    hasDataBooklet: false,
   },
 } as const;
 
@@ -53,7 +89,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
-  const [selectedYears, setSelectedYears] = useState<number[]>([]);
+  const [selectedYears, setSelectedYears] = useState<(number | string)[]>([]);
   const [selectedPapers, setSelectedPapers] = useState<number[]>([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showWorksheet, setShowWorksheet] = useState(false);
@@ -111,7 +147,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     setSelectedPapers([]);
   };
 
-  const removeYear = (year: number) => {
+  const removeYear = (year: number | string) => {
     setSelectedYears((prev) => prev.filter((y) => y !== year));
   };
 
@@ -138,6 +174,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   // Shared FilterSidebar props
   const filterSidebarProps = {
     theme,
+    showPaperFilter: !config.singlePaper,
     selectedSubtopics,
     onSubtopicsChange: setSelectedSubtopics,
     selectedYears,
@@ -369,6 +406,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <QuestionCard
                       key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
                       theme={theme}
+                      hasDataBooklet={config.hasDataBooklet}
                       question={q}
                       year={q.year}
                       paperNumber={q.paperNumber}
@@ -560,7 +598,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
-                          {showQRCodes && (
+                          {showQRCodes && q.videoId && (
                             <QRCodeImage
                               url={`https://www.youtube.com/watch?v=${q.videoId}&t=${getTimestampSeconds(q.timestamp)}`}
                               size={64}
@@ -593,17 +631,19 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
                           </button>
-                          <button
-                            onClick={() => setActiveVideo({
-                              videoId: q.videoId,
-                              timestamp: getTimestampSeconds(q.timestamp),
-                              title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
-                            })}
-                            className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
-                          >
-                            <Play className="h-4 w-4" />
-                            Watch Solution
-                          </button>
+                          {q.videoId && (
+                            <button
+                              onClick={() => setActiveVideo({
+                                videoId: q.videoId,
+                                timestamp: getTimestampSeconds(q.timestamp),
+                                title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
+                              })}
+                              className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                            >
+                              <Play className="h-4 w-4" />
+                              Watch Solution
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -741,12 +781,15 @@ const explorerFeatures = [
 const courseCards: { id: Course; name: string; subtitle: string }[] = [
   { id: 'n5', name: 'National 5', subtitle: '10 Past Papers · 200+ Questions' },
   { id: 'higher', name: 'Higher', subtitle: '9 Past Papers · 170+ Questions' },
+  { id: 'ah', name: 'Advanced Higher', subtitle: '14 Past Papers · 230+ Questions' },
+  { id: 'n5-apps', name: 'N5 Applications', subtitle: '14 Past Papers · 190+ Questions' },
+  { id: 'higher-apps', name: 'Higher Applications', subtitle: '5 Past Papers · Data Booklets & Files' },
 ];
 
 function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="text-center max-w-3xl w-full">
+      <div className="text-center max-w-5xl w-full">
         <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
         <h1 className="font-display text-3xl font-bold mb-3">Topic Explorer</h1>
         <p className="text-slate-400 mb-10 text-lg">
@@ -754,7 +797,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
           maths worksheet with answers, QR-coded video solutions and PDF export —
           free for students and teachers. Choose your course to start.
         </p>
-        <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {courseCards.map((course) => {
             const cardTheme = getCourseTheme(course.id);
             return (
@@ -794,7 +837,7 @@ export default function ExplorerPage() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(() => {
     if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('preferredCourse');
-    return saved === 'n5' || saved === 'higher' ? saved : null;
+    return COURSE_IDS.includes(saved as Course) ? (saved as Course) : null;
   });
 
   const handleSelectCourse = (course: Course) => {

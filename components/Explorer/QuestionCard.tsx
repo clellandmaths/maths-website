@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Plus, Check } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen } from 'lucide-react';
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import type { CourseTheme } from '@/lib/course-theme';
 
 
@@ -15,12 +16,16 @@ export interface Question {
   videoId: string;
   timestamp: string;
   topics: string[];
+  subtopics?: string[];
+  attachments?: { name: string; url: string; type: string }[];
 }
 
 interface QuestionCardProps {
   theme: CourseTheme;
+  // Higher Apps — show the year's data booklet alongside the question
+  hasDataBooklet?: boolean;
   question: Question;
-  year: number;
+  year: number | string;
   paperNumber: number;
   questionIndex: number;
 }
@@ -28,12 +33,14 @@ interface QuestionCardProps {
 
 export default function QuestionCard({
   theme,
+  hasDataBooklet = false,
   question,
   year,
   paperNumber,
   questionIndex,
 }: QuestionCardProps) {
   const [showAnswer, setShowAnswer] = useState(false);
+  const [showBooklet, setShowBooklet] = useState(false);
   const { addItem, removeItem, isInWorksheet } = useWorksheet();
 
   const fullQuestion: QuestionWithMetadata = {
@@ -44,7 +51,11 @@ export default function QuestionCard({
   };
 
   const inWorksheet = isInWorksheet(fullQuestion);
-  const mainTopics = [...new Set(question.topics.map((t) => getMainTopic(t)).filter(Boolean))];
+  // AH/Apps courses carry main topics directly; N5/Higher tag subtopic
+  // strings, so the main topic is derived
+  const mainTopics = question.subtopics
+    ? [...new Set(question.topics)]
+    : [...new Set(question.topics.map((t) => getMainTopic(t)).filter(Boolean))];
 
   const handleToggleWorksheet = () => {
     if (inWorksheet) {
@@ -106,8 +117,25 @@ export default function QuestionCard({
           className="text-slate-300 mb-4 question-content question-card text-sm leading-relaxed"
         />
 
+        {/* Attachments — Higher Apps data files (CSV/XLSX/DOCX) */}
+        {question.attachments && question.attachments.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {question.attachments.map((file) => (
+              <a
+                key={file.url}
+                href={file.url}
+                download
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+              >
+                <Paperclip className="h-3 w-3" />
+                {file.name}
+              </a>
+            ))}
+          </div>
+        )}
+
         {/* Answer Section */}
-        <div className="pt-3 mt-3">
+        <div className="pt-3 mt-3 flex items-start justify-between gap-3">
           <button
             onClick={() => setShowAnswer(!showAnswer)}
             className="flex items-center gap-2 text-slate-400 hover:text-slate-300 text-sm font-medium mb-2"
@@ -124,16 +152,29 @@ export default function QuestionCard({
               </>
             )}
           </button>
-
-          {showAnswer && (
-            <MathRenderer
-              html={question.answer}
-              className="bg-slate-800/50 rounded-lg p-3 text-slate-300 answer-content"
-            />
+          {hasDataBooklet && (
+            <button
+              onClick={() => setShowBooklet(true)}
+              className={`shrink-0 flex items-center gap-1.5 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}
+            >
+              <BookOpen className="h-4 w-4" />
+              Data Booklet
+            </button>
           )}
         </div>
 
+        {showAnswer && (
+          <MathRenderer
+            html={question.answer}
+            className="bg-slate-800/50 rounded-lg p-3 text-slate-300 answer-content"
+          />
+        )}
+
       </div>
+
+      {showBooklet && (
+        <DataBookletModal year={year} theme={theme} onClose={() => setShowBooklet(false)} />
+      )}
     </>
   );
 }

@@ -9,14 +9,16 @@ interface FilterSidebarProps {
   theme: CourseTheme;
   selectedSubtopics: string[];
   onSubtopicsChange: (subtopics: string[]) => void;
-  selectedYears: number[];
-  onYearsChange: (years: number[]) => void;
+  selectedYears: (number | string)[];
+  onYearsChange: (years: (number | string)[]) => void;
   selectedPapers: number[];
   onPapersChange: (papers: number[]) => void;
   questionCount: number;
   topicCategories: TopicCategory[];
   topics: Record<string, string[]>;
-  availableYears: number[];
+  availableYears: (number | string)[];
+  // Higher Apps has one paper per year — no paper filter
+  showPaperFilter?: boolean;
 }
 
 export default function FilterSidebar({
@@ -31,6 +33,7 @@ export default function FilterSidebar({
   topicCategories,
   topics,
   availableYears,
+  showPaperFilter = true,
 }: FilterSidebarProps) {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
   const [topicSearch, setTopicSearch] = useState('');
@@ -67,7 +70,7 @@ export default function FilterSidebar({
     }
   };
 
-  const toggleYear = (year: number) => {
+  const toggleYear = (year: number | string) => {
     if (selectedYears.includes(year)) {
       onYearsChange(selectedYears.filter((y) => y !== year));
     } else {
@@ -142,7 +145,8 @@ export default function FilterSidebar({
         </div>
       </div>
 
-      {/* Paper Filter */}
+      {/* Paper Filter — hidden for single-paper courses (Higher Apps) */}
+      {showPaperFilter && (
       <div className="mb-6">
         <h3 className="text-sm font-medium text-slate-400 mb-3 uppercase tracking-wide">
           Paper
@@ -172,6 +176,7 @@ export default function FilterSidebar({
           </label>
         </div>
       </div>
+      )}
 
       {/* Topic Filter */}
       <div className="mb-6">
