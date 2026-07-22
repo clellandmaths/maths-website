@@ -86,7 +86,7 @@ export const national5AppsData: Section[] = [
                 <BlockMath math="14.2 \times 3 = 42.6" />
                 <p><strong>Step B (Multiply by 100):</strong></p>
                 <BlockMath math="42.6 \times 100 = 4260\text{ grams}" />
-                <p><strong>Estimation Check:</strong> <InlineMath math="15\text{ grams} \times 300 = 4500\texts grams}" />, so 4260 grams is a highly sensible answer.</p>
+                <p><strong>Estimation Check:</strong> <InlineMath math="15\text{ grams} \times 300 = 4500\text{ grams}" />, so 4260 grams is a highly sensible answer.</p>
               </div>
             )
           },
@@ -189,7 +189,7 @@ export const national5AppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Convert both mixed numbers into top-heavy fractions.</p>
                 <BlockMath math="5 \frac{1}{4} = \frac{(5 \times 4) + 1}{4} = \frac{21}{4}" />
-                <BlockMath math="2 \frac{2}{3} = \fra\{(2 \times 3) + 2}{3} = \frac{8}{3}" />
+                <BlockMath math="2 \frac{2}{3} = \frac{(2 \times 3) + 2}{3} = \frac{8}{3}" />
                 <p><strong>Step 2:</strong> Find a common denominator (12) and subtract the cut piece from the total.</p>
                 <BlockMath math="\frac{21}{4} - \frac{8}{3} = \frac{63}{12} - \frac{32}{12} = \frac{31}{12}" />
                 <p><strong>Step 3:</strong> Convert the top-heavy fraction back into a mixed number (how many 12s go into 31?).</p>
@@ -299,7 +299,7 @@ export const national5AppsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Write the quantities as a fraction.</p>
-                <BlockMath math="\frac{144};320}" />
+                <BlockMath math="\frac{144}{320}" />
                 <p><strong>Step 2:</strong> Convert to a decimal by dividing, and multiply by 100 to find the percentage.</p>
                 <BlockMath math="(144 \div 320) \times 100 = 45\%" />
               </div>
@@ -335,8 +335,8 @@ export const national5AppsData: Section[] = [
             <h4 className="text-white font-semibold">1. Finding the Decimal Multiplier</h4>
             <p>Before doing any calculations, you must convert the percentage change into a decimal multiplier.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
-              <li><strong>Appreciation (Increase):</strong> Add the percentage to 100%, then divide by 100. <br/><em>Example:</em> A 4% increase <InlineMath math="\rightarrow 100%. + 4%. = 104%. \rightarrow 1.04" /> multiplier.</li>
-              <li><strong>Depreciation (Decrease):</strong> Subtract the percentage from 100%, then divide by 100. <br/><em>Example:</em> A 15% decrease <InlineMath math="\rightarrow 100%. - 15%. = 85%. \rightarrow 0.85" /> multiplier.</li>
+              <li><strong>Appreciation (Increase):</strong> Add the percentage to 100%, then divide by 100. <br/><em>Example:</em> A 4% increase <InlineMath math="\rightarrow 100\%. + 4\%. = 104\%. \rightarrow 1.04" /> multiplier.</li>
+              <li><strong>Depreciation (Decrease):</strong> Subtract the percentage from 100%, then divide by 100. <br/><em>Example:</em> A 15% decrease <InlineMath math="\rightarrow 100\%. - 15\%. = 85\%. \rightarrow 0.85" /> multiplier.</li>
             </ul>
 
             <h4 className="text-white font-semibold">2. The Compound Formula</h4>
@@ -394,7 +394,7 @@ export const national5AppsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Find the multiplier for the 6.5% decrease (Year 1).</p>
-                <BlockMath math="100\%. - 6.5\%. = 93.5\t%. = 0.935" />
+                <BlockMath math="100\%. - 6.5\%. = 93.5\%. = 0.935" />
                 <p><strong>Step 2:</strong> Find the multiplier for the 4.8% increase (Years 2 & 3).</p>
                 <BlockMath math="100\%. + 4.8\%. = 104.8\%. = 1.048" />
                 <p><strong>Step 3:</strong> Chain the calculation together. Note that the second multiplier needs a power of 2 because it lasts for two years.</p>
@@ -822,14 +822,14 @@ export const national5AppsData: Section[] = [
             id: "deductions-ex2",
             question: (
               <div className="space-y-2">
-                <p>Chloe has an annual salary of £34,800. She pays 6.5% of her annual salary into her workplace pension. Her annual income tax is £4,120.50. Her annual National Insurance payment is £2,267.60. She is paid in 52 weekly payments.</p>
+                <p>Chloe has an annual salary of £34,800. She pays 6.5% of her annual salary into her workplace pension. Her annual income tax is £4,120.50. Her annual National Insurance payment is £2,667.60. She is paid in 52 weekly payments.</p>
                 <p>Calculate Chloe's weekly net pay. (4 marks)</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Calculate her annual pension contribution based on her gross salary.</p>
-                <BlockMath math="6.5\text{% of } \pounds34,800 = \pounds34,800 \div 100 \times 6.5 = \pounds2,262.00" />
+                <BlockMath math="6.5\text{\% of } \pounds34,800 = \pounds34,800 \div 100 \times 6.5 = \pounds2,262.00" />
                 <p><strong>Step 2:</strong> Calculate her total annual deductions by adding the pension, tax, and National Insurance together.</p>
                 <BlockMath math="\pounds2,262.00 + \pounds4,120.50 + \pounds2,667.60 = \pounds9,050.10" />
                 <p><strong>Step 3:</strong> Subtract the total deductions from her gross salary to find her annual net pay.</p>
@@ -1008,7 +1008,7 @@ export const national5AppsData: Section[] = [
                   <li>£1 = 185 Japanese Yen (JPY)</li>
                   <li>£1 = 1.90 Australian Dollars (AUD)</li>
                 </ul>
-                <p>David converts £850 into Japanese Yen. He stays in Japan for 5 days, spending exactly 22,000 JTY each day. He then converts his remaining JTY into Australian Dollars. Calculate how many Australian Dollars he receives. (4 marks)</p>
+                <p>David converts £850 into Japanese Yen. He stays in Japan for 5 days, spending exactly 22,000 JPY each day. He then converts his remaining JPY into Australian Dollars. Calculate how many Australian Dollars he receives. (4 marks)</p>
               </div>
             ),
             solution: (
@@ -1017,7 +1017,7 @@ export const national5AppsData: Section[] = [
                 <BlockMath math="\pounds850 \times 185 = 157,250 \text{ JPY}" />
                 <p><strong>Step 2:</strong> Calculate his total spending and subtract it to find his remaining JPY.</p>
                 <BlockMath math="5 \text{ days} \times 22,000 = 110,000 \text{ JPY spent}" />
-                <BlockMath math="157,250 - 110,000 = 47,250 \text{ JTY remaining}" />
+                <BlockMath math="157,250 - 110,000 = 47,250 \text{ JPY remaining}" />
                 <p><strong>Step 3:</strong> Convert the remaining JPY back into Pounds (Divide).</p>
                 <BlockMath math="47,250 \div 185 = \pounds255.405405... \text{ (Keep unrounded!)}" />
                 <p><strong>Step 4:</strong> Convert the Pounds into AUD (Multiply).</p>
@@ -1064,7 +1064,7 @@ export const national5AppsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Calculate his total earnings in NOK over the 3 months.</p>
-                <BlockMath math="42,500 + 39,800 + 45,200 - 127,500 \text{ NOK}" />
+                <BlockMath math="42,500 + 39,800 + 45,200 = 127,500 \text{ NOK}" />
                 <p><strong>Step 2:</strong> Calculate his mean earnings in NOK.</p>
                 <BlockMath math="127,500 \div 3 = 42,500 \text{ NOK}" />
                 <p><strong>Step 3:</strong> Convert his mean NOK earnings into Pounds (Divide).</p>
@@ -1103,7 +1103,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <h4 className="text-white font-semibold">4. Annual Percentage Rate (APR) & Credit</h4>
-            <p>APR is a standardised calculation used to compare different loans and credit cards. Because it includes both the interest rate and any mandatory fees, looking for dhethe lowest APRs is the most accurate way to find the true, overall cost of borrowing.</p>
+            <p>APR is a standardised calculation used to compare different loans and credit cards. Because it includes both the interest rate and any mandatory fees, looking for the lowest APRs is the most accurate way to find the true, overall cost of borrowing.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>

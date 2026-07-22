@@ -475,9 +475,6 @@ export const national5MathsData: Section[] = [
               A function is a mathematical relationship often denoted using functional notation like <InlineMath math="f(x)" /> or <InlineMath math="g(x)" />.
             </p>
             <p>
-              Functional notation serves as an important alternative mathematical language to Leibniz's notation (using y).
-            </p>
-            <p>
               You must be able to substitute values into a function to evaluate it, and determine a missing variable when a function's overall output is given.
             </p>
           </div>
@@ -704,7 +701,7 @@ export const national5MathsData: Section[] = [
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Find a common denominator (ab) and scale the numerators: <InlineMath math="\frac{4a}{12} + \frac{3b}{12}" />.</p>
+                <p>Step 1: Find a common denominator (12) and scale the numerators: <InlineMath math="\frac{4a}{12} + \frac{3b}{12}" />.</p>
                 <p><strong>Answer:</strong> <InlineMath math="\frac{4a + 3b}{12}" />.</p>
               </div>
             )
@@ -1270,7 +1267,7 @@ export const national5MathsData: Section[] = [
             </div>
             <div>
               <h4 className="text-white font-semibold">Magnitude</h4>
-              <p>The magnitude (length) of a vector, denoted as |a|, is calculated using Pythagoras' theorem. For a 3D vector <InlineMath math="\begin{pmatrix} x \ y \ z \end{pmatrix}" />, the magnitude is <InlineMath math="\sqrt{x^2 + y^2 + z^2}" />.</p>
+              <p>The magnitude (length) of a vector, denoted as |a|, is calculated using Pythagoras' theorem. For a 3D vector <InlineMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix}" />, the magnitude is <InlineMath math="\sqrt{x^2 + y^2 + z^2}" />.</p>
             </div>
           </div>
         ),
@@ -1280,14 +1277,14 @@ export const national5MathsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p><strong>Adding Vector Components</strong></p>
-                <p>Given <InlineMath math="u = \begin{pmatrix} 4 \ -2 \ 7 \end{pmatrix}" /> and <InlineMath math="v = \begin{pmatrix} -1 \ 5 \ 3 \end{pmatrix}" />, calculate the resultant vector 2u + v.</p>
+                <p>Given <InlineMath math="u = \begin{pmatrix} 4 \\ -2 \\ 7 \end{pmatrix}" /> and <InlineMath math="v = \begin{pmatrix} -1 \\ 5 \\ 3 \end{pmatrix}" />, calculate the resultant vector 2u + v.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Scalar multiply u by 2: <InlineMath math="\begin{pmatrix} 8 \ -4 \ 14 \end{pmatrix}" />.</p>
-                <p>Step 2: Add the components to v: <InlineMath math="\begin{pmatrix} 8 + (-1) \ -4 + 5 \ 14 + 3 \end{pmatrix}" />.</p>
-                <p><strong>Answer:</strong> <InlineMath math="\begin{pmatrix} 7 \ 1 \ 17 \end{pmatrix}" />.</p>
+                <p>Step 1: Scalar multiply u by 2: <InlineMath math="\begin{pmatrix} 8 \\ -4 \\ 14 \end{pmatrix}" />.</p>
+                <p>Step 2: Add the components to v: <InlineMath math="\begin{pmatrix} 8 + (-1) \\ -4 + 5 \\ 14 + 3 \end{pmatrix}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="\begin{pmatrix} 7 \\ 1 \\ 17 \end{pmatrix}" />.</p>
               </div>
             )
           },
@@ -1296,7 +1293,7 @@ export const national5MathsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p><strong>Calculating Magnitude</strong></p>
-                <p>Find the magnitude of vector <InlineMath math="p = \begin{pmatrix} 2 \ -3 \ 6 \end{pmatrix}" />.</p>
+                <p>Find the magnitude of vector <InlineMath math="p = \begin{pmatrix} 2 \\ -3 \\ 6 \end{pmatrix}" />.</p>
               </div>
             ),
             solution: (
@@ -1591,8 +1588,8 @@ export const national5MathsData: Section[] = [
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Find the internal angle. The interior angle between the two paths is <InlineMath math="90^\circ" />.</p>
-                <p>Step 2: Since it forms a right-angled triangle, use Pythagoras:</p>
+                <p>Step 1: Find the interior angle of the triangle at the turning point. The back-bearing of the first leg is <InlineMath math="060^\circ + 180^\circ = 240^\circ" />, and the second leg is on a bearing of <InlineMath math="150^\circ" />. So the interior angle is <InlineMath math="240^\circ - 150^\circ = 90^\circ" />.</p>
+                <p>Step 2: Since the paths meet at <InlineMath math="90^\circ" />, this forms a right-angled triangle, so use Pythagoras:</p>
                 <BlockMath math="d^2 = 5^2 + 8^2 = 25 + 64 = 89" />
                 <p>Answer: <InlineMath math="d = \sqrt{89} \approx 9.4\text{ km}" />.</p>
               </div>
