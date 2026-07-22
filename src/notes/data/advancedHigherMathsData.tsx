@@ -892,5 +892,249 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "number-theory",
+    title: "Number Theory",
+    topics: [
+      {
+        id: "euclids-algorithm",
+        title: "1. Euclid's Algorithm",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>Euclid's algorithm</strong> finds the greatest common divisor (gcd) of two positive integers by repeated division. Write each step as <InlineMath math="a = qb + r" /> with <InlineMath math="0 \leq r < b" />, then replace <InlineMath math="(a, b)" /> with <InlineMath math="(b, r)" /> and repeat until the remainder is <InlineMath math="0" />. The last non-zero remainder is the gcd.</p>
+            <p>The gcd can then be written as a <strong>linear combination</strong> of the two numbers, <InlineMath math="\gcd(a,b) = ax + by" /> for integers <InlineMath math="x, y" />, by <strong>back-substituting</strong> through the equations.</p>
+            <p><strong>The Golden Rule:</strong> keep dividing until the remainder is <InlineMath math="0" />; the gcd is the <em>last non-zero</em> remainder. For the linear combination, work backwards through the algorithm's equations.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Reading the wrong remainder:</strong> the gcd is the last non-zero remainder, not the final <InlineMath math="0" />.</li>
+                <li><strong>Back-substitution slips:</strong> substitute one equation at a time and keep the two original numbers visible so the coefficients stay correct.</li>
+                <li><strong>Division form:</strong> each line must be <InlineMath math="a = qb + r" /> with <InlineMath math="0 \leq r < b" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "euclid-ex1",
+            question: <p>Use Euclid's algorithm to find <InlineMath math="\gcd(1071, 462)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Apply repeated division:</p>
+                <BlockMath math="\begin{aligned} 1071 &= 2 \times 462 + 147 \\ 462 &= 3 \times 147 + 21 \\ 147 &= 7 \times 21 + 0 \end{aligned}" />
+                <p><strong>Step 2:</strong> The last non-zero remainder is <InlineMath math="21" />, so <InlineMath math="\gcd(1071, 462) = 21" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "euclid-ex2",
+            question: <p>Express <InlineMath math="\gcd(1071, 462) = 21" /> as a linear combination of <InlineMath math="1071" /> and <InlineMath math="462" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Rearrange the algorithm's equations to make the remainders the subject:</p>
+                <BlockMath math="21 = 462 - 3 \times 147 \qquad 147 = 1071 - 2 \times 462" />
+                <p><strong>Step 2:</strong> Substitute the expression for <InlineMath math="147" /> and collect:</p>
+                <BlockMath math="21 = 462 - 3(1071 - 2 \times 462) = 7 \times 462 - 3 \times 1071" />
+                <p><strong>Step 3:</strong> So <InlineMath math="21 = (-3)(1071) + (7)(462)" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "number-bases",
+        title: "2. Number Bases",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A number written in <strong>base <InlineMath math="b" /></strong> uses digits <InlineMath math="0" /> to <InlineMath math="b-1" />, with place values that are powers of <InlineMath math="b" />. To convert <strong>to base 10</strong>, multiply each digit by its place value and add. To convert <strong>from base 10</strong>, divide repeatedly by <InlineMath math="b" /> and read the remainders from the bottom up.</p>
+            <p><strong>The Golden Rule:</strong> converting <em>to</em> base 10 uses place values (powers of the base); converting <em>from</em> base 10 uses repeated division, reading the remainders in reverse.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Remainder order:</strong> when dividing down, the base-<InlineMath math="b" /> digits are read from the <em>last</em> remainder to the first.</li>
+                <li><strong>Place values:</strong> the rightmost digit has place value <InlineMath math="b^0 = 1" />, then <InlineMath math="b^1, b^2, \dots" /> moving left.</li>
+                <li><strong>Digit range:</strong> every digit must be less than the base.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "bases-ex1",
+            question: <p>Convert <InlineMath math="2143_{5}" /> (base 5) to base 10.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write each digit against its place value (powers of 5):</p>
+                <BlockMath math="2143_{5} = 2(5^3) + 1(5^2) + 4(5^1) + 3(5^0)" />
+                <p><strong>Step 2:</strong> Evaluate and add:</p>
+                <BlockMath math="= 250 + 25 + 20 + 3 = 298" />
+              </div>
+            )
+          },
+          {
+            id: "bases-ex2",
+            question: <p>Convert <InlineMath math="100" /> (base 10) to base 7.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Divide repeatedly by 7, recording each remainder:</p>
+                <BlockMath math="\begin{aligned} 100 \div 7 &= 14 \ \text{r } 2 \\ 14 \div 7 &= 2 \ \text{r } 0 \\ 2 \div 7 &= 0 \ \text{r } 2 \end{aligned}" />
+                <p><strong>Step 2:</strong> Read the remainders from the bottom up:</p>
+                <BlockMath math="100 = 202_{7}" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "methods-of-proof",
+    title: "Methods of Proof",
+    topics: [
+      {
+        id: "direct-proof-counterexample",
+        title: "1. Direct Proof & Counterexample",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A <strong>direct proof</strong> starts from the definitions and assumptions and deduces the conclusion through valid steps. The key is translating words into algebra: an even number is <InlineMath math="2k" />, an odd number is <InlineMath math="2k+1" />, for some integer <InlineMath math="k" />.</p>
+            <p>To <strong>disprove</strong> a statement claimed to hold for <em>all</em> cases, a single <strong>counterexample</strong> is enough.</p>
+            <p><strong>The Golden Rule:</strong> for a direct proof, turn the words into general algebra and manipulate to the required form. To disprove a &ldquo;for all&rdquo; claim, you need only one case that fails.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Testing numbers instead of proving:</strong> checking a few cases does not prove a general statement — use a general <InlineMath math="2k+1" />, etc.</li>
+                <li><strong>Invalid counterexample:</strong> a counterexample must satisfy the hypothesis but break the conclusion.</li>
+                <li><strong>Not reaching the required form:</strong> finish by showing the result is exactly what was asked (e.g. of the form <InlineMath math="2 \times \text{integer}" />).</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "direct-ex1",
+            question: <p>Prove that the sum of any two odd numbers is even.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Let the two odd numbers be <InlineMath math="2m+1" /> and <InlineMath math="2n+1" />, where <InlineMath math="m, n" /> are integers.</p>
+                <p><strong>Step 2:</strong> Add them:</p>
+                <BlockMath math="(2m+1) + (2n+1) = 2m + 2n + 2 = 2(m + n + 1)" />
+                <p><strong>Step 3:</strong> Since <InlineMath math="m + n + 1" /> is an integer, the sum is a multiple of <InlineMath math="2" />, and is therefore even, as required.</p>
+              </div>
+            )
+          },
+          {
+            id: "direct-ex2",
+            question: <p>Disprove the statement: &ldquo;<InlineMath math="n^2 - n + 41" /> is prime for every positive integer <InlineMath math="n" />.&rdquo;</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Look for a value of <InlineMath math="n" /> that makes the expression factorise. Try <InlineMath math="n = 41" />:</p>
+                <BlockMath math="41^2 - 41 + 41 = 41^2 = 1681" />
+                <p><strong>Step 2:</strong> But <InlineMath math="1681 = 41 \times 41" />, which is not prime. So <InlineMath math="n = 41" /> is a counterexample, and the statement is false.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "proof-by-contrapositive",
+        title: "2. Proof by Contrapositive",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>To prove &ldquo;if <InlineMath math="P" /> then <InlineMath math="Q" />&rdquo;, it is sometimes easier to prove the logically equivalent <strong>contrapositive</strong>: &ldquo;if not <InlineMath math="Q" /> then not <InlineMath math="P" />&rdquo;. The two statements are always true or false together.</p>
+            <BlockMath math="(P \Rightarrow Q) \quad\equiv\quad (\lnot Q \Rightarrow \lnot P)" />
+            <p><strong>The Golden Rule:</strong> the contrapositive negates <em>and</em> swaps the two parts. It is <em>not</em> the converse &ldquo;if <InlineMath math="Q" /> then <InlineMath math="P" />&rdquo;, which is not equivalent.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Contrapositive vs converse:</strong> the converse <InlineMath math="Q \Rightarrow P" /> is a different statement — do not prove that instead.</li>
+                <li><strong>Negating carelessly:</strong> the negation of &ldquo;even&rdquo; is &ldquo;odd&rdquo;; make sure the negations are exact.</li>
+                <li><strong>Stopping early:</strong> once the contrapositive is proved, state that the original statement therefore holds.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "contrapositive-ex1",
+            question: <p>Prove, by contrapositive, that for any integer <InlineMath math="n" />, if <InlineMath math="n^2" /> is even then <InlineMath math="n" /> is even.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The contrapositive is: &ldquo;if <InlineMath math="n" /> is odd then <InlineMath math="n^2" /> is odd&rdquo;. Assume <InlineMath math="n" /> is odd, so <InlineMath math="n = 2k+1" />.</p>
+                <p><strong>Step 2:</strong> Square it:</p>
+                <BlockMath math="n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1" />
+                <p><strong>Step 3:</strong> This is of the form <InlineMath math="2 \times \text{integer} + 1" />, so <InlineMath math="n^2" /> is odd. The contrapositive holds, so the original statement is true.</p>
+              </div>
+            )
+          },
+          {
+            id: "contrapositive-ex2",
+            question: <p>Prove, by contrapositive, that for any integer <InlineMath math="n" />, if <InlineMath math="3n + 2" /> is odd then <InlineMath math="n" /> is odd.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The contrapositive is: &ldquo;if <InlineMath math="n" /> is even then <InlineMath math="3n + 2" /> is even&rdquo;. Assume <InlineMath math="n" /> is even, so <InlineMath math="n = 2k" />.</p>
+                <p><strong>Step 2:</strong> Substitute:</p>
+                <BlockMath math="3n + 2 = 3(2k) + 2 = 6k + 2 = 2(3k + 1)" />
+                <p><strong>Step 3:</strong> This is even. The contrapositive holds, so the original statement is true.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "proof-by-induction",
+        title: "3. Proof by Induction",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>Proof by induction</strong> establishes a statement <InlineMath math="P(n)" /> for all positive integers <InlineMath math="n" /> in three parts:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Base case:</strong> show <InlineMath math="P(1)" /> is true.</li>
+              <li><strong>Inductive step:</strong> assume <InlineMath math="P(k)" /> is true (the inductive hypothesis), and use it to prove <InlineMath math="P(k+1)" />.</li>
+              <li><strong>Conclusion:</strong> state that, by induction, <InlineMath math="P(n)" /> holds for all <InlineMath math="n \geq 1" />.</li>
+            </ul>
+            <p><strong>The Golden Rule:</strong> you must actually <em>use</em> the inductive hypothesis when proving <InlineMath math="P(k+1)" /> — that is the heart of the method — and never skip the base case or the concluding statement.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Missing the base case:</strong> without <InlineMath math="P(1)" /> the induction has no foundation.</li>
+                <li><strong>Not using the hypothesis:</strong> the <InlineMath math="P(k+1)" /> working must build on the assumed <InlineMath math="P(k)" />.</li>
+                <li><strong>No conclusion:</strong> finish with the &ldquo;therefore true for all <InlineMath math="n" />&rdquo; statement to earn the final mark.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "induction-ex1",
+            question: <p>Prove by induction that <InlineMath math="\displaystyle\sum_{r=1}^{n} r = \frac{n(n+1)}{2}" /> for all positive integers <InlineMath math="n" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Base case:</strong> for <InlineMath math="n=1" />, the left side is <InlineMath math="1" /> and the right side is <InlineMath math="\frac{1(2)}{2} = 1" />. True.</p>
+                <p><strong>Inductive step:</strong> assume the result holds for <InlineMath math="n = k" />, i.e. <InlineMath math="\sum_{r=1}^{k} r = \frac{k(k+1)}{2}" />. Then:</p>
+                <BlockMath math="\sum_{r=1}^{k+1} r = \frac{k(k+1)}{2} + (k+1) = \frac{k(k+1) + 2(k+1)}{2} = \frac{(k+1)(k+2)}{2}" />
+                <p><strong>Conclusion:</strong> this is the formula with <InlineMath math="n = k+1" />, so if it holds for <InlineMath math="k" /> it holds for <InlineMath math="k+1" />. Since it holds for <InlineMath math="n=1" />, by induction it holds for all <InlineMath math="n \geq 1" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "induction-ex2",
+            question: <p>Prove by induction that <InlineMath math="8^n - 1" /> is divisible by <InlineMath math="7" /> for all positive integers <InlineMath math="n" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Base case:</strong> for <InlineMath math="n=1" />, <InlineMath math="8^1 - 1 = 7" />, which is divisible by <InlineMath math="7" />. True.</p>
+                <p><strong>Inductive step:</strong> assume <InlineMath math="8^k - 1" /> is divisible by <InlineMath math="7" />, so <InlineMath math="8^k = 7m + 1" /> for some integer <InlineMath math="m" />. Then:</p>
+                <BlockMath math="8^{k+1} - 1 = 8 \cdot 8^k - 1 = 8(7m + 1) - 1 = 56m + 7 = 7(8m + 1)" />
+                <p><strong>Conclusion:</strong> this is a multiple of <InlineMath math="7" />, so the result holds for <InlineMath math="k+1" />. Since it holds for <InlineMath math="n=1" />, by induction <InlineMath math="8^n - 1" /> is divisible by <InlineMath math="7" /> for all <InlineMath math="n \geq 1" />.</p>
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
