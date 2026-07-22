@@ -1136,5 +1136,262 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "differentiation",
+    title: "Differentiation",
+    topics: [
+      {
+        id: "differentiation-rules",
+        title: "1. Rules & Standard Derivatives",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Advanced Higher extends Higher differentiation with three key rules and a wider set of standard derivatives.</p>
+            <BlockMath math="(uv)' = u'v + uv' \qquad \left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2} \qquad \bigl(f(g(x))\bigr)' = f'(g(x))\,g'(x)" />
+            <p>Standard derivatives you should know include:</p>
+            <BlockMath math="\frac{d}{dx}(\tan x) = \sec^2 x, \quad \frac{d}{dx}(\sec x) = \sec x \tan x, \quad \frac{d}{dx}(\tan^{-1} x) = \frac{1}{1 + x^2}" />
+            <p><strong>The Golden Rule:</strong> identify the structure before differentiating — a product, a quotient, or a composition — and apply the matching rule. For combinations, work from the outside in.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Quotient rule order:</strong> the numerator is <InlineMath math="u'v - uv'" />, in that order — reversing it flips the sign.</li>
+                <li><strong>Chain rule inside factor:</strong> always multiply by the derivative of the inner function.</li>
+                <li><strong>Standard derivatives:</strong> know the exact forms, e.g. <InlineMath math="\frac{d}{dx}(\tan x) = \sec^2 x" />, not <InlineMath math="\sec x" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "diff-rules-ex1",
+            question: <p>Differentiate <InlineMath math="y = x^2 \sin x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> This is a product with <InlineMath math="u = x^2" />, <InlineMath math="v = \sin x" />. Apply the product rule:</p>
+                <BlockMath math="\frac{dy}{dx} = (2x)(\sin x) + (x^2)(\cos x)" />
+                <p><strong>Step 2:</strong> So <InlineMath math="\dfrac{dy}{dx} = 2x\sin x + x^2\cos x" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "diff-rules-ex2",
+            question: <p>Differentiate <InlineMath math="y = \dfrac{2x + 1}{x^2 + 1}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Quotient rule with <InlineMath math="u = 2x+1" /> (<InlineMath math="u' = 2" />) and <InlineMath math="v = x^2+1" /> (<InlineMath math="v' = 2x" />):</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{2(x^2+1) - (2x+1)(2x)}{(x^2+1)^2}" />
+                <p><strong>Step 2:</strong> Expand and simplify the numerator:</p>
+                <BlockMath math="= \frac{2x^2 + 2 - 4x^2 - 2x}{(x^2+1)^2} = \frac{-2x^2 - 2x + 2}{(x^2+1)^2}" />
+              </div>
+            )
+          },
+          {
+            id: "diff-rules-ex3",
+            question: <p>Differentiate <InlineMath math="y = e^{3x}\cos 2x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Product rule, using the chain rule on each factor: <InlineMath math="\frac{d}{dx}(e^{3x}) = 3e^{3x}" /> and <InlineMath math="\frac{d}{dx}(\cos 2x) = -2\sin 2x" />.</p>
+                <BlockMath math="\frac{dy}{dx} = 3e^{3x}\cos 2x + e^{3x}(-2\sin 2x)" />
+                <p><strong>Step 2:</strong> Factor out <InlineMath math="e^{3x}" />:</p>
+                <BlockMath math="= e^{3x}(3\cos 2x - 2\sin 2x)" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "implicit-differentiation",
+        title: "2. Implicit Differentiation",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>When <InlineMath math="y" /> is defined <strong>implicitly</strong> (the equation is not solved for <InlineMath math="y" />), differentiate both sides with respect to <InlineMath math="x" />, treating <InlineMath math="y" /> as a function of <InlineMath math="x" />. Each <InlineMath math="y" />-term picks up a factor of <InlineMath math="\frac{dy}{dx}" /> by the chain rule; then collect and solve.</p>
+            <BlockMath math="\frac{d}{dx}\bigl(y^n\bigr) = n\,y^{n-1}\frac{dy}{dx}" />
+            <p><strong>The Golden Rule:</strong> every time you differentiate a term containing <InlineMath math="y" />, multiply by <InlineMath math="\frac{dy}{dx}" />; then gather all <InlineMath math="\frac{dy}{dx}" /> terms on one side and factor.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Dropping <InlineMath math="\frac{dy}{dx}" />:</strong> differentiating a <InlineMath math="y" />-term without the chain-rule factor is the most common error.</li>
+                <li><strong>Mixed terms:</strong> a term like <InlineMath math="xy" /> needs the product rule: <InlineMath math="\frac{d}{dx}(xy) = y + x\frac{dy}{dx}" />.</li>
+                <li><strong>Solving slips:</strong> factor <InlineMath math="\frac{dy}{dx}" /> carefully before dividing.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "implicit-ex1",
+            question: <p>Find <InlineMath math="\dfrac{dy}{dx}" /> for the circle <InlineMath math="x^2 + y^2 = 25" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate both sides with respect to <InlineMath math="x" />:</p>
+                <BlockMath math="2x + 2y\frac{dy}{dx} = 0" />
+                <p><strong>Step 2:</strong> Solve for <InlineMath math="\frac{dy}{dx}" />:</p>
+                <BlockMath math="\frac{dy}{dx} = -\frac{x}{y}" />
+              </div>
+            )
+          },
+          {
+            id: "implicit-ex2",
+            question: <p>Find <InlineMath math="\dfrac{dy}{dx}" /> for <InlineMath math="x^2 + xy + y^2 = 7" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate term by term, using the product rule on <InlineMath math="xy" />:</p>
+                <BlockMath math="2x + \left(y + x\frac{dy}{dx}\right) + 2y\frac{dy}{dx} = 0" />
+                <p><strong>Step 2:</strong> Gather the <InlineMath math="\frac{dy}{dx}" /> terms:</p>
+                <BlockMath math="(x + 2y)\frac{dy}{dx} = -(2x + y)" />
+                <p><strong>Step 3:</strong> Solve:</p>
+                <BlockMath math="\frac{dy}{dx} = -\frac{2x + y}{x + 2y}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "logarithmic-differentiation",
+        title: "3. Logarithmic Differentiation",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>Logarithmic differentiation</strong> takes the natural log of both sides first, using log laws to turn products, quotients and powers into sums and multiples, and then differentiates implicitly. It is essential when the variable appears in the index, such as <InlineMath math="y = x^x" />.</p>
+            <p><strong>The Golden Rule:</strong> take <InlineMath math="\ln" /> of both sides, simplify with log laws, differentiate implicitly (the left side becomes <InlineMath math="\frac{1}{y}\frac{dy}{dx}" />), then multiply through by <InlineMath math="y" /> and substitute it back.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>The left side:</strong> differentiating <InlineMath math="\ln y" /> gives <InlineMath math="\frac{1}{y}\frac{dy}{dx}" /> — don't forget the <InlineMath math="\frac{dy}{dx}" />.</li>
+                <li><strong>Not substituting <InlineMath math="y" /> back:</strong> the final answer should be in terms of <InlineMath math="x" />.</li>
+                <li><strong>Log laws:</strong> <InlineMath math="\ln(ab) = \ln a + \ln b" /> and <InlineMath math="\ln(a^n) = n\ln a" /> — apply them before differentiating.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "log-diff-ex1",
+            question: <p>Differentiate <InlineMath math="y = x^x" /> for <InlineMath math="x > 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Take natural logs and simplify:</p>
+                <BlockMath math="\ln y = \ln(x^x) = x\ln x" />
+                <p><strong>Step 2:</strong> Differentiate implicitly (product rule on the right):</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln x + x \cdot \frac{1}{x} = \ln x + 1" />
+                <p><strong>Step 3:</strong> Multiply by <InlineMath math="y = x^x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = x^x(\ln x + 1)" />
+              </div>
+            )
+          },
+          {
+            id: "log-diff-ex2",
+            question: <p>Use logarithmic differentiation to find <InlineMath math="\dfrac{dy}{dx}" /> for <InlineMath math="y = \dfrac{(2x+1)^3}{(x-1)^2}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Take logs and use the log laws:</p>
+                <BlockMath math="\ln y = 3\ln(2x+1) - 2\ln(x-1)" />
+                <p><strong>Step 2:</strong> Differentiate implicitly:</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \frac{6}{2x+1} - \frac{2}{x-1}" />
+                <p><strong>Step 3:</strong> Multiply by <InlineMath math="y" />:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{(2x+1)^3}{(x-1)^2}\left(\frac{6}{2x+1} - \frac{2}{x-1}\right)" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "parametric-differentiation",
+        title: "4. Parametric Differentiation",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>When a curve is given by <InlineMath math="x" /> and <InlineMath math="y" /> in terms of a <strong>parameter</strong> <InlineMath math="t" />, the gradient is found by the chain rule:</p>
+            <BlockMath math="\frac{dy}{dx} = \frac{dy/dt}{dx/dt}" />
+            <p>The second derivative differentiates <InlineMath math="\frac{dy}{dx}" /> with respect to <InlineMath math="t" />, then divides by <InlineMath math="\frac{dx}{dt}" /> again:</p>
+            <BlockMath math="\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}\!\left(\frac{dy}{dx}\right)}{dx/dt}" />
+            <p><strong>The Golden Rule:</strong> divide the <InlineMath math="t" />-derivatives to get <InlineMath math="\frac{dy}{dx}" />. For the second derivative, differentiate <InlineMath math="\frac{dy}{dx}" /> with respect to <InlineMath math="t" /> and divide by <InlineMath math="\frac{dx}{dt}" /> once more.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>The second derivative is NOT <InlineMath math="\frac{d^2y/dt^2}{d^2x/dt^2}" />:</strong> you must divide by <InlineMath math="\frac{dx}{dt}" />, not by <InlineMath math="\frac{d^2x}{dt^2}" />.</li>
+                <li><strong>Dividing vs differentiating:</strong> <InlineMath math="\frac{dy}{dx}" /> is a quotient of the two <InlineMath math="t" />-derivatives.</li>
+                <li><strong>Chain rule again:</strong> the second derivative needs another division by <InlineMath math="\frac{dx}{dt}" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "parametric-ex1",
+            question: <p>A curve is defined by <InlineMath math="x = t^2" />, <InlineMath math="y = t^3" />. Find <InlineMath math="\dfrac{dy}{dx}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate each with respect to <InlineMath math="t" />:</p>
+                <BlockMath math="\frac{dx}{dt} = 2t, \qquad \frac{dy}{dt} = 3t^2" />
+                <p><strong>Step 2:</strong> Divide:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{3t^2}{2t} = \frac{3}{2}t" />
+              </div>
+            )
+          },
+          {
+            id: "parametric-ex2",
+            question: <p>For the curve <InlineMath math="x = t^2" />, <InlineMath math="y = t^3" />, find <InlineMath math="\dfrac{d^2y}{dx^2}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> From the previous result, <InlineMath math="\frac{dy}{dx} = \frac{3}{2}t" />. Differentiate this with respect to <InlineMath math="t" />:</p>
+                <BlockMath math="\frac{d}{dt}\!\left(\frac{3}{2}t\right) = \frac{3}{2}" />
+                <p><strong>Step 2:</strong> Divide by <InlineMath math="\frac{dx}{dt} = 2t" />:</p>
+                <BlockMath math="\frac{d^2y}{dx^2} = \frac{3/2}{2t} = \frac{3}{4t}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "related-rates",
+        title: "5. Related Rates of Change",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>In a <strong>related rates</strong> problem, two quantities are linked by an equation and both change with time. Differentiate the relationship with respect to time <InlineMath math="t" /> (using the chain rule) to connect their rates, then substitute the values at the instant asked.</p>
+            <p><strong>The Golden Rule:</strong> write the equation relating the quantities, differentiate the whole equation with respect to <InlineMath math="t" />, and only <em>then</em> substitute the given values.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Differentiate with respect to time:</strong> the derivative is with respect to <InlineMath math="t" />, so every variable picks up a rate (e.g. <InlineMath math="\frac{dr}{dt}" />).</li>
+                <li><strong>Substituting too early:</strong> keep quantities as variables until after differentiating.</li>
+                <li><strong>Chain of rates:</strong> link them correctly, e.g. <InlineMath math="\frac{dA}{dt} = \frac{dA}{dr}\cdot\frac{dr}{dt}" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "related-rates-ex1",
+            question: <p>The radius of a circle increases at <InlineMath math="2" /> cm/s. Find the rate at which the area is increasing when the radius is <InlineMath math="5" /> cm.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The area is <InlineMath math="A = \pi r^2" />. Differentiate with respect to <InlineMath math="t" />:</p>
+                <BlockMath math="\frac{dA}{dt} = 2\pi r \frac{dr}{dt}" />
+                <p><strong>Step 2:</strong> Substitute <InlineMath math="r = 5" /> and <InlineMath math="\frac{dr}{dt} = 2" />:</p>
+                <BlockMath math="\frac{dA}{dt} = 2\pi(5)(2) = 20\pi \ \text{cm}^2/\text{s}" />
+              </div>
+            )
+          },
+          {
+            id: "related-rates-ex2",
+            question: <p>A spherical balloon is inflated so that its volume increases at <InlineMath math="100" /> cm³/s. Find the rate at which the radius is increasing when the radius is <InlineMath math="5" /> cm.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The volume is <InlineMath math="V = \frac{4}{3}\pi r^3" />. Differentiate with respect to <InlineMath math="t" />:</p>
+                <BlockMath math="\frac{dV}{dt} = 4\pi r^2 \frac{dr}{dt}" />
+                <p><strong>Step 2:</strong> Substitute <InlineMath math="\frac{dV}{dt} = 100" /> and <InlineMath math="r = 5" />:</p>
+                <BlockMath math="100 = 4\pi(25)\frac{dr}{dt} = 100\pi\frac{dr}{dt}" />
+                <p><strong>Step 3:</strong> Solve for the rate:</p>
+                <BlockMath math="\frac{dr}{dt} = \frac{100}{100\pi} = \frac{1}{\pi} \ \text{cm/s}" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
