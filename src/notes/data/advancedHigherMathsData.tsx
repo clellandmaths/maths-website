@@ -1635,5 +1635,269 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "integration",
+    title: "Integration",
+    topics: [
+      {
+        id: "standard-integrals-substitution",
+        title: "1. Standard Integrals & Substitution",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Advanced Higher adds several standard integrals and the technique of substitution. Key results include:</p>
+            <BlockMath math="\int \sec^2 x\,dx = \tan x + c, \quad \int \frac{1}{1+x^2}\,dx = \tan^{-1} x + c, \quad \int \frac{f'(x)}{f(x)}\,dx = \ln|f(x)| + c" />
+            <p>For <strong>integration by substitution</strong>, choose <InlineMath math="u" /> so that its derivative appears (up to a constant) in the integrand, and convert every part — including <InlineMath math="dx" /> — into <InlineMath math="u" />.</p>
+            <p><strong>The Golden Rule:</strong> spot the <InlineMath math="\frac{f'(x)}{f(x)}" /> and <InlineMath math="g(f(x))f'(x)" /> patterns for a quick substitution, and always replace <InlineMath math="dx" /> using <InlineMath math="du = \frac{du}{dx}\,dx" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting the <InlineMath math="dx \to du" /> step:</strong> the whole integrand, including <InlineMath math="dx" />, must be in terms of <InlineMath math="u" />.</li>
+                <li><strong>Definite limits:</strong> either change the limits to <InlineMath math="u" />-values or substitute back before applying them.</li>
+                <li><strong>Missing the log pattern:</strong> <InlineMath math="\int \frac{f'(x)}{f(x)}\,dx = \ln|f(x)| + c" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "std-int-ex1",
+            question: <p>Find <InlineMath math="\displaystyle\int \frac{2x}{x^2 + 1}\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The numerator is the derivative of the denominator, so this is the <InlineMath math="\frac{f'}{f}" /> pattern:</p>
+                <BlockMath math="\frac{d}{dx}(x^2 + 1) = 2x" />
+                <p><strong>Step 2:</strong> Therefore:</p>
+                <BlockMath math="\int \frac{2x}{x^2 + 1}\,dx = \ln|x^2 + 1| + c" />
+              </div>
+            )
+          },
+          {
+            id: "std-int-ex2",
+            question: <p>Find <InlineMath math="\displaystyle\int 2x(x^2 + 1)^5\,dx" /> using the substitution <InlineMath math="u = x^2 + 1" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> With <InlineMath math="u = x^2 + 1" />, we have <InlineMath math="\frac{du}{dx} = 2x" />, so <InlineMath math="du = 2x\,dx" />.</p>
+                <p><strong>Step 2:</strong> Rewrite the integral in <InlineMath math="u" /> and integrate:</p>
+                <BlockMath math="\int u^5\,du = \frac{u^6}{6} + c" />
+                <p><strong>Step 3:</strong> Substitute back:</p>
+                <BlockMath math="= \frac{(x^2 + 1)^6}{6} + c" />
+              </div>
+            )
+          },
+          {
+            id: "std-int-ex3",
+            question: <p>Find <InlineMath math="\displaystyle\int \frac{1}{9 + x^2}\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> This matches the standard form <InlineMath math="\int \frac{1}{a^2 + x^2}\,dx = \frac{1}{a}\tan^{-1}\!\frac{x}{a} + c" /> with <InlineMath math="a = 3" />.</p>
+                <p><strong>Step 2:</strong> Therefore:</p>
+                <BlockMath math="\int \frac{1}{9 + x^2}\,dx = \frac{1}{3}\tan^{-1}\!\left(\frac{x}{3}\right) + c" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "integrating-rational-functions",
+        title: "2. Integrating Rational Functions",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>To integrate a rational function, first express it in <strong>partial fractions</strong> (dividing first if it is improper), then integrate each simpler piece. Linear factors give logarithms; some quadratic denominators give an inverse tangent.</p>
+            <p><strong>The Golden Rule:</strong> decompose into partial fractions before integrating — a term <InlineMath math="\frac{A}{x-a}" /> integrates to <InlineMath math="A\ln|x-a|" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Improper fractions:</strong> divide first — you cannot decompose an improper fraction directly.</li>
+                <li><strong>Modulus in logs:</strong> the answer is <InlineMath math="\ln|x-a|" />, with the absolute value.</li>
+                <li><strong>Constant of integration:</strong> don't lose the <InlineMath math="+c" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "rational-int-ex1",
+            question: <p>Find <InlineMath math="\displaystyle\int \frac{5x - 1}{(x+1)(x-2)}\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> In partial fractions (as found earlier), the integrand is:</p>
+                <BlockMath math="\frac{5x-1}{(x+1)(x-2)} = \frac{2}{x+1} + \frac{3}{x-2}" />
+                <p><strong>Step 2:</strong> Integrate term by term:</p>
+                <BlockMath math="\int \frac{2}{x+1} + \frac{3}{x-2}\,dx = 2\ln|x+1| + 3\ln|x-2| + c" />
+              </div>
+            )
+          },
+          {
+            id: "rational-int-ex2",
+            question: <p>Find <InlineMath math="\displaystyle\int \frac{1}{x^2 - 1}\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Factorise and decompose <InlineMath math="\frac{1}{(x-1)(x+1)}" />:</p>
+                <BlockMath math="\frac{1}{x^2 - 1} = \frac{1}{2}\!\left(\frac{1}{x-1}\right) - \frac{1}{2}\!\left(\frac{1}{x+1}\right)" />
+                <p><strong>Step 2:</strong> Integrate each term:</p>
+                <BlockMath math="= \frac{1}{2}\ln|x-1| - \frac{1}{2}\ln|x+1| + c = \frac{1}{2}\ln\left|\frac{x-1}{x+1}\right| + c" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "integration-by-parts",
+        title: "3. Integration by Parts",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>Integration by parts</strong> reverses the product rule:</p>
+            <BlockMath math="\int u\,\frac{dv}{dx}\,dx = uv - \int v\,\frac{du}{dx}\,dx" />
+            <p>Choose <InlineMath math="u" /> to be the factor that becomes simpler when differentiated. A useful guide is <strong>LIATE</strong> (Logarithm, Inverse trig, Algebraic, Trig, Exponential): the factor earliest in this list is usually <InlineMath math="u" />. Some integrals need parts applied more than once.</p>
+            <p><strong>The Golden Rule:</strong> pick <InlineMath math="u" /> so that <InlineMath math="\frac{du}{dx}" /> is simpler, and <InlineMath math="\frac{dv}{dx}" /> as the part you can integrate; then apply <InlineMath math="uv - \int v\,\frac{du}{dx}\,dx" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Wrong choice of <InlineMath math="u" />:</strong> if the new integral is harder, you likely chose <InlineMath math="u" /> and <InlineMath math="dv" /> the wrong way round.</li>
+                <li><strong>Sign error:</strong> the formula subtracts the second integral.</li>
+                <li><strong>The <InlineMath math="\ln x" /> trick:</strong> for <InlineMath math="\int \ln x\,dx" />, take <InlineMath math="u = \ln x" /> and <InlineMath math="\frac{dv}{dx} = 1" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "parts-ex1",
+            question: <p>Find <InlineMath math="\displaystyle\int x e^x\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Let <InlineMath math="u = x" /> (so <InlineMath math="\frac{du}{dx} = 1" />) and <InlineMath math="\frac{dv}{dx} = e^x" /> (so <InlineMath math="v = e^x" />).</p>
+                <p><strong>Step 2:</strong> Apply the formula:</p>
+                <BlockMath math="\int x e^x\,dx = x e^x - \int e^x\,dx = x e^x - e^x + c" />
+                <p><strong>Step 3:</strong> Factor: <InlineMath math="= e^x(x - 1) + c" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "parts-ex2",
+            question: <p>Find <InlineMath math="\displaystyle\int x \cos x\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Let <InlineMath math="u = x" /> and <InlineMath math="\frac{dv}{dx} = \cos x" /> (so <InlineMath math="v = \sin x" />).</p>
+                <p><strong>Step 2:</strong> Apply the formula:</p>
+                <BlockMath math="\int x \cos x\,dx = x \sin x - \int \sin x\,dx = x \sin x + \cos x + c" />
+              </div>
+            )
+          },
+          {
+            id: "parts-ex3",
+            question: <p>Find <InlineMath math="\displaystyle\int \ln x\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Take <InlineMath math="u = \ln x" /> (so <InlineMath math="\frac{du}{dx} = \frac{1}{x}" />) and <InlineMath math="\frac{dv}{dx} = 1" /> (so <InlineMath math="v = x" />).</p>
+                <p><strong>Step 2:</strong> Apply the formula:</p>
+                <BlockMath math="\int \ln x\,dx = x\ln x - \int x \cdot \frac{1}{x}\,dx = x\ln x - \int 1\,dx" />
+                <p><strong>Step 3:</strong> So <InlineMath math="\int \ln x\,dx = x\ln x - x + c" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "volumes-of-revolution",
+        title: "4. Volumes of Revolution",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Rotating a curve about an axis sweeps out a solid whose volume is found by integrating the area of circular cross-sections. About the <InlineMath math="x" />-axis, between <InlineMath math="x = a" /> and <InlineMath math="x = b" />:</p>
+            <BlockMath math="V = \pi \int_a^b y^2\,dx" />
+            <p>About the <InlineMath math="y" />-axis, between <InlineMath math="y = c" /> and <InlineMath math="y = d" />: <InlineMath math="V = \pi \int_c^d x^2\,dy" />.</p>
+            <p><strong>The Golden Rule:</strong> square the radius (the function), integrate, and multiply by <InlineMath math="\pi" />; rotating about the <InlineMath math="x" />-axis uses <InlineMath math="\int y^2\,dx" />, about the <InlineMath math="y" />-axis uses <InlineMath math="\int x^2\,dy" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting to square:</strong> the integrand is <InlineMath math="y^2" /> (or <InlineMath math="x^2" />), not <InlineMath math="y" />.</li>
+                <li><strong>Wrong variable:</strong> rotation about the <InlineMath math="y" />-axis integrates with respect to <InlineMath math="y" />.</li>
+                <li><strong>Losing the <InlineMath math="\pi" />:</strong> the whole result is multiplied by <InlineMath math="\pi" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "volume-ex1",
+            question: <p>The curve <InlineMath math="y = \sqrt{x}" /> is rotated about the <InlineMath math="x" />-axis between <InlineMath math="x = 0" /> and <InlineMath math="x = 4" />. Find the volume generated.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Apply the formula with <InlineMath math="y^2 = (\sqrt{x})^2 = x" />:</p>
+                <BlockMath math="V = \pi \int_0^4 x\,dx" />
+                <p><strong>Step 2:</strong> Integrate and evaluate:</p>
+                <BlockMath math="= \pi\left[\frac{x^2}{2}\right]_0^4 = \pi\left(\frac{16}{2}\right) = 8\pi" />
+              </div>
+            )
+          },
+          {
+            id: "volume-ex2",
+            question: <p>The curve <InlineMath math="y = x^2" /> is rotated about the <InlineMath math="y" />-axis between <InlineMath math="y = 0" /> and <InlineMath math="y = 9" />. Find the volume generated.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Rotating about the <InlineMath math="y" />-axis uses <InlineMath math="\int x^2\,dy" />. Here <InlineMath math="y = x^2" />, so <InlineMath math="x^2 = y" />:</p>
+                <BlockMath math="V = \pi \int_0^9 y\,dy" />
+                <p><strong>Step 2:</strong> Integrate and evaluate:</p>
+                <BlockMath math="= \pi\left[\frac{y^2}{2}\right]_0^9 = \pi\left(\frac{81}{2}\right) = \frac{81\pi}{2}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "areas-under-between-curves",
+        title: "5. Areas Under & Between Curves",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The area under <InlineMath math="y = f(x)" /> (above the <InlineMath math="x" />-axis) from <InlineMath math="a" /> to <InlineMath math="b" /> is <InlineMath math="\int_a^b y\,dx" />. The area <strong>between</strong> two curves, with <InlineMath math="f" /> the upper and <InlineMath math="g" /> the lower, is:</p>
+            <BlockMath math="\text{Area} = \int_a^b \bigl(f(x) - g(x)\bigr)\,dx" />
+            <p>where <InlineMath math="a" /> and <InlineMath math="b" /> are the points of intersection.</p>
+            <p><strong>The Golden Rule:</strong> for the area between curves, find the intersection points first (they are the limits), then integrate &ldquo;upper minus lower&rdquo;.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Wrong way round:</strong> it is upper curve minus lower curve — check which is on top over the interval.</li>
+                <li><strong>Limits:</strong> the intersection points give the limits of integration — solve <InlineMath math="f(x) = g(x)" /> first.</li>
+                <li><strong>Areas below the axis:</strong> a region below the <InlineMath math="x" />-axis gives a negative integral, so account for the sign.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "area-ex1",
+            question: <p>Find the area enclosed between the curve <InlineMath math="y = x^2" /> and the line <InlineMath math="y = 2x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Find the intersection points by solving <InlineMath math="x^2 = 2x" />:</p>
+                <BlockMath math="x^2 - 2x = 0 \implies x(x-2) = 0 \implies x = 0,\ 2" />
+                <p><strong>Step 2:</strong> Between these, the line <InlineMath math="y = 2x" /> is above <InlineMath math="y = x^2" />, so integrate upper minus lower:</p>
+                <BlockMath math="\text{Area} = \int_0^2 (2x - x^2)\,dx = \left[x^2 - \frac{x^3}{3}\right]_0^2" />
+                <p><strong>Step 3:</strong> Evaluate:</p>
+                <BlockMath math="= 4 - \frac{8}{3} = \frac{4}{3}" />
+              </div>
+            )
+          },
+          {
+            id: "area-ex2",
+            question: <p>Find the area under the curve <InlineMath math="y = 3x^2" /> between <InlineMath math="x = 1" /> and <InlineMath math="x = 2" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Integrate the function between the given limits:</p>
+                <BlockMath math="\text{Area} = \int_1^2 3x^2\,dx = \left[x^3\right]_1^2" />
+                <p><strong>Step 2:</strong> Evaluate:</p>
+                <BlockMath math="= 8 - 1 = 7" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
