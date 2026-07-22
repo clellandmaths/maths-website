@@ -467,5 +467,233 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "sequences-and-series",
+    title: "Sequences and Series",
+    topics: [
+      {
+        id: "arithmetic-sequences-series",
+        title: "1. Arithmetic Sequences & Series",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>An <strong>arithmetic sequence</strong> increases by a constant <strong>common difference</strong> <InlineMath math="d" /> each step. With first term <InlineMath math="a" />, the <InlineMath math="n" />th term is:</p>
+            <BlockMath math="u_n = a + (n-1)d" />
+            <p>The sum of the first <InlineMath math="n" /> terms is:</p>
+            <BlockMath math="S_n = \frac{n}{2}\bigl[2a + (n-1)d\bigr] = \frac{n}{2}(a + l)" />
+            <p>where <InlineMath math="l" /> is the last term. Use the second form when you already know the last term.</p>
+            <p><strong>The Golden Rule:</strong> almost every arithmetic question reduces to finding <InlineMath math="a" /> and <InlineMath math="d" /> — pin those down first, then substitute.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>The <InlineMath math="(n-1)" /> slip:</strong> the <InlineMath math="n" />th term uses <InlineMath math="(n-1)d" />, not <InlineMath math="nd" /> — the first term already counts as one.</li>
+                <li><strong>Wrong sum formula:</strong> only use <InlineMath math="\frac{n}{2}(a+l)" /> when the last term <InlineMath math="l" /> is actually known.</li>
+                <li><strong>Counting terms:</strong> the number of terms from the <InlineMath math="p" />th to the <InlineMath math="q" />th is <InlineMath math="q - p + 1" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "arithmetic-ex1",
+            question: <p>An arithmetic sequence has first term <InlineMath math="5" /> and common difference <InlineMath math="3" />. Find the 20th term and the sum of the first 20 terms.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Apply the <InlineMath math="n" />th term formula with <InlineMath math="a=5" />, <InlineMath math="d=3" />, <InlineMath math="n=20" />:</p>
+                <BlockMath math="u_{20} = 5 + (20-1)(3) = 5 + 57 = 62" />
+                <p><strong>Step 2:</strong> Apply the sum formula:</p>
+                <BlockMath math="S_{20} = \frac{20}{2}\bigl[2(5) + (19)(3)\bigr] = 10\,[10 + 57] = 670" />
+              </div>
+            )
+          },
+          {
+            id: "arithmetic-ex2",
+            question: <p>The 4th term of an arithmetic sequence is <InlineMath math="11" /> and the 9th term is <InlineMath math="26" />. Find the first term and common difference, then the sum of the first 12 terms.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write each term with the formula and subtract to eliminate <InlineMath math="a" />:</p>
+                <BlockMath math="a + 3d = 11 \qquad a + 8d = 26 \implies 5d = 15 \implies d = 3" />
+                <p><strong>Step 2:</strong> Substitute back to find <InlineMath math="a" />:</p>
+                <BlockMath math="a + 3(3) = 11 \implies a = 2" />
+                <p><strong>Step 3:</strong> Find the sum of the first 12 terms:</p>
+                <BlockMath math="S_{12} = \frac{12}{2}\bigl[2(2) + (11)(3)\bigr] = 6\,[4 + 33] = 222" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "geometric-sequences-series",
+        title: "2. Geometric Sequences & Series",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A <strong>geometric sequence</strong> multiplies by a constant <strong>common ratio</strong> <InlineMath math="r" /> each step. With first term <InlineMath math="a" />, the <InlineMath math="n" />th term is:</p>
+            <BlockMath math="u_n = ar^{\,n-1}" />
+            <p>The sum of the first <InlineMath math="n" /> terms (for <InlineMath math="r \neq 1" />) is:</p>
+            <BlockMath math="S_n = \frac{a(r^n - 1)}{r - 1}" />
+            <p>If <InlineMath math="|r| < 1" /> the series converges, and the <strong>sum to infinity</strong> is:</p>
+            <BlockMath math="S_\infty = \frac{a}{1 - r}, \qquad |r| < 1" />
+            <p><strong>The Golden Rule:</strong> find <InlineMath math="a" /> and <InlineMath math="r" /> first, and remember that a sum to infinity <em>only exists</em> when <InlineMath math="|r| < 1" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Using <InlineMath math="S_\infty" /> when <InlineMath math="|r| \geq 1" />:</strong> the series diverges and has no sum to infinity — always check the ratio first.</li>
+                <li><strong>Power slip:</strong> the <InlineMath math="n" />th term is <InlineMath math="ar^{\,n-1}" />, not <InlineMath math="ar^{\,n}" />.</li>
+                <li><strong>Negative ratio:</strong> if the terms alternate in sign, <InlineMath math="r" /> is negative — keep the sign throughout.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "geometric-ex1",
+            question: <p>A geometric sequence has first term <InlineMath math="3" /> and common ratio <InlineMath math="2" />. Find the 6th term and the sum of the first 6 terms.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Apply the <InlineMath math="n" />th term formula with <InlineMath math="a=3" />, <InlineMath math="r=2" />:</p>
+                <BlockMath math="u_6 = 3 \times 2^{\,5} = 3 \times 32 = 96" />
+                <p><strong>Step 2:</strong> Apply the sum formula:</p>
+                <BlockMath math="S_6 = \frac{3(2^6 - 1)}{2 - 1} = \frac{3(63)}{1} = 189" />
+              </div>
+            )
+          },
+          {
+            id: "geometric-ex2",
+            question: <p>A geometric series has first term <InlineMath math="8" /> and common ratio <InlineMath math="\tfrac{1}{2}" />. Find its sum to infinity.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Check convergence: <InlineMath math="|r| = \tfrac{1}{2} < 1" />, so a sum to infinity exists.</p>
+                <p><strong>Step 2:</strong> Apply the formula:</p>
+                <BlockMath math="S_\infty = \frac{8}{1 - \tfrac{1}{2}} = \frac{8}{\tfrac{1}{2}} = 16" />
+              </div>
+            )
+          },
+          {
+            id: "geometric-ex3",
+            question: <p>The sum to infinity of a geometric series is <InlineMath math="12" /> and its first term is <InlineMath math="4" />. Find the common ratio.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Substitute into <InlineMath math="S_\infty = \dfrac{a}{1-r}" />:</p>
+                <BlockMath math="12 = \frac{4}{1 - r}" />
+                <p><strong>Step 2:</strong> Rearrange for <InlineMath math="r" />:</p>
+                <BlockMath math="1 - r = \frac{4}{12} = \frac{1}{3} \implies r = \frac{2}{3}" />
+                <p><strong>Step 3:</strong> Since <InlineMath math="|r| = \tfrac{2}{3} < 1" />, a sum to infinity is valid, as required.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "summation-formulae",
+        title: "3. Summation Formulae",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Standard results (given on the formula sheet) let us sum powers of the counting variable:</p>
+            <BlockMath math="\sum_{r=1}^{n} r = \frac{n(n+1)}{2}, \quad \sum_{r=1}^{n} r^2 = \frac{n(n+1)(2n+1)}{6}, \quad \sum_{r=1}^{n} r^3 = \left[\frac{n(n+1)}{2}\right]^2" />
+            <p>Summation is <strong>linear</strong>, so a sum of several terms can be split apart, and a constant <InlineMath math="c" /> sums to:</p>
+            <BlockMath math="\sum_{r=1}^{n} c = cn" />
+            <p><strong>The Golden Rule:</strong> split the summation using linearity, apply each standard formula, then factorise — the answer almost always simplifies to a neat factorised form.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Summing a constant:</strong> <InlineMath math="\sum_{r=1}^{n} c = cn" />, not <InlineMath math="c" />.</li>
+                <li><strong>Coefficients:</strong> a factor multiplies the <em>whole</em> standard formula, e.g. <InlineMath math="\sum 2r = 2 \cdot \frac{n(n+1)}{2}" />.</li>
+                <li><strong>Not simplifying:</strong> the exam usually wants the fully factorised expression, not an unexpanded sum of fractions.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "summation-ex1",
+            question: <p>Show that <InlineMath math="\displaystyle\sum_{r=1}^{n} (2r + 1) = n(n+2)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Split the summation using linearity:</p>
+                <BlockMath math="\sum_{r=1}^{n} (2r+1) = 2\sum_{r=1}^{n} r + \sum_{r=1}^{n} 1" />
+                <p><strong>Step 2:</strong> Apply the standard results:</p>
+                <BlockMath math="= 2 \cdot \frac{n(n+1)}{2} + n = n(n+1) + n" />
+                <p><strong>Step 3:</strong> Simplify and factorise:</p>
+                <BlockMath math="= n^2 + n + n = n^2 + 2n = n(n+2)" />
+              </div>
+            )
+          },
+          {
+            id: "summation-ex2",
+            question: <p>Find a formula for <InlineMath math="\displaystyle\sum_{r=1}^{n} r(r + 2)" /> in fully factorised form.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Expand and split:</p>
+                <BlockMath math="\sum_{r=1}^{n} r(r+2) = \sum_{r=1}^{n} (r^2 + 2r) = \sum_{r=1}^{n} r^2 + 2\sum_{r=1}^{n} r" />
+                <p><strong>Step 2:</strong> Apply the standard results:</p>
+                <BlockMath math="= \frac{n(n+1)(2n+1)}{6} + 2 \cdot \frac{n(n+1)}{2} = \frac{n(n+1)(2n+1)}{6} + n(n+1)" />
+                <p><strong>Step 3:</strong> Take out the common factor <InlineMath math="\dfrac{n(n+1)}{6}" /> and simplify:</p>
+                <BlockMath math="= \frac{n(n+1)}{6}\bigl[(2n+1) + 6\bigr] = \frac{n(n+1)(2n+7)}{6}" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "maclaurin-series",
+    title: "Maclaurin Series",
+    topics: [
+      {
+        id: "maclaurin-series",
+        title: "1. Maclaurin Series",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The <strong>Maclaurin series</strong> expresses a function as a power series built from its derivatives at <InlineMath math="x = 0" />:</p>
+            <BlockMath math="f(x) = f(0) + f'(0)\,x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n" />
+            <p>To build it: differentiate repeatedly, evaluate each derivative at <InlineMath math="x=0" />, and substitute into the formula, keeping the factorial in each denominator.</p>
+            <p><strong>The Golden Rule:</strong> always evaluate each derivative <em>at</em> <InlineMath math="x = 0" /> before substituting, and never drop the <InlineMath math="n!" /> denominators.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Dropping the factorials:</strong> each term is divided by <InlineMath math="n!" /> — <InlineMath math="\frac{f'''(0)}{3!}" />, not just <InlineMath math="f'''(0)" />.</li>
+                <li><strong>Leaving derivatives as functions:</strong> substitute <InlineMath math="x=0" /> into every derivative before using it.</li>
+                <li><strong>Sign errors:</strong> series such as <InlineMath math="\cos x" /> alternate in sign — track them carefully.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "maclaurin-ex1",
+            question: <p>Find the Maclaurin series for <InlineMath math="f(x) = e^{2x}" /> up to and including the term in <InlineMath math="x^3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate and evaluate each derivative at <InlineMath math="x=0" />:</p>
+                <BlockMath math="\begin{aligned} f(x) &= e^{2x}, & f(0) &= 1 \\ f'(x) &= 2e^{2x}, & f'(0) &= 2 \\ f''(x) &= 4e^{2x}, & f''(0) &= 4 \\ f'''(x) &= 8e^{2x}, & f'''(0) &= 8 \end{aligned}" />
+                <p><strong>Step 2:</strong> Substitute into the Maclaurin formula:</p>
+                <BlockMath math="e^{2x} = 1 + 2x + \frac{4}{2!}x^2 + \frac{8}{3!}x^3 + \cdots" />
+                <p><strong>Step 3:</strong> Simplify the coefficients:</p>
+                <BlockMath math="e^{2x} = 1 + 2x + 2x^2 + \frac{4}{3}x^3 + \cdots" />
+              </div>
+            )
+          },
+          {
+            id: "maclaurin-ex2",
+            question: <p>Find the Maclaurin series for <InlineMath math="f(x) = \cos x" /> up to and including the term in <InlineMath math="x^4" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate and evaluate at <InlineMath math="x=0" />:</p>
+                <BlockMath math="\begin{aligned} f(x) &= \cos x, & f(0) &= 1 \\ f'(x) &= -\sin x, & f'(0) &= 0 \\ f''(x) &= -\cos x, & f''(0) &= -1 \\ f'''(x) &= \sin x, & f'''(0) &= 0 \\ f^{(4)}(x) &= \cos x, & f^{(4)}(0) &= 1 \end{aligned}" />
+                <p><strong>Step 2:</strong> Substitute into the formula; the odd-power terms vanish:</p>
+                <BlockMath math="\cos x = 1 - \frac{1}{2!}x^2 + \frac{1}{4!}x^4 - \cdots" />
+                <p><strong>Step 3:</strong> Simplify:</p>
+                <BlockMath math="\cos x = 1 - \frac{x^2}{2} + \frac{x^4}{24} - \cdots" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
