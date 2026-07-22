@@ -1393,5 +1393,247 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "functions-and-graphs",
+    title: "Functions and Graphs",
+    topics: [
+      {
+        id: "asymptotes",
+        title: "1. Asymptotes",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>For a rational function, a <strong>vertical asymptote</strong> occurs where the denominator is zero (and the numerator is not). The <strong>non-vertical asymptote</strong> describes behaviour as <InlineMath math="x \to \pm\infty" />:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>Equal degrees on top and bottom &rarr; a horizontal asymptote at the ratio of the leading coefficients.</li>
+              <li>Numerator one degree higher &rarr; a slant (oblique) asymptote, found by algebraic division.</li>
+            </ul>
+            <p><strong>The Golden Rule:</strong> vertical asymptotes come from the zeros of the denominator; for the non-vertical asymptote, compare the degrees — divide if the top degree is the larger.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Hidden hole:</strong> if a factor cancels, there is a hole, not an asymptote — check the numerator is non-zero there.</li>
+                <li><strong>Slant asymptote:</strong> needs polynomial division; the asymptote is the quotient (ignoring the remainder term).</li>
+                <li><strong>Wrong horizontal value:</strong> for equal degrees it is the ratio of the <em>leading</em> coefficients.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "asymptotes-ex1",
+            question: <p>Find the asymptotes of <InlineMath math="y = \dfrac{2x + 1}{x - 3}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The denominator is zero at <InlineMath math="x = 3" />, giving a vertical asymptote <InlineMath math="x = 3" />.</p>
+                <p><strong>Step 2:</strong> The degrees are equal, so as <InlineMath math="x \to \pm\infty" /> the function tends to the ratio of leading coefficients:</p>
+                <BlockMath math="y \to \frac{2x}{x} = 2" />
+                <p>So there is a horizontal asymptote <InlineMath math="y = 2" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "asymptotes-ex2",
+            question: <p>Find the asymptotes of <InlineMath math="y = \dfrac{x^2 + 1}{x - 1}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Vertical asymptote where the denominator is zero: <InlineMath math="x = 1" />.</p>
+                <p><strong>Step 2:</strong> The numerator's degree is one higher, so divide to find the slant asymptote:</p>
+                <BlockMath math="\frac{x^2 + 1}{x - 1} = x + 1 + \frac{2}{x - 1}" />
+                <p><strong>Step 3:</strong> As <InlineMath math="x \to \pm\infty" /> the remainder term vanishes, so the slant asymptote is <InlineMath math="y = x + 1" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "odd-even-functions",
+        title: "2. Odd & Even Functions",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A function is <strong>even</strong> if <InlineMath math="f(-x) = f(x)" /> (symmetric about the <InlineMath math="y" />-axis, like <InlineMath math="x^2" /> or <InlineMath math="\cos x" />), and <strong>odd</strong> if <InlineMath math="f(-x) = -f(x)" /> (rotational symmetry about the origin, like <InlineMath math="x^3" /> or <InlineMath math="\sin x" />). A function that satisfies neither is simply neither.</p>
+            <p><strong>The Golden Rule:</strong> compute <InlineMath math="f(-x)" /> and compare: equal to <InlineMath math="f(x)" /> means even, equal to <InlineMath math="-f(x)" /> means odd, otherwise neither.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>A mixed function is neither:</strong> a sum like <InlineMath math="x^2 + x" /> is neither odd nor even — every term must fit the same pattern.</li>
+                <li><strong>Negating the whole function:</strong> <InlineMath math="-f(x)" /> negates every term, not just some.</li>
+                <li><strong>Even powers vs odd powers:</strong> even powers of <InlineMath math="x" /> are unchanged by <InlineMath math="x \to -x" />; odd powers change sign.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "odd-even-ex1",
+            question: <p>Determine whether <InlineMath math="f(x) = x^3 - 4x" /> is odd, even, or neither.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Compute <InlineMath math="f(-x)" />:</p>
+                <BlockMath math="f(-x) = (-x)^3 - 4(-x) = -x^3 + 4x" />
+                <p><strong>Step 2:</strong> Compare with <InlineMath math="-f(x) = -(x^3 - 4x) = -x^3 + 4x" />. They match, so <InlineMath math="f" /> is <strong>odd</strong>.</p>
+              </div>
+            )
+          },
+          {
+            id: "odd-even-ex2",
+            question: <p>Determine whether <InlineMath math="f(x) = x^4 + 3x^2 - 1" /> is odd, even, or neither.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Compute <InlineMath math="f(-x)" />:</p>
+                <BlockMath math="f(-x) = (-x)^4 + 3(-x)^2 - 1 = x^4 + 3x^2 - 1" />
+                <p><strong>Step 2:</strong> This equals <InlineMath math="f(x)" />, so <InlineMath math="f" /> is <strong>even</strong>.</p>
+              </div>
+            )
+          },
+          {
+            id: "odd-even-ex3",
+            question: <p>Determine whether <InlineMath math="f(x) = x^2 + x" /> is odd, even, or neither.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Compute <InlineMath math="f(-x) = (-x)^2 + (-x) = x^2 - x" />.</p>
+                <p><strong>Step 2:</strong> This is neither <InlineMath math="f(x) = x^2 + x" /> nor <InlineMath math="-f(x) = -x^2 - x" />, so <InlineMath math="f" /> is <strong>neither</strong> odd nor even.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "stationary-points-inflection",
+        title: "3. Stationary Points & Inflection",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>Stationary points</strong> occur where <InlineMath math="f'(x) = 0" />. Classify them using the second derivative: <InlineMath math="f''(x) > 0" /> gives a minimum, <InlineMath math="f''(x) < 0" /> gives a maximum. A <strong>point of inflection</strong> is where the concavity changes — where <InlineMath math="f''(x) = 0" /> <em>and</em> <InlineMath math="f''" /> changes sign.</p>
+            <p><strong>The Golden Rule:</strong> solve <InlineMath math="f'(x) = 0" /> for the stationary points, then use the sign of <InlineMath math="f''(x)" /> to classify each; for an inflection, confirm the concavity actually changes.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong><InlineMath math="f''(x) = 0" /> is not enough:</strong> an inflection also needs a genuine change of sign in <InlineMath math="f''" />.</li>
+                <li><strong>Missing the <InlineMath math="y" />-coordinate:</strong> give full coordinates for each stationary point.</li>
+                <li><strong>Nature confusion:</strong> keep the sign test straight — positive second derivative is a minimum.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "stationary-ex1",
+            question: <p>Find and classify the stationary points of <InlineMath math="y = x^3 - 3x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Set <InlineMath math="\frac{dy}{dx} = 0" />:</p>
+                <BlockMath math="3x^2 - 3 = 0 \implies x = \pm 1" />
+                <p><strong>Step 2:</strong> Use <InlineMath math="\frac{d^2y}{dx^2} = 6x" /> to classify:</p>
+                <BlockMath math="x = 1:\ 6 > 0 \ (\text{min}), \qquad x = -1:\ -6 < 0 \ (\text{max})" />
+                <p><strong>Step 3:</strong> Find the <InlineMath math="y" />-coordinates: minimum at <InlineMath math="(1, -2)" />, maximum at <InlineMath math="(-1, 2)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "stationary-ex2",
+            question: <p>Find the point of inflection of <InlineMath math="y = x^3 - 6x^2 + 5" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate twice and set the second derivative to zero:</p>
+                <BlockMath math="\frac{dy}{dx} = 3x^2 - 12x, \qquad \frac{d^2y}{dx^2} = 6x - 12 = 0 \implies x = 2" />
+                <p><strong>Step 2:</strong> Check the sign change: <InlineMath math="f''(x) < 0" /> for <InlineMath math="x < 2" /> and <InlineMath math="f''(x) > 0" /> for <InlineMath math="x > 2" />, so the concavity changes.</p>
+                <p><strong>Step 3:</strong> Evaluate <InlineMath math="y" />: <InlineMath math="8 - 24 + 5 = -11" />. The point of inflection is <InlineMath math="(2, -11)" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "extrema-max-min",
+        title: "4. Maximum & Minimum Values",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>On a <strong>closed interval</strong> <InlineMath math="[a, b]" />, the greatest and least values of a continuous function occur either at a stationary point inside the interval or at an endpoint. The method is: find the stationary points in <InlineMath math="(a, b)" />, then evaluate the function at those points and at both endpoints, and compare.</p>
+            <p><strong>The Golden Rule:</strong> on a closed interval, always evaluate the endpoints as well as the interior stationary points — the extreme value is often at an end.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting endpoints:</strong> checking only stationary points can miss the true maximum or minimum.</li>
+                <li><strong>Out-of-range stationary points:</strong> discard any that fall outside the interval.</li>
+                <li><strong>Compare values, not <InlineMath math="x" />:</strong> the answer is the largest/smallest function <em>value</em>.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "extrema-ex1",
+            question: <p>Find the maximum and minimum values of <InlineMath math="f(x) = x^3 - 3x" /> on the closed interval <InlineMath math="[0, 3]" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Stationary points: <InlineMath math="f'(x) = 3x^2 - 3 = 0 \implies x = \pm 1" />. Only <InlineMath math="x = 1" /> lies in <InlineMath math="[0, 3]" />.</p>
+                <p><strong>Step 2:</strong> Evaluate at the interior point and both endpoints:</p>
+                <BlockMath math="f(0) = 0, \qquad f(1) = -2, \qquad f(3) = 18" />
+                <p><strong>Step 3:</strong> The maximum value is <InlineMath math="18" /> (at <InlineMath math="x = 3" />) and the minimum value is <InlineMath math="-2" /> (at <InlineMath math="x = 1" />).</p>
+              </div>
+            )
+          },
+          {
+            id: "extrema-ex2",
+            question: <p>Find the maximum and minimum values of <InlineMath math="f(x) = 2x^3 - 3x^2" /> on <InlineMath math="[-1, 2]" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Stationary points: <InlineMath math="f'(x) = 6x^2 - 6x = 6x(x-1) = 0 \implies x = 0, 1" />. Both lie in <InlineMath math="[-1, 2]" />.</p>
+                <p><strong>Step 2:</strong> Evaluate at the stationary points and endpoints:</p>
+                <BlockMath math="f(-1) = -5, \quad f(0) = 0, \quad f(1) = -1, \quad f(2) = 4" />
+                <p><strong>Step 3:</strong> The maximum value is <InlineMath math="4" /> (at <InlineMath math="x = 2" />) and the minimum value is <InlineMath math="-5" /> (at <InlineMath math="x = -1" />).</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "curve-sketching-related-graphs",
+        title: "5. Curve Sketching & Related Graphs",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A full <strong>curve sketch</strong> combines intercepts, stationary points, asymptotes and behaviour at infinity. <strong>Related graphs</strong> are obtained from <InlineMath math="y = f(x)" /> by transformations: <InlineMath math="f(x) + a" /> shifts up, <InlineMath math="f(x + a) " /> shifts left, <InlineMath math="af(x)" /> stretches vertically, <InlineMath math="-f(x)" /> reflects in the <InlineMath math="x" />-axis, <InlineMath math="|f(x)|" /> reflects the negative parts upward, and <InlineMath math="y = f^{-1}(x)" /> reflects in the line <InlineMath math="y = x" />.</p>
+            <p><strong>The Golden Rule:</strong> apply one transformation at a time and track how the key features — roots, turning points and asymptotes — move.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Horizontal shift direction:</strong> <InlineMath math="f(x + a)" /> moves the graph <em>left</em> for <InlineMath math="a > 0" /> — the opposite of what many expect.</li>
+                <li><strong>Modulus graph:</strong> <InlineMath math="|f(x)|" /> reflects only the parts below the <InlineMath math="x" />-axis; the rest is unchanged.</li>
+                <li><strong>Derivative graph:</strong> the roots of <InlineMath math="y = f'(x)" /> are the <InlineMath math="x" />-values of the turning points of <InlineMath math="y = f(x)" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "curve-sketch-ex1",
+            question: <p>The graph of <InlineMath math="y = f(x)" /> has a maximum turning point at <InlineMath math="(2, 5)" />. State the coordinates of the corresponding turning point on the graph of <InlineMath math="y = f(x - 1) + 3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The <InlineMath math="f(x-1)" /> part shifts the graph <InlineMath math="1" /> unit to the right; the <InlineMath math="+3" /> shifts it <InlineMath math="3" /> units up.</p>
+                <p><strong>Step 2:</strong> Apply both shifts to the point <InlineMath math="(2, 5)" />:</p>
+                <BlockMath math="(2 + 1,\ 5 + 3) = (3, 8)" />
+                <p>The turning point is a maximum at <InlineMath math="(3, 8)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "curve-sketch-ex2",
+            question: <p>The graph of <InlineMath math="y = f(x)" /> has stationary points at <InlineMath math="x = 2" /> and <InlineMath math="x = 4" />. State the <InlineMath math="x" />-coordinates where the graph of <InlineMath math="y = f'(x)" /> crosses the <InlineMath math="x" />-axis.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> A stationary point of <InlineMath math="f" /> is where <InlineMath math="f'(x) = 0" />, i.e. where the derivative graph meets the <InlineMath math="x" />-axis.</p>
+                <p><strong>Step 2:</strong> So <InlineMath math="y = f'(x)" /> crosses the <InlineMath math="x" />-axis at <InlineMath math="x = 2" /> and <InlineMath math="x = 4" />.</p>
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
