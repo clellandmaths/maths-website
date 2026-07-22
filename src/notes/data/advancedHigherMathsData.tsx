@@ -1899,5 +1899,389 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "differential-equations",
+    title: "Differential Equations",
+    topics: [
+      {
+        id: "first-order-separable",
+        title: "1. First-Order Separable",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A first-order differential equation is <strong>separable</strong> if it can be written as <InlineMath math="\frac{dy}{dx} = f(x)g(y)" />. Separate the variables so that all the <InlineMath math="y" /> terms (with <InlineMath math="dy" />) are on one side and all the <InlineMath math="x" /> terms (with <InlineMath math="dx" />) on the other, then integrate both sides.</p>
+            <BlockMath math="\int \frac{1}{g(y)}\,dy = \int f(x)\,dx" />
+            <p>The <strong>general solution</strong> contains an arbitrary constant; a <strong>particular solution</strong> uses an initial condition to fix it.</p>
+            <p><strong>The Golden Rule:</strong> separate first, integrate both sides, and include just <em>one</em> constant of integration — then apply any initial condition.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Two constants:</strong> only one constant of integration is needed — combine them into one.</li>
+                <li><strong>Forgetting the condition:</strong> use the given initial condition to find the constant for a particular solution.</li>
+                <li><strong>Separation slips:</strong> make sure every <InlineMath math="y" /> moves with <InlineMath math="dy" /> and every <InlineMath math="x" /> with <InlineMath math="dx" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "separable-ex1",
+            question: <p>Find the general solution of <InlineMath math="\dfrac{dy}{dx} = xy" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Separate the variables:</p>
+                <BlockMath math="\frac{1}{y}\,dy = x\,dx" />
+                <p><strong>Step 2:</strong> Integrate both sides:</p>
+                <BlockMath math="\ln|y| = \frac{x^2}{2} + c" />
+                <p><strong>Step 3:</strong> Exponentiate to make <InlineMath math="y" /> the subject:</p>
+                <BlockMath math="y = A e^{x^2/2} \quad (A = e^c)" />
+              </div>
+            )
+          },
+          {
+            id: "separable-ex2",
+            question: <p>Solve <InlineMath math="\dfrac{dy}{dx} = 2xy^2" /> given that <InlineMath math="y = 1" /> when <InlineMath math="x = 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Separate and integrate:</p>
+                <BlockMath math="\int \frac{1}{y^2}\,dy = \int 2x\,dx \implies -\frac{1}{y} = x^2 + c" />
+                <p><strong>Step 2:</strong> Apply the condition <InlineMath math="y=1" /> at <InlineMath math="x=0" />:</p>
+                <BlockMath math="-\frac{1}{1} = 0 + c \implies c = -1" />
+                <p><strong>Step 3:</strong> Rearrange for <InlineMath math="y" />:</p>
+                <BlockMath math="-\frac{1}{y} = x^2 - 1 \implies y = \frac{1}{1 - x^2}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "first-order-linear",
+        title: "2. First-Order Linear",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A <strong>first-order linear</strong> equation has the standard form <InlineMath math="\frac{dy}{dx} + P(x)\,y = Q(x)" />. Multiply through by the <strong>integrating factor</strong>:</p>
+            <BlockMath math="I = e^{\int P\,dx}" />
+            <p>The left side then becomes an exact derivative, <InlineMath math="\frac{d}{dx}(Iy)" />, so integrating gives <InlineMath math="Iy = \int IQ\,dx" />.</p>
+            <p><strong>The Golden Rule:</strong> put the equation in standard form (coefficient of <InlineMath math="\frac{dy}{dx}" /> equal to 1) before reading off <InlineMath math="P" />, then multiply by <InlineMath math="e^{\int P\,dx}" /> and recognise the left side as <InlineMath math="\frac{d}{dx}(Iy)" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Not in standard form:</strong> divide through so the <InlineMath math="\frac{dy}{dx}" /> coefficient is 1 before identifying <InlineMath math="P" />.</li>
+                <li><strong>Integrating factor:</strong> use <InlineMath math="e^{\int P\,dx}" /> with no separate constant.</li>
+                <li><strong>The left side:</strong> after multiplying, it collapses to <InlineMath math="\frac{d}{dx}(Iy)" /> — use that directly.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "linear-ex1",
+            question: <p>Solve <InlineMath math="\dfrac{dy}{dx} + \dfrac{1}{x}y = 3x" /> for <InlineMath math="x > 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Here <InlineMath math="P = \frac{1}{x}" />, so the integrating factor is:</p>
+                <BlockMath math="I = e^{\int \frac{1}{x}\,dx} = e^{\ln x} = x" />
+                <p><strong>Step 2:</strong> Multiply through; the left side becomes <InlineMath math="\frac{d}{dx}(xy)" />:</p>
+                <BlockMath math="\frac{d}{dx}(xy) = 3x^2" />
+                <p><strong>Step 3:</strong> Integrate and solve for <InlineMath math="y" />:</p>
+                <BlockMath math="xy = x^3 + c \implies y = x^2 + \frac{c}{x}" />
+              </div>
+            )
+          },
+          {
+            id: "linear-ex2",
+            question: <p>Solve <InlineMath math="\dfrac{dy}{dx} - y = e^{2x}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Here <InlineMath math="P = -1" />, so the integrating factor is <InlineMath math="I = e^{\int -1\,dx} = e^{-x}" />.</p>
+                <p><strong>Step 2:</strong> Multiply through; the left side becomes <InlineMath math="\frac{d}{dx}(e^{-x}y)" />:</p>
+                <BlockMath math="\frac{d}{dx}\bigl(e^{-x}y\bigr) = e^{-x}e^{2x} = e^{x}" />
+                <p><strong>Step 3:</strong> Integrate and solve:</p>
+                <BlockMath math="e^{-x}y = e^{x} + c \implies y = e^{2x} + ce^{x}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "second-order-homogeneous",
+        title: "3. Second-Order Homogeneous",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A <strong>second-order homogeneous</strong> equation <InlineMath math="a\,y'' + b\,y' + c\,y = 0" /> is solved via its <strong>auxiliary equation</strong> <InlineMath math="am^2 + bm + c = 0" />. The nature of the roots gives the general solution:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>Real distinct roots <InlineMath math="m_1, m_2" />: <InlineMath math="y = Ae^{m_1 x} + Be^{m_2 x}" /></li>
+              <li>Real repeated root <InlineMath math="m" />: <InlineMath math="y = (A + Bx)e^{mx}" /></li>
+              <li>Complex roots <InlineMath math="p \pm qi" />: <InlineMath math="y = e^{px}(A\cos qx + B\sin qx)" /></li>
+            </ul>
+            <p><strong>The Golden Rule:</strong> solve the auxiliary equation first — the type of roots (distinct real, repeated, or complex) determines which of the three solution forms to use.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Repeated root:</strong> you need the <InlineMath math="(A + Bx)" /> form, not just <InlineMath math="Ae^{mx}" />.</li>
+                <li><strong>Complex roots:</strong> use the <InlineMath math="e^{px}(A\cos qx + B\sin qx)" /> form.</li>
+                <li><strong>Two constants:</strong> a second-order equation always has two arbitrary constants.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "homogeneous-ex1",
+            question: <p>Find the general solution of <InlineMath math="y'' - 5y' + 6y = 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Form and solve the auxiliary equation:</p>
+                <BlockMath math="m^2 - 5m + 6 = 0 \implies (m-2)(m-3) = 0 \implies m = 2,\ 3" />
+                <p><strong>Step 2:</strong> Real distinct roots, so:</p>
+                <BlockMath math="y = Ae^{2x} + Be^{3x}" />
+              </div>
+            )
+          },
+          {
+            id: "homogeneous-ex2",
+            question: <p>Find the general solution of <InlineMath math="y'' - 4y' + 4y = 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The auxiliary equation has a repeated root:</p>
+                <BlockMath math="m^2 - 4m + 4 = (m-2)^2 = 0 \implies m = 2 \ (\text{repeated})" />
+                <p><strong>Step 2:</strong> Use the repeated-root form:</p>
+                <BlockMath math="y = (A + Bx)e^{2x}" />
+              </div>
+            )
+          },
+          {
+            id: "homogeneous-ex3",
+            question: <p>Find the general solution of <InlineMath math="y'' + 4y = 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The auxiliary equation gives complex roots:</p>
+                <BlockMath math="m^2 + 4 = 0 \implies m = \pm 2i \quad (p = 0,\ q = 2)" />
+                <p><strong>Step 2:</strong> Use the complex-root form (here <InlineMath math="e^{0x} = 1" />):</p>
+                <BlockMath math="y = A\cos 2x + B\sin 2x" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "second-order-non-homogeneous",
+        title: "4. Second-Order Non-Homogeneous",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>For <InlineMath math="a\,y'' + b\,y' + c\,y = f(x)" />, the general solution is the <strong>complementary function</strong> (CF) — the solution of the homogeneous equation — plus a <strong>particular integral</strong> (PI), a trial function shaped like <InlineMath math="f(x)" />:</p>
+            <BlockMath math="y = \text{CF} + \text{PI}" />
+            <p>Trial forms: a constant or polynomial for a polynomial <InlineMath math="f(x)" />, <InlineMath math="Ce^{kx}" /> for an exponential, and <InlineMath math="C\cos + D\sin" /> for a trig term. If the trial clashes with the CF, multiply it by <InlineMath math="x" />.</p>
+            <p><strong>The Golden Rule:</strong> find the CF from the auxiliary equation, find a PI by substituting a suitable trial function, add them — and apply any conditions to the <em>full</em> solution, not just the CF.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Missing a part:</strong> the general solution is CF <em>plus</em> PI — both are required.</li>
+                <li><strong>Wrong trial:</strong> match the PI trial to the form of <InlineMath math="f(x)" />.</li>
+                <li><strong>Conditions applied too early:</strong> fix the constants using the full CF + PI, not the CF alone.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "non-homogeneous-ex1",
+            question: <p>Find the general solution of <InlineMath math="y'' - 5y' + 6y = 12" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The complementary function comes from <InlineMath math="m^2 - 5m + 6 = 0" />, giving <InlineMath math="m = 2, 3" />:</p>
+                <BlockMath math="\text{CF} = Ae^{2x} + Be^{3x}" />
+                <p><strong>Step 2:</strong> The right side is a constant, so try <InlineMath math="y = C" /> (then <InlineMath math="y' = y'' = 0" />):</p>
+                <BlockMath math="6C = 12 \implies C = 2 \quad\Rightarrow\quad \text{PI} = 2" />
+                <p><strong>Step 3:</strong> The general solution is CF + PI:</p>
+                <BlockMath math="y = Ae^{2x} + Be^{3x} + 2" />
+              </div>
+            )
+          },
+          {
+            id: "non-homogeneous-ex2",
+            question: <p>Find the general solution of <InlineMath math="y'' - 3y' + 2y = e^{3x}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The auxiliary equation <InlineMath math="m^2 - 3m + 2 = 0" /> gives <InlineMath math="m = 1, 2" />:</p>
+                <BlockMath math="\text{CF} = Ae^{x} + Be^{2x}" />
+                <p><strong>Step 2:</strong> Try <InlineMath math="y = Ce^{3x}" />, so <InlineMath math="y' = 3Ce^{3x}" /> and <InlineMath math="y'' = 9Ce^{3x}" />. Substitute:</p>
+                <BlockMath math="(9C - 9C + 2C)e^{3x} = e^{3x} \implies 2C = 1 \implies C = \tfrac{1}{2}" />
+                <p><strong>Step 3:</strong> The general solution is:</p>
+                <BlockMath math="y = Ae^{x} + Be^{2x} + \tfrac{1}{2}e^{3x}" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "vectors",
+    title: "Vectors",
+    topics: [
+      {
+        id: "vector-scalar-triple-product",
+        title: "1. Vector & Scalar Triple Product",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The <strong>scalar (dot) product</strong> gives the angle between two vectors:</p>
+            <BlockMath math="\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta \implies \cos\theta = \frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{a}||\mathbf{b}|}" />
+            <p>The <strong>vector (cross) product</strong> <InlineMath math="\mathbf{a} \times \mathbf{b}" /> is a vector perpendicular to both, computed as a determinant. The <strong>scalar triple product</strong> <InlineMath math="\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})" /> gives the volume of the parallelepiped and is zero when the vectors are coplanar.</p>
+            <p><strong>The Golden Rule:</strong> use the scalar product for angles, the vector product when you need a perpendicular direction, and the scalar triple product to test coplanarity — a zero value means coplanar.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Scalar vs vector:</strong> the dot product is a number, the cross product is a vector.</li>
+                <li><strong>Order of the cross product:</strong> <InlineMath math="\mathbf{a}\times\mathbf{b} = -(\mathbf{b}\times\mathbf{a})" /> — the order matters.</li>
+                <li><strong>Angle formula:</strong> the angle between vectors uses the <em>scalar</em> product.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "vector-products-ex1",
+            question: <p>Find the angle between <InlineMath math="\mathbf{a} = (1, 0, 1)" /> and <InlineMath math="\mathbf{b} = (1, 1, 0)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Compute the scalar product and the two magnitudes:</p>
+                <BlockMath math="\mathbf{a}\cdot\mathbf{b} = 1 + 0 + 0 = 1, \qquad |\mathbf{a}| = \sqrt{2}, \quad |\mathbf{b}| = \sqrt{2}" />
+                <p><strong>Step 2:</strong> Apply the angle formula:</p>
+                <BlockMath math="\cos\theta = \frac{1}{\sqrt{2}\,\sqrt{2}} = \frac{1}{2} \implies \theta = 60^\circ" />
+              </div>
+            )
+          },
+          {
+            id: "vector-products-ex2",
+            question: <p>Find <InlineMath math="\mathbf{a} \times \mathbf{b}" /> for <InlineMath math="\mathbf{a} = (1, 2, 3)" /> and <InlineMath math="\mathbf{b} = (2, 1, 0)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write the cross product as a determinant:</p>
+                <BlockMath math="\mathbf{a} \times \mathbf{b} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ 1 & 2 & 3 \\ 2 & 1 & 0 \end{vmatrix}" />
+                <p><strong>Step 2:</strong> Expand along the top row:</p>
+                <BlockMath math="= \mathbf{i}(2\cdot 0 - 3\cdot 1) - \mathbf{j}(1\cdot 0 - 3\cdot 2) + \mathbf{k}(1\cdot 1 - 2\cdot 2)" />
+                <p><strong>Step 3:</strong> Simplify:</p>
+                <BlockMath math="= (-3,\ 6,\ -3)" />
+              </div>
+            )
+          },
+          {
+            id: "vector-products-ex3",
+            question: <p>Determine whether <InlineMath math="\mathbf{a} = (1,0,1)" />, <InlineMath math="\mathbf{b} = (1,1,0)" /> and <InlineMath math="\mathbf{c} = (2,1,1)" /> are coplanar.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> First find <InlineMath math="\mathbf{b}\times\mathbf{c}" />:</p>
+                <BlockMath math="\mathbf{b}\times\mathbf{c} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ 1 & 1 & 0 \\ 2 & 1 & 1 \end{vmatrix} = (1,\ -1,\ -1)" />
+                <p><strong>Step 2:</strong> Compute the scalar triple product <InlineMath math="\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})" />:</p>
+                <BlockMath math="(1,0,1)\cdot(1,-1,-1) = 1 + 0 - 1 = 0" />
+                <p><strong>Step 3:</strong> The scalar triple product is <InlineMath math="0" />, so the three vectors are <strong>coplanar</strong>.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "equations-of-lines",
+        title: "2. Equations of Lines",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A line in three dimensions needs a point <InlineMath math="\mathbf{a}" /> on it and a direction vector <InlineMath math="\mathbf{d}" />. It can be written in three equivalent ways:</p>
+            <BlockMath math="\text{Vector: } \mathbf{r} = \mathbf{a} + t\mathbf{d} \qquad \text{Symmetric: } \frac{x - a_1}{d_1} = \frac{y - a_2}{d_2} = \frac{z - a_3}{d_3}" />
+            <p>The angle between two lines is the angle between their direction vectors.</p>
+            <p><strong>The Golden Rule:</strong> a line is a point plus a direction. Given two points, subtract to get the direction, then convert freely between vector, parametric and symmetric forms.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Direction from two points:</strong> subtract the position vectors to get <InlineMath math="\mathbf{d}" />.</li>
+                <li><strong>Symmetric denominators:</strong> these are the components of the direction vector.</li>
+                <li><strong>Angle between lines:</strong> use the direction vectors, not the points.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "lines-ex1",
+            question: <p>Find the vector and symmetric equations of the line through <InlineMath math="A(1, 2, 3)" /> and <InlineMath math="B(4, 0, 5)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The direction vector is <InlineMath math="\mathbf{d} = B - A" />:</p>
+                <BlockMath math="\mathbf{d} = (4-1,\ 0-2,\ 5-3) = (3,\ -2,\ 2)" />
+                <p><strong>Step 2:</strong> Vector equation, using point <InlineMath math="A" />:</p>
+                <BlockMath math="\mathbf{r} = (1, 2, 3) + t(3, -2, 2)" />
+                <p><strong>Step 3:</strong> Symmetric form:</p>
+                <BlockMath math="\frac{x-1}{3} = \frac{y-2}{-2} = \frac{z-3}{2}" />
+              </div>
+            )
+          },
+          {
+            id: "lines-ex2",
+            question: <p>Find the acute angle between the lines with direction vectors <InlineMath math="\mathbf{d}_1 = (1, 0, 1)" /> and <InlineMath math="\mathbf{d}_2 = (1, 1, 0)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Use the scalar product of the direction vectors:</p>
+                <BlockMath math="\mathbf{d}_1\cdot\mathbf{d}_2 = 1, \qquad |\mathbf{d}_1| = |\mathbf{d}_2| = \sqrt{2}" />
+                <p><strong>Step 2:</strong> Apply the angle formula:</p>
+                <BlockMath math="\cos\theta = \frac{1}{\sqrt{2}\,\sqrt{2}} = \frac{1}{2} \implies \theta = 60^\circ" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "equations-of-planes",
+        title: "3. Equations of Planes",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A plane is fixed by a <strong>normal vector</strong> <InlineMath math="\mathbf{n} = (a, b, c)" /> and a point on it. Its Cartesian equation is:</p>
+            <BlockMath math="ax + by + cz = d" />
+            <p>where <InlineMath math="d" /> is found by substituting a known point. If the plane is given by three points, find the normal by taking the cross product of two direction vectors lying in the plane.</p>
+            <p><strong>The Golden Rule:</strong> the coefficients <InlineMath math="(a, b, c)" /> in <InlineMath math="ax + by + cz = d" /> <em>are</em> the normal vector; find <InlineMath math="d" /> by substituting a point on the plane.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Normal from coefficients:</strong> read the normal directly from the Cartesian equation's coefficients.</li>
+                <li><strong>Three points:</strong> use a cross product of two in-plane vectors to get the normal.</li>
+                <li><strong>Finding <InlineMath math="d" />:</strong> substitute any known point into <InlineMath math="ax + by + cz" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "planes-ex1",
+            question: <p>Find the Cartesian equation of the plane with normal <InlineMath math="\mathbf{n} = (2, -1, 3)" /> passing through the point <InlineMath math="(1, 0, 4)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The equation is <InlineMath math="2x - y + 3z = d" />. Substitute the point to find <InlineMath math="d" />:</p>
+                <BlockMath math="2(1) - (0) + 3(4) = 2 + 12 = 14" />
+                <p><strong>Step 2:</strong> So the plane is:</p>
+                <BlockMath math="2x - y + 3z = 14" />
+              </div>
+            )
+          },
+          {
+            id: "planes-ex2",
+            question: <p>Find the equation of the plane through the points <InlineMath math="A(1, 0, 0)" />, <InlineMath math="B(0, 1, 0)" /> and <InlineMath math="C(0, 0, 1)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Two direction vectors in the plane are <InlineMath math="\overrightarrow{AB} = (-1, 1, 0)" /> and <InlineMath math="\overrightarrow{AC} = (-1, 0, 1)" />. The normal is their cross product:</p>
+                <BlockMath math="\mathbf{n} = \overrightarrow{AB}\times\overrightarrow{AC} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ -1 & 1 & 0 \\ -1 & 0 & 1 \end{vmatrix} = (1,\ 1,\ 1)" />
+                <p><strong>Step 2:</strong> Using normal <InlineMath math="(1,1,1)" /> and point <InlineMath math="A(1,0,0)" />, the equation <InlineMath math="x + y + z = d" /> gives <InlineMath math="d = 1" />:</p>
+                <BlockMath math="x + y + z = 1" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
