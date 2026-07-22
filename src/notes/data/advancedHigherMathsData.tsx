@@ -695,5 +695,202 @@ export const advancedHigherMathsData: Section[] = [
         ]
       }
     ]
+  },
+  {
+    id: "complex-numbers",
+    title: "Complex Numbers",
+    topics: [
+      {
+        id: "complex-algebraic-operations",
+        title: "1. Algebraic Operations",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A complex number has the form <InlineMath math="z = a + bi" />, where <InlineMath math="i^2 = -1" />; <InlineMath math="a" /> is the real part and <InlineMath math="b" /> the imaginary part. Add and subtract by combining real and imaginary parts; multiply by expanding and using <InlineMath math="i^2 = -1" />.</p>
+            <p>The <strong>complex conjugate</strong> of <InlineMath math="z = a + bi" /> is <InlineMath math="\bar{z} = a - bi" />, and their product is real:</p>
+            <BlockMath math="z\bar{z} = (a+bi)(a-bi) = a^2 + b^2" />
+            <p>To <strong>divide</strong>, multiply the numerator and denominator by the conjugate of the denominator, which makes the denominator real.</p>
+            <p><strong>The Golden Rule:</strong> to divide complex numbers, multiply top and bottom by the conjugate of the <em>denominator</em> — this clears <InlineMath math="i" /> from the bottom.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting <InlineMath math="i^2 = -1" />:</strong> the <InlineMath math="i^2" /> term becomes a real number and changes the real part.</li>
+                <li><strong>Conjugating the wrong part:</strong> when dividing, it is the denominator you conjugate, not the numerator.</li>
+                <li><strong>Mixing parts:</strong> keep real and imaginary terms separate all the way to the final <InlineMath math="a + bi" /> form.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "complex-ops-ex1",
+            question: <p>Evaluate <InlineMath math="(3 + 2i)(1 - 4i)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Expand the brackets:</p>
+                <BlockMath math="(3+2i)(1-4i) = 3 - 12i + 2i - 8i^2" />
+                <p><strong>Step 2:</strong> Replace <InlineMath math="i^2" /> with <InlineMath math="-1" /> and simplify:</p>
+                <BlockMath math="= 3 - 10i - 8(-1) = 3 - 10i + 8 = 11 - 10i" />
+              </div>
+            )
+          },
+          {
+            id: "complex-ops-ex2",
+            question: <p>Express <InlineMath math="\dfrac{5 + i}{2 - 3i}" /> in the form <InlineMath math="a + bi" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Multiply numerator and denominator by the conjugate of the denominator, <InlineMath math="2 + 3i" />:</p>
+                <BlockMath math="\frac{5+i}{2-3i} \times \frac{2+3i}{2+3i} = \frac{(5+i)(2+3i)}{(2-3i)(2+3i)}" />
+                <p><strong>Step 2:</strong> Expand top and bottom:</p>
+                <BlockMath math="= \frac{10 + 15i + 2i + 3i^2}{4 + 9} = \frac{7 + 17i}{13}" />
+                <p><strong>Step 3:</strong> Write in <InlineMath math="a + bi" /> form:</p>
+                <BlockMath math="= \frac{7}{13} + \frac{17}{13}i" />
+              </div>
+            )
+          },
+          {
+            id: "complex-ops-ex3",
+            question: <p>Find the square roots of <InlineMath math="3 + 4i" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Let <InlineMath math="\sqrt{3+4i} = a + bi" />. Squaring and comparing parts:</p>
+                <BlockMath math="(a+bi)^2 = a^2 - b^2 + 2abi = 3 + 4i \implies a^2 - b^2 = 3, \quad 2ab = 4" />
+                <p><strong>Step 2:</strong> From <InlineMath math="2ab = 4" /> we get <InlineMath math="b = \dfrac{2}{a}" />. Substitute:</p>
+                <BlockMath math="a^2 - \frac{4}{a^2} = 3 \implies a^4 - 3a^2 - 4 = 0 \implies (a^2 - 4)(a^2 + 1) = 0" />
+                <p><strong>Step 3:</strong> Since <InlineMath math="a" /> is real, <InlineMath math="a^2 = 4" />, so <InlineMath math="a = \pm 2" /> with <InlineMath math="b = \pm 1" /> to match. The square roots are:</p>
+                <BlockMath math="2 + i \quad \text{and} \quad -2 - i" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "polar-form-loci",
+        title: "2. Polar Form & Loci",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>A complex number can be written in <strong>polar (modulus–argument) form</strong>:</p>
+            <BlockMath math="z = r(\cos\theta + i\sin\theta), \qquad r = |z| = \sqrt{a^2 + b^2}, \quad \theta = \arg z" />
+            <p>The modulus <InlineMath math="r" /> is the distance from the origin on an Argand diagram, and the argument <InlineMath math="\theta" /> is the angle measured from the positive real axis (taken in the range <InlineMath math="-\pi < \theta \leq \pi" />).</p>
+            <p><strong>Loci</strong> describe sets of points: <InlineMath math="|z - a| = k" /> is a circle of radius <InlineMath math="k" /> centred at the point <InlineMath math="a" />; <InlineMath math="|z - a| = |z - b|" /> is the perpendicular bisector of the segment joining <InlineMath math="a" /> and <InlineMath math="b" />.</p>
+            <p><strong>The Golden Rule:</strong> always identify which quadrant <InlineMath math="z" /> lies in before stating the argument — <InlineMath math="\arctan\frac{b}{a}" /> alone cannot tell the second quadrant from the fourth.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Argument quadrant:</strong> <InlineMath math="\arctan\frac{b}{a}" /> gives a principal value — adjust by <InlineMath math="\pm\pi" /> for the second and third quadrants.</li>
+                <li><strong>Circle centre:</strong> <InlineMath math="|z - a| = k" /> is centred at the point <InlineMath math="a" />, not at the origin.</li>
+                <li><strong>Argument range:</strong> stick to <InlineMath math="-\pi < \theta \leq \pi" /> unless told otherwise.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "polar-ex1",
+            question: <p>Express <InlineMath math="z = 1 + i\sqrt{3}" /> in polar form.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Find the modulus:</p>
+                <BlockMath math="r = \sqrt{1^2 + (\sqrt{3})^2} = \sqrt{1 + 3} = 2" />
+                <p><strong>Step 2:</strong> The point <InlineMath math="(1, \sqrt{3})" /> is in the first quadrant, so the argument is:</p>
+                <BlockMath math="\theta = \arctan\!\left(\frac{\sqrt{3}}{1}\right) = \frac{\pi}{3}" />
+                <p><strong>Step 3:</strong> Write in polar form:</p>
+                <BlockMath math="z = 2\left(\cos\frac{\pi}{3} + i\sin\frac{\pi}{3}\right)" />
+              </div>
+            )
+          },
+          {
+            id: "polar-ex2",
+            question: <p>Express <InlineMath math="z = -1 + i" /> in polar form.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Find the modulus:</p>
+                <BlockMath math="r = \sqrt{(-1)^2 + 1^2} = \sqrt{2}" />
+                <p><strong>Step 2:</strong> The point <InlineMath math="(-1, 1)" /> is in the second quadrant. The related acute angle is <InlineMath math="\frac{\pi}{4}" />, so measuring from the positive real axis:</p>
+                <BlockMath math="\theta = \pi - \frac{\pi}{4} = \frac{3\pi}{4}" />
+                <p><strong>Step 3:</strong> Write in polar form:</p>
+                <BlockMath math="z = \sqrt{2}\left(\cos\frac{3\pi}{4} + i\sin\frac{3\pi}{4}\right)" />
+              </div>
+            )
+          },
+          {
+            id: "polar-ex3",
+            question: <p>Describe, and sketch mentally, the locus of points satisfying <InlineMath math="|z - 2 - i| = 3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Rewrite the condition to identify the fixed point:</p>
+                <BlockMath math="|z - (2 + i)| = 3" />
+                <p><strong>Step 2:</strong> This is the set of points whose distance from <InlineMath math="2 + i" /> is <InlineMath math="3" />.</p>
+                <p><strong>Step 3:</strong> The locus is a <strong>circle</strong> of radius <InlineMath math="3" /> centred at the point <InlineMath math="(2, 1)" /> on the Argand diagram.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "de-moivre-fta",
+        title: "3. De Moivre's Theorem & Roots",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>De Moivre's Theorem</strong> gives powers of a complex number in polar form:</p>
+            <BlockMath math="\bigl[r(\cos\theta + i\sin\theta)\bigr]^n = r^n\bigl(\cos n\theta + i\sin n\theta\bigr)" />
+            <p>It is used to evaluate powers, to find <InlineMath math="n" />th roots (which are equally spaced around a circle), and to derive multiple-angle trig identities. To find all <InlineMath math="n" />th roots, add <InlineMath math="2k\pi" /> to the argument before dividing by <InlineMath math="n" />.</p>
+            <p>The <strong>Fundamental Theorem of Algebra</strong> states that a polynomial of degree <InlineMath math="n" /> has exactly <InlineMath math="n" /> roots in <InlineMath math="\mathbb{C}" /> (counting multiplicity). For a polynomial with <em>real</em> coefficients, any complex roots occur in <strong>conjugate pairs</strong>.</p>
+            <p><strong>The Golden Rule:</strong> when finding roots, write the argument as <InlineMath math="\theta + 2k\pi" /> first, then take <InlineMath math="k = 0, 1, \dots, n-1" /> to capture all <InlineMath math="n" /> distinct roots.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Only finding one root:</strong> you must add <InlineMath math="2k\pi" /> to the argument to obtain all <InlineMath math="n" /> roots.</li>
+                <li><strong>Forgetting conjugate pairs:</strong> a real polynomial with root <InlineMath math="p + qi" /> also has root <InlineMath math="p - qi" />.</li>
+                <li><strong>Applying De Moivre outside polar form:</strong> convert to modulus–argument form first.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "de-moivre-ex1",
+            question: <p>Use De Moivre's Theorem to evaluate <InlineMath math="(1 + i)^8" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write <InlineMath math="1 + i" /> in polar form. Here <InlineMath math="r = \sqrt{2}" /> and <InlineMath math="\theta = \frac{\pi}{4}" />:</p>
+                <BlockMath math="1 + i = \sqrt{2}\left(\cos\frac{\pi}{4} + i\sin\frac{\pi}{4}\right)" />
+                <p><strong>Step 2:</strong> Apply De Moivre's Theorem with <InlineMath math="n = 8" />:</p>
+                <BlockMath math="(1+i)^8 = (\sqrt{2})^8\left(\cos 2\pi + i\sin 2\pi\right) = 16(1 + 0)" />
+                <p><strong>Step 3:</strong> So <InlineMath math="(1+i)^8 = 16" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "de-moivre-ex2",
+            question: <p>Find the three cube roots of <InlineMath math="8" />, giving your answers in the form <InlineMath math="a + bi" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write <InlineMath math="8" /> in polar form, including the <InlineMath math="2k\pi" />:</p>
+                <BlockMath math="8 = 8\bigl(\cos(0 + 2k\pi) + i\sin(0 + 2k\pi)\bigr)" />
+                <p><strong>Step 2:</strong> Take the cube root: modulus <InlineMath math="8^{1/3} = 2" />, arguments <InlineMath math="\frac{2k\pi}{3}" /> for <InlineMath math="k = 0, 1, 2" />, giving <InlineMath math="0,\ \frac{2\pi}{3},\ \frac{4\pi}{3}" />.</p>
+                <p><strong>Step 3:</strong> Evaluate each root:</p>
+                <BlockMath math="2,\qquad 2\left(-\tfrac{1}{2} + \tfrac{\sqrt{3}}{2}i\right) = -1 + i\sqrt{3},\qquad -1 - i\sqrt{3}" />
+              </div>
+            )
+          },
+          {
+            id: "de-moivre-ex3",
+            question: <p>A polynomial with real coefficients has <InlineMath math="3 - 2i" /> as a root. Write down another root, and hence a real quadratic factor of the polynomial.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Real coefficients force complex roots into conjugate pairs, so <InlineMath math="3 + 2i" /> is also a root.</p>
+                <p><strong>Step 2:</strong> The quadratic factor is <InlineMath math="(z - (3-2i))(z - (3+2i))" />. Its coefficients come from the sum and product of the roots:</p>
+                <BlockMath math="\text{sum} = 6, \qquad \text{product} = (3-2i)(3+2i) = 9 + 4 = 13" />
+                <p><strong>Step 3:</strong> So a real quadratic factor is:</p>
+                <BlockMath math="z^2 - 6z + 13" />
+              </div>
+            )
+          }
+        ]
+      }
+    ]
   }
 ];
