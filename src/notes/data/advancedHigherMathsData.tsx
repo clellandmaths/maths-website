@@ -1630,8 +1630,93 @@ export const advancedHigherMathsData: Section[] = [
         ]
       },
       {
+        id: "inverse-trig-differentiation",
+        title: "4. Inverse Trigonometric Differentiation",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The derivatives of <InlineMath math="\sin^{-1}x" />, <InlineMath math="\cos^{-1}x" /> and <InlineMath math="\tan^{-1}x" /> are not obvious, but they all follow from one idea about inverse functions. If <InlineMath math="y" /> is the inverse of some function, we can swap the roles of the variables and use:</p>
+            <BlockMath math="\frac{dy}{dx} = \frac{1}{\dfrac{dx}{dy}} \qquad \left(\text{provided } \frac{dx}{dy} \neq 0\right)" />
+            <p>Take <InlineMath math="y = \tan^{-1}x" />. By definition this means <InlineMath math="x = \tan y" />, which is easy to differentiate:</p>
+            <BlockMath math="\frac{dx}{dy} = \sec^2 y = 1 + \tan^2 y = 1 + x^2 \quad\implies\quad \frac{dy}{dx} = \frac{1}{1+x^2}" />
+            <p>The same argument applied to <InlineMath math="\sin^{-1}" /> and <InlineMath math="\cos^{-1}" /> gives the three standard results:</p>
+            <BlockMath math="\frac{d}{dx}\bigl(\sin^{-1}x\bigr) = \frac{1}{\sqrt{1-x^2}}, \qquad \frac{d}{dx}\bigl(\cos^{-1}x\bigr) = -\frac{1}{\sqrt{1-x^2}}, \qquad \frac{d}{dx}\bigl(\tan^{-1}x\bigr) = \frac{1}{1+x^2}" />
+            <p>When the argument is a function rather than just <InlineMath math="x" />, apply the chain rule — replace <InlineMath math="x" /> by <InlineMath math="f(x)" /> throughout and multiply by <InlineMath math="f'(x)" />:</p>
+            <BlockMath math="\frac{d}{dx}\bigl(\tan^{-1}f(x)\bigr) = \frac{f'(x)}{1 + \bigl[f(x)\bigr]^2}" />
+            <p><strong>The Golden Rule:</strong> to derive one of these, write the inverse statement (<InlineMath math="y = \sin^{-1}x \iff x = \sin y" />), differentiate <em>that</em> with respect to <InlineMath math="y" />, invert it, and finally convert back into terms of <InlineMath math="x" /> using a Pythagorean identity.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong><InlineMath math="\sin^{-1}x" /> is not <InlineMath math="\frac{1}{\sin x}" />:</strong> the <InlineMath math="-1" /> denotes the inverse function. The reciprocal of <InlineMath math="\sin x" /> is <InlineMath math="\operatorname{cosec} x" />.</li>
+                <li><strong>Losing the minus sign:</strong> <InlineMath math="\cos^{-1}" /> differentiates to the <em>negative</em> of the <InlineMath math="\sin^{-1}" /> result — that sign is the only difference between them.</li>
+                <li><strong>Forgetting the chain rule:</strong> for <InlineMath math="\tan^{-1}(4x)" /> you must square the whole argument in the denominator <em>and</em> multiply by <InlineMath math="4" />.</li>
+                <li><strong>Choosing the sign of the square root:</strong> in the derivation, <InlineMath math="\sqrt{1-x^2}" /> is taken as positive because the range of <InlineMath math="\sin^{-1}" /> is <InlineMath math="\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]" />, where <InlineMath math="\cos y \ge 0" />. State this — it is a marked step.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "inverse-trig-ex1",
+            question: <p>Prove, from the definition of the inverse function, that <InlineMath math="\dfrac{d}{dx}\bigl(\sin^{-1}x\bigr) = \dfrac{1}{\sqrt{1-x^2}}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Let <InlineMath math="y = \sin^{-1}x" />. By the definition of the inverse function this means:</p>
+                <BlockMath math="x = \sin y" />
+                <p><strong>Step 2:</strong> Differentiate with respect to <InlineMath math="y" />, then invert:</p>
+                <BlockMath math="\frac{dx}{dy} = \cos y \quad\implies\quad \frac{dy}{dx} = \frac{1}{\cos y}" />
+                <p><strong>Step 3:</strong> Convert back to <InlineMath math="x" /> using <InlineMath math="\sin^2 y + \cos^2 y = 1" />:</p>
+                <BlockMath math="\cos^2 y = 1 - \sin^2 y = 1 - x^2 \quad\implies\quad \cos y = \pm\sqrt{1-x^2}" />
+                <p><strong>Step 4:</strong> Choose the sign. The range of <InlineMath math="\sin^{-1}" /> is <InlineMath math="\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]" />, on which <InlineMath math="\cos y \ge 0" />, so the positive root is correct:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{1}{\sqrt{1-x^2}}" />
+              </div>
+            )
+          },
+          {
+            id: "inverse-trig-ex2",
+            question: <p>Differentiate <InlineMath math="y = \tan^{-1}(4x)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Apply the standard result with the chain rule. The inner function is <InlineMath math="f(x) = 4x" />, so <InlineMath math="f'(x) = 4" />:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{1}{1 + (4x)^2} \times 4" />
+                <p><strong>Step 2:</strong> Simplify, remembering that the whole of <InlineMath math="4x" /> is squared:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{4}{1 + 16x^2}" />
+              </div>
+            )
+          },
+          {
+            id: "inverse-trig-ex3",
+            question: <p>Differentiate <InlineMath math="y = \sin^{-1}\!\left(\dfrac{x}{3}\right)" />, simplifying your answer.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Use the chain rule with inner function <InlineMath math="\dfrac{x}{3}" />, whose derivative is <InlineMath math="\dfrac{1}{3}" />:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{1}{\sqrt{1 - \left(\frac{x}{3}\right)^2}} \times \frac{1}{3}" />
+                <p><strong>Step 2:</strong> Simplify the surd by writing the inside as a single fraction:</p>
+                <BlockMath math="\sqrt{1 - \frac{x^2}{9}} = \sqrt{\frac{9-x^2}{9}} = \frac{\sqrt{9-x^2}}{3}" />
+                <p><strong>Step 3:</strong> Substitute back — the factors of <InlineMath math="3" /> cancel:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{3}{\sqrt{9-x^2}} \times \frac{1}{3} = \frac{1}{\sqrt{9-x^2}}" />
+              </div>
+            )
+          },
+          {
+            id: "inverse-trig-ex4",
+            question: <p>Differentiate <InlineMath math="y = x^2\tan^{-1}x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> This is a product, with <InlineMath math="u = x^2" /> and <InlineMath math="v = \tan^{-1}x" />:</p>
+                <BlockMath math="u' = 2x, \qquad v' = \frac{1}{1+x^2}" />
+                <p><strong>Step 2:</strong> Apply the product rule <InlineMath math="u'v + uv'" />:</p>
+                <BlockMath math="\frac{dy}{dx} = 2x\tan^{-1}x + x^2 \times \frac{1}{1+x^2}" />
+                <p><strong>Step 3:</strong> Tidy the second term. The <InlineMath math="\tan^{-1}x" /> cannot be simplified further, so it stays as it is:</p>
+                <BlockMath math="\frac{dy}{dx} = 2x\tan^{-1}x + \frac{x^2}{1+x^2}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "implicit-differentiation",
-        title: "4. Implicit Differentiation",
+        title: "5. Implicit Differentiation",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1674,12 +1759,49 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\frac{dy}{dx} = -\frac{2x + y}{x + 2y}" />
               </div>
             )
+          },
+          {
+            id: "implicit-ex3",
+            question: <p>Find the equation of the tangent to the curve <InlineMath math="2x^2 - 3xy - y^2 = 1" /> at the point <InlineMath math="(2, 1)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Confirm the point lies on the curve:</p>
+                <BlockMath math="2(4) - 3(2)(1) - (1)^2 = 8 - 6 - 1 = 1 \ \checkmark" />
+                <p><strong>Step 2:</strong> Differentiate implicitly, using the product rule on the <InlineMath math="-3xy" /> term:</p>
+                <BlockMath math="4x - 3\left(y + x\frac{dy}{dx}\right) - 2y\frac{dy}{dx} = 0" />
+                <p><strong>Step 3:</strong> Gather the <InlineMath math="\frac{dy}{dx}" /> terms and factorise:</p>
+                <BlockMath math="4x - 3y = 3x\frac{dy}{dx} + 2y\frac{dy}{dx} \implies \frac{dy}{dx} = \frac{4x - 3y}{3x + 2y}" />
+                <p><strong>Step 4:</strong> Substitute <InlineMath math="(2,1)" /> to get the gradient of the tangent:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{8 - 3}{6 + 2} = \frac{5}{8}" />
+                <p><strong>Step 5:</strong> Use <InlineMath math="y - b = m(x - a)" /> and clear the fraction:</p>
+                <BlockMath math="y - 1 = \frac{5}{8}(x - 2) \implies 8y - 8 = 5x - 10 \implies 5x - 8y - 2 = 0" />
+              </div>
+            )
+          },
+          {
+            id: "implicit-ex4",
+            question: <p>Show that <InlineMath math="(1, 2)" /> is a stationary point on the curve <InlineMath math="x^2 - xy + y^3 = 7" />, and determine its nature.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Check the point lies on the curve:</p>
+                <BlockMath math="1^2 - (1)(2) + 2^3 = 1 - 2 + 8 = 7 \ \checkmark" />
+                <p><strong>Step 2:</strong> Differentiate implicitly and make <InlineMath math="\frac{dy}{dx}" /> the subject:</p>
+                <BlockMath math="2x - \left(y + x\frac{dy}{dx}\right) + 3y^2\frac{dy}{dx} = 0 \implies \frac{dy}{dx}\bigl(3y^2 - x\bigr) = y - 2x" />
+                <p><strong>Step 3:</strong> Substitute <InlineMath math="(1,2)" />. The numerator vanishes, so the point is stationary:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{2 - 2(1)}{3(4) - 1} = \frac{0}{11} = 0 \ \checkmark" />
+                <p><strong>Step 4:</strong> For the nature, differentiate the rearranged equation again. Writing <InlineMath math="p = \frac{dy}{dx}" />, the equation is <InlineMath math="p(3y^2 - x) = y - 2x" />, so by the product rule:</p>
+                <BlockMath math="\frac{dp}{dx}\bigl(3y^2 - x\bigr) + p\bigl(6yp - 1\bigr) = p - 2" />
+                <p><strong>Step 5:</strong> Substitute <InlineMath math="x=1" />, <InlineMath math="y=2" /> and <InlineMath math="p=0" />. Every term containing <InlineMath math="p" /> disappears:</p>
+                <BlockMath math="\frac{dp}{dx}\bigl(12 - 1\bigr) + 0 = 0 - 2 \implies 11\frac{d^2y}{dx^2} = -2 \implies \frac{d^2y}{dx^2} = -\frac{2}{11}" />
+                <p><strong>Step 6:</strong> Since <InlineMath math="\frac{d^2y}{dx^2} < 0" />, the point <InlineMath math="(1,2)" /> is a <strong>maximum</strong> turning point.</p>
+              </div>
+            )
           }
         ]
       },
       {
         id: "logarithmic-differentiation",
-        title: "5. Logarithmic Differentiation",
+        title: "6. Logarithmic Differentiation",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1723,12 +1845,43 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\frac{dy}{dx} = \frac{(2x+1)^3}{(x-1)^2}\left(\frac{6}{2x+1} - \frac{2}{x-1}\right)" />
               </div>
             )
+          },
+          {
+            id: "log-diff-ex3",
+            question: <p>Show that if <InlineMath math="y = a^x" />, where <InlineMath math="a" /> is a positive constant, then <InlineMath math="\dfrac{dy}{dx} = a^x \ln a" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The variable is in the index, so take natural logs of both sides and use <InlineMath math="\ln(a^x) = x\ln a" />:</p>
+                <BlockMath math="\ln y = x \ln a" />
+                <p><strong>Step 2:</strong> Differentiate implicitly. Note that <InlineMath math="\ln a" /> is a <em>constant</em>, so the right-hand side differentiates to just <InlineMath math="\ln a" />:</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln a" />
+                <p><strong>Step 3:</strong> Multiply through by <InlineMath math="y" /> and substitute <InlineMath math="y = a^x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = y\ln a = a^x \ln a" />
+                <p>This is a standard result worth remembering — and it confirms why <InlineMath math="e^x" /> is special: when <InlineMath math="a = e" />, <InlineMath math="\ln e = 1" /> and the derivative is <InlineMath math="e^x" /> itself.</p>
+              </div>
+            )
+          },
+          {
+            id: "log-diff-ex4",
+            question: <p>Differentiate <InlineMath math="y = (\sin x)^x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Both the base and the index involve <InlineMath math="x" />, so neither the power rule nor the result above applies. Take logs:</p>
+                <BlockMath math="\ln y = x\ln(\sin x)" />
+                <p><strong>Step 2:</strong> Differentiate implicitly. The right-hand side is a product, and <InlineMath math="\ln(\sin x)" /> needs the chain rule:</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln(\sin x) + x \times \frac{\cos x}{\sin x}" />
+                <p><strong>Step 3:</strong> Recognise <InlineMath math="\dfrac{\cos x}{\sin x} = \cot x" />:</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln(\sin x) + x\cot x" />
+                <p><strong>Step 4:</strong> Multiply by <InlineMath math="y" /> and substitute it back:</p>
+                <BlockMath math="\frac{dy}{dx} = (\sin x)^x\bigl(\ln(\sin x) + x\cot x\bigr)" />
+              </div>
+            )
           }
         ]
       },
       {
         id: "parametric-differentiation",
-        title: "6. Parametric Differentiation",
+        title: "7. Parametric Differentiation",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1776,7 +1929,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "related-rates",
-        title: "7. Related Rates of Change",
+        title: "8. Related Rates of Change",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
