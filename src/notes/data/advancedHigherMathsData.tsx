@@ -1885,7 +1885,9 @@ export const advancedHigherMathsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4">
-            <p>When a curve is given by <InlineMath math="x" /> and <InlineMath math="y" /> in terms of a <strong>parameter</strong> <InlineMath math="t" />, the gradient is found by the chain rule:</p>
+            <p>When a curve is given by <InlineMath math="x" /> and <InlineMath math="y" /> in terms of a <strong>parameter</strong> <InlineMath math="t" />, each value of <InlineMath math="t" /> produces one point on the curve. Eliminating the parameter between the two equations gives the <strong>constraint equation</strong> — the ordinary relationship between <InlineMath math="x" /> and <InlineMath math="y" />. Several standard forms are worth recognising:</p>
+            <BlockMath math="\begin{aligned} x = at^2,\ y = 2at &\ \longrightarrow\ y^2 = 4ax &&\text{parabola} \\ x = r\cos\theta,\ y = r\sin\theta &\ \longrightarrow\ x^2 + y^2 = r^2 &&\text{circle} \\ x = a\cos\theta,\ y = b\sin\theta &\ \longrightarrow\ \tfrac{x^2}{a^2} + \tfrac{y^2}{b^2} = 1 &&\text{ellipse} \\ x = a\sec\theta,\ y = b\tan\theta &\ \longrightarrow\ \tfrac{x^2}{a^2} - \tfrac{y^2}{b^2} = 1 &&\text{hyperbola} \\ x = ct,\ y = \tfrac{c}{t} &\ \longrightarrow\ xy = c^2 &&\text{rectangular hyperbola} \end{aligned}" />
+            <p>Usually, though, we differentiate without eliminating anything. The gradient comes from the chain rule:</p>
             <BlockMath math="\frac{dy}{dx} = \frac{dy/dt}{dx/dt}" />
             <p>The second derivative differentiates <InlineMath math="\frac{dy}{dx}" /> with respect to <InlineMath math="t" />, then divides by <InlineMath math="\frac{dx}{dt}" /> again:</p>
             <BlockMath math="\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}\!\left(\frac{dy}{dx}\right)}{dx/dt}" />
@@ -1924,12 +1926,118 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\frac{d^2y}{dx^2} = \frac{3/2}{2t} = \frac{3}{4t}" />
               </div>
             )
+          },
+          {
+            id: "parametric-ex3",
+            question: <p>A curve has parametric equations <InlineMath math="x = 2\cos\theta" />, <InlineMath math="y = 5\sin\theta" />. Find its constraint equation and name the curve.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Rearrange each equation to isolate the trigonometric function:</p>
+                <BlockMath math="\cos\theta = \frac{x}{2}, \qquad \sin\theta = \frac{y}{5}" />
+                <p><strong>Step 2:</strong> Eliminate <InlineMath math="\theta" /> using the identity <InlineMath math="\cos^2\theta + \sin^2\theta = 1" />:</p>
+                <BlockMath math="\left(\frac{x}{2}\right)^2 + \left(\frac{y}{5}\right)^2 = 1" />
+                <p><strong>Step 3:</strong> Write it in standard form:</p>
+                <BlockMath math="\frac{x^2}{4} + \frac{y^2}{25} = 1" />
+                <p>This is an <strong>ellipse</strong>, centred on the origin, with semi-axes <InlineMath math="2" /> along <InlineMath math="x" /> and <InlineMath math="5" /> along <InlineMath math="y" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "parametric-ex4",
+            question: <p>A curve is defined by <InlineMath math="x = 2t" />, <InlineMath math="y = t^2 - 1" />. Find the equation of the tangent at the point where <InlineMath math="t = 3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate each equation with respect to <InlineMath math="t" /> and divide:</p>
+                <BlockMath math="\frac{dx}{dt} = 2, \qquad \frac{dy}{dt} = 2t \qquad\implies\qquad \frac{dy}{dx} = \frac{2t}{2} = t" />
+                <p><strong>Step 2:</strong> Evaluate the gradient at <InlineMath math="t = 3" />:</p>
+                <BlockMath math="\left.\frac{dy}{dx}\right|_{t=3} = 3" />
+                <p><strong>Step 3:</strong> Find the coordinates of the point by substituting <InlineMath math="t = 3" /> into the parametric equations:</p>
+                <BlockMath math="x = 2(3) = 6, \qquad y = 3^2 - 1 = 8" />
+                <p><strong>Step 4:</strong> Use <InlineMath math="y - b = m(x - a)" /> with <InlineMath math="m = 3" /> at <InlineMath math="(6, 8)" />:</p>
+                <BlockMath math="y - 8 = 3(x - 6) \implies y = 3x - 10" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "motion-in-a-plane",
+        title: "8. Motion in a Plane",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Parametric equations describe motion naturally when the parameter is <strong>time</strong>. If a point <InlineMath math="P" /> moves in the <InlineMath math="x" />–<InlineMath math="y" /> plane with position given by <InlineMath math="x = f(t)" /> and <InlineMath math="y = g(t)" />, then each derivative is a velocity in one direction:</p>
+            <BlockMath math="\frac{dx}{dt} = \text{velocity in the } x \text{ direction}, \qquad \frac{dy}{dt} = \text{velocity in the } y \text{ direction}" />
+            <p>These are the two components of the velocity. The <strong>speed</strong> is the magnitude of that velocity, found by Pythagoras:</p>
+            <BlockMath math="|v| = \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}" />
+            <p>This gives the instantaneous speed of the particle at time <InlineMath math="t" />. Note that speed is always positive, even when one or both components are negative.</p>
+            <p><strong>The Golden Rule:</strong> most questions do not give you <InlineMath math="t" /> directly — they describe an <em>event</em> (&ldquo;when it hits the ground&rdquo;, &ldquo;when it reaches the target&rdquo;). Translate that event into an equation, solve it for <InlineMath math="t" /> first, and only then substitute into the derivatives.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Rejecting the wrong root:</strong> &ldquo;hits the ground&rdquo; usually gives <InlineMath math="t = 0" /> as well as the answer — but <InlineMath math="t=0" /> is the moment of launch, so discard it.</li>
+                <li><strong>Squaring away the sign:</strong> a downward velocity is negative, but <InlineMath math="(-20)^2 = 400" />. Keep the sign while differentiating; it only disappears at the squaring stage.</li>
+                <li><strong>Speed is not <InlineMath math="\frac{dy}{dx}" />:</strong> the gradient tells you the <em>direction</em> of travel; the speed needs both <InlineMath math="t" />-derivatives combined.</li>
+                <li><strong>Units:</strong> if <InlineMath math="x" /> and <InlineMath math="y" /> are in metres and <InlineMath math="t" /> in seconds, the speed is in m/s — state it.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "motion-plane-ex1",
+            question: <p>The position of a ball <InlineMath math="t" /> seconds after being struck is given by <InlineMath math="x = 12t" />, <InlineMath math="y = 20t - 5t^2" />, with distances in metres. Find the speed of the ball when it first hits the ground.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The ball is on the ground when <InlineMath math="y = 0" />:</p>
+                <BlockMath math="20t - 5t^2 = 0 \implies 5t(4 - t) = 0 \implies t = 0 \ \text{ or } \ t = 4" />
+                <p><strong>Step 2:</strong> <InlineMath math="t = 0" /> is the moment it was struck, so the ball lands at <InlineMath math="t = 4" />.</p>
+                <p><strong>Step 3:</strong> Differentiate each coordinate with respect to <InlineMath math="t" />:</p>
+                <BlockMath math="\frac{dx}{dt} = 12, \qquad \frac{dy}{dt} = 20 - 10t" />
+                <p><strong>Step 4:</strong> Substitute <InlineMath math="t = 4" />. The vertical component is negative because the ball is falling:</p>
+                <BlockMath math="\frac{dx}{dt} = 12, \qquad \frac{dy}{dt} = 20 - 40 = -20" />
+                <p><strong>Step 5:</strong> Combine using Pythagoras:</p>
+                <BlockMath math="|v| = \sqrt{12^2 + (-20)^2} = \sqrt{144 + 400} = \sqrt{544} = 4\sqrt{34} \approx 23.3\ \text{m/s}" />
+              </div>
+            )
+          },
+          {
+            id: "motion-plane-ex2",
+            question: <p>At time <InlineMath math="t" />, the position of a moving point is given by <InlineMath math="x = e^{t}" />, <InlineMath math="y = e^{-2t}" />. Find its speed when <InlineMath math="t = \ln 2" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate each coordinate, using the chain rule on the second:</p>
+                <BlockMath math="\frac{dx}{dt} = e^{t}, \qquad \frac{dy}{dt} = -2e^{-2t}" />
+                <p><strong>Step 2:</strong> Evaluate at <InlineMath math="t = \ln 2" />, using <InlineMath math="e^{\ln 2} = 2" /> and <InlineMath math="e^{-2\ln 2} = e^{\ln\frac{1}{4}} = \frac{1}{4}" />:</p>
+                <BlockMath math="\frac{dx}{dt} = 2, \qquad \frac{dy}{dt} = -2 \times \frac{1}{4} = -\frac{1}{2}" />
+                <p><strong>Step 3:</strong> Combine the components:</p>
+                <BlockMath math="|v| = \sqrt{2^2 + \left(-\tfrac{1}{2}\right)^2} = \sqrt{4 + \tfrac{1}{4}} = \sqrt{\tfrac{17}{4}} = \frac{\sqrt{17}}{2} \approx 2.06" />
+              </div>
+            )
+          },
+          {
+            id: "motion-plane-ex3",
+            question: <p>A particle moves so that its position at time <InlineMath math="t" /> is <InlineMath math="x = 4\cos t" />, <InlineMath math="y = 3\sin t" />. Show that its speed is <InlineMath math="\sqrt{9 + 7\sin^2 t}" />, and hence find its maximum and minimum speeds and the positions at which they occur.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate each coordinate:</p>
+                <BlockMath math="\frac{dx}{dt} = -4\sin t, \qquad \frac{dy}{dt} = 3\cos t" />
+                <p><strong>Step 2:</strong> Form the sum of the squares:</p>
+                <BlockMath math="|v|^2 = 16\sin^2 t + 9\cos^2 t" />
+                <p><strong>Step 3:</strong> Write everything in terms of <InlineMath math="\sin^2 t" /> using <InlineMath math="\cos^2 t = 1 - \sin^2 t" />:</p>
+                <BlockMath math="|v|^2 = 16\sin^2 t + 9(1 - \sin^2 t) = 9 + 7\sin^2 t \implies |v| = \sqrt{9 + 7\sin^2 t}" />
+                <p><strong>Step 4:</strong> Since <InlineMath math="0 \le \sin^2 t \le 1" />, the expression under the root runs from <InlineMath math="9" /> to <InlineMath math="16" />:</p>
+                <BlockMath math="|v|_{\min} = \sqrt{9} = 3, \qquad |v|_{\max} = \sqrt{16} = 4" />
+                <p><strong>Step 5:</strong> Identify the positions. The minimum occurs when <InlineMath math="\sin t = 0" />, so <InlineMath math="\cos t = \pm 1" /> and the particle is at <InlineMath math="(4, 0)" /> or <InlineMath math="(-4, 0)" />. The maximum occurs when <InlineMath math="\sin t = \pm 1" />, so <InlineMath math="\cos t = 0" /> and the particle is at <InlineMath math="(0, 3)" /> or <InlineMath math="(0, -3)" />.</p>
+                <p>The particle travels fastest at the ends of the minor axis and slowest at the ends of the major axis.</p>
+              </div>
+            )
           }
         ]
       },
       {
         id: "related-rates",
-        title: "8. Related Rates of Change",
+        title: "9. Related Rates of Change",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1941,6 +2049,8 @@ export const advancedHigherMathsData: Section[] = [
                 <li><strong>Differentiate with respect to time:</strong> the derivative is with respect to <InlineMath math="t" />, so every variable picks up a rate (e.g. <InlineMath math="\frac{dr}{dt}" />).</li>
                 <li><strong>Substituting too early:</strong> keep quantities as variables until after differentiating.</li>
                 <li><strong>Chain of rates:</strong> link them correctly, e.g. <InlineMath math="\frac{dA}{dt} = \frac{dA}{dr}\cdot\frac{dr}{dt}" />.</li>
+                <li><strong>Constant quantities differentiate to zero:</strong> when a question says an area or volume &ldquo;remains constant&rdquo;, that is the whole point — the derivative of the right-hand side is <InlineMath math="0" />, which is what lets you link the two rates.</li>
+                <li><strong>Reading the sign:</strong> a negative rate means the quantity is <em>decreasing</em>. Say so in words; the sign alone is not the answer.</li>
               </ul>
             </div>
           </div>
@@ -1969,6 +2079,43 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="100 = 4\pi(25)\frac{dr}{dt} = 100\pi\frac{dr}{dt}" />
                 <p><strong>Step 3:</strong> Solve for the rate:</p>
                 <BlockMath math="\frac{dr}{dt} = \frac{100}{100\pi} = \frac{1}{\pi} \ \text{cm/s}" />
+              </div>
+            )
+          },
+          {
+            id: "related-rates-ex3",
+            question: <p>A rectangle has sides <InlineMath math="x" /> cm and <InlineMath math="y" /> cm. Both are changing, but in such a way that the area stays constant at <InlineMath math="40" /> cm². If <InlineMath math="x" /> is increasing at <InlineMath math="0.2" /> cm/s, find the rate at which <InlineMath math="y" /> is changing when <InlineMath math="x = 8" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write the relationship. The area is fixed, so the right-hand side is a constant:</p>
+                <BlockMath math="xy = 40" />
+                <p><strong>Step 2:</strong> Differentiate with respect to <InlineMath math="t" />, using the product rule on the left. A constant differentiates to zero:</p>
+                <BlockMath math="y\frac{dx}{dt} + x\frac{dy}{dt} = 0" />
+                <p><strong>Step 3:</strong> Find the value of <InlineMath math="y" /> at the instant in question:</p>
+                <BlockMath math="x = 8 \implies y = \frac{40}{8} = 5" />
+                <p><strong>Step 4:</strong> Substitute <InlineMath math="x=8" />, <InlineMath math="y=5" /> and <InlineMath math="\frac{dx}{dt} = 0.2" />:</p>
+                <BlockMath math="5(0.2) + 8\frac{dy}{dt} = 0 \implies 1 + 8\frac{dy}{dt} = 0" />
+                <p><strong>Step 5:</strong> Solve for the rate:</p>
+                <BlockMath math="\frac{dy}{dt} = -\frac{1}{8} = -0.125 \ \text{cm/s}" />
+                <p>The negative sign means <InlineMath math="y" /> is <em>decreasing</em>, at <InlineMath math="0.125" /> cm/s — which makes sense, since the area must stay fixed as <InlineMath math="x" /> grows.</p>
+              </div>
+            )
+          },
+          {
+            id: "related-rates-ex4",
+            question: <p>A closed cylinder of radius <InlineMath math="r" /> and height <InlineMath math="h" /> has a fixed total surface area of <InlineMath math="24\pi" /> cm². Find an expression for <InlineMath math="\dfrac{dr}{dh}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The total surface area of a closed cylinder is two circular ends plus the curved surface:</p>
+                <BlockMath math="2\pi r^2 + 2\pi rh = 24\pi" />
+                <p><strong>Step 2:</strong> Divide through by <InlineMath math="2\pi" /> to simplify before differentiating:</p>
+                <BlockMath math="r^2 + rh = 12" />
+                <p><strong>Step 3:</strong> Differentiate with respect to <InlineMath math="h" />, treating <InlineMath math="r" /> as a function of <InlineMath math="h" />. The <InlineMath math="rh" /> term needs the product rule:</p>
+                <BlockMath math="2r\frac{dr}{dh} + \left(r + h\frac{dr}{dh}\right) = 0" />
+                <p><strong>Step 4:</strong> Gather the <InlineMath math="\frac{dr}{dh}" /> terms and factorise:</p>
+                <BlockMath math="\frac{dr}{dh}\bigl(2r + h\bigr) = -r" />
+                <p><strong>Step 5:</strong> Divide to obtain the expression:</p>
+                <BlockMath math="\frac{dr}{dh} = -\frac{r}{2r + h}" />
               </div>
             )
           }
