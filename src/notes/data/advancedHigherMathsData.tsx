@@ -1401,15 +1401,91 @@ export const advancedHigherMathsData: Section[] = [
     title: "Differentiation",
     topics: [
       {
+        id: "first-principles",
+        title: "1. Differentiation from First Principles",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Every differentiation rule you use rests on a single definition. To find the gradient of the tangent to <InlineMath math="y = f(x)" /> at the point <InlineMath math="A\,(x,\,f(x))" />, take a second point <InlineMath math="B\,(x+h,\,f(x+h))" /> on the curve and calculate the gradient of the <strong>chord</strong> <InlineMath math="AB" />:</p>
+            <BlockMath math="m_{AB} = \frac{f(x+h) - f(x)}{(x+h) - x} = \frac{f(x+h) - f(x)}{h}" />
+            <p>As <InlineMath math="h" /> gets smaller, <InlineMath math="B" /> slides towards <InlineMath math="A" /> and the chord becomes indistinguishable from the tangent. The value the gradient approaches is the <strong>derivative</strong>:</p>
+            <BlockMath math="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}" />
+            <p>Differentiating <strong>from first principles</strong> means using this definition directly — without any of the standard rules or known derivatives.</p>
+            <p><strong>The Golden Rule:</strong> expand <InlineMath math="f(x+h)" /> completely, then subtract <InlineMath math="f(x)" />. Every surviving term <em>must</em> contain a factor of <InlineMath math="h" /> — if one doesn't, you have made an algebra slip. Cancel that <InlineMath math="h" /> against the denominator, and only then let <InlineMath math="h \to 0" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Setting <InlineMath math="h = 0" /> too early:</strong> you cannot substitute <InlineMath math="h=0" /> while <InlineMath math="h" /> is still in the denominator — that gives <InlineMath math="\frac{0}{0}" />. Cancel first, take the limit second.</li>
+                <li><strong>Dropping the limit notation:</strong> write <InlineMath math="\lim_{h \to 0}" /> in front of every line until you actually take the limit. Marks are awarded for it.</li>
+                <li><strong>Expanding <InlineMath math="(x+h)^3" /> carelessly:</strong> it is <InlineMath math="x^3 + 3x^2h + 3xh^2 + h^3" />, not <InlineMath math="x^3 + h^3" />.</li>
+                <li><strong>Using the rules instead:</strong> if a question says &ldquo;from first principles&rdquo;, quoting <InlineMath math="nx^{n-1}" /> earns nothing, even with the right answer.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "first-principles-ex1",
+            question: <p>Differentiate <InlineMath math="f(x) = x^2 + 3x" /> from first principles.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write down <InlineMath math="f(x+h)" /> and expand it fully:</p>
+                <BlockMath math="f(x+h) = (x+h)^2 + 3(x+h) = x^2 + 2xh + h^2 + 3x + 3h" />
+                <p><strong>Step 2:</strong> Subtract <InlineMath math="f(x) = x^2 + 3x" />. The terms without an <InlineMath math="h" /> cancel:</p>
+                <BlockMath math="f(x+h) - f(x) = 2xh + h^2 + 3h" />
+                <p><strong>Step 3:</strong> Divide by <InlineMath math="h" />, cancelling the common factor:</p>
+                <BlockMath math="\frac{f(x+h)-f(x)}{h} = \frac{h(2x + h + 3)}{h} = 2x + h + 3" />
+                <p><strong>Step 4:</strong> Now the limit can be taken safely:</p>
+                <BlockMath math="f'(x) = \lim_{h \to 0}\,(2x + h + 3) = 2x + 3" />
+              </div>
+            )
+          },
+          {
+            id: "first-principles-ex2",
+            question: <p>Differentiate <InlineMath math="f(x) = x^3 - 2x" /> from first principles.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Expand <InlineMath math="f(x+h)" />, taking care with the cube:</p>
+                <BlockMath math="f(x+h) = (x+h)^3 - 2(x+h) = x^3 + 3x^2h + 3xh^2 + h^3 - 2x - 2h" />
+                <p><strong>Step 2:</strong> Subtract <InlineMath math="f(x) = x^3 - 2x" />:</p>
+                <BlockMath math="f(x+h) - f(x) = 3x^2h + 3xh^2 + h^3 - 2h" />
+                <p><strong>Step 3:</strong> Every term has a factor of <InlineMath math="h" />, so divide through:</p>
+                <BlockMath math="\frac{f(x+h)-f(x)}{h} = 3x^2 + 3xh + h^2 - 2" />
+                <p><strong>Step 4:</strong> Let <InlineMath math="h \to 0" />; the two terms still containing <InlineMath math="h" /> vanish:</p>
+                <BlockMath math="f'(x) = \lim_{h \to 0}\,(3x^2 + 3xh + h^2 - 2) = 3x^2 - 2" />
+              </div>
+            )
+          },
+          {
+            id: "first-principles-ex3",
+            question: <p>Differentiate <InlineMath math="f(x) = \dfrac{1}{x}" /> from first principles.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Here <InlineMath math="f(x+h) = \dfrac{1}{x+h}" />. Subtracting gives a difference of two fractions, so combine them over a common denominator:</p>
+                <BlockMath math="f(x+h) - f(x) = \frac{1}{x+h} - \frac{1}{x} = \frac{x - (x+h)}{x(x+h)} = \frac{-h}{x(x+h)}" />
+                <p><strong>Step 2:</strong> Dividing by <InlineMath math="h" /> means multiplying by <InlineMath math="\dfrac{1}{h}" />, which cancels the <InlineMath math="h" /> in the numerator:</p>
+                <BlockMath math="\frac{f(x+h)-f(x)}{h} = \frac{-h}{x(x+h)} \times \frac{1}{h} = \frac{-1}{x(x+h)}" />
+                <p><strong>Step 3:</strong> There is no longer an <InlineMath math="h" /> in the denominator's way, so let <InlineMath math="h \to 0" />:</p>
+                <BlockMath math="f'(x) = \lim_{h \to 0} \frac{-1}{x(x+h)} = \frac{-1}{x \cdot x} = -\frac{1}{x^2}" />
+                <p>This agrees with the power rule: <InlineMath math="\frac{d}{dx}(x^{-1}) = -x^{-2}" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "differentiation-rules",
-        title: "1. Rules & Standard Derivatives",
+        title: "2. Rules & Standard Derivatives",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
             <p>Advanced Higher extends Higher differentiation with three key rules and a wider set of standard derivatives.</p>
             <BlockMath math="(uv)' = u'v + uv' \qquad \left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2} \qquad \bigl(f(g(x))\bigr)' = f'(g(x))\,g'(x)" />
-            <p>Standard derivatives you should know include:</p>
-            <BlockMath math="\frac{d}{dx}(\tan x) = \sec^2 x, \quad \frac{d}{dx}(\sec x) = \sec x \tan x, \quad \frac{d}{dx}(\tan^{-1} x) = \frac{1}{1 + x^2}" />
+            <p>It also introduces three <strong>reciprocal trigonometric functions</strong>, which you must know by name:</p>
+            <BlockMath math="\sec\theta = \frac{1}{\cos\theta}, \qquad \operatorname{cosec}\theta = \frac{1}{\sin\theta}, \qquad \cot\theta = \frac{1}{\tan\theta} = \frac{\cos\theta}{\sin\theta}" />
+            <p>Note the pairing: <InlineMath math="\sec" /> goes with <InlineMath math="\cos" />, and <InlineMath math="\operatorname{cosec}" /> goes with <InlineMath math="\sin" /> — not the other way round. Together with the exponential and logarithmic functions, these give the standard derivatives for this course:</p>
+            <BlockMath math="\begin{aligned} \frac{d}{dx}(\tan x) &= \sec^2 x & \frac{d}{dx}(\cot x) &= -\operatorname{cosec}^2 x \\ \frac{d}{dx}(\sec x) &= \sec x \tan x & \frac{d}{dx}(\operatorname{cosec} x) &= -\operatorname{cosec} x \cot x \\ \frac{d}{dx}(e^x) &= e^x & \frac{d}{dx}(\ln x) &= \frac{1}{x} \end{aligned}" />
+            <p>The two functions beginning with &ldquo;co&rdquo; — <InlineMath math="\cot" /> and <InlineMath math="\operatorname{cosec}" /> — are the ones with <strong>negative</strong> derivatives, exactly as <InlineMath math="\cos" /> is. (The inverse trigonometric functions <InlineMath math="\sin^{-1}" />, <InlineMath math="\cos^{-1}" /> and <InlineMath math="\tan^{-1}" /> have their own topic.)</p>
             <p><strong>The Golden Rule:</strong> identify the structure before differentiating — a product, a quotient, or a composition — and apply the matching rule. For combinations, work from the outside in.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -1417,6 +1493,9 @@ export const advancedHigherMathsData: Section[] = [
                 <li><strong>Quotient rule order:</strong> the numerator is <InlineMath math="u'v - uv'" />, in that order — reversing it flips the sign.</li>
                 <li><strong>Chain rule inside factor:</strong> always multiply by the derivative of the inner function.</li>
                 <li><strong>Standard derivatives:</strong> know the exact forms, e.g. <InlineMath math="\frac{d}{dx}(\tan x) = \sec^2 x" />, not <InlineMath math="\sec x" />.</li>
+                <li><strong>Mixing up sec and cosec:</strong> <InlineMath math="\sec\theta = \frac{1}{\cos\theta}" /> — the names are deliberately crossed over, and it is a costly slip.</li>
+                <li><strong>Losing the minus sign:</strong> <InlineMath math="\cot x" /> and <InlineMath math="\operatorname{cosec} x" /> both differentiate to <em>negative</em> expressions.</li>
+                <li><strong>Powers of trig functions:</strong> <InlineMath math="\sec^3 x" /> means <InlineMath math="(\sec x)^3" />, so it needs the chain rule — differentiate the power first, then multiply by <InlineMath math="\sec x \tan x" />.</li>
               </ul>
             </div>
           </div>
@@ -1456,12 +1535,103 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="= e^{3x}(3\cos 2x - 2\sin 2x)" />
               </div>
             )
+          },
+          {
+            id: "diff-rules-ex4",
+            question: <p>Differentiate (a) <InlineMath math="y = 3\operatorname{cosec} 2x" /> and (b) <InlineMath math="y = \sec^3 x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1 (a):</strong> Use <InlineMath math="\frac{d}{dx}(\operatorname{cosec} x) = -\operatorname{cosec} x \cot x" /> together with the chain rule, since the angle is <InlineMath math="2x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = 3 \times \bigl(-\operatorname{cosec} 2x \cot 2x\bigr) \times 2 = -6\operatorname{cosec} 2x \cot 2x" />
+                <p><strong>Step 2 (b):</strong> Read <InlineMath math="\sec^3 x" /> as <InlineMath math="(\sec x)^3" />. Differentiate the power first, then multiply by the derivative of <InlineMath math="\sec x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = 3(\sec x)^2 \times \sec x \tan x" />
+                <p><strong>Step 3:</strong> Combine the powers of <InlineMath math="\sec x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = 3\sec^3 x \tan x" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "higher-derivatives",
+        title: "3. Higher Derivatives",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The derivative <InlineMath math="\frac{dy}{dx}" /> is itself a function of <InlineMath math="x" />, so it can be differentiated again. The result is the <strong>second derivative</strong>, written in any of these ways:</p>
+            <BlockMath math="\frac{d^2y}{dx^2} = \frac{d}{dx}\!\left(\frac{dy}{dx}\right), \qquad f''(x), \qquad y''" />
+            <p>Repeating the process gives the third, fourth and in general the <InlineMath math="n" />th derivative, <InlineMath math="\dfrac{d^ny}{dx^n}" /> or <InlineMath math="f^{(n)}(x)" />.</p>
+            <p>The second derivative measures how the gradient itself is changing, which is what makes it a test for the <strong>nature of a stationary point</strong>. At a stationary point <InlineMath math="x = a" /> (where <InlineMath math="f'(a) = 0" />):</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><InlineMath math="f''(a) > 0" /> — the gradient is increasing, so a <strong>minimum</strong> turning point</li>
+              <li><InlineMath math="f''(a) < 0" /> — the gradient is decreasing, so a <strong>maximum</strong> turning point</li>
+              <li><InlineMath math="f''(a) = 0" /> — the test <strong>fails</strong>; fall back on a nature table</li>
+            </ul>
+            <p>Questions also ask you to compute the first few derivatives of a function and then <strong>conjecture</strong> a formula for the <InlineMath math="n" />th, so look for a pattern in three things at once: the sign, the numerical coefficient, and the power.</p>
+            <p><strong>The Golden Rule:</strong> differentiate one step at a time, simplifying fully before starting the next step — an untidy first derivative makes the second far harder than it needs to be.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Getting the test backwards:</strong> positive second derivative means <em>minimum</em>. Picture a valley — the gradient rises from negative, through zero, to positive.</li>
+                <li><strong>Assuming <InlineMath math="f''(a)=0" /> means a point of inflection:</strong> it does not. The test is simply inconclusive, and you must use a nature table instead.</li>
+                <li><strong>Notation:</strong> <InlineMath math="\frac{d^2y}{dx^2}" /> is the second derivative, which is <em>not</em> the same as <InlineMath math="\left(\frac{dy}{dx}\right)^2" />.</li>
+                <li><strong>Forgetting the <InlineMath math="y" />-coordinates:</strong> a stationary point is a <em>point</em> — substitute back into the original equation, not the derivative.</li>
+                <li><strong>Conjectures need the sign pattern:</strong> alternating signs are captured by a factor of <InlineMath math="(-1)^n" /> or <InlineMath math="(-1)^{n-1}" /> — check which by testing <InlineMath math="n=1" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "higher-deriv-ex1",
+            question: <p>Find the first and second derivatives of <InlineMath math="f(x) = x^4 - 3x^3 + 2x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate term by term:</p>
+                <BlockMath math="f'(x) = 4x^3 - 9x^2 + 2" />
+                <p><strong>Step 2:</strong> Differentiate the result again. The constant <InlineMath math="2" /> disappears:</p>
+                <BlockMath math="f''(x) = 12x^2 - 18x" />
+              </div>
+            )
+          },
+          {
+            id: "higher-deriv-ex2",
+            question: <p>Find the stationary points of <InlineMath math="y = x^3 - 3x^2 - 9x + 5" /> and determine their nature using the second derivative.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate and set equal to zero:</p>
+                <BlockMath math="\frac{dy}{dx} = 3x^2 - 6x - 9 = 3(x^2 - 2x - 3) = 3(x-3)(x+1)" />
+                <BlockMath math="\frac{dy}{dx} = 0 \implies x = 3 \ \text{ or } \ x = -1" />
+                <p><strong>Step 2:</strong> Find the <InlineMath math="y" />-coordinates from the <em>original</em> equation:</p>
+                <BlockMath math="\begin{aligned} x=3: &\quad y = 27 - 27 - 27 + 5 = -22 \\ x=-1: &\quad y = -1 - 3 + 9 + 5 = 10 \end{aligned}" />
+                <p><strong>Step 3:</strong> Find the second derivative:</p>
+                <BlockMath math="\frac{d^2y}{dx^2} = 6x - 6" />
+                <p><strong>Step 4:</strong> Evaluate it at each stationary point:</p>
+                <BlockMath math="\begin{aligned} x=3: &\quad 6(3) - 6 = 12 > 0 \implies \text{minimum} \\ x=-1: &\quad 6(-1) - 6 = -12 < 0 \implies \text{maximum} \end{aligned}" />
+                <p>So <InlineMath math="(3, -22)" /> is a minimum turning point and <InlineMath math="(-1, 10)" /> is a maximum turning point.</p>
+              </div>
+            )
+          },
+          {
+            id: "higher-deriv-ex3",
+            question: <p>Given <InlineMath math="f(x) = \ln(1+x)" />, find the first four derivatives and hence make a conjecture for <InlineMath math="f^{(n)}(x)" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate repeatedly, writing each result as a negative power to expose the pattern:</p>
+                <BlockMath math="\begin{aligned} f'(x) &= (1+x)^{-1} \\ f''(x) &= -(1+x)^{-2} \\ f'''(x) &= 2(1+x)^{-3} \\ f^{(4)}(x) &= -6(1+x)^{-4} \end{aligned}" />
+                <p><strong>Step 2:</strong> Examine the three patterns separately. The signs alternate starting from positive; the coefficients are <InlineMath math="1, 1, 2, 6" />, which are <InlineMath math="0!, 1!, 2!, 3!" />; and the power is <InlineMath math="-n" />.</p>
+                <p><strong>Step 3:</strong> Since the first derivative is positive, the sign factor must be <InlineMath math="(-1)^{n-1}" />. Combining all three:</p>
+                <BlockMath math="f^{(n)}(x) = \frac{(-1)^{n-1}\,(n-1)!}{(1+x)^{n}}" />
+                <p><strong>Step 4:</strong> Check the conjecture against a known case. For <InlineMath math="n=3" />:</p>
+                <BlockMath math="\frac{(-1)^{2}\,2!}{(1+x)^{3}} = \frac{2}{(1+x)^3} = 2(1+x)^{-3} \ \checkmark" />
+              </div>
+            )
           }
         ]
       },
       {
         id: "implicit-differentiation",
-        title: "2. Implicit Differentiation",
+        title: "4. Implicit Differentiation",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1509,7 +1679,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "logarithmic-differentiation",
-        title: "3. Logarithmic Differentiation",
+        title: "5. Logarithmic Differentiation",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1558,7 +1728,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "parametric-differentiation",
-        title: "4. Parametric Differentiation",
+        title: "6. Parametric Differentiation",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -1606,7 +1776,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "related-rates",
-        title: "5. Related Rates of Change",
+        title: "7. Related Rates of Change",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
