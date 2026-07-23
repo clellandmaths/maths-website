@@ -14,8 +14,98 @@ export const advancedHigherMathsData: Section[] = [
     title: "Binomial Theorem",
     topics: [
       {
+        id: "pascals-triangle",
+        title: "1. Pascal's Triangle & Binomial Coefficients",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Writing out <InlineMath math="(x+y)^n" /> for <InlineMath math="n = 0,1,2,3,\dots" /> and recording only the coefficients produces <strong>Pascal's triangle</strong>:</p>
+            <BlockMath math="\begin{array}{c} 1 \\ 1 \quad 1 \\ 1 \quad 2 \quad 1 \\ 1 \quad 3 \quad 3 \quad 1 \\ 1 \quad 4 \quad 6 \quad 4 \quad 1 \\ 1 \quad 5 \quad 10 \quad 10 \quad 5 \quad 1 \end{array}" />
+            <p>Every row starts and ends with <InlineMath math="1" />, and each entry inside a row is the sum of the two entries above it. The triangle is also symmetrical about its centre.</p>
+            <p>Rather than extend the triangle line by line, we use <strong>factorials</strong>. For <InlineMath math="n \in \mathbb{N}" />, <InlineMath math="n! = n(n-1)(n-2)\cdots 3 \times 2 \times 1" />, with the special definition <InlineMath math="0! = 1" />. The <strong>binomial coefficient</strong> (read &ldquo;<InlineMath math="n" /> choose <InlineMath math="r" />&rdquo;) is then:</p>
+            <BlockMath math="\binom{n}{r} = \frac{n!}{r!\,(n-r)!}, \qquad 0 \le r \le n" />
+            <p>These are exactly the entries of Pascal's triangle: row <InlineMath math="n" /> is <InlineMath math="\binom{n}{0}, \binom{n}{1}, \dots, \binom{n}{n}" />. Two properties follow, and <strong>you are expected to be able to prove both</strong>:</p>
+            <BlockMath math="\textbf{Symmetry:}\quad \binom{n}{r} = \binom{n}{n-r}" />
+            <BlockMath math="\textbf{Pascal's rule:}\quad \binom{n}{r} + \binom{n}{r+1} = \binom{n+1}{r+1}" />
+            <p>Symmetry is the mirror image of the triangle; Pascal's rule is the &ldquo;add the two above&rdquo; construction written algebraically.</p>
+            <p><strong>The Golden Rule:</strong> to prove an identity in binomial coefficients, replace every <InlineMath math="\binom{n}{r}" /> by its factorial definition, put the terms over a common denominator, and simplify until the required form appears. Never argue from a few numerical rows — that is a check, not a proof.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting <InlineMath math="0! = 1" />:</strong> this is a definition, not a calculation, and it is what makes <InlineMath math="\binom{n}{0} = 1" /> work.</li>
+                <li><strong>Verifying instead of proving:</strong> checking an identity for <InlineMath math="n=5,\ r=2" /> earns no marks. A proof must hold for general <InlineMath math="n" /> and <InlineMath math="r" />.</li>
+                <li><strong>The common denominator:</strong> in Pascal's rule the two denominators are <InlineMath math="r!(n-r)!" /> and <InlineMath math="(r+1)!(n-r-1)!" />. Use <InlineMath math="(r+1)! = (r+1)\,r!" /> and <InlineMath math="(n-r)! = (n-r)(n-r-1)!" /> to bridge them.</li>
+                <li><strong>Discarding invalid solutions:</strong> when solving for <InlineMath math="n" />, only whole-number values with <InlineMath math="n \ge r" /> are admissible.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "pascals-ex1",
+            question: <p>Evaluate <InlineMath math="\binom{7}{3}" /> and <InlineMath math="\binom{10}{7}" />, and state which other coefficient equals <InlineMath math="\binom{10}{7}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Apply the definition to <InlineMath math="\binom{7}{3}" />:</p>
+                <BlockMath math="\binom{7}{3} = \frac{7!}{3!\,4!} = \frac{5040}{6 \times 24} = \frac{5040}{144} = 35" />
+                <p><strong>Step 2:</strong> Apply it again to <InlineMath math="\binom{10}{7}" />:</p>
+                <BlockMath math="\binom{10}{7} = \frac{10!}{7!\,3!} = \frac{3628800}{5040 \times 6} = \frac{3628800}{30240} = 120" />
+                <p><strong>Step 3:</strong> By the symmetry property, <InlineMath math="\binom{10}{7} = \binom{10}{10-7} = \binom{10}{3}" />, which is also <InlineMath math="120" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "pascals-ex2",
+            question: <p>Prove that <InlineMath math="\binom{n}{r} = \binom{n}{n-r}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Start from the right-hand side and use the definition, replacing <InlineMath math="r" /> by <InlineMath math="n-r" />:</p>
+                <BlockMath math="\binom{n}{n-r} = \frac{n!}{(n-r)!\,\bigl(n-(n-r)\bigr)!}" />
+                <p><strong>Step 2:</strong> Simplify the second factorial in the denominator:</p>
+                <BlockMath math="n - (n-r) = r \quad\implies\quad \binom{n}{n-r} = \frac{n!}{(n-r)!\,r!}" />
+                <p><strong>Step 3:</strong> Multiplication is commutative, so <InlineMath math="(n-r)!\,r! = r!\,(n-r)!" />:</p>
+                <BlockMath math="\binom{n}{n-r} = \frac{n!}{r!\,(n-r)!} = \binom{n}{r}" />
+                <p>Hence the two coefficients are equal for all <InlineMath math="0 \le r \le n" />, as required.</p>
+              </div>
+            )
+          },
+          {
+            id: "pascals-ex3",
+            question: <p>Prove Pascal's rule: <InlineMath math="\binom{n}{r} + \binom{n}{r+1} = \binom{n+1}{r+1}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write both terms using the definition:</p>
+                <BlockMath math="\binom{n}{r} + \binom{n}{r+1} = \frac{n!}{r!\,(n-r)!} + \frac{n!}{(r+1)!\,(n-r-1)!}" />
+                <p><strong>Step 2:</strong> The common denominator is <InlineMath math="(r+1)!\,(n-r)!" />. Multiply the first fraction by <InlineMath math="\dfrac{r+1}{r+1}" /> and the second by <InlineMath math="\dfrac{n-r}{n-r}" />, using <InlineMath math="(r+1)! = (r+1)r!" /> and <InlineMath math="(n-r)! = (n-r)(n-r-1)!" />:</p>
+                <BlockMath math="= \frac{n!\,(r+1)}{(r+1)!\,(n-r)!} + \frac{n!\,(n-r)}{(r+1)!\,(n-r)!}" />
+                <p><strong>Step 3:</strong> Combine over the single denominator and simplify the numerator:</p>
+                <BlockMath math="= \frac{n!\bigl[(r+1) + (n-r)\bigr]}{(r+1)!\,(n-r)!} = \frac{n!\,(n+1)}{(r+1)!\,(n-r)!} = \frac{(n+1)!}{(r+1)!\,(n-r)!}" />
+                <p><strong>Step 4:</strong> Compare with the definition of the target coefficient:</p>
+                <BlockMath math="\binom{n+1}{r+1} = \frac{(n+1)!}{(r+1)!\,\bigl((n+1)-(r+1)\bigr)!} = \frac{(n+1)!}{(r+1)!\,(n-r)!}" />
+                <p>The two expressions are identical, so the identity holds.</p>
+              </div>
+            )
+          },
+          {
+            id: "pascals-ex4",
+            question: <p>Find the value of <InlineMath math="n" /> for which <InlineMath math="\binom{n}{2} = 55" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Expand the coefficient using the definition, cancelling <InlineMath math="(n-2)!" />:</p>
+                <BlockMath math="\binom{n}{2} = \frac{n!}{2!\,(n-2)!} = \frac{n(n-1)}{2}" />
+                <p><strong>Step 2:</strong> Set this equal to <InlineMath math="55" /> and rearrange into a quadratic:</p>
+                <BlockMath math="\frac{n(n-1)}{2} = 55 \implies n^2 - n - 110 = 0" />
+                <p><strong>Step 3:</strong> Factorise and solve:</p>
+                <BlockMath math="(n-11)(n+10) = 0 \implies n = 11 \ \text{ or } \ n = -10" />
+                <p><strong>Step 4:</strong> Since <InlineMath math="n" /> must be a positive whole number, <InlineMath math="n = -10" /> is rejected. Therefore <InlineMath math="n = 11" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "binomial-expansion",
-        title: "1. Binomial Expansion",
+        title: "2. Binomial Expansion",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -66,7 +156,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "general-term",
-        title: "2. General Term & Coefficients",
+        title: "3. General Term & Coefficients",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -77,6 +167,7 @@ export const advancedHigherMathsData: Section[] = [
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Off-by-one:</strong> it is the <InlineMath math="(r+1)" />th term, so <InlineMath math="r" /> starts at <InlineMath math="0" />. The term in <InlineMath math="x^k" /> is not the <InlineMath math="k" />th term.</li>
+                <li><strong>&ldquo;The <InlineMath math="k" />th term&rdquo; means <InlineMath math="r = k-1" />:</strong> a question asking for the fourth term needs <InlineMath math="r = 3" />, not <InlineMath math="r = 4" />.</li>
                 <li><strong>&ldquo;Independent of <InlineMath math="x" />&rdquo; means power zero:</strong> the constant term is the one where the total power of <InlineMath math="x" /> equals <InlineMath math="0" />.</li>
                 <li><strong>Index algebra:</strong> when combining <InlineMath math="x^{n-r}" /> with <InlineMath math="x^{-r}" /> you get <InlineMath math="x^{n-2r}" /> — a very common place to slip.</li>
               </ul>
@@ -113,6 +204,89 @@ export const advancedHigherMathsData: Section[] = [
                 <p>The coefficient of <InlineMath math="x^3" /> is <InlineMath math="-160" />.</p>
               </div>
             )
+          },
+          {
+            id: "general-term-ex3",
+            question: <p>Find the fourth term in the expansion of <InlineMath math="(2x - 3y)^7" />, written in descending powers of <InlineMath math="x" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The general term is the <InlineMath math="(r+1)" />th term, so the <strong>fourth</strong> term needs <InlineMath math="r = 3" />:</p>
+                <BlockMath math="T_{r+1} = \binom{7}{r}(2x)^{7-r}(-3y)^r \quad\implies\quad T_4 = \binom{7}{3}(2x)^{4}(-3y)^{3}" />
+                <p><strong>Step 2:</strong> Evaluate each factor separately, taking care to raise the whole bracket to the power:</p>
+                <BlockMath math="\binom{7}{3} = 35, \qquad (2x)^4 = 16x^4, \qquad (-3y)^3 = -27y^3" />
+                <p><strong>Step 3:</strong> Multiply the three factors together:</p>
+                <BlockMath math="T_4 = 35 \times 16x^4 \times (-27y^3) = -15120\,x^4y^3" />
+                <p>The odd power of <InlineMath math="-3y" /> makes this term negative.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "binomial-approximation",
+        title: "4. Approximating Powers",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The Binomial Theorem gives a way of evaluating awkward powers such as <InlineMath math="3.1^4" /> or <InlineMath math="1.02^6" /> by hand. Split the number into a convenient part plus a small part, then expand:</p>
+            <BlockMath math="3.1^4 = (3 + 0.1)^4, \qquad 1.02^6 = (1 + 0.02)^6, \qquad 0.97^5 = (1 - 0.03)^5" />
+            <p>Because the small part is raised to ever higher powers, the terms shrink rapidly. If the index <InlineMath math="n" /> is a positive whole number the expansion <em>terminates</em>, so summing every term gives an <strong>exact</strong> answer. When a question asks only for a stated accuracy, you may stop once the remaining terms are too small to affect the last required figure.</p>
+            <p><strong>The Golden Rule:</strong> choose the split so the second term is small and the first is easy to raise to powers — <InlineMath math="(3 + 0.1)" />, not <InlineMath math="(2 + 1.1)" />. Then keep expanding until the next term cannot change the digit you have been asked for, and state clearly why you stopped.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Rounding too early:</strong> keep full accuracy in every term and round only at the very end, or the final digit will be wrong.</li>
+                <li><strong>Stopping too soon:</strong> before truncating, check the size of the <em>next</em> term. Only discard it if it cannot affect the required decimal place.</li>
+                <li><strong>Powers of the small part:</strong> <InlineMath math="(0.1)^3 = 0.001" />, not <InlineMath math="0.3" /> — a very common slip when the arithmetic is done mentally.</li>
+                <li><strong>Signs when subtracting:</strong> for <InlineMath math="(1-a)^n" /> the terms alternate in sign. Write the bracket as <InlineMath math="(1 + (-a))^n" /> to keep them straight.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "binomial-approx-ex1",
+            question: <p>Use the Binomial Theorem to find the <strong>exact</strong> value of <InlineMath math="3.1^4" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write the number as a binomial and expand with coefficients <InlineMath math="1, 4, 6, 4, 1" />:</p>
+                <BlockMath math="3.1^4 = (3 + 0.1)^4 = 3^4 + 4(3)^3(0.1) + 6(3)^2(0.1)^2 + 4(3)(0.1)^3 + (0.1)^4" />
+                <p><strong>Step 2:</strong> Evaluate each term:</p>
+                <BlockMath math="\begin{aligned} 3^4 &= 81 \\ 4(27)(0.1) &= 10.8 \\ 6(9)(0.01) &= 0.54 \\ 4(3)(0.001) &= 0.012 \\ (0.1)^4 &= 0.0001 \end{aligned}" />
+                <p><strong>Step 3:</strong> Add them. The index is a positive whole number, so the expansion terminates and the total is exact:</p>
+                <BlockMath math="3.1^4 = 81 + 10.8 + 0.54 + 0.012 + 0.0001 = 92.3521" />
+              </div>
+            )
+          },
+          {
+            id: "binomial-approx-ex2",
+            question: <p>Use the Binomial Theorem to evaluate <InlineMath math="1.02^6" /> correct to <strong>4 decimal places</strong>.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write <InlineMath math="1.02^6 = (1 + 0.02)^6" />. Since the first term is <InlineMath math="1" />, every power of it is <InlineMath math="1" /> and the expansion simplifies to:</p>
+                <BlockMath math="(1+0.02)^6 = 1 + 6(0.02) + 15(0.02)^2 + 20(0.02)^3 + 15(0.02)^4 + \cdots" />
+                <p><strong>Step 2:</strong> Evaluate the terms in turn:</p>
+                <BlockMath math="\begin{aligned} 6(0.02) &= 0.12 \\ 15(0.0004) &= 0.006 \\ 20(0.000008) &= 0.00016 \\ 15(0.00000016) &= 0.0000024 \end{aligned}" />
+                <p><strong>Step 3:</strong> Check the next term before stopping. It is <InlineMath math="6(0.02)^5 = 0.0000000192" />, far too small to affect the fourth decimal place, so we may truncate here.</p>
+                <p><strong>Step 4:</strong> Add the terms and round at the end:</p>
+                <BlockMath math="1 + 0.12 + 0.006 + 0.00016 + 0.0000024 = 1.1261624\ldots \approx 1.1262" />
+              </div>
+            )
+          },
+          {
+            id: "binomial-approx-ex3",
+            question: <p>Use the Binomial Theorem to evaluate <InlineMath math="0.97^5" /> correct to <strong>5 decimal places</strong>.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write <InlineMath math="0.97^5 = (1 - 0.03)^5" />. With a negative second term the signs alternate, using coefficients <InlineMath math="1, 5, 10, 10, 5, 1" />:</p>
+                <BlockMath math="(1-0.03)^5 = 1 - 5(0.03) + 10(0.03)^2 - 10(0.03)^3 + 5(0.03)^4 - (0.03)^5" />
+                <p><strong>Step 2:</strong> Evaluate each term, keeping full accuracy:</p>
+                <BlockMath math="\begin{aligned} 5(0.03) &= 0.15 \\ 10(0.0009) &= 0.009 \\ 10(0.000027) &= 0.00027 \\ 5(0.00000081) &= 0.00000405 \\ (0.03)^5 &= 0.0000000243 \end{aligned}" />
+                <p><strong>Step 3:</strong> Combine with alternating signs:</p>
+                <BlockMath math="1 - 0.15 + 0.009 - 0.00027 + 0.00000405 - 0.0000000243 = 0.8587340257\ldots" />
+                <p><strong>Step 4:</strong> Round to 5 decimal places: <InlineMath math="0.97^5 \approx 0.85873" />.</p>
+              </div>
+            )
           }
         ]
       }
@@ -123,8 +297,68 @@ export const advancedHigherMathsData: Section[] = [
     title: "Partial Fractions",
     topics: [
       {
+        id: "algebraic-long-division",
+        title: "1. Algebraic Long Division",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Before partial fractions can be used, the fraction must be <strong>proper</strong> — the degree of the numerator lower than the degree of the denominator. When it is not, we divide first, and the tool for that is <strong>algebraic long division</strong>.</p>
+            <p>The process is identical to long division with numbers. Dividing <InlineMath math="745" /> by <InlineMath math="6" /> gives <InlineMath math="124" /> remainder <InlineMath math="1" />, which we can write as:</p>
+            <BlockMath math="\frac{745}{6} = 124 + \frac{1}{6}" />
+            <p>The same layout works with polynomials. Dividing a polynomial <InlineMath math="f(x)" /> by <InlineMath math="g(x)" /> produces a <strong>quotient</strong> <InlineMath math="q(x)" /> and a <strong>remainder</strong> <InlineMath math="r(x)" />:</p>
+            <BlockMath math="\frac{f(x)}{g(x)} = q(x) + \frac{r(x)}{g(x)}" />
+            <p>At each stage, divide the leading term of what is left by the leading term of the divisor, multiply the whole divisor by that result, and subtract. Stop when the degree of what remains is <em>lower</em> than the degree of the divisor — that leftover is the remainder, and the fraction <InlineMath math="\frac{r(x)}{g(x)}" /> is guaranteed to be proper.</p>
+            <p><strong>The Golden Rule:</strong> compare degrees before you do anything else. Only divide the <em>leading</em> terms to get each new term of the quotient, and keep going only while the degree of the remainder is at least the degree of the divisor.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Missing terms:</strong> write in placeholders such as <InlineMath math="0x^2" /> so that like terms stay in line — this is the single most common source of error.</li>
+                <li><strong>Sign errors on subtraction:</strong> you subtract the <em>whole</em> product, so every sign in it changes. Bracket it before subtracting.</li>
+                <li><strong>Stopping at the wrong point:</strong> continue only while the degree of the remaining expression is greater than or equal to the degree of the divisor.</li>
+                <li><strong>Checking your answer:</strong> multiply back — <InlineMath math="g(x)\,q(x) + r(x)" /> must return the original numerator exactly.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "long-division-ex1",
+            question: <p>Divide <InlineMath math="x^3 + 2x^2 - 5x + 1" /> by <InlineMath math="x - 2" />, stating the quotient and remainder.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Divide the leading terms: <InlineMath math="x^3 \div x = x^2" />. Multiply the divisor by <InlineMath math="x^2" /> and subtract:</p>
+                <BlockMath math="x^2(x-2) = x^3 - 2x^2 \quad\implies\quad (x^3 + 2x^2) - (x^3 - 2x^2) = 4x^2" />
+                <p><strong>Step 2:</strong> Bring down the next term to give <InlineMath math="4x^2 - 5x" />. Now <InlineMath math="4x^2 \div x = 4x" />:</p>
+                <BlockMath math="4x(x-2) = 4x^2 - 8x \quad\implies\quad (4x^2 - 5x) - (4x^2 - 8x) = 3x" />
+                <p><strong>Step 3:</strong> Bring down the <InlineMath math="+1" /> to give <InlineMath math="3x + 1" />. Now <InlineMath math="3x \div x = 3" />:</p>
+                <BlockMath math="3(x-2) = 3x - 6 \quad\implies\quad (3x + 1) - (3x - 6) = 7" />
+                <p><strong>Step 4:</strong> The remainder <InlineMath math="7" /> has lower degree than <InlineMath math="x-2" />, so we stop. The quotient is <InlineMath math="x^2 + 4x + 3" /> and the remainder is <InlineMath math="7" />:</p>
+                <BlockMath math="\frac{x^3 + 2x^2 - 5x + 1}{x-2} = x^2 + 4x + 3 + \frac{7}{x-2}" />
+                <p><strong>Check:</strong> <InlineMath math="(x-2)(x^2+4x+3) + 7 = x^3 + 2x^2 - 5x - 6 + 7 = x^3 + 2x^2 - 5x + 1" /> ✓</p>
+              </div>
+            )
+          },
+          {
+            id: "long-division-ex2",
+            question: <p>Express <InlineMath math="\dfrac{2x^3 - 3x + 5}{x^2 + 1}" /> as a quotient plus a proper fraction.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The numerator has no <InlineMath math="x^2" /> term, so insert a placeholder before dividing:</p>
+                <BlockMath math="2x^3 + 0x^2 - 3x + 5 \ \div \ (x^2 + 1)" />
+                <p><strong>Step 2:</strong> Divide the leading terms: <InlineMath math="2x^3 \div x^2 = 2x" />. Multiply and subtract:</p>
+                <BlockMath math="2x(x^2+1) = 2x^3 + 2x" />
+                <BlockMath math="(2x^3 + 0x^2 - 3x + 5) - (2x^3 + 2x) = 0x^2 - 5x + 5" />
+                <p><strong>Step 3:</strong> What remains, <InlineMath math="-5x + 5" />, has degree <InlineMath math="1" />, which is lower than the degree of <InlineMath math="x^2+1" />. So the division stops here:</p>
+                <BlockMath math="\frac{2x^3 - 3x + 5}{x^2+1} = 2x + \frac{5 - 5x}{x^2+1}" />
+                <p><strong>Check:</strong> <InlineMath math="(x^2+1)(2x) + (5-5x) = 2x^3 + 2x + 5 - 5x = 2x^3 - 3x + 5" /> ✓</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "proper-rational-functions",
-        title: "1. Proper Rational Functions",
+        title: "2. Proper Rational Functions",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -134,6 +368,7 @@ export const advancedHigherMathsData: Section[] = [
               <li><strong>Repeated linear factor</strong> <InlineMath math="(x-a)^2" /> gives <InlineMath math="\dfrac{A}{x-a} + \dfrac{B}{(x-a)^2}" /></li>
               <li><strong>Irreducible quadratic factor</strong> <InlineMath math="(x^2+bx+c)" /> gives <InlineMath math="\dfrac{Bx+C}{x^2+bx+c}" /></li>
             </ul>
+            <p>A denominator may contain several of these at once. Each factor contributes its own term (or terms) independently, so <InlineMath math="(x+1)^2(x^2+4)" /> needs <em>three</em> unknowns in total: two for the repeated linear factor and one linear numerator over the quadratic.</p>
             <p><strong>The Golden Rule:</strong> factorise the denominator fully and check the fraction is proper before you start. Then choose the correct numerator shape for each factor — a <em>constant</em> over a linear factor, but a <em>linear expression</em> <InlineMath math="(Bx+C)" /> over an irreducible quadratic.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -191,12 +426,32 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\frac{3x^2+1}{(x+1)(x^2+1)} = \frac{2}{x+1} + \frac{x-1}{x^2+1}" />
               </div>
             )
+          },
+          {
+            id: "proper-ex4",
+            question: <p><strong>Repeated linear <em>and</em> irreducible quadratic.</strong> Express <InlineMath math="\dfrac{2x^3 + 5x^2 + 5x + 12}{(x+1)^2(x^2+4)}" /> in partial fractions.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The numerator has degree <InlineMath math="3" /> and the denominator degree <InlineMath math="4" />, so the fraction is proper. Each factor contributes its own terms — four unknowns in all:</p>
+                <BlockMath math="\frac{2x^3+5x^2+5x+12}{(x+1)^2(x^2+4)} = \frac{A}{x+1} + \frac{B}{(x+1)^2} + \frac{Cx+D}{x^2+4}" />
+                <p><strong>Step 2:</strong> Multiply through by <InlineMath math="(x+1)^2(x^2+4)" />:</p>
+                <BlockMath math="2x^3+5x^2+5x+12 = A(x+1)(x^2+4) + B(x^2+4) + (Cx+D)(x+1)^2" />
+                <p><strong>Step 3:</strong> Substitute the real root <InlineMath math="x = -1" />, which kills the <InlineMath math="A" /> and <InlineMath math="(Cx+D)" /> terms:</p>
+                <BlockMath math="-2 + 5 - 5 + 12 = B(1+4) \implies 10 = 5B \implies B = 2" />
+                <p><strong>Step 4:</strong> There are no other real roots, so compare coefficients. Expanding the right-hand side:</p>
+                <BlockMath math="\begin{aligned} x^3: &\quad A + C = 2 \\ x^2: &\quad A + B + 2C + D = 5 \\ \text{constants}: &\quad 4A + 4B + D = 12 \end{aligned}" />
+                <p><strong>Step 5:</strong> Substitute <InlineMath math="B = 2" />, giving <InlineMath math="C = 2 - A" /> and <InlineMath math="D = 4 - 4A" />. Put both into the <InlineMath math="x^2" /> equation:</p>
+                <BlockMath math="A + 2 + 2(2-A) + (4-4A) = 5 \implies 8 - 5A = 5 \implies A = 1" />
+                <p><strong>Step 6:</strong> Back-substitute: <InlineMath math="C = 1" /> and <InlineMath math="D = 0" />. State the result:</p>
+                <BlockMath math="\frac{2x^3+5x^2+5x+12}{(x+1)^2(x^2+4)} = \frac{1}{x+1} + \frac{2}{(x+1)^2} + \frac{x}{x^2+4}" />
+              </div>
+            )
           }
         ]
       },
       {
         id: "improper-rational-functions",
-        title: "2. Improper Rational Functions",
+        title: "3. Improper Rational Functions",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -218,12 +473,16 @@ export const advancedHigherMathsData: Section[] = [
             question: <p>Express <InlineMath math="\dfrac{x^3 + 2x^2 + 3}{x^2 - 1}" /> in partial fractions.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> The fraction is improper (degree 3 over degree 2), so divide first. Long division gives a quotient of <InlineMath math="x+2" /> and remainder <InlineMath math="x+5" />:</p>
+                <p><strong>Step 1:</strong> The fraction is improper (degree 3 over degree 2), so divide first. Insert a placeholder for the missing <InlineMath math="x" /> term, then divide the leading terms: <InlineMath math="x^3 \div x^2 = x" />.</p>
+                <BlockMath math="x(x^2-1) = x^3 - x \quad\implies\quad (x^3 + 2x^2 + 0x) - (x^3 - x) = 2x^2 + x" />
+                <p><strong>Step 2:</strong> Bring down the <InlineMath math="+3" /> to give <InlineMath math="2x^2 + x + 3" />. Now <InlineMath math="2x^2 \div x^2 = 2" />:</p>
+                <BlockMath math="2(x^2-1) = 2x^2 - 2 \quad\implies\quad (2x^2 + x + 3) - (2x^2 - 2) = x + 5" />
+                <p><strong>Step 3:</strong> The remainder <InlineMath math="x+5" /> has lower degree than <InlineMath math="x^2-1" />, so the division is complete with quotient <InlineMath math="x+2" />:</p>
                 <BlockMath math="\frac{x^3+2x^2+3}{x^2-1} = x + 2 + \frac{x+5}{x^2-1}" />
-                <p><strong>Step 2:</strong> Decompose the proper remainder, using <InlineMath math="x^2-1 = (x-1)(x+1)" />:</p>
+                <p><strong>Step 4:</strong> Decompose the proper remainder, using <InlineMath math="x^2-1 = (x-1)(x+1)" />:</p>
                 <BlockMath math="\frac{x+5}{(x-1)(x+1)} = \frac{A}{x-1} + \frac{B}{x+1} \implies x+5 = A(x+1) + B(x-1)" />
                 <BlockMath math="x=1:\ 6 = 2A \implies A = 3 \qquad x=-1:\ 4 = -2B \implies B = -2" />
-                <p><strong>Step 3:</strong> Combine the quotient and the partial fractions:</p>
+                <p><strong>Step 5:</strong> Combine the quotient and the partial fractions:</p>
                 <BlockMath math="\frac{x^3+2x^2+3}{x^2-1} = x + 2 + \frac{3}{x-1} - \frac{2}{x+1}" />
               </div>
             )
