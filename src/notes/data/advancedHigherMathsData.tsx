@@ -43,14 +43,14 @@ export const advancedHigherMathsData: Section[] = [
         examples: [
           {
             id: "pascals-ex1",
-            question: <p>Evaluate <InlineMath math="\binom{7}{3}" /> and <InlineMath math="\binom{10}{7}" />, and state which other coefficient equals <InlineMath math="\binom{10}{7}" />.</p>,
+            question: <p>Evaluate <InlineMath math="\binom{9}{4}" /> and <InlineMath math="\binom{12}{8}" />, and state which other coefficient equals <InlineMath math="\binom{12}{8}" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Apply the definition to <InlineMath math="\binom{7}{3}" />:</p>
-                <BlockMath math="\binom{7}{3} = \frac{7!}{3!\,4!} = \frac{5040}{6 \times 24} = \frac{5040}{144} = 35" />
-                <p><strong>Step 2:</strong> Apply it again to <InlineMath math="\binom{10}{7}" />:</p>
-                <BlockMath math="\binom{10}{7} = \frac{10!}{7!\,3!} = \frac{3628800}{5040 \times 6} = \frac{3628800}{30240} = 120" />
-                <p><strong>Step 3:</strong> By the symmetry property, <InlineMath math="\binom{10}{7} = \binom{10}{10-7} = \binom{10}{3}" />, which is also <InlineMath math="120" />.</p>
+                <p><strong>Step 1:</strong> Apply the definition to <InlineMath math="\binom{9}{4}" />:</p>
+                <BlockMath math="\binom{9}{4} = \frac{9!}{4!\,5!} = \frac{362880}{24 \times 120} = \frac{362880}{2880} = 126" />
+                <p><strong>Step 2:</strong> For <InlineMath math="\binom{12}{8}" />, cancelling <InlineMath math="8!" /> first keeps the numbers manageable:</p>
+                <BlockMath math="\binom{12}{8} = \frac{12!}{8!\,4!} = \frac{12 \times 11 \times 10 \times 9}{4 \times 3 \times 2 \times 1} = \frac{11880}{24} = 495" />
+                <p><strong>Step 3:</strong> By the symmetry property, <InlineMath math="\binom{12}{8} = \binom{12}{12-8} = \binom{12}{4}" />, which is also <InlineMath math="495" /> — and, as Step 2 shows, is the quicker one to compute.</p>
               </div>
             )
           },
@@ -88,16 +88,16 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "pascals-ex4",
-            question: <p>Find the value of <InlineMath math="n" /> for which <InlineMath math="\binom{n}{2} = 55" />.</p>,
+            question: <p>Find the value of <InlineMath math="n" /> for which <InlineMath math="\binom{n}{2} = 78" />.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Expand the coefficient using the definition, cancelling <InlineMath math="(n-2)!" />:</p>
                 <BlockMath math="\binom{n}{2} = \frac{n!}{2!\,(n-2)!} = \frac{n(n-1)}{2}" />
-                <p><strong>Step 2:</strong> Set this equal to <InlineMath math="55" /> and rearrange into a quadratic:</p>
-                <BlockMath math="\frac{n(n-1)}{2} = 55 \implies n^2 - n - 110 = 0" />
+                <p><strong>Step 2:</strong> Set this equal to <InlineMath math="78" /> and rearrange into a quadratic:</p>
+                <BlockMath math="\frac{n(n-1)}{2} = 78 \implies n^2 - n - 156 = 0" />
                 <p><strong>Step 3:</strong> Factorise and solve:</p>
-                <BlockMath math="(n-11)(n+10) = 0 \implies n = 11 \ \text{ or } \ n = -10" />
-                <p><strong>Step 4:</strong> Since <InlineMath math="n" /> must be a positive whole number, <InlineMath math="n = -10" /> is rejected. Therefore <InlineMath math="n = 11" />.</p>
+                <BlockMath math="(n-13)(n+12) = 0 \implies n = 13 \ \text{ or } \ n = -12" />
+                <p><strong>Step 4:</strong> Since <InlineMath math="n" /> must be a positive whole number, <InlineMath math="n = -12" /> is rejected. Therefore <InlineMath math="n = 13" />, which checks out: <InlineMath math="\frac{13 \times 12}{2} = 78" />.</p>
               </div>
             )
           }
@@ -207,16 +207,16 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "general-term-ex3",
-            question: <p>Find the fourth term in the expansion of <InlineMath math="(2x - 3y)^7" />, written in descending powers of <InlineMath math="x" />.</p>,
+            question: <p>Find the fourth term in the expansion of <InlineMath math="(3a - 2b)^6" />, written in descending powers of <InlineMath math="a" />.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> The general term is the <InlineMath math="(r+1)" />th term, so the <strong>fourth</strong> term needs <InlineMath math="r = 3" />:</p>
-                <BlockMath math="T_{r+1} = \binom{7}{r}(2x)^{7-r}(-3y)^r \quad\implies\quad T_4 = \binom{7}{3}(2x)^{4}(-3y)^{3}" />
+                <BlockMath math="T_{r+1} = \binom{6}{r}(3a)^{6-r}(-2b)^r \quad\implies\quad T_4 = \binom{6}{3}(3a)^{3}(-2b)^{3}" />
                 <p><strong>Step 2:</strong> Evaluate each factor separately, taking care to raise the whole bracket to the power:</p>
-                <BlockMath math="\binom{7}{3} = 35, \qquad (2x)^4 = 16x^4, \qquad (-3y)^3 = -27y^3" />
+                <BlockMath math="\binom{6}{3} = 20, \qquad (3a)^3 = 27a^3, \qquad (-2b)^3 = -8b^3" />
                 <p><strong>Step 3:</strong> Multiply the three factors together:</p>
-                <BlockMath math="T_4 = 35 \times 16x^4 \times (-27y^3) = -15120\,x^4y^3" />
-                <p>The odd power of <InlineMath math="-3y" /> makes this term negative.</p>
+                <BlockMath math="T_4 = 20 \times 27a^3 \times (-8b^3) = -4320\,a^3b^3" />
+                <p>The odd power of <InlineMath math="-2b" /> makes this term negative.</p>
               </div>
             )
           }
@@ -246,15 +246,15 @@ export const advancedHigherMathsData: Section[] = [
         examples: [
           {
             id: "binomial-approx-ex1",
-            question: <p>Use the Binomial Theorem to find the <strong>exact</strong> value of <InlineMath math="3.1^4" />.</p>,
+            question: <p>Use the Binomial Theorem to find the <strong>exact</strong> value of <InlineMath math="2.2^4" />.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Write the number as a binomial and expand with coefficients <InlineMath math="1, 4, 6, 4, 1" />:</p>
-                <BlockMath math="3.1^4 = (3 + 0.1)^4 = 3^4 + 4(3)^3(0.1) + 6(3)^2(0.1)^2 + 4(3)(0.1)^3 + (0.1)^4" />
+                <BlockMath math="2.2^4 = (2 + 0.2)^4 = 2^4 + 4(2)^3(0.2) + 6(2)^2(0.2)^2 + 4(2)(0.2)^3 + (0.2)^4" />
                 <p><strong>Step 2:</strong> Evaluate each term:</p>
-                <BlockMath math="\begin{aligned} 3^4 &= 81 \\ 4(27)(0.1) &= 10.8 \\ 6(9)(0.01) &= 0.54 \\ 4(3)(0.001) &= 0.012 \\ (0.1)^4 &= 0.0001 \end{aligned}" />
+                <BlockMath math="\begin{aligned} 2^4 &= 16 \\ 4(8)(0.2) &= 6.4 \\ 6(4)(0.04) &= 0.96 \\ 4(2)(0.008) &= 0.064 \\ (0.2)^4 &= 0.0016 \end{aligned}" />
                 <p><strong>Step 3:</strong> Add them. The index is a positive whole number, so the expansion terminates and the total is exact:</p>
-                <BlockMath math="3.1^4 = 81 + 10.8 + 0.54 + 0.012 + 0.0001 = 92.3521" />
+                <BlockMath math="2.2^4 = 16 + 6.4 + 0.96 + 0.064 + 0.0016 = 23.4256" />
               </div>
             )
           },
@@ -1426,17 +1426,17 @@ export const advancedHigherMathsData: Section[] = [
         examples: [
           {
             id: "first-principles-ex1",
-            question: <p>Differentiate <InlineMath math="f(x) = x^2 + 3x" /> from first principles.</p>,
+            question: <p>Differentiate <InlineMath math="f(x) = 2x^2 - 5x" /> from first principles.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Write down <InlineMath math="f(x+h)" /> and expand it fully:</p>
-                <BlockMath math="f(x+h) = (x+h)^2 + 3(x+h) = x^2 + 2xh + h^2 + 3x + 3h" />
-                <p><strong>Step 2:</strong> Subtract <InlineMath math="f(x) = x^2 + 3x" />. The terms without an <InlineMath math="h" /> cancel:</p>
-                <BlockMath math="f(x+h) - f(x) = 2xh + h^2 + 3h" />
+                <BlockMath math="f(x+h) = 2(x+h)^2 - 5(x+h) = 2x^2 + 4xh + 2h^2 - 5x - 5h" />
+                <p><strong>Step 2:</strong> Subtract <InlineMath math="f(x) = 2x^2 - 5x" />. The terms without an <InlineMath math="h" /> cancel:</p>
+                <BlockMath math="f(x+h) - f(x) = 4xh + 2h^2 - 5h" />
                 <p><strong>Step 3:</strong> Divide by <InlineMath math="h" />, cancelling the common factor:</p>
-                <BlockMath math="\frac{f(x+h)-f(x)}{h} = \frac{h(2x + h + 3)}{h} = 2x + h + 3" />
+                <BlockMath math="\frac{f(x+h)-f(x)}{h} = \frac{h(4x + 2h - 5)}{h} = 4x + 2h - 5" />
                 <p><strong>Step 4:</strong> Now the limit can be taken safely:</p>
-                <BlockMath math="f'(x) = \lim_{h \to 0}\,(2x + h + 3) = 2x + 3" />
+                <BlockMath math="f'(x) = \lim_{h \to 0}\,(4x + 2h - 5) = 4x - 5" />
               </div>
             )
           },
@@ -1538,15 +1538,17 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "diff-rules-ex4",
-            question: <p>Differentiate (a) <InlineMath math="y = 3\operatorname{cosec} 2x" /> and (b) <InlineMath math="y = \sec^3 x" />.</p>,
+            question: <p>Differentiate (a) <InlineMath math="y = 5\operatorname{cosec} 3x" />, (b) <InlineMath math="y = \sec^3 x" />, and (c) <InlineMath math="y = x\cot x" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1 (a):</strong> Use <InlineMath math="\frac{d}{dx}(\operatorname{cosec} x) = -\operatorname{cosec} x \cot x" /> together with the chain rule, since the angle is <InlineMath math="2x" />:</p>
-                <BlockMath math="\frac{dy}{dx} = 3 \times \bigl(-\operatorname{cosec} 2x \cot 2x\bigr) \times 2 = -6\operatorname{cosec} 2x \cot 2x" />
+                <p><strong>Step 1 (a):</strong> Use <InlineMath math="\frac{d}{dx}(\operatorname{cosec} x) = -\operatorname{cosec} x \cot x" /> together with the chain rule, since the angle is <InlineMath math="3x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = 5 \times \bigl(-\operatorname{cosec} 3x \cot 3x\bigr) \times 3 = -15\operatorname{cosec} 3x \cot 3x" />
                 <p><strong>Step 2 (b):</strong> Read <InlineMath math="\sec^3 x" /> as <InlineMath math="(\sec x)^3" />. Differentiate the power first, then multiply by the derivative of <InlineMath math="\sec x" />:</p>
-                <BlockMath math="\frac{dy}{dx} = 3(\sec x)^2 \times \sec x \tan x" />
-                <p><strong>Step 3:</strong> Combine the powers of <InlineMath math="\sec x" />:</p>
-                <BlockMath math="\frac{dy}{dx} = 3\sec^3 x \tan x" />
+                <BlockMath math="\frac{dy}{dx} = 3(\sec x)^2 \times \sec x \tan x = 3\sec^3 x \tan x" />
+                <p><strong>Step 3 (c):</strong> This is a product, so use <InlineMath math="u'v + uv'" /> with <InlineMath math="u = x" /> and <InlineMath math="v = \cot x" />, remembering the minus sign:</p>
+                <BlockMath math="\frac{dy}{dx} = (1)\cot x + x\bigl(-\operatorname{cosec}^2 x\bigr)" />
+                <p><strong>Step 4:</strong> Tidy the result:</p>
+                <BlockMath math="\frac{dy}{dx} = \cot x - x\operatorname{cosec}^2 x" />
               </div>
             )
           }
@@ -1614,16 +1616,16 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "higher-deriv-ex3",
-            question: <p>Given <InlineMath math="f(x) = \ln(1+x)" />, find the first four derivatives and hence make a conjecture for <InlineMath math="f^{(n)}(x)" />.</p>,
+            question: <p>Given <InlineMath math="f(x) = \dfrac{1}{x}" />, find the first four derivatives and hence make a conjecture for <InlineMath math="f^{(n)}(x)" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Differentiate repeatedly, writing each result as a negative power to expose the pattern:</p>
-                <BlockMath math="\begin{aligned} f'(x) &= (1+x)^{-1} \\ f''(x) &= -(1+x)^{-2} \\ f'''(x) &= 2(1+x)^{-3} \\ f^{(4)}(x) &= -6(1+x)^{-4} \end{aligned}" />
-                <p><strong>Step 2:</strong> Examine the three patterns separately. The signs alternate starting from positive; the coefficients are <InlineMath math="1, 1, 2, 6" />, which are <InlineMath math="0!, 1!, 2!, 3!" />; and the power is <InlineMath math="-n" />.</p>
-                <p><strong>Step 3:</strong> Since the first derivative is positive, the sign factor must be <InlineMath math="(-1)^{n-1}" />. Combining all three:</p>
-                <BlockMath math="f^{(n)}(x) = \frac{(-1)^{n-1}\,(n-1)!}{(1+x)^{n}}" />
+                <p><strong>Step 1:</strong> Write the function as <InlineMath math="x^{-1}" /> and differentiate repeatedly, keeping every result as a negative power so the pattern stays visible:</p>
+                <BlockMath math="\begin{aligned} f'(x) &= -x^{-2} \\ f''(x) &= 2x^{-3} \\ f'''(x) &= -6x^{-4} \\ f^{(4)}(x) &= 24x^{-5} \end{aligned}" />
+                <p><strong>Step 2:</strong> Examine the three patterns separately. The signs alternate starting from negative; the coefficients are <InlineMath math="1, 2, 6, 24" />, which are <InlineMath math="1!, 2!, 3!, 4!" />; and the power is <InlineMath math="-(n+1)" />.</p>
+                <p><strong>Step 3:</strong> Since the <em>first</em> derivative is negative, the sign factor must be <InlineMath math="(-1)^n" />. Combining all three patterns:</p>
+                <BlockMath math="f^{(n)}(x) = (-1)^n\,n!\,x^{-(n+1)} = \frac{(-1)^n\,n!}{x^{n+1}}" />
                 <p><strong>Step 4:</strong> Check the conjecture against a known case. For <InlineMath math="n=3" />:</p>
-                <BlockMath math="\frac{(-1)^{2}\,2!}{(1+x)^{3}} = \frac{2}{(1+x)^3} = 2(1+x)^{-3} \ \checkmark" />
+                <BlockMath math="\frac{(-1)^{3}\,3!}{x^{4}} = \frac{-6}{x^4} = -6x^{-4} \ \checkmark" />
               </div>
             )
           }
@@ -1649,7 +1651,7 @@ export const advancedHigherMathsData: Section[] = [
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong><InlineMath math="\sin^{-1}x" /> is not <InlineMath math="\frac{1}{\sin x}" />:</strong> the <InlineMath math="-1" /> denotes the inverse function. The reciprocal of <InlineMath math="\sin x" /> is <InlineMath math="\operatorname{cosec} x" />.</li>
                 <li><strong>Losing the minus sign:</strong> <InlineMath math="\cos^{-1}" /> differentiates to the <em>negative</em> of the <InlineMath math="\sin^{-1}" /> result — that sign is the only difference between them.</li>
-                <li><strong>Forgetting the chain rule:</strong> for <InlineMath math="\tan^{-1}(4x)" /> you must square the whole argument in the denominator <em>and</em> multiply by <InlineMath math="4" />.</li>
+                <li><strong>Forgetting the chain rule:</strong> for <InlineMath math="\tan^{-1}(5x^2)" /> you must square the whole argument in the denominator — giving <InlineMath math="25x^4" />, not <InlineMath math="25x^2" /> — <em>and</em> multiply by the derivative of the inside.</li>
                 <li><strong>Choosing the sign of the square root:</strong> in the derivation, <InlineMath math="\sqrt{1-x^2}" /> is taken as positive because the range of <InlineMath math="\sin^{-1}" /> is <InlineMath math="\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]" />, where <InlineMath math="\cos y \ge 0" />. State this — it is a marked step.</li>
               </ul>
             </div>
@@ -1674,27 +1676,31 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "inverse-trig-ex2",
-            question: <p>Differentiate <InlineMath math="y = \tan^{-1}(4x)" />.</p>,
+            question: <p>Differentiate (a) <InlineMath math="y = \cos^{-1}(2x)" /> and (b) <InlineMath math="y = \tan^{-1}(5x^2)" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Apply the standard result with the chain rule. The inner function is <InlineMath math="f(x) = 4x" />, so <InlineMath math="f'(x) = 4" />:</p>
-                <BlockMath math="\frac{dy}{dx} = \frac{1}{1 + (4x)^2} \times 4" />
-                <p><strong>Step 2:</strong> Simplify, remembering that the whole of <InlineMath math="4x" /> is squared:</p>
-                <BlockMath math="\frac{dy}{dx} = \frac{4}{1 + 16x^2}" />
+                <p><strong>Step 1 (a):</strong> Apply the standard result for <InlineMath math="\cos^{-1}" /> — note the minus sign — with the chain rule. The inner function is <InlineMath math="2x" />, so multiply by <InlineMath math="2" />:</p>
+                <BlockMath math="\frac{dy}{dx} = -\frac{1}{\sqrt{1 - (2x)^2}} \times 2" />
+                <p><strong>Step 2:</strong> Simplify, remembering the whole of <InlineMath math="2x" /> is squared:</p>
+                <BlockMath math="\frac{dy}{dx} = -\frac{2}{\sqrt{1 - 4x^2}}" />
+                <p><strong>Step 3 (b):</strong> Now the inner function is <InlineMath math="5x^2" />, whose derivative is <InlineMath math="10x" />:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{1}{1 + (5x^2)^2} \times 10x" />
+                <p><strong>Step 4:</strong> Square the inner function carefully — <InlineMath math="(5x^2)^2 = 25x^4" />, not <InlineMath math="25x^2" />:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{10x}{1 + 25x^4}" />
               </div>
             )
           },
           {
             id: "inverse-trig-ex3",
-            question: <p>Differentiate <InlineMath math="y = \sin^{-1}\!\left(\dfrac{x}{3}\right)" />, simplifying your answer.</p>,
+            question: <p>Differentiate <InlineMath math="y = \sin^{-1}\!\left(\dfrac{x}{4}\right)" />, simplifying your answer.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Use the chain rule with inner function <InlineMath math="\dfrac{x}{3}" />, whose derivative is <InlineMath math="\dfrac{1}{3}" />:</p>
-                <BlockMath math="\frac{dy}{dx} = \frac{1}{\sqrt{1 - \left(\frac{x}{3}\right)^2}} \times \frac{1}{3}" />
+                <p><strong>Step 1:</strong> Use the chain rule with inner function <InlineMath math="\dfrac{x}{4}" />, whose derivative is <InlineMath math="\dfrac{1}{4}" />:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{1}{\sqrt{1 - \left(\frac{x}{4}\right)^2}} \times \frac{1}{4}" />
                 <p><strong>Step 2:</strong> Simplify the surd by writing the inside as a single fraction:</p>
-                <BlockMath math="\sqrt{1 - \frac{x^2}{9}} = \sqrt{\frac{9-x^2}{9}} = \frac{\sqrt{9-x^2}}{3}" />
-                <p><strong>Step 3:</strong> Substitute back — the factors of <InlineMath math="3" /> cancel:</p>
-                <BlockMath math="\frac{dy}{dx} = \frac{3}{\sqrt{9-x^2}} \times \frac{1}{3} = \frac{1}{\sqrt{9-x^2}}" />
+                <BlockMath math="\sqrt{1 - \frac{x^2}{16}} = \sqrt{\frac{16-x^2}{16}} = \frac{\sqrt{16-x^2}}{4}" />
+                <p><strong>Step 3:</strong> Substitute back — the factors of <InlineMath math="4" /> cancel:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{4}{\sqrt{16-x^2}} \times \frac{1}{4} = \frac{1}{\sqrt{16-x^2}}" />
               </div>
             )
           },
@@ -1762,38 +1768,40 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "implicit-ex3",
-            question: <p>Find the equation of the tangent to the curve <InlineMath math="2x^2 - 3xy - y^2 = 1" /> at the point <InlineMath math="(2, 1)" />.</p>,
+            question: <p>Find the equation of the tangent to the curve <InlineMath math="x^2 + 2xy - y^2 = 7" /> at the point <InlineMath math="(2, 1)" />.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Confirm the point lies on the curve:</p>
-                <BlockMath math="2(4) - 3(2)(1) - (1)^2 = 8 - 6 - 1 = 1 \ \checkmark" />
-                <p><strong>Step 2:</strong> Differentiate implicitly, using the product rule on the <InlineMath math="-3xy" /> term:</p>
-                <BlockMath math="4x - 3\left(y + x\frac{dy}{dx}\right) - 2y\frac{dy}{dx} = 0" />
+                <BlockMath math="(2)^2 + 2(2)(1) - (1)^2 = 4 + 4 - 1 = 7 \ \checkmark" />
+                <p><strong>Step 2:</strong> Differentiate implicitly, using the product rule on the <InlineMath math="2xy" /> term:</p>
+                <BlockMath math="2x + 2\left(y + x\frac{dy}{dx}\right) - 2y\frac{dy}{dx} = 0" />
                 <p><strong>Step 3:</strong> Gather the <InlineMath math="\frac{dy}{dx}" /> terms and factorise:</p>
-                <BlockMath math="4x - 3y = 3x\frac{dy}{dx} + 2y\frac{dy}{dx} \implies \frac{dy}{dx} = \frac{4x - 3y}{3x + 2y}" />
+                <BlockMath math="\frac{dy}{dx}\bigl(2x - 2y\bigr) = -(2x + 2y) \implies \frac{dy}{dx} = -\frac{x + y}{x - y}" />
                 <p><strong>Step 4:</strong> Substitute <InlineMath math="(2,1)" /> to get the gradient of the tangent:</p>
-                <BlockMath math="\frac{dy}{dx} = \frac{8 - 3}{6 + 2} = \frac{5}{8}" />
-                <p><strong>Step 5:</strong> Use <InlineMath math="y - b = m(x - a)" /> and clear the fraction:</p>
-                <BlockMath math="y - 1 = \frac{5}{8}(x - 2) \implies 8y - 8 = 5x - 10 \implies 5x - 8y - 2 = 0" />
+                <BlockMath math="\frac{dy}{dx} = -\frac{2 + 1}{2 - 1} = -3" />
+                <p><strong>Step 5:</strong> Use <InlineMath math="y - b = m(x - a)" />:</p>
+                <BlockMath math="y - 1 = -3(x - 2) \implies y - 1 = -3x + 6 \implies 3x + y - 7 = 0" />
               </div>
             )
           },
           {
             id: "implicit-ex4",
-            question: <p>Show that <InlineMath math="(1, 2)" /> is a stationary point on the curve <InlineMath math="x^2 - xy + y^3 = 7" />, and determine its nature.</p>,
+            question: <p>Show that <InlineMath math="(2, 8)" /> is a stationary point on the curve <InlineMath math="x^2 + y^2 - 4x - 6y = 12" />, and determine its nature.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Check the point lies on the curve:</p>
-                <BlockMath math="1^2 - (1)(2) + 2^3 = 1 - 2 + 8 = 7 \ \checkmark" />
+                <BlockMath math="2^2 + 8^2 - 4(2) - 6(8) = 4 + 64 - 8 - 48 = 12 \ \checkmark" />
                 <p><strong>Step 2:</strong> Differentiate implicitly and make <InlineMath math="\frac{dy}{dx}" /> the subject:</p>
-                <BlockMath math="2x - \left(y + x\frac{dy}{dx}\right) + 3y^2\frac{dy}{dx} = 0 \implies \frac{dy}{dx}\bigl(3y^2 - x\bigr) = y - 2x" />
-                <p><strong>Step 3:</strong> Substitute <InlineMath math="(1,2)" />. The numerator vanishes, so the point is stationary:</p>
-                <BlockMath math="\frac{dy}{dx} = \frac{2 - 2(1)}{3(4) - 1} = \frac{0}{11} = 0 \ \checkmark" />
-                <p><strong>Step 4:</strong> For the nature, differentiate the rearranged equation again. Writing <InlineMath math="p = \frac{dy}{dx}" />, the equation is <InlineMath math="p(3y^2 - x) = y - 2x" />, so by the product rule:</p>
-                <BlockMath math="\frac{dp}{dx}\bigl(3y^2 - x\bigr) + p\bigl(6yp - 1\bigr) = p - 2" />
-                <p><strong>Step 5:</strong> Substitute <InlineMath math="x=1" />, <InlineMath math="y=2" /> and <InlineMath math="p=0" />. Every term containing <InlineMath math="p" /> disappears:</p>
-                <BlockMath math="\frac{dp}{dx}\bigl(12 - 1\bigr) + 0 = 0 - 2 \implies 11\frac{d^2y}{dx^2} = -2 \implies \frac{d^2y}{dx^2} = -\frac{2}{11}" />
-                <p><strong>Step 6:</strong> Since <InlineMath math="\frac{d^2y}{dx^2} < 0" />, the point <InlineMath math="(1,2)" /> is a <strong>maximum</strong> turning point.</p>
+                <BlockMath math="2x + 2y\frac{dy}{dx} - 4 - 6\frac{dy}{dx} = 0 \implies \frac{dy}{dx}\bigl(2y - 6\bigr) = 4 - 2x" />
+                <BlockMath math="\frac{dy}{dx} = \frac{2 - x}{y - 3}" />
+                <p><strong>Step 3:</strong> Substitute <InlineMath math="(2,8)" />. The numerator vanishes, so the point is stationary:</p>
+                <BlockMath math="\frac{dy}{dx} = \frac{2 - 2}{8 - 3} = \frac{0}{5} = 0 \ \checkmark" />
+                <p><strong>Step 4:</strong> For the nature, differentiate again. Writing <InlineMath math="p = \frac{dy}{dx}" />, the rearranged equation is <InlineMath math="p(y - 3) = 2 - x" />, so by the product rule:</p>
+                <BlockMath math="\frac{dp}{dx}\bigl(y - 3\bigr) + p \cdot p = -1" />
+                <p><strong>Step 5:</strong> Substitute <InlineMath math="y = 8" /> and <InlineMath math="p = 0" />, which removes the <InlineMath math="p^2" /> term:</p>
+                <BlockMath math="\frac{dp}{dx}\bigl(8 - 3\bigr) + 0 = -1 \implies 5\frac{d^2y}{dx^2} = -1 \implies \frac{d^2y}{dx^2} = -\frac{1}{5}" />
+                <p><strong>Step 6:</strong> Since <InlineMath math="\frac{d^2y}{dx^2} < 0" />, the point <InlineMath math="(2,8)" /> is a <strong>maximum</strong> turning point.</p>
+                <p><strong>Sense check:</strong> completing the square gives <InlineMath math="(x-2)^2 + (y-3)^2 = 25" /> — a circle of centre <InlineMath math="(2,3)" /> and radius <InlineMath math="5" />. The point <InlineMath math="(2,8)" /> is the very top of that circle, so a maximum is exactly what we should expect.</p>
               </div>
             )
           }
@@ -1863,17 +1871,17 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "log-diff-ex4",
-            question: <p>Differentiate <InlineMath math="y = (\sin x)^x" />.</p>,
+            question: <p>Differentiate <InlineMath math="y = (x^2+1)^x" />.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Both the base and the index involve <InlineMath math="x" />, so neither the power rule nor the result above applies. Take logs:</p>
-                <BlockMath math="\ln y = x\ln(\sin x)" />
-                <p><strong>Step 2:</strong> Differentiate implicitly. The right-hand side is a product, and <InlineMath math="\ln(\sin x)" /> needs the chain rule:</p>
-                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln(\sin x) + x \times \frac{\cos x}{\sin x}" />
-                <p><strong>Step 3:</strong> Recognise <InlineMath math="\dfrac{\cos x}{\sin x} = \cot x" />:</p>
-                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln(\sin x) + x\cot x" />
+                <BlockMath math="\ln y = x\ln(x^2+1)" />
+                <p><strong>Step 2:</strong> Differentiate implicitly. The right-hand side is a product, and <InlineMath math="\ln(x^2+1)" /> needs the chain rule:</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln(x^2+1) + x \times \frac{2x}{x^2+1}" />
+                <p><strong>Step 3:</strong> Tidy the second term:</p>
+                <BlockMath math="\frac{1}{y}\frac{dy}{dx} = \ln(x^2+1) + \frac{2x^2}{x^2+1}" />
                 <p><strong>Step 4:</strong> Multiply by <InlineMath math="y" /> and substitute it back:</p>
-                <BlockMath math="\frac{dy}{dx} = (\sin x)^x\bigl(\ln(\sin x) + x\cot x\bigr)" />
+                <BlockMath math="\frac{dy}{dx} = (x^2+1)^x\left(\ln(x^2+1) + \frac{2x^2}{x^2+1}\right)" />
               </div>
             )
           }
@@ -2003,33 +2011,33 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "motion-plane-ex2",
-            question: <p>At time <InlineMath math="t" />, the position of a moving point is given by <InlineMath math="x = e^{t}" />, <InlineMath math="y = e^{-2t}" />. Find its speed when <InlineMath math="t = \ln 2" />.</p>,
+            question: <p>At time <InlineMath math="t" />, the position of a moving point is given by <InlineMath math="x = e^{2t}" />, <InlineMath math="y = e^{-t}" />. Find its speed when <InlineMath math="t = \ln 2" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Differentiate each coordinate, using the chain rule on the second:</p>
-                <BlockMath math="\frac{dx}{dt} = e^{t}, \qquad \frac{dy}{dt} = -2e^{-2t}" />
-                <p><strong>Step 2:</strong> Evaluate at <InlineMath math="t = \ln 2" />, using <InlineMath math="e^{\ln 2} = 2" /> and <InlineMath math="e^{-2\ln 2} = e^{\ln\frac{1}{4}} = \frac{1}{4}" />:</p>
-                <BlockMath math="\frac{dx}{dt} = 2, \qquad \frac{dy}{dt} = -2 \times \frac{1}{4} = -\frac{1}{2}" />
+                <p><strong>Step 1:</strong> Differentiate each coordinate, using the chain rule on both:</p>
+                <BlockMath math="\frac{dx}{dt} = 2e^{2t}, \qquad \frac{dy}{dt} = -e^{-t}" />
+                <p><strong>Step 2:</strong> Evaluate at <InlineMath math="t = \ln 2" />, using <InlineMath math="e^{2\ln 2} = e^{\ln 4} = 4" /> and <InlineMath math="e^{-\ln 2} = \frac{1}{2}" />:</p>
+                <BlockMath math="\frac{dx}{dt} = 2 \times 4 = 8, \qquad \frac{dy}{dt} = -\frac{1}{2}" />
                 <p><strong>Step 3:</strong> Combine the components:</p>
-                <BlockMath math="|v| = \sqrt{2^2 + \left(-\tfrac{1}{2}\right)^2} = \sqrt{4 + \tfrac{1}{4}} = \sqrt{\tfrac{17}{4}} = \frac{\sqrt{17}}{2} \approx 2.06" />
+                <BlockMath math="|v| = \sqrt{8^2 + \left(-\tfrac{1}{2}\right)^2} = \sqrt{64 + \tfrac{1}{4}} = \sqrt{\tfrac{257}{4}} = \frac{\sqrt{257}}{2} \approx 8.02" />
               </div>
             )
           },
           {
             id: "motion-plane-ex3",
-            question: <p>A particle moves so that its position at time <InlineMath math="t" /> is <InlineMath math="x = 4\cos t" />, <InlineMath math="y = 3\sin t" />. Show that its speed is <InlineMath math="\sqrt{9 + 7\sin^2 t}" />, and hence find its maximum and minimum speeds and the positions at which they occur.</p>,
+            question: <p>A particle moves so that its position at time <InlineMath math="t" /> is <InlineMath math="x = 5\cos t" />, <InlineMath math="y = 2\sin t" />. Show that its speed is <InlineMath math="\sqrt{4 + 21\sin^2 t}" />, and hence find its maximum and minimum speeds and the positions at which they occur.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Differentiate each coordinate:</p>
-                <BlockMath math="\frac{dx}{dt} = -4\sin t, \qquad \frac{dy}{dt} = 3\cos t" />
+                <BlockMath math="\frac{dx}{dt} = -5\sin t, \qquad \frac{dy}{dt} = 2\cos t" />
                 <p><strong>Step 2:</strong> Form the sum of the squares:</p>
-                <BlockMath math="|v|^2 = 16\sin^2 t + 9\cos^2 t" />
+                <BlockMath math="|v|^2 = 25\sin^2 t + 4\cos^2 t" />
                 <p><strong>Step 3:</strong> Write everything in terms of <InlineMath math="\sin^2 t" /> using <InlineMath math="\cos^2 t = 1 - \sin^2 t" />:</p>
-                <BlockMath math="|v|^2 = 16\sin^2 t + 9(1 - \sin^2 t) = 9 + 7\sin^2 t \implies |v| = \sqrt{9 + 7\sin^2 t}" />
-                <p><strong>Step 4:</strong> Since <InlineMath math="0 \le \sin^2 t \le 1" />, the expression under the root runs from <InlineMath math="9" /> to <InlineMath math="16" />:</p>
-                <BlockMath math="|v|_{\min} = \sqrt{9} = 3, \qquad |v|_{\max} = \sqrt{16} = 4" />
-                <p><strong>Step 5:</strong> Identify the positions. The minimum occurs when <InlineMath math="\sin t = 0" />, so <InlineMath math="\cos t = \pm 1" /> and the particle is at <InlineMath math="(4, 0)" /> or <InlineMath math="(-4, 0)" />. The maximum occurs when <InlineMath math="\sin t = \pm 1" />, so <InlineMath math="\cos t = 0" /> and the particle is at <InlineMath math="(0, 3)" /> or <InlineMath math="(0, -3)" />.</p>
-                <p>The particle travels fastest at the ends of the minor axis and slowest at the ends of the major axis.</p>
+                <BlockMath math="|v|^2 = 25\sin^2 t + 4(1 - \sin^2 t) = 4 + 21\sin^2 t \implies |v| = \sqrt{4 + 21\sin^2 t}" />
+                <p><strong>Step 4:</strong> Since <InlineMath math="0 \le \sin^2 t \le 1" />, the expression under the root runs from <InlineMath math="4" /> to <InlineMath math="25" />:</p>
+                <BlockMath math="|v|_{\min} = \sqrt{4} = 2, \qquad |v|_{\max} = \sqrt{25} = 5" />
+                <p><strong>Step 5:</strong> Identify the positions. The minimum occurs when <InlineMath math="\sin t = 0" />, so <InlineMath math="\cos t = \pm 1" /> and the particle is at <InlineMath math="(5, 0)" /> or <InlineMath math="(-5, 0)" />. The maximum occurs when <InlineMath math="\sin t = \pm 1" />, so <InlineMath math="\cos t = 0" /> and the particle is at <InlineMath math="(0, 2)" /> or <InlineMath math="(0, -2)" />.</p>
+                <p>The path is an ellipse, and the particle travels fastest at the ends of the minor axis and slowest at the ends of the major axis.</p>
               </div>
             )
           }
@@ -2084,38 +2092,38 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "related-rates-ex3",
-            question: <p>A rectangle has sides <InlineMath math="x" /> cm and <InlineMath math="y" /> cm. Both are changing, but in such a way that the area stays constant at <InlineMath math="40" /> cm². If <InlineMath math="x" /> is increasing at <InlineMath math="0.2" /> cm/s, find the rate at which <InlineMath math="y" /> is changing when <InlineMath math="x = 8" />.</p>,
+            question: <p>A rectangle has sides <InlineMath math="x" /> cm and <InlineMath math="y" /> cm. Both are changing, but in such a way that the area stays constant at <InlineMath math="48" /> cm². If <InlineMath math="x" /> is increasing at <InlineMath math="0.25" /> cm/s, find the rate at which <InlineMath math="y" /> is changing when <InlineMath math="x = 4" />.</p>,
             solution: (
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Write the relationship. The area is fixed, so the right-hand side is a constant:</p>
-                <BlockMath math="xy = 40" />
+                <BlockMath math="xy = 48" />
                 <p><strong>Step 2:</strong> Differentiate with respect to <InlineMath math="t" />, using the product rule on the left. A constant differentiates to zero:</p>
                 <BlockMath math="y\frac{dx}{dt} + x\frac{dy}{dt} = 0" />
                 <p><strong>Step 3:</strong> Find the value of <InlineMath math="y" /> at the instant in question:</p>
-                <BlockMath math="x = 8 \implies y = \frac{40}{8} = 5" />
-                <p><strong>Step 4:</strong> Substitute <InlineMath math="x=8" />, <InlineMath math="y=5" /> and <InlineMath math="\frac{dx}{dt} = 0.2" />:</p>
-                <BlockMath math="5(0.2) + 8\frac{dy}{dt} = 0 \implies 1 + 8\frac{dy}{dt} = 0" />
+                <BlockMath math="x = 4 \implies y = \frac{48}{4} = 12" />
+                <p><strong>Step 4:</strong> Substitute <InlineMath math="x=4" />, <InlineMath math="y=12" /> and <InlineMath math="\frac{dx}{dt} = 0.25" />:</p>
+                <BlockMath math="12(0.25) + 4\frac{dy}{dt} = 0 \implies 3 + 4\frac{dy}{dt} = 0" />
                 <p><strong>Step 5:</strong> Solve for the rate:</p>
-                <BlockMath math="\frac{dy}{dt} = -\frac{1}{8} = -0.125 \ \text{cm/s}" />
-                <p>The negative sign means <InlineMath math="y" /> is <em>decreasing</em>, at <InlineMath math="0.125" /> cm/s — which makes sense, since the area must stay fixed as <InlineMath math="x" /> grows.</p>
+                <BlockMath math="\frac{dy}{dt} = -\frac{3}{4} = -0.75 \ \text{cm/s}" />
+                <p>The negative sign means <InlineMath math="y" /> is <em>decreasing</em>, at <InlineMath math="0.75" /> cm/s — which makes sense, since the area must stay fixed as <InlineMath math="x" /> grows.</p>
               </div>
             )
           },
           {
             id: "related-rates-ex4",
-            question: <p>A closed cylinder of radius <InlineMath math="r" /> and height <InlineMath math="h" /> has a fixed total surface area of <InlineMath math="24\pi" /> cm². Find an expression for <InlineMath math="\dfrac{dr}{dh}" />.</p>,
+            question: <p>An open-topped cylindrical tank of radius <InlineMath math="r" /> and height <InlineMath math="h" /> has a fixed total surface area of <InlineMath math="27\pi" /> cm². Find an expression for <InlineMath math="\dfrac{dr}{dh}" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> The total surface area of a closed cylinder is two circular ends plus the curved surface:</p>
-                <BlockMath math="2\pi r^2 + 2\pi rh = 24\pi" />
-                <p><strong>Step 2:</strong> Divide through by <InlineMath math="2\pi" /> to simplify before differentiating:</p>
-                <BlockMath math="r^2 + rh = 12" />
-                <p><strong>Step 3:</strong> Differentiate with respect to <InlineMath math="h" />, treating <InlineMath math="r" /> as a function of <InlineMath math="h" />. The <InlineMath math="rh" /> term needs the product rule:</p>
-                <BlockMath math="2r\frac{dr}{dh} + \left(r + h\frac{dr}{dh}\right) = 0" />
+                <p><strong>Step 1:</strong> With no lid, the surface area is one circular base plus the curved surface:</p>
+                <BlockMath math="\pi r^2 + 2\pi rh = 27\pi" />
+                <p><strong>Step 2:</strong> Divide through by <InlineMath math="\pi" /> to simplify before differentiating:</p>
+                <BlockMath math="r^2 + 2rh = 27" />
+                <p><strong>Step 3:</strong> Differentiate with respect to <InlineMath math="h" />, treating <InlineMath math="r" /> as a function of <InlineMath math="h" />. The <InlineMath math="2rh" /> term needs the product rule:</p>
+                <BlockMath math="2r\frac{dr}{dh} + 2\left(r + h\frac{dr}{dh}\right) = 0" />
                 <p><strong>Step 4:</strong> Gather the <InlineMath math="\frac{dr}{dh}" /> terms and factorise:</p>
-                <BlockMath math="\frac{dr}{dh}\bigl(2r + h\bigr) = -r" />
-                <p><strong>Step 5:</strong> Divide to obtain the expression:</p>
-                <BlockMath math="\frac{dr}{dh} = -\frac{r}{2r + h}" />
+                <BlockMath math="\frac{dr}{dh}\bigl(2r + 2h\bigr) = -2r" />
+                <p><strong>Step 5:</strong> Divide, cancelling the factor of <InlineMath math="2" />:</p>
+                <BlockMath math="\frac{dr}{dh} = -\frac{2r}{2r + 2h} = -\frac{r}{r + h}" />
               </div>
             )
           }
