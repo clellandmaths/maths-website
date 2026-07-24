@@ -1143,6 +1143,10 @@ export const advancedHigherMathsData: Section[] = [
             <p>A complex number can be written in <strong>polar (modulus–argument) form</strong>:</p>
             <BlockMath math="z = r(\cos\theta + i\sin\theta), \qquad r = |z| = \sqrt{a^2 + b^2}, \quad \theta = \arg z" />
             <p>The modulus <InlineMath math="r" /> is the distance from the origin on an Argand diagram, and the argument <InlineMath math="\theta" /> is the angle measured from the positive real axis (taken in the range <InlineMath math="-\pi < \theta \leq \pi" />).</p>
+            <p>Polar form is worth the effort because multiplication and division become simple. Writing <InlineMath math="z_1 = r_1(\cos\theta_1 + i\sin\theta_1)" /> and <InlineMath math="z_2 = r_2(\cos\theta_2 + i\sin\theta_2)" />:</p>
+            <BlockMath math="\begin{aligned} z_1z_2 &= r_1r_2\bigl[\cos(\theta_1+\theta_2) + i\sin(\theta_1+\theta_2)\bigr] \\ \frac{z_1}{z_2} &= \frac{r_1}{r_2}\bigl[\cos(\theta_1-\theta_2) + i\sin(\theta_1-\theta_2)\bigr] \end{aligned}" />
+            <p>In words: <strong>multiply the moduli and add the arguments</strong>. Geometrically, multiplying by a complex number of modulus <InlineMath math="r" /> and argument <InlineMath math="\theta" /> <em>scales</em> by <InlineMath math="r" /> and <em>rotates</em> by <InlineMath math="\theta" />. This gives a set of results worth knowing:</p>
+            <BlockMath math="\begin{aligned} |z_1z_2| &= |z_1||z_2| & \arg(z_1z_2) &= \arg z_1 + \arg z_2 \\ \left|\frac{z_1}{z_2}\right| &= \frac{|z_1|}{|z_2|} & \arg\!\left(\frac{z_1}{z_2}\right) &= \arg z_1 - \arg z_2 \\ |\bar{z}| &= |z| & \arg(\bar{z}) &= -\arg z \\ z\bar{z} &= |z|^2 && \end{aligned}" />
             <p><strong>Loci</strong> describe sets of points: <InlineMath math="|z - a| = k" /> is a circle of radius <InlineMath math="k" /> centred at the point <InlineMath math="a" />; <InlineMath math="|z - a| = |z - b|" /> is the perpendicular bisector of the segment joining <InlineMath math="a" /> and <InlineMath math="b" />.</p>
             <p><strong>The Golden Rule:</strong> always identify which quadrant <InlineMath math="z" /> lies in before stating the argument — <InlineMath math="\arctan\frac{b}{a}" /> alone cannot tell the second quadrant from the fourth.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
@@ -1195,12 +1199,108 @@ export const advancedHigherMathsData: Section[] = [
                 <p><strong>Step 3:</strong> The locus is a <strong>circle</strong> of radius <InlineMath math="3" /> centred at the point <InlineMath math="(2, 1)" /> on the Argand diagram.</p>
               </div>
             )
+          },
+          {
+            id: "polar-ex4",
+            question: <p>Given <InlineMath math="z_1 = -1 + \sqrt{3}\,i" /> and <InlineMath math="z_2 = 1 + i" />, find <InlineMath math="|z_1z_2|" /> and <InlineMath math="\arg(z_1z_2)" /> <em>without</em> multiplying the two numbers out.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Find the modulus and argument of <InlineMath math="z_1" />. The point <InlineMath math="(-1, \sqrt{3})" /> lies in the <strong>second</strong> quadrant, so the argument is <InlineMath math="\pi" /> minus the acute reference angle:</p>
+                <BlockMath math="|z_1| = \sqrt{(-1)^2 + (\sqrt{3})^2} = \sqrt{4} = 2, \qquad \arg z_1 = \pi - \tan^{-1}\!\left(\frac{\sqrt{3}}{1}\right) = \pi - \frac{\pi}{3} = \frac{2\pi}{3}" />
+                <p><strong>Step 2:</strong> Do the same for <InlineMath math="z_2" />. The point <InlineMath math="(1,1)" /> is in the first quadrant, so no adjustment is needed:</p>
+                <BlockMath math="|z_2| = \sqrt{1^2 + 1^2} = \sqrt{2}, \qquad \arg z_2 = \tan^{-1}(1) = \frac{\pi}{4}" />
+                <p><strong>Step 3:</strong> Multiply the moduli and add the arguments:</p>
+                <BlockMath math="|z_1z_2| = 2\sqrt{2}, \qquad \arg(z_1z_2) = \frac{2\pi}{3} + \frac{\pi}{4} = \frac{8\pi}{12} + \frac{3\pi}{12} = \frac{11\pi}{12}" />
+                <p><strong>Step 4:</strong> Check the argument lies in the required range <InlineMath math="-\pi < \theta \le \pi" />. Since <InlineMath math="\frac{11\pi}{12} < \pi" />, no adjustment is needed.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "polynomial-roots",
+        title: "3. Roots of Polynomial Equations",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The <strong>Fundamental Theorem of Algebra</strong> guarantees that every polynomial equation of degree <InlineMath math="n" /> has exactly <InlineMath math="n" /> roots in the complex numbers (counting repeats). Some may be real, some may not — but the count is always <InlineMath math="n" />.</p>
+            <p>When the coefficients are <strong>real</strong>, one extra fact does most of the work: complex roots always occur in <strong>conjugate pairs</strong>. If <InlineMath math="x + yi" /> is a root, so is <InlineMath math="x - yi" />. Multiplying their two factors together produces a quadratic with real coefficients:</p>
+            <BlockMath math="\bigl(z - (x+yi)\bigr)\bigl(z - (x-yi)\bigr) = z^2 - 2xz + (x^2 + y^2)" />
+            <p>That gives a reliable method: <strong>find one root, pair it with its conjugate, form the real quadratic factor, divide, and solve what's left.</strong></p>
+            <p>A useful consequence is that you can predict the shape of the answer. A cubic with real coefficients has either three real roots, or one real root and one conjugate pair — it can never have exactly two non-real roots and one non-real left over, because they must pair up.</p>
+            <p><strong>The Golden Rule:</strong> the conjugate-pair result holds <em>only</em> when every coefficient is real. Check that first; if the equation contains an <InlineMath math="i" /> in its coefficients, the pairing does not apply and you must solve directly.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting the real root:</strong> a cubic has <em>three</em> roots. Finding the conjugate pair is only two thirds of the answer.</li>
+                <li><strong>Sign slip forming the quadratic:</strong> the middle coefficient is <InlineMath math="-2x" /> — twice the <em>real</em> part, negated — and the constant is <InlineMath math="x^2 + y^2" />, a sum, not a difference.</li>
+                <li><strong>Verifying a root:</strong> if asked to <em>verify</em>, substitute and show the result is <InlineMath math="0" />; compute the powers of <InlineMath math="(x+yi)" /> step by step, and show the real and imaginary parts cancelling separately.</li>
+                <li><strong>Dividing carelessly:</strong> after dividing by the quadratic factor the remainder must be exactly zero. If it isn't, the root or the factor is wrong — go back rather than pressing on.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "poly-roots-ex1",
+            question: <p>Find all the roots of <InlineMath math="z^3 - 4z^2 + 14z - 20 = 0" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Look for a real root among the factors of the constant term <InlineMath math="20" />. Trying <InlineMath math="z = 2" />:</p>
+                <BlockMath math="8 - 16 + 28 - 20 = 0 \ \checkmark" />
+                <p>So <InlineMath math="z = 2" /> is a root and <InlineMath math="(z - 2)" /> is a factor.</p>
+                <p><strong>Step 2:</strong> Divide to find the remaining quadratic factor:</p>
+                <BlockMath math="z^3 - 4z^2 + 14z - 20 = (z-2)(z^2 - 2z + 10)" />
+                <p><strong>Step 3:</strong> Solve the quadratic. The discriminant is negative, so the remaining roots are non-real:</p>
+                <BlockMath math="z = \frac{2 \pm \sqrt{4 - 40}}{2} = \frac{2 \pm \sqrt{-36}}{2} = \frac{2 \pm 6i}{2} = 1 \pm 3i" />
+                <p><strong>Step 4:</strong> The three roots are <InlineMath math="z = 2" />, <InlineMath math="z = 1 + 3i" /> and <InlineMath math="z = 1 - 3i" /> — one real root and a conjugate pair, exactly as expected for a real cubic.</p>
+              </div>
+            )
+          },
+          {
+            id: "poly-roots-ex2",
+            question: <p>Verify that <InlineMath math="z = 2 + i" /> is a root of <InlineMath math="z^4 - 2z^3 - 6z^2 + 22z - 15 = 0" />, and hence find all the roots.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Build up the powers of <InlineMath math="2+i" /> one at a time:</p>
+                <BlockMath math="\begin{aligned} (2+i)^2 &= 4 + 4i + i^2 = 3 + 4i \\ (2+i)^3 &= (3+4i)(2+i) = 6 + 3i + 8i + 4i^2 = 2 + 11i \\ (2+i)^4 &= (3+4i)^2 = 9 + 24i + 16i^2 = -7 + 24i \end{aligned}" />
+                <p><strong>Step 2:</strong> Substitute into the equation and collect real and imaginary parts separately:</p>
+                <BlockMath math="(-7+24i) - 2(2+11i) - 6(3+4i) + 22(2+i) - 15" />
+                <BlockMath math="\begin{aligned} \text{real}: &\quad -7 - 4 - 18 + 44 - 15 = 0 \\ \text{imaginary}: &\quad 24 - 22 - 24 + 22 = 0 \end{aligned}" />
+                <p>Both parts are zero, so <InlineMath math="z = 2+i" /> is a root.</p>
+                <p><strong>Step 3:</strong> The coefficients are real, so <InlineMath math="z = 2 - i" /> is also a root. Their combined factor is:</p>
+                <BlockMath math="\bigl(z-(2+i)\bigr)\bigl(z-(2-i)\bigr) = z^2 - 4z + (4 + 1) = z^2 - 4z + 5" />
+                <p><strong>Step 4:</strong> Divide the quartic by this quadratic:</p>
+                <BlockMath math="z^4 - 2z^3 - 6z^2 + 22z - 15 = (z^2 - 4z + 5)(z^2 + 2z - 3)" />
+                <p><strong>Step 5:</strong> Factorise the remaining quadratic:</p>
+                <BlockMath math="z^2 + 2z - 3 = (z+3)(z-1) \implies z = -3 \ \text{ or } \ z = 1" />
+                <p><strong>Step 6:</strong> The four roots are <InlineMath math="2 + i" />, <InlineMath math="2 - i" />, <InlineMath math="1" /> and <InlineMath math="-3" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "poly-roots-ex3",
+            question: <p>A polynomial equation of degree 4 has <strong>real coefficients</strong>. Two of its roots are <InlineMath math="3i" /> and <InlineMath math="1 - i" />. Write down the other two roots and hence find the equation.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Because the coefficients are real, each given root brings its conjugate with it:</p>
+                <BlockMath math="\text{the other roots are } \ -3i \ \text{ and } \ 1 + i" />
+                <p><strong>Step 2:</strong> Pair each root with its conjugate to form two real quadratic factors. For <InlineMath math="\pm 3i" /> we have <InlineMath math="x = 0" />, <InlineMath math="y = 3" />:</p>
+                <BlockMath math="z^2 - 2(0)z + (0 + 9) = z^2 + 9" />
+                <p><strong>Step 3:</strong> For <InlineMath math="1 \pm i" /> we have <InlineMath math="x = 1" />, <InlineMath math="y = 1" />:</p>
+                <BlockMath math="z^2 - 2(1)z + (1 + 1) = z^2 - 2z + 2" />
+                <p><strong>Step 4:</strong> Multiply the two factors together:</p>
+                <BlockMath math="(z^2+9)(z^2-2z+2) = z^4 - 2z^3 + 2z^2 + 9z^2 - 18z + 18" />
+                <p><strong>Step 5:</strong> Collect like terms:</p>
+                <BlockMath math="z^4 - 2z^3 + 11z^2 - 18z + 18 = 0" />
+              </div>
+            )
           }
         ]
       },
       {
         id: "de-moivre-fta",
-        title: "3. De Moivre's Theorem & Roots",
+        title: "4. De Moivre's Theorem & Roots",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
