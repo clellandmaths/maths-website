@@ -1348,14 +1348,105 @@ export const advancedHigherMathsData: Section[] = [
           },
           {
             id: "de-moivre-ex3",
-            question: <p>A polynomial with real coefficients has <InlineMath math="3 - 2i" /> as a root. Write down another root, and hence a real quadratic factor of the polynomial.</p>,
+            question: <p>Find the five fifth roots of unity — that is, solve <InlineMath math="z^5 = 1" /> — and describe their positions on an Argand diagram.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Real coefficients force complex roots into conjugate pairs, so <InlineMath math="3 + 2i" /> is also a root.</p>
-                <p><strong>Step 2:</strong> The quadratic factor is <InlineMath math="(z - (3-2i))(z - (3+2i))" />. Its coefficients come from the sum and product of the roots:</p>
-                <BlockMath math="\text{sum} = 6, \qquad \text{product} = (3-2i)(3+2i) = 9 + 4 = 13" />
-                <p><strong>Step 3:</strong> So a real quadratic factor is:</p>
-                <BlockMath math="z^2 - 6z + 13" />
+                <p><strong>Step 1:</strong> Write <InlineMath math="1" /> in polar form. Crucially, add on multiples of <InlineMath math="2\pi" />, since these give the same number but different roots:</p>
+                <BlockMath math="1 = \cos(2k\pi) + i\sin(2k\pi), \qquad k \in \mathbb{Z}" />
+                <p><strong>Step 2:</strong> Apply De Moivre's Theorem with index <InlineMath math="\frac{1}{5}" />:</p>
+                <BlockMath math="z = \cos\!\left(\frac{2k\pi}{5}\right) + i\sin\!\left(\frac{2k\pi}{5}\right)" />
+                <p><strong>Step 3:</strong> Take <InlineMath math="k = 0, 1, 2, 3, 4" /> — five consecutive values give all five distinct roots, and any further <InlineMath math="k" /> simply repeats them. Adjusting into the range <InlineMath math="-\pi < \theta \le \pi" />:</p>
+                <BlockMath math="\theta = 0,\ \pm\frac{2\pi}{5},\ \pm\frac{4\pi}{5}" />
+                <p><strong>Step 4:</strong> Every root has modulus <InlineMath math="1" />, so all five lie on the <strong>unit circle</strong>, equally spaced by <InlineMath math="\frac{2\pi}{5}" />, with one of them at <InlineMath math="z = 1" />.</p>
+                <p>This generalises: the <InlineMath math="n" />th roots of unity are <InlineMath math="n" /> equally spaced points on the unit circle, separated by <InlineMath math="\frac{2\pi}{n}" />, always including the point <InlineMath math="1" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "multiple-angle-formulae",
+        title: "5. Multiple Angle Formulae",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>De Moivre's Theorem gives two powerful trigonometric tools, working in opposite directions.</p>
+            <p><strong>Direction 1 — multiple angles into powers.</strong> Expand <InlineMath math="(\cos\theta + i\sin\theta)^n" /> in two different ways. De Moivre says it equals <InlineMath math="\cos n\theta + i\sin n\theta" />; the Binomial Theorem gives a sum of terms. Since the two must be equal, <strong>equate the real parts</strong> to get <InlineMath math="\cos n\theta" />, and the <strong>imaginary parts</strong> to get <InlineMath math="\sin n\theta" />.</p>
+            <p><strong>Direction 2 — powers into multiple angles.</strong> Let <InlineMath math="z = \cos\theta + i\sin\theta" />. Then <InlineMath math="\frac{1}{z} = z^{-1} = \cos\theta - i\sin\theta" />, so adding and subtracting gives:</p>
+            <BlockMath math="z + \frac{1}{z} = 2\cos\theta, \qquad z - \frac{1}{z} = 2i\sin\theta" />
+            <p>and more generally — <strong>these are results you are expected to know</strong>:</p>
+            <BlockMath math="z^k + \frac{1}{z^k} = 2\cos k\theta, \qquad z^k - \frac{1}{z^k} = 2i\sin k\theta" />
+            <p>So to convert something like <InlineMath math="\cos^4\theta" /> into multiple angles, expand <InlineMath math="\left(z + \frac{1}{z}\right)^4" /> by the Binomial Theorem and pair the outer terms inwards — each pair collapses to a <InlineMath math="2\cos k\theta" />.</p>
+            <p><strong>The Golden Rule:</strong> read the question to decide the direction. Going <em>from</em> <InlineMath math="\cos n\theta" /> <em>to</em> powers of <InlineMath math="\cos\theta" /> uses De Moivre with the Binomial Theorem; going <em>from</em> a power like <InlineMath math="\cos^n\theta" /> <em>to</em> multiple angles uses <InlineMath math="z + \frac{1}{z}" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Powers of <InlineMath math="i" />:</strong> the cycle is <InlineMath math="i^2 = -1" />, <InlineMath math="i^3 = -i" />, <InlineMath math="i^4 = 1" />. Getting one wrong flips a sign in the middle of the expansion.</li>
+                <li><strong>Dropping the <InlineMath math="i" /> when equating:</strong> the imaginary part of <InlineMath math="4ic^3s" /> is <InlineMath math="4c^3s" />, not <InlineMath math="4ic^3s" /> — compare coefficients of <InlineMath math="i" />.</li>
+                <li><strong>Not finishing the conversion:</strong> &ldquo;in terms of <InlineMath math="\cos\theta" />&rdquo; means <em>only</em> <InlineMath math="\cos\theta" />, so use <InlineMath math="\sin^2\theta = 1 - \cos^2\theta" /> to remove every sine.</li>
+                <li><strong>Forgetting the <InlineMath math="2^n" />:</strong> <InlineMath math="\left(z + \frac{1}{z}\right)^n = (2\cos\theta)^n = 2^n\cos^n\theta" />, so you must divide by <InlineMath math="2^n" /> at the end.</li>
+                <li><strong>Odd powers bring an <InlineMath math="i" />:</strong> <InlineMath math="(2i\sin\theta)^3 = -8i\sin^3\theta" />, since <InlineMath math="i^3 = -i" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "multiple-angle-ex1",
+            question: <p>By considering <InlineMath math="(\cos\theta + i\sin\theta)^4" />, show that <InlineMath math="\cos 4\theta = 8\cos^4\theta - 8\cos^2\theta + 1" />, and find an expression for <InlineMath math="\sin 4\theta" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write <InlineMath math="c = \cos\theta" /> and <InlineMath math="s = \sin\theta" />. By De Moivre's Theorem:</p>
+                <BlockMath math="(c + is)^4 = \cos 4\theta + i\sin 4\theta" />
+                <p><strong>Step 2:</strong> Expand the same expression by the Binomial Theorem, with coefficients <InlineMath math="1,4,6,4,1" />:</p>
+                <BlockMath math="(c+is)^4 = c^4 + 4c^3(is) + 6c^2(is)^2 + 4c(is)^3 + (is)^4" />
+                <p><strong>Step 3:</strong> Simplify the powers of <InlineMath math="i" />, using <InlineMath math="i^2=-1" />, <InlineMath math="i^3=-i" />, <InlineMath math="i^4=1" />:</p>
+                <BlockMath math="= c^4 + 4ic^3s - 6c^2s^2 - 4ics^3 + s^4" />
+                <p><strong>Step 4:</strong> Equate real parts to obtain <InlineMath math="\cos 4\theta" />:</p>
+                <BlockMath math="\cos 4\theta = c^4 - 6c^2s^2 + s^4" />
+                <p><strong>Step 5:</strong> The answer must be in terms of <InlineMath math="\cos\theta" /> only, so replace <InlineMath math="s^2 = 1 - c^2" />:</p>
+                <BlockMath math="\begin{aligned} \cos 4\theta &= c^4 - 6c^2(1-c^2) + (1-c^2)^2 \\ &= c^4 - 6c^2 + 6c^4 + 1 - 2c^2 + c^4 \\ &= 8c^4 - 8c^2 + 1 \end{aligned}" />
+                <p><strong>Step 6:</strong> Now equate the imaginary parts, dropping the factor of <InlineMath math="i" />:</p>
+                <BlockMath math="\sin 4\theta = 4c^3s - 4cs^3 = 4\sin\theta\cos\theta\left(\cos^2\theta - \sin^2\theta\right)" />
+                <p><strong>Check:</strong> that last form is <InlineMath math="2(2\sin\theta\cos\theta)(\cos^2\theta - \sin^2\theta) = 2\sin 2\theta\cos 2\theta = \sin 4\theta" /> ✓</p>
+              </div>
+            )
+          },
+          {
+            id: "multiple-angle-ex2",
+            question: <p>By considering <InlineMath math="z = \cos\theta + i\sin\theta" />, show that <InlineMath math="\cos^4\theta = \dfrac{1}{8}\bigl[\cos 4\theta + 4\cos 2\theta + 3\bigr]" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Since <InlineMath math="z + \dfrac{1}{z} = 2\cos\theta" />, raising both sides to the fourth power gives:</p>
+                <BlockMath math="\left(z + \frac{1}{z}\right)^4 = (2\cos\theta)^4 = 16\cos^4\theta" />
+                <p><strong>Step 2:</strong> Expand the left-hand side by the Binomial Theorem. Each term is a power of <InlineMath math="z" /> times a power of <InlineMath math="\frac{1}{z}" />, so the powers partly cancel:</p>
+                <BlockMath math="\left(z + \frac{1}{z}\right)^4 = z^4 + 4z^2 + 6 + \frac{4}{z^2} + \frac{1}{z^4}" />
+                <p><strong>Step 3:</strong> Pair the outer terms inwards, so each pair has the form <InlineMath math="z^k + \frac{1}{z^k}" />:</p>
+                <BlockMath math="= \left(z^4 + \frac{1}{z^4}\right) + 4\left(z^2 + \frac{1}{z^2}\right) + 6" />
+                <p><strong>Step 4:</strong> Apply <InlineMath math="z^k + \frac{1}{z^k} = 2\cos k\theta" /> to each pair:</p>
+                <BlockMath math="= 2\cos 4\theta + 4(2\cos 2\theta) + 6 = 2\cos 4\theta + 8\cos 2\theta + 6" />
+                <p><strong>Step 5:</strong> Equate the two expressions and divide by <InlineMath math="16" />:</p>
+                <BlockMath math="16\cos^4\theta = 2\cos 4\theta + 8\cos 2\theta + 6 \implies \cos^4\theta = \frac{1}{8}\bigl[\cos 4\theta + 4\cos 2\theta + 3\bigr]" />
+              </div>
+            )
+          },
+          {
+            id: "multiple-angle-ex3",
+            question: <p>Show that <InlineMath math="\sin^3\theta = \dfrac{1}{4}\bigl[3\sin\theta - \sin 3\theta\bigr]" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> This time the function is sine, so use the <em>subtraction</em> result <InlineMath math="z - \dfrac{1}{z} = 2i\sin\theta" />. Cube both sides, remembering <InlineMath math="i^3 = -i" />:</p>
+                <BlockMath math="\left(z - \frac{1}{z}\right)^3 = (2i\sin\theta)^3 = 8i^3\sin^3\theta = -8i\sin^3\theta" />
+                <p><strong>Step 2:</strong> Expand the left-hand side, with alternating signs and coefficients <InlineMath math="1,3,3,1" />:</p>
+                <BlockMath math="\left(z - \frac{1}{z}\right)^3 = z^3 - 3z + \frac{3}{z} - \frac{1}{z^3}" />
+                <p><strong>Step 3:</strong> Pair the outer terms inwards. Note the middle pair carries a minus sign:</p>
+                <BlockMath math="= \left(z^3 - \frac{1}{z^3}\right) - 3\left(z - \frac{1}{z}\right)" />
+                <p><strong>Step 4:</strong> Apply <InlineMath math="z^k - \frac{1}{z^k} = 2i\sin k\theta" /> to each pair:</p>
+                <BlockMath math="= 2i\sin 3\theta - 3(2i\sin\theta) = 2i\sin 3\theta - 6i\sin\theta" />
+                <p><strong>Step 5:</strong> Equate with Step 1 and divide through by <InlineMath math="-2i" />:</p>
+                <BlockMath math="-8i\sin^3\theta = 2i\sin 3\theta - 6i\sin\theta \implies 4\sin^3\theta = 3\sin\theta - \sin 3\theta" />
+                <p><strong>Step 6:</strong> Divide by <InlineMath math="4" />:</p>
+                <BlockMath math="\sin^3\theta = \frac{1}{4}\bigl[3\sin\theta - \sin 3\theta\bigr]" />
               </div>
             )
           }
