@@ -2474,8 +2474,87 @@ export const advancedHigherMathsData: Section[] = [
         ]
       },
       {
+        id: "rectilinear-motion",
+        title: "9. Rectilinear Motion",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>When a particle moves along a <strong>straight line</strong>, its position is described by a single displacement function <InlineMath math="s(t)" />. Differentiating once gives velocity, and again gives acceleration:</p>
+            <BlockMath math="v = \frac{ds}{dt}, \qquad a = \frac{dv}{dt} = \frac{d^2s}{dt^2}" />
+            <p>Going the other way, integration recovers what differentiation removed — but each integration introduces a constant that must be found from the given conditions:</p>
+            <BlockMath math="v = \int a\,dt, \qquad s = \int v\,dt" />
+            <p>There is a third form of the acceleration that is invaluable when <InlineMath math="a" /> is given in terms of <strong>displacement</strong> rather than time. By the chain rule:</p>
+            <BlockMath math="a = \frac{dv}{dt} = \frac{dv}{ds}\cdot\frac{ds}{dt} = v\frac{dv}{ds}" />
+            <p>Most questions describe an <em>event</em> rather than giving a value, so learn the translations: &ldquo;at rest&rdquo; means <InlineMath math="v = 0" />; &ldquo;returns to the starting point&rdquo; means <InlineMath math="s = 0" />; &ldquo;maximum velocity&rdquo; means <InlineMath math="a = 0" />.</p>
+            <p><strong>The Golden Rule:</strong> distance and displacement are not the same thing. Displacement is simply <InlineMath math="s" /> at the end minus <InlineMath math="s" /> at the start, but if the particle changes direction — that is, if <InlineMath math="v" /> changes sign — the total <em>distance</em> must be found in separate stages and the magnitudes added.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Distance vs displacement:</strong> always check whether <InlineMath math="v = 0" /> inside the time interval. If it does, the particle turned round and the two answers differ.</li>
+                <li><strong><InlineMath math="a = 0" /> is about velocity, not position:</strong> it gives maximum or minimum <em>velocity</em>. Maximum displacement occurs where <InlineMath math="v = 0" />.</li>
+                <li><strong>Losing the constants:</strong> integrating from acceleration to displacement needs <em>two</em> conditions, and they are often given at different times.</li>
+                <li><strong>Choosing the wrong form of <InlineMath math="a" />:</strong> if acceleration is given in terms of <InlineMath math="s" />, use <InlineMath math="a = v\frac{dv}{ds}" />. Trying to use <InlineMath math="\frac{dv}{dt}" /> leaves you with two variables and nowhere to go.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "rectilinear-ex1",
+            question: <p>A particle moves along a straight line so that its displacement after <InlineMath math="t" /> seconds is <InlineMath math="s = t^3 - 6t^2 + 9t" /> metres. Find the times at which it is at rest, and its acceleration at each of those times.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Differentiate to obtain the velocity:</p>
+                <BlockMath math="v = \frac{ds}{dt} = 3t^2 - 12t + 9" />
+                <p><strong>Step 2:</strong> &ldquo;At rest&rdquo; means <InlineMath math="v = 0" />. Factorise and solve:</p>
+                <BlockMath math="3(t^2 - 4t + 3) = 0 \implies 3(t-1)(t-3) = 0 \implies t = 1 \ \text{ or } \ t = 3" />
+                <p><strong>Step 3:</strong> Differentiate again for the acceleration:</p>
+                <BlockMath math="a = \frac{dv}{dt} = 6t - 12" />
+                <p><strong>Step 4:</strong> Evaluate at each time:</p>
+                <BlockMath math="\begin{aligned} t = 1: &\quad a = 6 - 12 = -6\ \text{m/s}^2 \\ t = 3: &\quad a = 18 - 12 = 6\ \text{m/s}^2 \end{aligned}" />
+                <p>The opposite signs tell us the particle is decelerating into the first stop and accelerating away from the second.</p>
+              </div>
+            )
+          },
+          {
+            id: "rectilinear-ex2",
+            question: <p>For the same particle, <InlineMath math="s = t^3 - 6t^2 + 9t" />, find its <strong>displacement</strong> and the total <strong>distance travelled</strong> during the first 4 seconds.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Displacement is just the change in <InlineMath math="s" />:</p>
+                <BlockMath math="s(4) - s(0) = (64 - 96 + 36) - 0 = 4\ \text{m}" />
+                <p><strong>Step 2:</strong> For distance, first check whether the particle turned round. From the previous example <InlineMath math="v = 0" /> at <InlineMath math="t = 1" /> and <InlineMath math="t = 3" />, and both lie inside the interval — so it changed direction twice.</p>
+                <p><strong>Step 3:</strong> Evaluate <InlineMath math="s" /> at every turning point and at the ends:</p>
+                <BlockMath math="\begin{aligned} s(0) &= 0 \\ s(1) &= 1 - 6 + 9 = 4 \\ s(3) &= 27 - 54 + 27 = 0 \\ s(4) &= 64 - 96 + 36 = 4 \end{aligned}" />
+                <p><strong>Step 4:</strong> Add the magnitude of each leg separately:</p>
+                <BlockMath math="|4 - 0| + |0 - 4| + |4 - 0| = 4 + 4 + 4 = 12\ \text{m}" />
+                <p>So the displacement is <InlineMath math="4" /> m but the distance travelled is <InlineMath math="12" /> m — the particle went forward, came back to the origin, then went forward again.</p>
+              </div>
+            )
+          },
+          {
+            id: "rectilinear-ex3",
+            question: <p>A particle moves in a straight line with acceleration <InlineMath math="a = 6s + 4" />, where <InlineMath math="s" /> is its displacement. When <InlineMath math="s = 0" /> its velocity is <InlineMath math="2" /> m/s. Find its velocity when <InlineMath math="s = 2" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The acceleration is given in terms of <InlineMath math="s" />, not <InlineMath math="t" />, so use the third form:</p>
+                <BlockMath math="v\frac{dv}{ds} = 6s + 4" />
+                <p><strong>Step 2:</strong> Separate the variables and integrate both sides:</p>
+                <BlockMath math="\int v\,dv = \int (6s + 4)\,ds \implies \frac{1}{2}v^2 = 3s^2 + 4s + C" />
+                <p><strong>Step 3:</strong> Apply the given condition, <InlineMath math="v = 2" /> when <InlineMath math="s = 0" />:</p>
+                <BlockMath math="\frac{1}{2}(4) = 0 + 0 + C \implies C = 2" />
+                <p><strong>Step 4:</strong> The relationship is therefore:</p>
+                <BlockMath math="\frac{1}{2}v^2 = 3s^2 + 4s + 2" />
+                <p><strong>Step 5:</strong> Substitute <InlineMath math="s = 2" />:</p>
+                <BlockMath math="\frac{1}{2}v^2 = 12 + 8 + 2 = 22 \implies v^2 = 44 \implies v = 2\sqrt{11} \approx 6.6\ \text{m/s}" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "related-rates",
-        title: "9. Related Rates of Change",
+        title: "10. Related Rates of Change",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -2590,13 +2669,14 @@ export const advancedHigherMathsData: Section[] = [
         examples: [
           {
             id: "asymptotes-ex1",
-            question: <p>Find the asymptotes of <InlineMath math="y = \dfrac{2x + 1}{x - 3}" />.</p>,
+            question: <p>Find the asymptotes of <InlineMath math="y = \dfrac{3x - 2}{x + 1}" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> The denominator is zero at <InlineMath math="x = 3" />, giving a vertical asymptote <InlineMath math="x = 3" />.</p>
+                <p><strong>Step 1:</strong> The denominator is zero at <InlineMath math="x = -1" />, giving a vertical asymptote <InlineMath math="x = -1" />.</p>
                 <p><strong>Step 2:</strong> The degrees are equal, so as <InlineMath math="x \to \pm\infty" /> the function tends to the ratio of leading coefficients:</p>
-                <BlockMath math="y \to \frac{2x}{x} = 2" />
-                <p>So there is a horizontal asymptote <InlineMath math="y = 2" />.</p>
+                <BlockMath math="y \to \frac{3x}{x} = 3" />
+                <p>So there is a horizontal asymptote <InlineMath math="y = 3" />.</p>
+                <p><strong>Check by division:</strong> <InlineMath math="\dfrac{3x-2}{x+1} = 3 - \dfrac{5}{x+1}" />, and the fraction vanishes as <InlineMath math="x \to \pm\infty" />, confirming <InlineMath math="y = 3" />.</p>
               </div>
             )
           },
@@ -2615,8 +2695,79 @@ export const advancedHigherMathsData: Section[] = [
         ]
       },
       {
+        id: "modulus-function",
+        title: "2. The Modulus Function",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>The <strong>modulus</strong> (or absolute value) of <InlineMath math="x" /> is its size, ignoring sign. Formally it is defined piecewise:</p>
+            <BlockMath math="|x| = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 0 \end{cases}" />
+            <p>The second line often looks wrong at first glance, but <InlineMath math="-x" /> is positive precisely when <InlineMath math="x" /> is negative — so both branches return a non-negative value.</p>
+            <p>Graphically, <InlineMath math="y = |f(x)|" /> takes the graph of <InlineMath math="y = f(x)" /> and <strong>reflects every part below the <InlineMath math="x" />-axis up into the first and second quadrants</strong>. Anything already above the axis is unchanged. The result never dips below <InlineMath math="y = 0" />, and typically has sharp corners where the original graph crossed the axis.</p>
+            <p>Be careful to distinguish this from <InlineMath math="y = f(|x|)" />, which is a different transformation: it keeps the graph for <InlineMath math="x \ge 0" /> and reflects <em>that</em> in the <InlineMath math="y" />-axis, discarding the original left-hand side.</p>
+            <p>To solve an equation or inequality containing a modulus, split it into cases at the points where the expression inside changes sign, solve each case separately, and then check each solution back in the original.</p>
+            <p><strong>The Golden Rule:</strong> <InlineMath math="|A| = B" /> means <InlineMath math="A = B" /> <em>or</em> <InlineMath math="A = -B" /> — always two cases. Solve both, then verify each answer in the original equation, because the case analysis can introduce solutions that do not actually work.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Only taking the positive case:</strong> forgetting <InlineMath math="A = -B" /> loses half the solutions.</li>
+                <li><strong>Not checking back:</strong> squaring or splitting cases can produce values that fail the original equation. Substitute every candidate.</li>
+                <li><strong>Confusing the two graph transformations:</strong> <InlineMath math="|f(x)|" /> reflects the parts below the <InlineMath math="x" />-axis upwards; <InlineMath math="f(|x|)" /> reflects the right-hand side across the <InlineMath math="y" />-axis.</li>
+                <li><strong>Assuming the graph is smooth:</strong> <InlineMath math="y = |f(x)|" /> has a sharp corner wherever <InlineMath math="f(x) = 0" />, so it is not differentiable at those points.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "modulus-ex1",
+            question: <p>Solve <InlineMath math="|2x - 1| = 7" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The expression inside the modulus could be either <InlineMath math="7" /> or <InlineMath math="-7" />, so split into two cases:</p>
+                <BlockMath math="2x - 1 = 7 \qquad \text{or} \qquad 2x - 1 = -7" />
+                <p><strong>Step 2:</strong> Solve each separately:</p>
+                <BlockMath math="2x = 8 \implies x = 4 \qquad \text{or} \qquad 2x = -6 \implies x = -3" />
+                <p><strong>Step 3:</strong> Check both in the original equation:</p>
+                <BlockMath math="|2(4) - 1| = |7| = 7 \ \checkmark \qquad |2(-3) - 1| = |-7| = 7 \ \checkmark" />
+                <p>Both solutions are valid: <InlineMath math="x = 4" /> and <InlineMath math="x = -3" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "modulus-ex2",
+            question: <p>Solve the inequality <InlineMath math="|x - 3| < 5" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Read the inequality as a statement about distance: <InlineMath math="|x-3|" /> is the distance from <InlineMath math="x" /> to <InlineMath math="3" />, so we need every point less than <InlineMath math="5" /> away.</p>
+                <p><strong>Step 2:</strong> That gives a double inequality — for a &ldquo;less than&rdquo; modulus the solution is always a single interval:</p>
+                <BlockMath math="-5 < x - 3 < 5" />
+                <p><strong>Step 3:</strong> Add <InlineMath math="3" /> throughout:</p>
+                <BlockMath math="-2 < x < 8" />
+                <p><strong>Check:</strong> at <InlineMath math="x = 0" /> we get <InlineMath math="|-3| = 3 < 5" /> ✓, while at <InlineMath math="x = 9" /> we get <InlineMath math="|6| = 6 \not< 5" /> ✓ — the endpoint behaves as expected.</p>
+                <p>Note that <InlineMath math="|x-3| > 5" /> would instead give <em>two</em> separate intervals, <InlineMath math="x < -2" /> or <InlineMath math="x > 8" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "modulus-ex3",
+            question: <p>Describe how to sketch <InlineMath math="y = |x^2 - 4|" /> from the graph of <InlineMath math="y = x^2 - 4" />, and state the coordinates of any sharp corners.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Start with <InlineMath math="y = x^2 - 4" />, a parabola with minimum at <InlineMath math="(0, -4)" />, crossing the <InlineMath math="x" />-axis where:</p>
+                <BlockMath math="x^2 - 4 = 0 \implies x = -2 \ \text{ or } \ x = 2" />
+                <p><strong>Step 2:</strong> The parabola lies <em>below</em> the <InlineMath math="x" />-axis between <InlineMath math="x = -2" /> and <InlineMath math="x = 2" />. That is exactly the section the modulus reflects upwards.</p>
+                <p><strong>Step 3:</strong> Outside that interval the graph is already at or above zero, so it is unchanged.</p>
+                <p><strong>Step 4:</strong> The reflected section turns the minimum at <InlineMath math="(0,-4)" /> into a maximum at <InlineMath math="(0, 4)" />, giving a shape like a hump between the two roots.</p>
+                <p><strong>Step 5:</strong> The sharp corners occur where the original graph met the axis — at <InlineMath math="(-2, 0)" /> and <InlineMath math="(2, 0)" />. The curve is not differentiable at either point, since the gradient jumps sign there.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "odd-even-functions",
-        title: "2. Odd & Even Functions",
+        title: "3. Odd & Even Functions",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -2669,7 +2820,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "stationary-points-inflection",
-        title: "3. Stationary Points & Inflection",
+        title: "4. Stationary Points & Inflection",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -2715,7 +2866,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "extrema-max-min",
-        title: "4. Maximum & Minimum Values",
+        title: "5. Maximum & Minimum Values",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -2734,13 +2885,13 @@ export const advancedHigherMathsData: Section[] = [
         examples: [
           {
             id: "extrema-ex1",
-            question: <p>Find the maximum and minimum values of <InlineMath math="f(x) = x^3 - 3x" /> on the closed interval <InlineMath math="[0, 3]" />.</p>,
+            question: <p>Find the maximum and minimum values of <InlineMath math="f(x) = x^3 - 12x" /> on the closed interval <InlineMath math="[-3, 3]" />.</p>,
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Stationary points: <InlineMath math="f'(x) = 3x^2 - 3 = 0 \implies x = \pm 1" />. Only <InlineMath math="x = 1" /> lies in <InlineMath math="[0, 3]" />.</p>
-                <p><strong>Step 2:</strong> Evaluate at the interior point and both endpoints:</p>
-                <BlockMath math="f(0) = 0, \qquad f(1) = -2, \qquad f(3) = 18" />
-                <p><strong>Step 3:</strong> The maximum value is <InlineMath math="18" /> (at <InlineMath math="x = 3" />) and the minimum value is <InlineMath math="-2" /> (at <InlineMath math="x = 1" />).</p>
+                <p><strong>Step 1:</strong> Stationary points: <InlineMath math="f'(x) = 3x^2 - 12 = 0 \implies x = \pm 2" />. Both lie inside <InlineMath math="[-3, 3]" />, so both must be tested.</p>
+                <p><strong>Step 2:</strong> Evaluate at the two interior points and both endpoints:</p>
+                <BlockMath math="f(-3) = 9, \qquad f(-2) = 16, \qquad f(2) = -16, \qquad f(3) = -9" />
+                <p><strong>Step 3:</strong> The maximum value is <InlineMath math="16" /> (at <InlineMath math="x = -2" />) and the minimum value is <InlineMath math="-16" /> (at <InlineMath math="x = 2" />). Note that here both extremes occur at <em>interior</em> stationary points rather than at the endpoints.</p>
               </div>
             )
           },
@@ -2760,7 +2911,7 @@ export const advancedHigherMathsData: Section[] = [
       },
       {
         id: "curve-sketching-related-graphs",
-        title: "5. Curve Sketching & Related Graphs",
+        title: "6. Curve Sketching & Related Graphs",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
