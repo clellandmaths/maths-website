@@ -3485,7 +3485,11 @@ export const advancedHigherMathsData: Section[] = [
             <p>A plane is fixed by a <strong>normal vector</strong> <InlineMath math="\mathbf{n} = (a, b, c)" /> and a point on it. Its Cartesian equation is:</p>
             <BlockMath math="ax + by + cz = d" />
             <p>where <InlineMath math="d" /> is found by substituting a known point. If the plane is given by three points, find the normal by taking the cross product of two direction vectors lying in the plane.</p>
-            <p><strong>The Golden Rule:</strong> the coefficients <InlineMath math="(a, b, c)" /> in <InlineMath math="ax + by + cz = d" /> <em>are</em> the normal vector; find <InlineMath math="d" /> by substituting a point on the plane.</p>
+            <p>Angles are measured through the normals. For two planes with normals <InlineMath math="\mathbf{n}_1" /> and <InlineMath math="\mathbf{n}_2" />, the angle between the planes equals the angle between the normals:</p>
+            <BlockMath math="\cos\theta = \frac{|\mathbf{n}_1 \cdot \mathbf{n}_2|}{|\mathbf{n}_1||\mathbf{n}_2|}" />
+            <p>The angle between a <strong>line and a plane</strong> is the one case that behaves differently. The line's direction <InlineMath math="\mathbf{d}" /> makes some angle with the normal, but the plane itself lies at <InlineMath math="90^\circ" /> to that normal — so the angle we want is the <em>complement</em>. Since <InlineMath math="\cos(90^\circ - \alpha) = \sin\alpha" />, the formula uses <strong>sine</strong>:</p>
+            <BlockMath math="\sin\alpha = \frac{|\mathbf{d} \cdot \mathbf{n}|}{|\mathbf{d}||\mathbf{n}|}" />
+            <p><strong>The Golden Rule:</strong> the coefficients <InlineMath math="(a, b, c)" /> in <InlineMath math="ax + by + cz = d" /> <em>are</em> the normal vector; find <InlineMath math="d" /> by substituting a point on the plane. For angles, use <InlineMath math="\cos" /> between two planes and <InlineMath math="\sin" /> between a line and a plane.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
@@ -3518,6 +3522,107 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\mathbf{n} = \overrightarrow{AB}\times\overrightarrow{AC} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ -1 & 1 & 0 \\ -1 & 0 & 1 \end{vmatrix} = (1,\ 1,\ 1)" />
                 <p><strong>Step 2:</strong> Using normal <InlineMath math="(1,1,1)" /> and point <InlineMath math="A(1,0,0)" />, the equation <InlineMath math="x + y + z = d" /> gives <InlineMath math="d = 1" />:</p>
                 <BlockMath math="x + y + z = 1" />
+              </div>
+            )
+          },
+          {
+            id: "planes-ex-angle",
+            question: <p>Find the acute angle between the line <InlineMath math="\mathbf{r} = (1,-1,0) + t(2,1,2)" /> and the plane <InlineMath math="3x - y + 2z = 5" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Read off the direction of the line and the normal of the plane:</p>
+                <BlockMath math="\mathbf{d} = (2,1,2), \qquad \mathbf{n} = (3,-1,2)" />
+                <p><strong>Step 2:</strong> Compute the scalar product and the two magnitudes:</p>
+                <BlockMath math="\mathbf{d}\cdot\mathbf{n} = 6 - 1 + 4 = 9" />
+                <BlockMath math="|\mathbf{d}| = \sqrt{4+1+4} = 3, \qquad |\mathbf{n}| = \sqrt{9+1+4} = \sqrt{14}" />
+                <p><strong>Step 3:</strong> This is a line and a plane, so use <strong>sine</strong> — not cosine. The modulus signs ensure the acute angle:</p>
+                <BlockMath math="\sin\alpha = \frac{|\mathbf{d}\cdot\mathbf{n}|}{|\mathbf{d}||\mathbf{n}|} = \frac{9}{3\sqrt{14}} = \frac{3}{\sqrt{14}}" />
+                <p><strong>Step 4:</strong> Take the inverse sine:</p>
+                <BlockMath math="\alpha = \sin^{-1}\!\left(\frac{3}{\sqrt{14}}\right) = \sin^{-1}(0.8018) = 53.3^\circ \ \text{(1 d.p.)}" />
+                <p>Had cosine been used by mistake, the answer would have been <InlineMath math="36.7^\circ" /> — the complement, and a very common lost mark.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "intersections-lines-planes",
+        title: "4. Intersections of Lines and Planes",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>In three dimensions, two lines need not meet even when they are not parallel — they can pass by one another at different heights. Such lines are called <strong>skew</strong>. Deciding which case applies is a standard exam question.</p>
+            <p><strong>Two lines.</strong> Write both in parametric form using <em>different</em> parameters, say <InlineMath math="s" /> and <InlineMath math="t" />, and equate the components. That gives three equations in two unknowns. Solve any two of them, then <strong>substitute into the third to check</strong>:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>Third equation satisfied → the lines <strong>intersect</strong>; substitute back for the point</li>
+              <li>Third equation fails, directions not parallel → the lines are <strong>skew</strong></li>
+              <li>Directions are scalar multiples → the lines are <strong>parallel</strong> (or identical)</li>
+            </ul>
+            <p><strong>A line and a plane.</strong> Substitute the parametric coordinates of the line into the plane equation. This gives a single equation in the parameter; solve it and substitute back to get the point.</p>
+            <p><strong>Two planes.</strong> Non-parallel planes always meet in a <em>line</em>. Solve the two equations together, setting one variable equal to a parameter <InlineMath math="\lambda" />, and express the other two in terms of it.</p>
+            <p><strong>Three planes.</strong> This is a <InlineMath math="3\times 3" /> system, so use Gaussian elimination. A unique solution means the planes meet at a single point; a row of zeros means they share a whole line; an inconsistent row means there is no common point at all.</p>
+            <p><strong>The Golden Rule:</strong> when testing two lines, always use two different parameters, and <em>never</em> stop after solving two equations — the third equation is the entire test. Skipping it means you cannot distinguish intersecting lines from skew ones.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Using <InlineMath math="t" /> for both lines:</strong> the two lines reach the meeting point at different parameter values, so a shared letter forces a false conclusion.</li>
+                <li><strong>Skipping the third-equation check:</strong> two equations can always be solved for two unknowns — that alone proves nothing.</li>
+                <li><strong>Confusing skew with parallel:</strong> skew lines have <em>non-parallel</em> directions but still never meet. Check the directions before naming the case.</li>
+                <li><strong>Forgetting to find the point:</strong> if the lines do intersect, the question almost always wants the coordinates, not just the fact.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "intersections-ex1",
+            question: <p>Show that the lines <InlineMath math="\mathbf{r} = (1,2,3) + s(1,1,2)" /> and <InlineMath math="\mathbf{r} = (1,5,6) + t(2,-1,1)" /> intersect, and find the point of intersection.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Equate the two position vectors component by component, using different parameters:</p>
+                <BlockMath math="\begin{aligned} x: &\quad 1 + s = 1 + 2t \\ y: &\quad 2 + s = 5 - t \\ z: &\quad 3 + 2s = 6 + t \end{aligned}" />
+                <p><strong>Step 2:</strong> Simplify the first two equations:</p>
+                <BlockMath math="s = 2t, \qquad s = 3 - t" />
+                <p><strong>Step 3:</strong> Solve them together:</p>
+                <BlockMath math="2t = 3 - t \implies 3t = 3 \implies t = 1, \quad s = 2" />
+                <p><strong>Step 4:</strong> Now test these values in the <em>third</em> equation — the step that decides the answer:</p>
+                <BlockMath math="3 + 2(2) = 7 \qquad \text{and} \qquad 6 + 1 = 7 \ \checkmark" />
+                <p>The third equation is satisfied, so the lines do intersect.</p>
+                <p><strong>Step 5:</strong> Substitute <InlineMath math="s = 2" /> into the first line to find the point:</p>
+                <BlockMath math="(1,2,3) + 2(1,1,2) = (3,\,4,\,7)" />
+              </div>
+            )
+          },
+          {
+            id: "intersections-ex2",
+            question: <p>Show that the lines <InlineMath math="\mathbf{r} = (1,2,3) + s(2,1,-1)" /> and <InlineMath math="\mathbf{r} = (2,0,1) + t(1,-1,2)" /> are skew.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> First check the directions. If <InlineMath math="(2,1,-1)" /> were a multiple of <InlineMath math="(1,-1,2)" />, the lines would be parallel — but doubling the first component gives <InlineMath math="2" />, while doubling the second gives <InlineMath math="-2 \neq 1" />. They are <strong>not</strong> parallel.</p>
+                <p><strong>Step 2:</strong> Equate the components:</p>
+                <BlockMath math="\begin{aligned} x: &\quad 1 + 2s = 2 + t \\ y: &\quad 2 + s = -t \\ z: &\quad 3 - s = 1 + 2t \end{aligned}" />
+                <p><strong>Step 3:</strong> From the <InlineMath math="y" /> equation, <InlineMath math="t = -2 - s" />. Substitute into the <InlineMath math="x" /> equation:</p>
+                <BlockMath math="1 + 2s = 2 + (-2 - s) = -s \implies 3s = -1 \implies s = -\tfrac{1}{3}, \quad t = -\tfrac{5}{3}" />
+                <p><strong>Step 4:</strong> Test these values in the <InlineMath math="z" /> equation:</p>
+                <BlockMath math="\text{LHS} = 3 - \left(-\tfrac{1}{3}\right) = \tfrac{10}{3}, \qquad \text{RHS} = 1 + 2\left(-\tfrac{5}{3}\right) = -\tfrac{7}{3}" />
+                <p><strong>Step 5:</strong> Since <InlineMath math="\frac{10}{3} \neq -\frac{7}{3}" />, no pair of parameter values satisfies all three equations, so the lines never meet. As they are also not parallel, they are <strong>skew</strong>.</p>
+              </div>
+            )
+          },
+          {
+            id: "intersections-ex3",
+            question: <p>Find the point where the line <InlineMath math="\mathbf{r} = (1,0,2) + t(2,1,-1)" /> meets the plane <InlineMath math="3x + y - 2z = 5" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write the coordinates of a general point on the line in terms of <InlineMath math="t" />:</p>
+                <BlockMath math="x = 1 + 2t, \qquad y = t, \qquad z = 2 - t" />
+                <p><strong>Step 2:</strong> Substitute these into the equation of the plane:</p>
+                <BlockMath math="3(1 + 2t) + t - 2(2 - t) = 5" />
+                <p><strong>Step 3:</strong> Expand and collect terms in <InlineMath math="t" />:</p>
+                <BlockMath math="3 + 6t + t - 4 + 2t = 5 \implies 9t - 1 = 5 \implies t = \frac{2}{3}" />
+                <p><strong>Step 4:</strong> Substitute back into the line to get the coordinates:</p>
+                <BlockMath math="\left(1 + \tfrac{4}{3},\ \tfrac{2}{3},\ 2 - \tfrac{2}{3}\right) = \left(\tfrac{7}{3},\ \tfrac{2}{3},\ \tfrac{4}{3}\right)" />
+                <p><strong>Check:</strong> <InlineMath math="3\left(\tfrac{7}{3}\right) + \tfrac{2}{3} - 2\left(\tfrac{4}{3}\right) = 7 + \tfrac{2}{3} - \tfrac{8}{3} = 5" /> ✓</p>
               </div>
             )
           }
