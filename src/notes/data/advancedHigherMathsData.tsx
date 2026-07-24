@@ -742,6 +742,10 @@ export const advancedHigherMathsData: Section[] = [
             <p>The sum of the first <InlineMath math="n" /> terms is:</p>
             <BlockMath math="S_n = \frac{n}{2}\bigl[2a + (n-1)d\bigr] = \frac{n}{2}(a + l)" />
             <p>where <InlineMath math="l" /> is the last term. Use the second form when you already know the last term.</p>
+            <p>The sum formula comes from a neat trick worth knowing, since you may be asked to derive it. Write the series out, then write it again <strong>in reverse</strong> underneath:</p>
+            <BlockMath math="\begin{aligned} S_n &= a + (a+d) + \cdots + \bigl(a+(n-1)d\bigr) \\ S_n &= \bigl(a+(n-1)d\bigr) + \cdots + (a+d) + a \end{aligned}" />
+            <p>Adding the two lines pairs the first term of one with the last of the other. Every pair sums to the same total, <InlineMath math="2a + (n-1)d" />, and there are <InlineMath math="n" /> pairs:</p>
+            <BlockMath math="2S_n = n\bigl[2a + (n-1)d\bigr] \quad\implies\quad S_n = \frac{n}{2}\bigl[2a + (n-1)d\bigr]" />
             <p><strong>The Golden Rule:</strong> almost every arithmetic question reduces to finding <InlineMath math="a" /> and <InlineMath math="d" /> — pin those down first, then substitute.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -777,6 +781,21 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="a + 3(3) = 11 \implies a = 2" />
                 <p><strong>Step 3:</strong> Find the sum of the first 12 terms:</p>
                 <BlockMath math="S_{12} = \frac{12}{2}\bigl[2(2) + (11)(3)\bigr] = 6\,[4 + 33] = 222" />
+              </div>
+            )
+          },
+          {
+            id: "arithmetic-ex3",
+            question: <p>How many terms are there in the arithmetic sequence <InlineMath math="7,\ 11,\ 15,\ \ldots,\ 111" />? Hence find the sum of the sequence.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Identify <InlineMath math="a" /> and <InlineMath math="d" />, then write a formula for the <InlineMath math="n" />th term:</p>
+                <BlockMath math="a = 7, \quad d = 11 - 7 = 4 \quad\implies\quad u_n = 7 + (n-1)(4) = 4n + 3" />
+                <p><strong>Step 2:</strong> The last term is <InlineMath math="111" />, so set <InlineMath math="u_n = 111" /> and solve for <InlineMath math="n" />:</p>
+                <BlockMath math="4n + 3 = 111 \implies 4n = 108 \implies n = 27" />
+                <p>There are <strong>27</strong> terms.</p>
+                <p><strong>Step 3:</strong> Since the last term is known, the quicker sum formula applies:</p>
+                <BlockMath math="S_{27} = \frac{27}{2}(a + l) = \frac{27}{2}(7 + 111) = \frac{27}{2}(118) = 27 \times 59 = 1593" />
               </div>
             )
           }
@@ -839,6 +858,22 @@ export const advancedHigherMathsData: Section[] = [
                 <p><strong>Step 2:</strong> Rearrange for <InlineMath math="r" />:</p>
                 <BlockMath math="1 - r = \frac{4}{12} = \frac{1}{3} \implies r = \frac{2}{3}" />
                 <p><strong>Step 3:</strong> Since <InlineMath math="|r| = \tfrac{2}{3} < 1" />, a sum to infinity is valid, as required.</p>
+              </div>
+            )
+          },
+          {
+            id: "geometric-ex4",
+            question: <p>A geometric series has first term <InlineMath math="5" /> and common ratio <InlineMath math="1.5" />. Find the least number of terms for which the sum exceeds <InlineMath math="500" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Since <InlineMath math="r > 1" />, use the sum formula in the form that keeps the numbers positive:</p>
+                <BlockMath math="S_n = \frac{a(r^n - 1)}{r - 1} = \frac{5(1.5^n - 1)}{0.5} = 10\left(1.5^n - 1\right)" />
+                <p><strong>Step 2:</strong> Set up the inequality and simplify:</p>
+                <BlockMath math="10\left(1.5^n - 1\right) > 500 \implies 1.5^n - 1 > 50 \implies 1.5^n > 51" />
+                <p><strong>Step 3:</strong> The unknown is in the index, so take logarithms of both sides. Since <InlineMath math="\ln 1.5 > 0" />, the inequality sign is unchanged when we divide by it:</p>
+                <BlockMath math="n\ln 1.5 > \ln 51 \implies n > \frac{\ln 51}{\ln 1.5} = \frac{3.9318}{0.4055} = 9.70" />
+                <p><strong>Step 4:</strong> <InlineMath math="n" /> must be a whole number, so the least value is <InlineMath math="n = 10" />.</p>
+                <p><strong>Check:</strong> <InlineMath math="S_9 = 10(1.5^9 - 1) = 374.4" /> — not enough — while <InlineMath math="S_{10} = 10(1.5^{10} - 1) = 566.7 > 500" /> ✓</p>
               </div>
             )
           }
@@ -911,6 +946,9 @@ export const advancedHigherMathsData: Section[] = [
             <p>The <strong>Maclaurin series</strong> expresses a function as a power series built from its derivatives at <InlineMath math="x = 0" />:</p>
             <BlockMath math="f(x) = f(0) + f'(0)\,x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n" />
             <p>To build it: differentiate repeatedly, evaluate each derivative at <InlineMath math="x=0" />, and substitute into the formula, keeping the factorial in each denominator.</p>
+            <p>A series of the form <InlineMath math="a_0 + a_1x + a_2x^2 + \cdots" /> is called a <strong>power series</strong>. As more terms are added, some power series <strong>converge</strong> — the sum settles towards the function — while others <strong>diverge</strong>. A few expansions are worth knowing outright, since questions often expect you to quote rather than derive them:</p>
+            <BlockMath math="\begin{aligned} e^x &= 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots &&\text{all } x \\ \sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots &&\text{all } x \\ \cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots &&\text{all } x \\ \ln(1+x) &= x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots &&-1 < x \le 1 \\ \tan x &= x + \frac{x^3}{3} + \frac{2x^5}{15} + \cdots &&|x| < \tfrac{\pi}{2} \end{aligned}" />
+            <p>Note the ranges: <InlineMath math="e^x" />, <InlineMath math="\sin x" /> and <InlineMath math="\cos x" /> converge for every <InlineMath math="x" />, but <InlineMath math="\ln(1+x)" /> is only valid on <InlineMath math="-1 < x \le 1" />. Angles must be in <strong>radians</strong>.</p>
             <p><strong>The Golden Rule:</strong> always evaluate each derivative <em>at</em> <InlineMath math="x = 0" /> before substituting, and never drop the <InlineMath math="n!" /> denominators.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -948,6 +986,79 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\cos x = 1 - \frac{1}{2!}x^2 + \frac{1}{4!}x^4 - \cdots" />
                 <p><strong>Step 3:</strong> Simplify:</p>
                 <BlockMath math="\cos x = 1 - \frac{x^2}{2} + \frac{x^4}{24} - \cdots" />
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "combining-expansions",
+        title: "2. Combining Expansions",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Differentiating a function like <InlineMath math="e^{2x}\sin x" /> four or five times is punishing, and each derivative gets messier than the last. It is almost always faster to build the series from the <strong>standard expansions</strong> instead. There are three techniques:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Multiply two series</strong> together, collecting like powers</li>
+              <li><strong>Substitute</strong> a function into a standard series, e.g. <InlineMath math="u = x^2" /> in <InlineMath math="\ln(1+u)" /></li>
+              <li><strong>Factorise into standard form</strong>, e.g. <InlineMath math="\ln(3+x) = \ln 3 + \ln\!\left(1 + \tfrac{x}{3}\right)" /></li>
+            </ul>
+            <p>The saving is real: a product that would need four rounds of the product rule reduces to multiplying out a bracket.</p>
+            <p><strong>The Golden Rule:</strong> decide the highest power you need <em>first</em>, then take enough terms from each standard series to reach it — and discard any product that overshoots. If you want the <InlineMath math="x^3" /> term, a term in <InlineMath math="x^2" /> multiplied by one in <InlineMath math="x^2" /> can be ignored entirely.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Taking too few terms:</strong> to reach <InlineMath math="x^3" /> in a product you may still need the <InlineMath math="x^3" /> term of <em>each</em> factor, since it pairs with the constant term of the other.</li>
+                <li><strong>Keeping terms you don't need:</strong> anything above the required power is wasted work and invites arithmetic slips — cross it out as you go.</li>
+                <li><strong>Substituting carelessly:</strong> replacing <InlineMath math="x" /> by <InlineMath math="2x" /> means <em>every</em> <InlineMath math="x" /> changes, so <InlineMath math="\frac{x^2}{2}" /> becomes <InlineMath math="\frac{4x^2}{2} = 2x^2" />.</li>
+                <li><strong>Ranges of validity carry over:</strong> <InlineMath math="\ln(1+u)" /> needs <InlineMath math="-1 < u \le 1" />, so substituting <InlineMath math="u = 2x" /> restricts the result to <InlineMath math="-\frac{1}{2} < x \le \frac{1}{2}" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "combining-ex1",
+            question: <p>Use the standard expansions to find the series for <InlineMath math="e^{2x}\sin x" /> as far as the term in <InlineMath math="x^3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write down each standard series, substituting <InlineMath math="2x" /> into the one for <InlineMath math="e^x" />. Take terms as far as <InlineMath math="x^3" />:</p>
+                <BlockMath math="e^{2x} = 1 + 2x + \frac{(2x)^2}{2!} + \frac{(2x)^3}{3!} + \cdots = 1 + 2x + 2x^2 + \frac{4}{3}x^3 + \cdots" />
+                <BlockMath math="\sin x = x - \frac{x^3}{3!} + \cdots = x - \frac{x^3}{6} + \cdots" />
+                <p><strong>Step 2:</strong> Multiply, keeping only products whose total power is <InlineMath math="3" /> or less:</p>
+                <BlockMath math="\begin{aligned} 1 \times x &= x \\ 1 \times \left(-\tfrac{x^3}{6}\right) &= -\tfrac{1}{6}x^3 \\ 2x \times x &= 2x^2 \\ 2x^2 \times x &= 2x^3 \end{aligned}" />
+                <p><strong>Step 3:</strong> Every other product reaches <InlineMath math="x^4" /> or beyond, so discard them. Collect like powers:</p>
+                <BlockMath math="e^{2x}\sin x = x + 2x^2 + \left(2 - \tfrac{1}{6}\right)x^3 + \cdots = x + 2x^2 + \frac{11}{6}x^3 + \cdots" />
+              </div>
+            )
+          },
+          {
+            id: "combining-ex2",
+            question: <p>Find the series for <InlineMath math="\ln(1 + x^2)" /> as far as the term in <InlineMath math="x^6" />, and state the range of values of <InlineMath math="x" /> for which it is valid.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Start from the standard expansion, using <InlineMath math="u" /> as the variable to keep the substitution clear:</p>
+                <BlockMath math="\ln(1+u) = u - \frac{u^2}{2} + \frac{u^3}{3} - \cdots \qquad (-1 < u \le 1)" />
+                <p><strong>Step 2:</strong> Substitute <InlineMath math="u = x^2" />. Each power of <InlineMath math="u" /> doubles in <InlineMath math="x" />, so three terms are enough to reach <InlineMath math="x^6" />:</p>
+                <BlockMath math="\ln(1+x^2) = x^2 - \frac{(x^2)^2}{2} + \frac{(x^2)^3}{3} - \cdots = x^2 - \frac{x^4}{2} + \frac{x^6}{3} - \cdots" />
+                <p><strong>Step 3:</strong> Carry the range through the substitution. We need <InlineMath math="-1 < x^2 \le 1" />, and since <InlineMath math="x^2 \ge 0" /> always, this reduces to <InlineMath math="x^2 \le 1" />:</p>
+                <BlockMath math="-1 \le x \le 1" />
+              </div>
+            )
+          },
+          {
+            id: "combining-ex3",
+            question: <p>Find the series for <InlineMath math="\ln(3 + x)" /> as far as the term in <InlineMath math="x^3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The standard series needs the form <InlineMath math="\ln(1 + \ldots)" />, so factor out the <InlineMath math="3" />:</p>
+                <BlockMath math="\ln(3+x) = \ln\!\left[3\left(1 + \frac{x}{3}\right)\right] = \ln 3 + \ln\!\left(1 + \frac{x}{3}\right)" />
+                <p><strong>Step 2:</strong> Expand the second term using <InlineMath math="u = \dfrac{x}{3}" />:</p>
+                <BlockMath math="\ln\!\left(1 + \frac{x}{3}\right) = \frac{x}{3} - \frac{1}{2}\left(\frac{x}{3}\right)^2 + \frac{1}{3}\left(\frac{x}{3}\right)^3 - \cdots" />
+                <p><strong>Step 3:</strong> Simplify each term carefully — the cube of <InlineMath math="\frac{x}{3}" /> brings a factor of <InlineMath math="27" />:</p>
+                <BlockMath math="= \frac{x}{3} - \frac{x^2}{18} + \frac{x^3}{81} - \cdots" />
+                <p><strong>Step 4:</strong> Add back the constant. Note that <InlineMath math="\ln 3" /> is the <InlineMath math="x^0" /> term of the series:</p>
+                <BlockMath math="\ln(3+x) = \ln 3 + \frac{x}{3} - \frac{x^2}{18} + \frac{x^3}{81} - \cdots" />
               </div>
             )
           }
