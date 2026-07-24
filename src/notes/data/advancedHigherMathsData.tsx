@@ -2815,6 +2815,9 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>Advanced Higher adds several standard integrals and the technique of substitution. Key results include:</p>
             <BlockMath math="\int \sec^2 x\,dx = \tan x + c, \quad \int \frac{1}{1+x^2}\,dx = \tan^{-1} x + c, \quad \int \frac{f'(x)}{f(x)}\,dx = \ln|f(x)| + c" />
+            <p>Two further standard integrals come directly from reversing the inverse trigonometric derivatives. These appear on the formula sheet, but you must recognise <em>when</em> to reach for them:</p>
+            <BlockMath math="\int \frac{1}{\sqrt{a^2 - x^2}}\,dx = \sin^{-1}\!\left(\frac{x}{a}\right) + c, \qquad \int \frac{1}{a^2 + x^2}\,dx = \frac{1}{a}\tan^{-1}\!\left(\frac{x}{a}\right) + c" />
+            <p>The signal is the <em>shape</em> of the denominator: a square root of &ldquo;constant minus <InlineMath math="x^2" />&rdquo; points to <InlineMath math="\sin^{-1}" />, while &ldquo;constant plus <InlineMath math="x^2" />&rdquo; with no root points to <InlineMath math="\tan^{-1}" />. If the coefficient of <InlineMath math="x^2" /> is not <InlineMath math="1" />, factor it out first to reach the standard form.</p>
             <p>For <strong>integration by substitution</strong>, choose <InlineMath math="u" /> so that its derivative appears (up to a constant) in the integrand, and convert every part — including <InlineMath math="dx" /> — into <InlineMath math="u" />.</p>
             <p><strong>The Golden Rule:</strong> spot the <InlineMath math="\frac{f'(x)}{f(x)}" /> and <InlineMath math="g(f(x))f'(x)" /> patterns for a quick substitution, and always replace <InlineMath math="dx" /> using <InlineMath math="du = \frac{du}{dx}\,dx" />.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
@@ -2861,6 +2864,22 @@ export const advancedHigherMathsData: Section[] = [
                 <p><strong>Step 1:</strong> This matches the standard form <InlineMath math="\int \frac{1}{a^2 + x^2}\,dx = \frac{1}{a}\tan^{-1}\!\frac{x}{a} + c" /> with <InlineMath math="a = 3" />.</p>
                 <p><strong>Step 2:</strong> Therefore:</p>
                 <BlockMath math="\int \frac{1}{9 + x^2}\,dx = \frac{1}{3}\tan^{-1}\!\left(\frac{x}{3}\right) + c" />
+              </div>
+            )
+          },
+          {
+            id: "standard-integrals-ex4",
+            question: <p>Find (a) <InlineMath math="\displaystyle\int \frac{1}{\sqrt{25 - x^2}}\,dx" /> and (b) <InlineMath math="\displaystyle\int \frac{1}{9 + 4x^2}\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1 (a):</strong> The denominator is a square root of &ldquo;constant minus <InlineMath math="x^2" />&rdquo;, so this is the <InlineMath math="\sin^{-1}" /> form with <InlineMath math="a^2 = 25" />, giving <InlineMath math="a = 5" />:</p>
+                <BlockMath math="\int \frac{1}{\sqrt{25 - x^2}}\,dx = \sin^{-1}\!\left(\frac{x}{5}\right) + c" />
+                <p><strong>Step 2 (b):</strong> Here the coefficient of <InlineMath math="x^2" /> is not <InlineMath math="1" />, so factor it out of the denominator first:</p>
+                <BlockMath math="9 + 4x^2 = 4\left(\frac{9}{4} + x^2\right) \implies \int \frac{1}{9+4x^2}\,dx = \frac{1}{4}\int \frac{1}{\left(\frac{3}{2}\right)^2 + x^2}\,dx" />
+                <p><strong>Step 3:</strong> Now apply the standard form with <InlineMath math="a = \dfrac{3}{2}" />:</p>
+                <BlockMath math="= \frac{1}{4} \times \frac{1}{\frac{3}{2}}\tan^{-1}\!\left(\frac{x}{\frac{3}{2}}\right) + c = \frac{1}{4} \times \frac{2}{3}\tan^{-1}\!\left(\frac{2x}{3}\right) + c" />
+                <p><strong>Step 4:</strong> Simplify the constant:</p>
+                <BlockMath math="\int \frac{1}{9+4x^2}\,dx = \frac{1}{6}\tan^{-1}\!\left(\frac{2x}{3}\right) + c" />
               </div>
             )
           }
@@ -2966,6 +2985,43 @@ export const advancedHigherMathsData: Section[] = [
                 <p><strong>Step 3:</strong> So <InlineMath math="\int \ln x\,dx = x\ln x - x + c" />.</p>
               </div>
             )
+          },
+          {
+            id: "by-parts-ex3",
+            question: <p>Find <InlineMath math="\displaystyle\int x^2 e^{3x}\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Take <InlineMath math="u = x^2" /> so that differentiating reduces the power. With <InlineMath math="\frac{dv}{dx} = e^{3x}" />, we get <InlineMath math="v = \frac{1}{3}e^{3x}" />:</p>
+                <BlockMath math="\int x^2 e^{3x}\,dx = \frac{1}{3}x^2e^{3x} - \frac{2}{3}\int x e^{3x}\,dx" />
+                <p><strong>Step 2:</strong> The remaining integral still has a power of <InlineMath math="x" />, so apply integration by parts a <strong>second</strong> time, now with <InlineMath math="u = x" />:</p>
+                <BlockMath math="\int x e^{3x}\,dx = \frac{1}{3}xe^{3x} - \frac{1}{3}\int e^{3x}\,dx = \frac{1}{3}xe^{3x} - \frac{1}{9}e^{3x}" />
+                <p><strong>Step 3:</strong> Substitute this back into Step 1, taking care with the <InlineMath math="-\frac{2}{3}" /> multiplying both terms:</p>
+                <BlockMath math="\int x^2 e^{3x}\,dx = \frac{1}{3}x^2e^{3x} - \frac{2}{3}\left(\frac{1}{3}xe^{3x} - \frac{1}{9}e^{3x}\right)" />
+                <p><strong>Step 4:</strong> Expand and tidy:</p>
+                <BlockMath math="= \frac{1}{3}x^2e^{3x} - \frac{2}{9}xe^{3x} + \frac{2}{27}e^{3x} + c" />
+                <p>Each application of the rule drops the power of <InlineMath math="x" /> by one, so an <InlineMath math="x^n" /> term needs <InlineMath math="n" /> applications.</p>
+              </div>
+            )
+          },
+          {
+            id: "by-parts-ex4",
+            question: <p>Find <InlineMath math="\displaystyle\int e^{2x}\sin x\,dx" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Neither factor simplifies when differentiated, so parts will not terminate. Give the integral a name so we can treat it as an unknown:</p>
+                <BlockMath math="I = \int e^{2x}\sin x\,dx" />
+                <p><strong>Step 2:</strong> Apply parts with <InlineMath math="u = e^{2x}" /> and <InlineMath math="\frac{dv}{dx} = \sin x" />, so <InlineMath math="v = -\cos x" />:</p>
+                <BlockMath math="I = -e^{2x}\cos x + 2\int e^{2x}\cos x\,dx" />
+                <p><strong>Step 3:</strong> Apply parts again to the new integral, keeping <InlineMath math="u = e^{2x}" /> — switching now would simply undo the first step:</p>
+                <BlockMath math="\int e^{2x}\cos x\,dx = e^{2x}\sin x - 2\int e^{2x}\sin x\,dx = e^{2x}\sin x - 2I" />
+                <p><strong>Step 4:</strong> The original integral has reappeared. Substitute back:</p>
+                <BlockMath math="I = -e^{2x}\cos x + 2\left(e^{2x}\sin x - 2I\right) = -e^{2x}\cos x + 2e^{2x}\sin x - 4I" />
+                <p><strong>Step 5:</strong> Now solve for <InlineMath math="I" /> algebraically, gathering both <InlineMath math="I" /> terms on the left:</p>
+                <BlockMath math="5I = e^{2x}\left(2\sin x - \cos x\right)" />
+                <p><strong>Step 6:</strong> Divide, remembering the constant of integration only at the end:</p>
+                <BlockMath math="I = \frac{1}{5}e^{2x}\left(2\sin x - \cos x\right) + c" />
+              </div>
+            )
           }
         ]
       },
@@ -3025,7 +3081,10 @@ export const advancedHigherMathsData: Section[] = [
             <p>The area under <InlineMath math="y = f(x)" /> (above the <InlineMath math="x" />-axis) from <InlineMath math="a" /> to <InlineMath math="b" /> is <InlineMath math="\int_a^b y\,dx" />. The area <strong>between</strong> two curves, with <InlineMath math="f" /> the upper and <InlineMath math="g" /> the lower, is:</p>
             <BlockMath math="\text{Area} = \int_a^b \bigl(f(x) - g(x)\bigr)\,dx" />
             <p>where <InlineMath math="a" /> and <InlineMath math="b" /> are the points of intersection.</p>
-            <p><strong>The Golden Rule:</strong> for the area between curves, find the intersection points first (they are the limits), then integrate &ldquo;upper minus lower&rdquo;.</p>
+            <p>Advanced Higher also asks for the area between a curve and the <strong><InlineMath math="y" />-axis</strong>. The whole picture simply turns on its side: strips are now horizontal, so we integrate <InlineMath math="x" /> with respect to <InlineMath math="y" />, between <InlineMath math="y" />-limits:</p>
+            <BlockMath math="\text{Area} = \int_c^d x\,dy" />
+            <p>To use it, rearrange the equation of the curve to give <InlineMath math="x" /> in terms of <InlineMath math="y" /> before integrating.</p>
+            <p><strong>The Golden Rule:</strong> for the area between curves, find the intersection points first (they are the limits), then integrate &ldquo;upper minus lower&rdquo;. If the region is bounded by the <InlineMath math="y" />-axis rather than the <InlineMath math="x" />-axis, switch to <InlineMath math="\int x\,dy" /> and use <InlineMath math="y" />-limits throughout.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
@@ -3060,6 +3119,21 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="\text{Area} = \int_1^2 3x^2\,dx = \left[x^3\right]_1^2" />
                 <p><strong>Step 2:</strong> Evaluate:</p>
                 <BlockMath math="= 8 - 1 = 7" />
+              </div>
+            )
+          },
+          {
+            id: "areas-ex-yaxis",
+            question: <p>Find the area enclosed by the curve <InlineMath math="y = x^2" /> (for <InlineMath math="x \ge 0" />), the <InlineMath math="y" />-axis, and the lines <InlineMath math="y = 1" /> and <InlineMath math="y = 4" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The region is bounded by the <InlineMath math="y" />-axis and given <InlineMath math="y" />-limits, so integrate with respect to <InlineMath math="y" />. Rearrange the curve to give <InlineMath math="x" /> in terms of <InlineMath math="y" />, taking the positive root since <InlineMath math="x \ge 0" />:</p>
+                <BlockMath math="y = x^2 \implies x = \sqrt{y} = y^{1/2}" />
+                <p><strong>Step 2:</strong> Set up the integral with the <InlineMath math="y" />-limits:</p>
+                <BlockMath math="\text{Area} = \int_1^4 y^{1/2}\,dy = \left[\frac{2}{3}y^{3/2}\right]_1^4" />
+                <p><strong>Step 3:</strong> Evaluate, noting <InlineMath math="4^{3/2} = 8" /> and <InlineMath math="1^{3/2} = 1" />:</p>
+                <BlockMath math="= \frac{2}{3}(8) - \frac{2}{3}(1) = \frac{16}{3} - \frac{2}{3} = \frac{14}{3}" />
+                <p>The area is <InlineMath math="\dfrac{14}{3}" /> square units.</p>
               </div>
             )
           }
