@@ -518,6 +518,12 @@ export const advancedHigherMathsData: Section[] = [
             <p>For a <InlineMath math="2\times 2" /> matrix <InlineMath math="A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}" />, the <strong>determinant</strong> is <InlineMath math="\det A = ad - bc" />, and provided <InlineMath math="\det A \neq 0" /> the <strong>inverse</strong> is:</p>
             <BlockMath math="A^{-1} = \frac{1}{ad-bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}" />
             <p>If <InlineMath math="\det A = 0" /> the matrix is <strong>singular</strong> and has no inverse.</p>
+            <p>Two further pieces of notation are needed throughout the topic. The <strong>transpose</strong> <InlineMath math="A^{T}" /> is formed by swapping rows and columns:</p>
+            <BlockMath math="A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix} \implies A^{T} = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}" />
+            <p>It obeys <InlineMath math="(A^{T})^{T} = A" /> and, importantly, <InlineMath math="(AB)^{T} = B^{T}A^{T}" /> — the order <em>reverses</em>. A matrix with <InlineMath math="A^{T} = A" /> is called <strong>symmetric</strong>.</p>
+            <p>The <strong>identity matrix</strong> <InlineMath math="I" /> has <InlineMath math="1" />s on the leading diagonal and <InlineMath math="0" />s elsewhere. It behaves like the number <InlineMath math="1" />:</p>
+            <BlockMath math="I = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \qquad AI = IA = A, \qquad A^{-1}A = AA^{-1} = I" />
+            <p>That last statement is the <em>definition</em> of the inverse, and it is what makes the row-reduction method for larger matrices work.</p>
             <p><strong>The Golden Rule:</strong> matrix multiplication is <strong>not</strong> commutative — in general <InlineMath math="AB \neq BA" />. Check the inner dimensions match before multiplying, and the result takes the outer dimensions.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -570,12 +576,91 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="= -24 + 40 - 15 = 1" />
               </div>
             )
+          },
+          {
+            id: "matrix-algebra-ex4",
+            question: <p>Given <InlineMath math="A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}" /> and <InlineMath math="B = \begin{pmatrix} 1 & 4 \\ -2 & 5 \end{pmatrix}" />, verify that <InlineMath math="(AB)^{T} = B^{T}A^{T}" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Work out <InlineMath math="AB" /> first, combining rows of <InlineMath math="A" /> with columns of <InlineMath math="B" />:</p>
+                <BlockMath math="AB = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}\begin{pmatrix} 1 & 4 \\ -2 & 5 \end{pmatrix} = \begin{pmatrix} 2-2 & 8+5 \\ 0-6 & 0+15 \end{pmatrix} = \begin{pmatrix} 0 & 13 \\ -6 & 15 \end{pmatrix}" />
+                <p><strong>Step 2:</strong> Transpose the result by swapping rows and columns:</p>
+                <BlockMath math="(AB)^{T} = \begin{pmatrix} 0 & -6 \\ 13 & 15 \end{pmatrix}" />
+                <p><strong>Step 3:</strong> Now transpose <InlineMath math="A" /> and <InlineMath math="B" /> separately, and multiply them in the <em>reversed</em> order:</p>
+                <BlockMath math="B^{T} = \begin{pmatrix} 1 & -2 \\ 4 & 5 \end{pmatrix}, \qquad A^{T} = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}" />
+                <BlockMath math="B^{T}A^{T} = \begin{pmatrix} 2-2 & 0-6 \\ 8+5 & 0+15 \end{pmatrix} = \begin{pmatrix} 0 & -6 \\ 13 & 15 \end{pmatrix}" />
+                <p><strong>Step 4:</strong> The two results agree, confirming <InlineMath math="(AB)^{T} = B^{T}A^{T}" />. Note that <InlineMath math="A^{T}B^{T}" /> would <em>not</em> have worked — the reversal matters.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "three-by-three-inverse",
+        title: "2. The 3×3 Inverse",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>For a <InlineMath math="2\times 2" /> matrix there is a formula for the inverse. For a <InlineMath math="3\times 3" /> there is no such shortcut worth memorising, so we use <strong>row reduction</strong> instead — the same elementary row operations used in Gaussian elimination.</p>
+            <p>The method rests on the definition <InlineMath math="A^{-1}A = I" />. Write the matrix and the identity side by side in an augmented array, then apply row operations until the <em>left</em> block becomes the identity. Whatever those same operations do to the right block turns it into <InlineMath math="A^{-1}" />:</p>
+            <BlockMath math="\left(\begin{array}{ccc|ccc} & A & & & I & \end{array}\right) \quad \longrightarrow \quad \left(\begin{array}{ccc|ccc} & I & & & A^{-1} & \end{array}\right)" />
+            <p>The three permitted operations are the familiar ones: <strong>interchange</strong> two rows, <strong>multiply</strong> a row by a non-zero constant, and <strong>add a multiple</strong> of one row to another. Every operation must be applied right across the array, both blocks together.</p>
+            <p>If at any stage a row of the left block becomes entirely zero, the matrix is <strong>singular</strong> — its determinant is zero and no inverse exists.</p>
+            <p><strong>The Golden Rule:</strong> work down the leading diagonal one column at a time — first make the pivot entry <InlineMath math="1" />, then clear every other entry in that column to <InlineMath math="0" />, and only then move to the next column. Jumping around leads to undoing your own work.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting the right-hand block:</strong> every row operation must be carried out on <em>both</em> halves. Missing one is the single most common error.</li>
+                <li><strong>Clearing above as well as below:</strong> unlike Gaussian elimination, which stops at upper triangular form, here you must keep going until the left block is the full identity — zeros above the diagonal too.</li>
+                <li><strong>Not stating the operations:</strong> write each one down (<InlineMath math="R_2 \to R_2 - 2R_1" />). Marks are awarded for the operations, not just the answer.</li>
+                <li><strong>Skipping the check:</strong> multiply <InlineMath math="A" /> by your answer. If you do not get <InlineMath math="I" /> exactly, there is an arithmetic slip to find.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "three-inverse-ex1",
+            question: <p>Find the inverse of <InlineMath math="A = \begin{pmatrix} 2 & 1 & 1 \\ 1 & 3 & 2 \\ 1 & 0 & 0 \end{pmatrix}" /> using elementary row operations.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Write <InlineMath math="A" /> alongside the identity matrix:</p>
+                <BlockMath math="\left(\begin{array}{ccc|ccc} 2 & 1 & 1 & 1 & 0 & 0 \\ 1 & 3 & 2 & 0 & 1 & 0 \\ 1 & 0 & 0 & 0 & 0 & 1 \end{array}\right)" />
+                <p><strong>Step 2:</strong> Swap rows 1 and 3 to put a convenient <InlineMath math="1" /> in the top-left pivot position (<InlineMath math="R_1 \leftrightarrow R_3" />):</p>
+                <BlockMath math="\left(\begin{array}{ccc|ccc} 1 & 0 & 0 & 0 & 0 & 1 \\ 1 & 3 & 2 & 0 & 1 & 0 \\ 2 & 1 & 1 & 1 & 0 & 0 \end{array}\right)" />
+                <p><strong>Step 3:</strong> Clear the rest of column 1, using <InlineMath math="R_2 \to R_2 - R_1" /> and <InlineMath math="R_3 \to R_3 - 2R_1" />:</p>
+                <BlockMath math="\left(\begin{array}{ccc|ccc} 1 & 0 & 0 & 0 & 0 & 1 \\ 0 & 3 & 2 & 0 & 1 & -1 \\ 0 & 1 & 1 & 1 & 0 & -2 \end{array}\right)" />
+                <p><strong>Step 4:</strong> Swap rows 2 and 3 so the next pivot is already <InlineMath math="1" /> (<InlineMath math="R_2 \leftrightarrow R_3" />), then use <InlineMath math="R_3 \to R_3 - 3R_2" />:</p>
+                <BlockMath math="\left(\begin{array}{ccc|ccc} 1 & 0 & 0 & 0 & 0 & 1 \\ 0 & 1 & 1 & 1 & 0 & -2 \\ 0 & 0 & -1 & -3 & 1 & 5 \end{array}\right)" />
+                <p><strong>Step 5:</strong> Make the last pivot <InlineMath math="1" /> with <InlineMath math="R_3 \to -R_3" />, then clear above it with <InlineMath math="R_2 \to R_2 - R_3" />:</p>
+                <BlockMath math="\left(\begin{array}{ccc|ccc} 1 & 0 & 0 & 0 & 0 & 1 \\ 0 & 1 & 0 & -2 & 1 & 3 \\ 0 & 0 & 1 & 3 & -1 & -5 \end{array}\right)" />
+                <p><strong>Step 6:</strong> The left block is now the identity, so the right block is the inverse:</p>
+                <BlockMath math="A^{-1} = \begin{pmatrix} 0 & 0 & 1 \\ -2 & 1 & 3 \\ 3 & -1 & -5 \end{pmatrix}" />
+                <p><strong>Check:</strong> the first row of <InlineMath math="A" /> times the first column of <InlineMath math="A^{-1}" /> gives <InlineMath math="2(0) + 1(-2) + 1(3) = 1" />, and the same row times the second column gives <InlineMath math="2(0) + 1(1) + 1(-1) = 0" /> — as required for <InlineMath math="AA^{-1} = I" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "three-inverse-ex2",
+            question: <p>Show that <InlineMath math="B = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 1 & 0 & 5 \end{pmatrix}" /> has no inverse.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Begin the row reduction. Using <InlineMath math="R_2 \to R_2 - 2R_1" />:</p>
+                <BlockMath math="\begin{pmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 1 & 0 & 5 \end{pmatrix} \longrightarrow \begin{pmatrix} 1 & 2 & 3 \\ 0 & 0 & 0 \\ 1 & 0 & 5 \end{pmatrix}" />
+                <p><strong>Step 2:</strong> The second row has become entirely zero. This happened because row 2 of <InlineMath math="B" /> was exactly twice row 1 — the rows are not independent.</p>
+                <p><strong>Step 3:</strong> A row of zeros in the left block means it can never be reduced to the identity, so <InlineMath math="B" /> is <strong>singular</strong> and has no inverse.</p>
+                <p><strong>Confirming with the determinant:</strong> expanding along the first row,</p>
+                <BlockMath math="\det B = 1(4 \times 5 - 6 \times 0) - 2(2 \times 5 - 6 \times 1) + 3(2 \times 0 - 4 \times 1)" />
+                <BlockMath math="= 1(20) - 2(4) + 3(-4) = 20 - 8 - 12 = 0" />
+                <p>A zero determinant confirms the matrix is singular.</p>
+              </div>
+            )
           }
         ]
       },
       {
         id: "transformations-of-the-plane",
-        title: "2. Transformations of the Plane",
+        title: "3. Transformations of the Plane",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
@@ -720,6 +805,49 @@ export const advancedHigherMathsData: Section[] = [
                 <p><strong>Step 1:</strong> Subtracting the first equation from the second gives <InlineMath math="0.01y = 0.01" />, so <InlineMath math="y = 1" /> and <InlineMath math="x = 1" />. Solution <InlineMath math="(1, 1)" />.</p>
                 <p><strong>Step 2:</strong> With the constant changed to <InlineMath math="2.02" />, subtracting gives <InlineMath math="0.01y = 0.02" />, so <InlineMath math="y = 2" /> and <InlineMath math="x = 0" />. Solution <InlineMath math="(0, 2)" />.</p>
                 <p><strong>Step 3:</strong> A change of just <InlineMath math="0.01" /> in one constant moved the solution from <InlineMath math="(1,1)" /> to <InlineMath math="(0,2)" />. The system is <strong>ill-conditioned</strong> — the two lines are almost parallel, so the solution is highly sensitive to small changes.</p>
+              </div>
+            )
+          },
+          {
+            id: "gaussian-ex5",
+            question: <p>Show that the system below has infinitely many solutions, give the general solution in terms of a parameter <InlineMath math="\lambda" />, and state the particular solution when <InlineMath math="\lambda = 1" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p>The system is <InlineMath math="x + 2y - z = 3" />, <InlineMath math="2x - y + 3z = 1" />, <InlineMath math="3x + y + 2z = 4" />.</p>
+                <p><strong>Step 1:</strong> Write the augmented matrix:</p>
+                <BlockMath math="\left(\begin{array}{ccc|c} 1 & 2 & -1 & 3 \\ 2 & -1 & 3 & 1 \\ 3 & 1 & 2 & 4 \end{array}\right)" />
+                <p><strong>Step 2:</strong> Clear the first column with <InlineMath math="R_2 \to R_2 - 2R_1" /> and <InlineMath math="R_3 \to R_3 - 3R_1" />:</p>
+                <BlockMath math="\left(\begin{array}{ccc|c} 1 & 2 & -1 & 3 \\ 0 & -5 & 5 & -5 \\ 0 & -5 & 5 & -5 \end{array}\right)" />
+                <p><strong>Step 3:</strong> Rows 2 and 3 are now identical, so <InlineMath math="R_3 \to R_3 - R_2" /> produces a row of zeros:</p>
+                <BlockMath math="\left(\begin{array}{ccc|c} 1 & 2 & -1 & 3 \\ 0 & -5 & 5 & -5 \\ 0 & 0 & 0 & 0 \end{array}\right)" />
+                <p>The line <InlineMath math="0 = 0" /> is always true, so the third equation was <strong>redundant</strong> — it carried no new information. Two equations cannot pin down three unknowns, so there are <strong>infinitely many solutions</strong>.</p>
+                <p><strong>Step 4:</strong> Introduce a parameter for the free variable. Let <InlineMath math="z = \lambda" />. From row 2:</p>
+                <BlockMath math="-5y + 5\lambda = -5 \implies y - \lambda = 1 \implies y = 1 + \lambda" />
+                <p><strong>Step 5:</strong> Back-substitute into row 1:</p>
+                <BlockMath math="x + 2(1+\lambda) - \lambda = 3 \implies x + 2 + \lambda = 3 \implies x = 1 - \lambda" />
+                <p><strong>Step 6:</strong> The general solution is:</p>
+                <BlockMath math="x = 1 - \lambda, \qquad y = 1 + \lambda, \qquad z = \lambda" />
+                <p><strong>Step 7:</strong> Setting <InlineMath math="\lambda = 1" /> gives the particular solution <InlineMath math="(0,\ 2,\ 1)" />.</p>
+                <p><strong>Check:</strong> in the second equation, <InlineMath math="2(0) - 2 + 3(1) = 1" /> ✓</p>
+              </div>
+            )
+          },
+          {
+            id: "gaussian-ex6",
+            question: <p>A parabola with equation <InlineMath math="y = ax^2 + bx + c" /> passes through the points <InlineMath math="(1, 4)" />, <InlineMath math="(2, 3)" /> and <InlineMath math="(3, 6)" />. Form a system of equations and solve it to find the equation of the parabola.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Substitute each point into <InlineMath math="y = ax^2 + bx + c" />. Each one gives a linear equation in the three unknowns:</p>
+                <BlockMath math="\begin{aligned} (1,4): &\quad a + b + c = 4 \\ (2,3): &\quad 4a + 2b + c = 3 \\ (3,6): &\quad 9a + 3b + c = 6 \end{aligned}" />
+                <p><strong>Step 2:</strong> Eliminate <InlineMath math="c" /> by subtracting consecutive equations:</p>
+                <BlockMath math="\begin{aligned} (2)-(1): &\quad 3a + b = -1 \\ (3)-(2): &\quad 5a + b = 3 \end{aligned}" />
+                <p><strong>Step 3:</strong> Subtract these two to find <InlineMath math="a" />:</p>
+                <BlockMath math="2a = 4 \implies a = 2" />
+                <p><strong>Step 4:</strong> Back-substitute for <InlineMath math="b" />, then <InlineMath math="c" />:</p>
+                <BlockMath math="3(2) + b = -1 \implies b = -7, \qquad 2 - 7 + c = 4 \implies c = 9" />
+                <p><strong>Step 5:</strong> The parabola is:</p>
+                <BlockMath math="y = 2x^2 - 7x + 9" />
+                <p><strong>Check:</strong> at <InlineMath math="x=3" />, <InlineMath math="y = 18 - 21 + 9 = 6" /> ✓</p>
               </div>
             )
           }
