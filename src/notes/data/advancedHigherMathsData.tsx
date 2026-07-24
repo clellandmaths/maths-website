@@ -3358,6 +3358,94 @@ export const advancedHigherMathsData: Section[] = [
             )
           }
         ]
+      },
+      {
+        id: "applications-of-des",
+        title: "5. Applications & Modelling",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Differential equations earn their keep in modelling. Exam questions rarely hand you the equation — they describe a situation in words and expect you to <strong>form</strong> it first. The key is that the phrase &ldquo;rate of change&rdquo; means a derivative with respect to time, and &ldquo;proportional to&rdquo; introduces a constant:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>&ldquo;the rate of increase of <InlineMath math="P" /> is proportional to <InlineMath math="P" />&rdquo; <InlineMath math="\implies \dfrac{dP}{dt} = kP" /></li>
+              <li>&ldquo;the rate of decrease of <InlineMath math="N" /> is proportional to <InlineMath math="N" />&rdquo; <InlineMath math="\implies \dfrac{dN}{dt} = -kN" /></li>
+              <li>&ldquo;the rate of cooling is proportional to the excess temperature above the surroundings <InlineMath math="\theta_0" />&rdquo; <InlineMath math="\implies \dfrac{d\theta}{dt} = -k(\theta - \theta_0)" /></li>
+            </ul>
+            <p>That last one is <strong>Newton's law of cooling</strong>. The substitution <InlineMath math="u = \theta - \theta_0" /> turns it into the same separable equation as the others.</p>
+            <p>The workflow is always the same: form the equation, separate the variables and integrate, then use the given data to pin down the constants. There are usually <strong>two</strong> unknowns — the constant of integration and the constant of proportionality <InlineMath math="k" /> — so expect two pieces of information.</p>
+            <p><strong>The Golden Rule:</strong> translate the words into an equation before doing any calculus, and count your unknowns against the data you have been given. If you have two unknowns and only one condition, you have mis-formed the equation.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Sign of <InlineMath math="k" />:</strong> for decay or cooling, write the minus sign into the equation and keep <InlineMath math="k" /> positive. Doing both — a minus sign <em>and</em> a negative <InlineMath math="k" /> — reverses the model.</li>
+                <li><strong>Using conditions in the wrong order:</strong> the initial condition (at <InlineMath math="t=0" />) gives the constant of integration most easily, because the exponential term becomes <InlineMath math="1" />. Find that first, then use the second condition for <InlineMath math="k" />.</li>
+                <li><strong>Leaving the answer in log form:</strong> convert <InlineMath math="\ln P = kt + C" /> to <InlineMath math="P = Ae^{kt}" /> before substituting — it is far less error-prone.</li>
+                <li><strong>Forgetting the surrounding temperature:</strong> in a cooling problem the variable that decays exponentially is the <em>excess</em> <InlineMath math="\theta - \theta_0" />, not <InlineMath math="\theta" /> itself. Add <InlineMath math="\theta_0" /> back at the end.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "de-applications-ex1",
+            question: <p>A population grows at a rate proportional to its current size. Initially it is <InlineMath math="500" />, and after 3 hours it has reached <InlineMath math="2000" />. Find the population after 5 hours.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Translate the description into a differential equation:</p>
+                <BlockMath math="\frac{dP}{dt} = kP" />
+                <p><strong>Step 2:</strong> Separate the variables and integrate:</p>
+                <BlockMath math="\int \frac{1}{P}\,dP = \int k\,dt \implies \ln P = kt + C" />
+                <p><strong>Step 3:</strong> Convert to exponential form immediately, writing <InlineMath math="A = e^{C}" />:</p>
+                <BlockMath math="P = Ae^{kt}" />
+                <p><strong>Step 4:</strong> Use the initial condition <InlineMath math="P = 500" /> when <InlineMath math="t = 0" />. Since <InlineMath math="e^0 = 1" />, this gives <InlineMath math="A" /> at once:</p>
+                <BlockMath math="500 = A \implies P = 500e^{kt}" />
+                <p><strong>Step 5:</strong> Use the second condition, <InlineMath math="P = 2000" /> when <InlineMath math="t = 3" />, to find <InlineMath math="k" />:</p>
+                <BlockMath math="2000 = 500e^{3k} \implies e^{3k} = 4 \implies k = \frac{\ln 4}{3}" />
+                <p><strong>Step 6:</strong> Evaluate at <InlineMath math="t = 5" />:</p>
+                <BlockMath math="P = 500e^{5k} = 500 \times 4^{5/3} = 500 \times 10.079 \approx 5040" />
+              </div>
+            )
+          },
+          {
+            id: "de-applications-ex2",
+            question: <p>A body at <InlineMath math="90^\circ\text{C}" /> is left to cool in a room kept at <InlineMath math="20^\circ\text{C}" />. After 10 minutes its temperature is <InlineMath math="60^\circ\text{C}" />. Using Newton's law of cooling, find its temperature after 25 minutes.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Newton's law of cooling gives, with room temperature <InlineMath math="20" />:</p>
+                <BlockMath math="\frac{d\theta}{dt} = -k(\theta - 20)" />
+                <p><strong>Step 2:</strong> Substitute <InlineMath math="u = \theta - 20" />. Since <InlineMath math="20" /> is constant, <InlineMath math="\frac{du}{dt} = \frac{d\theta}{dt}" />, so the equation becomes separable in <InlineMath math="u" />:</p>
+                <BlockMath math="\frac{du}{dt} = -ku \implies u = Ae^{-kt}" />
+                <p><strong>Step 3:</strong> At <InlineMath math="t = 0" /> the temperature is <InlineMath math="90" />, so the excess is <InlineMath math="u = 70" />:</p>
+                <BlockMath math="A = 70 \implies u = 70e^{-kt}" />
+                <p><strong>Step 4:</strong> At <InlineMath math="t = 10" /> the temperature is <InlineMath math="60" />, so the excess is <InlineMath math="40" />:</p>
+                <BlockMath math="40 = 70e^{-10k} \implies e^{-10k} = \frac{4}{7} \implies k = \frac{1}{10}\ln\!\left(\frac{7}{4}\right) = 0.05596" />
+                <p><strong>Step 5:</strong> Find the excess at <InlineMath math="t = 25" />:</p>
+                <BlockMath math="u = 70e^{-25(0.05596)} = 70e^{-1.399} = 70 \times 0.2468 = 17.28" />
+                <p><strong>Step 6:</strong> Add the room temperature back to get the actual temperature:</p>
+                <BlockMath math="\theta = 20 + 17.28 = 37.3^\circ\text{C} \ \text{(1 d.p.)}" />
+              </div>
+            )
+          },
+          {
+            id: "de-applications-ex3",
+            question: <p>A tank leaks so that the rate of decrease of its volume is proportional to the square root of the volume remaining. Initially it holds <InlineMath math="100" /> litres, and after 5 minutes it holds <InlineMath math="64" /> litres. Find the volume after 10 minutes.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The rate is <em>decreasing</em> and proportional to <InlineMath math="\sqrt{V}" />, so:</p>
+                <BlockMath math="\frac{dV}{dt} = -k\sqrt{V}" />
+                <p><strong>Step 2:</strong> Separate the variables, writing the left side with a negative index:</p>
+                <BlockMath math="\int V^{-1/2}\,dV = \int -k\,dt \implies 2V^{1/2} = -kt + C" />
+                <p><strong>Step 3:</strong> Apply the initial condition <InlineMath math="V = 100" /> at <InlineMath math="t = 0" />:</p>
+                <BlockMath math="2\sqrt{100} = C \implies C = 20" />
+                <p><strong>Step 4:</strong> Apply the second condition, <InlineMath math="V = 64" /> at <InlineMath math="t = 5" />, to find <InlineMath math="k" />:</p>
+                <BlockMath math="2\sqrt{64} = -5k + 20 \implies 16 = -5k + 20 \implies k = 0.8" />
+                <p><strong>Step 5:</strong> The model is therefore <InlineMath math="2\sqrt{V} = 20 - 0.8t" />. Substitute <InlineMath math="t = 10" />:</p>
+                <BlockMath math="2\sqrt{V} = 20 - 8 = 12 \implies \sqrt{V} = 6 \implies V = 36" />
+                <p>The tank holds <strong>36 litres</strong> after 10 minutes.</p>
+              </div>
+            )
+          }
+        ]
       }
     ]
   },
