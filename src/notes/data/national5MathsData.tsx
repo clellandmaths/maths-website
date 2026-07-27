@@ -2092,6 +2092,16 @@ export const national5MathsData: Section[] = [
             <p>
               You must be able to recognise and interpret lines with a zero gradient (a perfectly horizontal line) and gradients that are undefined (a perfectly vertical line).
             </p>
+            <p><strong>The Golden Rule:</strong> subtract the coordinates in the <em>same order</em> on the top and bottom of the fraction. Equal gradients mean the lines are parallel — so to prove two lines parallel, show their gradients are equal and say so.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Order consistency:</strong> if you write <InlineMath math="y_2 - y_1" /> on top you must write <InlineMath math="x_2 - x_1" /> on the bottom, in the same order — swapping one flips the sign.</li>
+                <li><strong>Zero vs undefined:</strong> a horizontal line has gradient <InlineMath math="0" />; a vertical line's gradient is <em>undefined</em> (division by zero), not 0.</li>
+                <li><strong>Negatives:</strong> subtracting a negative coordinate adds, e.g. <InlineMath math="11 - (-5) = 16" />.</li>
+                <li><strong>&ldquo;Prove parallel&rdquo; needs a statement:</strong> after showing the gradients are equal, write the conclusion — equal gradients alone earn nothing without it.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2128,6 +2138,23 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> k = 6.</p>
               </div>
             )
+          },
+          {
+            id: "gradient-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>The points are A<InlineMath math="(-1, 2)" />, B<InlineMath math="(2, 8)" />, C<InlineMath math="(0, -3)" /> and D<InlineMath math="(3, 3)" />. Prove that AB is parallel to CD.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Find the gradient of AB: <InlineMath math="m_{AB} = \dfrac{8 - 2}{2 - (-1)} = \dfrac{6}{3} = 2" />.</p>
+                <p>Step 2: Find the gradient of CD, subtracting in the same order: <InlineMath math="m_{CD} = \dfrac{3 - (-3)}{3 - 0} = \dfrac{6}{3} = 2" />.</p>
+                <p>Step 3: State the conclusion clearly — this is the part that earns the mark:</p>
+                <p><strong>Answer:</strong> Since <InlineMath math="m_{AB} = m_{CD} = 2" />, the lines AB and CD are parallel.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2150,9 +2177,36 @@ export const national5MathsData: Section[] = [
             <p>
               You must be able to calculate the length of an arc or the area of a sector, and also work backwards to find the angle at the centre or the radius when given the area/length.
             </p>
+            <p><strong>The Golden Rule:</strong> everything is the fraction <InlineMath math="\frac{x}{360}" /> of a whole circle — of the <em>circumference</em> for an arc, of the <em>area</em> for a sector. Write the full formula first, then substitute; to work backwards, substitute what you know and solve for the missing letter.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Radius vs diameter:</strong> arc length uses <InlineMath math="\pi d" /> (diameter); sector area uses <InlineMath math="\pi r^2" /> (radius). Mixing them up is the classic error.</li>
+                <li><strong>Major arc / reflex angle:</strong> for a <em>major</em> arc, the angle at the centre is the reflex angle <InlineMath math="360^\circ - x" />, not the marked one.</li>
+                <li><strong>Rounding early:</strong> keep <InlineMath math="\pi" /> or full accuracy until the final line.</li>
+                <li><strong>Which fraction:</strong> a working-backwards problem still starts from the same formula — do not invent a new one.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
+          {
+            id: "arcs-sectors-ex-arclength",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Arc Length</strong></p>
+                <p>Calculate the length of an arc with radius 9 cm and an angle of 40&deg; at the centre.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Arc length uses the diameter, so <InlineMath math="d = 18" />. Substitute into <InlineMath math="\frac{x}{360} \times \pi d" />:</p>
+                <BlockMath math="\text{Arc} = \frac{40}{360} \times \pi \times 18" />
+                <p>Step 2: Simplify the fraction (<InlineMath math="\frac{40}{360} = \frac{1}{9}" />) and evaluate: <InlineMath math="\frac{1}{9} \times 18\pi = 2\pi" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="2\pi \approx 6.28" /> cm.</p>
+              </div>
+            )
+          },
           {
             id: "arcs-sectors-ex1",
             question: (
@@ -2184,6 +2238,24 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> x &approx; 85.9&deg;.</p>
               </div>
             )
+          },
+          {
+            id: "arcs-sectors-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (major arc)</strong></p>
+                <p>A circle has centre O and radius 6 cm. The <em>minor</em> arc AB subtends an angle of 100&deg; at the centre. Calculate the length of the <strong>major</strong> arc AB.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The major arc is the long way round, so its angle is the reflex angle: <InlineMath math="360^\circ - 100^\circ = 260^\circ" />.</p>
+                <p>Step 2: Substitute this angle into the arc-length formula with <InlineMath math="d = 12" />:</p>
+                <BlockMath math="\text{Major arc} = \frac{260}{360} \times \pi \times 12" />
+                <p>Step 3: Evaluate: <InlineMath math="\frac{260}{360} \times 12\pi = \frac{26}{3}\pi \approx 27.2" />.</p>
+                <p><strong>Answer:</strong> approximately <InlineMath math="27.2" /> cm.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2206,6 +2278,16 @@ export const national5MathsData: Section[] = [
             <p>
               Complex problems will require calculating the volume of composite solids (shapes joined together) or simple fractional parts of solids (e.g., hemispheres).
             </p>
+            <p><strong>The Golden Rule:</strong> choose the right formula, and check whether you are given the radius or the <em>diameter</em>. For a composite solid, add the parts (or subtract, if one is removed). If the volume is given and a length is unknown, substitute and rearrange.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Diameter given, not radius:</strong> if told the diameter, halve it first — a very common lost mark.</li>
+                <li><strong>The <InlineMath math="\frac{1}{3}" /> for cones and pyramids:</strong> forgetting it triples the answer.</li>
+                <li><strong>Units:</strong> volume is in cubic units (cm³, m³); make sure all lengths are in the same unit before calculating.</li>
+                <li><strong>Rounding:</strong> if asked for a number of significant figures, keep full accuracy until the end.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2241,6 +2323,24 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> 202.67<InlineMath math="\pi" /> m<sup className="text-xs">3</sup> (or approx. 636.70 m<sup className="text-xs">3</sup>).</p>
               </div>
             )
+          },
+          {
+            id: "volume-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Working Backwards (finding a length)</strong></p>
+                <p>A pyramid has a square base of side 6 cm and a volume of 96 cm³. Calculate its height.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The base area is <InlineMath math="6 \times 6 = 36" /> cm². Substitute the known values into <InlineMath math="V = \frac{1}{3}Ah" />:</p>
+                <BlockMath math="96 = \frac{1}{3} \times 36 \times h" />
+                <p>Step 2: Simplify the right-hand side: <InlineMath math="96 = 12h" />.</p>
+                <p>Step 3: Divide to find <InlineMath math="h" />: <InlineMath math="h = 8" />.</p>
+                <p><strong>Answer:</strong> the height is 8 cm.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2259,8 +2359,18 @@ export const national5MathsData: Section[] = [
               <p>This is used to prove whether a triangle is right-angled. You square the longest side, separately sum the squares of the two shorter sides, and compare the results.</p>
             </div>
             <p>
-              You must be able to apply Pythagoras in complex situations, including 3D problems (like finding the space diagonal inside a cuboid).
+              You must be able to apply Pythagoras in complex situations, including 3D problems (like finding the space diagonal inside a cuboid) and circle problems involving chords.
             </p>
+            <p><strong>The Golden Rule:</strong> the hypotenuse is the longest side and sits opposite the right angle. To find the hypotenuse, <em>add</em> the squares; to find a shorter side, <em>subtract</em>. In a circle, a line from the centre to the midpoint of a chord meets it at a right angle — that is what creates the triangle.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Adding when you should subtract:</strong> finding a shorter side means <InlineMath math="a^2 = c^2 - b^2" /> — subtract, don't add.</li>
+                <li><strong>Half the chord:</strong> in a circle problem, the right-angled triangle uses <em>half</em> the chord length, because the radius bisects the chord.</li>
+                <li><strong>3D in two steps:</strong> a space diagonal needs Pythagoras twice — first on the base, then with the height.</li>
+                <li><strong>Converse conclusion:</strong> to test for a right angle, compare (longest side)² with the sum of the other two squares, and <em>state</em> whether they are equal.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2293,6 +2403,23 @@ export const national5MathsData: Section[] = [
                 <p>Step 1: Square the longest side: 25<sup className="text-xs">2</sup> = 625.</p>
                 <p>Step 2: Sum the squares of the other two sides: 7<sup className="text-xs">2</sup> + 24<sup className="text-xs">2</sup> = 49 + 576 = 625.</p>
                 <p>Step 3: Compare and state conclusion: Since 25<sup className="text-xs">2</sup> = 7<sup className="text-xs">2</sup> + 24<sup className="text-xs">2</sup>, by the Converse of Pythagoras, the triangle is right-angled.</p>
+              </div>
+            )
+          },
+          {
+            id: "pythagoras-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (chord in a circle)</strong></p>
+                <p>A circle has centre O and radius 10 cm. A chord AB has length 16 cm. Calculate the distance from the centre O to the chord.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The perpendicular from the centre bisects the chord, so it meets the midpoint M with <InlineMath math="AM = 8" /> cm. This makes a right-angled triangle OMA with hypotenuse the radius <InlineMath math="OA = 10" />.</p>
+                <p>Step 2: The distance <InlineMath math="OM" /> is a <em>shorter</em> side, so subtract:</p>
+                <BlockMath math="OM = \sqrt{OA^2 - AM^2} = \sqrt{10^2 - 8^2} = \sqrt{100 - 64} = \sqrt{36}" />
+                <p><strong>Answer:</strong> the distance from the centre to the chord is 6 cm.</p>
               </div>
             )
           }
