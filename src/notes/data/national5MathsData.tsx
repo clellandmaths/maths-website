@@ -1645,6 +1645,7 @@ export const national5MathsData: Section[] = [
             <p>
               Contexts often include real-life situations such as comparing costs (e.g., hiring a car, mobile phone charges) or finding the exact intersection of two lines.
             </p>
+            <p>They can also be solved <strong>graphically</strong>: draw both lines on the same grid (a quick way is to find where each crosses the axes), and the coordinates of the point where they cross are the solution.</p>
             <p><strong>The Golden Rule:</strong> to eliminate a variable by adding or subtracting, its coefficients must match. Scale one or both equations until they do — then add if the matching signs are opposite, subtract if they are the same. Always substitute back to find the second variable.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -1710,6 +1711,24 @@ export const national5MathsData: Section[] = [
                 <p>Step 3: Subtract the second equation from the scaled first equation: <InlineMath math="(8a - 3a) = 480 - 230 \rightarrow 5a = 250 \rightarrow a = 50" />.</p>
                 <p>Step 4: Substitute <InlineMath math="a = 50" /> back into an original equation: <InlineMath math="4(50) + 2b = 240 \rightarrow 200 + 2b = 240 \rightarrow 2b = 40 \rightarrow b = 20" />.</p>
                 <p><strong>Answer:</strong> One apple costs £0.50, one banana costs £0.20.</p>
+              </div>
+            )
+          },
+          {
+            id: "simultaneous-ex-graph",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Solving Graphically</strong></p>
+                <p>Solve the system <InlineMath math="x + y = 6" /> and <InlineMath math="y = 2x" /> graphically.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Find two points on each line so you can draw them. For <InlineMath math="x + y = 6" />, the axis crossings are quickest: <InlineMath math="(0, 6)" /> and <InlineMath math="(6, 0)" />.</p>
+                <p>Step 2: For <InlineMath math="y = 2x" />, take <InlineMath math="(0, 0)" /> and <InlineMath math="(2, 4)" />.</p>
+                <p>Step 3: Draw both lines on the same grid and read off where they cross — the point of intersection is <InlineMath math="(2, 4)" />.</p>
+                <p>Step 4: Check in both equations: <InlineMath math="2 + 4 = 6" /> ✓ and <InlineMath math="4 = 2(2)" /> ✓.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = 2,\ y = 4" />.</p>
               </div>
             )
           }
@@ -1795,18 +1814,139 @@ export const national5MathsData: Section[] = [
         ]
       },
       {
+        id: "quadratic-graphs",
+        title: "Quadratic Graphs",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4 text-slate-300">
+            <p>The graph of a quadratic function is a <strong>parabola</strong>. You should be able to read its key features straight from the equation, and — going the other way — work out the equation from a graph.</p>
+            <div>
+              <h4 className="text-white font-semibold">Reading Features from the Equation</h4>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li><strong>Shape &amp; nature:</strong> a positive <InlineMath math="x^2" /> term gives a &ldquo;smile&rdquo; with a <em>minimum</em>; a negative <InlineMath math="x^2" /> term gives a &ldquo;frown&rdquo; with a <em>maximum</em>.</li>
+                <li><strong><InlineMath math="y" />-intercept:</strong> the constant term <InlineMath math="c" /> — the graph crosses the <InlineMath math="y" />-axis at <InlineMath math="(0, c)" />.</li>
+                <li><strong>Roots / zeros:</strong> where the graph crosses the <InlineMath math="x" />-axis — found by solving <InlineMath math="y = 0" /> (factorise).</li>
+                <li><strong>Turning point &amp; axis of symmetry:</strong> read directly from completed-square (vertex) form <InlineMath math="y = a(x + p)^2 + q" />, giving <InlineMath math="(-p, q)" /> and <InlineMath math="x = -p" />.</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold">Determining the Equation from a Graph</h4>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li><strong><InlineMath math="y = kx^2" />:</strong> turning point at the origin. Substitute a known point to find <InlineMath math="k" />.</li>
+                <li><strong>Turning point form <InlineMath math="y = k(x - a)^2 + b" />:</strong> read <InlineMath math="(a, b)" /> from the turning point, then use another point to find <InlineMath math="k" />.</li>
+                <li><strong>Root form <InlineMath math="y = k(x - p)(x - q)" />:</strong> read the roots <InlineMath math="p" /> and <InlineMath math="q" />, then use another point to find <InlineMath math="k" />.</li>
+              </ul>
+            </div>
+            <p><strong>The Golden Rule:</strong> match the information you are given to the right form — origin turning point means <InlineMath math="y = kx^2" />; a turning point elsewhere means vertex form; visible roots mean root form. Then substitute one more point to pin down <InlineMath math="k" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Sign of the roots in root form:</strong> a root at <InlineMath math="x = 3" /> gives a factor <InlineMath math="(x - 3)" />; a root at <InlineMath math="x = -3" /> gives <InlineMath math="(x + 3)" />.</li>
+                <li><strong>Turning-point sign:</strong> vertex form <InlineMath math="(x - a)^2" /> has its turning point at <InlineMath math="x = +a" />, not <InlineMath math="-a" />.</li>
+                <li><strong>Forgetting <InlineMath math="k" />:</strong> the shape can be stretched, so you must find <InlineMath math="k" /> from an extra point — don't assume it is 1.</li>
+                <li><strong>Reading the y-intercept as a root:</strong> the <InlineMath math="y" />-intercept is where <InlineMath math="x = 0" />; the roots are where <InlineMath math="y = 0" />.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "quad-graphs-ex1",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Identifying Features</strong></p>
+                <p>For the parabola <InlineMath math="y = x^2 - 2x - 8" />, state the shape, the <InlineMath math="y" />-intercept, and the roots.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The <InlineMath math="x^2" /> term is positive, so the parabola is a &ldquo;smile&rdquo; with a minimum.</p>
+                <p>Step 2: The constant term is <InlineMath math="-8" />, so the <InlineMath math="y" />-intercept is <InlineMath math="(0, -8)" />.</p>
+                <p>Step 3: For the roots, set <InlineMath math="y = 0" /> and factorise: <InlineMath math="x^2 - 2x - 8 = (x - 4)(x + 2) = 0" />.</p>
+                <p><strong>Answer:</strong> minimum parabola, <InlineMath math="y" />-intercept <InlineMath math="(0, -8)" />, roots at <InlineMath math="(4, 0)" /> and <InlineMath math="(-2, 0)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "quad-graphs-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Reading Vertex Form</strong></p>
+                <p>A parabola has equation <InlineMath math="y = 2(x - 4)^2 + 3" />. State the coordinates of its turning point, its nature, and the equation of its axis of symmetry.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Compare with <InlineMath math="y = a(x + p)^2 + q" />. Here <InlineMath math="p = -4" /> and <InlineMath math="q = 3" />, so the turning point <InlineMath math="(-p, q)" /> is <InlineMath math="(4, 3)" />.</p>
+                <p>Step 2: The coefficient <InlineMath math="a = 2" /> is positive, so the turning point is a <strong>minimum</strong>.</p>
+                <p><strong>Answer:</strong> minimum turning point <InlineMath math="(4, 3)" />, axis of symmetry <InlineMath math="x = 4" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "quad-graphs-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Equation of the form <InlineMath math="y = kx^2" /></strong></p>
+                <p>A parabola with equation <InlineMath math="y = kx^2" /> passes through the point <InlineMath math="(3, 18)" />. Find the value of <InlineMath math="k" /> and state the equation.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The turning point is at the origin, so the form is <InlineMath math="y = kx^2" />. Substitute the given point <InlineMath math="x = 3,\ y = 18" />:</p>
+                <BlockMath math="18 = k \times 3^2 = 9k" />
+                <p>Step 2: Solve for <InlineMath math="k" />: <InlineMath math="k = 2" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="k = 2" />, so the equation is <InlineMath math="y = 2x^2" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "quad-graphs-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (equation from the turning point)</strong></p>
+                <p>A parabola has turning point <InlineMath math="(3, -4)" /> and passes through the point <InlineMath math="(5, 8)" />. Determine its equation.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: A turning point away from the origin means vertex form <InlineMath math="y = k(x - a)^2 + b" /> with <InlineMath math="(a, b) = (3, -4)" />:</p>
+                <BlockMath math="y = k(x - 3)^2 - 4" />
+                <p>Step 2: Use the other point <InlineMath math="(5, 8)" /> to find <InlineMath math="k" />. Substitute <InlineMath math="x = 5,\ y = 8" />:</p>
+                <BlockMath math="8 = k(5 - 3)^2 - 4 \implies 8 = 4k - 4 \implies 4k = 12 \implies k = 3" />
+                <p><strong>Answer:</strong> <InlineMath math="y = 3(x - 3)^2 - 4" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "quad-graphs-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Equation from the roots</strong></p>
+                <p>A parabola cuts the <InlineMath math="x" />-axis at <InlineMath math="(-1, 0)" /> and <InlineMath math="(4, 0)" />, and passes through <InlineMath math="(0, -8)" />. Find its equation.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: With the roots visible, use root form <InlineMath math="y = k(x - p)(x - q)" />. Roots at <InlineMath math="-1" /> and <InlineMath math="4" /> give factors <InlineMath math="(x + 1)" /> and <InlineMath math="(x - 4)" />:</p>
+                <BlockMath math="y = k(x + 1)(x - 4)" />
+                <p>Step 2: Use the point <InlineMath math="(0, -8)" /> to find <InlineMath math="k" />:</p>
+                <BlockMath math="-8 = k(0 + 1)(0 - 4) = -4k \implies k = 2" />
+                <p><strong>Answer:</strong> <InlineMath math="y = 2(x + 1)(x - 4)" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "quadratics",
-        title: "Quadratics",
+        title: "Solving Quadratic Equations",
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
-              <h4 className="text-white font-semibold">Graphs</h4>
-              <p>A quadratic function contains a squared term (<InlineMath math="x^2" />) and no higher powers. Its graph creates a shape known as a parabola. You must be able to identify the nature (minimum/maximum), the coordinates of the turning point, and the equation of the axis of symmetry.</p>
-            </div>
-            <div>
               <h4 className="text-white font-semibold">Solving</h4>
-              <p>To calculate the roots (x-intercepts), set the equation to zero. Try to solve by factorising first. If that isn't possible, use the Quadratic Formula: <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />.</p>
+              <p>To calculate the roots, set the equation to zero. Try to solve by factorising first. If that isn't possible, use the Quadratic Formula: <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />.</p>
             </div>
             <div>
               <h4 className="text-white font-semibold">The Discriminant</h4>
@@ -1817,7 +1957,7 @@ export const national5MathsData: Section[] = [
                 <li><InlineMath math="b^2 - 4ac < 0" />: No real roots.</li>
               </ul>
             </div>
-            <p><strong>The Golden Rule:</strong> to solve, always make one side <strong>zero</strong> first, then factorise if you can and use the formula only if you cannot. To describe the roots without solving, evaluate the discriminant <InlineMath math="b^2 - 4ac" />. Reading a graph from vertex form <InlineMath math="y = a(x + p)^2 + q" />, the turning point is <InlineMath math="(-p, q)" />.</p>
+            <p><strong>The Golden Rule:</strong> to solve, always make one side <strong>zero</strong> first, then factorise if you can and use the formula only if you cannot. To describe the roots without solving, evaluate the discriminant <InlineMath math="b^2 - 4ac" />.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
@@ -1908,23 +2048,6 @@ export const national5MathsData: Section[] = [
               <div className="space-y-2">
                 <p>Step 1: Identify <InlineMath math="a = 2,\ b = 3,\ c = 4" /> and evaluate the discriminant <InlineMath math="b^2 - 4ac" />: <InlineMath math="3^2 - 4(2)(4) = 9 - 32 = -23" />.</p>
                 <p><strong>Answer:</strong> Since <InlineMath math="-23 < 0" />, the equation has <strong>no real roots</strong>.</p>
-              </div>
-            )
-          },
-          {
-            id: "quadratics-ex6",
-            question: (
-              <div className="space-y-2">
-                <p><strong>Reading a Parabola (vertex form)</strong></p>
-                <p>A parabola has equation <InlineMath math="y = 2(x - 4)^2 + 3" />. State the coordinates of its turning point, its nature, and the equation of its axis of symmetry.</p>
-              </div>
-            ),
-            solution: (
-              <div className="space-y-2">
-                <p>Step 1: Compare with <InlineMath math="y = a(x + p)^2 + q" />. Here <InlineMath math="p = -4" /> and <InlineMath math="q = 3" />, so the turning point <InlineMath math="(-p, q)" /> is <InlineMath math="(4, 3)" />.</p>
-                <p>Step 2: The coefficient <InlineMath math="a = 2" /> is positive, so the parabola opens upwards — the turning point is a <strong>minimum</strong>.</p>
-                <p>Step 3: The axis of symmetry is the vertical line through the turning point.</p>
-                <p><strong>Answer:</strong> minimum turning point <InlineMath math="(4, 3)" />, axis of symmetry <InlineMath math="x = 4" />.</p>
               </div>
             )
           },
