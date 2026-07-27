@@ -44,7 +44,7 @@ export const national5AppsData: Section[] = [
             <p>The SQA requires you to use your knowledge of rounding and estimation to check if your final answer makes logical sense in the context of the question. Always stop and ask yourself: "Does this answer seem sensible?"</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The Left-to-Right BODMAS Trap:</strong> The SQA frequently sets calculations that look tempting to read simply from left to right (e.g., <InlineMath math="27.2 - 4.6 \times 3 + 4.7" />). Candidates lose marks by ignoring the rule that multiplication must happen before addition and subtraction.</li>
                 <li><strong>The Decimal Alignment Trap:</strong> When subtracting a decimal from a whole number (e.g., <InlineMath math="30 - 14.26" />), candidates often forget to write the whole number as 30.00 to allow them to borrow correctly.</li>
@@ -145,7 +145,7 @@ export const national5AppsData: Section[] = [
             <p>Always check your final answer to see if the top and bottom numbers can be divided by a common factor.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Adding Denominators" Trap:</strong> A classic error under exam pressure is adding both the numerators AND the denominators together (e.g., deciding that <InlineMath math="\frac{1}{3} + \frac{1}{4} = \frac{2}{7}" />). You must find a common denominator first!</li>
                 <li><strong>The "Multiple Wholes" Trap:</strong> When a question states that someone bought 2 identical cakes or pizzas and gives you the fractions eaten from each, candidates frequently just add the fractions together and subtract from 1, completely forgetting that there were 2 wholes to begin with.</li>
@@ -258,7 +258,7 @@ export const national5AppsData: Section[] = [
             <p><strong>Without a calculator:</strong> Try to simplify the fraction or use equivalent fractions to multiply/divide the top and bottom until you obtain the number 100 on the bottom. The number left on the top is your percentage.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Original Value" Trap:</strong> In questions asking for percentage increase, decrease, profit, or loss, you always have to work out the percentage based on the original amount. Candidates frequently drop marks by successfully finding the difference in price, but then mistakenly dividing it by the new/selling price.</li>
                 <li><strong>The "Inefficient Route" Trap:</strong> In Paper 1, if you are asked to calculate <InlineMath math="33 \frac{1}{3}\%" /> or <InlineMath math="66 \frac{2}{3}\%" /> of an amount, do NOT attempt to find 1% and multiply. You are expected to spot the equivalence and simply divide the amount by 3 (and multiply by 2 for the latter).</li>
@@ -349,7 +349,7 @@ export const national5AppsData: Section[] = [
             <BlockMath math="\text{Original} \times \text{Multiplier}_1 \times {\text{Multiplier}_2}^{\text{Time}}" />
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The Year-by-Year Trap:</strong> Do not calculate the percentage for year 1, add it on, then calculate year 2, add it on, etc. SQA examiners actively advise against this because it consumes far too much exam time and frequently leads to arithmetic and premature rounding errors. Use a multiplier and a power!</li>
                 <li><strong>The Significant Figures Trap:</strong> Compound percentage questions almost always feature an instruction to round your final answer to a specific number of significant figures. You will lose the final mark if you ignore this. Always write down your unrounded answer from the calculator display first, then write your rounded answer underneath.</li>
@@ -462,7 +462,7 @@ export const national5AppsData: Section[] = [
             <p><strong>The Method:</strong> Multiply the two given numbers together to find the "total effort" (e.g., worker-hours). Then, divide this total by the new number of workers/machines to find the new time.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Direct vs. Inverse" Trap:</strong> Candidates frequently read an inverse proportion question (like workers building a wall) and treat it as direct proportion. If your calculation results in 6 workers taking longer to build a wall than 3 workers, you have fallen into the trap.</li>
                 <li><strong>The "Extra Workers" Trap:</strong> The SQA loves to state that a company sent "2 extra workers" to help with a job. Candidates frequently divide the total worker-hours by 2, completely forgetting that they must add the 2 extra workers to the original team first.</li>
@@ -568,7 +568,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Hidden Unrounded" Trap:</strong> This is one of the most common ways candidates drop marks across the entire paper. In multi-mark questions (like compound percentages), one mark is awarded for the unrounded answer, and the final mark is for the rounding. Skipping straight to the rounded answer loses both marks.</li>
                 <li><strong>The "Trailing Zero" Trap:</strong> When rounding to significant figures, candidates often incorrectly add .0 or .00 to the end of a whole number. For example, rounding 446.586 to 1 s.f. is 400, not 400.0.</li>
@@ -673,7 +673,7 @@ export const national5AppsData: Section[] = [
             <p>A bonus is an extra payment given for meeting targets. An allowance is a fixed amount of extra money given for a specific purpose (e.g., a uniform allowance or travel allowance). These simply get added to the Gross Pay.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Commission Threshold" Trap:</strong> The SQA frequently states an employee is paid a basic salary plus a percentage commission on sales over a specific amount (e.g., over £50,000). Candidates lose marks by calculating the percentage on the entire sales total instead of finding the difference first.</li>
                 <li><strong>The "Time Calculation" Trap:</strong> When working out overtime, the SQA will often give you a start time and a finish time, but hide a lunch break in the text. Candidates frequently forget to subtract the unpaid lunch break when calculating the total hours worked.</li>
@@ -781,7 +781,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Pre-Deduction" Trap:</strong> The SQA will often list the pension deduction first in the text, baiting you into subtracting it from the gross pay before calculating National Insurance. National insurance is always calculated on the gross pay before pension deductions are taken.</li>
                 <li><strong>The "Whole Salary" Trap:</strong> When calculating tax or National Insurance using bands, candidates often lose marks by applying the 12% rate to their entire salary, rather than just the slice of money that falls within that specific band.</li>
@@ -873,7 +873,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Incomplete Comparison" Trap:</strong> SQA Course Reports frequently highlight that candidates lose justification marks by only calculating the price for Shop A and Shop B, completely ignoring Shop C because it "looks" more expensive. You must write down a final total for all three.</li>
                 <li><strong>The "Rounding Down" Savings Trap:</strong> When finding the number of weeks required to save up, candidates often round using normal mathematical rules (e.g., rounding 12.3 down to 12). If you need 12.3 weeks of savings to afford a holiday, 12 weeks of saving will leave you short of money. You must round up!</li>
@@ -989,7 +989,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Wrong Operation" Trap:</strong> The most common error in exam conditions is dividing when you should multiply, or vice versa. Always do a quick logic check: if £1 gets you more than 1 unit of foreign currency (e.g. 150 Yen), your foreign amount should always be a much bigger number than your pounds.</li>
                 <li><strong>The "Forgetting to Subtract" Trap:</strong> In multi-stage holiday questions, candidates frequently convert the entire original amount into the second currency, completely forgetting to subtract the money the person actually spent on their first holiday.</li>
@@ -1106,7 +1106,7 @@ export const national5AppsData: Section[] = [
             <p>APR is a standardised calculation used to compare different loans and credit cards. Because it includes both the interest rate and any mandatory fees, looking for the lowest APRs is the most accurate way to find the true, overall cost of borrowing.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🖡 Common SQA Examiner Traps 🖡</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Interest vs Balance" Trap:</strong> When comparing a compound interest savings account with a fixed-interest bond, candidates frequently calculate the total balance for one option but only the interest gained for the other. Ensure you add the interest to the original investment for OptionB so you are comparing total value against total value.</li>
                 <li><strong>The "Year-by-Year" Trap:</strong> For compound interest over multiple years (e.g., 15 years), doing 15 lines of calculations is a massive trap that wastes time and causes rounding errors. Always use a multiplier and a power.</li>
@@ -1201,7 +1201,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Counting the Lines" Trap:</strong> When finding what a scale goes up in, candidates frequently count the physical dashes on the page instead of the "jumps" (gaps) between them, resulting in the wrong scale.</li>
                 <li><strong>The "Percentage of the Sample" Trap:</strong> In percentage tolerance questions, candidates occasionally calculate the percentage based on the measured sample weight rather than the target weight. Always calculate the percentage of the main target number.</li>
@@ -1309,7 +1309,7 @@ export const national5AppsData: Section[] = [
             <p>When using formulae like <InlineMath math="\text{BMI} = \frac{\text{Mass}}{\text{Height}^2}" />, you must remember your order of operations. The height must be squared before you divide the mass by it.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Unit Mismatch" Trap:</strong> This is the SQA's favourite trick in formula questions. For example, giving a patient's height in centimetres (e.g., 182 cm) but asking you to use a BMI formula that requires the height to be in metres. You must convert 182 cm to 1.82 m before substituting it in.</li>
                 <li><strong>The "Wrong Subject" Trap:</strong> A question gives you the Density and the Mass, but asks you to calculate the Volume. Candidates often just divide the first number by the second number blindly. Use your formula triangle to ensure you are doing the correct operation!</li>
@@ -1416,7 +1416,7 @@ export const national5AppsData: Section[] = [
             <p>Make sure your units match perfectly. If a question asks for a speed in kilometres per hour (km/h) but gives you the distance in miles, you must use a conversion factor (e.g., 1 mile = 1.609 km) to convert the distance before calculating the speed.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Decimal Time" Trap:</strong> Candidates frequently lose marks by writing 3 ½ hours as 3.30 hours in their calculator. It must be written as 3.5 hours.</li>
                 <li><strong>The "Hidden Stop" Trap:</strong> A question will describe a journey and provide the speed and distance, but embed a phrase like "she stopped for 50 minutes for breakfast" in the text. Candidates eagerly calculate the drive time but forget to include the break when calculating the final arrival/departure time.</li>
@@ -1526,7 +1526,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Forgotten Straight Edges" Trap:</strong> When finding the perimeter of a semi-circle, candidates often calculate the curve (<InlineMath math="\frac{1}{2}\pi d" />) and declare that the final answer, completely forgetting to add the straight diameter line closing the shape at the bottom.</li>
                 <li><strong>The "Internal Line" Trap:</strong> When finding the perimeter of two joined shapes (like a rectangle and a semi-circle), candidates often add up every single number on the diagram. You must ignore the internal lines where the shapes join; perimeter is strictly the outside border.</li>
@@ -1650,7 +1650,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Radius vs Diameter" Mix-Up:</strong> Candidates frequently substitute the full width (diameter) of a circular base directly into the formula. You must always halve the diameter to find the radius (r) before calculating the volume of a cylinder, cone, or sphere.</li>
                 <li><strong>The "Hidden Height" Trap:</strong> In composite solids (like a cone sitting on top of a hemisphere), the SQA will often give you the total height of the object rather than the specific height of the cone. You must subtract the radius of the hemisphere from the total height to find the true height of the cone before using the formula.</li>
@@ -1771,7 +1771,7 @@ export const national5AppsData: Section[] = [
             <p>Pythagoras questions almost always feature an instruction to round your final answer to a specific number of significant figures. You must write down the full, unrounded decimal from your calculator display before you write your rounded answer.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Wrong Dimensions" Trap:</strong> The 2024 SQA Course Report explicitly noted that while most candidates knew to use Pythagoras, many lost marks because they did not identify the correct dimensions from the diagram. When a boat sails from A to B, you must add the distances together to find the full length of the new triangle's base before calculating the hypotenuse.</li>
                 <li><strong>The "Premature Rounding" Trap:</strong> When finding a shared side between two triangles, do not round the length of the shared side to 1 or 2 decimal places. Keep the exact square root in your calculator for the second stage to prevent compounding rounding errors.</li>
@@ -1886,7 +1886,7 @@ export const national5AppsData: Section[] = [
             <p>When asked to determine which slope is steeper, calculate the gradient for both. The slope with the larger numerical value is the steeper slope.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Unit Mismatch" Trap:</strong> This is the most prevalent trap in the entire course. A question will give the vertical height in millimetres (e.g., 850 mm) and the horizontal base in centimetres (e.g., 165 cm). If you divide 850 by 165 without converting the units to match first, you will lose the majority of the marks.</li>
                 <li><strong>The "Sloping Edge" Trap:</strong> The SQA will occasionally label the diagonal, slanted length of the slope on the diagram instead of the horizontal base. You must use Pythagoras' Theorem first to calculate the horizontal distance across the bottom before you can calculate the gradient.</li>
@@ -2000,7 +2000,7 @@ export const national5AppsData: Section[] = [
             <p>If you need to find a suitable time for a phone call between two different time zones, draw a timeline for both countries to find the overlapping hours where both people are awake and available.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Double Conversion" Trap:</strong> Candidates frequently try to change the time zone of the departure time, then add the flight time, then get confused about which time zone they are currently in. Always stick to the starting location's time for the whole journey, and apply the time zone shift right at the end.</li>
                 <li><strong>The "AM/PM" Trap:</strong> The SQA will penalise you for omitting "am" or "pm" from 12-hour times. If you use a 24-hour clock (e.g., 14:15), you do not need am/pm, but 12-hour times must include it.</li>
@@ -2068,7 +2068,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Return Journey Bearing" Trap:</strong> The SQA's 2024 Course Report explicitly highlighted that for the return journey, "Most candidates did not measure the bearing of the return journey. Of those who did, few stated the angle as a three-figure bearing." You must ensure your final answer has three digits!</li>
                 <li><strong>The "Incomplete Diagram" Trap:</strong> Both the 2024 and 2025 SQA Course Reports state that while many candidates successfully calculate the scaled lengths in centimetres, "Few candidates accurately constructed a diagram of the entire course." You must follow through and actually draw every single leg of the journey with a ruler and protractor to secure the marks.</li>
@@ -2153,7 +2153,7 @@ export const national5AppsData: Section[] = [
             <p>If the question allows the boxes to be rotated, you must test at least two different arrangements (orientations) of the length and breadth to see which one fits more boxes inside. However, if a box has a "THIS WAY UP" symbol or must be placed with a "label facing upwards", the height of the small box is permanently locked and cannot be rotated.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "One Orientation Only" Trap:</strong> If there are no restrictions on how a box is packed, you must calculate multiple orientations. The SQA notes that many candidates lose marks by only attempting to find the number of boxes for a single orientation.</li>
                 <li><strong>The "Unit Mismatch" Trap:</strong> The internal dimensions of a shipping crate are often given in metres (e.g., 4.10 m), while the small boxes are given in centimetres (e.g., 60 cm). You must convert the metres into centimetres before dividing.</li>
@@ -2219,7 +2219,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Adding Everything" Trap:</strong> The SQA frequently reports that candidates simply take the column of times in the table and add them all together to calculate a total time. Because many tasks are done simultaneously (at the same time by different people), adding all numbers together is completely wrong. You must only sum the paths!</li>
                 <li><strong>The "Missing Node" Trap:</strong> When building the diagram, candidates often miss tasks that have multiple prerequisites (e.g., Task G relies on both C and F). Make sure your box for G has arrows coming from both C and F.</li>
@@ -2319,7 +2319,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "On Average Spread" Trap:</strong> The 2025 SQA Course Report highlights that when asked to compare interquartile ranges, many candidates incorrectly write responses that include "on average". You must completely avoid the phrase "on average" when making your second comment about standard deviation or the IQR.</li>
                 <li><strong>The "Unordered Data" Trap:</strong> Candidates frequently rush to find the middle number of the list exactly as it is printed on the exam paper. If you do not rearrange the raw data into ascending order first, your median and quartiles will be completely wrong.</li>
@@ -2439,7 +2439,7 @@ export const national5AppsData: Section[] = [
             <p>Compound (or comparative) bar graphs allow you to compare like-for-like data side-by-side using two or more sets of bars on the same axes.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Percentages instead of Angles" Trap:</strong> When asked to construct a pie chart, candidates frequently divide the amount by the total and multiply by 100. This calculates a percentage, not an angle! You cannot draw a 25% slice with a protractor; you must multiply by 360 to find the <InlineMath math="90^\circ" /> angle.</li>
                 <li><strong>The "Dot-to-Dot" Trap:</strong> When asked to draw a line of best fit, candidates sometimes join all the individual points together in a zig-zag pattern using their ruler. A line of best fit must be a single, continuous, straight line that slices through the middle of the data.</li>
@@ -2558,7 +2558,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "On Average" Spread Trap:</strong> SQA Course Reports repeatedly highlight that candidates lose marks by writing "on average, the scores were more varied". Standard deviation and IQR are measures of spread, not averages. You must completely avoid the word "average" in your second comment.</li>
                 <li><strong>The "Lack of Context" Trap:</strong> Writing a comment like "Group A is higher than Group B" or "The mean is higher" scores zero marks. You must explicitly mention the real-life subject you are comparing (e.g., "The average price of lambs was higher in September").</li>
@@ -2659,7 +2659,7 @@ export const national5AppsData: Section[] = [
             <p>If asked to determine which of two different games offers a higher chance of winning, you must calculate the probability for both. Because fractions with different denominators (e.g., <InlineMath math="\frac{18}{150}" /> and <InlineMath math="\frac{5}{36}" />) are hard to compare directly, you should convert both fractions into decimals or percentages to make a valid, justified conclusion.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Common SQA Examiner Traps 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Lottery Bonus Ball" Trap:</strong> In a lottery draw where balls are not replaced, candidates frequently forget to subtract the drawn balls from the total. If 6 balls have been drawn from a machine of 49, the denominator for the 7th ball is 43, not 49. Furthermore, you must actively check if any of the balls already drawn fit the criteria for your next draw, as this reduces your numerator!</li>
                 <li><strong>The "Expected vs Actual" Mix-Up:</strong> When asked if an event happened "more or less than expected", candidates sometimes perform the calculation but fail to write the final conclusion sentence. If your expected value is 16.1, and the actual value was 15, you must write "Less than expected because 15 &lt; 16.1" to secure the final mark.</li>
