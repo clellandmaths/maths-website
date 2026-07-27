@@ -2524,45 +2524,35 @@ export const national5AppsData: Section[] = [
       },
       {
         id: "interpreting-data",
-        title: "Interpreting Graphical Data",
+        title: "Interpreting Graphs & Tables",
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> When making statistical comparisons, you must explicitly state what you are comparing in context (e.g., "The number of visitors..."). Furthermore, you must never use the phrase "on average" when comparing the standard deviation or interquartile range.</p>
+            <p>This skill is about <em>reading</em> data that is given to you — in graphs and tables — and using it to answer questions and make decisions. It is the reverse of the &ldquo;Statistical Diagrams&rdquo; topic, which is about <em>constructing</em> them.</p>
 
-            <h4 className="text-white font-semibold">1. Comparing Statistics (Means and Spread)</h4>
-            <p>In the exam, you will frequently be given the mean and the standard deviation (or interquartile range) for two different groups and asked to make two valid comparisons.</p>
+            <h4 className="text-white font-semibold">1. Reading a Graph</h4>
+            <p>Before extracting anything, check four things: the <strong>title/text</strong> (what the graph is about), the <strong>scale</strong> on each axis, the <strong>key</strong> (for compound or comparative charts), and the overall <strong>trend</strong>. Typical questions ask you to:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
-              <li><strong>Comment 1 (The Average):</strong> Compare the Mean or Median. You must state which group is higher/lower and link it directly to the context. (Example: "On average, the temperature in the restaurant fridge was higher than the café fridge.")</li>
-              <li><strong>Comment 2 (The Spread):</strong> Compare the Standard Deviation (SD) or Interquartile Range (IQR). These measure how spread out the data is.</li>
-              <ul className="list-disc list-inside space-y-1 ml-8">
-                <li>A higher SD/IQR means the data is more varied (or more spread out).</li>
-                <li>A lower SD/IQR means the data is less varied (or more consistent).</li>
-              </ul>
-              <li>(Example: "The temperatures in the restaurant fridge were more consistent because the standard deviation was lower.")</li>
+              <li>state a specific total, or the most / least popular option;</li>
+              <li>express a value as a fraction or percentage of the total;</li>
+              <li>scale a total up (e.g. from one hour to a whole day or week);</li>
+              <li>make a fair comparison and choose the best or worst option.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Scatter Graphs & Lines of Best Fit</h4>
-            <p>A scatter graph plots two different variables to see if there is a relationship (correlation) between them.</p>
-            <ul className="list-disc list-inside space-y-1 ml-4">
-              <li><strong>Line of Best Fit:</strong> This is a single, straight line drawn with a ruler through the middle of the plotted points. It should follow the general trend of the data, with roughly an equal number of points above and below the line.</li>
-              <li><strong>Estimating:</strong> You will often be asked to use your line of best fit to estimate a value. Draw a line up from the x-axis to your line of best fit, and then across to the y-axis to read the corresponding value.</li>
-            </ul>
+            <h4 className="text-white font-semibold">2. Reading a Table</h4>
+            <p>Tables (price lists, timetables, tax bands, exchange rates) pack a lot of information into rows and columns. Find the correct cell, combine the values the question needs, and watch for conditions written in the small print (e.g. &ldquo;a stay crossing into a second month is charged at the higher rate&rdquo;).</p>
 
-            <h4 className="text-white font-semibold">3. Pie Charts</h4>
-            <p>A pie chart represents data as slices of a full <InlineMath math="360^\circ" /> circle.</p>
-            <ul className="list-disc list-inside space-y-1 ml-4">
-              <li><strong>Calculating Angles:</strong> Add up all the values to find the total. For each category, divide its value by the total, then multiply by 360.</li>
-              <li><strong>Formula:</strong> <InlineMath math="\frac{\text{Amount}}{\text{Total}} \times 360^\circ" />.</li>
-              <li><strong>Interpreting Slices:</strong> If you are given the angle and the total number of people, you can work backwards. Divide the angle by 360 and multiply by the total number of people.</li>
-            </ul>
+            <h4 className="text-white font-semibold">3. Justifying a Decision</h4>
+            <p>Applications questions often ask you to <strong>choose</strong> the better option and <strong>justify</strong> it with the numbers. A choice without a supporting calculation earns no marks — always show the comparison.</p>
 
+            <p><strong>The Golden Rule:</strong> compare <em>like for like</em>. If one figure is a percentage, convert the others to percentages too; if amounts cover different time periods or group sizes, put them on the same footing before you compare. And read the scale and key <em>first</em> — two graphs drawn the same size can use very different scales.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "On Average" Spread Trap:</strong> SQA Course Reports repeatedly highlight that candidates lose marks by writing "on average, the scores were more varied". Standard deviation and IQR are measures of spread, not averages. You must completely avoid the word "average" in your second comment.</li>
-                <li><strong>The "Lack of Context" Trap:</strong> Writing a comment like "Group A is higher than Group B" or "The mean is higher" scores zero marks. You must explicitly mention the real-life subject you are comparing (e.g., "The average price of lambs was higher in September").</li>
-                <li><strong>The "Dot-to-Dot" Trap:</strong> When asked to draw a line of best fit on a scatter graph, candidates sometimes connect the dots together in a zigzag pattern. A line of best fit must be a single, continuous straight line.</li>
+                <li><strong>Different scales:</strong> when comparing two graphs, a taller bar does not always mean a bigger value — check the axis scale on each.</li>
+                <li><strong>Raw number vs proportion:</strong> &ldquo;most visitors&rdquo; and &ldquo;highest proportion of visitors&rdquo; are different questions — decide which is being asked.</li>
+                <li><strong>Table small print:</strong> a condition hidden in the text (a surcharge, a minimum, a different rate) is usually the key to the marks.</li>
+                <li><strong>Justify with numbers:</strong> stating which option is better without the calculation to back it up scores nothing.</li>
               </ul>
             </div>
           </div>
@@ -2572,17 +2562,23 @@ export const national5AppsData: Section[] = [
             id: "interpreting-ex1",
             question: (
               <div className="space-y-2">
-                <p>The prices of lambs sold in September were recorded. The mean price was £70.50 and the standard deviation was £2.60.</p>
-                <p>The price of lambs sold in August was also recorded. The mean price was £70.20 and the standard deviation was £3.85.</p>
-                <p>Make two valid comparisons about the prices of lambs in August and September. (2 marks)</p>
+                <p><strong>Reading a Comparative Chart</strong></p>
+                <p>A shopping centre recorded, over one hour, how many people entered each of three cafés and how many of them bought a hot drink:</p>
+                <ul className="list-disc list-inside ml-4">
+                  <li>Café A: 60 visitors, 45 bought a hot drink</li>
+                  <li>Café B: 50 visitors, 20 bought a hot drink</li>
+                  <li>Café C: 40 visitors, 26 bought a hot drink</li>
+                </ul>
+                <p>(a) Which café was busiest? (b) Café C claims it had the highest <em>proportion</em> of visitors buying a hot drink. Is this correct? (c) If Café A keeps this rate over a 10-hour day, how many visitors would it expect?</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1 (Compare the means):</strong> September's mean (£70.50) is higher than August's mean (£70.20).</p>
-                <p><strong>Valid Comment 1:</strong> "On average, the price of lambs sold in September was higher than in August."</p>
-                <p><strong>Step 2 (Compare the standard deviations):</strong> September's SD (£2.60) is lower than August's SD (£3.85). Lower SD means more consistent.</p>
-                <p><strong>Valid Comment 2:</strong> "The prices of lambs sold in September were more consistent than in August because the standard deviation is lower."</p>
+                <p><strong>(a)</strong> Busiest means the most visitors: Café A, with 60.</p>
+                <p><strong>(b)</strong> &ldquo;Proportion&rdquo; means compare like for like as percentages:</p>
+                <BlockMath math="A = \tfrac{45}{60} = 75\%, \quad B = \tfrac{20}{50} = 40\%, \quad C = \tfrac{26}{40} = 65\%" />
+                <p>Café A has the highest proportion (75%), so Café C's claim is <strong>incorrect</strong>.</p>
+                <p><strong>(c)</strong> Scale the one-hour figure up: <InlineMath math="60 \times 10 = 600" /> visitors.</p>
               </div>
             )
           },
@@ -2590,26 +2586,21 @@ export const national5AppsData: Section[] = [
             id: "interpreting-ex2",
             question: (
               <div className="space-y-2">
-                <p>A survey was conducted into favourite pie fillings. The results were:</p>
+                <p><strong>Reading a Price Table</strong></p>
+                <p>A campsite charges the following per night (£). Each extra adult beyond those included costs £8 per night.</p>
                 <ul className="list-disc list-inside ml-4">
-                  <li>80 people for apple</li>
-                  <li>40 people for cherry</li>
-                  <li>60 people for lemon</li>
+                  <li>Low season — Tent £18, Caravan £30, Lodge £55</li>
+                  <li>High season — Tent £26, Caravan £42, Lodge £78</li>
                 </ul>
-                <p>Calculate the angles required to construct a pie chart to illustrate this information. (3 marks)</p>
+                <p>(a) What is the cost of a caravan for 4 nights in low season? (b) A group books a lodge for 3 nights in high season, with 1 extra adult. What is the total cost?</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Calculate the total number of people surveyed.</p>
-                <BlockMath math="80 + 40 + 60 = 180 \text{ people}" />
-                <p><strong>Step 2:</strong> Calculate the angle for Apple.</p>
-                <BlockMath math="\frac{80}{180} \times 360^\circ = 160^\circ" />
-                <p><strong>Step 3:</strong> Calculate the angle for Cherry.</p>
-                <BlockMath math="\frac{40}{180} \times 360^\circ = 80^\circ" />
-                <p><strong>Step 4:</strong> Calculate the angle for Lemon.</p>
-                <BlockMath math="\frac{60}{180} \times 360^\circ = 120^\circ" />
-                <p>(Self-Check: <InlineMath math="160^\circ + 80^\circ + 120^\circ = 360^\circ" />. The student would then use a protractor to accurately draw these slices).</p>
+                <p><strong>(a)</strong> Read the low-season caravan rate (£30) and multiply by the nights:</p>
+                <BlockMath math="30 \times 4 = £120" />
+                <p><strong>(b)</strong> Lodge at the high-season rate for 3 nights, plus the extra adult at £8 per night:</p>
+                <BlockMath math="(78 \times 3) + (8 \times 3) = 234 + 24 = £258" />
               </div>
             )
           },
@@ -2617,16 +2608,17 @@ export const national5AppsData: Section[] = [
             id: "interpreting-ex3",
             question: (
               <div className="space-y-2">
-                <p>Harris recorded the time his commute took depending on his departure time. He plots the data on a scatter graph and draws a straight line of best fit.</p>
-                <p>Tomorrow, Harris plans to depart at 7:55 am.</p>
-                <p>Explain how he would use his line of best fit to estimate his journey time. (1 mark)</p>
+                <p><strong>🎯 Exam-style (justify a decision)</strong></p>
+                <p>A customer wants to join a gym for 8 months. FitZone charges a £25 joining fee plus £20 per month. FlexFit has no joining fee but charges £24 per month. Which gym is cheaper over the 8 months, and by how much? Justify your answer.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p><strong>Step 1:</strong> Locate 7:55 am on the horizontal x-axis (Departure Time).</p>
-                <p><strong>Step 2:</strong> Draw a straight vertical line upwards from 7:55 am until it hits the drawn line of best fit.</p>
-                <p><strong>Step 3:</strong> From that exact point on the line of best fit, draw a straight horizontal line across to the vertical y-axis to read the estimated journey time in minutes.</p>
+                <p><strong>Step 1:</strong> Work out the full cost of each — do not compare the monthly rates alone, because of the joining fee.</p>
+                <BlockMath math="\text{FitZone} = 25 + (20 \times 8) = 25 + 160 = £185" />
+                <BlockMath math="\text{FlexFit} = 24 \times 8 = £192" />
+                <p><strong>Step 2:</strong> Compare and state the difference:</p>
+                <p><strong>Answer:</strong> FitZone is cheaper, by <InlineMath math="192 - 185 = £7" /> over the 8 months.</p>
               </div>
             )
           }
