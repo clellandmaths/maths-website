@@ -2003,7 +2003,7 @@ export const national5AppsData: Section[] = [
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Double Conversion" Trap:</strong> Candidates frequently try to change the time zone of the departure time, then add the flight time, then get confused about which time zone they are currently in. Always stick to the starting location's time for the whole journey, and apply the time zone shift right at the end.</li>
-                <li><strong>The "AM/PM" Trap:</strong> The SQA will penalise you for omitting "am" or "pm" from 12-hour times. If you use a 24-hour clock (e.g., 14:15), you do not need am/pm, but 12-hour times must include it.</li>
+                <li><strong>The "AM/PM" Trap:</strong> you will be penalised for omitting "am" or "pm" from 12-hour times. If you use a 24-hour clock (e.g., 14:15), you do not need am/pm, but 12-hour times must include it.</li>
               </ul>
             </div>
           </div>
@@ -2070,8 +2070,8 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Return Journey Bearing" Trap:</strong> The SQA's 2024 Course Report explicitly highlighted that for the return journey, "Most candidates did not measure the bearing of the return journey. Of those who did, few stated the angle as a three-figure bearing." You must ensure your final answer has three digits!</li>
-                <li><strong>The "Incomplete Diagram" Trap:</strong> Both the 2024 and 2025 SQA Course Reports state that while many candidates successfully calculate the scaled lengths in centimetres, "Few candidates accurately constructed a diagram of the entire course." You must follow through and actually draw every single leg of the journey with a ruler and protractor to secure the marks.</li>
+                <li><strong>The "Return Journey Bearing" Trap:</strong> a common mistake on the return journey is not measuring its bearing at all, or measuring it but not stating the angle as a three-figure bearing. You must ensure your final answer has three digits!</li>
+                <li><strong>The "Incomplete Diagram" Trap:</strong> a common mistake is to calculate the scaled lengths in centimetres correctly but then fail to construct a diagram of the entire course. You must follow through and actually draw every single leg of the journey with a ruler and protractor to secure the marks.</li>
                 <li><strong>The "Missing North Line" Trap:</strong> Candidates frequently try to measure the second bearing using the angle of the previous line they just drew. You must draw a completely new, straight-up North line at the end of leg 1 before measuring the angle for leg 2.</li>
               </ul>
             </div>
@@ -2155,7 +2155,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "One Orientation Only" Trap:</strong> If there are no restrictions on how a box is packed, you must calculate multiple orientations. The SQA notes that many candidates lose marks by only attempting to find the number of boxes for a single orientation.</li>
+                <li><strong>The "One Orientation Only" Trap:</strong> If there are no restrictions on how a box is packed, you must calculate multiple orientations. Many candidates lose marks by only attempting to find the number of boxes for a single orientation.</li>
                 <li><strong>The "Unit Mismatch" Trap:</strong> The internal dimensions of a shipping crate are often given in metres (e.g., 4.10 m), while the small boxes are given in centimetres (e.g., 60 cm). You must convert the metres into centimetres before dividing.</li>
               </ul>
             </div>
@@ -2221,7 +2221,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Adding Everything" Trap:</strong> The SQA frequently reports that candidates simply take the column of times in the table and add them all together to calculate a total time. Because many tasks are done simultaneously (at the same time by different people), adding all numbers together is completely wrong. You must only sum the paths!</li>
+                <li><strong>The "Adding Everything" Trap:</strong> a frequent error is to simply take the column of times in the table and add them all together to calculate a total time. Because many tasks are done simultaneously (at the same time by different people), adding all numbers together is completely wrong. You must only sum the paths!</li>
                 <li><strong>The "Missing Node" Trap:</strong> When building the diagram, candidates often miss tasks that have multiple prerequisites (e.g., Task G relies on both C and F). Make sure your box for G has arrows coming from both C and F.</li>
               </ul>
             </div>
