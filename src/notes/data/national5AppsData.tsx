@@ -646,7 +646,7 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The SQA constantly tests your ability to read the fine print in income questions. Before calculating commission, you must always check if the percentage is applied to total sales or only on sales over a certain amount.</p>
+            <p><strong>The Golden Rule:</strong> income questions constantly test your ability to read the fine print. Before calculating commission, you must always check if the percentage is applied to total sales or only on sales over a certain amount.</p>
 
             <h4 className="text-white font-semibold">1. Gross Pay vs. Net Pay</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -675,8 +675,8 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Commission Threshold" Trap:</strong> The SQA frequently states an employee is paid a basic salary plus a percentage commission on sales over a specific amount (e.g., over £50,000). Candidates lose marks by calculating the percentage on the entire sales total instead of finding the difference first.</li>
-                <li><strong>The "Time Calculation" Trap:</strong> When working out overtime, the SQA will often give you a start time and a finish time, but hide a lunch break in the text. Candidates frequently forget to subtract the unpaid lunch break when calculating the total hours worked.</li>
+                <li><strong>The "Commission Threshold" Trap:</strong> a common question states an employee is paid a basic salary plus a percentage commission on sales over a specific amount (e.g., over £50,000). Candidates lose marks by calculating the percentage on the entire sales total instead of finding the difference first.</li>
+                <li><strong>The "Time Calculation" Trap:</strong> when working out overtime, a question will often give you a start time and a finish time, but hide a lunch break in the text. Candidates frequently forget to subtract the unpaid lunch break when calculating the total hours worked.</li>
                 <li><strong>The "Gross vs Net" Mix-Up:</strong> Candidates often perform complex tax deductions perfectly but forget that the question only asked for Gross Pay, wasting time and losing the final mark. Always double-check which one you are being asked to find.</li>
               </ul>
             </div>
@@ -760,10 +760,10 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The SQA frequently tests your ability to follow the exact sequence of deductions. You must remember that National Insurance is always calculated on a person’s salary before deductions such as pension contributions.</p>
+            <p><strong>The Golden Rule:</strong> deductions questions test your ability to follow the exact sequence. You must remember that National Insurance is always calculated on a person’s salary before deductions such as pension contributions.</p>
 
             <h4 className="text-white font-semibold">1. National Insurance & Tax Bands</h4>
-            <p>Income Tax and National Insurance are rarely calculated as a simple, single percentage. Instead, the SQA provides tables with thresholds or "bands".</p>
+            <p>Income Tax and National Insurance are rarely calculated as a simple, single percentage. Instead, you are given tables with thresholds or "bands".</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Up to the first threshold:</strong> You pay 0%.</li>
               <li><strong>The middle band (e.g., 12%):</strong> You only pay this percentage on the portion of your salary that falls between the two stated values. To find this, subtract the lower number from your salary (or from the upper limit, if your salary exceeds it).</li>
@@ -783,7 +783,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Pre-Deduction" Trap:</strong> The SQA will often list the pension deduction first in the text, baiting you into subtracting it from the gross pay before calculating National Insurance. National insurance is always calculated on the gross pay before pension deductions are taken.</li>
+                <li><strong>The "Pre-Deduction" Trap:</strong> a question will often list the pension deduction first in the text, baiting you into subtracting it from the gross pay before calculating National Insurance. National Insurance is always calculated on the gross pay before pension deductions are taken.</li>
                 <li><strong>The "Whole Salary" Trap:</strong> When calculating tax or National Insurance using bands, candidates often lose marks by applying the 12% rate to their entire salary, rather than just the slice of money that falls within that specific band.</li>
                 <li><strong>The "4 Weeks in a Month" Trap:</strong> If a question asks you to convert between weekly and monthly pay, do not multiply or divide by 4. You must always use the annual figure as a bridge (multiply by 52 weeks, then divide by 12 months, or vice versa).</li>
               </ul>
@@ -875,7 +875,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Incomplete Comparison" Trap:</strong> SQA Course Reports frequently highlight that candidates lose justification marks by only calculating the price for Shop A and Shop B, completely ignoring Shop C because it "looks" more expensive. You must write down a final total for all three.</li>
+                <li><strong>The "Incomplete Comparison" Trap:</strong> a common way to lose justification marks is by only calculating the price for Shop A and Shop B, completely ignoring Shop C because it "looks" more expensive. You must write down a final total for all three.</li>
                 <li><strong>The "Rounding Down" Savings Trap:</strong> When finding the number of weeks required to save up, candidates often round using normal mathematical rules (e.g., rounding 12.3 down to 12). If you need 12.3 weeks of savings to afford a holiday, 12 weeks of saving will leave you short of money. You must round up!</li>
                 <li><strong>The "Missing Conclusion" Trap:</strong> Candidates often do all the complex calculations perfectly, but fail to write a final sentence stating clearly which shop/deal is the cheapest. The final mark is always for communication.</li>
               </ul>
@@ -980,7 +980,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <h4 className="text-white font-semibold">3. Multi-stage Trip Calculations</h4>
-            <p>A classic SQA 4-mark question involves a person travelling to Country A, spending some of their money over several days, and then converting the leftover money for a trip to Country B.</p>
+            <p>A classic 4-mark question involves a person travelling to Country A, spending some of their money over several days, and then converting the leftover money for a trip to Country B.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Convert the original budget into Currency A.</li>
               <li>Calculate their total spending and subtract it from their Currency A total.</li>
