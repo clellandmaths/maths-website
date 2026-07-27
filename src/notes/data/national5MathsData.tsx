@@ -3129,6 +3129,16 @@ export const national5MathsData: Section[] = [
               <li><strong>c:</strong> Phase Angle (translation left or right).</li>
               <li><strong>d:</strong> Vertical Shift (translation up or down).</li>
             </ul>
+            <p><strong>The Golden Rule:</strong> read the four numbers off a graph like this — <InlineMath math="a = \frac{\text{max} - \text{min}}{2}" /> (amplitude), <InlineMath math="d = \frac{\text{max} + \text{min}}{2}" /> (the midline), <InlineMath math="b" /> is the number of complete waves in <InlineMath math="360^\circ" />, and <InlineMath math="c" /> is the horizontal shift.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>b is cycles, not period:</strong> if the wave repeats every <InlineMath math="120^\circ" /> then <InlineMath math="b = 360 \div 120 = 3" />.</li>
+                <li><strong>Shift direction:</strong> <InlineMath math="(x + c)" /> shifts the graph <em>left</em>, <InlineMath math="(x - c)" /> shifts it <em>right</em> — the opposite of the sign.</li>
+                <li><strong>Amplitude is half:</strong> the amplitude is half the total height between max and min, not the whole height.</li>
+                <li><strong>Max/min of the shape:</strong> a plain <InlineMath math="\cos" /> graph has its maximum at <InlineMath math="0^\circ" /> and minimum at <InlineMath math="180^\circ" />; scale and shift from there.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3173,6 +3183,23 @@ export const national5MathsData: Section[] = [
                 <p>Answer: <InlineMath math="a = 45" />.</p>
               </div>
             )
+          },
+          {
+            id: "trig-graphs-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (turning point)</strong></p>
+                <p>The graph of <InlineMath math="y = 2\cos(x - 30)^\circ" /> has a minimum turning point at A. State the coordinates of A.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: A cosine graph reaches its minimum when the angle inside equals <InlineMath math="180^\circ" />. So set <InlineMath math="x - 30 = 180" />:</p>
+                <BlockMath math="x = 210" />
+                <p>Step 2: The amplitude is 2, so the minimum value of <InlineMath math="y" /> is <InlineMath math="-2" />.</p>
+                <p><strong>Answer:</strong> A is <InlineMath math="(210, -2)" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -3184,6 +3211,16 @@ export const national5MathsData: Section[] = [
           <div className="space-y-4 text-slate-300">
             <p>You must be able to solve trigonometric equations for a given domain (usually <InlineMath math="0^\circ \le x \le 360^\circ" />).</p>
             <p>There are usually two solutions. The CAST diagram (or the symmetry of trigonometric graphs) is used to find the related angles in different quadrants depending on whether the trig ratio is positive or negative.</p>
+            <p><strong>The Golden Rule:</strong> first rearrange to get <InlineMath math="\sin x" />, <InlineMath math="\cos x" /> or <InlineMath math="\tan x" /> on its own. Take the inverse of the <em>positive</em> value to get the base angle, then use the sign to decide which two quadrants (via CAST) the solutions fall in.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Base angle from the positive value:</strong> always take <InlineMath math="\sin^{-1}" /> etc. of the <em>positive</em> number, then place the answers using the sign.</li>
+                <li><strong>Which quadrants:</strong> positive sine → Q1 &amp; Q2; negative cosine → Q2 &amp; Q3; positive tan → Q1 &amp; Q3, and so on. CAST keeps this straight.</li>
+                <li><strong>Both solutions:</strong> the domain <InlineMath math="0^\circ" /> to <InlineMath math="360^\circ" /> almost always gives two answers — don't stop at one.</li>
+                <li><strong>Rearrange fully first:</strong> deal with the number in front and the constant before touching the inverse function.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3253,6 +3290,16 @@ export const national5MathsData: Section[] = [
             <BlockMath math="\sin^2 x + \cos^2 x = 1" />
             <BlockMath math="\tan x = \frac{\sin x}{\cos x}" />
             <p><strong>Crucial Note:</strong> These formulas are not given on the exam formula sheet and must be memorised.</p>
+            <p><strong>The Golden Rule:</strong> two moves solve almost everything — replace <InlineMath math="\tan x" /> with <InlineMath math="\frac{\sin x}{\cos x}" />, and swap <InlineMath math="\sin^2 x + \cos^2 x" /> for <InlineMath math="1" /> (or the rearrangements <InlineMath math="\sin^2 x = 1 - \cos^2 x" /> and <InlineMath math="\cos^2 x = 1 - \sin^2 x" />). Always show the working — these questions carry a &ldquo;show your working&rdquo; instruction.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Notation:</strong> <InlineMath math="\sin^2 x" /> means <InlineMath math="(\sin x)^2" />, not <InlineMath math="\sin(x^2)" />.</li>
+                <li><strong>Same angle:</strong> the identity <InlineMath math="\sin^2 x + \cos^2 x = 1" /> only applies when both terms have the <em>same</em> angle.</li>
+                <li><strong>Expanding a square:</strong> <InlineMath math="(\sin x + \cos x)^2" /> is a double bracket — it has a middle term <InlineMath math="2\sin x\cos x" />, it is not <InlineMath math="\sin^2 x + \cos^2 x" />.</li>
+                <li><strong>Show working:</strong> a correct final answer with no steps can still lose marks here.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3303,6 +3350,41 @@ export const national5MathsData: Section[] = [
                 <p>Step 2: Substitute the identity <InlineMath math="\tan x = \frac{\sin x}{\cos x}" />:</p>
                 <BlockMath math="\left(\frac{\sin x}{\cos x}\right)^2 = \tan^2 x" />
                 <p>Answer: <InlineMath math="\tan^2 x" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "trig-id-ex4",
+            question: (
+              <div className="space-y-2">
+                <p>Expand and simplify <InlineMath math="(\sin x + \cos x)^2" />. Show your working.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Expand the double bracket, just like any binomial square:</p>
+                <BlockMath math="\sin^2 x + 2\sin x\cos x + \cos^2 x" />
+                <p>Step 2: Group the two squared terms and use <InlineMath math="\sin^2 x + \cos^2 x = 1" />:</p>
+                <BlockMath math="(\sin^2 x + \cos^2 x) + 2\sin x\cos x = 1 + 2\sin x\cos x" />
+                <p><strong>Answer:</strong> <InlineMath math="1 + 2\sin x\cos x" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "trig-id-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (express in a given form)</strong></p>
+                <p>Express <InlineMath math="3\cos^2 x - 1" /> in the form <InlineMath math="a + b\sin^2 x" />. Show your working.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The target form uses <InlineMath math="\sin^2 x" />, so replace <InlineMath math="\cos^2 x" /> using <InlineMath math="\cos^2 x = 1 - \sin^2 x" />:</p>
+                <BlockMath math="3(1 - \sin^2 x) - 1" />
+                <p>Step 2: Expand and collect the constant terms:</p>
+                <BlockMath math="3 - 3\sin^2 x - 1 = 2 - 3\sin^2 x" />
+                <p><strong>Answer:</strong> <InlineMath math="2 - 3\sin^2 x" />, so <InlineMath math="a = 2" /> and <InlineMath math="b = -3" />.</p>
               </div>
             )
           }
