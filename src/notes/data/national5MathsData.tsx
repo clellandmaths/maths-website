@@ -331,6 +331,40 @@ export const national5MathsData: Section[] = [
             )
           },
           {
+            id: "surds-ex-rationalise2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Rationalise and Simplify</strong></p>
+                <p>Express <InlineMath math="\dfrac{8}{\sqrt{6}}" /> with a rational denominator, giving your answer in its simplest form.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Multiply top and bottom by <InlineMath math="\sqrt{6}" /> to clear the surd from the denominator: <InlineMath math="\dfrac{8}{\sqrt{6}} \times \dfrac{\sqrt{6}}{\sqrt{6}} = \dfrac{8\sqrt{6}}{6}" />.</p>
+                <p>Step 2: The fraction is not yet in simplest form — <InlineMath math="8" /> and <InlineMath math="6" /> share a factor of 2:</p>
+                <BlockMath math="\dfrac{8\sqrt{6}}{6} = \dfrac{4\sqrt{6}}{3}" />
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{4\sqrt{6}}{3}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "surds-ex-expand",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Expanding Surd Brackets</strong></p>
+                <p>Expand and simplify <InlineMath math="\sqrt{3}\left(\sqrt{6} + \sqrt{3}\right)" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Multiply the outside surd by each term inside the bracket: <InlineMath math="\sqrt{3} \times \sqrt{6} = \sqrt{18}" /> and <InlineMath math="\sqrt{3} \times \sqrt{3} = 3" />.</p>
+                <p>Step 2: Simplify the first surd — <InlineMath math="\sqrt{18} = \sqrt{9 \times 2} = 3\sqrt{2}" />:</p>
+                <BlockMath math="\sqrt{3}\left(\sqrt{6} + \sqrt{3}\right) = 3\sqrt{2} + 3" />
+                <p><strong>Answer:</strong> <InlineMath math="3\sqrt{2} + 3" />.</p>
+              </div>
+            )
+          },
+          {
             id: "surds-ex5",
             question: (
               <div className="space-y-2">
@@ -460,6 +494,22 @@ export const national5MathsData: Section[] = [
                 <p>Step 1: Apply the rule <InlineMath math="a^{m/n} = \sqrt[n]{a^m}" />. The denominator (3) becomes the root, and the numerator (2) becomes the power: <InlineMath math="(\sqrt[3]{8})^2" />.</p>
                 <p>Step 2: The cube root of 8 is 2. Then square it: <InlineMath math="2^2 = 4" />.</p>
                 <p><strong>Answer:</strong> 4.</p>
+              </div>
+            )
+          },
+          {
+            id: "indices-ex-form",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Writing in the Form <InlineMath math="x^n" /></strong></p>
+                <p>Express <InlineMath math="\dfrac{1}{\sqrt{x}}" /> in the form <InlineMath math="x^n" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: A square root is a power of <InlineMath math="\tfrac{1}{2}" />: <InlineMath math="\sqrt{x} = x^{1/2}" />.</p>
+                <p>Step 2: The whole thing is one over that, and &ldquo;one over&rdquo; makes the index negative: <InlineMath math="\dfrac{1}{x^{1/2}} = x^{-1/2}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x^{-1/2}" />.</p>
               </div>
             )
           },
@@ -645,6 +695,23 @@ export const national5MathsData: Section[] = [
                 <p>Step 1: Significant figures start at the first non-zero digit. The leading zeros do not count, so the first significant figure is 8 and the second is 4.</p>
                 <p>Step 2: Look at the next digit (5). Because it is 5 or more, round the 4 up to 5. The leading zeros must be kept — they fix the size of the number.</p>
                 <p><strong>Answer:</strong> 0.0085.</p>
+              </div>
+            )
+          },
+          {
+            id: "rounding-ex-count",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Counting Significant Figures</strong></p>
+                <p>State how many significant figures each number has: (a) <InlineMath math="25.00" /> and (b) <InlineMath math="0.00680" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1 (a): Count from the first non-zero digit. In <InlineMath math="25.00" /> every digit counts — the trailing zeros <em>after</em> a decimal point are significant, as they show the precision.</p>
+                <p><strong>(a)</strong> 4 significant figures.</p>
+                <p>Step 2 (b): In <InlineMath math="0.00680" /> the leading zeros do <em>not</em> count, so start at the 6. The 6, the 8 and the trailing 0 all count.</p>
+                <p><strong>(b)</strong> 3 significant figures.</p>
               </div>
             )
           }
@@ -845,6 +912,24 @@ export const national5MathsData: Section[] = [
             )
           },
           {
+            id: "factorising-ex-negative",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Rearranging first (negative <InlineMath math="x^2" /> term)</strong></p>
+                <p>Factorise <InlineMath math="15 + 2x - x^2" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: A trinomial is easiest to factorise when the <InlineMath math="x^2" /> term is positive and written first. Reorder, then take out a factor of <InlineMath math="-1" />:</p>
+                <BlockMath math="15 + 2x - x^2 = -x^2 + 2x + 15 = -(x^2 - 2x - 15)" />
+                <p>Step 2: Factorise the bracket as usual — two numbers multiplying to <InlineMath math="-15" /> and adding to <InlineMath math="-2" /> are <InlineMath math="-5" /> and <InlineMath math="+3" />:</p>
+                <BlockMath math="-(x^2 - 2x - 15) = -(x - 5)(x + 3)" />
+                <p><strong>Answer:</strong> <InlineMath math="-(x - 5)(x + 3)" />.</p>
+              </div>
+            )
+          },
+          {
             id: "factorising-ex5",
             question: (
               <div className="space-y-2">
@@ -915,6 +1000,39 @@ export const national5MathsData: Section[] = [
               <div className="space-y-2">
                 <p>Step 1: Set the expression equal to 35: <InlineMath math="4a + 7 = 35" />.</p>
                 <p>Step 2: Solve for a: <InlineMath math="4a = 28 \rightarrow a = 7" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "functions-ex-fraction",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Finding an unknown (fractional function)</strong></p>
+                <p>A function is defined by <InlineMath math="f(x) = 2 + \dfrac{6}{x}" />. Given that <InlineMath math="f(a) = 5" />, find <InlineMath math="a" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Substitute and set equal to 5: <InlineMath math="2 + \dfrac{6}{a} = 5" />.</p>
+                <p>Step 2: Subtract 2 from both sides: <InlineMath math="\dfrac{6}{a} = 3" />.</p>
+                <p>Step 3: Multiply both sides by <InlineMath math="a" />, then divide by 3: <InlineMath math="6 = 3a \rightarrow a = 2" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="a = 2" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "functions-ex-trig",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Evaluating a non-polynomial function</strong></p>
+                <p>A function is defined by <InlineMath math="f(x) = 10\sin x^\circ" />. Evaluate <InlineMath math="f(30)" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Function notation works the same whatever the formula — substitute <InlineMath math="30" /> for <InlineMath math="x" />: <InlineMath math="f(30) = 10\sin 30^\circ" />.</p>
+                <p>Step 2: Use the exact value <InlineMath math="\sin 30^\circ = \tfrac{1}{2}" />: <InlineMath math="10 \times \tfrac{1}{2}" />.</p>
+                <p><strong>Answer:</strong> 5.</p>
               </div>
             )
           },
