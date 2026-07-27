@@ -2032,6 +2032,24 @@ export const national5AppsData: Section[] = [
                 <BlockMath math="14:12 + \text{1 hour} = 15:12 \text{ (or 3:12 pm)}" />
               </div>
             )
+          },
+          {
+            id: "time-zones-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Communicating Across Time Zones</strong></p>
+                <p>Ravi is in Glasgow (GMT). He needs to phone a colleague in Mumbai, where the local time is 5 hours 30 minutes <em>ahead</em> of Glasgow. The colleague is only at their desk between 09:00 and 17:00 Mumbai time.</p>
+                <p>What is the latest time Ravi can make the call, in Glasgow time?</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The latest the colleague is available is 17:00 Mumbai time.</p>
+                <p><strong>Step 2:</strong> To convert a Mumbai time back to Glasgow time, <em>subtract</em> the 5 hours 30 minutes difference (because Mumbai is ahead):</p>
+                <BlockMath math="17{:}00 - 5\text{ h }30\text{ min} = 11{:}30 \text{ (Glasgow time)}" />
+                <p><strong>Answer:</strong> Ravi must call no later than <strong>11:30</strong> Glasgow time.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2196,6 +2214,27 @@ export const national5AppsData: Section[] = [
                 <BlockMath math="30 \times 11 = 330 \text{ boxes maximum}" />
               </div>
             )
+          },
+          {
+            id: "packing-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>No Restriction (test every orientation)</strong></p>
+                <p>A storage crate has internal dimensions 100 cm (L) <InlineMath math="\times" /> 70 cm (B) <InlineMath math="\times" /> 50 cm (H). Cartons measuring 30 cm <InlineMath math="\times" /> 20 cm <InlineMath math="\times" /> 20 cm may be packed in <em>any</em> orientation. Calculate the maximum number of cartons that will fit.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>With no restriction, try each way of standing the carton and keep the best. Divide each dimension and <strong>round down</strong> every time.</p>
+                <p><strong>Orientation A</strong> (30 along L, 20 along B, 20 up):</p>
+                <BlockMath math="\lfloor 100/30 \rfloor \times \lfloor 70/20 \rfloor \times \lfloor 50/20 \rfloor = 3 \times 3 \times 2 = 18" />
+                <p><strong>Orientation B</strong> (20 along L, 30 along B, 20 up):</p>
+                <BlockMath math="\lfloor 100/20 \rfloor \times \lfloor 70/30 \rfloor \times \lfloor 50/20 \rfloor = 5 \times 2 \times 2 = 20" />
+                <p><strong>Orientation C</strong> (20 along L, 20 along B, 30 up):</p>
+                <BlockMath math="\lfloor 100/20 \rfloor \times \lfloor 70/20 \rfloor \times \lfloor 50/30 \rfloor = 5 \times 3 \times 1 = 15" />
+                <p><strong>Answer:</strong> Orientation B fits the most, so the maximum is <strong>20 cartons</strong>.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2272,6 +2311,35 @@ export const national5AppsData: Section[] = [
                 </ul>
                 <p><strong>Step 3:</strong> Identify the longest path.</p>
                 <p><strong>Final Answer:</strong> The minimum time required to complete the renovations is 58 days.</p>
+              </div>
+            )
+          },
+          {
+            id: "precedence-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Identifying the Critical Path</strong></p>
+                <p>A small event is planned. The activities, their preceding tasks and their durations (in hours) are:</p>
+                <ul className="list-disc list-inside ml-4">
+                  <li>A (start, none): 4</li>
+                  <li>B (after A): 6</li>
+                  <li>C (after A): 3</li>
+                  <li>D (after B): 5</li>
+                  <li>E (after C): 9</li>
+                  <li>F (after D and E): 2</li>
+                </ul>
+                <p>(a) Find the minimum time to complete the event. (b) State which activities are on the critical path.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> List the paths from A to the finish (F) and total each:</p>
+                <ul className="list-disc list-inside ml-4">
+                  <li>A &rarr; B &rarr; D &rarr; F = <InlineMath math="4 + 6 + 5 + 2 = 17 \text{ hours}" /></li>
+                  <li>A &rarr; C &rarr; E &rarr; F = <InlineMath math="4 + 3 + 9 + 2 = 18 \text{ hours}" /></li>
+                </ul>
+                <p><strong>(a)</strong> The minimum completion time is the <em>longest</em> path: <strong>18 hours</strong>.</p>
+                <p><strong>(b)</strong> The critical path is the activities on that longest route: <strong>A, C, E, F</strong>. A delay to any of these delays the whole event.</p>
               </div>
             )
           }
