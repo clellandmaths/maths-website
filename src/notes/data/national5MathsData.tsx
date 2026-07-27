@@ -100,6 +100,23 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> <InlineMath math="1\tfrac{7}{8}" />.</p>
               </div>
             )
+          },
+          {
+            id: "fractions-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Calculate <InlineMath math="1\tfrac{1}{2} + \tfrac{2}{3} \times \tfrac{3}{4}" />, giving your answer in its simplest form.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Order of operations still applies to fractions — do the <em>multiplication</em> before the addition: <InlineMath math="\tfrac{2}{3} \times \tfrac{3}{4} = \tfrac{6}{12} = \tfrac{1}{2}" />.</p>
+                <p>Step 2: Now add: <InlineMath math="1\tfrac{1}{2} + \tfrac{1}{2}" />.</p>
+                <p>Step 3: The two halves make a whole: <InlineMath math="1\tfrac{1}{2} + \tfrac{1}{2} = 2" />.</p>
+                <p><strong>Answer:</strong> 2.</p>
+              </div>
+            )
           }
         ]
       },
@@ -198,6 +215,25 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> £75.</p>
               </div>
             )
+          },
+          {
+            id: "percentages-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style</strong></p>
+                <p>£4000 is invested in a fund. It grows by 3% in each of the first two years, but in the third year the fund falls by 5%. Calculate the value at the end of the three years.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Apply a separate multiplier for each change. Two years of 3% growth use <InlineMath math="1.03" />; the 5% fall uses <InlineMath math="0.95" />.</p>
+                <p>Step 2: Chain them in one calculation — do not add or average the percentages:</p>
+                <BlockMath math="4000 \times 1.03 \times 1.03 \times 0.95 = 4000 \times 1.03^2 \times 0.95" />
+                <p>Step 3: Evaluate, keeping full accuracy until the end:</p>
+                <BlockMath math="4000 \times 1.0609 \times 0.95 = 4031.42" />
+                <p><strong>Answer:</strong> £4031.42.</p>
+              </div>
+            )
           }
         ]
       },
@@ -291,6 +327,22 @@ export const national5MathsData: Section[] = [
                 <p>Step 1: Use <InlineMath math="\sqrt{a} \times \sqrt{b} = \sqrt{ab}" /> to combine them under one root: <InlineMath math="\sqrt{6 \times 15} = \sqrt{90}" />.</p>
                 <p>Step 2: Simplify by taking out the largest square factor of 90, which is 9: <InlineMath math="\sqrt{90} = \sqrt{9 \times 10} = 3\sqrt{10}" />.</p>
                 <p><strong>Answer:</strong> <InlineMath math="3\sqrt{10}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "surds-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Simplify <InlineMath math="\sqrt{50} + \sqrt{8} - \sqrt{18}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The three surds look unlike, so simplify each first by taking out its largest square factor: <InlineMath math="\sqrt{50} = 5\sqrt{2}" />, <InlineMath math="\sqrt{8} = 2\sqrt{2}" />, <InlineMath math="\sqrt{18} = 3\sqrt{2}" />.</p>
+                <p>Step 2: They are now all like surds in <InlineMath math="\sqrt{2}" />, so combine the numbers in front — watching the subtraction: <InlineMath math="5\sqrt{2} + 2\sqrt{2} - 3\sqrt{2} = (5 + 2 - 3)\sqrt{2}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="4\sqrt{2}" />.</p>
               </div>
             )
           }
@@ -410,6 +462,22 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> 4.</p>
               </div>
             )
+          },
+          {
+            id: "indices-ex6",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Simplify <InlineMath math="\dfrac{(2x^3)^4}{4x^5}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Deal with the bracket on top first, applying the power to a power to <em>both</em> the 2 and the <InlineMath math="x" />: <InlineMath math="(2x^3)^4 = 2^4 x^{12} = 16x^{12}" />.</p>
+                <p>Step 2: The expression is now <InlineMath math="\dfrac{16x^{12}}{4x^5}" />. Divide the numbers and subtract the powers: <InlineMath math="16 \div 4 = 4" /> and <InlineMath math="x^{12-5} = x^7" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="4x^7" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -485,6 +553,23 @@ export const national5MathsData: Section[] = [
                 <BlockMath math="4{,}530{,}000 = 4.53 \times 10^6" />
                 <p>Step 2 (b): Again make the front number <InlineMath math="7.2" />. This time the point moves 4 places <em>right</em> to get there, so the index is <em>negative</em>:</p>
                 <BlockMath math="0.00072 = 7.2 \times 10^{-4}" />
+              </div>
+            )
+          },
+          {
+            id: "scientific-notation-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Calculate <InlineMath math="(5 \times 10^4) \times (6 \times 10^3)" />, giving your answer in scientific notation.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Multiply the front numbers, and add the indices for the powers of 10: <InlineMath math="5 \times 6 = 30" /> and <InlineMath math="10^4 \times 10^3 = 10^7" />, giving <InlineMath math="30 \times 10^7" />.</p>
+                <p>Step 2: This is <em>not</em> yet in scientific notation, because <InlineMath math="30" /> is not between 1 and 10. Re-standardise by writing <InlineMath math="30 = 3 \times 10^1" />:</p>
+                <BlockMath math="30 \times 10^7 = 3 \times 10^1 \times 10^7 = 3 \times 10^8" />
+                <p><strong>Answer:</strong> <InlineMath math="3 \times 10^8" />.</p>
               </div>
             )
           }
