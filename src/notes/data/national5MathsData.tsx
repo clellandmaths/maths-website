@@ -22,6 +22,16 @@ export const national5MathsData: Section[] = [
             <p>
               A key skill is understanding the interrelationships between fractions, decimal fractions, and percentages to choose an efficient route to a solution.
             </p>
+            <p><strong>The Golden Rule:</strong> before you multiply or divide, turn every mixed number into a top-heavy (improper) fraction. Before you add or subtract, find a common denominator. Get those set up first and the rest is routine.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Adding the denominators:</strong> <InlineMath math="\frac{1}{3} + \frac{1}{4}" /> is <em>not</em> <InlineMath math="\frac{2}{7}" />. Only the numerators are added, once the denominators match.</li>
+                <li><strong>Multiplying mixed numbers directly:</strong> <InlineMath math="2\frac{1}{2} \times 1\frac{1}{3}" /> is not <InlineMath math="2\frac{1}{6}" />. Convert to <InlineMath math="\frac{5}{2} \times \frac{4}{3}" /> first.</li>
+                <li><strong>Forgetting to simplify:</strong> an unsimplified final fraction can cost the last mark — always check whether the top and bottom share a factor.</li>
+                <li><strong>&ldquo;Of&rdquo; means multiply:</strong> <InlineMath math="\frac{2}{3}" /> of a quantity is <InlineMath math="\frac{2}{3} \times" /> it, not a division.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -76,6 +86,16 @@ export const national5MathsData: Section[] = [
               <p>
                 You must know how to use reverse percentages to calculate an original quantity before a percentage was added or subtracted (e.g., calculating the price excluding VAT).
               </p>
+            </div>
+            <p><strong>The Golden Rule:</strong> decide first whether the original amount (100%) is known or unknown. If it is known, apply a multiplier. If it is <em>unknown</em> — the price already includes the change — it is a reverse percentage, so work back from the percentage you are given.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Treating a reverse percentage as a normal one:</strong> if £60 is the price after 20% off, that £60 is <InlineMath math="80\%" /> of the original — you cannot just add 20% of £60 back on.</li>
+                <li><strong>Adding percentages across years:</strong> two years of 10% growth is <InlineMath math="\times 1.1^2 = 1.21" />, a 21% rise, not 20%. Compound with a power.</li>
+                <li><strong>The decrease multiplier:</strong> a 15% fall uses <InlineMath math="\times 0.85" />, not <InlineMath math="\times 1.15" />.</li>
+                <li><strong>Money to two decimal places:</strong> write <InlineMath math="£168\,729.60" />, never <InlineMath math="£168\,729.6" />.</li>
+              </ul>
             </div>
           </div>
         ),
@@ -134,6 +154,16 @@ export const national5MathsData: Section[] = [
                <span>and</span>
                <BlockMath math="\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}" />
             </div>
+            <p><strong>The Golden Rule:</strong> to simplify, split off the <em>largest</em> square factor. To rationalise, multiply top and bottom by the surd on the denominator. Both leave the value unchanged — you are only rewriting it in a tidier form.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Not using the largest square factor:</strong> writing <InlineMath math="\sqrt{72} = \sqrt{4}\sqrt{18} = 2\sqrt{18}" /> is not finished — <InlineMath math="\sqrt{18}" /> still simplifies. Take out <InlineMath math="36" /> in one go.</li>
+                <li><strong>Adding unlike surds:</strong> <InlineMath math="\sqrt{2} + \sqrt{3}" /> does <em>not</em> equal <InlineMath math="\sqrt{5}" />. Only like surds combine, e.g. <InlineMath math="2\sqrt{3} + 4\sqrt{3} = 6\sqrt{3}" />.</li>
+                <li><strong>Splitting a sum under the root:</strong> <InlineMath math="\sqrt{a+b} \neq \sqrt{a} + \sqrt{b}" />. The product rule works only for multiplication and division.</li>
+                <li><strong>Stopping before simplifying:</strong> after rationalising, check whether the surd on top can still be reduced.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -191,6 +221,16 @@ export const national5MathsData: Section[] = [
             <p>
               Where possible, applying the laws in combination is desirable as preparation for Higher Maths.
             </p>
+            <p><strong>The Golden Rule:</strong> the laws only apply when the <em>bases match</em>. With the same base, add the indices to multiply and subtract them to divide. A negative index means &ldquo;one over&rdquo;, and a fractional index means a root.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Ignoring the coefficient:</strong> <InlineMath math="(2a)^3 = 8a^3" />, not <InlineMath math="2a^3" /> — the <InlineMath math="2" /> is cubed as well.</li>
+                <li><strong>A negative index is not a negative number:</strong> <InlineMath math="x^{-2} = \frac{1}{x^2}" />, which is positive. The sign of the index controls the reciprocal, not the sign of the answer.</li>
+                <li><strong>Root-and-power order:</strong> in <InlineMath math="a^{m/n}" /> the denominator <InlineMath math="n" /> is the root and the numerator <InlineMath math="m" /> is the power — take the root first to keep the numbers small.</li>
+                <li><strong>Forgetting <InlineMath math="a^0 = 1" />:</strong> anything (except 0) to the power zero is 1, not 0.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -240,6 +280,16 @@ export const national5MathsData: Section[] = [
             <p>
               It is heavily linked to science and technology to represent very large or very small numbers (e.g., ms<sup className="-mt-1">&minus;1</sup>).
             </p>
+            <p><strong>The Golden Rule:</strong> a number in scientific notation is written as <InlineMath math="a \times 10^n" /> where <InlineMath math="a" /> is between 1 and 10 (that is, <InlineMath math="1 \le a < 10" />). Always check the front number is in that range — especially after a calculation, where it can drift out.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Front number out of range:</strong> <InlineMath math="42 \times 10^3" /> is not standard form. Rewrite it as <InlineMath math="4.2 \times 10^4" />.</li>
+                <li><strong>Sign of the index:</strong> small numbers below 1 take a <em>negative</em> power, e.g. <InlineMath math="0.0003 = 3 \times 10^{-4}" />.</li>
+                <li><strong>Not re-standardising after multiplying:</strong> if multiplying the front numbers gives, say, <InlineMath math="20 \times 10^5" />, adjust it to <InlineMath math="2 \times 10^6" />.</li>
+                <li><strong>Calculator display:</strong> a screen showing <InlineMath math="4.2^{06}" /> or &ldquo;4.2E6&rdquo; means <InlineMath math="4.2 \times 10^6" /> — write it out in full.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -289,6 +339,16 @@ export const national5MathsData: Section[] = [
             <p>
               You should consider the effects of rounding appropriately. For example, there is a precision limitation if you round an angle prematurely after calculating it using trigonometry, especially as distances increase.
             </p>
+            <p><strong>The Golden Rule:</strong> significant figures are counted from the first non-zero digit; decimal places are counted after the point. Whichever you are asked for, look at the <em>next</em> digit to decide whether to round up, and keep any place-holding zeros.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Confusing the two:</strong> 2 significant figures is not the same as 2 decimal places. <InlineMath math="0.057134" /> to 2 s.f. is <InlineMath math="0.057" />; to 2 d.p. it is <InlineMath math="0.06" />.</li>
+                <li><strong>Leading zeros are not significant:</strong> in <InlineMath math="0.057" /> the first significant figure is the 5, not the zeros.</li>
+                <li><strong>Dropping place-value zeros:</strong> <InlineMath math="45\,872" /> to 2 s.f. is <InlineMath math="46\,000" />, not <InlineMath math="46" /> — the zeros hold the size of the number.</li>
+                <li><strong>Rounding too early:</strong> in a multi-step problem, keep full accuracy until the final line. Rounding a trig angle mid-calculation shifts the final answer, and the error grows with distance.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
