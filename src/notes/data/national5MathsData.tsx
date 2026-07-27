@@ -55,6 +55,40 @@ export const national5MathsData: Section[] = [
             id: "fractions-ex2",
             question: (
               <div className="space-y-2">
+                <p><strong>Subtracting Mixed Numbers</strong></p>
+                <p>Calculate <InlineMath math="5\tfrac{1}{4} - 2\tfrac{2}{3}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Borrowing across whole numbers is fiddly, so change both mixed numbers to top-heavy fractions: <InlineMath math="5\tfrac{1}{4} = \tfrac{21}{4}" /> and <InlineMath math="2\tfrac{2}{3} = \tfrac{8}{3}" />.</p>
+                <p>Step 2: Use a common denominator of 12: <InlineMath math="\tfrac{63}{12} - \tfrac{32}{12} = \tfrac{31}{12}" />.</p>
+                <p>Step 3: Convert back to a mixed number.</p>
+                <p><strong>Answer:</strong> <InlineMath math="2\tfrac{7}{12}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "fractions-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Multiplying Mixed Numbers</strong></p>
+                <p>Calculate <InlineMath math="2\tfrac{1}{5} \times 1\tfrac{1}{4}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Change both to top-heavy fractions first — never multiply the whole numbers and fractions separately: <InlineMath math="2\tfrac{1}{5} = \tfrac{11}{5}" /> and <InlineMath math="1\tfrac{1}{4} = \tfrac{5}{4}" />.</p>
+                <p>Step 2: Multiply straight across the tops and bottoms: <InlineMath math="\tfrac{11}{5} \times \tfrac{5}{4} = \tfrac{55}{20}" />.</p>
+                <p>Step 3: Simplify by dividing top and bottom by 5, then convert to a mixed number: <InlineMath math="\tfrac{55}{20} = \tfrac{11}{4}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="2\tfrac{3}{4}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "fractions-ex4",
+            question: (
+              <div className="space-y-2">
                 <p><strong>Dividing Fractions</strong></p>
                 <p>Calculate <InlineMath math="\tfrac{3}{4} \div \tfrac{2}{5}" />.</p>
               </div>
@@ -118,6 +152,39 @@ export const national5MathsData: Section[] = [
           },
           {
             id: "percentages-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Compound Interest Earned</strong></p>
+                <p>£2000 is invested at 2.5% interest per year. Calculate the <em>interest earned</em> after 4 years.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The multiplier for a 2.5% rise is <InlineMath math="1.025" />. Find the total in the account after 4 years: <InlineMath math="2000 \times 1.025^4 = £2207.63" />.</p>
+                <p>Step 2: The question asks for the interest <em>earned</em>, not the total, so subtract the original amount:</p>
+                <BlockMath math="2207.63 - 2000 = 207.63" />
+                <p><strong>Answer:</strong> £207.63.</p>
+              </div>
+            )
+          },
+          {
+            id: "percentages-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Depreciation</strong></p>
+                <p>A car worth £18,000 depreciates by 12% each year. Find its value after 3 years.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: For a <em>decrease</em>, subtract from 100%: <InlineMath math="100\% - 12\% = 88\%" />, so the multiplier is <InlineMath math="0.88" /> — not <InlineMath math="1.12" />.</p>
+                <p>Step 2: Apply the power for 3 years: <InlineMath math="18{,}000 \times 0.88^3" />.</p>
+                <p><strong>Answer:</strong> £12,266.50.</p>
+              </div>
+            )
+          },
+          {
+            id: "percentages-ex4",
             question: (
               <div className="space-y-2">
                 <p><strong>Reverse Percentages</strong></p>
@@ -210,6 +277,22 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> <InlineMath math="7\sqrt{3}" />.</p>
               </div>
             )
+          },
+          {
+            id: "surds-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Multiplying Surds</strong></p>
+                <p>Multiply and simplify <InlineMath math="\sqrt{6} \times \sqrt{15}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Use <InlineMath math="\sqrt{a} \times \sqrt{b} = \sqrt{ab}" /> to combine them under one root: <InlineMath math="\sqrt{6 \times 15} = \sqrt{90}" />.</p>
+                <p>Step 2: Simplify by taking out the largest square factor of 90, which is 9: <InlineMath math="\sqrt{90} = \sqrt{9 \times 10} = 3\sqrt{10}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="3\sqrt{10}" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -265,6 +348,55 @@ export const national5MathsData: Section[] = [
           },
           {
             id: "indices-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Multiplication and Division Together</strong></p>
+                <p>Simplify <InlineMath math="\dfrac{m^6 \times m^2}{m^3}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Deal with the top first — multiplying means adding the powers: <InlineMath math="m^6 \times m^2 = m^{6+2} = m^8" />.</p>
+                <p>Step 2: Now divide, which means subtracting the power on the bottom: <InlineMath math="m^{8} \div m^3 = m^{8-3}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="m^5" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "indices-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Raising a Power to a Power</strong></p>
+                <p>Simplify <InlineMath math="(3p^4)^2" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The power outside applies to <em>everything</em> inside the bracket, including the 3. Deal with each part: <InlineMath math="3^2 = 9" />.</p>
+                <p>Step 2: For the letter, multiply the powers: <InlineMath math="(p^4)^2 = p^{4 \times 2} = p^8" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="9p^8" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "indices-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Negative Indices</strong></p>
+                <p>Simplify <InlineMath math="(2t^{-3})^2" />, giving your answer with a positive index.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Apply the outside power to each part: <InlineMath math="2^2 = 4" /> and <InlineMath math="(t^{-3})^2 = t^{-6}" />, giving <InlineMath math="4t^{-6}" />.</p>
+                <p>Step 2: A negative index means &ldquo;one over&rdquo;, so move the <InlineMath math="t" /> to the denominator to make the index positive:</p>
+                <BlockMath math="4t^{-6} = \frac{4}{t^6}" />
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{4}{t^6}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "indices-ex5",
             question: (
               <div className="space-y-2">
                 <p><strong>Fractional Indices</strong></p>
@@ -338,6 +470,23 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> <InlineMath math="4 \times 10^3" />.</p>
               </div>
             )
+          },
+          {
+            id: "scientific-notation-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Writing Numbers in Scientific Notation</strong></p>
+                <p>Write (a) <InlineMath math="4{,}530{,}000" /> and (b) <InlineMath math="0.00072" /> in scientific notation.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1 (a): Place the decimal point after the first non-zero digit to get a front number between 1 and 10: <InlineMath math="4.53" />. Count how many places the point moved — 6 places left — so the index is <InlineMath math="+6" />.</p>
+                <BlockMath math="4{,}530{,}000 = 4.53 \times 10^6" />
+                <p>Step 2 (b): Again make the front number <InlineMath math="7.2" />. This time the point moves 4 places <em>right</em> to get there, so the index is <em>negative</em>:</p>
+                <BlockMath math="0.00072 = 7.2 \times 10^{-4}" />
+              </div>
+            )
           }
         ]
       },
@@ -395,6 +544,22 @@ export const national5MathsData: Section[] = [
                 <p>Step 1: Identify the third decimal place (1).</p>
                 <p>Step 2: Look at the next digit (5). Because it is 5 or more, round up.</p>
                 <p><strong>Answer:</strong> 3.142.</p>
+              </div>
+            )
+          },
+          {
+            id: "rounding-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Significant Figures with Leading Zeros</strong></p>
+                <p>Round 0.008451 to 2 significant figures.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Significant figures start at the first non-zero digit. The leading zeros do not count, so the first significant figure is 8 and the second is 4.</p>
+                <p>Step 2: Look at the next digit (5). Because it is 5 or more, round the 4 up to 5. The leading zeros must be kept — they fix the size of the number.</p>
+                <p><strong>Answer:</strong> 0.0085.</p>
               </div>
             )
           }
