@@ -3029,8 +3029,90 @@ export const advancedHigherMathsData: Section[] = [
         ]
       },
       {
+        id: "optimisation",
+        title: "6. Optimisation",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>An <strong>optimisation</strong> problem asks for the largest or smallest value something can take — the greatest volume, the least cost, the shortest distance. The calculus is the easy part; the skill is turning the words into a function first.</p>
+            <p>Almost every such problem starts with <em>two</em> variables and a <strong>constraint</strong> linking them (a fixed perimeter, a fixed volume). Use the constraint to eliminate one variable, so the quantity to be optimised becomes a function of a single variable. Then differentiate, set equal to zero, and confirm the nature of the stationary point:</p>
+            <BlockMath math="\frac{dQ}{dx} = 0 \quad \text{then check} \quad \frac{d^2Q}{dx^2}" />
+            <p>A negative second derivative confirms a maximum, a positive one a minimum.</p>
+            <p><strong>The Golden Rule:</strong> the modelling comes before the calculus. Write down the quantity to optimise, write down the constraint, and use the constraint to get the quantity in terms of <em>one</em> variable — only then differentiate. And always confirm the nature of the stationary point; a question about a maximum expects you to <em>show</em> it is one.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Trying to differentiate two variables:</strong> you must use the constraint to eliminate one first, or there is nothing to differentiate with respect to.</li>
+                <li><strong>Not justifying the nature:</strong> finding a stationary point is not enough — use the second derivative (or a nature table) to show it really is the maximum or minimum asked for.</li>
+                <li><strong>Ignoring the domain:</strong> a length or radius must be positive, so reject negative or zero stationary values, and check the endpoints if the variable is restricted.</li>
+                <li><strong>Answering the wrong question:</strong> if asked for the maximum <em>volume</em>, substitute the optimal <InlineMath math="x" /> back into the volume — do not stop at the value of <InlineMath math="x" /> itself.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "optimisation-ex1",
+            question: <p>A farmer has <InlineMath math="60" /> m of fencing to make a rectangular enclosure against an existing straight wall, so only three sides need fencing. Find the dimensions that give the greatest area, and state that area.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Let the two sides perpendicular to the wall be <InlineMath math="x" /> and the side parallel to it be <InlineMath math="y" />. Only three sides are fenced, so the constraint is:</p>
+                <BlockMath math="2x + y = 60 \implies y = 60 - 2x" />
+                <p><strong>Step 2:</strong> The quantity to maximise is the area. Write it using the constraint to remove <InlineMath math="y" />:</p>
+                <BlockMath math="A = xy = x(60 - 2x) = 60x - 2x^2" />
+                <p><strong>Step 3:</strong> Differentiate and set to zero:</p>
+                <BlockMath math="\frac{dA}{dx} = 60 - 4x = 0 \implies x = 15" />
+                <p><strong>Step 4:</strong> Confirm it is a maximum:</p>
+                <BlockMath math="\frac{d^2A}{dx^2} = -4 < 0 \ \checkmark \ (\text{maximum})" />
+                <p><strong>Step 5:</strong> Find <InlineMath math="y" /> and the area:</p>
+                <BlockMath math="y = 60 - 30 = 30, \qquad A = 15 \times 30 = 450\ \text{m}^2" />
+                <p>The enclosure is <InlineMath math="15" /> m by <InlineMath math="30" /> m, giving a maximum area of <InlineMath math="450" /> m².</p>
+              </div>
+            )
+          },
+          {
+            id: "optimisation-ex2",
+            question: <p>A closed cylindrical can is to hold <InlineMath math="500\pi" /> cm³. Find the radius that minimises the total surface area.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The two variables are the radius <InlineMath math="r" /> and height <InlineMath math="h" />. The fixed volume is the constraint:</p>
+                <BlockMath math="\pi r^2 h = 500\pi \implies h = \frac{500}{r^2}" />
+                <p><strong>Step 2:</strong> The quantity to minimise is the total surface area (two ends plus the curved side):</p>
+                <BlockMath math="S = 2\pi r^2 + 2\pi r h" />
+                <p><strong>Step 3:</strong> Substitute the constraint to get <InlineMath math="S" /> in terms of <InlineMath math="r" /> alone:</p>
+                <BlockMath math="S = 2\pi r^2 + 2\pi r \cdot \frac{500}{r^2} = 2\pi r^2 + \frac{1000\pi}{r}" />
+                <p><strong>Step 4:</strong> Differentiate, writing the second term as <InlineMath math="1000\pi r^{-1}" />, and set to zero:</p>
+                <BlockMath math="\frac{dS}{dr} = 4\pi r - \frac{1000\pi}{r^2} = 0 \implies 4\pi r^3 = 1000\pi \implies r^3 = 250" />
+                <BlockMath math="r = \sqrt[3]{250} \approx 6.30\ \text{cm}" />
+                <p><strong>Step 5:</strong> Confirm it is a minimum using the second derivative, which is positive for all <InlineMath math="r > 0" />:</p>
+                <BlockMath math="\frac{d^2S}{dr^2} = 4\pi + \frac{2000\pi}{r^3} > 0 \ \checkmark \ (\text{minimum})" />
+              </div>
+            )
+          },
+          {
+            id: "optimisation-ex3",
+            question: <p>An open-topped box is made from a square sheet of card of side <InlineMath math="24" /> cm by cutting a square of side <InlineMath math="x" /> from each corner and folding up the flaps. Find the value of <InlineMath math="x" /> that maximises the volume.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> After cutting corners of side <InlineMath math="x" /> and folding up, the base is a square of side <InlineMath math="(24 - 2x)" /> and the height is <InlineMath math="x" />. So the volume is:</p>
+                <BlockMath math="V = x(24 - 2x)^2" />
+                <p><strong>Step 2:</strong> Expand ready to differentiate:</p>
+                <BlockMath math="V = x(576 - 96x + 4x^2) = 576x - 96x^2 + 4x^3" />
+                <p><strong>Step 3:</strong> Differentiate and set to zero:</p>
+                <BlockMath math="\frac{dV}{dx} = 576 - 192x + 12x^2 = 0 \implies x^2 - 16x + 48 = 0" />
+                <p><strong>Step 4:</strong> Factorise and solve:</p>
+                <BlockMath math="(x - 4)(x - 12) = 0 \implies x = 4 \ \text{ or } \ x = 12" />
+                <p><strong>Step 5:</strong> Reject <InlineMath math="x = 12" />: it would make the base side <InlineMath math="24 - 24 = 0" />, so no box. Check <InlineMath math="x = 4" /> is a maximum:</p>
+                <BlockMath math="\frac{d^2V}{dx^2} = -192 + 24x, \qquad \text{at } x=4:\ -192 + 96 = -96 < 0 \ \checkmark" />
+                <p><strong>Step 6:</strong> So <InlineMath math="x = 4" /> cm gives the maximum volume, which is <InlineMath math="V = 4(16)^2 = 1024" /> cm³.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "curve-sketching-related-graphs",
-        title: "6. Curve Sketching & Related Graphs",
+        title: "7. Curve Sketching & Related Graphs",
         videoUrl: "",
         theory: (
           <div className="space-y-4">
