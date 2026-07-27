@@ -861,14 +861,17 @@ export const national5AppsData: Section[] = [
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Profit:</strong> Made when total Income is greater than total Expenditure.</li>
               <li><strong>Loss:</strong> Made when total Expenditure is greater than total Income.</li>
-              <li><strong>Percentage Profit/Loss:</strong> Remember your Numeracy skills here! Always divide the actual profit or loss by the original purchase amount (Expenditure), then multiply by 100.</li>
+              <li><strong>Percentage Profit/Loss:</strong> Remember your Numeracy skills here! Always divide the actual profit or loss by the original purchase amount (Expenditure), then multiply by 100:</li>
+            </ul>
+            <BlockMath math="\%\ \text{Profit or Loss} = \frac{\text{Profit or Loss}}{\text{Original Amount}} \times 100" />
+            <ul className="list-disc list-inside space-y-1 ml-4">
             </ul>
 
             <h4 className="text-white font-semibold">3. Best Deals & Comparing Offers</h4>
             <p>You must confidently navigate complex promotional offers to find the cheapest overall price for a set quantity of items.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>"Buy X, Get Y Free":</strong> Group the items. If an offer is "Buy 3, get 1 free", they are sold in groups of 4, but you only pay for 3. Divide your total required amount by the group size (4) to find out how many groups you need.</li>
-              <li><strong>"Percentage Discount on Totals":</strong> Calculate the full price first, then apply the percentage discount multiplyer (e.g., for a 30% discount, multiply the total by 0.70).</li>
+              <li><strong>"Percentage Discount on Totals":</strong> Calculate the full price first, then apply the percentage discount multiplier (e.g., for a 30% discount, multiply the total by 0.70).</li>
               <li><strong>Comparing Sizes:</strong> If comparing different sizes of the same product, always scale them to match (e.g., find the price per 100g, or price per kilogram).</li>
             </ul>
 
@@ -967,6 +970,10 @@ export const national5AppsData: Section[] = [
             <p><strong>The Golden Rule:</strong> When converting between two different foreign currencies, you must almost always use British Pounds (£) as a "middle bridge" unless a direct exchange rate is explicitly given. Because you are dealing with money, ensure your final answers are always rounded to exactly two decimal places where appropriate.</p>
 
             <h4 className="text-white font-semibold">1. The Basic Conversions</h4>
+            <p>Every currency question comes down to one pair of rules — <strong>multiply</strong> going out of pounds, <strong>divide</strong> coming back:</p>
+            <BlockMath math="\text{Foreign} = \text{Pounds} \times \text{Rate}" />
+            <BlockMath math="\text{Pounds} = \frac{\text{Foreign}}{\text{Rate}}" />
+            <p>where the rate is the amount of foreign currency you get for <InlineMath math="\pounds 1" />.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Pounds to Foreign Currency:</strong> You multiply the amount in pounds by the exchange rate. (Example: If £1 = $1.30, then £100 = 100 × 1.30).</li>
               <li><strong>Foreign Currency to Pounds:</strong> You divide the foreign amount by the exchange rate. (Example: $130 ÷ 1.30 = £100).</li>
@@ -1084,7 +1091,9 @@ export const national5AppsData: Section[] = [
             <p><strong>The Golden Rule:</strong> When an exam question asks you to determine which of two investment or savings options is best, you must clearly calculate the final total value for both options to make a valid comparison.</p>
 
             <h4 className="text-white font-semibold">1. Simple Interest</h4>
-            <p>Simple interest is calculated purely on the original amount invested or borrowed. To calculate it, you find one year's interest using basic percentages, and then multiply that amount by the total number of years.</p>
+            <p>Simple interest is calculated purely on the original amount invested or borrowed. To calculate it, you find one year's interest using basic percentages, and then multiply that amount by the total number of years:</p>
+            <BlockMath math="\text{Simple Interest} = \frac{P \times R \times T}{100}" />
+            <p>where <InlineMath math="P" /> is the amount invested or borrowed, <InlineMath math="R" /> is the percentage rate per year, and <InlineMath math="T" /> is the number of years.</p>
 
             <h4 className="text-white font-semibold">2. Compound Interest (Appreciation)</h4>
             <p>Compound interest is a form of appreciation where the amount in the account is always going up, so the interest you earn grows each year.</p>
@@ -1186,7 +1195,10 @@ export const national5AppsData: Section[] = [
             <p>Note: If a dial has two different scales (e.g., mph on the outside and km/h on the inside), ensure you are reading the correct one.</p>
 
             <h4 className="text-white font-semibold">2. Calculating Tolerance Limits</h4>
-            <p>Tolerance is the amount by which a measurement is allowed to vary while still being acceptable. It is written using the plus-minus symbol (±).</p>
+            <p>Tolerance is the amount by which a measurement is allowed to vary while still being acceptable. It is written using the plus-minus symbol (±), and gives two limits:</p>
+            <BlockMath math="\text{Maximum} = \text{Target} + \text{Tolerance}" />
+            <BlockMath math="\text{Minimum} = \text{Target} - \text{Tolerance}" />
+            <p>So a measurement written as <InlineMath math="400 \pm 5" /> g is acceptable anywhere from <InlineMath math="395" /> g to <InlineMath math="405" /> g.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Maximum Limit:</strong> Add the tolerance to the target value.</li>
               <li><strong>Minimum Limit:</strong> Subtract the tolerance from the target value.</li>
@@ -1395,7 +1407,11 @@ export const national5AppsData: Section[] = [
             <p><strong>The Golden Rule:</strong> The most common mistake candidates make in this entire course is misinterpreting decimal time. You must remember that there are 60 minutes in an hour, not 100. Therefore, a time of 4.3 hours is not 4 hours and 3 minutes.</p>
 
             <h4 className="text-white font-semibold">1. The Formula Triangle</h4>
-            <p>You must know how to calculate Speed, Distance, and Time using the formula triangle:</p>
+            <p>You must know how to calculate Speed, Distance, and Time. All three come from one relationship:</p>
+            <BlockMath math="D = S \times T" />
+            <p>which rearranges to give the other two:</p>
+            <BlockMath math="S = \frac{D}{T} \qquad\qquad T = \frac{D}{S}" />
+            <p>In words:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Distance = Speed × Time</li>
               <li>Speed = Distance ÷ Time</li>
