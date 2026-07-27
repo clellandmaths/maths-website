@@ -3415,6 +3415,16 @@ export const national5MathsData: Section[] = [
               <li>Compare the spread using standard deviation or IQR (e.g., "The data for [Subject A] was more/less consistent" or "more/less varied").</li>
             </ul>
             <p>You must not just list the numbers; the context and comparative words are required.</p>
+            <p><strong>The Golden Rule:</strong> a comparison always needs <em>two</em> statements — one about the average (which is bigger) and one about the spread (which is more consistent). A <em>smaller</em> standard deviation or IQR means the data is more consistent / less spread out.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Divide by <InlineMath math="n - 1" />:</strong> the standard-deviation formula uses <InlineMath math="n - 1" />, not <InlineMath math="n" />.</li>
+                <li><strong>Even-sized data:</strong> with an even number of values the median is the <em>average</em> of the two middle numbers, and the halves for the quartiles do not include a shared middle value.</li>
+                <li><strong>Context and comparison words:</strong> &ldquo;more consistent&rdquo;, &ldquo;on average higher&rdquo; — bare numbers with no comparison earn no marks.</li>
+                <li><strong>Order the data first:</strong> quartiles and the median only work on data written from smallest to largest.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3480,6 +3490,28 @@ export const national5MathsData: Section[] = [
                 <p>Answer: Median = 20, IQR = 10.</p>
               </div>
             )
+          },
+          {
+            id: "comparing-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Median &amp; IQR of an Even-sized Set</strong></p>
+                <p>Calculate the median and interquartile range of: 3, 5, 8, 9, 12, 14, 17, 20.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: There are 8 values (an even number), so the median is the average of the two middle values, the 4th and 5th:</p>
+                <BlockMath math="Q_2 = \frac{9 + 12}{2} = 10.5" />
+                <p>Step 2: The lower half is 3, 5, 8, 9. Its median (the lower quartile) is the average of 5 and 8:</p>
+                <BlockMath math="Q_1 = \frac{5 + 8}{2} = 6.5" />
+                <p>Step 3: The upper half is 12, 14, 17, 20. The upper quartile is the average of 14 and 17:</p>
+                <BlockMath math="Q_3 = \frac{14 + 17}{2} = 15.5" />
+                <p>Step 4: The IQR is <InlineMath math="Q_3 - Q_1" />:</p>
+                <BlockMath math="\text{IQR} = 15.5 - 6.5 = 9" />
+                <p><strong>Answer:</strong> median = 10.5, IQR = 9.</p>
+              </div>
+            )
           }
         ]
       },
@@ -3494,6 +3526,16 @@ export const national5MathsData: Section[] = [
             <p>To find the equation of your line of best fit, you select two points that lie <strong>exactly</strong> on the line (not necessarily data points). You then calculate the gradient (<InlineMath math="m" />) and use <InlineMath math="y - b = m(x - a)" /> to find the equation in terms of the variables on the axes.</p>
             <h4 className="text-white font-semibold">Estimating</h4>
             <p>Once you have the linear model (the equation), you must be able to use it to estimate a <InlineMath math="y" />-value for a given <InlineMath math="x" />-value (or use transposition to find <InlineMath math="x" /> given <InlineMath math="y" />).</p>
+            <p><strong>The Golden Rule:</strong> pick two points that lie exactly on the <em>line</em> (not raw data points), find the gradient, then use <InlineMath math="y - b = m(x - a)" /> — and rename <InlineMath math="x" /> and <InlineMath math="y" /> to the letters on the axes. To estimate, substitute into the finished equation; to reverse it, substitute and rearrange.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Points on the line:</strong> read the two points off the drawn line where it crosses grid corners — do not use scattered data points.</li>
+                <li><strong>Rename the variables:</strong> the answer must be in the question's letters (e.g. <InlineMath math="W" /> and <InlineMath math="A" />), not <InlineMath math="x" /> and <InlineMath math="y" />.</li>
+                <li><strong>Negative gradient:</strong> a downward line has a negative gradient — keep the sign through the working.</li>
+                <li><strong>Simplest form:</strong> tidy the equation fully; often the constant cancels to give a clean result.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3550,6 +3592,26 @@ export const national5MathsData: Section[] = [
                 <BlockMath math="V - 8000 = -1500A + 3000" />
                 <BlockMath math="V = -1500A + 11000" />
                 <p>Answer: <InlineMath math="V = -1500A + 11000" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "lobf-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together (reverse estimate)</strong></p>
+                <p>Using the equation <InlineMath math="V = -1500A + 11000" /> from above, estimate the age of a car whose value is £5000.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: This time the value <InlineMath math="V" /> is known, so substitute <InlineMath math="V = 5000" /> and solve for <InlineMath math="A" />:</p>
+                <BlockMath math="5000 = -1500A + 11000" />
+                <p>Step 2: Rearrange — subtract 11000 from both sides:</p>
+                <BlockMath math="-6000 = -1500A" />
+                <p>Step 3: Divide by <InlineMath math="-1500" />:</p>
+                <BlockMath math="A = 4" />
+                <p><strong>Answer:</strong> the car is estimated to be 4 years old.</p>
               </div>
             )
           }
