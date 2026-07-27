@@ -14,10 +14,10 @@ export const national5MathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
-              Candidates must be able to perform operations and combinations of operations on fractions, including mixed numbers (e.g., 3<sup className="text-xs">1</sup>/<sub className="text-xs">2</sub>, 1<sup className="text-xs">1</sup>/<sub className="text-xs">3</sub>, 1<sup className="text-xs">1</sup>/<sub className="text-xs">4</sub>).
+              Candidates must be able to perform operations and combinations of operations on fractions, including mixed numbers (e.g., <InlineMath math="3\tfrac{1}{2}" />, <InlineMath math="1\tfrac{1}{3}" />, <InlineMath math="1\tfrac{1}{4}" />).
             </p>
             <p>
-              You must be able to add and subtract simple fractions (e.g., <sup className="text-xs">1</sup>/<sub className="text-xs">2</sub> + <sup className="text-xs">1</sup>/<sub className="text-xs">4</sub> and <sup className="text-xs">2</sup>/<sub className="text-xs">3</sub> &minus; <sup className="text-xs">1</sup>/<sub className="text-xs">3</sub>).
+              You must be able to add and subtract simple fractions (e.g., <InlineMath math="\tfrac{1}{2} + \tfrac{1}{4}" /> and <InlineMath math="\tfrac{2}{3} - \tfrac{1}{3}" />).
             </p>
             <p>
               A key skill is understanding the interrelationships between fractions, decimal fractions, and percentages to choose an efficient route to a solution.
@@ -40,14 +40,14 @@ export const national5MathsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p><strong>Adding Mixed Numbers</strong></p>
-                <p>Calculate 2 1/3 + 1 1/4.</p>
+                <p>Calculate <InlineMath math="2\tfrac{1}{3} + 1\tfrac{1}{4}" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Add the whole numbers: 2 + 1 = 3.</p>
-                <p>Step 2: Find a common denominator for the fractions (12): 4/12 + 3/12 = 7/12.</p>
-                <p><strong>Answer:</strong> 3 7/12.</p>
+                <p>Step 1: Add the whole numbers: <InlineMath math="2 + 1 = 3" />.</p>
+                <p>Step 2: Find a common denominator for the fractions (12): <InlineMath math="\tfrac{4}{12} + \tfrac{3}{12} = \tfrac{7}{12}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="3\tfrac{7}{12}" />.</p>
               </div>
             )
           },
@@ -56,14 +56,14 @@ export const national5MathsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p><strong>Dividing Fractions</strong></p>
-                <p>Calculate 3/4 &divide; 2/5.</p>
+                <p>Calculate <InlineMath math="\tfrac{3}{4} \div \tfrac{2}{5}" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Flip the second fraction and multiply (keep, change, flip): 3/4 &times; 5/2.</p>
-                <p>Step 2: Multiply numerators and denominators: 15/8.</p>
-                <p><strong>Answer:</strong> 1 7/8.</p>
+                <p>Step 1: Flip the second fraction and multiply (keep, change, flip): <InlineMath math="\tfrac{3}{4} \times \tfrac{5}{2}" />.</p>
+                <p>Step 2: Multiply numerators and denominators: <InlineMath math="\tfrac{15}{8}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="1\tfrac{7}{8}" />.</p>
               </div>
             )
           }
@@ -111,7 +111,7 @@ export const national5MathsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p>Step 1: Find the multiplier: 100% + 4% = 104% = 1.04.</p>
-                <p>Step 2: Apply the power for 3 years: 150,000 &times; 1.04<sup>3</sup>.</p>
+                <p>Step 2: Apply the power for 3 years: <InlineMath math="150{,}000 \times 1.04^3" />.</p>
                 <p><strong>Answer:</strong> £168,729.60.</p>
               </div>
             )
@@ -127,7 +127,7 @@ export const national5MathsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p>Step 1: Equate the sale price to the percentage of the original: 80% = £60.</p>
-                <p>Step 2: Find 1% by dividing by 80, then multiply by 100 to find the original (100%): (60 / 80) &times; 100.</p>
+                <p>Step 2: Find 1% by dividing by 80, then multiply by 100 to find the original (100%): <InlineMath math="\tfrac{60}{80} \times 100" />.</p>
                 <p><strong>Answer:</strong> £75.</p>
               </div>
             )
@@ -146,13 +146,10 @@ export const national5MathsData: Section[] = [
             <p>
               Exact values are an important method of communication in maths, science, and technology.
             </p>
-            <p className="flex items-center space-x-2">
-              <span>The key rules to memorise are:</span>
-            </p>
-            <div className="flex flex-wrap gap-6 items-center bg-slate-800 p-4 rounded-lg">
+            <p>The key rules to memorise are:</p>
+            <div className="bg-slate-800 p-4 rounded-lg space-y-3">
                <BlockMath math="\sqrt{ab} = \sqrt{a} \times \sqrt{b}" />
-               <span>and</span>
-               <BlockMath math="\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}" />
+               <BlockMath math="\sqrt{\dfrac{a}{b}} = \dfrac{\sqrt{a}}{\sqrt{b}}" />
             </div>
             <p><strong>The Golden Rule:</strong> to simplify, split off the <em>largest</em> square factor. To rationalise, multiply top and bottom by the surd on the denominator. Both leave the value unchanged — you are only rewriting it in a tidier form.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
@@ -313,13 +310,13 @@ export const national5MathsData: Section[] = [
             id: "scientific-notation-ex1",
             question: (
               <div className="space-y-2">
-                <p><strong>Percentage Calculation with Scientific Notation (From SQA Marking Instructions)</strong></p>
+                <p><strong>Percentage of a Number in Scientific Notation</strong></p>
                 <p>Calculate 6.1% of <InlineMath math="3.27 \times 10^{-22}" /> grams.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Convert the percentage to a decimal or fraction: 6.1 / 100.</p>
+                <p>Step 1: Convert the percentage to a fraction: <InlineMath math="\tfrac{6.1}{100}" />.</p>
                 <p>Step 2: Multiply by the standard form number: <InlineMath math="\frac{6.1}{100} \times 3.27 \times 10^{-22}" />.</p>
                 <p><strong>Answer:</strong> <InlineMath math="1.99 \times 10^{-23}" /> grams.</p>
               </div>
@@ -329,14 +326,15 @@ export const national5MathsData: Section[] = [
             id: "scientific-notation-ex2",
             question: (
               <div className="space-y-2">
-                <p><strong>Division (Outside Knowledge)</strong></p>
-                <p>Calculate <BlockMath math="\frac{8 \times 10^5}{2 \times 10^2}" />.</p>
+                <p><strong>Dividing in Scientific Notation</strong></p>
+                <p>Calculate the following, giving your answer in scientific notation:</p>
+                <BlockMath math="\frac{8 \times 10^5}{2 \times 10^2}" />
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Divide the regular numbers: 8 &divide; 2 = 4.</p>
-                <p>Step 2: Subtract the indices for the powers of 10: 10<sup>5</sup> &divide; 10<sup>2</sup> = 10<sup>3</sup>.</p>
+                <p>Step 1: Divide the front numbers: <InlineMath math="8 \div 2 = 4" />.</p>
+                <p>Step 2: Subtract the indices for the powers of 10: <InlineMath math="10^5 \div 10^2 = 10^3" />.</p>
                 <p><strong>Answer:</strong> <InlineMath math="4 \times 10^3" />.</p>
               </div>
             )
