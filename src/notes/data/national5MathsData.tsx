@@ -2759,6 +2759,16 @@ export const national5MathsData: Section[] = [
             <p>The formula provided on the exam sheet is:</p>
             <BlockMath math="A = \frac{1}{2}ab\sin C" />
             <p>Candidates may also be required to work backwards from a given area to calculate a missing angle or side.</p>
+            <p><strong>The Golden Rule:</strong> the angle must be the one <em>between</em> the two sides you use (the included angle). Working backwards, substitute the known values and rearrange for <InlineMath math="\sin C" /> — and if the angle is described as obtuse, take <InlineMath math="180^\circ" /> minus the calculator value.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Wrong angle:</strong> the formula needs the angle <em>between</em> the two sides — not just any angle in the triangle.</li>
+                <li><strong>The obtuse case:</strong> <InlineMath math="\sin C = \sin(180^\circ - C)" />, so a value like <InlineMath math="\sin C = 0.5" /> gives both <InlineMath math="30^\circ" /> and <InlineMath math="150^\circ" /> — pick the one the question asks for.</li>
+                <li><strong>Regular polygons:</strong> split them into identical triangles from the centre and add the areas.</li>
+                <li><strong>Rounding:</strong> keep full accuracy in <InlineMath math="\sin" /> until the final line.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2816,6 +2826,25 @@ export const national5MathsData: Section[] = [
                 <p>Answer: <InlineMath math="C = 180^\circ - 30^\circ = 150^\circ" />.</p>
               </div>
             )
+          },
+          {
+            id: "area-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together (regular polygon)</strong></p>
+                <p>Calculate the area of a regular hexagon with side length 8 cm, giving your answer as an exact surd.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: A regular hexagon splits into 6 identical triangles from the centre. Each has two sides of 8 cm (the radius equals the side for a hexagon) and an included angle of <InlineMath math="360^\circ \div 6 = 60^\circ" />.</p>
+                <p>Step 2: Area of one triangle, using <InlineMath math="\sin 60^\circ = \frac{\sqrt{3}}{2}" />:</p>
+                <BlockMath math="\frac{1}{2} \times 8 \times 8 \times \frac{\sqrt{3}}{2} = 16\sqrt{3}" />
+                <p>Step 3: Multiply by the 6 triangles:</p>
+                <BlockMath math="6 \times 16\sqrt{3} = 96\sqrt{3}" />
+                <p><strong>Answer:</strong> <InlineMath math="96\sqrt{3} \approx 166.3" /> cm².</p>
+              </div>
+            )
           }
         ]
       },
@@ -2828,6 +2857,16 @@ export const national5MathsData: Section[] = [
             <p>The Sine Rule is used for non-right-angled triangles when you know one corresponding side-and-angle pair, plus one additional piece of information.</p>
             <p>The formula provided on the exam sheet is:</p>
             <BlockMath math="\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}" />
+            <p><strong>The Golden Rule:</strong> use the Sine Rule when you have a <em>matching pair</em> — a side and its opposite angle — plus one more piece of information. Put the unknown on top: use the fractions the &ldquo;normal&rdquo; way up to find a side, and flip them (angles on top) to find an angle.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Side opposite angle:</strong> each side pairs with the angle <em>opposite</em> it, not the one next to it.</li>
+                <li><strong>Third angle:</strong> if you are given two angles, the third is <InlineMath math="180^\circ" /> minus their sum — find it if you need its opposite side.</li>
+                <li><strong>Application problems:</strong> a &ldquo;height from two angles of elevation&rdquo; question needs the Sine Rule in one triangle first, then basic trig for the height.</li>
+                <li><strong>Rounding:</strong> keep full accuracy from the calculator until the very end.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2883,6 +2922,25 @@ export const national5MathsData: Section[] = [
                 <p>Answer: <InlineMath math="a \approx 11.1\text{ m}" />.</p>
               </div>
             )
+          },
+          {
+            id: "sine-rule-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (height from two angles)</strong></p>
+                <p>Two observers A and B stand 40 m apart on level ground, in line with the point directly below a balloon. The angle of elevation of the balloon is 30&deg; from A and 45&deg; from B (B is nearer). Calculate the height of the balloon.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Work in the triangle ABD, where D is the balloon. The angle at A is 30&deg;. Because A is on the far side of B, the angle DBA is the supplement of the 45&deg; elevation: <InlineMath math="180^\circ - 45^\circ = 135^\circ" />.</p>
+                <p>Step 2: The third angle is <InlineMath math="\angle ADB = 180^\circ - 30^\circ - 135^\circ = 15^\circ" />. Use the Sine Rule to find BD:</p>
+                <BlockMath math="\frac{BD}{\sin 30^\circ} = \frac{40}{\sin 15^\circ} \implies BD = \frac{40\sin 30^\circ}{\sin 15^\circ} \approx 77.3 \text{ m}" />
+                <p>Step 3: Now drop to the right-angled triangle under B. The height is <InlineMath math="BD \sin 45^\circ" />:</p>
+                <BlockMath math="\text{height} = 77.3 \times \sin 45^\circ \approx 54.7 \text{ m}" />
+                <p><strong>Answer:</strong> approximately 54.7 m.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2896,6 +2954,16 @@ export const national5MathsData: Section[] = [
             <p>Both forms of the formula are provided on the exam sheet:</p>
             <BlockMath math="a^2 = b^2 + c^2 - 2bc\cos A" />
             <BlockMath math="\cos A = \frac{b^2 + c^2 - a^2}{2bc}" />
+            <p><strong>The Golden Rule:</strong> reach for the Cosine Rule when the Sine Rule cannot start — that is, when you have <em>two sides and the angle between them</em> (to find the third side), or <em>all three sides</em> (to find any angle). The angle in the first form is always opposite the side you are finding.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Order of operations:</strong> work out <InlineMath math="2bc\cos A" /> as one quantity, then subtract — don't subtract before multiplying.</li>
+                <li><strong>Square-rooting:</strong> the formula gives <InlineMath math="a^2" />; remember the final square root to get <InlineMath math="a" />.</li>
+                <li><strong>Negative cosine = obtuse:</strong> if <InlineMath math="\cos A" /> comes out negative, the angle is obtuse (over 90&deg;) — the calculator handles this automatically.</li>
+                <li><strong>Largest angle:</strong> the biggest angle is opposite the longest side — a quick way to pick which angle to find.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2963,6 +3031,16 @@ export const national5MathsData: Section[] = [
             <p>Bearings use trigonometry (often the sine or cosine rules) to calculate a distance or direction.</p>
             <p>Bearings are always measured clockwise from North and are expressed as three digits (e.g., <InlineMath math="045^\circ" />).</p>
             <p>A common error candidates make is treating non-right-angled bearing scenarios as right-angled triangles, which leads to incorrectly using basic SOH-CAH-TOA or Pythagoras instead of the sine/cosine rules.</p>
+            <p><strong>The Golden Rule:</strong> always sketch the situation with a North line at each point. Use the North lines and the angle facts (angles round a point, alternate angles between parallel Norths) to find the angle inside the triangle, then apply the Sine or Cosine Rule. To go back the other way, a <strong>back bearing</strong> differs from the original by <InlineMath math="180^\circ" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Three figures:</strong> always write bearings with three digits, e.g. <InlineMath math="072^\circ" />, not <InlineMath math="72^\circ" />.</li>
+                <li><strong>Back bearing:</strong> the reverse direction is <InlineMath math="\pm 180^\circ" /> — add 180 if the bearing is under 180, subtract if it is over.</li>
+                <li><strong>Triangle angle vs bearing:</strong> the angle you calculate inside the triangle is usually <em>not</em> the bearing — combine it with the North line to get the actual bearing.</li>
+                <li><strong>Not right-angled:</strong> unless a right angle is given, use the Sine or Cosine Rule, not SOH-CAH-TOA.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3015,6 +3093,23 @@ export const national5MathsData: Section[] = [
                 <BlockMath math="BC^2 = 20^2 + 30^2 - 2(20)(30)\cos(80^\circ)" />
                 <BlockMath math="BC^2 \approx 400 + 900 - 1200(0.1736) \approx 1091.6" />
                 <p>Answer: <InlineMath math="BC \approx 33.0\text{ miles}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "bearings-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Back Bearing</strong></p>
+                <p>The bearing of a harbour H from a boat B is <InlineMath math="118^\circ" />. Calculate the bearing of the boat B from the harbour H.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The reverse (back) bearing differs by <InlineMath math="180^\circ" />. Since the original bearing <InlineMath math="118^\circ" /> is less than <InlineMath math="180^\circ" />, add:</p>
+                <BlockMath math="118^\circ + 180^\circ = 298^\circ" />
+                <p>Step 2: Check it is a valid three-figure bearing (between 000&deg; and 360&deg;) — it is.</p>
+                <p><strong>Answer:</strong> the bearing of B from H is <InlineMath math="298^\circ" />.</p>
               </div>
             )
           }
