@@ -2440,8 +2440,19 @@ export const national5MathsData: Section[] = [
               <p>You must use circle properties to find missing angles. Key rules:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>A tangent meets a radius at exactly 90&deg;.</li>
+                <li>An angle in a semicircle (standing on a diameter) is exactly 90&deg;.</li>
                 <li>The perpendicular bisector of any chord always passes through the centre of the circle.</li>
-                <li>Any triangle formed by a chord and the centre of the circle is isosceles.</li>
+                <li>Any triangle formed by two radii is isosceles, so its base angles are equal.</li>
+              </ul>
+            </div>
+            <p><strong>The Golden Rule:</strong> in a circle problem, hunt for the special angles first — a tangent–radius right angle, an angle in a semicircle, or the equal base angles of an isosceles radius triangle. Mark them on the diagram, then chase the missing angle using &ldquo;angles in a triangle sum to 180&deg;&rdquo;.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Interior vs exterior:</strong> for a regular polygon, find the exterior angle (<InlineMath math="360 \div n" />) first, then subtract from 180&deg; for the interior.</li>
+                <li><strong>Two radii are equal:</strong> that is why the triangle is isosceles — the two base angles are equal, which is often the key step.</li>
+                <li><strong>Angle in a semicircle:</strong> it is <InlineMath math="90^\circ" /> only when the triangle stands on a <em>diameter</em>.</li>
+                <li><strong>Give reasons:</strong> circle-geometry questions expect you to name the property you used, not just the number.</li>
               </ul>
             </div>
           </div>
@@ -2478,6 +2489,23 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> PQ = 12 cm.</p>
               </div>
             )
+          },
+          {
+            id: "angles-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (angle in a semicircle)</strong></p>
+                <p>A, B and C lie on a circle, and AB is a diameter. Angle CAB is 34&deg;. Calculate the size of angle ABC.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Because AB is a diameter and C is on the circle, angle ACB is an angle in a semicircle, so <InlineMath math="\angle ACB = 90^\circ" />.</p>
+                <p>Step 2: The three angles of triangle ABC add to 180&deg;:</p>
+                <BlockMath math="\angle ABC = 180^\circ - 90^\circ - 34^\circ" />
+                <p><strong>Answer:</strong> angle ABC = 56&deg;.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2495,9 +2523,35 @@ export const national5MathsData: Section[] = [
               <li><strong>Area Factor:</strong> The Area Factor is equal to the <InlineMath math="(\text{Scale Factor})^2" />.</li>
               <li><strong>Volume Factor:</strong> The Volume Factor is equal to the <InlineMath math="(\text{Scale Factor})^3" />.</li>
             </ul>
+            <p><strong>The Golden Rule:</strong> find the linear scale factor first, as <InlineMath math="\frac{\text{new length}}{\text{old length}}" />. For lengths, multiply by the scale factor; for <em>areas</em> multiply by its square; for <em>volumes</em> multiply by its cube.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Using the linear factor for area/volume:</strong> areas scale by <InlineMath math="k^2" /> and volumes by <InlineMath math="k^3" />, not by <InlineMath math="k" />.</li>
+                <li><strong>Scaling the wrong way:</strong> to go from small to large multiply (factor &gt; 1); from large to small the factor is less than 1.</li>
+                <li><strong>Matching corresponding sides:</strong> the scale factor must use a pair of <em>corresponding</em> sides — line the two shapes up the same way round.</li>
+                <li><strong>Proving similar:</strong> shapes are similar only if <em>every</em> pair of corresponding sides shares the same ratio.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
+          {
+            id: "similarity-ex-length",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Similar Triangles (lengths)</strong></p>
+                <p>Triangles ABC and DEF are mathematically similar. Side AB = 6 cm corresponds to DE = 9 cm, and BC = 8 cm. Calculate the length of the corresponding side EF.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Find the linear scale factor from the matching pair: <InlineMath math="\frac{DE}{AB} = \frac{9}{6} = 1.5" />.</p>
+                <p>Step 2: EF corresponds to BC, so multiply by the scale factor: <InlineMath math="EF = 8 \times 1.5" />.</p>
+                <p><strong>Answer:</strong> EF = 12 cm.</p>
+              </div>
+            )
+          },
           {
             id: "similarity-ex1",
             question: (
@@ -2548,6 +2602,20 @@ export const national5MathsData: Section[] = [
               <h4 className="text-white font-semibold">Magnitude</h4>
               <p>The magnitude (length) of a vector, denoted as |a|, is calculated using Pythagoras' theorem. For a 3D vector <InlineMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix}" />, the magnitude is <InlineMath math="\sqrt{x^2 + y^2 + z^2}" />.</p>
             </div>
+            <div>
+              <h4 className="text-white font-semibold">Journeys (Pathways)</h4>
+              <p>A vector between two points can be built from a &ldquo;journey&rdquo; along other vectors, added nose-to-tail. Travelling a vector backwards reverses its sign, so <InlineMath math="\overrightarrow{BA} = -\overrightarrow{AB}" />.</p>
+            </div>
+            <p><strong>The Golden Rule:</strong> to add or subtract in component form, work one row (component) at a time. For a journey between two points, take any route along known vectors — adding them nose-to-tail — and reverse the sign of any vector travelled backwards.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Reverse direction:</strong> <InlineMath math="\overrightarrow{BA}" /> is the negative of <InlineMath math="\overrightarrow{AB}" /> — swapping the letters flips every sign.</li>
+                <li><strong>Scalar multiplies every component:</strong> <InlineMath math="2\mathbf{u}" /> doubles all of the components, not just the first.</li>
+                <li><strong>Magnitude of a surd:</strong> the magnitude is often not a whole number — simplify the surd rather than rounding, if an exact answer is asked for.</li>
+                <li><strong>Negative components squared:</strong> in a magnitude, <InlineMath math="(-3)^2 = 9" /> is positive.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2582,6 +2650,39 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> <InlineMath math="|p| = 7" />.</p>
               </div>
             )
+          },
+          {
+            id: "vectors-ex-magsurd",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Magnitude as a Surd</strong></p>
+                <p>Find the magnitude of the vector <InlineMath math="v = \begin{pmatrix} 6 \\ -3 \end{pmatrix}" />, giving your answer as a surd in its simplest form.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Apply the magnitude formula: <InlineMath math="|v| = \sqrt{6^2 + (-3)^2} = \sqrt{36 + 9} = \sqrt{45}" />.</p>
+                <p>Step 2: Simplify the surd by taking out the largest square factor (9): <InlineMath math="\sqrt{45} = \sqrt{9 \times 5} = 3\sqrt{5}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="|v| = 3\sqrt{5}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "vectors-ex-pathway",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together (journeys)</strong></p>
+                <p>ABCD is a parallelogram with <InlineMath math="\overrightarrow{AB} = \mathbf{u}" /> and <InlineMath math="\overrightarrow{AD} = \mathbf{v}" />. Express <InlineMath math="\overrightarrow{BD}" /> in terms of <InlineMath math="\mathbf{u}" /> and <InlineMath math="\mathbf{v}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Plan a journey from B to D along known vectors. Go B → A → D, adding the two steps nose-to-tail: <InlineMath math="\overrightarrow{BD} = \overrightarrow{BA} + \overrightarrow{AD}" />.</p>
+                <p>Step 2: The first step goes backwards along <InlineMath math="\overrightarrow{AB}" />, so <InlineMath math="\overrightarrow{BA} = -\mathbf{u}" />, and <InlineMath math="\overrightarrow{AD} = \mathbf{v}" />:</p>
+                <BlockMath math="\overrightarrow{BD} = -\mathbf{u} + \mathbf{v}" />
+                <p><strong>Answer:</strong> <InlineMath math="\overrightarrow{BD} = \mathbf{v} - \mathbf{u}" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2594,6 +2695,16 @@ export const national5MathsData: Section[] = [
             <p>
               You must be able to determine the x, y, and z coordinates of a specific point from a diagram representing a 3-dimensional object (like a cuboid or pyramid).
             </p>
+            <p><strong>The Golden Rule:</strong> read each coordinate as how far the point is along the <InlineMath math="x" />, then <InlineMath math="y" />, then <InlineMath math="z" /> axis from the origin. For a midpoint or a centre, take the <em>average</em> of the coordinates of the two ends (or of the corners).</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Order matters:</strong> always give coordinates as <InlineMath math="(x, y, z)" /> in that order.</li>
+                <li><strong>Points on the floor:</strong> a point on the base has <InlineMath math="z = 0" />; a point directly above another shares its <InlineMath math="x" /> and <InlineMath math="y" />.</li>
+                <li><strong>Midpoints:</strong> the midpoint of an edge is the average of its two end coordinates — halve each difference, don't guess.</li>
+                <li><strong>Centre of a base:</strong> the centre is the average of the base corners, which usually gives half-values.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2611,6 +2722,22 @@ export const national5MathsData: Section[] = [
                 <p>Step 2: Travel along the y-axis to the end of the width: y = 6.</p>
                 <p>Step 3: Travel up the z-axis to the ceiling: z = 3.</p>
                 <p><strong>Answer:</strong> (8, 6, 3).</p>
+              </div>
+            )
+          },
+          {
+            id: "3d-coord-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Coordinates of a Midpoint</strong></p>
+                <p>A cuboid sits with one corner at the origin. It measures 8 units along the <InlineMath math="x" />-axis, 5 units along the <InlineMath math="y" />-axis and 6 units along the <InlineMath math="z" />-axis. Find the coordinates of the point M at the <em>centre of the top face</em>.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The top face is at full height, so <InlineMath math="z = 6" />.</p>
+                <p>Step 2: The centre is halfway across the face in both horizontal directions — average each: <InlineMath math="x = \tfrac{8}{2} = 4" /> and <InlineMath math="y = \tfrac{5}{2} = 2.5" />.</p>
+                <p><strong>Answer:</strong> M is <InlineMath math="(4,\ 2.5,\ 6)" />.</p>
               </div>
             )
           }
