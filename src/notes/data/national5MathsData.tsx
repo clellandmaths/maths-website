@@ -1643,16 +1643,63 @@ export const national5MathsData: Section[] = [
               You must be able to construct simultaneous equations from a written context and solve them algebraically or graphically.
             </p>
             <p>
-              Contexts often include real-life situations such as comparing costs (e.g., hiring a car, mobile phone charges) or finding the exact intersection of moving objects.
+              Contexts often include real-life situations such as comparing costs (e.g., hiring a car, mobile phone charges) or finding the exact intersection of two lines.
             </p>
+            <p><strong>The Golden Rule:</strong> to eliminate a variable by adding or subtracting, its coefficients must match. Scale one or both equations until they do — then add if the matching signs are opposite, subtract if they are the same. Always substitute back to find the second variable.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Add vs subtract:</strong> if the matching terms have the <em>same</em> sign, subtract; if <em>opposite</em> signs, add. Getting this wrong is the usual error.</li>
+                <li><strong>Only scaling one equation:</strong> sometimes both equations must be multiplied (by different numbers) to make a pair of coefficients match.</li>
+                <li><strong>Forgetting the second variable:</strong> finding one value is half the answer — substitute back to get the other.</li>
+                <li><strong>Sign slips when subtracting:</strong> subtracting a negative becomes an addition, e.g. <InlineMath math="7 - (-2) = 9" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
           {
+            id: "simultaneous-ex-elim",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Elimination (coefficients already match)</strong></p>
+                <p>Solve the system <InlineMath math="3x + 2y = 12" /> and <InlineMath math="5x - 2y = 4" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The <InlineMath math="y" /> terms are <InlineMath math="+2y" /> and <InlineMath math="-2y" /> — opposite signs, so <em>add</em> the equations to eliminate <InlineMath math="y" />:</p>
+                <BlockMath math="(3x + 5x) + (2y - 2y) = 12 + 4 \implies 8x = 16" />
+                <p>Step 2: So <InlineMath math="x = 2" />. Substitute back into the first equation:</p>
+                <BlockMath math="3(2) + 2y = 12 \implies 2y = 6 \implies y = 3" />
+                <p><strong>Answer:</strong> <InlineMath math="x = 2,\ y = 3" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "simultaneous-ex-scale",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Elimination (scaling both equations)</strong></p>
+                <p>Solve the system <InlineMath math="2x + 3y = 13" /> and <InlineMath math="3x + 2y = 12" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: No coefficients match, so scale both to make the <InlineMath math="x" /> terms equal. Multiply the first by 3 and the second by 2:</p>
+                <BlockMath math="6x + 9y = 39 \qquad 6x + 4y = 24" />
+                <p>Step 2: The <InlineMath math="x" /> terms now match with the same sign, so <em>subtract</em>:</p>
+                <BlockMath math="(9y - 4y) = 39 - 24 \implies 5y = 15 \implies y = 3" />
+                <p>Step 3: Substitute back into <InlineMath math="2x + 3y = 13" />: <InlineMath math="2x + 9 = 13 \implies x = 2" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = 2,\ y = 3" />.</p>
+              </div>
+            )
+          },
+          {
             id: "simultaneous-ex1",
             question: (
               <div className="space-y-2">
-                <p><strong>Constructing and Solving</strong></p>
+                <p><strong>🎯 Exam-style (constructing from a context)</strong></p>
                 <p>"4 apples and 2 bananas cost £2.40. 3 apples and 4 bananas cost £2.30." Find the cost of one apple (a) and one banana (b).</p>
               </div>
             ),
@@ -1683,6 +1730,16 @@ export const national5MathsData: Section[] = [
             <p>
               Once in this form, you can immediately identify the exact coordinates of the parabola's turning point, which are given by <InlineMath math="(-p, q)" />.
             </p>
+            <p><strong>The Golden Rule:</strong> <InlineMath math="p" /> is always <em>half</em> the coefficient of <InlineMath math="x" />. Write the bracket <InlineMath math="(x + p)^2" />, then subtract <InlineMath math="p^2" /> to cancel the extra it introduces, and finally add the original constant.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting to subtract <InlineMath math="p^2" />:</strong> <InlineMath math="(x + p)^2" /> expands to include an extra <InlineMath math="p^2" />, which must be subtracted back off.</li>
+                <li><strong>Sign of <InlineMath math="p" />:</strong> a negative <InlineMath math="x" /> coefficient gives a negative <InlineMath math="p" />, e.g. <InlineMath math="x^2 - 6x" /> leads to <InlineMath math="(x - 3)^2" />.</li>
+                <li><strong>Odd coefficients:</strong> if the <InlineMath math="x" /> coefficient is odd, <InlineMath math="p" /> is a fraction — keep it exact, do not round.</li>
+                <li><strong>Turning point sign:</strong> from <InlineMath math="(x + p)^2 + q" /> the turning point is <InlineMath math="(-p, q)" /> — the <InlineMath math="x" />-coordinate has the opposite sign to <InlineMath math="p" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -1716,6 +1773,24 @@ export const national5MathsData: Section[] = [
                 <p>Step 2: Extract coordinates <InlineMath math="(-p, q)" />. <strong>Answer:</strong> The turning point is (3, 1).</p>
               </div>
             )
+          },
+          {
+            id: "completing-square-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Odd Coefficient (fractions)</strong></p>
+                <p>Express <InlineMath math="x^2 + 5x + 2" /> in the form <InlineMath math="(x + p)^2 + q" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Half of 5 is <InlineMath math="\tfrac{5}{2}" /> — a fraction, which is fine. Write the bracket: <InlineMath math="\left(x + \tfrac{5}{2}\right)^2" />.</p>
+                <p>Step 2: Subtract <InlineMath math="\left(\tfrac{5}{2}\right)^2 = \tfrac{25}{4}" /> and add the original constant 2:</p>
+                <BlockMath math="\left(x + \tfrac{5}{2}\right)^2 - \tfrac{25}{4} + 2" />
+                <p>Step 3: Combine the constants — <InlineMath math="2 = \tfrac{8}{4}" />, so <InlineMath math="-\tfrac{25}{4} + \tfrac{8}{4} = -\tfrac{17}{4}" />:</p>
+                <p><strong>Answer:</strong> <InlineMath math="\left(x + \tfrac{5}{2}\right)^2 - \tfrac{17}{4}" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -1738,8 +1813,19 @@ export const national5MathsData: Section[] = [
               <p>The expression <InlineMath math="b^2 - 4ac" /> is the discriminant. It dictates the nature of the roots:</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li><InlineMath math="b^2 - 4ac > 0" />: 2 real distinct roots.</li>
-                <li><InlineMath math="b^2 - 4ac = 0" />: 1 repeated real root.</li>
+                <li><InlineMath math="b^2 - 4ac = 0" />: 1 repeated real root (equal roots).</li>
                 <li><InlineMath math="b^2 - 4ac < 0" />: No real roots.</li>
+              </ul>
+            </div>
+            <p><strong>The Golden Rule:</strong> to solve, always make one side <strong>zero</strong> first, then factorise if you can and use the formula only if you cannot. To describe the roots without solving, evaluate the discriminant <InlineMath math="b^2 - 4ac" />. Reading a graph from vertex form <InlineMath math="y = a(x + p)^2 + q" />, the turning point is <InlineMath math="(-p, q)" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Not setting to zero:</strong> <InlineMath math="16t - t^2 = 60" /> must be rearranged to <InlineMath math="t^2 - 16t + 60 = 0" /> before factorising.</li>
+                <li><strong>Formula sign errors:</strong> substitute <InlineMath math="a, b, c" /> with their signs. If <InlineMath math="c = -4" /> then <InlineMath math="-4ac" /> becomes <InlineMath math="+" /> — mishandling this is the most common formula slip.</li>
+                <li><strong>Discriminant vs roots:</strong> <InlineMath math="b^2 - 4ac" /> tells you the <em>nature</em> of the roots, not the roots themselves.</li>
+                <li><strong>Rejecting impossible answers:</strong> in a context (a length, a number of items), discard any negative or otherwise impossible solution — and say why.</li>
+                <li><strong>Use the formula when asked for decimals:</strong> &ldquo;correct to 2 d.p.&rdquo; signals the quadratic does not factorise — go straight to the formula.</li>
               </ul>
             </div>
           </div>
@@ -1749,14 +1835,14 @@ export const national5MathsData: Section[] = [
             id: "quadratics-ex1",
             question: (
               <div className="space-y-2">
-                <p><strong>Factorising to Solve</strong></p>
+                <p><strong>Solve by Factorising (unitary)</strong></p>
                 <p>Solve <InlineMath math="x^2 - 8x + 15 = 0" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
                 <p>Step 1: Factorise the trinomial: <InlineMath math="(x - 3)(x - 5) = 0" />.</p>
-                <p>Step 2: Set each bracket to zero. <strong>Answer:</strong> <InlineMath math="x = 3" /> or <InlineMath math="x = 5" />.</p>
+                <p>Step 2: A product is zero when a factor is zero, so set each bracket to zero. <strong>Answer:</strong> <InlineMath math="x = 3" /> or <InlineMath math="x = 5" />.</p>
               </div>
             )
           },
@@ -1764,14 +1850,15 @@ export const national5MathsData: Section[] = [
             id: "quadratics-ex2",
             question: (
               <div className="space-y-2">
-                <p><strong>Using the Discriminant</strong></p>
-                <p>Determine the nature of the roots of <InlineMath math="2x^2 + 3x + 4 = 0" />.</p>
+                <p><strong>Solve by Factorising (non-unitary)</strong></p>
+                <p>Solve <InlineMath math="3x^2 - 5x - 2 = 0" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Identify <InlineMath math="a = 2, b = 3, c = 4" /> and substitute into <InlineMath math="b^2 - 4ac" />: <InlineMath math="3^2 - 4(2)(4) = 9 - 32 = -23" />.</p>
-                <p><strong>Answer:</strong> Since <InlineMath math="-23 < 0" />, there are no real roots.</p>
+                <p>Step 1: Factorise, with first terms multiplying to <InlineMath math="3x^2" /> and last terms to <InlineMath math="-2" />: <InlineMath math="(3x + 1)(x - 2) = 0" />.</p>
+                <p>Step 2: Set each bracket to zero: <InlineMath math="3x + 1 = 0" /> gives <InlineMath math="x = -\tfrac{1}{3}" />, and <InlineMath math="x - 2 = 0" /> gives <InlineMath math="x = 2" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = -\tfrac{1}{3}" /> or <InlineMath math="x = 2" />.</p>
               </div>
             )
           },
@@ -1779,16 +1866,83 @@ export const national5MathsData: Section[] = [
             id: "quadratics-ex3",
             question: (
               <div className="space-y-2">
-                <p><strong>Using the Quadratic Formula</strong></p>
-                <p>Solve <InlineMath math="x^2 + 5x - 2 = 0" /> to 1 d.p.</p>
+                <p><strong>Rearranging First</strong></p>
+                <p>Solve <InlineMath math="x^2 = 3x + 10" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Identify <InlineMath math="a = 1, b = 5, c = -2" />.</p>
-                <p>Step 2: Substitute into the formula: <BlockMath math="x = \frac{-5 \pm \sqrt{5^2 - 4(1)(-2)}}{2(1)} = \frac{-5 \pm \sqrt{25 + 8}}{2} = \frac{-5 \pm \sqrt{33}}{2}" />.</p>
-                <p>Step 3: Calculate the two pathways: <InlineMath math="\frac{-5 + 5.74}{2}" /> and <InlineMath math="\frac{-5 - 5.74}{2}" />.</p>
-                <p><strong>Answer:</strong> <InlineMath math="x = 0.4" /> or <InlineMath math="x = -5.4" />.</p>
+                <p>Step 1: Make one side zero before doing anything else: <InlineMath math="x^2 - 3x - 10 = 0" />.</p>
+                <p>Step 2: Factorise: <InlineMath math="(x - 5)(x + 2) = 0" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = 5" /> or <InlineMath math="x = -2" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "quadratics-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Using the Quadratic Formula</strong></p>
+                <p>Solve <InlineMath math="2x^2 + 3x - 4 = 0" />, giving the solutions correct to 2 decimal places.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: It does not factorise, so use the formula with <InlineMath math="a = 2,\ b = 3,\ c = -4" />:</p>
+                <BlockMath math="x = \frac{-3 \pm \sqrt{3^2 - 4(2)(-4)}}{2(2)} = \frac{-3 \pm \sqrt{9 + 32}}{4} = \frac{-3 \pm \sqrt{41}}{4}" />
+                <p>Step 2: Since <InlineMath math="\sqrt{41} \approx 6.40" />, work out both values:</p>
+                <BlockMath math="x = \frac{-3 + 6.40}{4} = 0.85 \qquad \text{or} \qquad x = \frac{-3 - 6.40}{4} = -2.35" />
+                <p><strong>Answer:</strong> <InlineMath math="x = 0.85" /> or <InlineMath math="x = -2.35" /> (2 d.p.).</p>
+              </div>
+            )
+          },
+          {
+            id: "quadratics-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Nature of the Roots (discriminant)</strong></p>
+                <p>Determine the nature of the roots of <InlineMath math="2x^2 + 3x + 4 = 0" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Identify <InlineMath math="a = 2,\ b = 3,\ c = 4" /> and evaluate the discriminant <InlineMath math="b^2 - 4ac" />: <InlineMath math="3^2 - 4(2)(4) = 9 - 32 = -23" />.</p>
+                <p><strong>Answer:</strong> Since <InlineMath math="-23 < 0" />, the equation has <strong>no real roots</strong>.</p>
+              </div>
+            )
+          },
+          {
+            id: "quadratics-ex6",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Reading a Parabola (vertex form)</strong></p>
+                <p>A parabola has equation <InlineMath math="y = 2(x - 4)^2 + 3" />. State the coordinates of its turning point, its nature, and the equation of its axis of symmetry.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Compare with <InlineMath math="y = a(x + p)^2 + q" />. Here <InlineMath math="p = -4" /> and <InlineMath math="q = 3" />, so the turning point <InlineMath math="(-p, q)" /> is <InlineMath math="(4, 3)" />.</p>
+                <p>Step 2: The coefficient <InlineMath math="a = 2" /> is positive, so the parabola opens upwards — the turning point is a <strong>minimum</strong>.</p>
+                <p>Step 3: The axis of symmetry is the vertical line through the turning point.</p>
+                <p><strong>Answer:</strong> minimum turning point <InlineMath math="(4, 3)" />, axis of symmetry <InlineMath math="x = 4" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "quadratics-ex7",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (word problem)</strong></p>
+                <p>A rectangle has length <InlineMath math="(x + 3)" /> cm and breadth <InlineMath math="x" /> cm. Its area is <InlineMath math="40" /> cm². Show that <InlineMath math="x^2 + 3x - 40 = 0" />, and find the breadth.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Area is length × breadth, so <InlineMath math="x(x + 3) = 40" />. Expand and set to zero:</p>
+                <BlockMath math="x^2 + 3x = 40 \implies x^2 + 3x - 40 = 0" />
+                <p>Step 2: Factorise: <InlineMath math="(x + 8)(x - 5) = 0" />, giving <InlineMath math="x = -8" /> or <InlineMath math="x = 5" />.</p>
+                <p>Step 3: A breadth cannot be negative, so reject <InlineMath math="x = -8" />.</p>
+                <p><strong>Answer:</strong> the breadth is <InlineMath math="5" /> cm.</p>
               </div>
             )
           }
