@@ -13,7 +13,7 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The SQA explicitly states that candidates frequently lose valuable marks in Paper 1 (Non-calculator) because they do not demonstrate necessary basic number skills. It is essential to maintain and practise these non-calculator arithmetic skills to guarantee your marks.</p>
+            <p><strong>The Golden Rule:</strong> candidates frequently lose valuable marks in Paper 1 (the non-calculator paper) by not demonstrating solid basic number skills. It is essential to maintain and practise these non-calculator arithmetic skills to secure your marks.</p>
 
             <h4 className="text-white font-semibold">1. Decimals: Addition & Subtraction</h4>
             <p>You are expected to add and subtract numbers with up to two or three decimal places.</p>
@@ -41,12 +41,12 @@ export const national5AppsData: Section[] = [
             <p>Operations within brackets must always be dealt with first, followed by multiplication and division, before you attempt any addition or subtraction.</p>
 
             <h4 className="text-white font-semibold">4. Estimation & Checking Answers</h4>
-            <p>The SQA requires you to use your knowledge of rounding and estimation to check if your final answer makes logical sense in the context of the question. Always stop and ask yourself: "Does this answer seem sensible?"</p>
+            <p>You are expected to use your knowledge of rounding and estimation to check if your final answer makes logical sense in the context of the question. Always stop and ask yourself: "Does this answer seem sensible?"</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The Left-to-Right BODMAS Trap:</strong> The SQA frequently sets calculations that look tempting to read simply from left to right (e.g., <InlineMath math="27.2 - 4.6 \times 3 + 4.7" />). Candidates lose marks by ignoring the rule that multiplication must happen before addition and subtraction.</li>
+                <li><strong>The Left-to-Right BODMAS Trap:</strong> calculations are frequently set that look tempting to read simply from left to right (e.g., <InlineMath math="27.2 - 4.6 \times 3 + 4.7" />). Candidates lose marks by ignoring the rule that multiplication must happen before addition and subtraction.</li>
                 <li><strong>The Decimal Alignment Trap:</strong> When subtracting a decimal from a whole number (e.g., <InlineMath math="30 - 14.26" />), candidates often forget to write the whole number as 30.00 to allow them to borrow correctly.</li>
                 <li><strong>The Unrealistic Answer Trap:</strong> Candidates often calculate an answer but fail to check if it is logically possible (e.g., calculating that a person worked 150 hours in a single day). Always estimate your answer first to ensure your final calculation is realistic.</li>
                 <li><strong>The Money Formatting Trap:</strong> You will lose marks if you fail to write amounts of money to exactly two decimal places (e.g., writing £4.5 instead of £4.50).</li>
@@ -229,10 +229,10 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The SQA explicitly highlights that understanding the interrelationships between fractions, decimals, and percentages allows you to choose the most efficient route to a solution, saving you vital time in the non-calculator paper.</p>
+            <p><strong>The Golden Rule:</strong> understanding the interrelationships between fractions, decimals, and percentages lets you choose the most efficient route to a solution, saving you vital time in the non-calculator paper.</p>
             
             <h4 className="text-white font-semibold">1. Equivalences (Fractions, Decimals, and Percentages)</h4>
-            <p>You must be able to convert equivalences between fractions, decimals, and percentages seamlessly. For example, the SQA expects you to know that calculating 75% of an amount is exactly the same as finding <InlineMath math="\frac{3}{4}" /> of it. You must commit the following standard equivalences to memory:</p>
+            <p>You must be able to convert equivalences between fractions, decimals, and percentages seamlessly. For example, you are expected to know that calculating 75% of an amount is exactly the same as finding <InlineMath math="\frac{3}{4}" /> of it. You must commit the following standard equivalences to memory:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><InlineMath math="50\% = \frac{1}{2}" /></li>
               <li><InlineMath math="25\% = \frac{1}{4}" /></li>
@@ -331,7 +331,7 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The SQA explicitly encourages candidates to use the most efficient strategy available when answering compound percentage questions. You must calculate compound percentages using a decimal multiplier and a power rather than using a slow, step-by-step, year-by-year approach.</p>
+            <p><strong>The Golden Rule:</strong> use the most efficient strategy available when answering compound percentage questions — calculate them with a decimal multiplier and a power, rather than a slow, step-by-step, year-by-year approach.</p>
             <h4 className="text-white font-semibold">1. Finding the Decimal Multiplier</h4>
             <p>Before doing any calculations, you must convert the percentage change into a decimal multiplier.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -351,7 +351,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The Year-by-Year Trap:</strong> Do not calculate the percentage for year 1, add it on, then calculate year 2, add it on, etc. SQA examiners actively advise against this because it consumes far too much exam time and frequently leads to arithmetic and premature rounding errors. Use a multiplier and a power!</li>
+                <li><strong>The Year-by-Year Trap:</strong> Do not calculate the percentage for year 1, add it on, then calculate year 2, add it on, etc. This is best avoided because it consumes far too much exam time and frequently leads to arithmetic and premature rounding errors. Use a multiplier and a power!</li>
                 <li><strong>The Significant Figures Trap:</strong> Compound percentage questions almost always feature an instruction to round your final answer to a specific number of significant figures. You will lose the final mark if you ignore this. Always write down your unrounded answer from the calculator display first, then write your rounded answer underneath.</li>
                 <li><strong>The Money Formatting Trap:</strong> If the question involves calculating a financial value and does not specify rounding to significant figures, you must remember that candidates lose marks for failing to write amounts of money to exactly two decimal places.</li>
               </ul>
@@ -447,7 +447,7 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <h4 className="text-white font-semibold">3. Sharing in a Ratio (When given ONE PERSON'S share)</h4>
-            <p>Sometimes, the SQA will give you the amount one person received, raa�her than the total.</p>
+            <p>Sometimes you are given the amount one person received, rather than the total.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Divide their monetary amount by their specific number of ratio parts to find the value of 1 part.</li>
               <li><strong>Step 2:</strong> Multiply this value by the total number of parts to find the overall total.</li>
@@ -465,7 +465,7 @@ export const national5AppsData: Section[] = [
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Direct vs. Inverse" Trap:</strong> Candidates frequently read an inverse proportion question (like workers building a wall) and treat it as direct proportion. If your calculation results in 6 workers taking longer to build a wall than 3 workers, you have fallen into the trap.</li>
-                <li><strong>The "Extra Workers" Trap:</strong> The SQA loves to state that a company sent "2 extra workers" to help with a job. Candidates frequently divide the total worker-hours by 2, completely forgetting that they must add the 2 extra workers to the original team first.</li>
+                <li><strong>The "Extra Workers" Trap:</strong> a common question states that a company sent "2 extra workers" to help with a job. Candidates frequently divide the total worker-hours by 2, completely forgetting that they must add the 2 extra workers to the original team first.</li>
                 <li><strong>The "Given Share" Trap:</strong> When given a ratio (e.g., 2:3:4) and told that the last person received £120, candidates often mistakenly divide £120 by the total parts (9). You must only divide it by their specific parts (4).</li>
               </ul>
             </div>
@@ -541,7 +541,7 @@ export const national5AppsData: Section[] = [
             <p><strong>The Golden Rule:</strong> If a question requires you to round your answer, you must write down your unrounded answer from your calculator display first before you write your rounded answer. If you do not write down your unrounded answer first, you will risk losing multiple marks, even if your final rounded answer is completely correct.</p>
 
             <h4 className="text-white font-semibold">1. Decimal Places (d.p.)</h4>
-            <p>When rounding to a specified number of decimal places (the SQA expects you to be able to round up to three decimal places), you only consider the number immediately to the right of your cut-off point.</p>
+            <p>When rounding to a specified number of decimal places (you are expected to be able to round to three decimal places), you only consider the number immediately to the right of your cut-off point.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>If the digit is 5 or more, round up.</li>
               <li>If the digit is 4 or less, keep it the same.</li>
