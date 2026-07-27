@@ -1114,6 +1114,12 @@ export const national5AppsData: Section[] = [
             <h4 className="text-white font-semibold">4. Annual Percentage Rate (APR) & Credit</h4>
             <p>APR is a standardised calculation used to compare different loans and credit cards. Because it includes both the interest rate and any mandatory fees, looking for the lowest APRs is the most accurate way to find the true, overall cost of borrowing.</p>
 
+            <h4 className="text-white font-semibold">5. Shares</h4>
+            <p>A company can raise money by selling <strong>shares</strong>. Buying one makes you a shareholder, owning a small piece of the company. Share values rise and fall with the company's fortunes, so buying shares can produce a profit or a loss — it is not a guaranteed return like a savings rate.</p>
+            <p>The calculation is always the same: total what was paid, total what was received, and compare.</p>
+            <BlockMath math="\text{Profit or Loss} = (\text{Number} \times \text{Selling Price}) - (\text{Number} \times \text{Buying Price})" />
+            <p>If the shares were bought and sold at a single price each, the percentage profit can be found from one share alone, since the proportion is the same however many were held.</p>
+
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
@@ -1168,6 +1174,27 @@ export const national5AppsData: Section[] = [
                 <p><strong>Final Answer:</strong> Rounded to exactly two decimal places for money, the monthly payment is £587.71</p>
               </div>
             )
+          },
+          {
+            id: "savings-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Shares (profit or loss)</strong></p>
+                <p>Jamila bought 400 shares in a company at £3.15 each. She later sold 250 of them at £3.80 each, and the remaining 150 at £2.90 each.</p>
+                <p>Calculate her overall profit or loss, before any charges.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Calculate the total buying price:</p>
+                <BlockMath math="400 \times 3.15 = \pounds1260" />
+                <p><strong>Step 2:</strong> Calculate the total selling price. The shares were sold in two batches at different prices, so work out each and add:</p>
+                <BlockMath math="(250 \times 3.80) + (150 \times 2.90) = 950 + 435 = \pounds1385" />
+                <p><strong>Step 3:</strong> Compare the two totals. She received more than she paid, so this is a profit:</p>
+                <BlockMath math="1385 - 1260 = \pounds125" />
+                <p><strong>Answer:</strong> Jamila made a <strong>profit of £125</strong>.</p>
+              </div>
+            )
           }
         ]
       }
@@ -1177,6 +1204,97 @@ export const national5AppsData: Section[] = [
     id: "measurement-geometry",
     title: "Measurement & Geometry",
     topics: [
+      {
+        id: "converting-units",
+        title: "Converting Units of Measurement",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4 text-slate-300">
+            <p><strong>The Golden Rule:</strong> decide first whether the unit you are moving to is <em>smaller</em> or <em>larger</em>. Moving to a <strong>smaller</strong> unit means more of them, so you <strong>multiply</strong>; moving to a <strong>larger</strong> unit means fewer of them, so you <strong>divide</strong>. Checking this before you calculate stops the most common error of all.</p>
+
+            <h4 className="text-white font-semibold">1. Metric Length, Weight and Volume</h4>
+            <p>The metric system works entirely in powers of 10:</p>
+            <BlockMath math="\text{km} \xrightarrow{\times 1000} \text{m} \xrightarrow{\times 100} \text{cm} \xrightarrow{\times 10} \text{mm}" />
+            <BlockMath math="\text{tonnes} \xrightarrow{\times 1000} \text{kg} \xrightarrow{\times 1000} \text{g} \qquad \text{litres} \xrightarrow{\times 1000} \text{ml}" />
+            <p>Reverse each arrow (divide instead) when moving to the larger unit.</p>
+
+            <h4 className="text-white font-semibold">2. Units of Area and Volume</h4>
+            <p>This is the part most often got wrong. Because area is two dimensions, the conversion factor is <strong>squared</strong>; for volume it is <strong>cubed</strong>:</p>
+            <BlockMath math="1\ \text{m}^2 = 100 \times 100 = 10{,}000\ \text{cm}^2" />
+            <BlockMath math="1\ \text{m}^3 = 100 \times 100 \times 100 = 1{,}000{,}000\ \text{cm}^3" />
+            <p>Also worth knowing: <InlineMath math="1\ \text{cm}^3 = 1\ \text{ml}" />, so <InlineMath math="1000\ \text{cm}^3 = 1" /> litre.</p>
+
+            <h4 className="text-white font-semibold">3. Non-Metric Conversions</h4>
+            <p>You are never expected to memorise conversions such as miles to kilometres — the rate is always given in the question. Simply multiply or divide by the rate given, then check whether your answer is sensible in size.</p>
+
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Area and volume factors:</strong> converting <InlineMath math="\text{m}^2" /> to <InlineMath math="\text{cm}^2" /> uses <InlineMath math="10{,}000" />, not <InlineMath math="100" />. This is the single most common conversion error.</li>
+                <li><strong>Multiplying when you should divide:</strong> always ask whether the new unit is smaller (multiply) or larger (divide) before touching the calculator.</li>
+                <li><strong>Converting too late:</strong> in a formula question, convert <em>before</em> substituting, not after — mixing units mid-calculation loses the process marks.</li>
+                <li><strong>Money-style rounding:</strong> a converted measurement is not money — only round to 2 d.p. if the question asks for it.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "units-ex1",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Metric Conversions</strong></p>
+                <p>Convert: (a) 3.4 km into metres, (b) 250 g into kilograms, (c) 2.5 litres into millilitres.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>(a)</strong> Metres are smaller than kilometres, so multiply by 1000:</p>
+                <BlockMath math="3.4 \times 1000 = 3400\ \text{m}" />
+                <p><strong>(b)</strong> Kilograms are larger than grams, so divide by 1000:</p>
+                <BlockMath math="250 \div 1000 = 0.25\ \text{kg}" />
+                <p><strong>(c)</strong> Millilitres are smaller than litres, so multiply by 1000:</p>
+                <BlockMath math="2.5 \times 1000 = 2500\ \text{ml}" />
+              </div>
+            )
+          },
+          {
+            id: "units-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (area units)</strong></p>
+                <p>A workshop floor measures 6 m by 4 m. Floor covering is sold by the square centimetre. Calculate the area of the floor in cm².</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Find the area in the units given:</p>
+                <BlockMath math="6 \times 4 = 24\ \text{m}^2" />
+                <p><strong>Step 2:</strong> Convert to cm². Because this is an <em>area</em>, multiply by <InlineMath math="10{,}000" />, not by 100:</p>
+                <BlockMath math="24 \times 10{,}000 = 240{,}000\ \text{cm}^2" />
+                <p>(Converting the sides first gives the same answer: <InlineMath math="600 \times 400 = 240{,}000" /> cm² ✓)</p>
+              </div>
+            )
+          },
+          {
+            id: "units-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Non-Metric Conversion</strong></p>
+                <p>A driver has enough fuel to travel 150 miles. The destination is 230 km away. Using <InlineMath math="1 \text{ mile} = 1.609 \text{ km}" />, determine whether there is enough fuel.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Put both distances in the same unit. Convert the range into kilometres by multiplying by the given rate:</p>
+                <BlockMath math="150 \times 1.609 = 241.35\ \text{km}" />
+                <p><strong>Step 2:</strong> Compare with the distance needed, and state a conclusion:</p>
+                <p><strong>Answer:</strong> Yes — there is enough fuel, because <InlineMath math="241.35 \text{ km} > 230 \text{ km}" />.</p>
+              </div>
+            )
+          }
+        ]
+      },
       {
         id: "reading-scales-tolerance",
         title: "Reading Scales & Tolerance",
@@ -1752,6 +1870,100 @@ export const national5AppsData: Section[] = [
                 <p><strong>Step 3:</strong> Convert the cubic centimetres into litres by dividing by 1000.</p>
                 <BlockMath math="346.360 \div 1000 = 0.34636... \text{ litres}" />
                 <p><strong>Final Answer:</strong> There are 0.346 litres of juice in each cup.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "costs-from-measurements",
+        title: "Costs from a Calculated Value",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4 text-slate-300">
+            <p>Many Applications questions are two jobs in one: first <strong>calculate a quantity</strong> (an area, a volume, a distance or a number of items), then use it to work out a <strong>cost</strong>. The marks are split across both stages, so the measurement work matters as much as the money.</p>
+
+            <h4 className="text-white font-semibold">1. The Two-Stage Method</h4>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Stage 1:</strong> work out the quantity needed — area of a floor, volume of a tank, litres of fuel, number of packs.</li>
+              <li><strong>Stage 2:</strong> multiply by the price per unit, or divide to find how many units are needed and then cost them.</li>
+            </ul>
+            <BlockMath math="\text{Total Cost} = \text{Quantity} \times \text{Cost per Unit}" />
+
+            <h4 className="text-white font-semibold">2. Buying in Whole Units</h4>
+            <p>Materials are usually sold in whole packs, tins or rolls. If the calculation gives 7.2 tins, you cannot buy 0.2 of a tin — you must <strong>round up</strong> to 8 and cost 8. This is the opposite of normal rounding, and it is where most marks are lost.</p>
+
+            <h4 className="text-white font-semibold">3. Comparing Options</h4>
+            <p>If asked whether a job comes in under budget, or which supplier is cheaper, calculate the full cost of each and finish with a written comparison against the figure given.</p>
+
+            <p><strong>The Golden Rule:</strong> check the units match the price <em>before</em> costing. If covering is priced per square metre, the area must be in m² — not cm². Then, if the item is sold in whole units, always round <em>up</em>.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Rounding down:</strong> 7.2 tins of paint means <em>8</em> tins must be bought. Rounding to 7 leaves the job unfinished.</li>
+                <li><strong>Mismatched units:</strong> an area worked out in cm² cannot be costed at a price per m² — convert first (<InlineMath math="1\ \text{m}^2 = 10{,}000\ \text{cm}^2" />).</li>
+                <li><strong>Forgetting the second stage:</strong> the question asks for a <em>cost</em>; stopping at the area or volume leaves marks behind.</li>
+                <li><strong>No conclusion:</strong> if asked "is it within budget?", state clearly whether it is, and by how much.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "costs-ex1",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Area then Cost</strong></p>
+                <p>A rectangular function room measures 12 m by 7.5 m. New carpet costs £18.50 per square metre. Calculate the cost of carpeting the room.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Calculate the area. The measurements are already in metres, matching the price:</p>
+                <BlockMath math="12 \times 7.5 = 90\ \text{m}^2" />
+                <p><strong>Step 2:</strong> Multiply by the cost per square metre:</p>
+                <BlockMath math="90 \times 18.50 = 1665" />
+                <p><strong>Answer:</strong> the carpet costs <strong>£1665.00</strong>.</p>
+              </div>
+            )
+          },
+          {
+            id: "costs-ex2",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Rounding Up to Whole Units</strong></p>
+                <p>A wall has an area of 46 m². One tin of paint covers 12 m² and costs £21.95. Calculate the cost of the paint needed.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Work out how many tins are needed:</p>
+                <BlockMath math="46 \div 12 = 3.83\ldots" />
+                <p><strong>Step 2:</strong> You cannot buy part of a tin, and 3 tins would not cover the wall — so <strong>round up</strong> to 4 tins.</p>
+                <p><strong>Step 3:</strong> Cost the whole tins:</p>
+                <BlockMath math="4 \times 21.95 = 87.80" />
+                <p><strong>Answer:</strong> the paint costs <strong>£87.80</strong>.</p>
+              </div>
+            )
+          },
+          {
+            id: "costs-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (within budget?)</strong></p>
+                <p>A path 15 m long and 2 m wide is to be laid with gravel. Gravel is sold in bags covering 5 m² each, costing £8.40 a bag. The budget for the job is £50. Determine whether the job can be done within budget.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Calculate the area of the path:</p>
+                <BlockMath math="15 \times 2 = 30\ \text{m}^2" />
+                <p><strong>Step 2:</strong> Work out the bags needed and round up if necessary:</p>
+                <BlockMath math="30 \div 5 = 6 \text{ bags}" />
+                <p><strong>Step 3:</strong> Cost the bags:</p>
+                <BlockMath math="6 \times 8.40 = 50.40" />
+                <p><strong>Step 4:</strong> Compare with the budget and state a conclusion.</p>
+                <p><strong>Answer:</strong> No — the job cannot be done within budget, as £50.40 exceeds the £50 available (by 40p).</p>
               </div>
             )
           }
