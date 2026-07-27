@@ -1289,10 +1289,10 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The most critical step when using any formula is checking the units before you substitute your numbers. The SQA will frequently give you a measurement in centimetres when the formula explicitly requires metres. If you plug the raw numbers in without converting first, you will lose the majority of the marks.</p>
+            <p><strong>The Golden Rule:</strong> The most critical step when using any formula is checking the units before you substitute your numbers. Questions frequently give you a measurement in centimetres when the formula explicitly requires metres. If you plug the raw numbers in without converting first, you will lose the majority of the marks.</p>
 
             <h4 className="text-white font-semibold">1. Given Formulae</h4>
-            <p>In the exam, you will often be asked to calculate a quantity based on two related pieces of information. For these questions, the SQA will provide the specific formula in the text of the question (e.g., calculating Density or Body Mass Index). You do not need to memorise these specific scientific formulae; you simply need to substitute the correct numbers into them.</p>
+            <p>In the exam, you will often be asked to calculate a quantity based on two related pieces of information. For these questions, you will be given the specific formula in the text of the question (e.g., calculating Density or Body Mass Index). You do not need to memorise these specific scientific formulae; you simply need to substitute the correct numbers into them.</p>
 
             <h4 className="text-white font-semibold">2. Formula Triangles & Rearranging</h4>
             <p>Many of the formulae you will be given involve three variables (e.g., <InlineMath math="\text{Density} = \frac{\text{Volume}}{\text{Mass}}" />).</p>
@@ -1311,7 +1311,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Unit Mismatch" Trap:</strong> This is the SQA's favourite trick in formula questions. For example, giving a patient's height in centimetres (e.g., 182 cm) but asking you to use a BMI formula that requires the height to be in metres. You must convert 182 cm to 1.82 m before substituting it in.</li>
+                <li><strong>The "Unit Mismatch" Trap:</strong> This is the most common trick in formula questions. For example, giving a patient's height in centimetres (e.g., 182 cm) but asking you to use a BMI formula that requires the height to be in metres. You must convert 182 cm to 1.82 m before substituting it in.</li>
                 <li><strong>The "Wrong Subject" Trap:</strong> A question gives you the Density and the Mass, but asks you to calculate the Volume. Candidates often just divide the first number by the second number blindly. Use your formula triangle to ensure you are doing the correct operation!</li>
                 <li><strong>The "Forgotten Square" Trap:</strong> In formulae with indices (like <InlineMath math="\text{Height}^2" />), candidates frequently forget to actually square the number on their calculator, dividing only by the base height.</li>
               </ul>
@@ -1420,7 +1420,7 @@ export const national5AppsData: Section[] = [
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Decimal Time" Trap:</strong> Candidates frequently lose marks by writing 3 ½ hours as 3.30 hours in their calculator. It must be written as 3.5 hours.</li>
                 <li><strong>The "Hidden Stop" Trap:</strong> A question will describe a journey and provide the speed and distance, but embed a phrase like "she stopped for 50 minutes for breakfast" in the text. Candidates eagerly calculate the drive time but forget to include the break when calculating the final arrival/departure time.</li>
-                <li><strong>The "Wrong Units" Trap:</strong> The SQA will often give the time in minutes (e.g., 45 minutes) but ask for the speed in miles per hour. Candidates divide the distance by 45 rather than converting the time to 0.75 hours first.</li>
+                <li><strong>The "Wrong Units" Trap:</strong> a question will often give the time in minutes (e.g., 45 minutes) but ask for the speed in miles per hour. Candidates divide the distance by 45 rather than converting the time to 0.75 hours first.</li>
               </ul>
             </div>
           </div>
@@ -1623,7 +1623,7 @@ export const national5AppsData: Section[] = [
             <p><strong>The Golden Rule:</strong> If a volume question asks you to round your final answer to a specific number of significant figures, you must write down your unrounded answer from your calculator display first. Failing to show the unrounded calculation will cost you vital process marks, even if the rounded answer is correct.</p>
 
             <h4 className="text-white font-semibold">1. Using Given Formulae</h4>
-            <p>You do not need to memorise complex volume formulae, as the SQA provides them on the exam paper. You simply need to substitute the correct values into the given equations:</p>
+            <p>You do not need to memorise complex volume formulae, as they are provided on the exam paper. You simply need to substitute the correct values into the given equations:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Prism:</strong> <InlineMath math="V = Ah" /> (Area of the base shape × height).</li>
               <li><strong>Cylinder:</strong> <InlineMath math="V = \pi r^2 h" />.</li>
@@ -1653,7 +1653,7 @@ export const national5AppsData: Section[] = [
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Radius vs Diameter" Mix-Up:</strong> Candidates frequently substitute the full width (diameter) of a circular base directly into the formula. You must always halve the diameter to find the radius (r) before calculating the volume of a cylinder, cone, or sphere.</li>
-                <li><strong>The "Hidden Height" Trap:</strong> In composite solids (like a cone sitting on top of a hemisphere), the SQA will often give you the total height of the object rather than the specific height of the cone. You must subtract the radius of the hemisphere from the total height to find the true height of the cone before using the formula.</li>
+                <li><strong>The "Hidden Height" Trap:</strong> In composite solids (like a cone sitting on top of a hemisphere), a question will often give you the total height of the object rather than the specific height of the cone. You must subtract the radius of the hemisphere from the total height to find the true height of the cone before using the formula.</li>
                 <li><strong>The "Premature Rounding" Trap:</strong> When working out the volume of two separate shapes to add together, candidates sometimes round the volume of the first shape before calculating the second. Keep the exact values in your calculator until the very final step to avoid rounding errors.</li>
               </ul>
             </div>
@@ -1759,7 +1759,7 @@ export const national5AppsData: Section[] = [
             <p>You will frequently be presented with two right-angled triangles joined together. You must use Pythagoras in the first triangle to find the length of the shared "hidden" side. You then use that newly calculated length as a dimension in the second triangle to find the final missing side.</p>
 
             <h4 className="text-white font-semibold">3. Pythagoras in a Circle (Chords & Depths)</h4>
-            <p>This is a classic SQA context. You will be given a circular cross-section (like an oil tank or a pipe) and asked to find the depth of a liquid or the width of a table.</p>
+            <p>This is a classic context. You will be given a circular cross-section (like an oil tank or a pipe) and asked to find the depth of a liquid or the width of a table.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Draw a straight vertical line down from the centre of the circle to the chord (the liquid surface), creating a right-angled triangle.</li>
               <li><strong>Step 2:</strong> Halve the length of the chord to find the base of your triangle.</li>
@@ -1773,7 +1773,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "Wrong Dimensions" Trap:</strong> The 2024 SQA Course Report explicitly noted that while most candidates knew to use Pythagoras, many lost marks because they did not identify the correct dimensions from the diagram. When a boat sails from A to B, you must add the distances together to find the full length of the new triangle's base before calculating the hypotenuse.</li>
+                <li><strong>The "Wrong Dimensions" Trap:</strong> a common way to lose marks is knowing to use Pythagoras but failing to identify the correct dimensions from the diagram. When a boat sails from A to B, you must add the distances together to find the full length of the new triangle's base before calculating the hypotenuse.</li>
                 <li><strong>The "Premature Rounding" Trap:</strong> When finding a shared side between two triangles, do not round the length of the shared side to 1 or 2 decimal places. Keep the exact square root in your calculator for the second stage to prevent compounding rounding errors.</li>
                 <li><strong>The "Forgotten Final Step" Trap:</strong> In circle questions, candidates frequently calculate the height of the right-angled triangle and underline it as their final answer, forgetting that the question asked for the total depth of the water, which requires adding or subtracting that height from the radius.</li>
               </ul>
@@ -1865,7 +1865,7 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> The SQA's 2024 Course Report explicitly stated that the two most common ways candidates lose marks in gradient questions are by failing to ensure their dimensions are in consistent units, and failing to express their final gradient as a fraction in its simplest form. Always check your units before doing any calculation!</p>
+            <p><strong>The Golden Rule:</strong> the two most common ways to lose marks in gradient questions are failing to ensure the dimensions are in consistent units, and failing to express the final gradient as a fraction in its simplest form. Always check your units before doing any calculation!</p>
 
             <h4 className="text-white font-semibold">1. The Gradient Formula</h4>
             <p>The gradient of a slope is a measure of its steepness. You must use the formula:</p>
@@ -1873,7 +1873,7 @@ export const national5AppsData: Section[] = [
             <p>This formula is provided on your formula sheet, so you do not need to memorise it, but you must know how to apply it correctly.</p>
 
             <h4 className="text-white font-semibold">2. Calculating the True Vertical Height</h4>
-            <p>In real-life contexts (like hills or roads), the SQA will rarely give you the vertical height directly. Instead, they will give you the starting height above sea level and the ending height above sea level. You must subtract the starting height from the ending height to find the actual vertical height of the triangle before using the formula.</p>
+            <p>In real-life contexts (like hills or roads), you are rarely given the vertical height directly. Instead, you are given the starting height above sea level and the ending height above sea level. You must subtract the starting height from the ending height to find the actual vertical height of the triangle before using the formula.</p>
 
             <h4 className="text-white font-semibold">3. Format of the Final Answer</h4>
             <p>You must read the bold text in the question carefully to see how the examiner wants the final answer presented:</p>
@@ -1889,7 +1889,7 @@ export const national5AppsData: Section[] = [
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Unit Mismatch" Trap:</strong> This is the most prevalent trap in the entire course. A question will give the vertical height in millimetres (e.g., 850 mm) and the horizontal base in centimetres (e.g., 165 cm). If you divide 850 by 165 without converting the units to match first, you will lose the majority of the marks.</li>
-                <li><strong>The "Sloping Edge" Trap:</strong> The SQA will occasionally label the diagonal, slanted length of the slope on the diagram instead of the horizontal base. You must use Pythagoras' Theorem first to calculate the horizontal distance across the bottom before you can calculate the gradient.</li>
+                <li><strong>The "Sloping Edge" Trap:</strong> a question will occasionally label the diagonal, slanted length of the slope on the diagram instead of the horizontal base. You must use Pythagoras' Theorem first to calculate the horizontal distance across the bottom before you can calculate the gradient.</li>
                 <li><strong>The "Unsimplified Fraction" Trap:</strong> If the question states "Give your answer as a fraction in its simplest form", you will lose the final communication mark if you leave your answer as <InlineMath math="\frac{85}{165}" /> rather than simplifying it down to <InlineMath math="\frac{17}{33}" />.</li>
               </ul>
             </div>
