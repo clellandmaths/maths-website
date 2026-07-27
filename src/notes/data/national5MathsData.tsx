@@ -673,6 +673,16 @@ export const national5MathsData: Section[] = [
             <p>
               Candidates must be able to expand expressions ranging from <InlineMath math="(ax+b)(cx+d)" /> to multiplying a linear bracket by a trinomial bracket, <InlineMath math="(ax+b)(cx^2+dx+e)" />.
             </p>
+            <p><strong>The Golden Rule:</strong> every term inside the bracket must be multiplied by every term outside it — none left behind. When two brackets meet, be systematic (FOIL for two-by-two, or each term of the first across the whole second), then collect like terms at the end.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Sign errors with a negative outside:</strong> <InlineMath math="-2(x+5)" /> is <InlineMath math="-2x-10" />, not <InlineMath math="-2x+10" /> — the minus multiplies <em>both</em> terms.</li>
+                <li><strong>Squaring a bracket:</strong> <InlineMath math="(x+3)^2" /> means <InlineMath math="(x+3)(x+3) = x^2+6x+9" />, not <InlineMath math="x^2+9" />.</li>
+                <li><strong>Missing the middle terms:</strong> in a linear-by-trinomial expansion there are six products before collecting — losing one is the usual slip.</li>
+                <li><strong>Not collecting like terms:</strong> an expanded answer left as a string of terms can cost the final mark; always simplify.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -711,13 +721,33 @@ export const national5MathsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p><strong>Linear by Trinomial</strong></p>
-                <p>Expand <InlineMath math="(x - 2)(x^2 + 3x - 1)" />.</p>
+                <p>Expand <InlineMath math="(x + 3)(2x^2 - x + 4)" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Multiply x by the trinomial, then &minus;2 by the trinomial: <InlineMath math="x^3 + 3x^2 - x - 2x^2 - 6x + 2" />.</p>
-                <p><strong>Answer:</strong> <InlineMath math="x^3 + x^2 - 7x + 2" />.</p>
+                <p>Step 1: Multiply <InlineMath math="x" /> by the trinomial, then <InlineMath math="+3" /> by the trinomial: <InlineMath math="2x^3 - x^2 + 4x + 6x^2 - 3x + 12" />.</p>
+                <p>Step 2: Collect like terms: <InlineMath math="2x^3 + 5x^2 + x + 12" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="2x^3 + 5x^2 + x + 12" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "expanding-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Expand and simplify <InlineMath math="(x + 4)^2 - (x - 3)(x + 2)" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Expand each part separately. Remember the square is a double bracket: <InlineMath math="(x+4)^2 = x^2 + 8x + 16" />.</p>
+                <p>Step 2: Expand the second product: <InlineMath math="(x-3)(x+2) = x^2 - x - 6" />.</p>
+                <p>Step 3: Subtract the <em>whole</em> second bracket — every sign inside it flips:</p>
+                <BlockMath math="(x^2 + 8x + 16) - (x^2 - x - 6) = x^2 + 8x + 16 - x^2 + x + 6" />
+                <p>Step 4: Collect like terms; the <InlineMath math="x^2" /> terms cancel:</p>
+                <p><strong>Answer:</strong> <InlineMath math="9x + 22" />.</p>
               </div>
             )
           }
@@ -738,11 +768,37 @@ export const national5MathsData: Section[] = [
             <p>
               Some expressions will require a combination of these methods (e.g., extracting a common factor before factorising a difference of squares).
             </p>
+            <p><strong>The Golden Rule:</strong> always check for a <em>common factor first</em> — take it outside a bracket before trying anything else. Then look at what is left: two terms is likely a difference of two squares; three terms is a trinomial.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Missing the common factor:</strong> jumping straight to a trinomial and forgetting to take out a factor first leaves the answer only partly factorised — and loses marks.</li>
+                <li><strong>Sum of two squares:</strong> <InlineMath math="x^2 + 9" /> does <em>not</em> factorise. The difference of two squares needs a minus sign.</li>
+                <li><strong>Signs in a trinomial:</strong> the two numbers must multiply to the last term <em>and</em> add to the middle one — check both, and mind the signs.</li>
+                <li><strong>Not factorising fully:</strong> after the first step, always ask whether what remains can be factorised again.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
           {
             id: "factorising-ex1",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Common Factor</strong></p>
+                <p>Factorise <InlineMath math="6x^2 + 9x" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Find the highest common factor of both terms. <InlineMath math="6x^2" /> and <InlineMath math="9x" /> share <InlineMath math="3x" />.</p>
+                <p>Step 2: Take <InlineMath math="3x" /> outside the bracket and write what is left inside:</p>
+                <p><strong>Answer:</strong> <InlineMath math="3x(2x + 3)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "factorising-ex2",
             question: (
               <div className="space-y-2">
                 <p><strong>Difference of Two Squares</strong></p>
@@ -751,23 +807,9 @@ export const national5MathsData: Section[] = [
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Identify the square roots of both terms: 3m and 5.</p>
+                <p>Step 1: Both terms are perfect squares with a minus between them. Identify the square roots: <InlineMath math="\sqrt{9m^2} = 3m" /> and <InlineMath math="\sqrt{25} = 5" />.</p>
+                <p>Step 2: Write as one bracket plus, one bracket minus:</p>
                 <p><strong>Answer:</strong> <InlineMath math="(3m - 5)(3m + 5)" />.</p>
-              </div>
-            )
-          },
-          {
-            id: "factorising-ex2",
-            question: (
-              <div className="space-y-2">
-                <p><strong>Trinomials (Non-unitary)</strong></p>
-                <p>Factorise <InlineMath math="2x^2 - 7x + 3" />.</p>
-              </div>
-            ),
-            solution: (
-              <div className="space-y-2">
-                <p>Step 1: Find terms that multiply to <InlineMath math="2x^2" /> and 3, but cross-multiply and add to make &minus;7x.</p>
-                <p><strong>Answer:</strong> <InlineMath math="(2x - 1)(x - 3)" />.</p>
               </div>
             )
           },
@@ -775,14 +817,46 @@ export const national5MathsData: Section[] = [
             id: "factorising-ex3",
             question: (
               <div className="space-y-2">
-                <p><strong>Combination Method</strong></p>
-                <p>Factorise <InlineMath math="3y^2 - 27" />.</p>
+                <p><strong>Trinomial (unitary)</strong></p>
+                <p>Factorise <InlineMath math="x^2 - x - 12" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Extract the common factor of 3: <InlineMath math="3(y^2 - 9)" />.</p>
-                <p>Step 2: Factorise the remaining difference of squares.</p>
+                <p>Step 1: Find two numbers that multiply to <InlineMath math="-12" /> and add to <InlineMath math="-1" />. The pair <InlineMath math="-4" /> and <InlineMath math="+3" /> works: <InlineMath math="-4 \times 3 = -12" /> and <InlineMath math="-4 + 3 = -1" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="(x - 4)(x + 3)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "factorising-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Trinomial (non-unitary)</strong></p>
+                <p>Factorise <InlineMath math="5x^2 - 13x + 6" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: With a coefficient on <InlineMath math="x^2" />, look for brackets whose first terms multiply to <InlineMath math="5x^2" /> and whose last terms multiply to <InlineMath math="+6" />, chosen so the cross-terms add to <InlineMath math="-13x" />.</p>
+                <p>Step 2: Testing <InlineMath math="(5x - 3)(x - 2)" />: the cross-terms are <InlineMath math="-10x - 3x = -13x" /> ✓.</p>
+                <p><strong>Answer:</strong> <InlineMath math="(5x - 3)(x - 2)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "factorising-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Factorise fully <InlineMath math="3y^2 - 27" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Following the Golden Rule, take out the common factor of 3 first: <InlineMath math="3(y^2 - 9)" />.</p>
+                <p>Step 2: The bracket is now a difference of two squares, so factorise it again: <InlineMath math="y^2 - 9 = (y - 3)(y + 3)" />.</p>
+                <p>Step 3: Combine — the word &ldquo;fully&rdquo; is the signal that a second step was needed:</p>
                 <p><strong>Answer:</strong> <InlineMath math="3(y - 3)(y + 3)" />.</p>
               </div>
             )
@@ -801,6 +875,15 @@ export const national5MathsData: Section[] = [
             <p>
               You must be able to substitute values into a function to evaluate it, and determine a missing variable when a function's overall output is given.
             </p>
+            <p><strong>The Golden Rule:</strong> <InlineMath math="f(\text{something})" /> means &ldquo;replace every <InlineMath math="x" /> in the formula with that something&rdquo;. Put the value in brackets when you substitute — it keeps signs and powers correct.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Squaring a negative:</strong> <InlineMath math="f(-3)" /> with an <InlineMath math="x^2" /> term gives <InlineMath math="(-3)^2 = 9" />, positive — not <InlineMath math="-9" />. Always bracket the substituted value.</li>
+                <li><strong><InlineMath math="f(x) = 0" /> is not the same as <InlineMath math="f(0)" />:</strong> the first solves an equation for <InlineMath math="x" />; the second substitutes <InlineMath math="x = 0" />.</li>
+                <li><strong>Reading the notation backwards:</strong> in <InlineMath math="g(a) = 35" />, the <InlineMath math="35" /> is the output — set the formula equal to it and solve for <InlineMath math="a" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -834,6 +917,23 @@ export const national5MathsData: Section[] = [
                 <p>Step 2: Solve for a: <InlineMath math="4a = 28 \rightarrow a = 7" />.</p>
               </div>
             )
+          },
+          {
+            id: "functions-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>A function is defined by <InlineMath math="f(x) = x^2 - 5x" />. Find the values of <InlineMath math="x" /> for which <InlineMath math="f(x) = 0" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: <InlineMath math="f(x) = 0" /> means set the formula equal to zero — an equation to solve, not a substitution: <InlineMath math="x^2 - 5x = 0" />.</p>
+                <p>Step 2: Factorise (common factor of <InlineMath math="x" />): <InlineMath math="x(x - 5) = 0" />.</p>
+                <p>Step 3: A product is zero when either factor is zero, so <InlineMath math="x = 0" /> or <InlineMath math="x - 5 = 0" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = 0" /> or <InlineMath math="x = 5" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -850,6 +950,15 @@ export const national5MathsData: Section[] = [
             <div>
               <h4 className="text-white font-semibold">Equation of a Line</h4>
               <p>Any straight line can be described using the General Equation <InlineMath math="y = mx + c" /> (where c is the y-intercept). Alternatively, use <InlineMath math="y - b = m(x - a)" /> to find the equation when given the gradient and any point (a, b) on the line.</p>
+            </div>
+            <p><strong>The Golden Rule:</strong> to write the equation of a line you always need two things — a gradient and a point. If you are given two points instead, find the gradient first, then use <InlineMath math="y - b = m(x - a)" /> with either point.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Gradient formula order:</strong> subtract the coordinates in the <em>same</em> order on top and bottom. Flipping one gives the wrong sign.</li>
+                <li><strong>Sign of a negative point:</strong> in <InlineMath math="y - b = m(x - a)" />, a point with <InlineMath math="a = -2" /> gives <InlineMath math="x - (-2) = x + 2" />.</li>
+                <li><strong>Special gradients:</strong> a horizontal line has gradient <InlineMath math="0" /> (equation <InlineMath math="y = c" />); a vertical line has an <em>undefined</em> gradient (equation <InlineMath math="x = k" />).</li>
+              </ul>
             </div>
           </div>
         ),
@@ -881,6 +990,24 @@ export const national5MathsData: Section[] = [
               <div className="space-y-2">
                 <p>Step 1: Substitute into <InlineMath math="y - b = m(x - a)" />: <InlineMath math="y - 5 = -2(x - 3)" />.</p>
                 <p>Step 2: Expand and rearrange: <InlineMath math="y - 5 = -2x + 6 \rightarrow y = -2x + 11" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "straight-line-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Find the equation of the line passing through the points <InlineMath math="(1, 3)" /> and <InlineMath math="(4, 12)" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Two points, no gradient given — so find the gradient first: <InlineMath math="m = \dfrac{12 - 3}{4 - 1} = \dfrac{9}{3} = 3" />.</p>
+                <p>Step 2: Now use <InlineMath math="y - b = m(x - a)" /> with the gradient and either point. Taking <InlineMath math="(1, 3)" />: <InlineMath math="y - 3 = 3(x - 1)" />.</p>
+                <p>Step 3: Expand and rearrange:</p>
+                <BlockMath math="y - 3 = 3x - 3 \implies y = 3x" />
+                <p><strong>Answer:</strong> <InlineMath math="y = 3x" />.</p>
               </div>
             )
           }
