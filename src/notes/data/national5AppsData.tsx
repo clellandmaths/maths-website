@@ -2368,7 +2368,11 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <h4 className="text-white font-semibold">2. Interquartile Range (IQR) & Semi-Interquartile Range (SIQR)</h4>
-            <p>The Interquartile Range is calculated by subtracting the lower quartile from the upper quartile (<InlineMath math="\text{IQR} = \text{Upper Quartile} - \text{Lower Quartile}" />). The Semi-Interquartile Range is simply the IQR divided by 2.</p>
+            <p>The Interquartile Range is calculated by subtracting the lower quartile from the upper quartile:</p>
+            <BlockMath math="\text{IQR} = Q_3 - Q_1" />
+            <p>The Semi-Interquartile Range is simply the IQR divided by 2:</p>
+            <BlockMath math="\text{SIQR} = \frac{Q_3 - Q_1}{2}" />
+            <p>where <InlineMath math="Q_1" /> is the lower quartile and <InlineMath math="Q_3" /> is the upper quartile.</p>
 
             <h4 className="text-white font-semibold">3. Box Plots</h4>
             <p>A box plot is a visual drawing of the five-figure summary.</p>
@@ -2379,12 +2383,16 @@ export const national5AppsData: Section[] = [
             </ul>
 
             <h4 className="text-white font-semibold">4. Standard Deviation</h4>
-            <p>The standard deviation of a list of numbers is a measure of how spread out numbers are from the mean.</p>
+            <p>The standard deviation of a list of numbers is a measure of how spread out the numbers are from the mean.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>A lower standard deviation indicates that the numbers are more consistent.</li>
               <li>A higher standard deviation indicates that the numbers are more varied (or more spread out).</li>
-              <li>You do not need to memorise the formula, as it is provided in the exam booklet.</li>
             </ul>
+            <p>The formula is given in the exam booklet in two equivalent forms, so you do not need to memorise it — but you must be able to apply it:</p>
+            <BlockMath math="s = \sqrt{\frac{\sum(x - \bar{x})^2}{n - 1}}" />
+            <p>or, the version that avoids working out every difference from the mean:</p>
+            <BlockMath math="s = \sqrt{\frac{\sum x^2 - \dfrac{(\sum x)^2}{n}}{n - 1}}" />
+            <p>Here <InlineMath math="x" /> is each value, <InlineMath math="\bar{x}" /> is the mean, and <InlineMath math="n" /> is how many values there are. Either form gives the same answer — the first is easier to follow, the second is quicker when the mean is not a whole number.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
