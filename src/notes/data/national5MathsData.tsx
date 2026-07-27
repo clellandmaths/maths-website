@@ -945,16 +945,26 @@ export const national5MathsData: Section[] = [
           <div className="space-y-4 text-slate-300">
             <div>
               <h4 className="text-white font-semibold">Gradient</h4>
-              <p>The gradient (m) defines the steepness of a line. The formula is <InlineMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />. Parallel lines always have equal gradients.</p>
+              <p>The gradient (m) defines the steepness of a line. The formula is <InlineMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />.</p>
             </div>
             <div>
               <h4 className="text-white font-semibold">Equation of a Line</h4>
-              <p>Any straight line can be described using the General Equation <InlineMath math="y = mx + c" /> (where c is the y-intercept). Alternatively, use <InlineMath math="y - b = m(x - a)" /> to find the equation when given the gradient and any point (a, b) on the line.</p>
+              <p>A straight line is usually written as <InlineMath math="y = mx + c" />, where <InlineMath math="m" /> is the gradient and <InlineMath math="c" /> is the <InlineMath math="y" />-intercept. When given the gradient and any point <InlineMath math="(a, b)" />, use <InlineMath math="y - b = m(x - a)" /> instead.</p>
             </div>
-            <p><strong>The Golden Rule:</strong> to write the equation of a line you always need two things — a gradient and a point. If you are given two points instead, find the gradient first, then use <InlineMath math="y - b = m(x - a)" /> with either point.</p>
+            <div>
+              <h4 className="text-white font-semibold">The General Form</h4>
+              <p>Lines are often given in the <strong>general form</strong> <InlineMath math="ax + by + c = 0" /> (for example <InlineMath math="3x - 7y - 4 = 0" />). You cannot read the gradient off this directly — you must <strong>rearrange it into <InlineMath math="y = mx + c" /></strong> first, and then <InlineMath math="m" /> and the <InlineMath math="y" />-intercept can be read off. This is one of the most frequently examined straight-line skills.</p>
+              <p>To find where any line <strong>crosses the axes</strong>: set <InlineMath math="y = 0" /> to find the <InlineMath math="x" />-axis crossing, and set <InlineMath math="x = 0" /> to find the <InlineMath math="y" />-axis crossing.</p>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold">Special Lines</h4>
+              <p>A <strong>horizontal</strong> line has gradient <InlineMath math="0" /> and equation <InlineMath math="y = c" />. A <strong>vertical</strong> line has an <strong>undefined</strong> gradient and equation <InlineMath math="x = k" />. <strong>Parallel</strong> lines have equal gradients.</p>
+            </div>
+            <p><strong>The Golden Rule:</strong> to write the equation of a line you always need a gradient and a point. Given two points, find the gradient first, then use <InlineMath math="y - b = m(x - a)" />. Given a line in general form, rearrange to <InlineMath math="y = mx + c" /> <em>before</em> reading off anything.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Reading the gradient off the general form:</strong> in <InlineMath math="3x - 7y - 4 = 0" /> the gradient is <em>not</em> 3. You must rearrange into <InlineMath math="y = mx + c" /> first — this is the single most common mistake here.</li>
                 <li><strong>Gradient formula order:</strong> subtract the coordinates in the <em>same</em> order on top and bottom. Flipping one gives the wrong sign.</li>
                 <li><strong>Sign of a negative point:</strong> in <InlineMath math="y - b = m(x - a)" />, a point with <InlineMath math="a = -2" /> gives <InlineMath math="x - (-2) = x + 2" />.</li>
                 <li><strong>Special gradients:</strong> a horizontal line has gradient <InlineMath math="0" /> (equation <InlineMath math="y = c" />); a vertical line has an <em>undefined</em> gradient (equation <InlineMath math="x = k" />).</li>
@@ -1008,6 +1018,45 @@ export const national5MathsData: Section[] = [
                 <p>Step 3: Expand and rearrange:</p>
                 <BlockMath math="y - 3 = 3x - 3 \implies y = 3x" />
                 <p><strong>Answer:</strong> <InlineMath math="y = 3x" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "straight-line-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Gradient from the General Form</strong></p>
+                <p>A straight line has equation <InlineMath math="4x + 2y - 10 = 0" />. Find its gradient and the coordinates of its <InlineMath math="y" />-intercept.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: You cannot read anything off yet — rearrange into <InlineMath math="y = mx + c" />. Move the other terms to the right:</p>
+                <BlockMath math="2y = -4x + 10" />
+                <p>Step 2: Divide every term by 2 to leave <InlineMath math="y" /> on its own:</p>
+                <BlockMath math="y = -2x + 5" />
+                <p>Step 3: Now read off the values: <InlineMath math="m = -2" /> and <InlineMath math="c = 5" />.</p>
+                <p><strong>Answer:</strong> gradient <InlineMath math="-2" />, <InlineMath math="y" />-intercept <InlineMath math="(0, 5)" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "straight-line-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style</strong></p>
+                <p>A straight line has equation <InlineMath math="3x + 5y - 15 = 0" />. Find the coordinates of the points where it crosses the <InlineMath math="x" />-axis and the <InlineMath math="y" />-axis.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: A line crosses the <InlineMath math="x" />-axis where <InlineMath math="y = 0" />. Substitute:</p>
+                <BlockMath math="3x + 5(0) - 15 = 0 \implies 3x = 15 \implies x = 5" />
+                <p>So it crosses the <InlineMath math="x" />-axis at <InlineMath math="(5, 0)" />.</p>
+                <p>Step 2: It crosses the <InlineMath math="y" />-axis where <InlineMath math="x = 0" />. Substitute:</p>
+                <BlockMath math="3(0) + 5y - 15 = 0 \implies 5y = 15 \implies y = 3" />
+                <p>So it crosses the <InlineMath math="y" />-axis at <InlineMath math="(0, 3)" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="(5, 0)" /> on the <InlineMath math="x" />-axis and <InlineMath math="(0, 3)" /> on the <InlineMath math="y" />-axis.</p>
               </div>
             )
           }
