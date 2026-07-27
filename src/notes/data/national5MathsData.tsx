@@ -197,6 +197,22 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> <InlineMath math="\frac{5\sqrt{3}}{3}" />.</p>
               </div>
             )
+          },
+          {
+            id: "surds-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Collecting Like Surds</strong></p>
+                <p>Simplify <InlineMath math="\sqrt{48} + \sqrt{27}" /> as a single surd.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The two surds look different, so simplify each first by taking out its largest square factor: <InlineMath math="\sqrt{48} = \sqrt{16 \times 3} = 4\sqrt{3}" /> and <InlineMath math="\sqrt{27} = \sqrt{9 \times 3} = 3\sqrt{3}" />.</p>
+                <p>Step 2: They are now like surds (both in <InlineMath math="\sqrt{3}" />), so add the numbers in front: <InlineMath math="4\sqrt{3} + 3\sqrt{3} = 7\sqrt{3}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="7\sqrt{3}" />.</p>
+              </div>
+            )
           }
         ]
       },
