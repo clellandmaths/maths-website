@@ -1192,6 +1192,16 @@ export const national5MathsData: Section[] = [
             <p>
               The primary method involves using inverse operations to add or subtract from both sides. The goal is to isolate the variable (the letter) on one side and the numerical constants on the other.
             </p>
+            <p><strong>The Golden Rule:</strong> whatever you do to one side, do to the other. When brackets appear, expand them first; when fractions appear, multiply <em>every</em> term by the lowest common denominator to clear them before solving.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Clearing fractions incompletely:</strong> when you multiply through by the common denominator, every term must be multiplied — including any whole numbers, not just the fractions.</li>
+                <li><strong>Sign slips moving terms:</strong> a term crossing the equals sign changes sign. Collect the letters on the side that keeps their coefficient positive to avoid negatives.</li>
+                <li><strong>Not expanding brackets first:</strong> <InlineMath math="4(x-3)" /> must become <InlineMath math="4x - 12" /> before collecting terms.</li>
+                <li><strong>Fraction answers are fine:</strong> not every equation has a whole-number solution — leave the answer as a simplified fraction if that is what it is.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -1214,14 +1224,66 @@ export const national5MathsData: Section[] = [
             id: "equations-ex2",
             question: (
               <div className="space-y-2">
-                <p><strong>Fractional Equations</strong></p>
-                <p>Solve <InlineMath math="\frac{2x + 1}{3} = 5" />.</p>
+                <p><strong>With Brackets</strong></p>
+                <p>Solve <InlineMath math="4(x - 3) = 2x + 6" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Multiply both sides by 3 to eliminate the fraction: <InlineMath math="2x + 1 = 15" />.</p>
-                <p>Step 2: Subtract 1 and divide by 2: <InlineMath math="2x = 14" />. <strong>Answer:</strong> <InlineMath math="x = 7" />.</p>
+                <p>Step 1: Expand the bracket first: <InlineMath math="4x - 12 = 2x + 6" />.</p>
+                <p>Step 2: Subtract <InlineMath math="2x" /> from both sides and add 12 to both: <InlineMath math="2x = 18" />.</p>
+                <p>Step 3: Divide by 2. <strong>Answer:</strong> <InlineMath math="x = 9" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "equations-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Clearing a Single Fraction</strong></p>
+                <p>Solve <InlineMath math="\dfrac{3x - 1}{4} = 5" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Multiply both sides by 4 to clear the denominator: <InlineMath math="3x - 1 = 20" />.</p>
+                <p>Step 2: Add 1, then divide by 3: <InlineMath math="3x = 21" />. <strong>Answer:</strong> <InlineMath math="x = 7" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "equations-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Two Fractions</strong></p>
+                <p>Solve <InlineMath math="\dfrac{x + 3}{2} = \dfrac{2x - 1}{5}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: With a single fraction equal to a single fraction, cross-multiply (or multiply both sides by 10, the LCM):</p>
+                <BlockMath math="5(x + 3) = 2(2x - 1)" />
+                <p>Step 2: Expand both sides: <InlineMath math="5x + 15 = 4x - 2" />.</p>
+                <p>Step 3: Subtract <InlineMath math="4x" /> and 15 from both sides: <InlineMath math="x = -17" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = -17" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "equations-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style</strong></p>
+                <p>Solve <InlineMath math="\dfrac{x}{4} + 1 = \dfrac{x + 5}{6}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The denominators are 4 and 6, so multiply <em>every</em> term by their LCM, 12 — including the <InlineMath math="+1" />:</p>
+                <BlockMath math="12 \times \dfrac{x}{4} + 12 \times 1 = 12 \times \dfrac{x + 5}{6}" />
+                <p>Step 2: Simplify each term: <InlineMath math="3x + 12 = 2(x + 5)" />.</p>
+                <p>Step 3: Expand and solve: <InlineMath math="3x + 12 = 2x + 10 \implies x = -2" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = -2" />.</p>
               </div>
             )
           }
@@ -1239,9 +1301,16 @@ export const national5MathsData: Section[] = [
             <p>
               When evaluating real-life situations, limitations should be considered (e.g., the maximum safe load for a concrete beam).
             </p>
-            <p className="font-semibold text-white">
-              Crucial Rule: Whenever you multiply or divide an inequality by a negative number, the direction of the inequality sign must flip.
-            </p>
+            <p><strong>The Golden Rule:</strong> solve an inequality exactly like an equation — <em>except</em> that multiplying or dividing both sides by a <strong>negative</strong> number flips the direction of the sign. A neat way to avoid this altogether is to collect the letters on whichever side keeps their coefficient positive.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Forgetting to flip:</strong> dividing by a negative reverses the sign — <InlineMath math="-3y \geq -6" /> becomes <InlineMath math="y \leq 2" />, not <InlineMath math="y \geq 2" />.</li>
+                <li><strong>Flipping when you add or subtract:</strong> the sign only flips for <em>multiplying or dividing</em> by a negative, never for adding or subtracting.</li>
+                <li><strong>Fractions and brackets:</strong> clear denominators and expand brackets exactly as for an equation before isolating the variable.</li>
+                <li><strong>Answer is a range:</strong> the solution is an inequality such as <InlineMath math="x > 4" />, not a single value.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -1264,7 +1333,7 @@ export const national5MathsData: Section[] = [
             id: "inequalities-ex2",
             question: (
               <div className="space-y-2">
-                <p><strong>Negative Variables</strong></p>
+                <p><strong>Negative Variables (sign flip)</strong></p>
                 <p>Solve <InlineMath math="12 - 3y \geq 6" />.</p>
               </div>
             ),
@@ -1272,6 +1341,40 @@ export const national5MathsData: Section[] = [
               <div className="space-y-2">
                 <p>Step 1: Subtract 12 from both sides: <InlineMath math="-3y \geq -6" />.</p>
                 <p>Step 2: Divide by &minus;3, remembering to flip the inequality sign. <strong>Answer:</strong> <InlineMath math="y \leq 2" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "inequalities-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>With Brackets</strong></p>
+                <p>Solve <InlineMath math="3(x - 2) < x + 8" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Expand the bracket: <InlineMath math="3x - 6 < x + 8" />.</p>
+                <p>Step 2: Subtract <InlineMath math="x" /> from both sides and add 6 to both: <InlineMath math="2x < 14" />.</p>
+                <p>Step 3: Divide by 2 (positive, so no flip). <strong>Answer:</strong> <InlineMath math="x < 7" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "inequalities-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style</strong></p>
+                <p>Solve the inequation <InlineMath math="\dfrac{x + 2}{3} \leq \dfrac{x}{2}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Clear the denominators by multiplying every term by the LCM, 6:</p>
+                <BlockMath math="2(x + 2) \leq 3x" />
+                <p>Step 2: Expand: <InlineMath math="2x + 4 \leq 3x" />.</p>
+                <p>Step 3: Subtract <InlineMath math="2x" /> from both sides: <InlineMath math="4 \leq x" />.</p>
+                <p>Step 4: Read it the usual way round. <strong>Answer:</strong> <InlineMath math="x \geq 4" />.</p>
               </div>
             )
           }
@@ -1289,7 +1392,17 @@ export const national5MathsData: Section[] = [
             </div>
             <div>
               <h4 className="text-white font-semibold">Four Operations</h4>
-              <p>You must be able to add, subtract, multiply, and divide algebraic fractions, expressing them in their simplest form.</p>
+              <p>You must be able to add, subtract, multiply, and divide algebraic fractions, expressing them in their simplest form. To add or subtract, use a common denominator; to divide, flip the second fraction and multiply.</p>
+            </div>
+            <p><strong>The Golden Rule:</strong> you can only cancel <em>factors</em>, never individual terms — so always <strong>factorise fully first</strong>, then cancel identical brackets. For adding and subtracting, the common denominator of two different brackets is simply their product.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Cancelling terms, not factors:</strong> in <InlineMath math="\frac{x+2}{x+4}" /> you cannot cancel the <InlineMath math="x" />s or the numbers — nothing cancels unless it is a whole bracket top and bottom.</li>
+                <li><strong>Subtraction sign:</strong> when subtracting, the minus applies to the <em>whole</em> numerator of the second fraction — bracket it, e.g. <InlineMath math="\ldots - (3x - 1)" />.</li>
+                <li><strong>Dividing:</strong> &ldquo;keep, change, flip&rdquo; — flip the <em>second</em> fraction and multiply. Do not flip the first.</li>
+                <li><strong>Stopping too early:</strong> after combining or multiplying, check whether the result factorises and cancels further.</li>
+              </ul>
             </div>
           </div>
         ),
@@ -1298,14 +1411,14 @@ export const national5MathsData: Section[] = [
             id: "algebraic-fractions-ex1",
             question: (
               <div className="space-y-2">
-                <p><strong>Simplifying</strong></p>
-                <p>Simplify <BlockMath math="\frac{(x - 4)(x + 2)}{x^2 - 16}" />.</p>
+                <p><strong>Simplifying (difference of squares)</strong></p>
+                <p>Simplify <InlineMath math="\dfrac{(x - 4)(x + 2)}{x^2 - 16}" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Factorise the top using the difference of two squares: <InlineMath math="\frac{(x - 4)(x + 2)}{(x - 4)(x + 4)}" />.</p>
-                <p>Step 2: Cancel the identical <InlineMath math="(x - 4)" /> brackets. <strong>Answer:</strong> <InlineMath math="\frac{x + 2}{x + 4}" />.</p>
+                <p>Step 1: Factorise the bottom using the difference of two squares: <InlineMath math="\dfrac{(x - 4)(x + 2)}{(x - 4)(x + 4)}" />.</p>
+                <p>Step 2: Cancel the identical <InlineMath math="(x - 4)" /> brackets. <strong>Answer:</strong> <InlineMath math="\dfrac{x + 2}{x + 4}" />.</p>
               </div>
             )
           },
@@ -1313,14 +1426,99 @@ export const national5MathsData: Section[] = [
             id: "algebraic-fractions-ex2",
             question: (
               <div className="space-y-2">
-                <p><strong>Adding</strong></p>
-                <p>Express <BlockMath math="\frac{a}{3} + \frac{b}{4}" /> as a single fraction.</p>
+                <p><strong>Simplifying (factorising a trinomial)</strong></p>
+                <p>Simplify <InlineMath math="\dfrac{x^2 + 5x + 6}{x^2 - 9}" />.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Find a common denominator (12) and scale the numerators: <InlineMath math="\frac{4a}{12} + \frac{3b}{12}" />.</p>
-                <p><strong>Answer:</strong> <InlineMath math="\frac{4a + 3b}{12}" />.</p>
+                <p>Step 1: Factorise top and bottom fully. The top is a trinomial, the bottom a difference of squares:</p>
+                <BlockMath math="\dfrac{(x + 2)(x + 3)}{(x - 3)(x + 3)}" />
+                <p>Step 2: Cancel the common <InlineMath math="(x + 3)" /> bracket:</p>
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{x + 2}{x - 3}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "algebraic-fractions-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Adding (numeric denominators)</strong></p>
+                <p>Express <InlineMath math="\dfrac{a}{3} + \dfrac{b}{4}" /> as a single fraction.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Find a common denominator (12) and scale the numerators: <InlineMath math="\dfrac{4a}{12} + \dfrac{3b}{12}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{4a + 3b}{12}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "algebraic-fractions-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Subtracting (algebraic denominators)</strong></p>
+                <p>Express <InlineMath math="\dfrac{4}{x - 1} - \dfrac{3}{x + 2}" /> as a single fraction <InlineMath math="(x \neq 1,\ x \neq -2)" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The common denominator is the product of the two brackets, <InlineMath math="(x - 1)(x + 2)" />. Scale each numerator by the other bracket:</p>
+                <BlockMath math="\dfrac{4(x + 2) - 3(x - 1)}{(x - 1)(x + 2)}" />
+                <p>Step 2: Expand the numerator carefully — the minus applies to all of <InlineMath math="3(x-1)" />:</p>
+                <BlockMath math="4x + 8 - 3x + 3 = x + 11" />
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{x + 11}{(x - 1)(x + 2)}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "algebraic-fractions-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Multiplying</strong></p>
+                <p>Express <InlineMath math="\dfrac{5}{2a} \times \dfrac{a^2}{10}" /> in its simplest form.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Multiply straight across the tops and bottoms: <InlineMath math="\dfrac{5 \times a^2}{2a \times 10} = \dfrac{5a^2}{20a}" />.</p>
+                <p>Step 2: Simplify — divide numbers by 5 and cancel one <InlineMath math="a" />: <InlineMath math="\dfrac{5a^2}{20a} = \dfrac{a}{4}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{a}{4}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "algebraic-fractions-ex6",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Dividing</strong></p>
+                <p>Express <InlineMath math="\dfrac{2}{3x} \div \dfrac{4}{9x^2}" /> in its simplest form.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Keep, change, flip — flip the second fraction and multiply: <InlineMath math="\dfrac{2}{3x} \times \dfrac{9x^2}{4}" />.</p>
+                <p>Step 2: Multiply across: <InlineMath math="\dfrac{18x^2}{12x}" />.</p>
+                <p>Step 3: Simplify — divide numbers by 6 and cancel one <InlineMath math="x" />: <InlineMath math="\dfrac{18x^2}{12x} = \dfrac{3x}{2}" />.</p>
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{3x}{2}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "algebraic-fractions-ex7",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Simplify <InlineMath math="\dfrac{x^2 - 4x}{x^2 - x - 12}" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Nothing cancels yet, so factorise both parts fully. The top has a common factor; the bottom is a trinomial:</p>
+                <BlockMath math="\dfrac{x(x - 4)}{(x - 4)(x + 3)}" />
+                <p>Step 2: Cancel the common <InlineMath math="(x - 4)" /> bracket:</p>
+                <p><strong>Answer:</strong> <InlineMath math="\dfrac{x}{x + 3}" />.</p>
               </div>
             )
           }
@@ -1341,6 +1539,16 @@ export const national5MathsData: Section[] = [
             <p>
               You are expected to apply this to real-life contexts using formulae from science, health, and finance (e.g., <InlineMath math="E = \frac{1}{2}mv^2" /> or calculating the radius of a sphere given its volume).
             </p>
+            <p><strong>The Golden Rule:</strong> use inverse operations to peel away everything around the target variable, in reverse order (undo <InlineMath math="+/-" /> before <InlineMath math="\times/\div" />, and undo those before powers/roots). To undo a square, take a root; to undo a root, square both sides. If the target appears in two terms, factorise it out first.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Undoing in the wrong order:</strong> reverse the order of operations — deal with terms added or subtracted <em>before</em> multiplying or dividing.</li>
+                <li><strong>Clearing a fraction:</strong> if the subject is trapped in a fraction, multiply <em>both sides</em> by the denominator first.</li>
+                <li><strong>Roots and squares:</strong> to free a variable under a square root, square both sides; to free a squared variable, square-root both sides.</li>
+                <li><strong>Subject in two terms:</strong> if the target appears twice (e.g. <InlineMath math="ax + bx" />), you must factorise it out — <InlineMath math="x(a + b)" /> — before you can divide.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -1355,7 +1563,7 @@ export const national5MathsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p>Step 1: Subtract 2B from both sides: <InlineMath math="P - 2B = 2L" />.</p>
-                <p>Step 2: Divide both sides by 2. <strong>Answer:</strong> <InlineMath math="L = \frac{P - 2B}{2}" />.</p>
+                <p>Step 2: Divide both sides by 2. <strong>Answer:</strong> <InlineMath math="L = \dfrac{P - 2B}{2}" />.</p>
               </div>
             )
           },
@@ -1363,14 +1571,63 @@ export const national5MathsData: Section[] = [
             id: "change-subject-ex2",
             question: (
               <div className="space-y-2">
-                <p><strong>Using a root</strong></p>
+                <p><strong>Freeing a Squared Variable</strong></p>
                 <p>Change the subject of <InlineMath math="A = \pi r^2" /> to r.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
-                <p>Step 1: Divide by <InlineMath math="\pi" />: <InlineMath math="\frac{A}{\pi} = r^2" />.</p>
-                <p>Step 2: Take the square root of both sides. <strong>Answer:</strong> <InlineMath math="r = \sqrt{\frac{A}{\pi}}" />.</p>
+                <p>Step 1: Divide by <InlineMath math="\pi" />: <InlineMath math="\dfrac{A}{\pi} = r^2" />.</p>
+                <p>Step 2: Undo the square by taking the square root of both sides. <strong>Answer:</strong> <InlineMath math="r = \sqrt{\dfrac{A}{\pi}}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "change-subject-ex3",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Subject in a Fraction</strong></p>
+                <p>Change the subject of <InlineMath math="T = \dfrac{2a + 5}{b}" /> to a.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The subject is trapped in a fraction, so multiply both sides by <InlineMath math="b" /> first: <InlineMath math="Tb = 2a + 5" />.</p>
+                <p>Step 2: Subtract 5 from both sides: <InlineMath math="Tb - 5 = 2a" />.</p>
+                <p>Step 3: Divide by 2. <strong>Answer:</strong> <InlineMath math="a = \dfrac{Tb - 5}{2}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "change-subject-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Freeing a Variable Under a Root</strong></p>
+                <p>Change the subject of <InlineMath math="y = \sqrt{3x + 1}" /> to x.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The <InlineMath math="x" /> is trapped under a square root, so undo it by squaring <em>both</em> sides: <InlineMath math="y^2 = 3x + 1" />.</p>
+                <p>Step 2: Subtract 1 from both sides: <InlineMath math="y^2 - 1 = 3x" />.</p>
+                <p>Step 3: Divide by 3. <strong>Answer:</strong> <InlineMath math="x = \dfrac{y^2 - 1}{3}" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "change-subject-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🔗 Bringing it together</strong></p>
+                <p>Change the subject of <InlineMath math="ax + bx = c" /> to x.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The subject <InlineMath math="x" /> appears in two terms, so it cannot be isolated by dividing yet. Factorise it out:</p>
+                <BlockMath math="x(a + b) = c" />
+                <p>Step 2: Now <InlineMath math="x" /> is a single factor — divide both sides by the bracket:</p>
+                <p><strong>Answer:</strong> <InlineMath math="x = \dfrac{c}{a + b}" />.</p>
               </div>
             )
           }
