@@ -2321,7 +2321,7 @@ export const national5AppsData: Section[] = [
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>The "On Average Spread" Trap:</strong> The 2025 SQA Course Report highlights that when asked to compare interquartile ranges, many candidates incorrectly write responses that include "on average". You must completely avoid the phrase "on average" when making your second comment about standard deviation or the IQR.</li>
+                <li><strong>The "On Average Spread" Trap:</strong> a very common lost mark is writing "on average" when comparing interquartile ranges or standard deviations. You must completely avoid the phrase "on average" when making your second comment about standard deviation or the IQR, because these measure <em>spread</em>, not average.</li>
                 <li><strong>The "Unordered Data" Trap:</strong> Candidates frequently rush to find the middle number of the list exactly as it is printed on the exam paper. If you do not rearrange the raw data into ascending order first, your median and quartiles will be completely wrong.</li>
                 <li><strong>The "Forgotten Square Root" Trap:</strong> When calculating the standard deviation, the final step of the formula requires you to take the square root of your total. Candidates often do the complex division and then stop, losing the final process mark.</li>
               </ul>
@@ -2408,7 +2408,7 @@ export const national5AppsData: Section[] = [
         videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
-            <p><strong>The Golden Rule:</strong> When constructing a pie chart, you must remember to multiply your fraction by 360 to find the angle. The SQA Course Reports repeatedly highlight that candidates lose marks by mistakenly calculating percentages (multiplying by 100) instead of angle sizes.</p>
+            <p><strong>The Golden Rule:</strong> When constructing a pie chart, you must remember to multiply your fraction by 360 to find the angle. A very common lost mark is calculating percentages (multiplying by 100) instead of angle sizes.</p>
 
             <h4 className="text-white font-semibold">1. Pie Charts</h4>
             <p>A pie chart represents data as slices of a full <InlineMath math="360^\circ" /> circle.</p>
@@ -2650,12 +2650,23 @@ export const national5AppsData: Section[] = [
             <h4 className="text-white font-semibold">4. Comparing Probabilities</h4>
             <p>If asked to determine which of two different games offers a higher chance of winning, you must calculate the probability for both. Because fractions with different denominators (e.g., <InlineMath math="\frac{18}{150}" /> and <InlineMath math="\frac{5}{36}" />) are hard to compare directly, you should convert both fractions into decimals or percentages to make a valid, justified conclusion.</p>
 
+            <h4 className="text-white font-semibold">5. Combined Probability (in succession)</h4>
+            <p>The probability of several <em>independent</em> events all happening is found by <strong>multiplying</strong> their probabilities. For example, if the probability of a train being on time is 0.7, the probability of three trains in a row all being on time is <InlineMath math="0.7 \times 0.7 \times 0.7" />.</p>
+
+            <h4 className="text-white font-semibold">6. Bias &amp; Reliability</h4>
+            <p>A probability found from a survey or experiment is only trustworthy if it was gathered fairly. Two things can undermine it:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Bias:</strong> the sample is not representative — surveying only one type of person skews the result (e.g. asking only cyclists whether a town needs a cycle lane).</li>
+              <li><strong>Small sample size:</strong> a small experiment may not reflect the true probability. The larger the sample, the closer the experimental probability gets to the theoretical one.</li>
+            </ul>
+
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Lottery Bonus Ball" Trap:</strong> In a lottery draw where balls are not replaced, candidates frequently forget to subtract the drawn balls from the total. If 6 balls have been drawn from a machine of 49, the denominator for the 7th ball is 43, not 49. Furthermore, you must actively check if any of the balls already drawn fit the criteria for your next draw, as this reduces your numerator!</li>
                 <li><strong>The "Expected vs Actual" Mix-Up:</strong> When asked if an event happened "more or less than expected", candidates sometimes perform the calculation but fail to write the final conclusion sentence. If your expected value is 16.1, and the actual value was 15, you must write "Less than expected because 15 &lt; 16.1" to secure the final mark.</li>
-                <li><strong>The "Invisible Table" Trap:</strong> For questions with two spinners, the SQA awards marks for identifying the correct total number of outcomes. If you do not draw a grid and accidentally miss a combination (thinking there are 15 outcomes instead of 16), you will lose the process marks.</li>
+                <li><strong>The "Invisible Table" Trap:</strong> For questions with two spinners, marks are awarded for identifying the correct total number of outcomes. If you do not draw a grid and accidentally miss a combination (thinking there are 15 outcomes instead of 16), you will lose the process marks.</li>
+                <li><strong>Adding instead of multiplying:</strong> for independent events happening <em>in succession</em> ("and then"), multiply the probabilities — do not add them.</li>
               </ul>
             </div>
           </div>
@@ -2751,6 +2762,40 @@ export const national5AppsData: Section[] = [
                 <BlockMath math="0.045 \times 600 = 27 \text{ expected late trains}" />
                 <p><strong>Step 2:</strong> Compare the expected value (27) to the actual value (24) and state a conclusion.</p>
                 <p><strong>Final Answer:</strong> Less than expected, because 24 is less than 27.</p>
+              </div>
+            )
+          },
+          {
+            id: "probability-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Combined Probability (in succession)</strong></p>
+                <p>At a station, the probability that any train arrives on time is 0.8. Assuming the trains are independent, calculate the probability that the next three trains all arrive on time. Round your answer to 2 decimal places.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> The three arrivals are independent events happening in succession, so multiply the probabilities:</p>
+                <BlockMath math="0.8 \times 0.8 \times 0.8 = 0.8^3" />
+                <p><strong>Step 2:</strong> Evaluate:</p>
+                <BlockMath math="0.8^3 = 0.512" />
+                <p><strong>Final Answer:</strong> The probability is <InlineMath math="0.51" /> (to 2 d.p.).</p>
+              </div>
+            )
+          },
+          {
+            id: "probability-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (bias &amp; reliability)</strong></p>
+                <p>A town council wants to find out whether residents support building a new cycle lane. A researcher surveys 40 people as they leave a bicycle shop, and finds that 90% are in favour.</p>
+                <p>(a) Explain why this result is likely to be biased. (b) Suggest one way to make the survey more reliable.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>(a)</strong> People leaving a bicycle shop are far more likely to be cyclists, who would tend to support a cycle lane. The sample is not representative of all residents, so it is biased towards being in favour and over-states the true level of support.</p>
+                <p><strong>(b)</strong> Survey a larger, random cross-section of residents from different places around the town (not just cyclists) — a bigger, representative sample gives a more reliable result.</p>
               </div>
             )
           }
