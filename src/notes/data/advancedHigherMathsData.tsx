@@ -1823,6 +1823,125 @@ export const advancedHigherMathsData: Section[] = [
             )
           }
         ]
+      },
+      {
+        id: "proof-by-contradiction",
+        title: "4. Proof by Contradiction",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p>Some statements are hard to prove directly but easy to prove by ruling out the alternative. In <strong>proof by contradiction</strong> you <em>assume the statement is false</em>, then reason until you reach something impossible. Since the reasoning was sound, the only faulty step must have been the assumption — so the original statement is true.</p>
+            <p>To prove &ldquo;if <InlineMath math="A" /> then <InlineMath math="B" />&rdquo;, assume <InlineMath math="A" /> is true <em>and</em> <InlineMath math="B" /> is false, and derive a contradiction. The classic results proved this way are that <InlineMath math="\sqrt{2}" /> is irrational and that there are infinitely many primes.</p>
+            <p>The most-used tool is the representation of integers: an even number is <InlineMath math="2k" /> and an odd number is <InlineMath math="2k+1" /> (or <InlineMath math="2k-1" />) for integer <InlineMath math="k" />. Squaring these keeps the parity visible.</p>
+            <p><strong>The Golden Rule:</strong> state the assumption explicitly — &ldquo;Assume, for contradiction, that&hellip;&rdquo; — carry it through until two statements directly conflict, then name the contradiction before concluding. The examiner is looking for that named clash.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Negating the statement wrongly:</strong> the opposite of &ldquo;<InlineMath math="n" /> is even&rdquo; is &ldquo;<InlineMath math="n" /> is odd&rdquo;, and you must assume that alongside the given hypothesis, not instead of it.</li>
+                <li><strong>Never actually reaching a contradiction:</strong> the proof only works once you point to two things that cannot both be true. Circular reasoning that never conflicts proves nothing.</li>
+                <li><strong>Confusing it with contrapositive:</strong> contradiction assumes the hypothesis <em>and</em> the negated conclusion; contrapositive proves &ldquo;not <InlineMath math="B" /> implies not <InlineMath math="A" />&rdquo; directly, with no assumption of <InlineMath math="A" />.</li>
+                <li><strong>Rushing the conclusion:</strong> after the contradiction, state plainly that the assumption was false and therefore the original statement holds.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "contradiction-ex1",
+            question: <p>Prove by contradiction that if <InlineMath math="n^2" /> is even, then <InlineMath math="n" /> is even (for <InlineMath math="n \in \mathbb{N}" />).</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Assume, for contradiction, that <InlineMath math="n^2" /> is even but <InlineMath math="n" /> is <em>odd</em>.</p>
+                <p><strong>Step 2:</strong> If <InlineMath math="n" /> is odd, write <InlineMath math="n = 2k + 1" /> for some integer <InlineMath math="k" />. Then:</p>
+                <BlockMath math="n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1" />
+                <p><strong>Step 3:</strong> This has the form <InlineMath math="2m + 1" />, so <InlineMath math="n^2" /> is <strong>odd</strong>.</p>
+                <p><strong>Step 4:</strong> But we assumed <InlineMath math="n^2" /> was even. It cannot be both even and odd — a contradiction. Therefore the assumption that <InlineMath math="n" /> is odd is false, so <InlineMath math="n" /> must be even.</p>
+              </div>
+            )
+          },
+          {
+            id: "contradiction-ex2",
+            question: <p>Prove by contradiction that <InlineMath math="\sqrt{2}" /> is irrational.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Assume, for contradiction, that <InlineMath math="\sqrt{2}" /> is rational. Then it can be written as a fraction in <strong>lowest terms</strong>:</p>
+                <BlockMath math="\sqrt{2} = \frac{a}{b}, \qquad a, b \in \mathbb{Z}, \quad b \neq 0, \quad \text{with no common factor}" />
+                <p><strong>Step 2:</strong> Square both sides and rearrange:</p>
+                <BlockMath math="2 = \frac{a^2}{b^2} \implies a^2 = 2b^2" />
+                <p><strong>Step 3:</strong> So <InlineMath math="a^2" /> is even, which (by the previous result) means <InlineMath math="a" /> is even. Write <InlineMath math="a = 2c" />:</p>
+                <BlockMath math="(2c)^2 = 2b^2 \implies 4c^2 = 2b^2 \implies b^2 = 2c^2" />
+                <p><strong>Step 4:</strong> Then <InlineMath math="b^2" /> is even, so <InlineMath math="b" /> is even too.</p>
+                <p><strong>Step 5:</strong> But now <InlineMath math="a" /> and <InlineMath math="b" /> are <em>both</em> even, so they share a factor of <InlineMath math="2" /> — contradicting the assumption that the fraction was in lowest terms. Therefore <InlineMath math="\sqrt{2}" /> cannot be written as such a fraction, so it is irrational.</p>
+              </div>
+            )
+          },
+          {
+            id: "contradiction-ex3",
+            question: <p>Prove by contradiction that if <InlineMath math="7n" /> is even, then <InlineMath math="n" /> is even (for <InlineMath math="n \in \mathbb{N}" />).</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Assume, for contradiction, that <InlineMath math="7n" /> is even but <InlineMath math="n" /> is <em>odd</em>.</p>
+                <p><strong>Step 2:</strong> If <InlineMath math="n" /> is odd, write <InlineMath math="n = 2k + 1" />:</p>
+                <BlockMath math="7n = 7(2k + 1) = 14k + 7 = 2(7k + 3) + 1" />
+                <p><strong>Step 3:</strong> This has the form <InlineMath math="2m + 1" />, so <InlineMath math="7n" /> is <strong>odd</strong>.</p>
+                <p><strong>Step 4:</strong> This contradicts the assumption that <InlineMath math="7n" /> is even. Hence <InlineMath math="n" /> cannot be odd, so <InlineMath math="n" /> is even.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
+        id: "proof-by-exhaustion",
+        title: "5. Proof by Exhaustion",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-4">
+            <p><strong>Proof by exhaustion</strong> works when the statement need only be checked over a <em>finite</em> number of cases. You split the possibilities into a complete set of cases and verify the claim in every one. If it holds in all of them, it holds in general — because there is nothing left to check.</p>
+            <p>The method is only available when the cases really are finite and genuinely cover every possibility. A common device is to split the integers by their remainder on division by some number: every integer is of the form <InlineMath math="3k" />, <InlineMath math="3k+1" /> or <InlineMath math="3k+2" />, for instance, which is three cases covering all integers.</p>
+            <p><strong>The Golden Rule:</strong> the cases must be <em>exhaustive</em> — together they must account for every possibility, with none omitted. Before concluding, say in words that the cases are complete; a proof that quietly skips a case is not a proof.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Missing a case:</strong> if you split by remainder mod <InlineMath math="3" />, you need all three of <InlineMath math="3k" />, <InlineMath math="3k+1" />, <InlineMath math="3k+2" /> — leaving one out breaks the proof entirely.</li>
+                <li><strong>Using it on infinite cases:</strong> exhaustion cannot prove a statement about &ldquo;all integers&rdquo; by testing a few examples. The <em>cases</em> must be finite, even though the numbers they represent need not be.</li>
+                <li><strong>Checking examples instead of cases:</strong> verifying <InlineMath math="n = 1, 2, 3" /> is not a proof; verifying every <em>form</em> an integer can take is.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "exhaustion-ex1",
+            question: <p>Prove that <InlineMath math="n^2 + n" /> is even for every integer <InlineMath math="n" />, by considering the two cases for the parity of <InlineMath math="n" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Every integer is either even or odd — two cases that together exhaust all possibilities.</p>
+                <p><strong>Case 1 — <InlineMath math="n" /> even.</strong> Write <InlineMath math="n = 2k" />:</p>
+                <BlockMath math="n^2 + n = 4k^2 + 2k = 2(2k^2 + k)" />
+                <p>This is a multiple of <InlineMath math="2" />, so even.</p>
+                <p><strong>Case 2 — <InlineMath math="n" /> odd.</strong> Write <InlineMath math="n = 2k + 1" />:</p>
+                <BlockMath math="n^2 + n = (2k+1)^2 + (2k+1) = 4k^2 + 4k + 1 + 2k + 1 = 2(2k^2 + 3k + 1)" />
+                <p>This is also a multiple of <InlineMath math="2" />, so even.</p>
+                <p><strong>Step 2:</strong> The claim holds in both cases, and the two cases cover every integer, so <InlineMath math="n^2 + n" /> is even for all integers <InlineMath math="n" />.</p>
+                <p>(A neater direct proof notes that <InlineMath math="n^2 + n = n(n+1)" /> is a product of consecutive integers, one of which is always even — but exhaustion makes the two cases explicit.)</p>
+              </div>
+            )
+          },
+          {
+            id: "exhaustion-ex2",
+            question: <p>Prove that <InlineMath math="n^3 - n" /> is divisible by <InlineMath math="3" /> for every integer <InlineMath math="n" />, by splitting into cases according to the remainder when <InlineMath math="n" /> is divided by <InlineMath math="3" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Every integer leaves remainder <InlineMath math="0" />, <InlineMath math="1" /> or <InlineMath math="2" /> on division by <InlineMath math="3" />, so it has one of the forms <InlineMath math="3k" />, <InlineMath math="3k+1" /> or <InlineMath math="3k+2" />. These three cases are exhaustive. First factorise:</p>
+                <BlockMath math="n^3 - n = n(n^2 - 1) = (n-1)\,n\,(n+1)" />
+                <p><strong>Case 1 — <InlineMath math="n = 3k" />.</strong> Then <InlineMath math="n" /> itself is a multiple of <InlineMath math="3" />, so the product is divisible by <InlineMath math="3" />.</p>
+                <p><strong>Case 2 — <InlineMath math="n = 3k+1" />.</strong> Then <InlineMath math="n - 1 = 3k" /> is a multiple of <InlineMath math="3" />, so the product is divisible by <InlineMath math="3" />.</p>
+                <p><strong>Case 3 — <InlineMath math="n = 3k+2" />.</strong> Then <InlineMath math="n + 1 = 3k + 3 = 3(k+1)" /> is a multiple of <InlineMath math="3" />, so the product is divisible by <InlineMath math="3" />.</p>
+                <p><strong>Step 2:</strong> In every case the product <InlineMath math="(n-1)n(n+1)" /> contains a factor of <InlineMath math="3" />, and the three cases cover all integers. Therefore <InlineMath math="n^3 - n" /> is divisible by <InlineMath math="3" /> for every integer <InlineMath math="n" />.</p>
+              </div>
+            )
+          }
+        ]
       }
     ]
   },
