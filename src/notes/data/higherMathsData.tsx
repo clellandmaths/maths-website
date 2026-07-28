@@ -2893,6 +2893,15 @@ export const higherMathsData: Section[] = [
               <p className="text-sm text-slate-300 text-center">Multiply by the power, reduce the power by 1.</p>
             </div>
             <p className="mb-6">This rule applies to positive, negative, and fractional indices.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Negative indices:</strong> both the 2024 and 2025 Course Reports record candidates failing to differentiate negative indices correctly. Reducing the power by 1 makes it <em>more</em> negative — <InlineMath math="x^{-2}" /> differentiates to <InlineMath math="-2x^{-3}" />, not <InlineMath math="-2x^{-1}" />.</li>
+                <li><strong>Rewrite before you differentiate:</strong> the power rule only works on terms in the form <InlineMath math="ax^n" />. Roots and fractions must be written as indices first.</li>
+                <li><strong>Consistent lines of working:</strong> the reports single out differentiation as a place where each line must follow logically from the one above. Do not collapse several steps into one line.</li>
+                <li><strong>Simplify the final answer:</strong> both years ask candidates to simplify where appropriate — an unsimplified derivative can cost the final mark.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3141,6 +3150,15 @@ export const higherMathsData: Section[] = [
             </div>
 
             <p className="mb-6">As we already know, the gradient of a straight line is constant. We can determine the <strong>gradient</strong> of a curve, at a particular point, by differentiating i.e. finding the <strong>rate of change</strong>.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Differentiate with respect to the right variable:</strong> in a context question the letters change. If the formula is in terms of <InlineMath math="t" />, you want <InlineMath math="\frac{dV}{dt}" />, not <InlineMath math="\frac{dy}{dx}" />.</li>
+                <li><strong>Rate of change means the derivative, evaluated:</strong> substitute the given value in. An unsubstituted derivative does not answer the question.</li>
+                <li><strong>Substituting negative numbers:</strong> the Course Reports repeatedly ask for brackets when substituting negative values into a formula. Write <InlineMath math="3(-2)^2" />, not <InlineMath math="3-2^2" />.</li>
+                <li><strong>Say what it means:</strong> if the rate is negative, the quantity is <em>decreasing</em>. Context questions usually want that interpretation, with units.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3193,6 +3211,15 @@ export const higherMathsData: Section[] = [
                 <TangentDiagram />
              </div>
              <p className="mb-6">Once we have determined the gradient of a curve at a particular point (<InlineMath math="m = \frac{dy}{dx}" />), we can use this information directly with <InlineMath math="y - b = m(x - a)" /> to find the equation of the tangent line touching the curve at this point.</p>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>Negative indices:</strong> the 2024 Course Report notes this exact question type — candidates who could otherwise do it lost marks by differentiating negative indices incorrectly. Check that step before going on.</li>
+                 <li><strong>Gradient, then point:</strong> <InlineMath math="\frac{dy}{dx}" /> gives a <em>formula</em> for the gradient. You must substitute the <InlineMath math="x" />-coordinate into it to get the number. Using the derivative itself as <InlineMath math="m" /> is a guaranteed loss.</li>
+                 <li><strong>Find the missing coordinate:</strong> if you are given only <InlineMath math="x" />, substitute into the <em>original</em> equation — not the derivative — to get <InlineMath math="y" />.</li>
+                 <li><strong>Tangent vs normal:</strong> a tangent uses <InlineMath math="m" />; a normal uses <InlineMath math="-\frac{1}{m}" />. Read which one is asked for.</li>
+               </ul>
+             </div>
            </div>
          ),
          examples: [
@@ -3332,6 +3359,15 @@ export const higherMathsData: Section[] = [
              </div>
              
              <p>A stationary point's nature is determined by its behaviour to the left and right, using a <strong>nature table</strong>.</p>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>The nature table has minimum requirements:</strong> the 2025 Course Report found responses that did not meet them. It must show the <InlineMath math="x" /> values either side of the stationary point, the sign of <InlineMath math="\frac{dy}{dx}" /> in each region, and the shape of the slope — not just an answer.</li>
+                 <li><strong>Label it correctly:</strong> incorrect labelling within the table is named in that report as a common error. Say which <InlineMath math="x" /> values you are testing.</li>
+                 <li><strong>Evaluate carefully either side:</strong> numerical errors when evaluating the derivative near the point are also listed. Choose easy test values, and keep clear of the neighbouring stationary point.</li>
+                 <li><strong>Give the coordinates:</strong> solving <InlineMath math="\frac{dy}{dx}=0" /> gives only <InlineMath math="x" />. Substitute back into the original function for <InlineMath math="y" /> and state the point.</li>
+               </ul>
+             </div>
            </div>
          ),
          examples: [
@@ -3521,6 +3557,15 @@ export const higherMathsData: Section[] = [
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-6">In a closed interval, the maximum and minimum values of a function are either at a <strong>stationary point</strong> or at an <strong>end point</strong> of the interval.</p>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>Check both ends:</strong> of this exact question in 2024 the Course Report states that <em>most</em> candidates did not consider both ends of the closed interval. You must evaluate the function at <strong>both</strong> endpoints as well as at every stationary point inside the interval.</li>
+                 <li><strong>Compare values, not natures:</strong> the greatest value is simply the largest of the numbers you have worked out. A maximum turning point inside the interval is not automatically the greatest value — an endpoint can beat it.</li>
+                 <li><strong>Discard stationary points outside the interval:</strong> if solving <InlineMath math="\frac{dy}{dx}=0" /> gives an <InlineMath math="x" /> outside the stated range, it plays no part.</li>
+                 <li><strong>Answer with the value:</strong> the question asks for the greatest and least <em>values</em> of the function, so give the <InlineMath math="y" /> values.</li>
+               </ul>
+             </div>
            </div>
          ),
          examples: [
@@ -3701,6 +3746,16 @@ export const higherMathsData: Section[] = [
                 </table>
              </div>
              <p className="text-slate-300 text-sm italic">For example, if <InlineMath math="f(x)" /> is a cubic with two turning points, <InlineMath math="f'(x)" /> will be a parabola with two roots.</p>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>This is one of the worst-answered questions in the course.</strong> In 2024 the Course Report records that <em>most</em> candidates gained no marks on it, and 2025 reports the same. It is very winnable if you follow the rules below.</li>
+                 <li><strong>Get the degree right:</strong> in both years many candidates drew a curve of the wrong type — a quartic differentiates to a cubic, a cubic to a parabola. Decide the shape before you draw anything.</li>
+                 <li><strong>Turning points become roots:</strong> every stationary point of <InlineMath math="f(x)" /> is a point where <InlineMath math="f'(x)" /> <em>crosses the x-axis</em>. Mark those first — they fix the sketch.</li>
+                 <li><strong>Read the sign of the slope:</strong> where <InlineMath math="f(x)" /> rises, <InlineMath math="f'(x)" /> is above the axis; where it falls, below. Check each region.</li>
+                 <li><strong>Use the conditions given:</strong> the 2025 report notes candidates ignoring the stated conditions, and some treating the question as a differential equation. Read what you are told about the original graph.</li>
+               </ul>
+             </div>
            </div>
          ),
          examples: [
@@ -4391,6 +4446,15 @@ id: "integration-of-brackets",
                   </tbody>
                 </table>
               </div>
+            </div>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Never mix the two in one line:</strong> the 2025 Course Report found candidates mixing degrees and radians <em>within a single line of working</em>. Decide which the question is in and stay there.</li>
+                <li><strong>Answer in the units asked for:</strong> the same report notes candidates working in degrees throughout when radians were wanted. If the domain is given as <InlineMath math="0 \leq x \leq 2\pi" />, the answer must be in radians.</li>
+                <li><strong>Set your calculator to the right mode:</strong> a correct method in the wrong mode gives a wrong answer with no way back. Check it before paper 2 and every time the units change.</li>
+                <li><strong>Practise this deliberately:</strong> both the 2024 and 2025 reports specifically ask teachers to give more practice in radian measure and exact values — it is a known weak spot, not a minor detail.</li>
+              </ul>
             </div>
           </div>
         ),
@@ -5106,6 +5170,15 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">Trigonometric equations which contain a mixture of double angles (like <InlineMath math="2x" />) and single angles (like <InlineMath math="x" />) require using Double Angle Formulae to find solutions.</p>
             <p className="mb-6">The goal is to substitute the double angle term so that the entire equation is in terms of the same single angle trig function, which often results in a quadratic equation you can factorise.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Never divide by a trig term — factorise it out.</strong> The 2025 Course Report records candidates dividing an equation by <InlineMath math="\cos x" />, which <em>loses solutions</em>. Dividing throws away every solution where <InlineMath math="\cos x = 0" />. Take the common factor out and set each factor to zero instead.</li>
+                <li><strong>Extract the common factor:</strong> the same report notes many candidates did not spot one at all. After substituting the double angle formula, always look for a shared <InlineMath math="\sin x" /> or <InlineMath math="\cos x" />.</li>
+                <li><strong>Pick the right form of <InlineMath math="\cos 2x" />:</strong> choose whichever of the three versions leaves the equation in one trig function only. Match it to the other term in the equation.</li>
+                <li><strong>Give every solution in the domain:</strong> each factor produces its own set of answers. Use a quadrant diagram and check you have them all before you stop.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -5471,6 +5544,15 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Once you have converted <InlineMath math="a\sin x + b\cos x" /> into a single wave form, such as <InlineMath math="k\cos(x - \alpha)" />, sketch it by applying the phase shift <InlineMath math="\alpha" /> to the <InlineMath math="\cos" /> or <InlineMath math="\sin" /> curve multiplied by amplitude <InlineMath math="k" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Almost nobody scored here in 2024.</strong> The Course Report for that year records that <em>most</em> candidates gained no marks on the sketching part. The three points below are exactly what it says went wrong.</li>
+                <li><strong>Translate the right way:</strong> the report notes candidates shifting the graph in the wrong direction. In <InlineMath math="k\cos(x - \alpha)" /> the graph moves <strong>right</strong> by <InlineMath math="\alpha" />; a <InlineMath math="+\alpha" /> moves it left.</li>
+                <li><strong>Check both ends of the domain:</strong> only a few candidates considered the height of the graph at each end. Substitute the first and last <InlineMath math="x" /> values of the stated domain and plot those points — the curve rarely starts or finishes at a maximum.</li>
+                <li><strong>Mark the key features:</strong> maximum <InlineMath math="k" />, minimum <InlineMath math="-k" />, and the roots. The reports also ask candidates to practise sketching on the axes provided, so use them.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
