@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, Flame, ArrowLeft } from 'lucide-react';
 import { QuestionWithMetadata, getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
+import Marks from '@/components/Marks';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
 
@@ -231,6 +232,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             <p className="text-slate-500 text-xs mt-0.5">
               {question.year} Paper {question.paperNumber} Q{question.questionIndex + 1}
             </p>
+            <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
           </div>
         </div>
 

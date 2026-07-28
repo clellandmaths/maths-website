@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Eye, EyeOff, RefreshCw } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
+import Marks from '@/components/Marks';
 import type { PastPaper, QuestionWithMetadata } from '@/lib/data-loader';
 
 // One file imported per question shown — keeps the homepage payload small.
@@ -57,9 +58,12 @@ export default function TryQuestion() {
           Try a real past-paper question
         </span>
         {question && (
-          <span className="font-mono text-xs text-signal-mint/80">
-            {question.course} · {question.year} · P{question.paperNumber} · Q{question.questionIndex + 1}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs text-signal-mint/80">
+              {question.course} · {question.year} · P{question.paperNumber} · Q{question.questionIndex + 1}
+            </span>
+            <Marks marks={question.marks} />
+          </div>
         )}
       </div>
 

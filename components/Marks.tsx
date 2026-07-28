@@ -14,19 +14,23 @@ export default function Marks({
   className = '',
 }: {
   marks?: number[];
-  theme: CourseTheme;
+  /** Omit on surfaces with no course context — falls back to neutral styling. */
+  theme?: CourseTheme;
   className?: string;
 }) {
   if (!marks || marks.length === 0) return null;
 
   const total = marks.reduce((a, b) => a + b, 0);
+  const badge = theme ? `${theme.tint} ${theme.text}` : 'bg-white/5 text-muted-foreground';
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {marks.length > 1 && (
-        <span className="text-muted-foreground text-xs font-mono">({marks.join(', ')})</span>
+        <span className="text-muted-foreground text-xs font-mono print:text-black">
+          ({marks.join(', ')})
+        </span>
       )}
-      <span className={`${theme.tint} ${theme.text} text-xs font-bold px-2 py-1 rounded whitespace-nowrap`}>
+      <span className={`${badge} text-xs font-bold px-2 py-1 rounded whitespace-nowrap print:bg-transparent print:text-black print:border print:border-black/40`}>
         {total} {total === 1 ? 'Mark' : 'Marks'}
       </span>
     </div>

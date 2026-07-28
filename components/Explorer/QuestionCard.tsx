@@ -7,6 +7,7 @@ import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
+import Marks from '@/components/Marks';
 import type { CourseTheme } from '@/lib/course-theme';
 
 
@@ -18,6 +19,8 @@ export interface Question {
   topics: string[];
   subtopics?: string[];
   attachments?: { name: string; url: string; type: string }[];
+  marks?: number[];
+  solutionUrl?: string;
 }
 
 interface QuestionCardProps {
@@ -78,7 +81,7 @@ export default function QuestionCard({
             <p className="text-slate-200 font-semibold text-sm">
               {year} Paper {paperNumber} Q{questionIndex + 1}
             </p>
-            <div className="flex flex-wrap gap-1.5 mt-1">
+            <div className="flex flex-wrap items-center gap-1.5 mt-1">
               {mainTopics.slice(0, 2).map((topic) => (
                 <span
                   key={topic}
@@ -87,6 +90,7 @@ export default function QuestionCard({
                   {topic}
                 </span>
               ))}
+              <Marks marks={question.marks} theme={theme} />
             </div>
           </div>
           <button
