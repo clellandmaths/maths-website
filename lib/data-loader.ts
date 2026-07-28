@@ -22,6 +22,13 @@ export interface Question {
   attachments?: QuestionAttachment[];
   dataBookletSection?: number;
   dataBookletLabel?: string;
+  /**
+   * Set on guided practice questions owned by maths.scot. Linking to his
+   * written solution is a condition of using them, so it travels with the
+   * question rather than depending on one particular surface remembering.
+   * See docs/guided-practice-attribution.md
+   */
+  solutionUrl?: string;
 }
 
 export interface Paper {

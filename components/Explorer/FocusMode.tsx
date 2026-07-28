@@ -249,6 +249,19 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
                     html={q.answer}
                     className="text-slate-300 answer-content"
                   />
+                  {q.solutionUrl && (
+                    // Guided practice questions from maths.scot: linking to his
+                    // written solution is a condition of using them.
+                    // See docs/guided-practice-attribution.md
+                    <a
+                      href={q.solutionUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-4 text-sm text-slate-400 hover:text-slate-200 underline transition-colors"
+                    >
+                      Full written solution at maths.scot
+                    </a>
+                  )}
                 </div>
               )}
             </div>

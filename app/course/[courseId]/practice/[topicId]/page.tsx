@@ -6,7 +6,7 @@ import { COURSES_WITH_PRACTICE, getPracticeTopics, getPracticeTopic, resolveQues
 import { renderMathHtml } from '@/components/MathHtml';
 import { getCourseTheme } from '@/lib/course-theme';
 import PracticeQuestion from '@/components/Practice/PracticeQuestion';
-import PracticeFocus from '@/components/Practice/PracticeFocus';
+import PracticeFocusButton from '@/components/Practice/PracticeFocusButton';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -101,15 +101,19 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           {questions.length} question{questions.length === 1 ? '' : 's'} with answers and video
           solutions. Try each one before revealing the answer.
         </p>
-        <PracticeFocus
-          topicName={topic.name}
-          questions={questions.map(q => ({
-            questionHtml: q.questionHtml,
-            answerHtml: q.answerHtml,
-            videoId: q.videoId,
-            timestamp: q.timestamp,
-            paper: q.paper,
+        {/* Raw (unrendered) question html — Focus Mode renders maths itself */}
+        <PracticeFocusButton
+          questions={questions.map((q, i) => ({
+            question: q.question,
+            answer: q.answer,
+            videoId: q.videoId ?? '',
+            timestamp: q.timestamp ? `${q.timestamp}s` : '0s',
+            topics: [topic.name],
+            marks: q.marks,
             solutionUrl: q.solutionUrl,
+            year: q.paper ?? topic.name,
+            paperNumber: 0,
+            questionIndex: i,
           }))}
           theme={theme}
         />
