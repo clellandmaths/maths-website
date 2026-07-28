@@ -74,7 +74,7 @@ pupil gets a long video from the beginning and has to hunt for their topic.
 | 61 | Integration | Area Under the x-axis | deep-linked @ 3142s | n68SZ605FQQ | 3142 |
 | 62 | Integration | Further Integration of Brackets | deep-linked @ 3573s | n68SZ605FQQ | 3573 |
 | 63 | Integration | Further Integration of Trigonometric Functions | deep-linked @ 3869s | n68SZ605FQQ | 3869 |
-| 64 | Trigonometry | Radian Measure | deep-linked @ 440s | AvgXvkloPps | 440 |
+| 64 | Trigonometry | Radian Measure | deep-linked @ 0s | AvgXvkloPps | 0 |
 | 65 | Trigonometry | Exact Values | deep-linked @ 296s | AvgXvkloPps | 296 |
 | 66 | Trigonometry | Exact Values of Related Angles | deep-linked @ 296s | AvgXvkloPps | 296 |
 | 67 | Trigonometry | Solving Basic Trigonometric Equations | deep-linked @ 680s | AvgXvkloPps | 680 |

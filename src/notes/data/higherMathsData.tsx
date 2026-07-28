@@ -4355,7 +4355,7 @@ id: "integration-of-brackets",
       {
         id: "radian-measure",
         title: "Radian Measure",
-        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=440",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=0",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Previously when measuring angles, we have always used degrees.</p>
