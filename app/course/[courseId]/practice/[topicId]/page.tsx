@@ -2,10 +2,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ChevronLeft } from 'lucide-react';
-import { COURSES_WITH_PRACTICE, getPracticeTopics, getPracticeTopic } from '@/lib/practice-loader';
+import { COURSES_WITH_PRACTICE, getPracticeTopics, getPracticeTopic, resolveQuestions } from '@/lib/practice-loader';
 import { renderMathHtml } from '@/components/MathHtml';
 import { getCourseTheme } from '@/lib/course-theme';
 import PracticeQuestion from '@/components/Practice/PracticeQuestion';
+import PracticeFocus from '@/components/Practice/PracticeFocus';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -44,7 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const courseName = COURSE_NAMES[courseId] ?? courseId;
   const n = found.topic.questions.length;
-  const papers = found.topic.questions.filter(q => q.paper).length;
+  // A past paper question is either a reference to one we hold, or written in
+  // because the archive lacks that year
+  const papers = found.topic.questions.filter(q => q.ref || q.paper).length;
 
   return {
     title: `${found.topic.name} — ${courseName} Practice Questions`,
@@ -65,8 +68,10 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
   const courseName = COURSE_NAMES[courseId] ?? courseId;
   const { topic, sectionTitle } = found;
 
-  // Render the maths server-side so it is in the markup, not built in the browser
-  const questions = topic.questions.map(q => ({
+  // Resolve past paper references against the paper data, then render the
+  // maths server-side so it is in the markup rather than built in the browser
+  const resolved = await resolveQuestions(courseId, topic.questions);
+  const questions = resolved.map(q => ({
     ...q,
     questionHtml: renderMathHtml(q.question),
     answerHtml: renderMathHtml(q.answer),
@@ -92,10 +97,22 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
           {topic.name}
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground mb-5">
           {questions.length} question{questions.length === 1 ? '' : 's'} with answers and video
           solutions. Try each one before revealing the answer.
         </p>
+        <PracticeFocus
+          topicName={topic.name}
+          questions={questions.map(q => ({
+            questionHtml: q.questionHtml,
+            answerHtml: q.answerHtml,
+            videoId: q.videoId,
+            timestamp: q.timestamp,
+            paper: q.paper,
+            solutionUrl: q.solutionUrl,
+          }))}
+          theme={theme}
+        />
       </div>
 
       <div className="space-y-4">

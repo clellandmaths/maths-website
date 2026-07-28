@@ -1,6 +1,9 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import type { Metadata } from 'next';
+import { ArrowRight } from 'lucide-react';
 import { getNotesForCourse } from '@/lib/notes-loader';
+import { getPracticeSlugForTopic } from '@/lib/practice-loader';
 import NotesTopicShell, { type NotesNav } from '@/components/Notes/NotesTopicShell';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -76,6 +79,9 @@ export default async function NotesTopicPage(
   const topic = section?.topics[tIdx];
   if (!section || !topic) notFound();
 
+  // Null for courses or topics with no practice set yet
+  const practice = await getPracticeSlugForTopic(courseId, topicId);
+
   // Serializable nav model for the client shell — ids and titles only
   const nav: NotesNav = {
     courseTitle: course.title,
@@ -120,6 +126,27 @@ export default async function NotesTopicPage(
         nextHref={next ? href(next) : undefined}
         nextTitle={next?.title}
       />
+
+      {/* Notes teach, practice drills. Send them straight from one to the
+          other rather than making them find it. */}
+      {practice && (
+        <div className="mt-10 pt-6 border-t border-border">
+          <Link
+            href={`/course/${courseId}/practice/${practice.slug}`}
+            className="group flex items-center justify-between gap-4 rounded-xl border border-border p-5 hover:border-white/25 hover:bg-white/5 transition-colors"
+          >
+            <div>
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">
+                Ready to practise?
+              </p>
+              <p className="font-medium">
+                {practice.count} {practice.name} questions with answers and video solutions
+              </p>
+            </div>
+            <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

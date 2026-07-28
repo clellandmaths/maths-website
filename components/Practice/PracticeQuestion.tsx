@@ -30,7 +30,9 @@ export default function PracticeQuestion({
   index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, theme,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const answerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
 
   function reveal() {
     setOpen(true);
@@ -41,8 +43,18 @@ export default function PracticeQuestion({
     });
   }
 
-  const videoHref = videoId
-    ? `https://www.youtube.com/watch?v=${videoId}${timestamp ? `&t=${timestamp}s` : ''}`
+  function play() {
+    setPlaying(true);
+    requestAnimationFrame(() => {
+      videoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  // Embedded inline at the right second, as the app does — sending a pupil to
+  // YouTube loses their place in the question set. The iframe is only created
+  // on click, so no YouTube script loads with the page.
+  const embedSrc = videoId
+    ? `https://www.youtube-nocookie.com/embed/${videoId}?start=${timestamp ?? 0}&autoplay=1&rel=0`
     : null;
 
   return (
@@ -87,16 +99,14 @@ export default function PracticeQuestion({
         </div>
 
         <div className="flex flex-wrap gap-2 pt-1">
-          {videoHref && (
-            <a
-              href={videoHref}
-              target="_blank"
-              rel="noopener noreferrer"
+          {embedSrc && !playing && (
+            <button
+              onClick={play}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.text} text-sm font-medium hover:bg-white/10 transition-colors`}
             >
               <Play className="h-3.5 w-3.5" />
               Watch the solution
-            </a>
+            </button>
           )}
           {solutionUrl && (
             // Condition of using these questions: the full written solution
@@ -112,6 +122,18 @@ export default function PracticeQuestion({
             </a>
           )}
         </div>
+
+        {playing && embedSrc && (
+          <div ref={videoRef} className="rounded-lg overflow-hidden border border-border aspect-video bg-black">
+            <iframe
+              src={embedSrc}
+              title="Worked solution"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

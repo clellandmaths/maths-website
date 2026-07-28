@@ -1,4 +1,5 @@
-import type { PracticeCourse, PracticeTopic } from '@/src/practice/types';
+import type { PracticeCourse, PracticeTopic, PracticeQuestion } from '@/src/practice/types';
+import { getAllN5Questions } from '@/lib/data-loader';
 
 // Guided practice loader.
 //
@@ -64,4 +65,122 @@ export async function getPracticeTopics(courseId: string): Promise<FoundTopic[]>
 export async function getPracticeTopic(courseId: string, slug: string): Promise<FoundTopic | null> {
   const all = await getPracticeTopics(courseId);
   return all.find(t => t.slug === slug) ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Resolving past paper references
+//
+// Most practice questions are past paper questions the site already holds, so
+// they are stored as a reference ("2023 P2 Q14") rather than a copy. This
+// resolves them at build time, which means a correction to a paper flows
+// through to practice automatically, and the exam diagrams are not duplicated.
+
+/** A question ready to render: refs resolved, everything inline. */
+export interface ResolvedQuestion {
+  question: string;
+  answer: string;
+  videoId?: string;
+  timestamp?: number;
+  paper?: string;
+  solutionUrl?: string;
+  marks?: number[];
+}
+
+const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*)?\s*P([12])\s*Q(\d+)/i;
+
+const paperIndexes: Record<string, Promise<Map<string, ResolvedQuestion>>> = {};
+
+function indexFor(courseId: string): Promise<Map<string, ResolvedQuestion>> {
+  if (!paperIndexes[courseId]) {
+    paperIndexes[courseId] = (async () => {
+      const map = new Map<string, ResolvedQuestion>();
+      if (courseId !== 'n5') return map;
+      for (const q of await getAllN5Questions()) {
+        const m = q.question.match(LABEL);
+        if (!m) continue;
+        const label = `${m[1]}${m[2] ? ' Spec' : ''} P${m[3]} Q${m[4]}`;
+        map.set(label, {
+          // Strip the label prefix — the page shows it as a badge instead
+          question: q.question.replace(
+            /^\s*<small>\s*<strong>[\s\S]*?<\/strong>\s*<\/small>\s*(<br\s*\/?>)?\s*/i, ''
+          ),
+          answer: q.answer,
+          videoId: q.videoId || undefined,
+          timestamp: q.timestamp ? parseInt(q.timestamp, 10) : undefined,
+          paper: label,
+          marks: q.marks,
+        });
+      }
+      return map;
+    })();
+  }
+  return paperIndexes[courseId];
+}
+
+/**
+ * Resolve a topic's questions for rendering.
+ *
+ * A reference that cannot be resolved is dropped rather than rendered empty —
+ * and reported, so a paper being removed shows up in the build log instead of
+ * silently leaving a blank card on the page.
+ */
+export async function resolveQuestions(
+  courseId: string,
+  questions: PracticeQuestion[]
+): Promise<ResolvedQuestion[]> {
+  const index = await indexFor(courseId);
+  const out: ResolvedQuestion[] = [];
+
+  for (const q of questions) {
+    if (q.ref) {
+      const hit = index.get(q.ref);
+      if (hit) out.push(hit);
+      else console.warn(`[practice] unresolved past paper reference: ${courseId} ${q.ref}`);
+      continue;
+    }
+    if (q.question === undefined || q.answer === undefined) continue;
+    out.push({
+      question: q.question,
+      answer: q.answer,
+      videoId: q.videoId,
+      timestamp: q.timestamp,
+      paper: q.paper,
+      solutionUrl: q.solutionUrl,
+    });
+  }
+  return out;
+}
+
+/**
+ * Notes topic id -> practice slug, where the two differ.
+ *
+ * Most ids match outright. These are the ones where the notes and the app named
+ * the same topic differently, so a notes page can still offer its practice.
+ */
+const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
+  n5: {
+    'expanding': 'expanding-brackets',
+    'equations': 'linear-equations',
+    'inequalities': 'linear-inequalities',
+    'arcs-sectors': 'arcs-and-sectors',
+    'area-of-triangle': 'triangle-area',
+    'comparing-data-sets': 'data-sets',
+    // Both notes topics drill the same practice set
+    'quadratic-graphs': 'quadratics',
+  },
+};
+
+/** The practice page for a notes topic, or null if there isn't one. */
+export async function getPracticeSlugForTopic(
+  courseId: string,
+  notesTopicId: string
+): Promise<{ slug: string; name: string; count: number } | null> {
+  const topics = await getPracticeTopics(courseId);
+  if (!topics.length) return null;
+
+  const target = NOTES_TO_PRACTICE[courseId]?.[notesTopicId] ?? notesTopicId;
+  const found = topics.find(t => t.slug === target);
+  if (!found) return null;
+
+  return { slug: found.slug, name: found.topic.name, count: found.topic.questions.length };
 }
