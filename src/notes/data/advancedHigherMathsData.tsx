@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { InlineMath, BlockMath } from '@/src/notes/math-components';
+import { ArgandDiagramPlotting } from '@/src/notes/illustrations';
 import { Section } from '@/src/notes/types';
 
 // Advanced Higher Maths course notes.
@@ -1208,6 +1209,20 @@ export const advancedHigherMathsData: Section[] = [
             <p>The <strong>complex conjugate</strong> of <InlineMath math="z = a + bi" /> is <InlineMath math="\bar{z} = a - bi" />, and their product is real:</p>
             <BlockMath math="z\bar{z} = (a+bi)(a-bi) = a^2 + b^2" />
             <p>To <strong>divide</strong>, multiply the numerator and denominator by the conjugate of the denominator, which makes the denominator real.</p>
+
+            <h4 className="text-white font-semibold">Plotting on an Argand Diagram</h4>
+            <p>Complex numbers are represented geometrically on an <strong>Argand diagram</strong>. It looks like ordinary <InlineMath math="x" />–<InlineMath math="y" /> axes, but the horizontal axis is the <strong>real</strong> axis and the vertical axis is the <strong>imaginary</strong> axis. The number <InlineMath math="z = a + bi" /> is plotted at the point <InlineMath math="(a,\,b)" />.</p>
+            <p>So <InlineMath math="3 + 2i" /> sits 3 right and 2 up; <InlineMath math="-1 - 4i" /> sits 1 left and 4 down. A <em>real</em> number such as <InlineMath math="5" /> lies on the horizontal axis, and a purely <em>imaginary</em> number such as <InlineMath math="3i" /> lies on the vertical axis.</p>
+            <div className="bg-black/20 p-6 rounded-xl border border-white/10 flex justify-center">
+              <ArgandDiagramPlotting />
+            </div>
+            <p>Two geometric facts follow immediately and are worth knowing, because questions lean on them:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>The <strong>conjugate</strong> <InlineMath math="\bar{z}" /> is the <em>reflection of <InlineMath math="z" /> in the real axis</em> — same distance from the origin, opposite side.</li>
+              <li><strong>Adding</strong> two complex numbers behaves exactly like adding vectors: go along and up for one, then along and up for the other.</li>
+            </ul>
+            <p>This diagram is the foundation for modulus and argument (the distance from the origin and the angle from the positive real axis), for loci, and for the pattern made by the roots of an equation — so being able to plot quickly and accurately pays off throughout the topic.</p>
+
             <p><strong>The Golden Rule:</strong> to divide complex numbers, multiply top and bottom by the conjugate of the <em>denominator</em> — this clears <InlineMath math="i" /> from the bottom.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -1257,6 +1272,38 @@ export const advancedHigherMathsData: Section[] = [
                 <BlockMath math="a^2 - \frac{4}{a^2} = 3 \implies a^4 - 3a^2 - 4 = 0 \implies (a^2 - 4)(a^2 + 1) = 0" />
                 <p><strong>Step 3:</strong> Since <InlineMath math="a" /> is real, <InlineMath math="a^2 = 4" />, so <InlineMath math="a = \pm 2" /> with <InlineMath math="b = \pm 1" /> to match. The square roots are:</p>
                 <BlockMath math="2 + i \quad \text{and} \quad -2 - i" />
+              </div>
+            )
+          },
+          {
+            id: "complex-ops-ex4",
+            question: <p>The complex number <InlineMath math="z = -3 + 4i" />. Describe the position of <InlineMath math="z" />, <InlineMath math="\bar{z}" /> and <InlineMath math="-z" /> on an Argand diagram, stating the quadrant each lies in.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Read off the real and imaginary parts. For <InlineMath math="z = -3 + 4i" />, the real part is <InlineMath math="-3" /> and the imaginary part is <InlineMath math="4" />, so <InlineMath math="z" /> is plotted at the point <InlineMath math="(-3,\,4)" /> — 3 units left along the real axis and 4 units up the imaginary axis. That is the <strong>second quadrant</strong>.</p>
+                <p><strong>Step 2:</strong> The conjugate changes the sign of the imaginary part only:</p>
+                <BlockMath math="\bar{z} = -3 - 4i \quad \to \quad (-3,\,-4)" />
+                <p>This is the reflection of <InlineMath math="z" /> in the real axis, in the <strong>third quadrant</strong>.</p>
+                <p><strong>Step 3:</strong> Negating changes the sign of both parts:</p>
+                <BlockMath math="-z = 3 - 4i \quad \to \quad (3,\,-4)" />
+                <p>This is <InlineMath math="z" /> rotated through <InlineMath math="180^\circ" /> about the origin, in the <strong>fourth quadrant</strong>.</p>
+                <p><strong>Step 4:</strong> Note all three lie the same distance from the origin, since <InlineMath math="|z| = |\bar{z}| = |-z| = \sqrt{(-3)^2 + 4^2} = 5" />. All three points sit on a circle of radius 5 centred at the origin.</p>
+              </div>
+            )
+          },
+          {
+            id: "complex-ops-ex5",
+            question: <p>🔗 <strong>Bringing it together:</strong> On an Argand diagram, the points <InlineMath math="A" /> and <InlineMath math="B" /> represent <InlineMath math="z_1 = 5 + 2i" /> and <InlineMath math="z_2 = 1 + 8i" />. Find the complex number represented by the midpoint of <InlineMath math="AB" />, and find the distance <InlineMath math="AB" />.</p>,
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Plot the points. <InlineMath math="A" /> is at <InlineMath math="(5,\,2)" /> and <InlineMath math="B" /> is at <InlineMath math="(1,\,8)" /> — both in the first quadrant.</p>
+                <p><strong>Step 2:</strong> Because the Argand diagram uses ordinary coordinates, the midpoint is found the ordinary way — average the real parts and average the imaginary parts:</p>
+                <BlockMath math="\text{midpoint} = \frac{z_1 + z_2}{2} = \frac{(5+2i) + (1+8i)}{2} = \frac{6 + 10i}{2} = 3 + 5i" />
+                <p>So the midpoint is the point <InlineMath math="(3,\,5)" />, representing <InlineMath math="3 + 5i" />.</p>
+                <p><strong>Step 3:</strong> The distance between two points on the diagram is the modulus of their difference:</p>
+                <BlockMath math="z_1 - z_2 = (5 - 1) + (2 - 8)i = 4 - 6i" />
+                <BlockMath math="AB = |z_1 - z_2| = \sqrt{4^2 + (-6)^2} = \sqrt{52} = 2\sqrt{13}" />
+                <p>This is exactly Pythagoras on the diagram, and it is why a locus such as <InlineMath math="|z - a| = k" /> is a circle: it says &ldquo;all points a fixed distance <InlineMath math="k" /> from the point <InlineMath math="a" />&rdquo;.</p>
               </div>
             )
           }

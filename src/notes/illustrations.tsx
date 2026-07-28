@@ -1680,3 +1680,60 @@ export const AreaUnderXAxisEx2Graph = () => {
         </svg>
     )
 }
+
+// Advanced Higher — Complex Numbers: plotting on an Argand diagram.
+// Shows z = -3 + 4i with its conjugate and negative, matching complex-ops-ex4.
+export const ArgandDiagramPlotting = () => {
+    const O = 180, s = 22;
+    const px = (re: number) => O + s * re;
+    const py = (im: number) => O - s * im;
+
+    const Point = ({ re, im, label, dx = 10, dy = -10 }: { re: number, im: number, label: string, dx?: number, dy?: number }) => (
+        <g>
+            <circle cx={px(re)} cy={py(im)} r="4.5" fill="#EF4444" />
+            <text x={px(re) + dx} y={py(im) + dy} fill="#EF4444" fontSize="14" fontWeight="bold"
+                textAnchor={dx < 0 ? "end" : "start"}>{label}</text>
+        </g>
+    );
+
+    return (
+        <svg viewBox="0 0 360 360" className="w-full max-w-md mx-auto my-6 font-sans" role="img"
+            aria-label="Argand diagram showing z equals minus 3 plus 4i, its conjugate and its negative">
+            {/* grid */}
+            {[-6, -4, -2, 2, 4, 6].map(n => (
+                <g key={n} className="text-slate-700">
+                    <line x1={px(n)} y1="20" x2={px(n)} y2="340" stroke="currentColor" strokeWidth="0.5" />
+                    <line x1="20" y1={py(n)} x2="340" y2={py(n)} stroke="currentColor" strokeWidth="0.5" />
+                </g>
+            ))}
+
+            {/* axes */}
+            <g className="text-slate-400">
+                <line x1="20" y1={O} x2="345" y2={O} stroke="currentColor" strokeWidth="2" />
+                <line x1={O} y1="345" x2={O} y2="15" stroke="currentColor" strokeWidth="2" />
+            </g>
+            <text x="348" y={O - 8} fill="currentColor" fontSize="13" className="text-slate-300">Re</text>
+            <text x={O + 8} y="22" fill="currentColor" fontSize="13" className="text-slate-300">Im</text>
+
+            {/* axis numbers */}
+            {[-6, -4, -2, 4, 6].map(n => (
+                <text key={`x${n}`} x={px(n)} y={O + 16} textAnchor="middle" fill="currentColor" fontSize="11" className="text-slate-500">{n}</text>
+            ))}
+            {[-6, -4, -2, 2, 6].map(n => (
+                <text key={`y${n}`} x={O - 8} y={py(n) + 4} textAnchor="end" fill="currentColor" fontSize="11" className="text-slate-500">{n}</text>
+            ))}
+
+            {/* guide lines showing how (-3, 4) is reached */}
+            <g stroke="#EF4444" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.65">
+                <line x1={O} y1={O} x2={px(-3)} y2={O} />
+                <line x1={px(-3)} y1={O} x2={px(-3)} y2={py(4)} />
+            </g>
+            <text x={px(-1.5)} y={O + 18} textAnchor="middle" fill="#EF4444" fontSize="11">3 left</text>
+            <text x={px(-3) - 8} y={py(2)} textAnchor="end" fill="#EF4444" fontSize="11">4 up</text>
+
+            <Point re={-3} im={4} label="z = -3 + 4i" dx={-10} dy={-12} />
+            <Point re={-3} im={-4} label="z̄ = -3 - 4i" dx={-10} dy={20} />
+            <Point re={3} im={-4} label="-z = 3 - 4i" dx={10} dy={20} />
+        </svg>
+    )
+}

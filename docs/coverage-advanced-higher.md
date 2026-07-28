@@ -55,7 +55,7 @@ matching *d-iff-erence*, and "second order" missing our hyphenated
 | De Moivre's Theorem; roots | De Moivre's Theorem & Roots | ✅ |
 | Multiple angle formulae (z + 1/z) | Multiple Angle Formulae | ✅ |
 | Geometric interpretation (loci, inequations) | Polar Form & Loci | ✅ |
-| **Argand diagrams (plotting points)** | referenced throughout, never taught as a step | **⚠️ see note 1** |
+| Argand diagrams (plotting points) | Algebraic Operations §Plotting on an Argand Diagram + ex4–ex5 + diagram | ✅ **added after teacher ruling** |
 
 ## Textbook Unit 2 / Notebook 3
 
@@ -100,17 +100,17 @@ matching *d-iff-erence*, and "second order" missing our hyphenated
 | Concavity; points of inflection | Stationary Points & Inflection | ✅ |
 | Odd and even functions ("new terms") | Odd & Even Functions | ✅ |
 | The modulus function | The Modulus Function | ✅ |
-| **The graph of inverse functions** (reflection in y = x) | — | **❓ candidate, note 2** |
+| The graph of inverse functions (reflection in y = x) | — | ➖ **ruled Higher, not AH** |
 | More related graphs from Higher; new related graphs | Curve Sketching & Related Graphs | ✅ |
 | Motion in a straight line | Rectilinear Motion | ✅ |
 | Optimisation | Optimisation | ✅ |
 | Volume of revolution | Volumes of Revolution | ✅ |
 | Sigma notation; special summation; summation of a series | Summation Formulae | ✅ |
 | Proof by induction | Proof by Induction | ✅ |
-| **Notation and terminology (implication signs)** | — | **❓ candidate, note 3** |
-| **Negation of a statement** | — | **❓ candidate, note 3** |
-| The converse of a statement | mentioned when contrasting with contrapositive | ⚠️ |
-| **Equivalent statements / two-way implication (iff)** | — | **❓ candidate, note 3** |
+| Notation and terminology (implication signs) | — | ➖ **ruled out, note 3** |
+| Negation of a statement | — | ➖ **ruled out, note 3** |
+| The converse of a statement | mentioned when contrasting with contrapositive | ➖ **ruled out, note 3** |
+| Equivalent statements / two-way implication (iff) | — | ➖ **ruled out, note 3** |
 | Contrapositive of a statement | Proof by Contrapositive | ✅ |
 | Disproving conjectures — counterexamples | Direct Proof & Counterexample | ✅ |
 | The form of numbers (2k, 2k+1 …) | used across the proof topics | ✅ |
@@ -122,23 +122,50 @@ matching *d-iff-erence*, and "second order" missing our hyphenated
 
 ---
 
-## Notes / questions for you
+## Teacher rulings on the three candidates — all now resolved
 
-**Note 1 — Argand diagrams.** We refer to them (modulus as distance from the
-origin, loci described on the diagram, roots of unity equally spaced) but never
-teach "plot z = 3 + 2i". My assumption is this is assumed knowledge and the real
-need is a *diagram*, which is already on the deferred diagrams list — but tell me
-if you want it taught explicitly.
+**Note 1 — Argand diagrams. → TAUGHT (change made).** Ruling: *"candidates need
+to be able to do that as part of other bits of questions within complex numbers.
+We should probably have it as a skill taught."* So it is no longer left as
+assumed knowledge. Added to **Complex Numbers §1 Algebraic Operations**:
 
-**Note 2 — Graph of inverse functions.** The reflection of y = f(x) in the line
-y = x. We cover differentiating inverse trig functions, but not the graph
-relationship. Is this required at AH, or Higher revision?
+- A **"Plotting on an Argand Diagram"** theory block — real axis horizontal,
+  imaginary axis vertical, z = a + bi plotted at (a, b); where real and purely
+  imaginary numbers sit; the conjugate as a reflection in the real axis; addition
+  behaving like vector addition; and why this underpins modulus/argument, loci
+  and the pattern made by roots.
+- **A diagram** (`ArgandDiagramPlotting` in `src/notes/illustrations.tsx`) —
+  labelled Re/Im axes with z = −3 + 4i plotted, guide lines showing "3 left,
+  4 up", plus its conjugate and its negative. *This is the first diagram in the
+  AH notes.*
+- **ex4** — plot z, z̄ and −z, state the quadrants, and notice all three are the
+  same distance from the origin.
+- **ex5 (🔗 Bringing it together)** — two points on the diagram: find the midpoint
+  as a complex number and the distance between them as |z₁ − z₂|, connecting the
+  plotting skill to loci.
 
-**Note 3 — Statement logic.** Textbook Unit 3 gives sections to implication
-notation, negation of a statement, equivalent statements and two-way implication
-(iff). We teach the proof *methods* thoroughly, but not this vocabulary. Given
-the AH proof unit, I suspect negation and iff are genuinely required — but this
-is exactly the sort of judgement I got wrong on N5, so I have not assumed.
+**Note 2 — Graph of inverse functions. → NOT AH.** Ruling: *"Graphs of inverse
+functions are really higher."* Removed as an AH candidate.
+
+*Related question answered:* **graphs of modulus functions are already covered.**
+The **Functions & Graphs §2 The Modulus Function** topic teaches y = |f(x)| as
+reflecting every part of the graph below the x-axis upwards, contrasts it with
+y = f(|x|), notes the sharp corners where the original graph crossed the axis,
+and sketches y = |x² − 4|.
+
+**Note 3 — Statement logic. → LEFT OUT.** Ruling: *"I would probably leave out
+statement logic as long as we have taught all the methods of proof in advanced
+higher."* Condition verified — all five proof topics are present and worked:
+
+| | Topic |
+|---|---|
+| Direct proof + counterexample | 1. Direct Proof & Counterexample |
+| Contrapositive | 2. Proof by Contrapositive |
+| Induction | 3. Proof by Induction |
+| Contradiction | 4. Proof by Contradiction |
+| Exhaustion | 5. Proof by Exhaustion |
+
+So implication notation, negation, converse and iff stay out.
 
 ## Summary
 
@@ -146,5 +173,6 @@ is exactly the sort of judgement I got wrong on N5, so I have not assumed.
 - **No confirmed missing content** — the Pass A–D work closed the substantive gaps
   (first principles, inverse trig differentiation, motion, intersections, DE
   modelling, contradiction/exhaustion, optimisation, multiple angles, 3×3 inverse).
-- **3 candidates + 2 partials** listed above, awaiting your ruling on course level.
-- **Still outstanding for AH regardless:** diagrams (none yet) and video links.
+- **All 3 candidates now ruled on:** 1 taught (Argand plotting), 2 ruled out of AH.
+- **Advanced Higher content is complete against the reference material.**
+- **Still outstanding for AH:** more diagrams (one now exists) and video links.
