@@ -43,6 +43,15 @@ export const higherMathsData: Section[] = [
             <p>To calculate the distance between two points, we can construct a right-angled triangle and use Pythagoras' Theorem.</p>
             <p>The distance <InlineMath math="d" /> between two points <InlineMath math="(x_1, y_1)" /> and <InlineMath math="(x_2, y_2)" /> is given by:</p>
             <BlockMath math="d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}" />
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Leave the answer as a surd:</strong> the distance formula usually gives a root. Simplify it rather than rounding, especially when the result feeds into later working.</li>
+              <li><strong>Squaring kills the sign:</strong> so the order of the points does not matter — but brackets around a negative difference do.</li>
+              <li><strong>It is Pythagoras:</strong> if you forget the formula, sketch the right-angled triangle and use <InlineMath math="a^2+b^2=c^2" />.</li>
+              <li><strong>In three dimensions add the third term:</strong> the pattern extends to <InlineMath math="\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}" />.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -72,6 +81,15 @@ export const higherMathsData: Section[] = [
             <p>The midpoint is the exact centre point of a straight line connecting two points.</p>
             <p>The midpoint of <InlineMath math="(x_1, y_1)" /> and <InlineMath math="(x_2, y_2)" /> is found by averaging the <InlineMath math="x" /> and <InlineMath math="y" /> coordinates:</p>
             <BlockMath math="\text{Midpoint} = \left(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2}\right)" />
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Add then divide, do not subtract:</strong> the midpoint averages the coordinates. Using the difference gives the length, not the middle.</li>
+              <li><strong>Working backwards is common:</strong> given one endpoint and the midpoint, use <InlineMath math="x_2 = 2x_m - x_1" />. Guessing rarely works with negatives.</li>
+              <li><strong>Careful with negatives:</strong> the average of <InlineMath math="-3" /> and <InlineMath math="7" /> is <InlineMath math="2" />. Write the addition down rather than doing it mentally.</li>
+              <li><strong>Answer as coordinates:</strong> a midpoint is a point, so give it as a pair.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -170,6 +188,15 @@ export const higherMathsData: Section[] = [
              <p>The gradient is also related to the angle <InlineMath math="\theta" /> the line makes with the positive x-axis:</p>
              <BlockMath math="m = \tan\theta" />
              <GradientTypes />
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>Keep the order consistent:</strong> whichever point you call the first, use it first in both the numerator and the denominator. Swapping halfway through flips the sign.</li>
+               <li><strong>Rearrange before reading off <InlineMath math="m" />:</strong> from <InlineMath math="3x+2y=12" /> you must make <InlineMath math="y" /> the subject. The coefficient of <InlineMath math="x" /> in the original is not the gradient.</li>
+               <li><strong>Leave gradients as fractions:</strong> decimals make later comparisons unreliable, particularly when testing whether two gradients are equal.</li>
+               <li><strong>Angle questions use <InlineMath math="m = \tan\theta" />:</strong> and if the angle is measured from the <InlineMath math="y" />-axis, subtract from <InlineMath math="90^\circ" /> first.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -331,6 +358,15 @@ export const higherMathsData: Section[] = [
                  <Circumcentre />
                </div>
              </div>
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>Two steps, both needed:</strong> the midpoint of the line <em>and</em> the perpendicular gradient. Missing either one is the usual way marks are lost.</li>
+               <li><strong>Perpendicular means negative reciprocal:</strong> flip the fraction <em>and</em> change the sign — doing only one of the two is the classic error.</li>
+               <li><strong>Use the midpoint in the equation:</strong> <InlineMath math="y - b = m(x - a)" /> takes the midpoint, not either original endpoint.</li>
+               <li><strong>Set the working out in order:</strong> midpoint, then original gradient, then perpendicular gradient, then equation. Each line should follow from the one above.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -380,6 +416,15 @@ export const higherMathsData: Section[] = [
                   <Orthocentre />
                 </div>
               </div>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>An altitude is perpendicular to the opposite side:</strong> so you need the gradient of the <em>side</em>, then its negative reciprocal.</li>
+                <li><strong>It passes through the opposite vertex:</strong> use the vertex the altitude comes <em>from</em>, not a point on the side it meets.</li>
+                <li><strong>Identify the right side:</strong> the altitude from <InlineMath math="A" /> is perpendicular to <InlineMath math="BC" />. Mixing up which vertex pairs with which side wastes the whole question.</li>
+                <li><strong>A sketch prevents most errors:</strong> even a rough one makes it obvious which side is opposite which vertex.</li>
+              </ul>
+            </div>
             </div>
           ),
           examples: [
@@ -432,6 +477,15 @@ export const higherMathsData: Section[] = [
                   <Centroid />
                 </div>
               </div>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>A median goes to a midpoint:</strong> so find the midpoint of the opposite side first. No perpendicular gradient is involved — that is an altitude.</li>
+                <li><strong>Use the vertex and the midpoint:</strong> the gradient is between those two points, then apply <InlineMath math="y - b = m(x - a)" />.</li>
+                <li><strong>Match vertex to opposite side:</strong> the median from <InlineMath math="A" /> goes to the midpoint of <InlineMath math="BC" />.</li>
+                <li><strong>Do not confuse the three cevians:</strong> median goes to a midpoint, altitude is perpendicular to the opposite side, perpendicular bisector does both but starts from the midpoint.</li>
+              </ul>
+            </div>
             </div>
           ),
           examples: [
@@ -1625,6 +1679,15 @@ export const higherMathsData: Section[] = [
                 </tbody>
               </table>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The degree is the highest power:</strong> not the number of terms, and not the first coefficient you see.</li>
+              <li><strong>Write terms in descending order:</strong> before doing anything else, and include a zero for any missing power — a missing term will wreck synthetic division.</li>
+              <li><strong>A root is where the graph crosses:</strong> a root <InlineMath math="x = a" /> corresponds to a factor <InlineMath math="(x-a)" />, with the sign reversed.</li>
+              <li><strong>Degree tells you how many roots to expect:</strong> a cubic has at most three, counting repeats.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: []
@@ -1671,6 +1734,15 @@ export const higherMathsData: Section[] = [
                 </tbody>
               </table>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Include zeros for missing powers:</strong> for <InlineMath math="x^3 - 7x + 6" /> the row is 1, 0, −7, 6. Omitting the zero is the most common synthetic division error there is.</li>
+              <li><strong>Divide by <InlineMath math="a" />, not <InlineMath math="-a" />:</strong> to test the factor <InlineMath math="(x-3)" /> you use 3 in the box. The sign reverses.</li>
+              <li><strong>Set it out in the standard layout:</strong> non-standard arrangements are hard to credit, even when the arithmetic is right.</li>
+              <li><strong>The last number is the remainder:</strong> if it is zero, say explicitly that this proves the divisor is a factor.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1720,6 +1792,15 @@ export const higherMathsData: Section[] = [
             <p>Consider a polynomial with some unknown coefficients, such as <InlineMath math="x^3+2px^2-px+4" />, where <InlineMath math="p" /> is a constant.</p>
             <p>If we divide the polynomial by <InlineMath math="x-h" />, then we will obtain an expression for the remainder in terms of the unknown constants.</p>
             <p>If we already know the value of the remainder then we can solve for the unknown constants.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>A factor means remainder zero:</strong> that is the equation you solve for the unknown. Set the last entry of the synthetic division to 0.</li>
+              <li><strong>Two unknowns need two conditions:</strong> the question will give you both — usually two factors, or a factor and a remainder. Form both equations and solve simultaneously.</li>
+              <li><strong>Do not stop at the unknown:</strong> most questions then ask you to factorise fully or find the roots. Read to the end.</li>
+              <li><strong>Substitute your value back:</strong> a quick check that the remainder really is zero catches arithmetic slips.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1855,6 +1936,15 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Finding the roots of a polynomial equation <InlineMath math="f(x)=0" /> follows the same principles as finding roots of a quadratic. We must first fully factorise the polynomial and then set each factor equal to zero.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Factorise fully before solving:</strong> a partly factorised polynomial hides roots. Keep going until every factor is linear or an irreducible quadratic.</li>
+              <li><strong>Reverse the sign for the root:</strong> the factor <InlineMath math="(x+4)" /> gives the root <InlineMath math="x = -4" />.</li>
+              <li><strong>Check the quadratic factor as well:</strong> it may factorise further, need the quadratic formula, or have no real roots — use the discriminant to decide.</li>
+              <li><strong>Say what you have found:</strong> state the roots clearly at the end rather than leaving them inside brackets.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1984,6 +2074,15 @@ export const higherMathsData: Section[] = [
             <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
               <PolyIntersectionDiagrams />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Set the equations equal:</strong> intersections happen where the <InlineMath math="y" /> values match. Bring everything to one side to get a polynomial equal to zero.</li>
+              <li><strong>Solve fully, then find the <InlineMath math="y" /> values:</strong> the <InlineMath math="x" /> values are only half the answer. Substitute each back to give coordinates.</li>
+              <li><strong>Substitute into the simpler equation:</strong> usually the straight line — it is faster and less error-prone.</li>
+              <li><strong>Watch the signs when subtracting:</strong> subtracting a whole polynomial changes every one of its terms.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2118,6 +2217,15 @@ export const higherMathsData: Section[] = [
             <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
               <IntersectionDiagram />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>State the condition you are testing:</strong> two intersections need <InlineMath math="b^2-4ac \gt 0" />, a tangent needs <InlineMath math="= 0" />, and no intersection needs <InlineMath math="\lt 0" />. Write it down before you solve — leaving it unstated is one of the most repeated faults on these questions.</li>
+              <li><strong>Rearrange to zero first:</strong> substitute the line into the curve, then collect everything on one side before reading off <InlineMath math="a" />, <InlineMath math="b" /> and <InlineMath math="c" />.</li>
+              <li><strong>Use brackets when substituting:</strong> especially with a negative <InlineMath math="b" /> or a coefficient in terms of <InlineMath math="k" />.</li>
+              <li><strong>"Tangent" and "equal roots" are the same statement:</strong> and both mean the discriminant is zero.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2177,6 +2285,16 @@ export const higherMathsData: Section[] = [
             <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
               <InequalitiesDiagram />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Sketch the parabola:</strong> find the roots, decide whether it opens up or down, then read off where it is above or below the axis. Guessing the direction of the inequality is the main way marks go here.</li>
+              <li><strong>Two regions need two inequalities:</strong> an answer such as "<InlineMath math="x \lt 1" /> or <InlineMath math="x \gt 4" />" cannot be compressed into a single chain.</li>
+              <li><strong>A negative <InlineMath math="x^2" /> coefficient flips the shape:</strong> the parabola opens downwards, so the regions swap over.</li>
+              <li><strong>Rearrange to zero first:</strong> you cannot read off the regions until one side is zero.</li>
+              <li><strong>Watch strict versus inclusive:</strong> <InlineMath math="\geq" /> includes the roots themselves, <InlineMath math="\gt" /> does not.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2307,6 +2425,15 @@ export const higherMathsData: Section[] = [
                 <polyline points="18,0 18,3 21,3" fill="none" stroke="#EF4444" strokeWidth="0.5" />
               </svg>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Radius or diameter?</strong> the equation uses <InlineMath math="r^2" />, so a question that gives the diameter needs halving first. This is the most common single error in circle work.</li>
+              <li><strong>The angle in a semicircle is a right angle:</strong> it is worth knowing, because it converts many circle problems into perpendicular-gradient problems.</li>
+              <li><strong>A tangent is perpendicular to the radius at the point of contact:</strong> this is the fact almost every tangent question depends on.</li>
+              <li><strong>Keep the radius exact:</strong> leave it as a surd rather than rounding — a rounded radius will not satisfy the equation later.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2421,6 +2548,15 @@ export const higherMathsData: Section[] = [
                 </table>
               </div>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The signs inside the brackets flip:</strong> a centre of <InlineMath math="(3,-2)" /> gives <InlineMath math="(x-3)^2 + (y+2)^2 = r^2" />. Reading the centre straight out of the brackets without changing sign is the classic slip.</li>
+              <li><strong>It is <InlineMath math="r^2" /> on the right:</strong> so a radius of 5 gives 25. Going the other way, remember to square root before quoting the radius.</li>
+              <li><strong>Find the radius from two points if needed:</strong> the distance from the centre to a point on the circle is the radius — use the distance formula and keep it exact.</li>
+              <li><strong>Do not expand unless asked:</strong> the centre-radius form is usually the most useful one to leave the answer in.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2483,6 +2619,15 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Compare distance with radius:</strong> work out the distance from the centre to the point, then compare. Less than the radius is inside, equal is on, greater is outside.</li>
+              <li><strong>State the conclusion:</strong> a calculation with no sentence does not answer a question that asks whether the point lies on the circle.</li>
+              <li><strong>Substituting works too:</strong> put the coordinates into the left-hand side and compare with <InlineMath math="r^2" /> — often quicker than a square root.</li>
+              <li><strong>Compare like with like:</strong> if you substitute, you are comparing with <InlineMath math="r^2" />, not with <InlineMath math="r" />.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2698,6 +2843,15 @@ export const higherMathsData: Section[] = [
                 </tbody>
               </table>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Compare the distance between centres with the radii:</strong> touching externally means <InlineMath math="d = r_1 + r_2" />; touching internally means <InlineMath math="d = r_1 - r_2" />. Work out all three numbers before concluding.</li>
+              <li><strong>Do not stop at the distance:</strong> the marks are for the comparison and the conclusion, so state which case applies and why.</li>
+              <li><strong>Keep distances exact:</strong> rounding can make a genuine tangency look like a near miss.</li>
+              <li><strong>Find the centres and radii correctly first:</strong> if either circle is in general form, extract <InlineMath math="(-g,-f)" /> and <InlineMath math="\sqrt{g^2+f^2-c}" /> before comparing anything.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -2795,6 +2949,15 @@ export const higherMathsData: Section[] = [
             <p>If the point of contact between the circle and the tangent is known, then we can calculate the gradient of the radius.</p>
             <p>The gradient of the tangent can then be found using <InlineMath math="m_{radius} \times m_{tangent} = -1" />.</p>
             <p>We then know the gradient of the tangent and we have the point of contact, therefore can find the equation of the tangent using <InlineMath math="y - b = m(x - a)" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Radius and tangent are perpendicular:</strong> so the tangent's gradient is the negative reciprocal of the radius gradient. Using the radius gradient itself is the standard error.</li>
+              <li><strong>Find the radius gradient first:</strong> from the centre to the point of contact — in that order, though the gradient is the same either way.</li>
+              <li><strong>Use the point of contact in the equation:</strong> <InlineMath math="y - b = m(x - a)" /> needs the point on the circle, not the centre.</li>
+              <li><strong>"Show that the line is a tangent" is different:</strong> substitute and show the discriminant is zero, rather than finding an equation.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4141,6 +4304,15 @@ export const higherMathsData: Section[] = [
               <li><InlineMath math="f'(x)=0 \implies f(x) = c" /> (where <InlineMath math="c" /> is a constant)</li>
             </ul>
             <p>Integration is a branch of calculus. It is the inverse of differentiation.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Integration undoes differentiation:</strong> every check you make should be "does differentiating my answer give me back the original?" It catches most errors in seconds.</li>
+              <li><strong>The constant is part of the answer:</strong> an indefinite integral without <InlineMath math="+\,C" /> is incomplete, and the working that follows it can be treated as invalid.</li>
+              <li><strong>Notation is assessed:</strong> write the integral sign and the <InlineMath math="dx" /> together. An integral with no <InlineMath math="dx" /> is not a complete statement.</li>
+              <li><strong>Rewrite before integrating:</strong> as with differentiation, every term needs to be in the form <InlineMath math="ax^n" /> first.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: []
@@ -4248,6 +4420,15 @@ export const higherMathsData: Section[] = [
             <BlockMath math="\int f'(x) \,dx = f(x)" />
             <p>The above obtains a general solution for the original function.</p>
             <p>However, if we have additional information about the function, we can find the value of the constant of integration (<InlineMath math="C" />) to obtain a particular solution.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>You cannot skip the constant here:</strong> the whole point is to find it. Integrate, write <InlineMath math="+\,C" />, then use the given condition to pin it down.</li>
+              <li><strong>Substitute the condition immediately:</strong> put the given point into your integrated expression before doing anything else, and solve for <InlineMath math="C" />.</li>
+              <li><strong>Write the final function out:</strong> the answer is the equation with <InlineMath math="C" /> replaced by its value — not the value of <InlineMath math="C" /> on its own.</li>
+              <li><strong>Read what the derivative represents:</strong> in a context question, <InlineMath math="\frac{dV}{dt}" /> is a rate. Integrating gives the quantity, not the rate.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4352,6 +4533,16 @@ export const higherMathsData: Section[] = [
              </div>
              <p>In general, we can find the area enclosed by a curve and the <InlineMath math="x" />-axis between <InlineMath math="x=a" /> and <InlineMath math="x=b" /> by using:</p>
              <BlockMath math="\int_a^b f(x) \,dx" />
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>Find the limits if you are not given them:</strong> "the area between the curve and the <InlineMath math="x" />-axis" means you must solve <InlineMath math="y = 0" /> to get the roots first.</li>
+               <li><strong>An area is never negative:</strong> if the integral comes out negative the region is below the axis. Take the positive value and say why.</li>
+               <li><strong>Split where the curve crosses the axis:</strong> integrating straight through a root lets positive and negative parts cancel, which understates the area.</li>
+               <li><strong>Use brackets when substituting:</strong> particularly with a negative limit, where a missing bracket changes every sign.</li>
+               <li><strong>State the units:</strong> areas are in square units.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -4491,6 +4682,15 @@ export const higherMathsData: Section[] = [
              </div>
              <p>If the area is below the x-axis, the definite integral will yield a negative value.  Since area must be positive, we can calculate it as the area between two curves, where the upper curve is <InlineMath math="y=0" /> (the x-axis) and the lower curve is the function.</p>
              <BlockMath math="\int_a^b (0 - f(x)) \,dx = - \int_a^b f(x) \,dx" />
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>The negative is information, not a mistake:</strong> a negative integral tells you the region lies below the axis. Interpret it rather than quietly dropping the sign.</li>
+               <li><strong>Never add a negative area to a positive one:</strong> work out each piece separately and add the <em>magnitudes</em>.</li>
+               <li><strong>Find every root in the interval:</strong> each crossing is a place the integral must be split.</li>
+               <li><strong>Total area versus net value:</strong> read carefully — "the area enclosed" wants the sum of the magnitudes; a plain definite integral may legitimately be negative.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -4528,6 +4728,16 @@ id: "integration-of-brackets",
             <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col space-y-4">
               <BlockMath math="\int (ax+b)^n \,dx = \frac{(ax+b)^{n+1}}{a(n+1)} + C \quad (n \neq -1)" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Divide by the derivative of the bracket:</strong> integrating <InlineMath math="(3x+2)^4" /> needs <InlineMath math="\times \frac{1}{3}" /> as well as raising the power. Forgetting that factor is the standard error.</li>
+              <li><strong>This only works for a linear bracket:</strong> the shortcut is valid when the inside is <InlineMath math="ax+b" />. It does not work when the bracket contains <InlineMath math="x^2" />.</li>
+              <li><strong>Add one to the power, then divide by the new power:</strong> and by the coefficient — two divisions, not one.</li>
+              <li><strong>Rewrite fractions as negative powers first:</strong> <InlineMath math="\frac{1}{(2x-1)^2}" /> becomes <InlineMath math="(2x-1)^{-2}" />.</li>
+              <li><strong>Still write <InlineMath math="+\,C" />:</strong> the bracket form makes it especially easy to forget.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4566,6 +4776,15 @@ id: "integration-of-brackets",
               <BlockMath math="\int \cos(ax+b) \, dx = \frac{1}{a} \sin(ax+b) + C" />
               <BlockMath math="\int \sin(ax+b) \, dx = -\frac{1}{a} \cos(ax+b) + C" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The minus sign swaps sides:</strong> <InlineMath math="\int \sin x\,dx = -\cos x + C" />, while <InlineMath math="\int \cos x\,dx = \sin x + C" />. This is the reverse of differentiation, and mixing the two up is the most common error in the topic.</li>
+              <li><strong>Divide by the coefficient of <InlineMath math="x" />:</strong> <InlineMath math="\int \cos(4x)\,dx = \frac{1}{4}\sin(4x) + C" />. The chain factor divides when integrating and multiplies when differentiating.</li>
+              <li><strong>Work in radians:</strong> these results are only valid in radians, and definite integrals must have radian limits.</li>
+              <li><strong>Check by differentiating:</strong> it takes seconds and catches both the sign and the coefficient.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
