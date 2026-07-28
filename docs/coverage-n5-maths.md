@@ -129,25 +129,42 @@ _Last run: N5 Maths notes at 35 topics._
 
 ---
 
-## Summary — gaps found
+## ⚠️ Important: the reference is a study guide, not the spec
 
-**❌ Missing (6):**
+Teacher review of the first version of this table corrected four of my six
+"gaps". The SCHOLAR guides include **National 4 recap sections** and some
+material that sits at **Higher**, so a section existing in the reference does
+not by itself make it an N5 Maths requirement. Corrections applied:
 
-1. **Five-figure summaries and boxplots** (File 5 §1.3) — quartiles and IQR are
-   taught, but not the five-figure summary or how to draw/read a boxplot.
-2. **Stem-and-leaf diagrams** (File 5 §1.1.1) — absent. (Earlier keyword checks
-   showed "stem" hits, but those were "systematic" / "solve the system".)
-3. **Exact trigonometric values** (File 4 §1.5) — the exact-value table for
-   0°/30°/45°/60°/90° is never given; it is used once in passing in a solution.
-4. **Selecting the rule** (File 4 §2.4) — no guidance on choosing between the
-   area formula, sine rule and cosine rule from the information given.
-5. **Distance between two coordinates** (File 3 §3.4) — the distance formula
-   derived from Pythagoras.
-6. **Simultaneous equations by substitution** (File 2 §6.4.2) — only the
-   elimination method is taught.
+| My original finding | Teacher verdict |
+|---|---|
+| Five-figure summaries and boxplots missing | **Not an N5 Maths skill** — these belong to N5 Applications. Not a gap. |
+| Stem-and-leaf diagrams missing | Sits under "Looking back at National 4" — recap, not separately assessed. |
+| Exact trigonometric values missing | **Exact values are a Higher skill.** The N5 skill is different: given a value such as sin 60°, calculate a *related* value, or put related values in order of size, using CAST or the graph. |
+| Distance between two coordinates missing | **A Higher skill**, not N5. |
+| Drawing straight lines from equations (§6.2) | Not really an N5 skill — but candidates *do* need to find the **point of intersection of two lines**, given as equations or as labelled graphs, using simultaneous equations. |
 
-**⚠️ Partial (5):** sketching a quadratic (features taught, no sketch method);
+## Summary — after correction
+
+**❌ Genuine gaps (3) — all now fixed:**
+
+1. **Related trigonometric values** — given one value, find a related value, and
+   order values by size using CAST / graph symmetry. CAST was taught only for
+   *solving* equations. → added to **Trig Equations** (theory + two examples,
+   including an order-of-size exam-style question).
+2. **Selecting the rule** (File 4 §2.4) — no guidance on choosing between the
+   area formula, sine rule and cosine rule. → added to **Cosine Rule** as a
+   decision guide ("if you can see a side and the angle opposite it, use the
+   Sine Rule").
+3. **Point of intersection of two lines** — solving simultaneously was taught,
+   but never framed as finding a point of intersection or answered as
+   coordinates. → added to **Simultaneous equations**.
+
+**⚠️ Partial / lower priority (5):** simultaneous by substitution (only
+elimination taught); sketching a quadratic (features taught, no sketch method);
 rational vs irrational roots not named; finding radius/angle from *sector area*
 (shown only for arc length); composite **areas**; mode.
 
-These are outstanding — this table records the state as found, before fixes.
+**Lesson recorded:** check a reference section against the actual course level
+before treating it as a gap — "it's in the study guide" is not the same as
+"it's assessed at N5".

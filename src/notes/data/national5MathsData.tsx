@@ -1731,6 +1731,25 @@ export const national5MathsData: Section[] = [
                 <p><strong>Answer:</strong> <InlineMath math="x = 2,\ y = 4" />.</p>
               </div>
             )
+          },
+          {
+            id: "simultaneous-ex-intersect",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (point of intersection)</strong></p>
+                <p>Two straight lines have equations <InlineMath math="2x + y = 11" /> and <InlineMath math="3x - y = 9" />. Find, algebraically, the coordinates of their point of intersection.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: The point of intersection is the pair of values satisfying <em>both</em> equations — so solve them simultaneously. The <InlineMath math="y" /> terms are <InlineMath math="+y" /> and <InlineMath math="-y" />, so add the equations:</p>
+                <BlockMath math="(2x + 3x) + (y - y) = 11 + 9 \implies 5x = 20 \implies x = 4" />
+                <p>Step 2: Substitute back into the first equation:</p>
+                <BlockMath math="2(4) + y = 11 \implies y = 3" />
+                <p>Step 3: The question asks for <em>coordinates</em>, so give the answer as a point, not as two separate values.</p>
+                <p><strong>Answer:</strong> the lines intersect at <InlineMath math="(4,\ 3)" />.</p>
+              </div>
+            )
           }
         ]
       },
@@ -2954,6 +2973,15 @@ export const national5MathsData: Section[] = [
             <p>Both forms of the formula are provided on the exam sheet:</p>
             <BlockMath math="a^2 = b^2 + c^2 - 2bc\cos A" />
             <BlockMath math="\cos A = \frac{b^2 + c^2 - a^2}{2bc}" />
+            <h4 className="text-white font-semibold">Selecting the Right Rule</h4>
+            <p>With three tools available, the marks often go to choosing correctly. Look at what you are <em>given</em>:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Two sides + the angle between them → area.</strong> Use <InlineMath math="A = \tfrac{1}{2}ab\sin C" /> if the question asks for the area.</li>
+              <li><strong>Two sides + the angle between them → third side.</strong> Use the <strong>Cosine Rule</strong>.</li>
+              <li><strong>All three sides → any angle.</strong> Use the <strong>Cosine Rule</strong> (rearranged form).</li>
+              <li><strong>A matching side-and-angle pair → anything else.</strong> Use the <strong>Sine Rule</strong>.</li>
+            </ul>
+            <p>The quickest test: if you can see a side and the angle <em>opposite</em> it, the Sine Rule will work. If you cannot, it must be the Cosine Rule.</p>
             <p><strong>The Golden Rule:</strong> reach for the Cosine Rule when the Sine Rule cannot start — that is, when you have <em>two sides and the angle between them</em> (to find the third side), or <em>all three sides</em> (to find any angle). The angle in the first form is always opposite the side you are finding.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -3211,6 +3239,12 @@ export const national5MathsData: Section[] = [
           <div className="space-y-4 text-slate-300">
             <p>You must be able to solve trigonometric equations for a given domain (usually <InlineMath math="0^\circ \le x \le 360^\circ" />).</p>
             <p>There are usually two solutions. The CAST diagram (or the symmetry of trigonometric graphs) is used to find the related angles in different quadrants depending on whether the trig ratio is positive or negative.</p>
+
+            <h4 className="text-white font-semibold">Related Values</h4>
+            <p>You may be given one value — say <InlineMath math="\sin 40^\circ = 0.643" /> — and asked to write down a <em>related</em> value without a calculator, or to put several values in order of size. Both use the same symmetry:</p>
+            <BlockMath math="\sin(180^\circ - x) = \sin x \qquad \sin(180^\circ + x) = -\sin x \qquad \sin(360^\circ - x) = -\sin x" />
+            <BlockMath math="\cos(360^\circ - x) = \cos x \qquad \cos(180^\circ - x) = -\cos x" />
+            <p>In practice you do not need to memorise these as formulas — read them off the CAST diagram or the shape of the graph. CAST tells you the <strong>sign</strong> in each quadrant, and the related acute angle tells you the <strong>size</strong>.</p>
             <p><strong>The Golden Rule:</strong> first rearrange to get <InlineMath math="\sin x" />, <InlineMath math="\cos x" /> or <InlineMath math="\tan x" /> on its own. Take the inverse of the <em>positive</em> value to get the base angle, then use the sign to decide which two quadrants (via CAST) the solutions fall in.</p>
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -3275,6 +3309,46 @@ export const national5MathsData: Section[] = [
                 <BlockMath math="x = \tan^{-1}(3) \approx 71.6^\circ" />
                 <p>Step 3: Since tangent is positive, the second solution is in Quadrant 3 (T): <InlineMath math="180^\circ + 71.6^\circ" />.</p>
                 <p>Answer: <InlineMath math="x = 71.6^\circ" /> and <InlineMath math="x = 251.6^\circ" />.</p>
+              </div>
+            )
+          },
+          {
+            id: "trig-eq-ex4",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Related Values</strong></p>
+                <p>Given that <InlineMath math="\sin 35^\circ = 0.574" />, write down the value of (a) <InlineMath math="\sin 145^\circ" /> and (b) <InlineMath math="\sin 215^\circ" />.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1 (a): <InlineMath math="145^\circ" /> is in the second quadrant, where sine is <strong>positive</strong> (the S in CAST). Its related acute angle is <InlineMath math="180^\circ - 145^\circ = 35^\circ" />.</p>
+                <p>So the size is the same and the sign is positive:</p>
+                <BlockMath math="\sin 145^\circ = 0.574" />
+                <p>Step 2 (b): <InlineMath math="215^\circ" /> is in the third quadrant, where only tangent is positive — so sine is <strong>negative</strong>. Its related acute angle is <InlineMath math="215^\circ - 180^\circ = 35^\circ" />.</p>
+                <BlockMath math="\sin 215^\circ = -0.574" />
+              </div>
+            )
+          },
+          {
+            id: "trig-eq-ex5",
+            question: (
+              <div className="space-y-2">
+                <p><strong>🎯 Exam-style (order of size)</strong></p>
+                <p>Write the following in order of size, starting with the smallest. Justify your answer.</p>
+                <BlockMath math="\cos 100^\circ, \qquad \cos 20^\circ, \qquad \cos 190^\circ" />
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p>Step 1: Use CAST to get the sign of each. Cosine is positive only in the first and fourth quadrants:</p>
+                <ul className="list-disc list-inside space-y-1 ml-4">
+                  <li><InlineMath math="\cos 20^\circ" /> — first quadrant, so <strong>positive</strong>.</li>
+                  <li><InlineMath math="\cos 100^\circ" /> — second quadrant, so <strong>negative</strong>.</li>
+                  <li><InlineMath math="\cos 190^\circ" /> — third quadrant, so <strong>negative</strong>.</li>
+                </ul>
+                <p>Step 2: Separate the two negatives. Their related acute angles are <InlineMath math="180^\circ - 100^\circ = 80^\circ" /> and <InlineMath math="190^\circ - 180^\circ = 10^\circ" />. Since <InlineMath math="\cos 10^\circ" /> is larger than <InlineMath math="\cos 80^\circ" />, the negative of it is <em>smaller</em> — so <InlineMath math="\cos 190^\circ" /> is the smallest.</p>
+                <p><strong>Answer:</strong> <InlineMath math="\cos 190^\circ,\ \cos 100^\circ,\ \cos 20^\circ" /> — the two in the second and third quadrants are negative and the first-quadrant one is positive, so it is largest.</p>
               </div>
             )
           }
