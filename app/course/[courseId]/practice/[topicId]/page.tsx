@@ -6,7 +6,7 @@ import { COURSES_WITH_PRACTICE, getPracticeTopics, getPracticeTopic, resolveQues
 import { renderMathHtml } from '@/components/MathHtml';
 import { getCourseTheme } from '@/lib/course-theme';
 import PracticeQuestion from '@/components/Practice/PracticeQuestion';
-import PracticeFocusButton from '@/components/Practice/PracticeFocusButton';
+import PracticeModes from '@/components/Practice/PracticeModes';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -102,7 +102,7 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           solutions. Try each one before revealing the answer.
         </p>
         {/* Raw (unrendered) question html — Focus Mode renders maths itself */}
-        <PracticeFocusButton
+        <PracticeModes
           questions={questions.map((q, i) => ({
             question: q.question,
             answer: q.answer,
