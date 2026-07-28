@@ -639,6 +639,15 @@ export const higherMathsData: Section[] = [
                 </ul>
                 <p className="mt-4">i.e. <InlineMath math="U_{n+1} = 1.02U_n, \ U_0 = 100" /> where <InlineMath math="U_n" /> is the amount in the bank account after <InlineMath math="n" /> years.</p>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong><InlineMath math="u_0" /> or <InlineMath math="u_1" />?</strong> read which term the sequence starts from. Being one term out runs through the entire rest of the question.</li>
+              <li><strong>Each term depends on the one before:</strong> you cannot jump to the tenth term without generating the ones in between, unless a formula is given.</li>
+              <li><strong>Keep full accuracy:</strong> rounding each term compounds the error quickly. Carry the decimals through.</li>
+              <li><strong>Read the context carefully:</strong> "10% is removed" means multiplying by 0.9, not subtracting 10.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: []
@@ -658,6 +667,15 @@ export const higherMathsData: Section[] = [
               <p className="text-slate-300 mt-2">where <InlineMath math="U_1" /> is the initial value</p>
               <p className="mt-4 text-indigo-300"><InlineMath math="a \neq 0 \text{ and } b \in \mathbb{R}" /></p>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Identify <InlineMath math="a" /> and <InlineMath math="b" /> from the words:</strong> <InlineMath math="a" /> is the multiplier and <InlineMath math="b" /> the amount added each time. Percentage changes belong in <InlineMath math="a" />, fixed quantities in <InlineMath math="b" />.</li>
+              <li><strong>A decrease of 20% means <InlineMath math="a = 0.8" />:</strong> not <InlineMath math="-0.2" />. The multiplier is what remains.</li>
+              <li><strong>Apply the operations in the stated order:</strong> whether the fixed amount is added before or after the percentage change changes the answer.</li>
+              <li><strong>Define your terms:</strong> say what <InlineMath math="u_n" /> represents and in what units — a bare recurrence relation does not answer a context question.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -718,6 +736,15 @@ export const higherMathsData: Section[] = [
            <div className="space-y-4">
              <p className="text-lg">If a sequence is defined by a linear recurrence relation <InlineMath math="U_{n+1} = aU_n + b" /> with unknowns <InlineMath math="a" /> and <InlineMath math="b" />, but we know several terms of the sequence, then we can find the values of <InlineMath math="a" /> and <InlineMath math="b" />.</p>
              <p className="font-bold text-white text-xl mt-4">We can then solve for <InlineMath math="a" /> and <InlineMath math="b" /> using simultaneous equations.</p>
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>Two unknowns need two equations:</strong> use two consecutive pairs of terms to form simultaneous equations in <InlineMath math="a" /> and <InlineMath math="b" />.</li>
+               <li><strong>Subtract to eliminate <InlineMath math="b" />:</strong> since <InlineMath math="b" /> appears with the same coefficient in both, subtracting one equation from the other leaves <InlineMath math="a" /> alone.</li>
+               <li><strong>Substitute back for <InlineMath math="b" />:</strong> and check both original equations, which catches arithmetic errors immediately.</li>
+               <li><strong>Keep lines consistent:</strong> write each equation out in full rather than scoring terms out, so every line follows from the one above.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -780,6 +807,15 @@ export const higherMathsData: Section[] = [
                  </div>
                </div>
              </div>
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>A limit exists only when <InlineMath math="-1 \lt a \lt 1" />:</strong> state this condition. Quoting a limit without justifying that it exists loses marks.</li>
+               <li><strong><InlineMath math="L = \frac{b}{1-a}" />:</strong> note it is <InlineMath math="1-a" /> on the bottom, not <InlineMath math="a-1" />. Getting this the wrong way round flips the sign.</li>
+               <li><strong>The limit does not depend on the starting value:</strong> <InlineMath math="u_0" /> affects how fast you get there, not where you end up.</li>
+               <li><strong>Interpret it in context:</strong> say what the limit means in the situation described — a long-term level, not just a number.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -836,6 +872,28 @@ export const higherMathsData: Section[] = [
          id: "problems-in-context",
          title: "Problems in Context",
          videoUrl: "https://www.youtube.com/embed/Y3eGTMlMgNs?start=1175",
+         theory: (
+           <div className="space-y-4 text-slate-300">
+             <p>Recurrence relations are most often examined through a real situation — a population, a drug dose, a bank balance, a pollutant in a loch. The mathematics is exactly the same as before; the difficulty is turning the words into <InlineMath math="u_{n+1} = au_n + b" />.</p>
+             <p>Read the description for two separate things:</p>
+             <ul className="list-disc list-inside space-y-1 ml-4">
+               <li>a <strong>proportional</strong> change — a percentage rise or fall, which becomes the multiplier <InlineMath math="a" />;</li>
+               <li>a <strong>fixed</strong> change — a quantity added or removed each period, which becomes <InlineMath math="b" />.</li>
+             </ul>
+             <p>A fall of 15% leaves 85%, so <InlineMath math="a = 0.85" />; a rise of 15% gives <InlineMath math="a = 1.15" />. A quantity removed each time makes <InlineMath math="b" /> negative.</p>
+             <p>The long-term behaviour question — &ldquo;will the level ever exceed…&rdquo;, &ldquo;what happens in the long run&rdquo; — is asking for the <strong>limit</strong>, which requires <InlineMath math="-1 \lt a \lt 1" />.</p>
+             <p><strong>The Golden Rule:</strong> always say what <InlineMath math="u_n" /> stands for, including its units and the period it covers. A recurrence relation with undefined terms does not answer a context question.</p>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>Translate the words carefully:</strong> &ldquo;increases by 5% then 200 are removed&rdquo; gives <InlineMath math="u_{n+1} = 1.05u_n - 200" />. Order and sign both matter.</li>
+                 <li><strong>Answer the question that was asked:</strong> often the useful answer is whether a level is safe or sustainable, not the value of <InlineMath math="u_{10}" />. Read to the end.</li>
+                 <li><strong>Compare with the limit to justify:</strong> a long-term claim needs the limit and the condition <InlineMath math="-1 \lt a \lt 1" />, not a list of terms.</li>
+                 <li><strong>Watch which term the question wants:</strong> &ldquo;after 4 years&rdquo; may be <InlineMath math="u_4" /> or <InlineMath math="u_3" /> depending on where the sequence starts.</li>
+               </ul>
+             </div>
+           </div>
+         ),
          examples: [
            {
              id: "pic-ex1",
@@ -973,6 +1031,15 @@ export const higherMathsData: Section[] = [
             <p>A <strong>composite function</strong> is when one function is 'inside' another function.</p>
             <p className="mt-2 text-slate-300">It is formed by applying one function to the result of another.</p>
             <p>e.g., <InlineMath math="g(f(x))" /> means you compute <InlineMath math="f(x)" /> first, and plug the result into <InlineMath math="g" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Order matters:</strong> <InlineMath math="f(g(x))" /> means do <InlineMath math="g" /> first, then <InlineMath math="f" />. Reading it left to right and applying <InlineMath math="f" /> first is the standard error, and gives a completely different function.</li>
+              <li><strong>Substitute the whole function:</strong> every <InlineMath math="x" /> in the outer function is replaced by the entire inner expression, in brackets.</li>
+              <li><strong>Use brackets, then expand:</strong> <InlineMath math="f(x) = x^2" /> with <InlineMath math="g(x) = x+3" /> gives <InlineMath math="(x+3)^2" />, which is <em>not</em> <InlineMath math="x^2+9" />.</li>
+              <li><strong><InlineMath math="f(g(x))" /> rarely equals <InlineMath math="g(f(x))" />:</strong> if a question asks you to show they are equal, that is a special result worth checking carefully.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1086,6 +1153,16 @@ export const higherMathsData: Section[] = [
                  </div>
                </div>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Swap, then rearrange:</strong> write <InlineMath math="y = f(x)" />, swap <InlineMath math="x" /> and <InlineMath math="y" />, then make <InlineMath math="y" /> the subject. Rearranging without swapping is the most common failure.</li>
+              <li><strong>Write the answer as <InlineMath math="f^{-1}(x)" />:</strong> leaving it as <InlineMath math="y = \ldots" /> does not finish the question.</li>
+              <li><strong><InlineMath math="f^{-1}" /> is not a reciprocal:</strong> it does not mean <InlineMath math="\frac{1}{f(x)}" />. The notation is unfortunate but the meaning is fixed.</li>
+              <li><strong>An inverse needs a one-to-one function:</strong> some functions only have one if the domain is restricted first. Say so if the question calls for it.</li>
+              <li><strong>Check by composing:</strong> <InlineMath math="f(f^{-1}(x))" /> should give <InlineMath math="x" />. It is a fast, complete verification.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1143,6 +1220,15 @@ export const higherMathsData: Section[] = [
               <p><InlineMath math="f(a) = b \implies f^{-1}(b) = a" /></p>
             </div>
             <InverseGraphReflection />
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Reflect in <InlineMath math="y = x" />:</strong> not in either axis. Every point <InlineMath math="(a,b)" /> becomes <InlineMath math="(b,a)" />.</li>
+              <li><strong>Draw the line <InlineMath math="y = x" /> on your sketch:</strong> it makes the reflection much easier to get right, and shows the marker what you did.</li>
+              <li><strong>Domain and range swap over:</strong> the domain of the inverse is the range of the original, and vice versa.</li>
+              <li><strong>Intercepts swap too:</strong> an <InlineMath math="x" />-intercept of the original becomes a <InlineMath math="y" />-intercept of the inverse.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1384,6 +1470,16 @@ export const higherMathsData: Section[] = [
                 <li>The axis of symmetry is the line <InlineMath math="x = -p" />.</li>
               </ul>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Halve the coefficient of <InlineMath math="x" />, then square it:</strong> both steps, in that order. Halving without squaring, or squaring without halving, is the usual slip.</li>
+              <li><strong>Subtract what you added:</strong> <InlineMath math="x^2+6x" /> becomes <InlineMath math="(x+3)^2 - 9" />. The <InlineMath math="-9" /> keeps the expression equal to what you started with.</li>
+              <li><strong>Factor out a coefficient first:</strong> if the <InlineMath math="x^2" /> term has a coefficient, take it outside the bracket before completing the square, and remember it multiplies the correction term.</li>
+              <li><strong>Read the turning point correctly:</strong> <InlineMath math="(x+3)^2 - 9" /> has its minimum at <InlineMath math="(-3,-9)" /> — the <InlineMath math="x" /> value flips sign, the <InlineMath math="y" /> value does not.</li>
+              <li><strong>Watch signs with a negative coefficient:</strong> the parabola opens downwards, so the turning point is a maximum.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1465,6 +1561,15 @@ export const higherMathsData: Section[] = [
             
             <h3 className="text-lg font-bold mt-4">The Natural Exponential Function</h3>
             <p>The function <InlineMath math="f(x) = e^x" /> is called the <strong>natural exponential function</strong>.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Every exponential passes through <InlineMath math="(0,1)" />:</strong> because <InlineMath math="a^0 = 1" /> for any base. It is the single most useful checkpoint on a sketch.</li>
+              <li><strong>Growth or decay depends on the base:</strong> <InlineMath math="a \gt 1" /> grows, <InlineMath math="0 \lt a \lt 1" /> decays. Sketching the wrong direction throws away the whole question.</li>
+              <li><strong>The <InlineMath math="x" />-axis is an asymptote:</strong> the curve approaches it but never reaches it, so there is no <InlineMath math="x" />-intercept. Draw it approaching, not touching.</li>
+              <li><strong>Transformations move the asymptote:</strong> adding a constant shifts the horizontal asymptote up or down with the curve.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1525,6 +1630,15 @@ export const higherMathsData: Section[] = [
             <div className="bg-indigo-500/10 p-5 rounded-xl border border-indigo-500/20 text-center font-mono text-xl text-indigo-300">
                <BlockMath math="y = a^x \iff \log_a y = x" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>A logarithm is an index in disguise:</strong> <InlineMath math="\log_a x = y" /> means exactly <InlineMath math="a^y = x" />. Being able to switch between these two forms instantly is what most log questions actually test.</li>
+              <li><strong>You cannot take the log of zero or a negative:</strong> so check that any solution keeps every argument positive, and discard those that do not.</li>
+              <li><strong><InlineMath math="\log_a 1 = 0" /> and <InlineMath math="\log_a a = 1" />:</strong> these two special values shortcut a great many calculations.</li>
+              <li><strong>Log and exponential are inverses:</strong> which is why their graphs are reflections in <InlineMath math="y = x" />.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -1585,6 +1699,15 @@ export const higherMathsData: Section[] = [
               <li>When <InlineMath math="x = a, f(a) = \log_a a = 1 \implies (a, 1)" /></li>
             </ul>
             <p>Every logarithmic graph of the form <InlineMath math="f(x) = \log_a x" /> passes through the points <InlineMath math="(1, 0)" /> and <InlineMath math="(a, 1)" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Every log graph passes through <InlineMath math="(1,0)" />:</strong> because <InlineMath math="\log_a 1 = 0" />. This is the counterpart of <InlineMath math="(0,1)" /> on the exponential.</li>
+              <li><strong>The <InlineMath math="y" />-axis is the asymptote:</strong> vertical, not horizontal — the opposite of the exponential graph. There is no <InlineMath math="y" />-intercept.</li>
+              <li><strong>Only defined for <InlineMath math="x \gt 0" />:</strong> nothing at all is drawn to the left of the <InlineMath math="y" />-axis.</li>
+              <li><strong>Transformations shift the asymptote:</strong> <InlineMath math="\log_a(x-2)" /> moves the vertical asymptote to <InlineMath math="x = 2" />, and the graph with it.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5931,6 +6054,16 @@ id: "integration-of-brackets",
             <BlockMath math="\frac{k\sin\alpha^\circ}{k\cos\alpha^\circ} = \tan\alpha^\circ = \frac{b}{a}" />
             <p>On its own <InlineMath math="\tan^{-1}" /> cannot tell you which angle you want — it only ever returns one of two possibilities. The quadrant is decided by the <strong>signs</strong> of <InlineMath math="k\sin\alpha^\circ" /> and <InlineMath math="k\cos\alpha^\circ" />; since <InlineMath math="k" /> is positive, those are simply the signs of <InlineMath math="b" /> and <InlineMath math="a" />. Both positive puts <InlineMath math="\alpha" /> in the first quadrant, and so on round the CAST diagram.</p>
             <p><strong>The Golden Rule:</strong> find <InlineMath math="k" /> by squaring and adding, find <InlineMath math="\alpha" /> by dividing — then let the <em>signs</em> of the two equations, not your calculator, decide the quadrant.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>The quadrant is the marks:</strong> <InlineMath math="\tan^{-1}" /> returns only one of two possible angles. Read the <em>signs</em> of <InlineMath math="k\cos\alpha" /> and <InlineMath math="k\sin\alpha" /> and use CAST — taking the calculator value on trust is the most common error in the topic.</li>
+                <li><strong>Match the form you were asked for:</strong> <InlineMath math="k\cos(x-\alpha)" /> and <InlineMath math="k\sin(x+\alpha)" /> give different values of <InlineMath math="\alpha" />. Expand the form the question specifies, not the one you find easiest.</li>
+                <li><strong>Equate coefficients, and show it:</strong> the marks are for lining up the <InlineMath math="\cos x" /> and <InlineMath math="\sin x" /> terms. Write that comparison down as its own line.</li>
+                <li><strong>Take the positive root for <InlineMath math="k" />:</strong> it is an amplitude, so it is never negative.</li>
+                <li><strong>Watch the units:</strong> if the question is set in radians, <InlineMath math="\alpha" /> must be in radians too — mixing them within a line of working is a frequent and expensive error.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -6207,6 +6340,15 @@ id: "integration-of-brackets",
             <BlockMath math="\log_a x - \log_a y = \log_a \left(\frac{x}{y}\right)" />
             <p>If the argument of a logarithmic function is raised to a power, then this equates to the product of the exponent and the logarithmic function:</p>
             <BlockMath math="\log_a (x^n) = n \log_a x" />
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The bases must match:</strong> the log laws only apply to logarithms of the same base. Terms with different bases cannot be combined at all.</li>
+              <li><strong><InlineMath math="\log(a+b)" /> is not <InlineMath math="\log a + \log b" />:</strong> the addition law works the other way — a <em>sum of logs</em> becomes a log of a <em>product</em>.</li>
+              <li><strong>Switching forms is the core skill:</strong> being unable to move between <InlineMath math="a^y = x" /> and <InlineMath math="\log_a x = y" /> is the most repeated failure in this whole topic.</li>
+              <li><strong>Keep the argument positive:</strong> check any answer back in the original expression and reject values that make a log undefined.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6234,6 +6376,15 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>If we have the sum of several terms involving logarithmic functions then we can combine the terms in one step.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Clear coefficients first:</strong> <InlineMath math="2\log_a 3" /> must become <InlineMath math="\log_a 9" /> before it can be combined with anything. Trying to add while a coefficient sits out in front is the usual error.</li>
+              <li><strong>Then add and subtract the arguments:</strong> sums become products, differences become quotients.</li>
+              <li><strong>Same base throughout:</strong> check before you start — mixed bases cannot be combined.</li>
+              <li><strong>Simplify the final argument:</strong> leave <InlineMath math="\log_a 12" /> rather than <InlineMath math="\log_a (4 \times 3)" />.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6257,6 +6408,15 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>Many mathematical models of real-life situations use exponential and logarithmic functions.</p>
             <p>We have previously studied basic logarithmic equations and can now solve equations using the properties of logarithmic functions we have now become familiar with.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Condense to a single log, then switch form:</strong> combine everything into one logarithm, then rewrite it as an exponential equation to solve.</li>
+              <li><strong>Check every solution in the original:</strong> the algebra can produce values that make a logarithm undefined. Those must be rejected explicitly, not silently dropped.</li>
+              <li><strong>Keep the lines consistent:</strong> conversions between log and exponential form are where working most often stops following logically.</li>
+              <li><strong>A number can be written as a log:</strong> <InlineMath math="2 = \log_a a^2" />, which lets you combine a constant with the log terms.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6330,6 +6490,15 @@ id: "integration-of-brackets",
               <li><InlineMath math="\ln(13e) = \ln 13 + \ln e = \ln 13 + 1" /></li>
               <li><InlineMath math="\ln 0" /> cannot be found because <InlineMath math="e^x = 0" /> has no real solution (the graph of <InlineMath math="e^x" /> never crosses the x-axis).</li>
             </ul>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong><InlineMath math="\ln" /> means <InlineMath math="\log_e" />:</strong> it is not a different kind of operation, so every log law applies to it unchanged.</li>
+              <li><strong><InlineMath math="\ln e = 1" /> and <InlineMath math="\ln 1 = 0" />:</strong> these shortcut most base-<InlineMath math="e" /> calculations.</li>
+              <li><strong><InlineMath math="e^x" /> and <InlineMath math="\ln x" /> undo each other:</strong> so <InlineMath math="e^{\ln x} = x" />. This is how you clear an exponential from an equation.</li>
+              <li><strong>Use the right calculator button:</strong> <InlineMath math="\ln" /> and <InlineMath math="\log" /> are different keys. Using <InlineMath math="\log" /> for a natural logarithm gives a wrong answer with correct-looking working.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6418,6 +6587,15 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>We previously learned that exponential functions are sometimes known as growth or decay functions. These often occur in models of real-life situations.</p>
             <p>For example, radioactive decay can be modelled using an exponential function. An important measurement is the half-life of radioactive substance, which is the time taken for the mass of the radioactive substance to halve.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Decay needs a negative exponent:</strong> or a base below 1. Getting the sign wrong turns decay into growth and the answer becomes nonsense.</li>
+              <li><strong>Take logs to find the time:</strong> when the unknown is in the exponent, logarithms are the only route.</li>
+              <li><strong>Half-life means half the original:</strong> set the expression equal to <InlineMath math="0.5A_0" /> — you do not need to know <InlineMath math="A_0" /> itself, since it cancels.</li>
+              <li><strong>Round sensibly and in context:</strong> a time usually needs rounding <em>up</em> to be sure the condition is met. Say what your answer means.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6650,6 +6828,15 @@ id: "integration-of-brackets",
             <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
               <BlockMath math="\vec{AB} = \vec{b} - \vec{a}" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong><InlineMath math="\vec{AB} = \mathbf{b} - \mathbf{a}" />:</strong> end point minus start point. Doing it the other way round reverses the vector and every sign with it.</li>
+              <li><strong>A position vector starts at the origin:</strong> the point <InlineMath math="P(3,-1,2)" /> has position vector with those components — no subtraction needed.</li>
+              <li><strong>Keep columns aligned:</strong> subtract component by component, and write them stacked. Most slips here are arithmetic, not method.</li>
+              <li><strong>Distinguish points from vectors:</strong> answer with coordinates when asked for a point, and with a column or <InlineMath math="i, j, k" /> form when asked for a vector.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6687,6 +6874,15 @@ id: "integration-of-brackets",
               <li>e.g. <InlineMath math="\vec{u} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix}" />, <InlineMath math="\vec{v} = \begin{pmatrix} 16 \\ -4 \\ 0 \end{pmatrix} = 2\begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix} = 2\vec{u} \implies \vec{u}" /> and <InlineMath math="\vec{v}" /> are parallel.</li>
               <li>e.g. <InlineMath math="\vec{a} = \begin{pmatrix} 12 \\ -3 \\ 9 \end{pmatrix} = 3\begin{pmatrix} 4 \\ -1 \\ 3 \end{pmatrix}" />, <InlineMath math="\vec{b} = \begin{pmatrix} 20 \\ -5 \\ 15 \end{pmatrix} = 5\begin{pmatrix} 4 \\ -1 \\ 3 \end{pmatrix} \implies \vec{a}" /> and <InlineMath math="\vec{b}" /> are parallel.</li>
             </ul>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Parallel is not enough:</strong> you must also state that the two vectors share a common point. Without that, they could be parallel lines that never meet.</li>
+              <li><strong>Show one is a multiple of the other:</strong> <InlineMath math="\vec{AB} = k\vec{BC}" />. State the value of <InlineMath math="k" /> explicitly.</li>
+              <li><strong>Write the conclusion:</strong> say that the vectors are parallel, that the point is common, and therefore that the points are collinear. Conclusions here are very often left unstated.</li>
+              <li><strong>Check every component gives the same <InlineMath math="k" />:</strong> if one component disagrees, the vectors are not parallel at all.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6780,6 +6976,15 @@ id: "integration-of-brackets",
             <BlockMath math="|\vec{u}| = \sqrt{\left(\frac{\sqrt{3}}{2}\right)^2 + 0^2 + \left(\frac{1}{2}\right)^2} = \sqrt{\frac{3}{4} + 0 + \frac{1}{4}} = \sqrt{1} = 1" />
             <p>Therefore <InlineMath math="\vec{u}" /> is a unit vector.</p>
             <p>To find a unit vector parallel to vector <InlineMath math="\vec{v}" />, we divide <InlineMath math="\vec{v}" /> by its magnitude: <InlineMath math="\frac{1}{|\vec{v}|}\vec{v}" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Divide by the magnitude:</strong> a unit vector is <InlineMath math="\frac{1}{|\vec{u}|}\vec{u}" />. Dividing by a single component instead is a common error.</li>
+              <li><strong>Its magnitude must be 1:</strong> that is the definition, and squaring your components and adding is a quick check.</li>
+              <li><strong>Keep the surd:</strong> the magnitude is usually irrational — leave it exact rather than rounding, or the result will not have magnitude 1.</li>
+              <li><strong>Direction is unchanged:</strong> a unit vector points the same way as the original; only its length changes.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6805,6 +7010,15 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>We can express a vector in terms of the standard basis vectors <InlineMath math="\mathbf{i}" />, <InlineMath math="\mathbf{j}" />, and <InlineMath math="\mathbf{k}" /> (which have length 1 and point along the x, y, and z axes respectively).</p>
             <BlockMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix} = x\mathbf{i} + y\mathbf{j} + z\mathbf{k}" />
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong><InlineMath math="i" />, <InlineMath math="j" /> and <InlineMath math="k" /> are just the axes:</strong> the coefficients are exactly the components of the column vector. Converting between the two forms is purely notation.</li>
+              <li><strong>Include zero components carefully:</strong> a missing <InlineMath math="j" /> term means that component is zero — do not shuffle the others up.</li>
+              <li><strong>Convert before adding:</strong> if a question mixes column and <InlineMath math="i, j, k" /> notation, put everything into one form first. Being unable to do this is a common source of lost marks.</li>
+              <li><strong>Answer in the form asked for:</strong> if the question uses <InlineMath math="i, j, k" />, give the answer that way.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6850,6 +7064,15 @@ id: "integration-of-brackets",
               <BlockMath math="\vec{a} \cdot \vec{b} = a_1b_1 + a_2b_2 + a_3b_3" />
             </div>
             <p className="text-center">where <InlineMath math="\vec{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}" /> and <InlineMath math="\vec{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}" /></p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The result is a number, not a vector:</strong> the scalar product produces a scalar. An answer written as a column vector shows the method was misunderstood.</li>
+              <li><strong>Multiply matching components, then add:</strong> <InlineMath math="a_1b_1 + a_2b_2 + a_3b_3" /> — it is not component-by-component multiplication kept as a vector.</li>
+              <li><strong>Mind the negatives:</strong> a single sign error changes the answer completely, and there is no obvious check.</li>
+              <li><strong>Zero means perpendicular:</strong> if the scalar product is zero, the vectors are at right angles — a fact many questions depend on.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6884,6 +7107,15 @@ id: "integration-of-brackets",
               <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />
             </div>
             <p className="text-center">where <InlineMath math="\theta" /> is the angle between the vectors <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" />. The vectors must both be pointing away from the vertex.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Use the magnitudes, not the components:</strong> the geometric form is <InlineMath math="|\vec{a}||\vec{b}|\cos\theta" />. Mixing the two forms in one line is a frequent error.</li>
+              <li><strong>The angle is between the vectors:</strong> both must point <em>away</em> from the common vertex. If one points towards it, reverse it first or the angle will be wrong.</li>
+              <li><strong>Keep magnitudes exact:</strong> rounding surds early makes the final angle inaccurate.</li>
+              <li><strong>Choose the form that suits the question:</strong> components when you know them, magnitudes and angle when you are given those.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6910,6 +7142,15 @@ id: "integration-of-brackets",
               <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then <InlineMath math="\vec{a} \cdot \vec{b} = 0" />.</p>
               <p>Conversely, if <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> then <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular.</p>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Perpendicular means the scalar product is zero:</strong> this is both the test and the equation you solve for an unknown.</li>
+              <li><strong>Set it equal to zero, then solve:</strong> for a question with an unknown component, form <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> and solve for it.</li>
+              <li><strong>State the conclusion:</strong> after showing the product is zero, say that the vectors are therefore perpendicular.</li>
+              <li><strong>Zero product does not mean zero vector:</strong> two non-zero vectors can have a scalar product of zero — that is exactly what perpendicular means.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6946,6 +7187,15 @@ id: "integration-of-brackets",
               <BlockMath math="\cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}" />
             </div>
             <p className="text-center">Remember to calculate <InlineMath math="\vec{a} \cdot \vec{b}" /> using <InlineMath math="a_1b_1 + a_2b_2 + a_3b_3" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Rearranged, not memorised separately:</strong> <InlineMath math="\cos\theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}" /> is just the geometric form rearranged.</li>
+              <li><strong>Both vectors point away from the vertex:</strong> to find the angle at <InlineMath math="B" /> in a triangle, use <InlineMath math="\vec{BA}" /> and <InlineMath math="\vec{BC}" /> — not <InlineMath math="\vec{AB}" />.</li>
+              <li><strong>A negative cosine gives an obtuse angle:</strong> that is a valid answer, not an error. Do not discard the sign.</li>
+              <li><strong>Do not round too early:</strong> keep the scalar product and magnitudes exact until the final inverse cosine.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -6992,6 +7242,15 @@ id: "integration-of-brackets",
             <p>2. The scalar product is distributive i.e. <InlineMath math="\vec{a} \cdot (\vec{b} + \vec{c}) = \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}" /></p>
             <p>3. The scalar product of a vector and itself is a positive real number if <InlineMath math="\vec{a} \neq 0" /> i.e. <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}|^2" />.</p>
             <p className="ml-4">Proof: <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}| |\vec{a}| \cos \theta" />. Since the angle is 0, <InlineMath math="\cos 0^\circ = 1" />. <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}| |\vec{a}| \times 1 = |\vec{a}|^2" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong><InlineMath math="\vec{a}\cdot\vec{a} = |\vec{a}|^2" />:</strong> the scalar product of a vector with itself is the square of its magnitude, which is often the quickest route into a proof.</li>
+              <li><strong>It distributes over addition:</strong> <InlineMath math="\vec{a}\cdot(\vec{b}+\vec{c}) = \vec{a}\cdot\vec{b} + \vec{a}\cdot\vec{c}" />, which lets you expand exactly like ordinary algebra.</li>
+              <li><strong>Order does not matter:</strong> <InlineMath math="\vec{a}\cdot\vec{b} = \vec{b}\cdot\vec{a}" />.</li>
+              <li><strong>You cannot divide by a vector:</strong> there is no such operation, so rearranging a scalar product equation must be done by expanding, not dividing.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
