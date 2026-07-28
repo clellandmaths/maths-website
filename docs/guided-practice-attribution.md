@@ -29,35 +29,54 @@ comparison is the only way to establish the mapping. His question text is used
 **The rule, which cannot produce a wrong link:**
 
 1. Question text matches an example → deep link to that example (`…#3`)
-2. No confident match → link to the topic page (`…/nat5/surds`)
-3. Never a guessed example number
+2. Otherwise, if the topic has a **unanimous offset** derived from its matched
+   questions → deep link by position + offset
+3. Otherwise → link to the topic page (`…/nat5/surds`)
+4. Never a guessed example number
 
-Both satisfy the condition. A guessed deep link would point at the worked
-solution to a *different* question, which fails it more badly than a general
-link does.
+The guided practice was built following his example order — our question 1 is
+his example 1, and so on — so position is good evidence. But it is not trusted
+blindly: the offset is *derived* from the questions we can match by text, and
+applied only where every one of them agrees. Every topic with a consensus came
+out at **+0**, except Trig Identities at **+7**, which corroborates the ordering.
 
-## Match rate
+## Result
 
-**109 exact (53%), 96 topic-level (47%)** across the 205 National 5 questions.
+**145 deep links (71%), 60 topic-level (29%).** Of the deep links, 116 were
+matched directly by text and 29 placed by a verified offset.
 
-The shortfall is not a matching failure. Many questions were **reworded when
-they went into the app**, because it could not display his diagrams, so the
-dimensions were written into the text instead:
+The remaining topic-level links are legitimate, not failures:
+
+- **22 are Rounding**, where his page is a notes page carrying **no worked
+  examples at all** — there is nothing to deep-link to.
+- Most of the rest are questions **reworded when they went into the app**,
+  because it could not display his diagrams, so dimensions were written into
+  the text instead:
 
 > his — *"Find the volume of **this cylinder**"* (with a diagram)
 > ours — *"Find the volume of a cylinder **with base radius 6 mm and height 1 cm**"*
 
-Mathematically the same question; textually unmatchable. Those correctly fall
-back to the topic page.
+Mathematically identical, textually unmatchable — and correctly not guessed at.
 
-Two matcher bugs were found and fixed while establishing this, both of which
-had been suppressing real matches:
+## Matcher bugs found and fixed
 
-- a minimum-length guard skipped short questions, so identical strings such as
-  `solve3x25` never matched;
-- LaTeX presentation commands differ between the two sites (`\large` versus
-  `\displaystyle\small`) and had to be stripped, since they carry no
-  mathematical meaning.
+Three, all of which suppressed real matches and one of which produced *wrong*
+ones. Worth recording, because the same traps apply to Higher and AH:
+
+1. A minimum-length guard skipped short questions, so identical strings such as
+   `solve3x25` never matched.
+2. LaTeX presentation commands differ between the two sites (`\large` versus
+   `\displaystyle\small`) and carry no mathematical meaning, so they must be
+   stripped.
+3. **The two sides were normalised differently** — his text kept a trailing
+   `small` from `\small`. Exact matching then failed and a 24-character prefix
+   match took over, which matched *the wrong example* on questions sharing a
+   stem like "Multiply out the brackets and collect like terms". This produced
+   a convincing but false "off by one" pattern. Both sides must use the same
+   normaliser; there is now a comment in `build-links.mjs` saying so.
+
+The teacher caught this one by checking Expanding Brackets by hand and finding
+the first five examples matched exactly. They now do.
 
 ## Rebuilding the map
 
