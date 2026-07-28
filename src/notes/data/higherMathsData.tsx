@@ -37,7 +37,7 @@ export const higherMathsData: Section[] = [
       {
         id: "distance-between-points",
         title: "Distance Between Points",
-        videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+        videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=28",
         theory: (
           <div className="space-y-4">
             <p>To calculate the distance between two points, we can construct a right-angled triangle and use Pythagoras' Theorem.</p>
@@ -66,7 +66,7 @@ export const higherMathsData: Section[] = [
       {
         id: "midpoints",
         title: "Midpoints",
-        videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+        videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=477",
         theory: (
           <div className="space-y-4">
             <p>The midpoint is the exact centre point of a straight line connecting two points.</p>
@@ -109,7 +109,7 @@ export const higherMathsData: Section[] = [
       {
         id: "collinearity",
         title: "Collinearity",
-        videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+        videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=772",
         theory: (
           <div className="space-y-4">
             <p>Points which lie on the same straight line are said to be <strong>collinear</strong>.</p>
@@ -152,7 +152,7 @@ export const higherMathsData: Section[] = [
       {
          id: "gradient",
          title: "Gradient",
-         videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+         videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=1047",
          theory: (
            <div className="space-y-4">
              <p>The gradient of a line measures its steepness. It is the ratio of vertical change to horizontal change.</p>
@@ -226,7 +226,7 @@ export const higherMathsData: Section[] = [
       {
          id: "parallel-perpendicular",
          title: "Parallel & Perpendicular Gradients",
-         videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+         videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=1537",
          theory: (
            <div className="space-y-8">
              <h3 className="font-bold text-2xl text-white border-b border-white/10 pb-2 mb-6">Parallel Lines</h3>
@@ -277,7 +277,7 @@ export const higherMathsData: Section[] = [
       {
          id: "perpendicular-bisectors",
          title: "Perpendicular Bisectors",
-         videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+         videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=1922",
          theory: (
            <div className="space-y-8 text-lg">
              <h4 className="font-bold text-white text-xl mb-4">Perpendicular</h4>
@@ -339,7 +339,7 @@ export const higherMathsData: Section[] = [
       {
           id: "altitudes",
           title: "Altitudes",
-          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=2342",
           theory: (
             <div className="space-y-8 text-lg">
               <p className="mb-8">The <strong className="text-white">altitude</strong> of a triangle is a line drawn from one vertex which meets the opposite side at right angles.</p>
@@ -387,7 +387,7 @@ export const higherMathsData: Section[] = [
       {
           id: "medians",
           title: "Medians",
-          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=2903",
           theory: (
             <div className="space-y-8 text-lg">
               <div>
@@ -440,7 +440,7 @@ export const higherMathsData: Section[] = [
       {
           id: "intersections",
           title: "Points of Intersection",
-          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?si=JrMJclzuuIEuPheD",
+          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=3276",
           theory: (
             <div className="space-y-4">
               <p>Many problems involve lines which intersect (cross each other). Once we have equations for the lines, there are three ways of calculating the point of intersection using simultaneous equations:</p>
@@ -802,7 +802,7 @@ export const higherMathsData: Section[] = [
       {
         id: "intro-domain-range",
         title: "Introduction, Domain & Range",
-        videoUrl: "https://www.youtube.com/embed/NoGdMUAVEe4?start=0",
+        videoUrl: "https://www.youtube.com/embed/NoGdMUAVEe4?start=282",
         theory: (
           <div className="space-y-6">
             <h3 className="text-xl font-bold text-white">Introduction To Functions & Sets</h3>
@@ -1345,7 +1345,7 @@ export const higherMathsData: Section[] = [
       {
         id: "exponential-functions",
         title: "Exponential Functions",
-        videoUrl: "https://www.youtube.com/embed/jCmCrFQhsdQ",
+        videoUrl: "https://www.youtube.com/embed/NoGdMUAVEe4?start=5231",
         theory: (
           <div className="space-y-6">
             <h3 className="text-xl font-bold">Introduction</h3>
@@ -1417,7 +1417,7 @@ export const higherMathsData: Section[] = [
       {
         id: "logarithmic-functions",
         title: "Logarithmic Functions",
-        videoUrl: "https://www.youtube.com/embed/jCmCrFQhsdQ",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=551",
         theory: (
           <div className="space-y-6">
             <p>A <strong>logarithmic function</strong> is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a > 0" /> and <InlineMath math="x > 0" />.</p>
@@ -1475,7 +1475,7 @@ export const higherMathsData: Section[] = [
       {
         id: "logarithmic-graphs",
         title: "Logarithmic Graphs",
-        videoUrl: "https://www.youtube.com/embed/jCmCrFQhsdQ",
+        videoUrl: "https://www.youtube.com/embed/NoGdMUAVEe4?start=5653",
         theory: (
           <div className="space-y-6">
             <h3 className="text-xl font-bold">The Logarithmic Graph</h3>
@@ -1543,7 +1543,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-intro",
         title: "Introduction to Polynomials",
-        videoUrl: "https://www.youtube.com/embed/r9wyZ6YAuOI",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1017",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Polynomials are expressions with one or more terms of the form:</p>
@@ -1586,7 +1586,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-evaluation",
         title: "Evaluation",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1111",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Polynomials can be evaluated using substitution.</p>
@@ -1668,7 +1668,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-unknowns",
         title: "Finding Unknown Coefficients",
-        videoUrl: "https://www.youtube.com/embed/bZJZKRq28b8?start=2",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1345",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Consider a polynomial with some unknown coefficients, such as <InlineMath math="x^3+2px^2-px+4" />, where <InlineMath math="p" /> is a constant.</p>
@@ -1728,7 +1728,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-factorising",
         title: "Factorising",
-        videoUrl: "https://www.youtube.com/embed/mVDRzaX7D7U",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1606",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We can use synthetic division (or polynomial long division) alongside the factor theorem to fully factorise polynomials of degree 3 or higher.</p>
@@ -1795,7 +1795,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-roots",
         title: "Finding Roots",
-        videoUrl: "https://www.youtube.com/embed/MY293638LN8",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1920",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Finding the roots of a polynomial equation <InlineMath math="f(x)=0" /> follows the same principles as finding roots of a quadratic. We must first fully factorise the polynomial and then set each factor equal to zero.</p>
@@ -1841,7 +1841,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-eq",
         title: "Determining the Equation of a Graph",
-        videoUrl: "https://www.youtube.com/embed/B2pjIz5Ri-Q?start=1",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=2050",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Given the roots and at least one other point on the graph, we can establish the graph's equation.</p>
@@ -1910,7 +1910,7 @@ export const higherMathsData: Section[] = [
       {
         id: "poly-intersection",
         title: "Intersection of Two Graphs",
-        videoUrl: "https://www.youtube.com/embed/rO2Dk4fm1CI",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=2298",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>Given two equations of graphs, we can find their points of intersection. We already have experience of this with straight lines (National 5) and quadratics/lines.</p>
@@ -1956,7 +1956,7 @@ export const higherMathsData: Section[] = [
       {
         id: "discriminant",
         title: "Discriminant",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=9",
         theory: (
           <div className="space-y-6 text-lg text-slate-300">
             <p>Given a quadratic equation of the form, <InlineMath math="ax^2+bx+c=0" />, the <strong>discriminant</strong> is defined by <InlineMath math="b^2-4ac" />.</p>
@@ -2027,7 +2027,7 @@ export const higherMathsData: Section[] = [
       {
         id: "intersection-lines-parabolas",
         title: "Intersection of Lines and Parabolas",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=309",
         theory: (
           <div className="space-y-6 text-lg text-slate-300">
             <p>A line may:</p>
@@ -2093,7 +2093,7 @@ export const higherMathsData: Section[] = [
       {
         id: "solving-quadratic-inequalities",
         title: "Solving Quadratic Inequalities",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=545",
         theory: (
           <div className="space-y-6 text-lg text-slate-300">
             <p>Quadratic inequalities can come in one of the following forms:</p>
@@ -2201,7 +2201,7 @@ export const higherMathsData: Section[] = [
       {
         id: "circles-intro",
         title: "Introduction",
-        videoUrl: "https://www.youtube.com/embed/7R5CuFIU8eU",
+        videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=0",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The equation of a circle with centre <InlineMath math="(0,0)" /> is <InlineMath math="x^2+y^2=r^2" /></p>
@@ -2278,7 +2278,7 @@ export const higherMathsData: Section[] = [
       {
         id: "circles-eq",
         title: "Equation of a Circle",
-        videoUrl: "https://www.youtube.com/embed/MNMfUVs9V_w",
+        videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=19",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The equation of a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units is:</p>
@@ -2441,7 +2441,7 @@ export const higherMathsData: Section[] = [
       {
         id: "circles-general",
         title: "General Equation of a Circle",
-        videoUrl: "https://www.youtube.com/embed/ZYJsdl72V8I",
+        videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=711",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The equation of a circle can be written in expanded form.</p>
@@ -2516,7 +2516,7 @@ export const higherMathsData: Section[] = [
       {
         id: "circles-intersection",
         title: "Intersection of Circles",
-        videoUrl: "https://www.youtube.com/embed/hM_5k1bXOtY",
+        videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1121",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Consider two circles with radii <InlineMath math="r_1" /> and <InlineMath math="r_2" /> with <InlineMath math="r_1 > r_2" />.</p>
@@ -2691,7 +2691,7 @@ export const higherMathsData: Section[] = [
       {
         id: "circles-tangents",
         title: "Equations of Tangents to Circles",
-        videoUrl: "https://www.youtube.com/embed/f-34PCzB5i8",
+        videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1597",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We know from National 5 that if we have a circle and a tangent to that circle, the tangent meets the radius at right angles.</p>
@@ -2742,7 +2742,7 @@ export const higherMathsData: Section[] = [
       {
         id: "circles-line-intersection",
         title: "Intersections of Lines and Circles",
-        videoUrl: "https://www.youtube.com/embed/RNesYHK203A",
+        videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1747",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We have previously studied the intersection of lines and curves. Similarly, lines and circles can intersect at two points, one point (tangent), or no points.</p>
@@ -2855,7 +2855,7 @@ export const higherMathsData: Section[] = [
       {
         id: "introduction-to-calculus",
         title: "Introduction & First Principles",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=26",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Calculus provides a tool for solving problems involving motion, such as orbits of planets or paths of rockets. It can be used to study any situation where a rate of increase or decrease is involved.</p>
@@ -2883,7 +2883,7 @@ export const higherMathsData: Section[] = [
       {
         id: "differentiating-polynomials",
         title: "Differentiating Terms (Positive, Negative & Fractional Indices)",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=432",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Rather than using first principles every time, we can use a general rule for polynomials.</p>
@@ -2946,7 +2946,7 @@ export const higherMathsData: Section[] = [
       {
         id: "preparing-to-differentiate-1",
         title: "Preparing to Differentiate 1 – Brackets",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=432",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Before differentiating, you must rewrite expressions in the form <InlineMath math="x^n" /> or <InlineMath math="ax^n" />.</p>
@@ -2981,7 +2981,7 @@ export const higherMathsData: Section[] = [
       {
         id: "preparing-to-differentiate-2",
         title: "Preparing to Differentiate 2 – Indices",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=432",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Before differentiating, rewrite roots as fractional indices (<InlineMath math="\sqrt[n]{x^m} = x^{\frac{m}{n}}" />).</p>
@@ -3039,7 +3039,7 @@ export const higherMathsData: Section[] = [
       {
         id: "preparing-to-differentiate-3",
         title: "Preparing to Differentiate 3 – Indices and Fractions",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=432",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">If you have a fraction with a single term in the denominator, you should separate it into multiple fractions and simplify the indices before differentiating.</p>
@@ -3088,7 +3088,7 @@ export const higherMathsData: Section[] = [
       {
         id: "differentiating-trig",
         title: "Differentiating sin x and cos x",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=1742",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">The derivatives of the core trigonometric functions are:</p>
@@ -3123,7 +3123,7 @@ export const higherMathsData: Section[] = [
       {
         id: "rates-of-change",
         title: "Rates of Change",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=1906",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">The derivative of a function describes its <strong>rate of change</strong>. This can be evaluated for specific values by substituting these into the derivative.</p>
@@ -3186,7 +3186,7 @@ export const higherMathsData: Section[] = [
       {
          id: "equations-of-tangents",
          title: "Equations of Tangents",
-         videoUrl: "https://www.youtube.com/embed/placeholder",
+         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=2229",
          theory: (
            <div className="space-y-8 text-lg">
              <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8 max-w-sm mx-auto">
@@ -3245,7 +3245,7 @@ export const higherMathsData: Section[] = [
       {
          id: "increasing-decreasing-functions",
          title: "Increasing and Decreasing Curves",
-         videoUrl: "https://www.youtube.com/embed/placeholder",
+         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=2951",
          theory: (
            <div className="space-y-8 text-lg">
              <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-6">
@@ -3302,7 +3302,7 @@ export const higherMathsData: Section[] = [
       {
          id: "stationary-points",
          title: "Stationary Points & Curve Sketching",
-         videoUrl: "https://www.youtube.com/embed/placeholder",
+         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=3337",
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-6">Points where the curve is neither increasing nor decreasing are called <strong>stationary points</strong>. At these points, the tangent is horizontal.</p>
@@ -3517,7 +3517,7 @@ export const higherMathsData: Section[] = [
       {
          id: "max-min-values",
          title: "Maximum and Minimum Values",
-         videoUrl: "https://www.youtube.com/embed/placeholder",
+         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=4964",
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-6">In a closed interval, the maximum and minimum values of a function are either at a <strong>stationary point</strong> or at an <strong>end point</strong> of the interval.</p>
@@ -3555,7 +3555,7 @@ export const higherMathsData: Section[] = [
       {
          id: "optimisation",
          title: "Optimisation",
-         videoUrl: "https://www.youtube.com/embed/placeholder",
+         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=5400",
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-4"><strong>Optimisation</strong> involves finding the greatest (maximum) or least (minimum) value of a quantity under certain constraints, such as finding the maximum volume of a box or the minimum material needed to make a can.</p>
@@ -3668,7 +3668,7 @@ export const higherMathsData: Section[] = [
       {
          id: "graphs-of-derived",
          title: "Graphs of Derived Functions",
-         videoUrl: "https://www.youtube.com/embed/placeholder",
+         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6238",
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-6">We can sketch <InlineMath math="f'(x)" /> by examining the features of <InlineMath math="f(x)" /> and its gradients.</p>
@@ -3763,7 +3763,7 @@ export const higherMathsData: Section[] = [
     , {
         id: "further-differentiation-brackets",
         title: "Further Differentiation of Brackets",
-        videoUrl: "https://youtu.be/fDOzDXGx6MQ",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6707",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>When differentiating composite functions involving linear expressions raised to a power, we can use the chain rule.</p>
@@ -3835,7 +3835,7 @@ export const higherMathsData: Section[] = [
       {
         id: "further-differentiation-trig",
         title: "Further Differentiation of Trigonometric Functions",
-        videoUrl: "https://youtu.be/qYhDl43p720",
+        videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6707",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The chain rule is also required when differentiating composite trigonometric functions.</p>
@@ -3897,7 +3897,7 @@ export const higherMathsData: Section[] = [
       {
         id: "integration-intro",
         title: "Introduction",
-        videoUrl: "https://www.youtube.com/embed/hj0Jq7x0ngw",
+        videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=0",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We have previously learned how to differentiate terms.</p>
@@ -3917,7 +3917,7 @@ export const higherMathsData: Section[] = [
       {
         id: "indefinite-integrals",
         title: "Indefinite Integrals",
-        videoUrl: "https://www.youtube.com/embed/uVwLA1vhooQ",
+        videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=17",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>When integrating a term of the form <InlineMath math="ax^n" />, we increase the power by 1 and divide by the new power:</p>
@@ -3998,7 +3998,7 @@ export const higherMathsData: Section[] = [
       {
         id: "differential-equations",
         title: "Differential Equations",
-        videoUrl: "https://www.youtube.com/embed/uv-QNygdb-Y",
+        videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=916",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>As previously stated, integration is the reverse of differentiation.</p>
@@ -4039,7 +4039,7 @@ export const higherMathsData: Section[] = [
       {
         id: "definite-integrals",
         title: "Definite Integrals",
-        videoUrl: "https://www.youtube.com/embed/AoZQyozIVyU",
+        videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1208",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Let <InlineMath math="F(x)" /> be the integral of <InlineMath math="f(x)" />.</p>
@@ -4093,7 +4093,7 @@ export const higherMathsData: Section[] = [
       {
          id: "area-under-curve",
          title: "Area Under a Curve",
-         videoUrl: "https://www.youtube.com/embed/7-2YdYLyXa8",
+         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1619",
          theory: (
            <div className="space-y-4 text-slate-300">
              <div className="flex justify-center my-6">
@@ -4145,7 +4145,7 @@ export const higherMathsData: Section[] = [
       {
          id: "area-between-curves",
          title: "Area Between Curves",
-         videoUrl: "https://www.youtube.com/embed/x4wwRCeTFIE",
+         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1973",
          theory: (
            <div className="space-y-4 text-slate-300">
              <div className="flex justify-center my-6">
@@ -4222,7 +4222,7 @@ export const higherMathsData: Section[] = [
       {
          id: "area-under-x-axis",
          title: "Area Under the x-axis",
-         videoUrl: "https://www.youtube.com/embed/MHvv41EVBhk",
+         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3142",
          theory: (
            <div className="space-y-4 text-slate-300">
              <div className="flex justify-center my-6">
@@ -4256,7 +4256,7 @@ export const higherMathsData: Section[] = [
       {
 id: "integration-of-brackets",
         title: "Further Integration of Brackets",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3573",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We have previously learned how to differentiate functions of the form <InlineMath math="f(ax+b)" />:</p>
@@ -4296,7 +4296,7 @@ id: "integration-of-brackets",
       {
         id: "integration-of-trig",
         title: "Further Integration of Trigonometric Functions",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3869",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We have previously learned how to differentiate trigonometric functions of the form <InlineMath math="\sin(ax+b)" /> and <InlineMath math="\cos(ax+b)" />.</p>
@@ -4355,7 +4355,7 @@ id: "integration-of-brackets",
       {
         id: "radian-measure",
         title: "Radian Measure",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=440",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Previously when measuring angles, we have always used degrees.</p>
@@ -4436,7 +4436,7 @@ id: "integration-of-brackets",
       {
         id: "exact-values",
         title: "Exact Values",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=296",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">It is important to know the exact values for the trigonometric functions at key angles.</p>
@@ -4649,7 +4649,7 @@ id: "integration-of-brackets",
       {
         id: "solving-basic-eqs",
         title: "Solving Basic Trigonometric Equations",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=680",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">To solve basic trigonometric equations:</p>
@@ -4713,7 +4713,7 @@ id: "integration-of-brackets",
       {
         id: "multiple-angles",
         title: "Trigonometric Equations with Multiple Angles",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=1034",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Multiple angles occur when the period of the given function is not <InlineMath math="360^\circ" /> or <InlineMath math="2\pi" />.</p>
@@ -4758,7 +4758,7 @@ id: "integration-of-brackets",
       {
         id: "square-terms-constants",
         title: "Trigonometric Equations with Square Terms",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=1351",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">When solving an equation involving a squared term (like <InlineMath math="\sin^2 x" /> or <InlineMath math="\cos^2 x" />), taking the square root requires remembering the <strong className="text-white">plus or minus (<InlineMath math="\pm" />)</strong> sign.</p>
@@ -4796,7 +4796,7 @@ id: "integration-of-brackets",
       {
         id: "quadratics-identities",
         title: "Quadratic Trigonometric Equations",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=1567",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Some trigonometric equations take the structure of a quadratic equation. You will need to factorise them to solve.</p>
@@ -4866,7 +4866,7 @@ id: "integration-of-brackets",
       {
         id: "compound-angles",
         title: "Compound Angles",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2086",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Compound angles are formed by adding or subtracting angles, for example <InlineMath math="45^\circ + 30^\circ = 75^\circ" /> or <InlineMath math="45^\circ - 30^\circ = 15^\circ" />.</p>
@@ -4982,7 +4982,7 @@ id: "integration-of-brackets",
       {
         id: "double-angle-formulae",
         title: "Double Angle Formulae",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2410",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">We can derive the Double Angle Formulae by replacing <InlineMath math="B" /> with <InlineMath math="A" /> in our addition formulae.</p>
@@ -5064,7 +5064,7 @@ id: "integration-of-brackets",
       {
         id: "trigonometric-identities",
         title: "Trigonometric Identities",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2647",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">You will often be asked to prove trigonometric identities by showing that one side equals the other.</p>
@@ -5101,7 +5101,7 @@ id: "integration-of-brackets",
       {
         id: "further-trigonometric-equations",
         title: "Further Trigonometric Equations",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2746",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Trigonometric equations which contain a mixture of double angles (like <InlineMath math="2x" />) and single angles (like <InlineMath math="x" />) require using Double Angle Formulae to find solutions.</p>
@@ -5265,7 +5265,7 @@ id: "integration-of-brackets",
       {
         id: "using-addition-formula",
         title: "Using the Addition Formula",
-        videoUrl: "https://www.youtube.com/embed/dKn8Mp_h5Kc",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2086",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Given a function of the form <InlineMath math="a\sin x + b\cos x" />, it is useful to express this as a single function rather than the sum of two separate functions.</p>
@@ -5307,7 +5307,7 @@ id: "integration-of-brackets",
       {
         id: "wave-function",
         title: "Wave Function",
-        videoUrl: "https://www.youtube.com/embed/bp1E1IgUzcE",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3163",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We can combine everything learned so far to rewrite trigonometric sums as a single wave function.</p>
@@ -5391,7 +5391,7 @@ id: "integration-of-brackets",
       {
         id: "wave-function-multiple-angles",
         title: "Multiple Angles",
-        videoUrl: "https://www.youtube.com/embed/mhZ0q0_Zi_0",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3658",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The wave function method works exactly the same if there are multiple angles inside the trigonometric functions, as long as both terms have the same multiple angle.</p>
@@ -5422,7 +5422,7 @@ id: "integration-of-brackets",
       {
         id: "wave-function-min-max",
         title: "Minimum and Maximum Values",
-        videoUrl: "https://www.youtube.com/embed/jIv9Ovo00zA",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3674",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>By expressing <InlineMath math="f(x) = p\cos x + q\sin x" /> as a single trigonometric function, we can find the minimum and maximum values of the function and the corresponding angles at which these values occur.</p>
@@ -5467,7 +5467,7 @@ id: "integration-of-brackets",
       {
         id: "wave-function-sketching",
         title: "Sketching Graphs",
-        videoUrl: "https://www.youtube.com/embed/oPhBe86mr8A",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=4067",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Once you have converted <InlineMath math="a\sin x + b\cos x" /> into a single wave form, such as <InlineMath math="k\cos(x - \alpha)" />, sketch it by applying the phase shift <InlineMath math="\alpha" /> to the <InlineMath math="\cos" /> or <InlineMath math="\sin" /> curve multiplied by amplitude <InlineMath math="k" />.</p>
@@ -5500,7 +5500,7 @@ id: "integration-of-brackets",
       {
         id: "wave-function-solving-equations",
         title: "Solving Equations",
-        videoUrl: "https://www.youtube.com/embed/SjVPu1M_o0E",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=4311",
         theory: (
           <div className="space-y-4 text-slate-300">
              <p>A composite trigonometric equation can be solved using the wave function format. Once compiled as <InlineMath math="k\cos(x - \alpha) = c" />, it acts like solving standard basic trigonometric equations.</p>
@@ -5551,7 +5551,7 @@ id: "integration-of-brackets",
       {
         id: "properties-of-logarithmic-functions",
         title: "Properties of Logarithmic Functions",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=551",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>A logarithmic function is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a>0" /> and <InlineMath math="x>0" />.</p>
@@ -5588,7 +5588,7 @@ id: "integration-of-brackets",
       {
         id: "working-with-logarithmic-functions",
         title: "Working with Logarithmic Functions",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=1222",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>If we have the sum of several terms involving logarithmic functions then we can combine the terms in one step.</p>
@@ -5610,7 +5610,7 @@ id: "integration-of-brackets",
       {
         id: "further-logarithmic-equations",
         title: "Further Logarithmic Equations",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=1728",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Many mathematical models of real-life situations use exponential and logarithmic functions.</p>
@@ -5668,7 +5668,7 @@ id: "integration-of-brackets",
       {
         id: "exp-log-base-e",
         title: "Exponentials & Logarithms to the Base e",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2104",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p><InlineMath math="\log_e x" /> is a logarithm to the base <InlineMath math="e" />. This is also known as the natural logarithm of <InlineMath math="x" />, and is often written as <InlineMath math="\ln x" />.</p>
@@ -5710,7 +5710,7 @@ id: "integration-of-brackets",
       {
         id: "solving-equations-unknown-exponents",
         title: "Solving Equations with Unknown Exponents",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2388",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>If an unknown value is the exponent of a term (e.g. <InlineMath math="10^x" /> or <InlineMath math="e^x" />), we can solve for <InlineMath math="x" /> by taking the logarithm of both sides of the equation.</p>
@@ -5762,7 +5762,7 @@ id: "integration-of-brackets",
       {
         id: "exponential-growth-decay",
         title: "Exponential Growth & Decay",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2841",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We previously learned that exponential functions are sometimes known as growth or decay functions. These often occur in models of real-life situations.</p>
@@ -5816,7 +5816,7 @@ id: "integration-of-brackets",
       {
         id: "experimental-data-linear-models",
         title: "Experimental Data & Linear Models",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=3163",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The results of an experiment may show that there is an exponential relationship between the variables. However, the rapid rise/decrease can often make it difficult to interpret the results.</p>
@@ -5930,7 +5930,7 @@ id: "integration-of-brackets",
       {
         id: "revision-of-n5-vectors",
         title: "Revision of N5 Vectors",
-        videoUrl: "https://youtu.be/IpSJLBqaF2M",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=13",
         theory: (
           <div className="space-y-4 text-slate-300">
             <h3 className="text-xl font-bold text-white">Magnitude</h3>
@@ -5973,7 +5973,7 @@ id: "integration-of-brackets",
       {
         id: "revision-of-position-vectors",
         title: "Revision of Position Vectors",
-        videoUrl: "https://youtu.be/j0yhFqgt7ko",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=13",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The vector from origin <InlineMath math="O" /> to point <InlineMath math="A" /> is called the position vector of point A: <InlineMath math="\vec{OA}" /> or <InlineMath math="\vec{a}" />.</p>
@@ -6009,7 +6009,7 @@ id: "integration-of-brackets",
       {
         id: "collinearity",
         title: "Collinearity",
-        videoUrl: "https://youtu.be/LE9tfvrfJSk",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=717",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Points A, B and C are collinear if <InlineMath math="\vec{AB}" /> and <InlineMath math="\vec{BC}" /> are parallel, with B a common point.</p>
@@ -6068,7 +6068,7 @@ id: "integration-of-brackets",
       {
         id: "dividing-lines",
         title: "Dividing Lines in a Given Ratio",
-        videoUrl: "https://youtu.be/vVuQYEyc2TE",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1570",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>If a point T divides a line segment PR in the ratio <InlineMath math="m:n" />, we can use position vectors to find the coordinates of T.</p>
@@ -6094,7 +6094,7 @@ id: "integration-of-brackets",
       {
         id: "unit-vectors",
         title: "Unit Vectors",
-        videoUrl: "https://youtu.be/5QmEMvyVHaI",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1716",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Any vector with a magnitude of 1 is called a unit vector.</p>
@@ -6122,7 +6122,7 @@ id: "integration-of-brackets",
       {
         id: "unit-vector-form",
         title: "Unit Vector Form",
-        videoUrl: "https://youtu.be/SbT_0lwf8w0",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1839",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We can express a vector in terms of the standard basis vectors <InlineMath math="\mathbf{i}" />, <InlineMath math="\mathbf{j}" />, and <InlineMath math="\mathbf{k}" /> (which have length 1 and point along the x, y, and z axes respectively).</p>
@@ -6157,7 +6157,7 @@ id: "integration-of-brackets",
       {
         id: "dot-product-1",
         title: "Scalar/Dot Product (1)",
-        videoUrl: "https://youtu.be/iFGnE4KFhec",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2188",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The dot product can be thought of as directional multiplication. Multiplying two vectors means we are applying the directional growth of one vector to another. The result is how much stronger we have made the original vector.</p>
@@ -6198,7 +6198,7 @@ id: "integration-of-brackets",
       {
         id: "dot-product-2",
         title: "Scalar/Dot Product (2)",
-        videoUrl: "https://youtu.be/rHQCqSrK_Rk",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2318",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Polar perspective):</p>
@@ -6223,7 +6223,7 @@ id: "integration-of-brackets",
       {
         id: "perpendicular-vectors",
         title: "Perpendicular Vectors",
-        videoUrl: "https://youtu.be/QsKYCe_CDok",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2551",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
@@ -6260,7 +6260,7 @@ id: "integration-of-brackets",
       {
         id: "angle-between-vectors",
         title: "Angle Between Vectors",
-        videoUrl: "https://youtu.be/pe7haahylBM",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2741",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>From the dot product formula <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />, we can rearrange this to find the angle between two vectors:</p>
@@ -6307,7 +6307,7 @@ id: "integration-of-brackets",
       {
         id: "properties-scalar-product",
         title: "Properties of the Scalar Product",
-        videoUrl: "https://youtu.be/YQcFFuEJnOQ",
+        videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=3224",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>1. The scalar product is commutative i.e. <InlineMath math="\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}" /></p>

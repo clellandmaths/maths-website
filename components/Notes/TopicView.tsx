@@ -37,6 +37,20 @@ export default function TopicView({
 
   const hasVideo = Boolean(topic.videoUrl) && !topic.videoUrl.includes('placeholder');
 
+  // Most topics are a chapter inside one long lesson video, so the embed starts
+  // partway through. Say so — otherwise it looks like the same video restarting
+  // on every subtopic and pupils assume the link is broken.
+  const startSeconds = Number(topic.videoUrl?.match(/[?&]start=(\d+)/)?.[1] ?? 0);
+  const startLabel = (() => {
+    if (!startSeconds) return null;
+    const h = Math.floor(startSeconds / 3600);
+    const m = Math.floor((startSeconds % 3600) / 60);
+    const s = startSeconds % 60;
+    return h > 0
+      ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+      : `${m}:${String(s).padStart(2, '0')}`;
+  })();
+
   function toggleExample(idx: number) {
     setOpenExamples(prevSet => {
       const nextSet = new Set(prevSet);
@@ -59,7 +73,11 @@ export default function TopicView({
         <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
           <span className="inline-flex items-center gap-1.5 font-mono text-xs">
             <Play className="h-3.5 w-3.5" />
-            {hasVideo ? 'Video lesson' : 'Video coming soon'}
+            {hasVideo
+              ? startLabel
+                ? `Video lesson · from ${startLabel}`
+                : 'Video lesson'
+              : 'Video coming soon'}
           </span>
           {topic.examples.length > 0 && (
             <span className="inline-flex items-center gap-1.5 font-mono text-xs">
@@ -85,14 +103,23 @@ export default function TopicView({
       <div className="space-y-10">
         {/* Video — only rendered when one exists */}
         {hasVideo && (
-          <div className="rounded-xl overflow-hidden border border-border aspect-video bg-black">
-            <iframe
-              src={topic.videoUrl}
-              title={topic.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full"
-            />
+          <div>
+            <div className="rounded-xl overflow-hidden border border-border aspect-video bg-black">
+              <iframe
+                src={topic.videoUrl}
+                title={topic.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+            {startLabel && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                One lesson video covers all of <span className="text-foreground">{sectionTitle}</span>, so it opens
+                at <span className={`font-mono ${theme.text}`}>{startLabel}</span> for this topic — not from the
+                beginning.
+              </p>
+            )}
           </div>
         )}
 
