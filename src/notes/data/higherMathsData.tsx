@@ -1256,7 +1256,7 @@ export const higherMathsData: Section[] = [
       {
         id: "completing-the-square",
         title: "Completing the Square",
-        videoUrl: "https://www.youtube.com/embed/NoGdMUAVEe4?start=1939",
+        videoUrl: "",
         theory: (
           <div className="space-y-6">
             <p><strong>Completing the square</strong> is a method used to write a quadratic expression <InlineMath math="ax^2 + bx + c" /> in the form <InlineMath math="a(x + p)^2 + q" />.</p>
@@ -4535,7 +4535,7 @@ id: "integration-of-brackets",
       {
         id: "exact-values-related-angles",
         title: "Exact Values of Related Angles",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=296",
         theory: (
           <div className="space-y-8 text-lg">
             <h3 className="font-bold text-2xl text-white mb-6">The CAST Diagram</h3>
@@ -5209,7 +5209,7 @@ id: "integration-of-brackets",
 {
         id: "solving-simultaneous-equations",
         title: "Solving Simultaneous Equations",
-        videoUrl: "https://www.youtube.com/embed/prkyjZMY4Qs",
+        videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3163",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>You are already familiar with some wave functions, namely <InlineMath math="f(x)=\sin x" /> and <InlineMath math="f(x)=\cos x" />.</p>

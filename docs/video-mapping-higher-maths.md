@@ -1,6 +1,6 @@
 # Higher Maths — video mapping worksheet
 
-100 topics: **96** deep-linked · **2** have a video but land at 0:00 · **2** have no video.
+100 topics: **97** deep-linked · **1** have a video but land at 0:00 · **2** have no video.
 
 Fill in the last two columns and send it back. Timestamp in seconds or mm:ss —
 either is fine. Where several topics share one long video, repeat the same video
@@ -29,7 +29,7 @@ pupil gets a long video from the beginning and has to hunt for their topic.
 | 16 | Functions & Graphs | Inverse Functions | deep-linked @ 3542s | NoGdMUAVEe4 | 3542 |
 | 17 | Functions & Graphs | Graphs of Inverse Functions | deep-linked @ 4523s | NoGdMUAVEe4 | 4523 |
 | 18 | Functions & Graphs | Graph Transformations | deep-linked @ 4813s | NoGdMUAVEe4 | 4813 |
-| 19 | Functions & Graphs | Completing the Square | deep-linked @ 1939s | NoGdMUAVEe4 | 1939 |
+| 19 | Functions & Graphs | Completing the Square | no video |  |  |
 | 20 | Functions & Graphs | Exponential Functions | deep-linked @ 5231s | NoGdMUAVEe4 | 5231 |
 | 21 | Functions & Graphs | Logarithmic Functions | deep-linked @ 551s | oNAzh9QKThQ | 551 |
 | 22 | Functions & Graphs | Logarithmic Graphs | deep-linked @ 5653s | NoGdMUAVEe4 | 5653 |
@@ -76,7 +76,7 @@ pupil gets a long video from the beginning and has to hunt for their topic.
 | 63 | Integration | Further Integration of Trigonometric Functions | deep-linked @ 3869s | n68SZ605FQQ | 3869 |
 | 64 | Trigonometry | Radian Measure | deep-linked @ 440s | AvgXvkloPps | 440 |
 | 65 | Trigonometry | Exact Values | deep-linked @ 296s | AvgXvkloPps | 296 |
-| 66 | Trigonometry | Exact Values of Related Angles | no video |  |  |
+| 66 | Trigonometry | Exact Values of Related Angles | deep-linked @ 296s | AvgXvkloPps | 296 |
 | 67 | Trigonometry | Solving Basic Trigonometric Equations | deep-linked @ 680s | AvgXvkloPps | 680 |
 | 68 | Trigonometry | Trigonometric Equations with Multiple Angles | deep-linked @ 1034s | AvgXvkloPps | 1034 |
 | 69 | Trigonometry | Trigonometric Equations with Square Terms | deep-linked @ 1351s | AvgXvkloPps | 1351 |
@@ -86,7 +86,7 @@ pupil gets a long video from the beginning and has to hunt for their topic.
 | 73 | Trigonometry | Double Angle Formulae | deep-linked @ 2410s | AvgXvkloPps | 2410 |
 | 74 | Trigonometry | Trigonometric Identities | deep-linked @ 2647s | AvgXvkloPps | 2647 |
 | 75 | Trigonometry | Further Trigonometric Equations | deep-linked @ 2746s | AvgXvkloPps | 2746 |
-| 76 | Trigonometry | Solving Simultaneous Equations | lands at 0:00 | prkyjZMY4Qs |  |
+| 76 | Trigonometry | Solving Simultaneous Equations | deep-linked @ 3163s | AvgXvkloPps | 3163 |
 | 77 | Trigonometry | Using the Addition Formula | deep-linked @ 2086s | AvgXvkloPps | 2086 |
 | 78 | Trigonometry | Wave Function | deep-linked @ 3163s | AvgXvkloPps | 3163 |
 | 79 | Trigonometry | Multiple Angles | deep-linked @ 3658s | AvgXvkloPps | 3658 |
