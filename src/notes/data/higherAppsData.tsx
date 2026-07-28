@@ -11,7 +11,7 @@ export const higherAppsData: Section[] = [
       {
         id: "finance-revision-and-gross-income",
         title: "Finance Revision & Gross Income",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -142,7 +142,7 @@ export const higherAppsData: Section[] = [
       {
         id: "national-insurance",
         title: "National Insurance",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/NbXeQFcU9MQ",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -273,7 +273,7 @@ export const higherAppsData: Section[] = [
       {
         id: "income-tax",
         title: "Income Tax",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/v6UA3kNY2sY",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -431,7 +431,7 @@ export const higherAppsData: Section[] = [
       {
         id: "deductions",
         title: "Deductions",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/Z_UsKwnFgDI",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -581,7 +581,7 @@ export const higherAppsData: Section[] = [
       {
         id: "other-taxes",
         title: "Other Taxes",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/gkpnyMhmPV0",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -702,7 +702,7 @@ export const higherAppsData: Section[] = [
       {
         id: "multipliers-and-interest",
         title: "Multipliers & Interest",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -820,7 +820,7 @@ export const higherAppsData: Section[] = [
       {
         id: "interest-varying-time-units",
         title: "Interest - Varying Time Units",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/8-mHZxNeDJU",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -949,7 +949,7 @@ export const higherAppsData: Section[] = [
       {
         id: "combining-interest-rates",
         title: "Combining Interest Rates",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1100,7 +1100,7 @@ export const higherAppsData: Section[] = [
       {
         id: "accumulation-calculations",
         title: "Accumulation Calculations (Regular Payments)",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1241,7 +1241,7 @@ export const higherAppsData: Section[] = [
       {
         id: "accumulation-irregular",
         title: "Accumulation - Irregular Payments and Withdrawals",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1398,7 +1398,7 @@ export const higherAppsData: Section[] = [
       {
         id: "converting-time-frequencies",
         title: "Converting Between Time Frequencies",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1552,7 +1552,7 @@ export const higherAppsData: Section[] = [
       {
         id: "start-and-end-values",
         title: "Working with Start and End Values",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1679,7 +1679,7 @@ export const higherAppsData: Section[] = [
       {
         id: "present-value",
         title: "Present Value (Fixed Interest Rates)",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1782,7 +1782,7 @@ export const higherAppsData: Section[] = [
       {
         id: "present-value-variable",
         title: "Present Value (Variable Interest Rates)",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -1915,7 +1915,7 @@ export const higherAppsData: Section[] = [
       {
         id: "investment-schedules",
         title: "Accumulation: Investment Schedules",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2077,7 +2077,7 @@ export const higherAppsData: Section[] = [
       {
         id: "loans-and-schedules",
         title: "Loans & Loan Schedules",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/XoA_f73A_Ec",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2232,7 +2232,7 @@ export const higherAppsData: Section[] = [
       {
         id: "inflation",
         title: "Inflation",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2362,7 +2362,7 @@ export const higherAppsData: Section[] = [
       {
         id: "pension-savings",
         title: "Pension Savings",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "https://www.youtube.com/embed/KD4jJ8ACp28",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2506,7 +2506,7 @@ export const higherAppsData: Section[] = [
       {
         id: "insurance",
         title: "Insurance",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2639,7 +2639,7 @@ export const higherAppsData: Section[] = [
       {
         id: "classifying-data",
         title: "Classifying Data",
-        videoUrl: "https://www.youtube.com/embed/placeholder", // Replace when available
+        videoUrl: "", // Replace when available
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2759,7 +2759,7 @@ export const higherAppsData: Section[] = [
       {
         id: "samples-populations-outliers",
         title: "Samples, Populations & Outliers",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -2865,7 +2865,7 @@ export const higherAppsData: Section[] = [
       {
         id: "statistical-diagrams",
         title: "Statistical Diagrams",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3001,7 +3001,7 @@ export const higherAppsData: Section[] = [
       {
         id: "distributions",
         title: "Distributions",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3123,7 +3123,7 @@ export const higherAppsData: Section[] = [
       {
         id: "descriptive-statistics",
         title: "Descriptive Statistics",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3281,7 +3281,7 @@ export const higherAppsData: Section[] = [
       {
         id: "correlation",
         title: "Correlation",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3409,7 +3409,7 @@ export const higherAppsData: Section[] = [
       {
         id: "linear-regression",
         title: "Linear Regression",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3571,7 +3571,7 @@ export const higherAppsData: Section[] = [
       {
         id: "hypothesis-testing",
         title: "Hypothesis Testing & Errors",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3714,7 +3714,7 @@ export const higherAppsData: Section[] = [
       {
         id: "confidence-intervals",
         title: "Confidence Intervals & P Values",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3844,7 +3844,7 @@ export const higherAppsData: Section[] = [
       {
         id: "correlation-tests",
         title: "Correlation Tests",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -3979,9 +3979,153 @@ export const higherAppsData: Section[] = [
         ]
       },
       {
+        id: "t-tests",
+        title: "T Tests",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-6 text-slate-300">
+            <p>
+              A <strong>t-test</strong> compares the <strong>means</strong> of numerical data from two groups, and asks whether the difference between them is big enough to be a real effect rather than chance. It is the test to reach for whenever the research question is about an <em>average</em>.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-lg font-semibold text-white">1. Paired or Independent?</h4>
+                <p className="mb-2">This is the only decision you have to make, and everything else follows from it. Ask: <em>did the same subjects produce both sets of numbers?</em></p>
+                <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
+                  <li>
+                    <strong className="text-blue-300">Paired</strong> — the same people, animals or objects measured <em>twice</em>. Before and after a treatment, morning versus afternoon, summer versus winter. Each value in one list has a partner in the other.
+                  </li>
+                  <li>
+                    <strong className="text-blue-300">Independent</strong> — two <em>separate</em> groups. Manufacturer A versus Manufacturer B, one school versus another, one age band versus another. Nothing links a particular value in one list to a particular value in the other.
+                  </li>
+                </ul>
+                <p className="mt-3">A useful check: if the two lists <strong>must</strong> be the same length for the data to make sense, the test is paired. Independent groups can be — and usually are — different sizes, and that is not a problem.</p>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-white mt-6">2. Performing the Test in R Studio</h4>
+                <p className="mb-2">Independent groups:</p>
+                <p><code className="text-blue-300 font-mono">t.test(X, Y)</code></p>
+                <p className="mb-2 mt-3">The same subjects measured twice:</p>
+                <p><code className="text-blue-300 font-mono">t.test(X, Y, paired=TRUE)</code></p>
+                <p className="mt-3">
+                  The output to read is the <strong>p-value</strong> and the <strong>confidence interval</strong>, interpreted exactly as for any other hypothesis test.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-white mt-6">3. Check the Data First</h4>
+                <p>
+                  A t-test assumes the data is roughly <strong>normally distributed</strong>. Before running one, look at a histogram or boxplot of each group and comment on the shape. With small samples this is often not clear-cut, and saying so is a perfectly good answer — what loses marks is not looking at all.
+                </p>
+                <p className="mt-2">
+                  If the data is clearly skewed, the mean is not a good summary of it, and a t-test is the wrong tool.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-white mt-6">4. Writing the Hypotheses</h4>
+                <div className="mt-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg mb-4">
+                  <p className="text-rose-200 font-semibold mb-1">Common Trap:</p>
+                  <p className="text-rose-100/80">
+                    A t-test hypothesis must contain the word <strong>mean</strong> or <strong>average</strong>. Writing "there is no difference between the two groups" is too vague to gain the mark — a difference in <em>what</em>?
+                  </p>
+                </div>
+                <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
+                  <li>
+                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no difference in the mean [variable] between [Group A] and [Group B].
+                  </li>
+                  <li>
+                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a difference in the mean [variable] between [Group A] and [Group B].
+                  </li>
+                </ul>
+                <p className="mt-3">Name the actual groups and the actual quantity. Generic letters will not do.</p>
+              </div>
+            </div>
+          </div>
+        ),
+        examples: [
+          {
+            id: "t-test-ex1",
+            question: (
+              <div className="space-y-2">
+                <p>For each study, state whether a <strong>paired</strong> or an <strong>independent</strong> t-test is appropriate, and say why.</p>
+                <ol className="list-[lower-alpha] list-inside ml-4 space-y-1">
+                  <li>The resting pulse of 40 volunteers is recorded, then recorded again after eight weeks of a running programme.</li>
+                  <li>The battery life of 25 phones from Brand A is compared with 31 phones from Brand B.</li>
+                  <li>Learners sit a spelling test in silence, and the same learners sit an equivalent test with music playing.</li>
+                  <li>The delivery times of two rival courier firms are compared over the same month.</li>
+                </ol>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-3">
+                <p><strong>(a) Paired.</strong> The same 40 volunteers are measured twice, so each &ldquo;after&rdquo; value belongs to a particular &ldquo;before&rdquo; value.</p>
+                <p><strong>(b) Independent.</strong> Two separate sets of phones, with nothing linking a particular Brand A phone to a particular Brand B phone. The unequal sample sizes, 25 and 31, are not a problem.</p>
+                <p><strong>(c) Paired.</strong> The same learners under two conditions.</p>
+                <p><strong>(d) Independent.</strong> Two separate firms, with no link between an individual delivery by one and an individual delivery by the other.</p>
+                <p className="text-slate-400 text-sm mt-2">The quick test: in (a) and (c) the two lists must be the same length, because every value has a partner. In (b) and (d) they need not be.</p>
+              </div>
+            )
+          },
+          {
+            id: "t-test-ex2",
+            question: (
+              <div className="space-y-2">
+                <p>A gym records the time, in minutes, that the same 60 members spend training in January and again in June. A paired t-test gives the following output:</p>
+                <pre className="bg-black/40 border border-white/10 rounded-lg p-3 text-xs text-slate-200 overflow-x-auto font-mono">{`	Paired t-test
+
+data:  Train.Jan and Train.Jun
+t = 2.9143, df = 59, p-value = 0.005022
+95 percent confidence interval:
+ 1.842  9.671`}</pre>
+                <p>State the conclusion in context, at the 5% significance level.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-3">
+                <p><strong>Step 1:</strong> Compare the p-value with the significance level.</p>
+                <p>p = 0.005022, which is less than 0.05.</p>
+                <p><strong>Step 2:</strong> Decide on the null hypothesis.</p>
+                <p>Since p &lt; 0.05, we <strong>reject the null hypothesis</strong>.</p>
+                <p><strong>Step 3:</strong> Say what that means in context.</p>
+                <p>There is sufficient evidence to conclude that there is a difference in the mean training time of gym members between January and June.</p>
+                <p><strong>Step 4:</strong> Use the confidence interval.</p>
+                <p>The interval (1.842, 9.671) does not contain zero, which agrees with rejecting the null hypothesis. We can be 95% confident that the mean training time fell by between about 1.8 and 9.7 minutes.</p>
+              </div>
+            )
+          },
+          {
+            id: "t-test-ex3",
+            question: (
+              <div className="space-y-2">
+                <p>A supplier claims that two of its greenhouses produce tomato plants of the same average height. A researcher measures a sample of plants from each greenhouse.</p>
+                <ol className="list-[lower-alpha] list-inside ml-4 space-y-1">
+                  <li>Write suitable hypotheses.</li>
+                  <li>State the R Studio command needed.</li>
+                  <li>The test returns a p-value of 0.214. State the conclusion at the 5% level.</li>
+                </ol>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-3">
+                <p><strong>(a)</strong></p>
+                <p>H<sub>0</sub>: There is no difference in the mean height of tomato plants grown in Greenhouse A and Greenhouse B.</p>
+                <p>H<sub>1</sub>: There is a difference in the mean height of tomato plants grown in Greenhouse A and Greenhouse B.</p>
+                <p><strong>(b)</strong> The two samples are separate groups of plants, so this is an independent t-test:</p>
+                <p><code className="text-blue-300 font-mono">t.test(Height.A, Height.B)</code></p>
+                <p><strong>(c)</strong> p = 0.214, which is greater than 0.05, so we <strong>fail to reject the null hypothesis</strong>. There is insufficient evidence of a difference in the mean height of tomato plants between the two greenhouses.</p>
+                <p className="text-slate-400 text-sm mt-2">Note the wording: we have <em>not</em> proved the heights are the same. Failing to find evidence of a difference is not the same as showing there is none.</p>
+              </div>
+            )
+          }
+        ]
+      },
+      {
         id: "z-tests",
         title: "Z Tests",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -4124,7 +4268,7 @@ export const higherAppsData: Section[] = [
       {
         id: "mixed-hypothesis-tests",
         title: "Mixed Hypothesis Tests",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -5175,7 +5319,7 @@ export const higherAppsData: Section[] = [
       {
         id: "pdm-intro",
         title: "Introduction to Planning & Decision Making",
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        videoUrl: "",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>This section explores techniques such as project planning, critical path analysis, and other decision-making models to optimize outcomes.</p>
@@ -5192,7 +5336,7 @@ export const higherAppsData: Section[] = [
       {
         id: "precedence-tables",
         title: "Precedence Tables",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -5332,7 +5476,7 @@ export const higherAppsData: Section[] = [
       {
         id: "constructing-pert-charts",
         title: "Constructing PERT Charts",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -5499,7 +5643,7 @@ export const higherAppsData: Section[] = [
       {
         id: "interpreting-pert-charts",
         title: "Interpreting PERT Charts",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -5663,7 +5807,7 @@ export const higherAppsData: Section[] = [
       {
         id: "gantt-charts",
         title: "Gantt Charts",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -5785,7 +5929,7 @@ export const higherAppsData: Section[] = [
       {
         id: "calculating-basic-probabilities",
         title: "Calculating Basic Probabilities",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -5920,7 +6064,7 @@ export const higherAppsData: Section[] = [
       {
         id: "expected-probabilities",
         title: "Expected Probabilities",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -6012,7 +6156,7 @@ export const higherAppsData: Section[] = [
       {
         id: "tree-diagrams",
         title: "Tree Diagrams",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -6146,7 +6290,7 @@ export const higherAppsData: Section[] = [
       {
         id: "venn-diagrams",
         title: "Venn Diagrams",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -6311,7 +6455,7 @@ export const higherAppsData: Section[] = [
       {
         id: "risk-control-measures",
         title: "Risk & Control Measures",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -6431,7 +6575,7 @@ export const higherAppsData: Section[] = [
       {
         id: "multiple-control-measures",
         title: "Multiple Control Measures",
-        videoUrl: "https://www.youtube.com/embed/placeholder",
+        videoUrl: "",
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
@@ -6569,6 +6713,134 @@ export const higherAppsData: Section[] = [
             )
           }
         ]
+      }
+    ]
+  },
+  {
+    id: "software-skills",
+    title: "Software Skills",
+    topics: [
+      {
+        id: "rstudio-workbook",
+        title: "RStudio Workbook",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-6 text-slate-300">
+            <p>
+              The question paper and the project both require you to use statistical software, and RStudio is what this course uses. It is free, and you can install it on your own computer from <span className="font-mono text-slate-400">posit.co</span> in a few minutes.
+            </p>
+
+            <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+              <h4 className="text-lg font-semibold text-white mb-2">📘 The RStudio Workbook</h4>
+              <p className="mb-3">
+                There is a full interactive workbook covering everything you need: loading a dataset, descriptive statistics, boxplots, tables, histograms, scattergraphs, correlation and regression, t-tests and z-tests — with practice datasets to download and past paper questions worked through.
+              </p>
+              <p>
+                <a href="https://rstudio.clellandmaths.com" target="_blank" rel="noopener noreferrer" className="text-blue-300 underline font-semibold">Open the RStudio Workbook →</a>
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold text-white mt-6">Data Booklet Commands</h4>
+              <p className="mb-3">These are the commands given to you in the exam data booklet. You are not expected to memorise them, but you must be able to choose the right one and read its output.</p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-white/20">
+                      <th className="pb-2 font-bold text-white">Command</th>
+                      <th className="pb-2 font-bold text-white">What it does</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    <tr><td className="py-2 font-mono text-blue-300">read.csv(&quot;file.csv&quot;)</td><td className="py-2">Loads a dataset into RStudio</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">attach(file)</td><td className="py-2">Makes the column headings usable as variable names</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">head(file)</td><td className="py-2">Shows the first few rows — useful for checking exact heading names</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">summary(X)</td><td className="py-2">Minimum, quartiles, median, mean and maximum</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">mean(X)  sd(X)  median(X)  IQR(X)</td><td className="py-2">Individual descriptive statistics</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">table(X)</td><td className="py-2">Frequency table</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">table(X, Y)</td><td className="py-2">Contingency table for two categorical variables</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">prop.table(table(X))*100</td><td className="py-2">Proportions, shown as percentages</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">hist(X)</td><td className="py-2">Histogram — use it to judge the shape of a distribution</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">boxplot(X)</td><td className="py-2">Boxplot; <span className="font-mono">boxplot(X, Y)</span> compares two sets</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">plot(X, Y)</td><td className="py-2">Scattergraph of two numerical variables</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">cor(X, Y)</td><td className="py-2">Correlation coefficient r</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">cor.test(X, Y)</td><td className="py-2">Correlation hypothesis test — gives r and a p-value</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">lm(Y ~ X)</td><td className="py-2">Fits a regression line; <span className="font-mono">summary(lm(Y ~ X))</span> adds R²</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">t.test(X, Y)</td><td className="py-2">Independent t-test comparing two means</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">t.test(X, Y, paired=TRUE)</td><td className="py-2">Paired t-test, for the same subjects measured twice</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">prop.test(x = c(a, b), n = c(n1, n2))</td><td className="py-2">Z-test comparing two proportions</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-300">detach(file)</td><td className="py-2">Run at the end of a session to clear the heading names</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-4 text-slate-400 text-sm">Remember to run your code — <span className="font-mono">Ctrl + Enter</span>, or click Run.</p>
+            </div>
+          </div>
+        ),
+        examples: []
+      },
+      {
+        id: "excel-skills",
+        title: "Excel Skills",
+        videoUrl: "",
+        theory: (
+          <div className="space-y-6 text-slate-300">
+            <p>
+              The question paper requires you to use spreadsheet software as well as statistical software. Spreadsheets are used most heavily in the <strong>Finance</strong> section — pay and deductions, interest, accumulation, loan schedules and present value — and for straightforward counting and averaging elsewhere.
+            </p>
+
+            <div className="p-5 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+              <h4 className="text-lg font-semibold text-white mb-2">📗 Excel Workbook — coming soon</h4>
+              <p>
+                A full interactive workbook with practice files is on its way, in the same format as the RStudio one. In the meantime, the spreadsheet work is taught within the Finance and Statistics topics themselves.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold text-white mt-6">Functions You Need</h4>
+              <p className="mb-3">These are the spreadsheet functions named in the course specification. You should be able to use each one and explain what your formula is doing.</p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-white/20">
+                      <th className="pb-2 font-bold text-white">Function</th>
+                      <th className="pb-2 font-bold text-white">Typical use in this course</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    <tr><td className="py-2 font-mono text-emerald-300">SUM</td><td className="py-2">Totalling a column of payments or hours</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">PRODUCT</td><td className="py-2">Multiplying values, such as rate × hours</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">IF</td><td className="py-2">Applying a rule only when a condition is met — tax bands, overtime thresholds</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">AND / OR</td><td className="py-2">Combining two conditions inside an IF</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">ROUND</td><td className="py-2">Rounding money to 2 decimal places</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">ABS</td><td className="py-2">Size of a difference, ignoring its sign — useful for errors and tolerance</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">INT</td><td className="py-2">Whole number part — whole years, whole units</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">GOAL SEEK</td><td className="py-2">Working backwards to a required input — present value, repayments</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">AVERAGE</td><td className="py-2">Mean of a range</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">MIN / MAX</td><td className="py-2">Smallest and largest values</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">MEDIAN</td><td className="py-2">Middle value, for skewed data</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">COUNTIF</td><td className="py-2">Counting entries that meet a condition</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">STDEV</td><td className="py-2">Standard deviation of a sample</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-300">PEARSON</td><td className="py-2">Correlation coefficient between two ranges</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold text-white mt-6">Presentation Matters</h4>
+              <p className="mb-2">Marks are available for a spreadsheet another person can follow. You should be able to:</p>
+              <ul className="list-disc list-inside ml-4 space-y-1">
+                <li>set up key variables in their own cells <em>before</em> using them in calculations, rather than typing numbers into formulas;</li>
+                <li>use <strong>absolute cell references</strong> (<span className="font-mono">$B$2</span>) so a formula still points at the right cell when filled down;</li>
+                <li>fill down, and copy and rename worksheets;</li>
+                <li>add a comment explaining what a formula does;</li>
+                <li>combine data taken from more than one source document.</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        examples: []
       }
     ]
   }
