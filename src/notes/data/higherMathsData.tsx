@@ -2959,6 +2959,15 @@ export const higherMathsData: Section[] = [
               <BlockMath math="f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}" />
               <p className="mt-4 text-sm text-slate-300"><InlineMath math="f'(x)" /> is the <strong>derived function</strong> or <strong>derivative</strong> of <InlineMath math="f(x)" />.</p>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Keep the limit notation until the end:</strong> every line needs <InlineMath math="\lim_{h \to 0}" /> in front of it until you actually take the limit. Dropping it early is a communication error even if the algebra is right.</li>
+              <li><strong>Expand <InlineMath math="f(x+h)" /> carefully:</strong> <InlineMath math="(x+h)^2 = x^2 + 2xh + h^2" />, not <InlineMath math="x^2 + h^2" />. This single expansion is where most first-principles marks are lost.</li>
+              <li><strong>Cancel the <InlineMath math="h" />, do not set it to zero:</strong> divide the numerator and denominator by <InlineMath math="h" /> first. Substituting <InlineMath math="h = 0" /> before cancelling gives <InlineMath math="\tfrac{0}{0}" />.</li>
+              <li><strong>Answer the question asked:</strong> "differentiate from first principles" means marks are for the process. Quoting the power rule scores nothing.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -3053,6 +3062,15 @@ export const higherMathsData: Section[] = [
           <div className="space-y-8 text-lg">
             <p className="mb-6">Before differentiating, you must rewrite expressions in the form <InlineMath math="x^n" /> or <InlineMath math="ax^n" />.</p>
             <p className="mb-6">If the expression contains brackets, you should multiply them out first.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Multiply out completely before differentiating:</strong> there is no product rule at Higher, so a product must be expanded first. Differentiating each bracket separately is simply wrong.</li>
+              <li><strong>Watch signs when expanding:</strong> a negative outside a bracket changes every term inside it.</li>
+              <li><strong>Collect like terms first:</strong> tidying up before you differentiate makes the derivative far less error-prone.</li>
+              <li><strong>Show the expanded form:</strong> jumping straight to the derivative loses the working mark, and each line must follow from the one above.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -3088,6 +3106,15 @@ export const higherMathsData: Section[] = [
           <div className="space-y-8 text-lg">
             <p className="mb-6">Before differentiating, rewrite roots as fractional indices (<InlineMath math="\sqrt[n]{x^m} = x^{\frac{m}{n}}" />).</p>
             <p className="mb-6">Move variables out of the denominator to the numerator using negative indices (<InlineMath math="\frac{1}{x^n} = x^{-n}" />).</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Rewrite roots as fractional indices:</strong> <InlineMath math="\sqrt{x} = x^{1/2}" /> and <InlineMath math="\sqrt[3]{x^2} = x^{2/3}" />. You cannot apply the power rule until every term is in the form <InlineMath math="ax^n" />.</li>
+              <li><strong>Subtracting 1 from a fraction:</strong> <InlineMath math="\tfrac{1}{2} - 1 = -\tfrac{1}{2}" />, so <InlineMath math="x^{1/2}" /> differentiates to <InlineMath math="\tfrac{1}{2}x^{-1/2}" />. This is a very common slip.</li>
+              <li><strong>Negative indices go more negative:</strong> <InlineMath math="x^{-3}" /> differentiates to <InlineMath math="-3x^{-4}" />. Negative indices are the most reliable source of dropped marks in this topic.</li>
+              <li><strong>Match the form of the question:</strong> if it was asked with roots, it is usually best to give the answer with roots too.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -3145,6 +3172,15 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">If you have a fraction with a single term in the denominator, you should separate it into multiple fractions and simplify the indices before differentiating.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Split the fraction term by term:</strong> <InlineMath math="\frac{a+b}{c} = \frac{a}{c} + \frac{b}{c}" />. You can only do this when the <em>denominator</em> is a single term.</li>
+              <li><strong>You cannot split the other way:</strong> <InlineMath math="\frac{1}{a+b}" /> is <em>not</em> <InlineMath math="\frac{1}{a} + \frac{1}{b}" />. A sum in the denominator cannot be separated.</li>
+              <li><strong>Subtract the indices:</strong> <InlineMath math="\frac{x^3}{x} = x^2" />. Dividing by <InlineMath math="x" /> reduces the power by one; it does not divide the coefficient.</li>
+              <li><strong>Simplify fully before differentiating:</strong> every term must be <InlineMath math="ax^n" /> first. Half-simplified terms lead to wrong powers.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -3199,6 +3235,15 @@ export const higherMathsData: Section[] = [
               <BlockMath math="\text{If } f(x) = \cos x \text{ then } f'(x) = -\sin x" />
             </div>
             <p className="mt-4 text-sm text-slate-300">Wait, if the angle is in degrees, we must convert to radians to differentiate. Always assume <InlineMath math="x" /> is in radians for calculus.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The minus sign belongs to cosine:</strong> <InlineMath math="\sin x" /> differentiates to <InlineMath math="\cos x" />, but <InlineMath math="\cos x" /> differentiates to <InlineMath math="-\sin x" />. Losing that minus is the single most common error here.</li>
+              <li><strong>These rules need radians:</strong> they are only valid when <InlineMath math="x" /> is in radians, so work in radians throughout a calculus question.</li>
+              <li><strong>Keep coefficients:</strong> <InlineMath math="4\sin x" /> differentiates to <InlineMath math="4\cos x" /> — the multiplier stays.</li>
+              <li><strong>Do not confuse with integration:</strong> the minus sign moves to the other function when integrating. Check which operation you are doing.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -3389,6 +3434,15 @@ export const higherMathsData: Section[] = [
              <div className="bg-white/5 p-6 rounded-xl border border-white/10 mt-8 overflow-hidden flex justify-center py-8">
                <IncDecCombinedGraph />
              </div>
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>Answer with an inequality, not a number:</strong> the question asks for the values of <InlineMath math="x" /> for which the function is increasing, so the answer is a range such as <InlineMath math="x \gt 2" />.</li>
+               <li><strong>Justify with the sign of the derivative:</strong> state <InlineMath math="\frac{dy}{dx} \gt 0" /> for increasing and <InlineMath math="\frac{dy}{dx} \lt 0" /> for decreasing. An unsupported answer does not gain full marks.</li>
+               <li><strong>"Show that it is always increasing" needs an argument:</strong> usually complete the square on the derivative to show it can never be negative. Testing a few values proves nothing.</li>
+               <li><strong>Strict inequalities at stationary points:</strong> where <InlineMath math="\frac{dy}{dx} = 0" /> the function is neither increasing nor decreasing.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -3710,6 +3764,16 @@ export const higherMathsData: Section[] = [
                  <li>Calculate the maximum/minimum value of the quantity required.</li>
                </ul>
              </div>
+           <div className="bg-slate-800 p-4 rounded-lg mt-4">
+             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <ul className="list-disc list-inside space-y-2 ml-2">
+               <li><strong>Get to one variable first:</strong> use the constraint given in the question to eliminate a variable before differentiating. You cannot differentiate a formula in two unknowns.</li>
+               <li><strong>Justify the nature:</strong> finding the stationary point is not enough — a nature table is needed to show it really is the maximum or minimum.</li>
+               <li><strong>Check the endpoints too:</strong> in a context with a restricted range, the optimum can sit at an end of the interval rather than at a stationary point.</li>
+               <li><strong>Answer in context, with units:</strong> if the question asks for the minimum cost, give the cost, not the value of <InlineMath math="x" /> that produces it. Read which one is wanted.</li>
+               <li><strong>Reject impossible solutions:</strong> negative lengths, times or prices are not valid answers — say why you are discarding them.</li>
+             </ul>
+           </div>
            </div>
          ),
          examples: [
@@ -3927,6 +3991,16 @@ export const higherMathsData: Section[] = [
             <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
               <BlockMath math="\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Multiply by the derivative of the inside:</strong> the chain rule is easy to state and easy to forget. <InlineMath math="(3x+1)^5" /> differentiates to <InlineMath math="5(3x+1)^4 \times 3" />, and that <InlineMath math="\times 3" /> is where the marks go.</li>
+              <li><strong>Do not expand the bracket:</strong> for a high power the chain rule is the only realistic route.</li>
+              <li><strong>Keep the inside unchanged:</strong> only the power drops. The contents of the bracket stay exactly as they were.</li>
+              <li><strong>Negative and fractional powers still follow the rule:</strong> <InlineMath math="\frac{1}{(2x-5)^3}" /> should be written <InlineMath math="(2x-5)^{-3}" /> before differentiating.</li>
+              <li><strong>Simplify at the end:</strong> collect the constants into a single coefficient.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -3991,6 +4065,15 @@ export const higherMathsData: Section[] = [
               <BlockMath math="\frac{d}{dx}[\sin(f(x))] = \cos(f(x)) \times f'(x)" />
               <BlockMath math="\frac{d}{dx}[\cos(f(x))] = -\sin(f(x)) \times f'(x)" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Two things must happen:</strong> differentiate the trig function <em>and</em> multiply by the derivative of the angle. <InlineMath math="\sin(4x)" /> differentiates to <InlineMath math="4\cos(4x)" />.</li>
+              <li><strong>The minus still belongs to cosine:</strong> <InlineMath math="\cos(3x)" /> differentiates to <InlineMath math="-3\sin(3x)" /> — both the chain factor and the minus sign are needed.</li>
+              <li><strong>Powers of trig functions are chains too:</strong> <InlineMath math="\sin^3 x" /> means <InlineMath math="(\sin x)^3" />, so it differentiates to <InlineMath math="3\sin^2 x \cos x" />.</li>
+              <li><strong>Work in radians:</strong> the derivatives of <InlineMath math="\sin" /> and <InlineMath math="\cos" /> are only valid in radians.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4715,6 +4798,15 @@ id: "integration-of-brackets",
                 </table>
               </div>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>These must be memorised:</strong> exact values are a known weak spot across the course, and in the non-calculator paper there is no way round them. Learn the two triangles rather than the table — you can rebuild every value from them.</li>
+              <li><strong>Exact means exact:</strong> a decimal such as 0.866 gains nothing when <InlineMath math="\frac{\sqrt{3}}{2}" /> was asked for.</li>
+              <li><strong>Rationalise the denominator:</strong> <InlineMath math="\frac{1}{\sqrt{2}}" /> is usually written <InlineMath math="\frac{\sqrt{2}}{2}" />. Check the form expected.</li>
+              <li><strong>Know them in radians as well as degrees:</strong> the same values appear as <InlineMath math="\frac{\pi}{6}" />, <InlineMath math="\frac{\pi}{4}" /> and <InlineMath math="\frac{\pi}{3}" />, and questions mix the two freely.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: []
@@ -4761,6 +4853,15 @@ id: "integration-of-brackets",
             </div>
             
             <p className="mb-6">We can use this diagram along with our exact values in the first quadrant to evaluate trigonometric functions for any angle.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Find the acute related angle first:</strong> for <InlineMath math="150^\circ" /> that is <InlineMath math="30^\circ" />. Work out the exact value for the acute angle, then attach the sign.</li>
+              <li><strong>The quadrant decides the sign:</strong> use CAST. The size of the value never changes — only whether it is positive or negative.</li>
+              <li><strong>Subtract from the right axis:</strong> related angles come from <InlineMath math="180^\circ" /> and <InlineMath math="360^\circ" /> for sine and cosine. Subtracting from <InlineMath math="90^\circ" /> changes the ratio instead of the sign.</li>
+              <li><strong>Tangent has a period of <InlineMath math="180^\circ" />:</strong> it repeats twice as often as sine and cosine, so treat it separately.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4846,6 +4947,15 @@ id: "integration-of-brackets",
               <li>Use the CAST diagram to determine which two quadrants the solutions lie in based on the sign of <InlineMath math="k" />.</li>
               <li>Calculate your final answers using the base angle and the quadrants, checking that they fall inside the required domain.</li>
             </ol>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Give every solution in the domain:</strong> a calculator returns one angle. Each equation normally has two solutions per revolution — use CAST to find the others.</li>
+              <li><strong>Check the domain and its units:</strong> <InlineMath math="0 \leq x \leq 360" /> wants degrees; <InlineMath math="0 \leq x \leq 2\pi" /> wants radians. Answering in the wrong one loses the marks.</li>
+              <li><strong>Isolate the trig function first:</strong> rearrange to <InlineMath math="\sin x = k" /> before going near a calculator.</li>
+              <li><strong>A negative value does not mean a negative angle:</strong> it tells you which quadrants to use. Your answers should still sit inside the given domain.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4910,6 +5020,15 @@ id: "integration-of-brackets",
               <li><InlineMath math="y = \cos 4x^\circ" /> has a period of <InlineMath math="90^\circ" />.</li>
             </ul>
             <p className="mb-6">When solving multiple angle equations, adjust your domain to match the argument. E.g. if the domain is <InlineMath math="0 \leq x \leq 360" />, solve <InlineMath math="0 \leq 2x \leq 720" /> first, then divide your answers by 2.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Widen the domain before you solve:</strong> for <InlineMath math="\sin 2x" /> with <InlineMath math="0 \leq x \leq 360" />, solve for <InlineMath math="2x" /> over <InlineMath math="0 \leq 2x \leq 720" />. Forgetting this is the classic way to lose half the solutions.</li>
+              <li><strong>Divide at the very end:</strong> find all the values of <InlineMath math="2x" /> first, then halve each one.</li>
+              <li><strong>Count what you expect:</strong> <InlineMath math="\sin 2x = k" /> normally has four solutions in a full revolution, <InlineMath math="\sin 3x = k" /> six. If you have fewer, you have missed some.</li>
+              <li><strong>Keep going round:</strong> add <InlineMath math="360^\circ" /> repeatedly to each base solution until you pass the widened domain.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4950,6 +5069,15 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">When solving an equation involving a squared term (like <InlineMath math="\sin^2 x" /> or <InlineMath math="\cos^2 x" />), taking the square root requires remembering the <strong className="text-white">plus or minus (<InlineMath math="\pm" />)</strong> sign.</p>
             <p className="mb-6">This means you will usually be looking for solutions in all four quadrants.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Do not lose the negative root:</strong> <InlineMath math="\sin^2 x = \tfrac{1}{4}" /> gives <InlineMath math="\sin x = \pm\tfrac{1}{2}" />. Taking only the positive root halves your solutions.</li>
+              <li><strong>That means four solutions, not two:</strong> each of the two values produces its own pair of angles.</li>
+              <li><strong>Isolate the squared term first:</strong> rearrange fully before square rooting.</li>
+              <li><strong>Use CAST for each value separately:</strong> the positive and negative cases sit in different quadrants.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -4988,6 +5116,15 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">Some trigonometric equations take the structure of a quadratic equation. You will need to factorise them to solve.</p>
             <p className="mb-6">Sometimes, the equation contains both sine and cosine terms. You must use the identity <InlineMath math="\sin^2 x + \cos^2 x = 1" />. Rearrange it to replace one squared term, ensuring the whole equation is expressed using only one trigonometric function.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Factorise — never divide by a trig term:</strong> dividing by <InlineMath math="\sin x" /> throws away every solution where <InlineMath math="\sin x = 0" />. Take the common factor out and set each factor to zero.</li>
+              <li><strong>Substitute to see the quadratic:</strong> letting <InlineMath math="u = \sin x" /> makes the structure obvious and stops sign errors.</li>
+              <li><strong>Reject impossible values:</strong> <InlineMath math="\sin x = 2" /> has no solutions, since sine never leaves <InlineMath math="-1 \leq \sin x \leq 1" />. Say so explicitly rather than ignoring it.</li>
+              <li><strong>Solve both factors:</strong> a quadratic gives two values, and each produces its own set of angles in the domain.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5067,6 +5204,15 @@ id: "integration-of-brackets",
               </div>
               <p className="mt-6 text-sm text-slate-300 text-center">Notice how the signs work: sine keeps the same sign (<InlineMath math="\pm \to \pm" />) while cosine flips the sign (<InlineMath math="\pm \to \mp" />).</p>
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The signs behave differently:</strong> <InlineMath math="\cos(A+B) = \cos A\cos B - \sin A\sin B" /> — the sign <em>flips</em> for cosine but matches for sine. Mixing these up is the most common compound-angle error.</li>
+              <li><strong>Do not distribute:</strong> <InlineMath math="\sin(A+B)" /> is not <InlineMath math="\sin A + \sin B" />. The formula exists precisely because that shortcut is false.</li>
+              <li><strong>Choose angles that give exact values:</strong> for <InlineMath math="75^\circ" /> use <InlineMath math="45^\circ + 30^\circ" /> — both have exact values you know.</li>
+              <li><strong>Keep it exact:</strong> in a non-calculator question the answer should be a surd, not a decimal.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5120,6 +5266,15 @@ id: "integration-of-brackets",
             </div>
             
             <p className="mb-6">Given one of these ratios as a fraction, we can draw a right-angled triangle and use Pythagoras' Theorem to find the third side. We can then state the other two trigonometric ratios.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Draw the right-angled triangle:</strong> from <InlineMath math="\sin A = \tfrac{3}{5}" /> you can build a triangle and read off <InlineMath math="\cos A" /> and <InlineMath math="\tan A" /> directly. This is faster and safer than identities.</li>
+              <li><strong>Use Pythagoras for the third side:</strong> and check the quadrant before deciding its sign.</li>
+              <li><strong>The quadrant sets the signs:</strong> an acute angle gives everything positive, but if the question restricts the angle elsewhere some ratios turn negative.</li>
+              <li><strong>Leave answers as exact fractions:</strong> these questions are almost always non-calculator.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5183,6 +5338,15 @@ id: "integration-of-brackets",
             </div>
             
             <p className="mb-6">The three versions of the <InlineMath math="\cos 2A" /> formula are derived using the National 5 identity <InlineMath math="\sin^2 A + \cos^2 A = 1" />.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong><InlineMath math="\sin 2x" /> is not <InlineMath math="2\sin x" />:</strong> it is <InlineMath math="2\sin x\cos x" />. The same applies to cosine — doubling the angle is not doubling the function.</li>
+              <li><strong>Three versions of <InlineMath math="\cos 2x" />:</strong> pick the one that leaves the equation in a single trig function. Choosing badly turns an easy question into a hard one.</li>
+              <li><strong>The formulae work both ways:</strong> you may need to <em>replace</em> <InlineMath math="2\sin x\cos x" /> with <InlineMath math="\sin 2x" /> to simplify an expression.</li>
+              <li><strong>They apply to any doubled angle:</strong> <InlineMath math="\sin 4x = 2\sin 2x\cos 2x" />, not just <InlineMath math="2x" />.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5263,6 +5427,15 @@ id: "integration-of-brackets",
                <li><InlineMath math="\sin^2 x + \cos^2 x = 1" /></li>
                <li>Factorising or using common denominators for fractions.</li>
             </ul>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Work on one side only:</strong> start with the more complicated side and transform it until it matches the other. Moving terms across the equals sign assumes what you are trying to prove.</li>
+              <li><strong><InlineMath math="\sin^2 x + \cos^2 x = 1" /> is the workhorse:</strong> and its rearrangements <InlineMath math="\sin^2 x = 1 - \cos^2 x" /> and <InlineMath math="\cos^2 x = 1 - \sin^2 x" /> are what let you switch between functions.</li>
+              <li><strong>Convert tangent early:</strong> replacing <InlineMath math="\tan x" /> with <InlineMath math="\frac{\sin x}{\cos x}" /> usually unlocks the problem.</li>
+              <li><strong>Finish the argument:</strong> end by stating that the two sides are now equal. An unfinished chain of algebra does not read as a proof.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5438,6 +5611,15 @@ id: "integration-of-brackets",
               <BlockMath math="k^2 = a^2 + b^2" />
               <BlockMath math="k = \sqrt{a^2 + b^2}" />
             </div>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Divide to eliminate <InlineMath math="k" />:</strong> dividing one equation by the other cancels <InlineMath math="k" /> and leaves a tangent, which is what gives you the angle.</li>
+              <li><strong>Square and add for <InlineMath math="k" />:</strong> using <InlineMath math="\sin^2 + \cos^2 = 1" /> gives <InlineMath math="k^2" /> directly. Always take the positive root.</li>
+              <li><strong>The signs fix the quadrant:</strong> the angle is decided by the signs of the two right-hand sides, not by the calculator value of the inverse tangent.</li>
+              <li><strong>Keep the working consistent:</strong> set the two equations out clearly and label them, so each later line plainly follows from them.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5467,6 +5649,15 @@ id: "integration-of-brackets",
             <p>Given a function of the form <InlineMath math="a\sin x + b\cos x" />, it is useful to express this as a single function rather than the sum of two separate functions.</p>
             <p>A single function would allow us to calculate maximum and minimum values of expressions of the form <InlineMath math="a\sin x + b\cos x" />, sketch graphs more easily and solve equations involving expressions of this form.</p>
             <p>We previously studied the addition formulae, and this will help to express sums of two separate functions as single functions.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Expand the target, not the question:</strong> write out the addition formula for the form you have been asked for, then compare it with the expression you were given.</li>
+              <li><strong>Match the right terms:</strong> line the <InlineMath math="\cos x" /> terms up with the <InlineMath math="\cos x" /> terms. Comparing them the wrong way round swaps your <InlineMath math="a" /> and <InlineMath math="b" />.</li>
+              <li><strong>Use the form the question specifies:</strong> <InlineMath math="k\cos(x-\alpha)" /> and <InlineMath math="k\sin(x+\alpha)" /> give different values of <InlineMath math="\alpha" />. Answering in a different form loses marks even if the maths is sound.</li>
+              <li><strong>Show the comparison step:</strong> the marks are for equating the coefficients, so write that line down.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5591,6 +5782,15 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The wave function method works exactly the same if there are multiple angles inside the trigonometric functions, as long as both terms have the same multiple angle.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>The method is unchanged:</strong> treat <InlineMath math="2x" /> exactly as you would treat <InlineMath math="x" /> — compare coefficients and find <InlineMath math="k" /> and <InlineMath math="\alpha" /> in the usual way.</li>
+              <li><strong><InlineMath math="\alpha" /> belongs to the whole bracket:</strong> the answer is <InlineMath math="k\cos(2x - \alpha)" />, not <InlineMath math="k\cos 2(x - \alpha)" />, unless you deliberately factorise.</li>
+              <li><strong>Widen the domain when solving:</strong> if you go on to solve an equation, the multiple angle needs the extended range just as it does elsewhere.</li>
+              <li><strong>The period changes, the amplitude does not:</strong> <InlineMath math="k" /> is still <InlineMath math="\sqrt{a^2+b^2}" />.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5635,6 +5835,15 @@ id: "integration-of-brackets",
               <li><InlineMath math="\sin x" /> reaches its maximum of 1 at <InlineMath math="90^\circ (\pi/2)" /> and its minimum of -1 at <InlineMath math="270^\circ (3\pi/2)" />.</li>
               <li><InlineMath math="\cos x" /> reaches its maximum of 1 at <InlineMath math="0^\circ" /> or <InlineMath math="360^\circ (2\pi)" /> and its minimum of -1 at <InlineMath math="180^\circ (\pi)" />.</li>
             </ul>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Read them straight off:</strong> once in the form <InlineMath math="k\cos(x-\alpha)" />, the maximum is <InlineMath math="k" /> and the minimum is <InlineMath math="-k" />. No calculus is needed, and using calculus here wastes time.</li>
+              <li><strong>Give the value <em>and</em> where it happens if asked:</strong> the maximum occurs when the bracket is zero, so <InlineMath math="x = \alpha" />. Read whether the question wants the value, the angle, or both.</li>
+              <li><strong>A vertical shift moves both:</strong> for <InlineMath math="k\cos(x-\alpha) + d" /> the maximum is <InlineMath math="k + d" /> and the minimum is <InlineMath math="-k + d" />.</li>
+              <li><strong>Check the answer sits in the domain:</strong> if the stated range does not include <InlineMath math="x = \alpha" />, the maximum will be at an end of the interval instead.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
@@ -5709,6 +5918,15 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
              <p>A composite trigonometric equation can be solved using the wave function format. Once compiled as <InlineMath math="k\cos(x - \alpha) = c" />, it acts like solving standard basic trigonometric equations.</p>
+          <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <ul className="list-disc list-inside space-y-2 ml-2">
+              <li><strong>Convert first, then solve:</strong> you cannot solve <InlineMath math="a\sin x + b\cos x = c" /> directly. Rewrite it as a single wave, then treat it as a basic equation.</li>
+              <li><strong>Adjust the domain for the bracket:</strong> if you are solving for <InlineMath math="x - \alpha" />, shift the domain by <InlineMath math="\alpha" /> before finding solutions, then shift back.</li>
+              <li><strong>Give every solution:</strong> there are normally two in a revolution. Use CAST on the bracket, not on <InlineMath math="x" />.</li>
+              <li><strong>Check for no solutions:</strong> if <InlineMath math="c" /> is larger than <InlineMath math="k" />, there are none — say so rather than forcing an answer.</li>
+            </ul>
+          </div>
           </div>
         ),
         examples: [
