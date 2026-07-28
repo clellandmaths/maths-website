@@ -1972,6 +1972,15 @@ export const higherMathsData: Section[] = [
             <p>If <InlineMath math="b^2-4ac \gt 0" /> and is a <strong>perfect square</strong>, the roots are <em>rational</em> and the quadratic factorises; if it is positive but not a perfect square, the roots are <em>irrational</em>.</p>
             <p>The discriminant has many uses including finding unknown terms in a quadratic equation.</p>
             <p><strong>The Golden Rule:</strong> before substituting, write the equation in the form <InlineMath math="ax^2+bx+c=0" /> with everything on one side — reading <InlineMath math="a" />, <InlineMath math="b" /> and <InlineMath math="c" /> off an equation that has not been rearranged is the most common way to lose these marks.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>State the condition you are using.</strong> The 2024 <em>and</em> 2025 Course Reports say almost the same thing about this question: candidates used an incorrect condition, or did not state the inequality they were solving. Write down <InlineMath math="b^2-4ac \lt 0" /> (or whichever applies) before you solve it.</li>
+                <li><strong>Brackets when substituting:</strong> 2025 records marks lost for not using brackets when substituting into <InlineMath math="b^2-4ac" />. With <InlineMath math="b" /> negative or a coefficient in terms of <InlineMath math="k" />, brackets are essential.</li>
+                <li><strong>Two regions need two inequalities:</strong> 2025 notes candidates using a single inequality to describe two separate regions. If the answer is &ldquo;<InlineMath math="k \lt 0" /> or <InlineMath math="k \gt 4" />&rdquo;, write both — it cannot be compressed into one chain.</li>
+                <li><strong>Match the condition to the wording:</strong> &ldquo;two distinct real roots&rdquo; is <InlineMath math="\gt 0" />; &ldquo;equal roots&rdquo; and &ldquo;is a tangent to&rdquo; are both <InlineMath math="= 0" />; &ldquo;no real roots&rdquo; and &ldquo;does not intersect&rdquo; are both <InlineMath math="\lt 0" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2475,6 +2484,16 @@ export const higherMathsData: Section[] = [
               <li>Radius: <strong><InlineMath math="r = \sqrt{g^2+f^2-c}" /></strong></li>
               <li>Valid if: <strong><InlineMath math="g^2+f^2-c > 0" /></strong></li>
             </ul>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Sign of the centre:</strong> the centre is <InlineMath math="(-g,-f)" />, so the coefficients <InlineMath math="2g" /> and <InlineMath math="2f" /> flip sign twice. For <InlineMath math="x^2+y^2+4x-8y+7=0" />, <InlineMath math="2g=4" /> gives <InlineMath math="g=2" /> and the centre has <InlineMath math="x = -2" />.</li>
+                <li><strong>Halve before you negate:</strong> reading the centre straight off as <InlineMath math="(-4, 8)" /> instead of <InlineMath math="(-2, 4)" /> is the classic slip.</li>
+                <li><strong>Show your working:</strong> the 2025 Course Report notes candidates who <em>stated the centre and radius with no other working</em>. State <InlineMath math="g" />, <InlineMath math="f" /> and <InlineMath math="c" />, then the centre and radius.</li>
+                <li><strong>Check it is a circle:</strong> if <InlineMath math="g^2+f^2-c \leq 0" /> there is no circle. When asked to <em>explain why</em> an equation is not a circle, work the value out and say it is negative.</li>
+                <li><strong>Use earlier parts:</strong> 2024 records that on a circle question most candidates <em>did not use their answer to part (a)</em> to find the centre. If you have just found a midpoint or an equation, it is almost certainly needed next.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -2779,6 +2798,15 @@ export const higherMathsData: Section[] = [
               </div>
             </div>
             <p>We can use substitution to find out how many times a line and a circle touch.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Answer the question that was asked:</strong> the 2024 Course Report notes candidates who found the centre and radius here when it <em>was not required</em>, and 2025 notes candidates stating centre and radius with no other working. Substituting the line into the circle is the method — the centre and radius are not the answer.</li>
+                <li><strong>Substitute, then use the discriminant:</strong> two intersections need <InlineMath math="b^2-4ac \gt 0" />, a tangent needs <InlineMath math="= 0" />, and no intersection needs <InlineMath math="\lt 0" />. State which you are testing.</li>
+                <li><strong>Rearrange to <InlineMath math="ax^2+bx+c=0" /> first:</strong> after substituting you must collect everything on one side before reading off <InlineMath math="a" />, <InlineMath math="b" /> and <InlineMath math="c" />.</li>
+                <li><strong>Give the points if asked:</strong> solving gives <InlineMath math="x" /> only. Substitute back into the <em>line</em> — much easier than the circle — to get each <InlineMath math="y" />, and write the coordinates.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -3980,6 +4008,16 @@ export const higherMathsData: Section[] = [
               <BlockMath math="\int ax^n \,dx = \frac{ax^{n+1}}{n+1} + C \quad (n \neq -1)" />
             </div>
             <p>Where <InlineMath math="C" /> is the constant of integration.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>The <InlineMath math="+\,C" /> is not optional:</strong> the 2025 Course Report records candidates omitting the constant of integration, and says it <em>led to invalid working</em> — it costs more than one mark because everything after it is wrong too.</li>
+                <li><strong>Write <InlineMath math="dx" />:</strong> the reports ask for accurate notation, naming integral notation specifically. An integral sign with no <InlineMath math="dx" /> is incomplete.</li>
+                <li><strong>Deal with the coefficient:</strong> 2025 also notes candidates mishandling the coefficient of <InlineMath math="x" />. Integrating <InlineMath math="(ax+b)^n" /> needs the extra <InlineMath math="\frac{1}{a}" />.</li>
+                <li><strong>Rewrite first:</strong> roots and fractions must be written as indices before you can integrate. You cannot integrate a product or quotient term by term as it stands.</li>
+                <li><strong>Never integrate <InlineMath math="x^{-1}" /> with the power rule:</strong> the rule fails when <InlineMath math="n = -1" /> because it would divide by zero.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -4102,6 +4140,16 @@ export const higherMathsData: Section[] = [
             <p>Example:</p>
             <BlockMath math="\begin{aligned} \int_a^b x \,dx &= \left[\frac{x^2}{2} + C\right]_a^b \\ &= \left(\frac{b^2}{2} + C\right) - \left(\frac{a^2}{2} + C\right) \\ &= \frac{b^2}{2} - \frac{a^2}{2} \end{aligned}" />
             <p className="text-emerald-300">Note: The constant of integration simplifies to 0 so is not required for definite integrals.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Brackets when substituting:</strong> the 2025 Course Report names definite integrals as the place candidates most need brackets, and both years warn about substituting negative numbers. Write <InlineMath math="\left[\ldots\right]" /> and substitute the negative limit in brackets.</li>
+                <li><strong>Upper limit first:</strong> it is <InlineMath math="F(b) - F(a)" />. The 2025 report notes candidates who <em>switched the limits</em> and then mishandled the resulting negative.</li>
+                <li><strong>A negative answer is not automatically an error:</strong> if you have swapped limits, fix the limits — do not just make the answer positive. For an area below the axis, deal with it deliberately.</li>
+                <li><strong>Use your calculator properly in paper 2:</strong> both years ask for efficient calculator use, and 2025 notes candidates writing extra lines of working instead. Evaluate in one go and keep the working structured.</li>
+                <li><strong>Include <InlineMath math="dx" /> in the statement:</strong> 2025 flags this explicitly on a definite integral question.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -4209,6 +4257,16 @@ export const higherMathsData: Section[] = [
              <p>In general, we can find the area enclosed between two curves from <InlineMath math="x=a" /> to <InlineMath math="x=b" /> by using:</p>
              <BlockMath math="\int_a^b \big( f(x) - g(x) \big) \,dx" />
              <p>where <InlineMath math="f(x)" /> is the <strong>upper</strong> curve and <InlineMath math="g(x)" /> is the <strong>lower</strong> curve.</p>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>Brackets round the second curve:</strong> the 2024 Course Report names this exact question as one where candidates <em>made errors with brackets</em>. Write <InlineMath math="\big(f(x) - g(x)\big)" /> — subtracting <InlineMath math="g(x)" /> means subtracting <em>every</em> term of it, signs included.</li>
+                 <li><strong>Upper minus lower, not left minus right:</strong> decide which curve is on top over the interval. Getting it the wrong way round gives the right size with the wrong sign.</li>
+                 <li><strong>Find the limits if you are not given them:</strong> set the two curves equal and solve. Do not assume the limits are the axis intercepts.</li>
+                 <li><strong>Split at every crossing:</strong> if the curves swap over inside the interval, the integral must be split there and each piece taken as upper minus lower separately.</li>
+                 <li><strong>Calculator discipline:</strong> the same report notes inefficient calculator use for the substitution — evaluate carefully and keep your lines consistent.</li>
+               </ul>
+             </div>
            </div>
          ),
          examples: [
@@ -5797,6 +5855,15 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>If an unknown value is the exponent of a term (e.g. <InlineMath math="10^x" /> or <InlineMath math="e^x" />), we can solve for <InlineMath math="x" /> by taking the logarithm of both sides of the equation.</p>
             <p>The same solution will be obtained using any base, but generally calculators only work in base 10 or base <InlineMath math="e" /> (natural logarithm).</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Converting between the two forms:</strong> this is the single most repeated log failure in the reports — 2024 records candidates who <em>did not rearrange from exponential form to logarithmic form</em>, and 2025 records the same in reverse. Practise both directions: <InlineMath math="a^y = x \iff \log_a x = y" />.</li>
+                <li><strong>Consistent lines of working:</strong> both years name logarithms and exponentials as a place where each line must follow from the one before. 2025 explicitly notes inconsistent working when converting.</li>
+                <li><strong>Bring the power down first:</strong> <InlineMath math="\log(a^x) = x\log a" /> is what makes the unknown solvable. Taking logs without applying the power law achieves nothing.</li>
+                <li><strong>Take logs of <em>both</em> sides:</strong> and of the whole side, not term by term — <InlineMath math="\log(a+b)" /> is not <InlineMath math="\log a + \log b" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -5911,6 +5978,15 @@ id: "integration-of-brackets",
             <p className="font-bold text-white mt-6">Exponential equations of the form <InlineMath math="y = ab^x" />:</p>
             <BlockMath math="\begin{aligned} y &= ab^x \\ \log_{10} y &= \log_{10}(ab^x) \\ \log_{10} y &= \log_{10} a + \log_{10}(b^x) \\ \log_{10} y &= \log_{10} a + x\log_{10} b \\ \log_{10} y &= (\log_{10} b)x + \log_{10} a \end{aligned}" />
             <p>The equation is now in the linear form <InlineMath math="Y = mX + c" /> where <InlineMath math="Y = \log_{10} y" />, <InlineMath math="m = \log_{10} b" />, <InlineMath math="X = x" /> and <InlineMath math="c = \log_{10} a" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Pick the right model.</strong> The 2024 Course Report records candidates using a relationship of the wrong form here — many did not make a valid attempt at all. Read the <em>axes</em>: if both are logarithmic it is <InlineMath math="y = ax^b" />; if only the vertical axis is, it is <InlineMath math="y = ab^x" />.</li>
+                <li><strong>The gradient is not the constant you want:</strong> for <InlineMath math="y = ax^b" /> the gradient is <InlineMath math="b" /> and the intercept is <InlineMath math="\log a" />, so you must undo the log to recover <InlineMath math="a" />.</li>
+                <li><strong>Reproduce every step:</strong> 2024 notes candidates who used a valid method but <em>did not reproduce all the steps accurately</em>. Take logs, apply the laws, then compare with <InlineMath math="Y = mX + c" /> in full.</li>
+                <li><strong>Undo the log at the end:</strong> an answer left as <InlineMath math="\log a = 0.6" /> is unfinished — give <InlineMath math="a" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -6048,6 +6124,15 @@ id: "integration-of-brackets",
             <h3 className="text-xl font-bold text-white mt-6">Multiplying by a Scalar</h3>
             <p>Since vectors have directional growth, multiplying an existing vector by a scalar means we are making this existing vector stronger (in the same direction). If you multiply by a negative, then the direction of the vector will change.</p>
             <p>If <InlineMath math="\vec{u} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix}" />, then <InlineMath math="3\vec{u} = 3\begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix} = \begin{pmatrix} 24 \\ -6 \\ 0 \end{pmatrix}" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Pathways are where marks are lost.</strong> Of a vector pathway question the 2025 Course Report says <em>many candidates did not gain any marks</em>, with incorrect pathways a named cause. Travel with the arrows: <InlineMath math="\vec{AB} = \vec{AO} + \vec{OB} = -\vec{OA} + \vec{OB}" />.</li>
+                <li><strong>Reversing a vector flips every component:</strong> <InlineMath math="\vec{BA} = -\vec{AB}" />, so all three signs change, not just the first.</li>
+                <li><strong>Work in one notation:</strong> the same report notes candidates who <em>did not add vectors presented in <InlineMath math="i" />, <InlineMath math="j" />, <InlineMath math="k" /> form</em>. If a question mixes column vectors and <InlineMath math="i,j,k" />, convert everything to one form first.</li>
+                <li><strong>Order matters:</strong> <InlineMath math="\vec{AB}" /> means &ldquo;from <InlineMath math="A" /> to <InlineMath math="B" />&rdquo;, so it is <InlineMath math="b - a" /> — end point minus start point.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: []
@@ -6155,6 +6240,15 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>If a point T divides a line segment PR in the ratio <InlineMath math="m:n" />, we can use position vectors to find the coordinates of T.</p>
             <p>From the ratio, <InlineMath math="\vec{PT} = \frac{m}{m+n} \vec{PR}" /> or we can use the ratio of parts: <InlineMath math="n\vec{PT} = m\vec{TR}" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>A flagged weak spot:</strong> the 2024 Course Report's advice to teachers asks specifically for more practice at finding an internal division point in three dimensions — so expect it, and expect it in 3D.</li>
+                <li><strong>Ratio parts, not the ratio itself:</strong> for <InlineMath math="m:n" /> the fraction along the line is <InlineMath math="\frac{m}{m+n}" />. Using <InlineMath math="\frac{m}{n}" /> is the standard error.</li>
+                <li><strong>Which end are you starting from?</strong> <InlineMath math="T" /> dividing <InlineMath math="PR" /> in <InlineMath math="2:1" /> is not the same point as <InlineMath math="1:2" />. Check the order of the letters in the question.</li>
+                <li><strong>Add the position vector back on:</strong> <InlineMath math="\vec{PT}" /> is a step, not a position. The coordinates of <InlineMath math="T" /> come from <InlineMath math="\vec{OT} = \vec{OP} + \vec{PT}" />.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
