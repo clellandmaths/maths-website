@@ -119,6 +119,15 @@ export const higherMathsData: Section[] = [
               <li>The gradient of AB equals the gradient of BC (<InlineMath math="m_{AB} = m_{BC}" />)</li>
               <li>They share a common point (B)</li>
             </ul>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Write the conclusion out.</strong> The 2025 Course Report says <em>few candidates communicated their conclusions unambiguously</em> on a collinearity question. Equal gradients on their own do not finish it — state that the gradients are equal, that <InlineMath math="B" /> is common to both, and therefore the points are collinear.</li>
+                <li><strong>The common point is half the proof:</strong> two separate lines can have equal gradients and never meet. Naming the shared point is what rules that out.</li>
+                <li><strong>Do not stop at &ldquo;parallel&rdquo;:</strong> equal gradients alone prove the lines are parallel, which is a different statement.</li>
+                <li><strong>Keep gradients exact:</strong> leave them as fractions. Rounding to decimals can make two genuinely equal gradients look different.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -245,6 +254,15 @@ export const higherMathsData: Section[] = [
              <h3 className="font-bold text-2xl text-white border-b border-white/10 pb-2 mb-6">Horizontal & Vertical Lines</h3>
              <div className="flex justify-center w-full mb-8">
                <HorizontalVerticalLines />
+             </div>
+             <div className="bg-slate-800 p-4 rounded-lg mt-4">
+               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+               <ul className="list-disc list-inside space-y-2 ml-2">
+                 <li><strong>Negative <em>and</em> reciprocal:</strong> the 2025 Course Report records candidates stating an incorrect perpendicular gradient. Doing only half the operation — flipping the fraction but keeping the sign, or vice versa — is the usual cause. From <InlineMath math="m = \frac{2}{3}" /> the perpendicular gradient is <InlineMath math="-\frac{3}{2}" />.</li>
+                 <li><strong>Whole numbers are fractions too:</strong> perpendicular to <InlineMath math="m = 4" /> is <InlineMath math="-\frac{1}{4}" />, not <InlineMath math="-4" />.</li>
+                 <li><strong>Get the gradient from the equation first:</strong> if you are given a line as <InlineMath math="3x + 2y = 12" />, rearrange to find <InlineMath math="m" /> before doing anything else.</li>
+                 <li><strong>Horizontal and vertical are the exception:</strong> the rule <InlineMath math="m_1 m_2 = -1" /> does not apply. A horizontal line has <InlineMath math="m = 0" /> and its perpendicular is vertical, whose gradient is undefined.</li>
+               </ul>
              </div>
            </div>
          ),
@@ -478,6 +496,15 @@ export const higherMathsData: Section[] = [
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div className="bg-slate-800 p-4 rounded-lg mt-4">
+                <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+                <ul className="list-disc list-inside space-y-2 ml-2">
+                  <li><strong>Substitution is usually the faster route:</strong> the 2025 Course Report notes many candidates used <em>elimination</em> where substitution was more efficient, and that this led to errors. If one equation is already in the form <InlineMath math="y = \ldots" />, substitute it.</li>
+                  <li><strong>Do not score out terms mid-line:</strong> the same report records candidates scoring out terms in simultaneous equations, producing lines of working that no longer follow from each other. Write each new equation out in full.</li>
+                  <li><strong>Answer as coordinates:</strong> finding <InlineMath math="x" /> is half the job. Substitute back for <InlineMath math="y" /> and give the point.</li>
+                  <li><strong>Check in the other equation:</strong> substituting your point into the equation you did <em>not</em> use catches most arithmetic slips in seconds.</li>
+                </ul>
               </div>
             </div>
           ),
@@ -870,6 +897,15 @@ export const higherMathsData: Section[] = [
                   </tbody>
                 </table>
             </div>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>State the condition, not just the domain.</strong> The 2024 Course Report says <em>few</em> candidates gave the condition for a function to be undefined. Name the value that breaks it: a denominator of zero, or a negative under a square root.</li>
+                <li><strong>Denominators:</strong> for <InlineMath math="f(x) = \frac{1}{x-3}" /> the function is undefined at <InlineMath math="x = 3" />, so the domain is all real <InlineMath math="x" /> except 3. Set the denominator equal to zero to find it.</li>
+                <li><strong>Square roots:</strong> for <InlineMath math="\sqrt{g(x)}" /> you need <InlineMath math="g(x) \geq 0" /> — solve that inequality rather than guessing.</li>
+                <li><strong>Domain is inputs, range is outputs:</strong> writing one when the question asks for the other loses the mark even when the numbers are right.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: []
@@ -1141,6 +1177,16 @@ export const higherMathsData: Section[] = [
               <h4 className="font-bold text-amber-400 mb-2">Remember:</h4>
               <p className="text-sm">Changes <strong>inside</strong> the bracket affect the <strong>x-coordinates</strong> (horizontally) and do the <em>opposite</em> of what you might expect.</p>
               <p className="text-sm mt-2">Changes <strong>outside</strong> the bracket affect the <strong>y-coordinates</strong> (vertically) and do exactly what they say.</p>
+            </div>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Label the point you were asked for:</strong> the 2024 Course Report notes candidates who did not clearly identify which coordinates were the <em>maximum</em> of the transformed graph, or who gave the wrong ones. Mark and name it explicitly.</li>
+                <li><strong>Inside the bracket does the opposite:</strong> <InlineMath math="f(x+3)" /> moves the graph <strong>left</strong> 3, not right. This is the most common transformation error there is.</li>
+                <li><strong>Apply transformations in order:</strong> for something like <InlineMath math="3f(2x)+1" />, deal with each change separately and track what happens to a known point at each stage.</li>
+                <li><strong>Transform the key points, not the whole curve:</strong> take the turning points and intercepts, move each one, then draw a curve of the same shape through them.</li>
+                <li><strong>Practise on the axes given:</strong> both reports ask for practice at sketching on provided axes — use the scale printed on them.</li>
+              </ul>
             </div>
           </div>
         ),
@@ -1733,6 +1779,16 @@ export const higherMathsData: Section[] = [
           <div className="space-y-4 text-slate-300">
             <p>We can use synthetic division (or polynomial long division) alongside the factor theorem to fully factorise polynomials of degree 3 or higher.</p>
             <p>Once a linear factor <InlineMath math="(x-h)" /> is found, we divide the polynomial by <InlineMath math="(x-h)" /> to obtain a quotient. We then factorise the quotient if possible.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>Take out a common factor first:</strong> the 2025 Course Report notes that <em>many</em> candidates did not, which made the factorisation harder than it needed to be. Check for one before you start dividing.</li>
+                <li><strong>Sign of the root:</strong> a factor <InlineMath math="(x-h)" /> corresponds to the root <InlineMath math="x = h" />, so you divide by <InlineMath math="h" />, not <InlineMath math="-h" />. The 2024 report records sign errors as a common cause of lost marks on polynomial questions.</li>
+                <li><strong>Use the standard layout:</strong> 2025 notes candidates presenting synthetic division in a non-standard way. Set it out the usual way so the marker can follow it.</li>
+                <li><strong>Factorise completely:</strong> stopping at <InlineMath math="(x-h)(\text{quadratic})" /> is unfinished if the quadratic factorises further.</li>
+                <li><strong>Say what you have shown:</strong> both years note candidates failing to communicate a conclusion. If the remainder is zero, write that <InlineMath math="(x-h)" /> is a factor.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
@@ -1851,6 +1907,15 @@ export const higherMathsData: Section[] = [
             <p>If a repeated root exists, then a stationary point lies on the x-axis.</p>
             <p>Recall that a repeated root exists when two roots, and hence two factors, are equal.</p>
             <p>If a graph has a root <InlineMath math="x=a" /> and a repeated root at <InlineMath math="x=b" /> (where it touches the x-axis), the equation is of the form <InlineMath math="y = k(x-a)(x-b)^2" />.</p>
+            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <ul className="list-disc list-inside space-y-2 ml-2">
+                <li><strong>You must find <InlineMath math="k" />.</strong> Of this question in 2024 the Course Report notes that some candidates had <em>no valid strategy for finding k</em>. Substitute another point from the graph — usually the <InlineMath math="y" />-intercept — and solve.</li>
+                <li><strong>Signs of the roots:</strong> the same report records that <em>many</em> candidates made errors with signs here. A root at <InlineMath math="x = -3" /> gives the factor <InlineMath math="(x+3)" />.</li>
+                <li><strong>A touch means a repeated factor:</strong> where the curve touches the axis and turns back, that factor is squared. Treating it as a single root gives a curve of the wrong degree.</li>
+                <li><strong>Count the degree:</strong> a cubic needs three factors in total, counting the repeat twice.</li>
+              </ul>
+            </div>
           </div>
         ),
         examples: [
