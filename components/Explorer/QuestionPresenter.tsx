@@ -7,6 +7,7 @@ import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
+import Marks from '@/components/Marks';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -105,6 +106,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
             <p className="text-slate-500 text-xs mt-0.5">
               {question.year} Paper {question.paperNumber} Q{question.questionIndex + 1}
             </p>
+            <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
           </div>
         </div>
 

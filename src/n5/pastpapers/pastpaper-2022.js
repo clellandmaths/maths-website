@@ -9,6 +9,7 @@ export const pastpaper2022 = {
                     answer: `\\(\\frac{19}{30}\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "23s",
+                    marks: [2],
                     topics: ["Fractions and mixed numbers"]
                 },
                 {
@@ -16,6 +17,7 @@ export const pastpaper2022 = {
                     answer: `-29`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "73s",
+                    marks: [2],
                     topics: ["Function notation"]
                 },
                 {
@@ -23,6 +25,7 @@ export const pastpaper2022 = {
                     answer: `6280 cm³`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "102s",
+                    marks: [2],
                     topics: ["Volume - simple shape"]
                 },
                 {
@@ -30,6 +33,7 @@ export const pastpaper2022 = {
                     answer: `124°`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "186s",
+                    marks: [3],
                     topics: ["Angles in diagrams involving circles"]
                 },
                 {
@@ -37,6 +41,7 @@ export const pastpaper2022 = {
                     answer: `(a) \\((x+4)^{2}-1\\), (b) (-4, -1)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "298s",
+                    marks: [2, 1],
                     topics: ["Turning Points and Axis of Symmetry", "Completing the square"]
                 },
                 {
@@ -44,6 +49,7 @@ export const pastpaper2022 = {
                     answer: `\\(y=-4x-13\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "348s",
+                    marks: [3],
                     topics: ["Straight Line Equation"]
                 },
                 {
@@ -51,6 +57,7 @@ export const pastpaper2022 = {
                     answer: `\\(B=DC^{2}-4\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "432s",
+                    marks: [2],
                     topics: ["Changing the subject of a formula"]
                 },
                 {
@@ -58,6 +65,7 @@ export const pastpaper2022 = {
                     answer: `(a) 3, (b) 8`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "476s",
+                    marks: [1, 1],
                     topics: ["Identify equation of trigonometric graph"]
                 },
                 {
@@ -65,6 +73,7 @@ export const pastpaper2022 = {
                     answer: `\\(\\frac{11}{14}\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "518s",
+                    marks: [2],
                     topics: ["Cosine rule: calculate angle"]
                 },
                 {
@@ -72,6 +81,7 @@ export const pastpaper2022 = {
                     answer: `£23`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "667s",
+                    marks: [3],
                     topics: ["Reversing a percentage change"]
                 },
                 {
@@ -79,6 +89,7 @@ export const pastpaper2022 = {
                     answer: `\\(\\frac{1}{m^{13}}\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "723s",
+                    marks: [3],
                     topics: ["Laws of indices", "Rewriting fraction or negative index in the form ax^n"]
                 },
                 {
@@ -86,6 +97,7 @@ export const pastpaper2022 = {
                     answer: `\\(\\frac{4(x+2)}{5}\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "754s",
+                    marks: [2],
                     topics: ["Multiply or divide Algebraic Fractions"]
                 },
                 {
@@ -93,6 +105,7 @@ export const pastpaper2022 = {
                     answer: `\\(10+6\\sqrt{5}\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "804s",
+                    marks: [3],
                     topics: ["Simplifying surds"]
                 },
                 {
@@ -100,6 +113,7 @@ export const pastpaper2022 = {
                     answer: `Roots: -1, 3; y-intercept: -3; turning point: (1, -4)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "872s",
+                    marks: [3],
                     topics: ["Sketch a parabola from equation"]
                 },
                 {
@@ -107,6 +121,7 @@ export const pastpaper2022 = {
                     answer: `(a) \\(\\frac{3}{2}(x+12)\\), (b) \\(x=4\\)`,
                     videoId: "KS2EpwO4xfI",
                     timestamp: "993s",
+                    marks: [1, 4],
                     topics: ["Linear equations and inequations", "Create equation in geometric context"]
                 }
             ]
@@ -119,6 +134,7 @@ export const pastpaper2022 = {
                     answer: `\\(6x^{3}+11x^{2}-13x+2\\)`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "12s",
+                    marks: [3],
                     topics: ["Expanding brackets"]
                 },
                 {
@@ -126,6 +142,7 @@ export const pastpaper2022 = {
                     answer: `£242,000`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "76s",
+                    marks: [3],
                     topics: ["Appreciation and Depreciation"]
                 },
                 {
@@ -133,6 +150,7 @@ export const pastpaper2022 = {
                     answer: `0.49 m³`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "127s",
+                    marks: [3],
                     topics: ["Volume - composite shape"]
                 },
                 {
@@ -140,6 +158,7 @@ export const pastpaper2022 = {
                     answer: `(a) \\(4m+3a=4.25\\), (b) \\(5m+2a=4.70\\), (c) Mango £0.80, Apple £0.35`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "234s",
+                    marks: [1, 1, 4],
                     topics: ["Simultaneous equations"]
                 },
                 {
@@ -147,6 +166,7 @@ export const pastpaper2022 = {
                     answer: `(a) Mean 26, SD 4.5, (b) On average the hockey team completed more sit-ups. The number of sit-ups for the hockey team was more consistent.`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "400s",
+                    marks: [4, 2],
                     topics: ["Standard Deviation", "Comparing Calculated Statistics"]
                 },
                 {
@@ -154,6 +174,7 @@ export const pastpaper2022 = {
                     answer: `339 cm²`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "645s",
+                    marks: [2],
                     topics: ["Area of a Triangle"]
                 },
                 {
@@ -161,6 +182,7 @@ export const pastpaper2022 = {
                     answer: `\\(x=1.1, x=-1.6\\)`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "701s",
+                    marks: [4],
                     topics: ["Quadratic formula"]
                 },
                 {
@@ -168,6 +190,7 @@ export const pastpaper2022 = {
                     answer: `5 metres`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "823s",
+                    marks: [4],
                     topics: ["Pythagoras in circle diagrams"]
                 },
                 {
@@ -175,6 +198,7 @@ export const pastpaper2022 = {
                     answer: `\\(x=41.8, 138.2\\)`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "893s",
+                    marks: [3],
                     topics: ["Trigonometric equation"]
                 },
                 {
@@ -182,6 +206,7 @@ export const pastpaper2022 = {
                     answer: `265°`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "969s",
+                    marks: [3],
                     topics: ["Arc length"]
                 },
                 {
@@ -189,6 +214,7 @@ export const pastpaper2022 = {
                     answer: `26 cm`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "1079s",
+                    marks: [3],
                     topics: ["Pythagoras in 3d"]
                 },
                 {
@@ -196,6 +222,7 @@ export const pastpaper2022 = {
                     answer: `\\(\\frac{2a}{b-3}\\)`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "1195s",
+                    marks: [3],
                     topics: ["Simplifying algebraic fraction"]
                 },
                 {
@@ -203,6 +230,7 @@ export const pastpaper2022 = {
                     answer: `\\(\\tan x^{\\circ}+2\\)`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "1255s",
+                    marks: [2],
                     topics: ["Trigonometric identities"]
                 },
                 {
@@ -210,6 +238,7 @@ export const pastpaper2022 = {
                     answer: `10 metres`,
                     videoId: "dFdKdzadNUE",
                     timestamp: "1311s",
+                    marks: [5],
                     topics: ["Sine rule: calculate length"]
                 }
             ]

@@ -9,6 +9,7 @@ export const higherPastPaper2018 = {
           answer: `\\(y=2x\\)`,
           videoId: "anlLalFtifo",
           timestamp: "0s",
+                    marks: [3],
           topics: ["Altitudes, medians, perpendicular bisectors"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2018 = {
           answer: `\\(g^{-1}(x)=5(x+4)\\)`,
           videoId: "anlLalFtifo",
           timestamp: "75s",
+                    marks: [3],
           topics: ["Inverse functions"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2018 = {
           answer: `\\(-3\\sqrt{3}\\)`,
           videoId: "anlLalFtifo",
           timestamp: "139s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: trigonometric expression"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2018 = {
           answer: `\\(x-4y-28=0\\) or equivalent`,
           videoId: "anlLalFtifo",
           timestamp: "187s",
+                    marks: [4],
           topics: ["Equation of a tangent to a circle at a point"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2018 = {
           answer: `(a) 4:1<br>(b) \\(t=8\\)`,
           videoId: "anlLalFtifo",
           timestamp: "329s",
+                    marks: [1, 1],
           topics: ["Ratio in which one point divides two others"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2018 = {
           answer: `3`,
           videoId: "anlLalFtifo",
           timestamp: "471s",
+                    marks: [3],
           topics: ["Simplify numerical expression involving logs/exponentials"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2018 = {
           answer: `(a) \\((0,5)\\)<br>(b) \\(y=2x+5\\)<br>(c) \\(Q(3,11)\\)`,
           videoId: "anlLalFtifo",
           timestamp: "534s",
+                    marks: [1, 3, 4],
           topics: ["Points of intersection of polynomial(s) and/or straight line", "Equation of a tangent to a curve"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2018 = {
           answer: `\\(60^{\\circ}\\) or \\(\\frac{\\pi}{3}\\) radians`,
           videoId: "anlLalFtifo",
           timestamp: "680s",
+                    marks: [2],
           topics: ["Angles and straight lines: m = tanθ"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2018 = {
           answer: `(a) \\(\\mathbf{u}-\\mathbf{t}\\)<br>(b) \\(\\mathbf{v}-\\frac{1}{2}\\mathbf{t}-\\frac{1}{2}\\mathbf{u}\\)`,
           videoId: "anlLalFtifo",
           timestamp: "722s",
+                    marks: [1, 2],
           topics: ["Vector pathways in geometric diagrams"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2018 = {
           answer: `\\(y=2x^{3}-\\frac{3}{2}x^{2}+4x-4\\)`,
           videoId: "anlLalFtifo",
           timestamp: "838s",
+                    marks: [4],
           topics: ["Differential equation"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2018 = {
           answer: `(a) Sketch showing reflection in x-axis and translation 1 unit up.<br>(b) \\(x=\\sqrt{3}\\)`,
           videoId: "anlLalFtifo",
           timestamp: "948s",
+                    marks: [2, 3],
           topics: ["Graphs of logarithmic or exponential functions", "Identifying/sketching graphs of related functions (non-trigonometric)", "Solving equations containing a logarithm"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2018 = {
           answer: `(a) \\(6\\mathbf{i}-3\\mathbf{j}+(4+p)\\mathbf{k}\\)<br>(b) \\(p=-6, p=-2\\)`,
           videoId: "anlLalFtifo",
           timestamp: "1108s",
+                    marks: [1, 3],
           topics: ["Vector pathways in geometric diagrams"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2018 = {
           answer: `(a)(i) \\(\\frac{4\\sqrt{7}}{11}\\), (ii) \\(\\frac{3}{11}\\)<br>(b) \\(\\frac{34}{11\\sqrt{11}}\\) or \\(\\frac{34\\sqrt{11}}{121}\\)`,
           videoId: "anlLalFtifo",
           timestamp: "1267s",
+                    marks: [3, 1, 3],
           topics: ["Apply double angle formula to simplify or evaluate", "Apply compound angle formula to simplify or evaluate"]
         },
         {
@@ -100,6 +113,7 @@ export const higherPastPaper2018 = {
           answer: `3`,
           videoId: "anlLalFtifo",
           timestamp: "1449s",
+                    marks: [5],
           topics: ["Integrate (definite or indefinite): (px + q)^n"]
         },
         {
@@ -107,6 +121,7 @@ export const higherPastPaper2018 = {
           answer: `Sketch of a cubic curve crossing the x-axis at -4, having a turning point at 2 (on the x-axis) and another turning point at -2. The graph should start from the top left (negative cubic).`,
           videoId: "anlLalFtifo",
           timestamp: "1657s",
+                    marks: [4],
           topics: ["Identify polynomial equation when shown graph/roots", "Increasing/decreasing: show that, or find values for which"]
         }
       ]
@@ -119,6 +134,7 @@ export const higherPastPaper2018 = {
           answer: `\\(\\frac{32}{3}\\) or \\(10\\frac{2}{3}\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "0s",
+                    marks: [4],
           topics: ["Areas using integration"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2018 = {
           answer: `(a) 24<br>(b) \\(66.4^{\\circ}\\) or 1.16 radians`,
           videoId: "iRtP334DDMs",
           timestamp: "120s",
+                    marks: [1, 4],
           topics: ["Scalar product", "Calculating an angle using the scalar product"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2018 = {
           answer: `Increasing`,
           videoId: "iRtP334DDMs",
           timestamp: "289s",
+                    marks: [3],
           topics: ["Increasing/decreasing: show that, or find values for which"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2018 = {
           answer: `\\(-3(x+1)^{2}+10\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "347s",
+                    marks: [3],
           topics: ["Completing the square"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2018 = {
           answer: `(a) \\(y=x-5\\)<br>(b) \\(C(10,5)\\)<br>(c) \\((x-10)^{2}+(y-5)^{2}=50\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "422s",
+                    marks: [3, 2, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines", "Circle equation from radius/centre or vice versa"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2018 = {
           answer: `(a)(i) \\(3+\\cos 2x\\), (ii) \\(6+2\\cos x\\)<br>(b) \\(x=\\pi\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "664s",
+                    marks: [2, 1, 6],
           topics: ["Composite functions", "Solving a trigonometric equation using formula for cos(2x)"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2018 = {
           answer: `(a)(ii) \\((x-2)(2x-1)(x+1)\\)<br>(b) Proof<br>(c)(i) \\(a=\\frac{1}{2}\\), (ii) Limit = -2`,
           videoId: "iRtP334DDMs",
           timestamp: "881s",
+                    marks: [2, 2, 1, 3, 1],
           topics: ["Cubic/quartic expressions/equations: factorise or solve", "Find a specific term of a recurrence relation", "Limits of recurrence relations"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2018 = {
           answer: `(a) \\(\\sqrt{5}\\cos(x-333.4)^{\\circ}\\)<br>(b)(i) Minimum value \\(-3\\sqrt{5}\\), (ii) \\(x=153.4^{\\circ}\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "1157s",
+                    marks: [4, 1, 2],
           topics: ["Wave function (y = asin x ± bcosx)", "Identifying/sketching graphs of related functions (trigonometric)"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2018 = {
           answer: `32 cm`,
           videoId: "iRtP334DDMs",
           timestamp: "1474s",
+                    marks: [6],
           topics: ["Optimisation"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2018 = {
           answer: `\\(m \\lt 1\\) or \\(m \\gt 9\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "1681s",
+                    marks: [4],
           topics: ["Discriminant and Quadratics", "Quadratic inequations"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2018 = {
           answer: `(a) \\(k\\approx-0.231\\)<br>(b) 31.5%`,
           videoId: "iRtP334DDMs",
           timestamp: "1829s",
+                    marks: [4, 2],
           topics: ["Solving equations where the unknown is in the exponent"]
         },
         {
@@ -196,6 +222,7 @@ export const higherPastPaper2018 = {
           answer: `(a)(i) \\((13,-4)\\), (ii) Proof<br>(b)(i) 3:2, (ii) \\((5,2)\\)<br>(c) \\((x-5)^{2}+(y-2)^{2}=1600\\)`,
           videoId: "iRtP334DDMs",
           timestamp: "2010s",
+                    marks: [1, 1, 2, 2, 1],
           topics: ["Circle equation from radius/centre or vice versa", "Intersections of two circles"]
         }
       ]

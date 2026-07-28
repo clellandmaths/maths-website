@@ -130,6 +130,7 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
             timestamp={q.timestamp}
             paper={q.paper}
             solutionUrl={q.solutionUrl}
+            marks={q.marks}
             theme={theme}
           />
         ))}

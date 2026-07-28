@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Marks from '@/components/Marks';
 import { notFound } from 'next/navigation';
 import {
   getAllN5Questions,
@@ -186,6 +187,7 @@ export default async function PaperPage(
                     {topic}
                   </span>
                 ))}
+                <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
               </div>
               <MathHtml
                 html={q.question}

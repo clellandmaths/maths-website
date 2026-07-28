@@ -9,6 +9,7 @@ export const pastpaper2024 = {
                     answer: `\\(2\\frac{5}{12}\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "12s",
+                    marks: [2],
                     topics: ["Fractions and mixed numbers"]
                 },
                 {
@@ -16,6 +17,7 @@ export const pastpaper2024 = {
                     answer: `100`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "87s",
+                    marks: [2],
                     topics: ["Function notation"]
                 },
                 {
@@ -23,6 +25,7 @@ export const pastpaper2024 = {
                     answer: `\\(x^3-3x^2+x+5\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "103s",
+                    marks: [3],
                     topics: ["Expanding brackets"]
                 },
                 {
@@ -30,6 +33,7 @@ export const pastpaper2024 = {
                     answer: `\\(\\begin{pmatrix}14\\\\ 15\\\\ -1\\end{pmatrix}\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "155s",
+                    marks: [2],
                     topics: ["Adding and Subtracting vector components"]
                 },
                 {
@@ -37,6 +41,7 @@ export const pastpaper2024 = {
                     answer: `(a) Median = £200, IQR = £70<br>(b) On average, cameras on the website are cheaper (£195 < £200). The prices on the website are more varied (£73 > £70).`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "192s",
+                    marks: [3, 2],
                     topics: ["Median/Quartiles/Interquartile Range", "Comparing Calculated Statistics"]
                 },
                 {
@@ -44,6 +49,7 @@ export const pastpaper2024 = {
                     answer: `\\(4\\sqrt{3}\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "389s",
+                    marks: [2],
                     topics: ["Simplifying surds"]
                 },
                 {
@@ -51,6 +57,7 @@ export const pastpaper2024 = {
                     answer: `\\(p=2, r=-1\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "415s",
+                    marks: [3],
                     topics: ["Simultaneous equations"]
                 },
                 {
@@ -58,6 +65,7 @@ export const pastpaper2024 = {
                     answer: `(a) 7, (b) 3`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "509s",
+                    marks: [1, 1],
                     topics: ["Identify equation of trigonometric graph"]
                 },
                 {
@@ -65,6 +73,7 @@ export const pastpaper2024 = {
                     answer: `(a) \\(D=-2T+32\\), (b) 18 km`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "533s",
+                    marks: [3, 1],
                     topics: ["Scatter Graph", "Straight Line Equation"]
                 },
                 {
@@ -72,6 +81,7 @@ export const pastpaper2024 = {
                     answer: `70°`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "701s",
+                    marks: [3],
                     topics: ["Angles in diagrams involving circles"]
                 },
                 {
@@ -79,6 +89,7 @@ export const pastpaper2024 = {
                     answer: `\\(-\\frac{1}{4}\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "876s",
+                    marks: [2],
                     topics: ["Straight Line Equation"]
                 },
                 {
@@ -86,6 +97,7 @@ export const pastpaper2024 = {
                     answer: `(a) \\((x-3)^2-1\\), (b) (3, -1), (c) (6, 8)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "917s",
+                    marks: [2, 1, 2],
                     topics: ["Completing the square", "Turning Points and Axis of Symmetry"]
                 },
                 {
@@ -93,6 +105,7 @@ export const pastpaper2024 = {
                     answer: `\\(x^{\\frac{3}{2}} + 1\\)`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "1062s",
+                    marks: [2],
                     topics: ["Laws of indices"]
                 },
                 {
@@ -100,6 +113,7 @@ export const pastpaper2024 = {
                     answer: `6 cm`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "1092s",
+                    marks: [3],
                     topics: ["Similar lengths"]
                 },
             ]
@@ -112,6 +126,7 @@ export const pastpaper2024 = {
                     answer: `£186.40`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "6s",
+                    marks: [3],
                     topics: ["Appreciation and Depreciation"]
                 },
                 {
@@ -119,6 +134,7 @@ export const pastpaper2024 = {
                     answer: `\\(3.05 \\times 10^8\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "49s",
+                    marks: [2],
                     topics: ["Scientific notation"]
                 },
                 {
@@ -126,6 +142,7 @@ export const pastpaper2024 = {
                     answer: `103°`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "97s",
+                    marks: [3],
                     topics: ["Cosine rule: calculate angle"]
                 },
                 {
@@ -133,6 +150,7 @@ export const pastpaper2024 = {
                     answer: `\\(x > -7\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "253s",
+                    marks: [3],
                     topics: ["Linear equations and inequations"]
                 },
                 {
@@ -140,6 +158,7 @@ export const pastpaper2024 = {
                     answer: `£240`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "321s",
+                    marks: [3],
                     topics: ["Reversing a percentage change"]
                 },
                 {
@@ -147,6 +166,7 @@ export const pastpaper2024 = {
                     answer: `(a) \\(y(y-6)\\), (b) \\(\\frac{y}{y+3}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "379s",
+                    marks: [1, 2],
                     topics: ["Factorising", "Simplifying algebraic fraction"]
                 },
                 {
@@ -154,6 +174,7 @@ export const pastpaper2024 = {
                     answer: `140 cm³`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "449s",
+                    marks: [4],
                     topics: ["Volume - composite shape"]
                 },
                 {
@@ -161,6 +182,7 @@ export const pastpaper2024 = {
                     answer: `\\(x=-0.13, x=-2.54\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "574s",
+                    marks: [3],
                     topics: ["Quadratic formula"]
                 },
                 {
@@ -168,6 +190,7 @@ export const pastpaper2024 = {
                     answer: `\\(d = \\frac{ef-3}{2}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "700s",
+                    marks: [3],
                     topics: ["Changing the subject of a formula"]
                 },
                 {
@@ -175,6 +198,7 @@ export const pastpaper2024 = {
                     answer: `33.2 cm`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "738s",
+                    marks: [4],
                     topics: ["Pythagoras in circle diagrams"]
                 },
                 {
@@ -182,6 +206,7 @@ export const pastpaper2024 = {
                     answer: `\\(x=28.1, 151.9\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "873s",
+                    marks: [3],
                     topics: ["Trigonometric equation"]
                 },
                 {
@@ -189,6 +214,7 @@ export const pastpaper2024 = {
                     answer: `\\(\\frac{5x+7}{(x+5)(x-4)}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "940s",
+                    marks: [3],
                     topics: ["Add or subtract Algebraic Fractions"]
                 },
                 {
@@ -196,6 +222,7 @@ export const pastpaper2024 = {
                     answer: `7.5 cm`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "1010s",
+                    marks: [5],
                     topics: ["Sine rule: calculate length"]
                 },
                 {
@@ -203,6 +230,7 @@ export const pastpaper2024 = {
                     answer: `(a) \\(\\mathbf{b}-\\mathbf{a}\\), (b) \\(\\mathbf{b}-\\frac{1}{2}\\mathbf{a}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "1228s",
+                    marks: [1, 2],
                     topics: ["Vector pathways"]
                 },
                 {
@@ -210,6 +238,7 @@ export const pastpaper2024 = {
                     answer: `90 cm²`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "1321s",
+                    marks: [3],
                     topics: ["Sector area"]
                 },
                 {
@@ -217,6 +246,7 @@ export const pastpaper2024 = {
                     answer: `\\(1 - 4 \\sin^2 x^{\\circ}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "1430s",
+                    marks: [2],
                     topics: ["Trigonometric identities"]
                 }
             ]

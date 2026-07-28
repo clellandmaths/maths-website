@@ -9,6 +9,7 @@ export const higherPastPaper2025 = {
           answer: `\\(y=4x-3\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "21s",
+                    marks: [4],
           topics: ["Equation of a tangent to a curve"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2025 = {
           answer: `\\(3y=-4x+41\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "106s",
+                    marks: [4],
           topics: ["Perpendicular and parallel lines"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2025 = {
           answer: `\\(-12x^{-1}+\\frac{2}{3}x^{\\frac{3}{2}}+c\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "269s",
+                    marks: [4],
           topics: ["Integrate (definite or indefinite): polynomial"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2025 = {
           answer: `-1`,
           videoId: "t1_htB2awtg",
           timestamp: "336s",
+                    marks: [3],
           topics: ["Simplify numerical expression involving logs/exponentials"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2025 = {
           answer: `Sketch showing graph reflected in y-axis and translated 3 units up. Stationary points at (0,6) and (-4,3).`,
           videoId: "t1_htB2awtg",
           timestamp: "385s",
+                    marks: [2],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2025 = {
           answer: `(a)(i) \\(\\frac{5}{13}\\) (ii) \\(\\frac{12}{13}\\)<br>(b) \\(\\frac{8}{13\\sqrt{17}}\\)<br>`,
           videoId: "t1_htB2awtg",
           timestamp: "515s",
+                    marks: [3, 1, 3],
           topics: ["Apply double angle formula to simplify or evaluate", "Apply compound angle formula to simplify or evaluate"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2025 = {
           answer: `(a) Proof using synthetic division showing remainder is 0.<br>(b) \\(x=-3, -1, \\frac{4}{5}\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "736s",
+                    marks: [2, 3],
           topics: ["Cubic/quartic expressions/equations: factorise or solve"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2025 = {
           answer: `\\(a = 5\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "872s",
+                    marks: [3],
           topics: ["Solving equations containing a logarithm"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2025 = {
           answer: `(1, 2) and (-4, -3)`,
           videoId: "t1_htB2awtg",
           timestamp: "921s",
+                    marks: [4],
           topics: ["Intersections of lines and circles (including showing tangency)"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2025 = {
           answer: `\\(k=\\sqrt{6}\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "1027s",
+                    marks: [5],
           topics: ["Scalar product"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2025 = {
           answer: `\\(k \\lt 0\\) and \\(k \\gt 4\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "1183s",
+                    marks: [4],
           topics: ["Discriminant and Quadratics", "Quadratic inequations"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2025 = {
           answer: `\\(y=6\\sin x - 4\\cos 2x + 3\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "1274s",
+                    marks: [4],
           topics: ["Differential equation", "Integrate (definite or indefinite): trigonometric expression"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2025 = {
           answer: `(a) Min at \\(x=-5\\), Max at \\(x=2\\)<br>(b) Sketch showing cubic curve with min at -5, max at 2, negative y-intercept, and one root between -10 and 10.`,
           videoId: "t1_htB2awtg",
           timestamp: "1434s",
+                    marks: [3, 3],
           topics: ["Find stationary points and determine nature"]
         }
       ]
@@ -105,6 +118,7 @@ export const higherPastPaper2025 = {
           answer: `(a) \\(y=3x-7\\)<br>(b) \\(2y=x-19\\)<br>(c) \\((-1, -10)\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "16s",
+                    marks: [3, 3, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines"]
         },
         {
@@ -112,6 +126,7 @@ export const higherPastPaper2025 = {
           answer: `\\(2(x+4)^{2}-27\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "320s",
+                    marks: [3],
           topics: ["Completing the square"]
         },
         {
@@ -119,6 +134,7 @@ export const higherPastPaper2025 = {
           answer: `\\(\\frac{38}{3}\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "369s",
+                    marks: [4],
           topics: ["Areas using integration"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2025 = {
           answer: `\\(g^{-1}(x)=\\sqrt[3]{x}+4\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "500s",
+                    marks: [3],
           topics: ["Inverse functions"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2025 = {
           answer: `(a) Proof showing \\(\\vec{BC} = \\frac{2}{3}\\vec{AB}\\) (or equivalent) and B is a common point.<br>(b) 3:2`,
           videoId: "NNOugVXypYo",
           timestamp: "602s",
+                    marks: [3, 1],
           topics: ["Collinearity (in 3d or 2d)", "Ratio in which one point divides two others"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2025 = {
           answer: `(a) \\(\\sqrt{106}\\cos(x+1.06)\\)<br>(b) 4.40, 6.04`,
           videoId: "NNOugVXypYo",
           timestamp: "742s",
+                    marks: [4, 3],
           topics: ["Wave function (y = asin x ± bcosx)", "Trig equation involving compound angle"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2025 = {
           answer: `\\(\\frac{1}{24}(3x+2)^{8}+c\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "1049s",
+                    marks: [2],
           topics: ["Integrate (definite or indefinite): (px + q)^n"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2025 = {
           answer: `\\(5j+4k\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "1092s",
+                    marks: [2],
           topics: ["Vector pathways in geometric diagrams"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2025 = {
           answer: `(a) \\(m=\\frac{3}{5}\\) (or 0.6)<br>(b) \\(u_{0}=25\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "1169s",
+                    marks: [2, 1],
           topics: ["Find a specific term of a recurrence relation", "Limits of recurrence relations"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2025 = {
           answer: `(a) Proof<br>(b) 48 cm`,
           videoId: "NNOugVXypYo",
           timestamp: "1277s",
+                    marks: [3, 6],
           topics: ["Optimisation"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2025 = {
           answer: `\\(x=90, 221.8, 270, 318.2\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "1668s",
+                    marks: [4],
           topics: ["Solving a trigonometric equation using formula for sin(2x)"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2025 = {
           answer: `(a) \\(h(x)=(1-x^{3})^{5}+3\\)<br>(b) \\(h^{\\prime}(x)=-15x^{2}(1-x^{3})^{4}\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "1812s",
+                    marks: [2, 2],
           topics: ["Composite functions", "Differentiate or evaluate derivative: composite function"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2025 = {
           answer: `(a) 150 micrograms<br>(b) 41.3 years`,
           videoId: "NNOugVXypYo",
           timestamp: "1895s",
+                    marks: [1, 4],
           topics: ["Solving equations where the unknown is in the exponent"]
         },
         {
@@ -196,6 +222,7 @@ export const higherPastPaper2025 = {
           answer: `(a) Centre (-5, 6), Radius 3<br>(b) Centre (7, -3), Radius 2<br>(c) \\((x+1)^{2}+(y-3)^{2}=64\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "2038s",
+                    marks: [2, 2, 3],
           topics: ["Circle equation from radius/centre or vice versa", "Intersections of two circles"]
         }
       ]

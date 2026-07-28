@@ -9,6 +9,7 @@ export const higherPastPaper2023 = {
           answer: `\\(\\frac{5}{3}x^{\\frac{2}{3}}+40x^{-5}\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "8s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: polynomial"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2023 = {
           answer: `\\(y=2x-5\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "656s",
+                    marks: [4],
           topics: ["Altitudes, medians, perpendicular bisectors"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2023 = {
           answer: `\\(x=75\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "166s",
+                    marks: [3],
           topics: ["Solving equations containing a logarithm"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2023 = {
           answer: `(a) (i) \\(\\frac{3}{5}\\) (ii) \\(\\frac{1}{\\sqrt{5}}\\) or \\(\\frac{3}{\\sqrt{45}}\\)<br>(b) \\(-\\frac{1}{\\sqrt{5}}\\) or \\(-\\frac{3}{\\sqrt{45}}\\)<br>`,
           videoId: "uHHQrgtXh7w",
           timestamp: "213s",
+                    marks: [1, 1, 3],
           topics: ["Apply compound angle formula to simplify or evaluate"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2023 = {
           answer: `\\(p=\\frac{2}{9}, 2\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "403s",
+                    marks: [3],
           topics: ["Discriminant and Quadratics"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2023 = {
           answer: `\\(\\frac{1}{3}x^{6}-4x^{\\frac{3}{2}}+c\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "577s",
+                    marks: [4],
           topics: ["Integrate (definite or indefinite): polynomial"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2023 = {
           answer: `(a) -3<br>(b) \\(0 \\lt a \\lt 1\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "655s",
+                    marks: [2, 1],
           topics: ["Simplify numerical expression involving logs/exponentials", "Graphs of logarithmic or exponential functions"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2023 = {
           answer: `Max at (-3, 32), Min at (1, 0)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "788s",
+                    marks: [6],
           topics: ["Find stationary points and determine nature"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2023 = {
           answer: `Sketch showing concave up curve passing through (0,0) and (1,2), approaching \\(y=-1\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1080s",
+                    marks: [3],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)", "Inverse functions"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2023 = {
           answer: `(a) Proof<br>(b) \\(x=-5, x=2\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1163s",
+                    marks: [2, 5],
           topics: ["Cubic/quartic expressions/equations: factorise or solve", "Discriminant and Quadratics"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2023 = {
           answer: `(a) 8<br>(b) Area shaded between \\(x=\\frac{\\pi}{2}\\) and \\(x=\\pi\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1515s",
+                    marks: [3, 1],
           topics: ["Integrate (definite or indefinite): trigonometric expression", "Areas using integration"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2023 = {
           answer: `\\(-2(x+3)^{2}+25\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1693s",
+                    marks: [3],
           topics: ["Completing the square"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2023 = {
           answer: `(a) (i) \\(\\sqrt{3}\\) (ii) \\(2\\sin 2x\\)<br>(b) (i) \\(\\frac{1}{6}\\) (ii) \\(\\frac{\\sqrt{35}}{9}\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1753s",
+                    marks: [1, 2, 1, 3],
           topics: ["Composite functions", "Solving a trigonometric equation using formula for sin(2x)"]
         }
       ]
@@ -105,6 +118,7 @@ export const higherPastPaper2023 = {
           answer: `(a) \\(y=3x-16\\)<br>(b) \\(26.6^{\\circ}\\) or 0.46 radians`,
           videoId: "nbwGH7tXPm8",
           timestamp: "11s",
+                    marks: [3, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Angles and straight lines: m = tanθ"]
         },
         {
@@ -112,6 +126,7 @@ export const higherPastPaper2023 = {
           answer: `\\(y=7x-8\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "130s",
+                    marks: [4],
           topics: ["Equation of a tangent to a curve"]
         },
         {
@@ -119,6 +134,7 @@ export const higherPastPaper2023 = {
           answer: `\\(\\frac{7}{4}\\sin(4x+\\frac{\\pi}{3})+c\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "223s",
+                    marks: [2],
           topics: ["Integrate (definite or indefinite): trigonometric expression"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2023 = {
           answer: `Sketch showing graph reflected in y-axis and scaled vertically by 2. Points: (-2, 0) and (0, -4).`,
           videoId: "nbwGH7tXPm8",
           timestamp: "271s",
+                    marks: [2],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2023 = {
           answer: `1000`,
           videoId: "nbwGH7tXPm8",
           timestamp: "347s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: composite function"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2023 = {
           answer: `\\(f^{-1}(x)=\\frac{2}{x-3}\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "423s",
+                    marks: [3],
           topics: ["Inverse functions"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2023 = {
           answer: `\\(x=19.5, 160.5, 210, 330\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "471s",
+                    marks: [5],
           topics: ["Solving a trigonometric equation using formula for cos(2x)"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2023 = {
           answer: `\\(\\frac{63}{4}\\) or 15.75`,
           videoId: "nbwGH7tXPm8",
           timestamp: "732s",
+                    marks: [5],
           topics: ["Areas using integration"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2023 = {
           answer: `(a) \\(\\sqrt{58}\\sin(x+113.2)^{\\circ}\\)<br>(b) (i) \\(2\\sqrt{58}\\) (ii) 336.8`,
           videoId: "nbwGH7tXPm8",
           timestamp: "1006s",
+                    marks: [4, 1, 2],
           topics: ["Wave function (y = asin x ± bcosx)", "Identifying/sketching graphs of related functions (trigonometric)"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2023 = {
           answer: `\\(-4 \\lt x \\lt 1\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "1342s",
+                    marks: [4],
           topics: ["Find value of x for which a function has given gradient", "Quadratic inequations"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2023 = {
           answer: `(a) \\(\\sqrt{50}\\) or \\(5\\sqrt{2}\\)<br>(b) Proof`,
           videoId: "nbwGH7tXPm8",
           timestamp: "1553s",
+                    marks: [3, 3],
           topics: ["Circle equation from radius/centre or vice versa", "Intersections of two circles"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2023 = {
           answer: `\\(y=2x^{4}+3x+4\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "1848s",
+                    marks: [4],
           topics: ["Differential equation"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2023 = {
           answer: `(a) 9.38 mg/l<br>(b) 531 minutes`,
           videoId: "nbwGH7tXPm8",
           timestamp: "1925s",
+                    marks: [1, 3],
           topics: ["Solving equations where the unknown is in the exponent"]
         },
         {
@@ -196,6 +222,7 @@ export const higherPastPaper2023 = {
           answer: `(a) (i) \\(A=6x^{2}+10xh\\) (ii) Proof<br>(b) \\(x=20\\)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "2105s",
+                    marks: [1, 2, 4],
           topics: ["Optimisation"]
         },
         {
@@ -203,6 +230,7 @@ export const higherPastPaper2023 = {
           answer: `(0, -1)`,
           videoId: "nbwGH7tXPm8",
           timestamp: "2476s",
+                    marks: [4],
           topics: ["Equation of a tangent to a circle at a point"]
         }
       ]

@@ -9,6 +9,7 @@ export const higherPastPaper2022 = {
           answer: `\\(5y=2x+32\\) or \\(2x-5y+32=0\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "7s",
+                    marks: [3],
           topics: ["Perpendicular and parallel lines"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2022 = {
           answer: `2`,
           videoId: "-McipY5Dx0I",
           timestamp: "109s",
+                    marks: [3],
           topics: ["Simplify numerical expression involving logs/exponentials"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2022 = {
           answer: `\\(h^{-1}(x)=3(x-4)\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "157s",
+                    marks: [3],
           topics: ["Inverse functions"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2022 = {
           answer: `\\(\\frac{3}{2}x^{\\frac{1}{2}}+2x^{-2}\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "202s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: polynomial"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2022 = {
           answer: `\\(y=\\frac{1}{\\sqrt{3}}x+\\frac{2}{\\sqrt{3}}\\) or \\(\\sqrt{3}y=x+2\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "249s",
+                    marks: [3],
           topics: ["Angles and straight lines: m = tanθ"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2022 = {
           answer: `2`,
           videoId: "-McipY5Dx0I",
           timestamp: "351s",
+                    marks: [4],
           topics: ["Integrate (definite or indefinite): (px + q)^n"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2022 = {
           answer: `(a)(i) \\(\\frac{1}{\\sqrt{10}}\\) (ii) \\(\\frac{3}{\\sqrt{13}}\\) <br>(b) \\(\\frac{7}{\\sqrt{130}}\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "552s",
+                    marks: [1, 1, 3],
           topics: ["Apply compound angle formula to simplify or evaluate"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2022 = {
           answer: `\\(x=4\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "771s",
+                    marks: [4],
           topics: ["Solving equations containing a logarithm"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2022 = {
           answer: `\\(x=60, 300\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "861s",
+                    marks: [5],
           topics: ["Solving a trigonometric equation using formula for cos(2x)"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2022 = {
           answer: `(a) Sketch with max turning point at \\((0,7)\\) and min turning point at \\((4,1)\\).<br>(b) \\((0,3)\\) and \\((8,0)\\).`,
           videoId: "-McipY5Dx0I",
           timestamp: "1034s",
+                    marks: [3, 1],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2022 = {
           answer: `\\(2(x+3)^{2}+5\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "1147s",
+                    marks: [3],
           topics: ["Completing the square"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2022 = {
           answer: `\\(6\\sqrt{3}\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "1202s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: trigonometric expression"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2022 = {
           answer: `(a)(ii) \\(x=-2, 6\\) <br>(b) \\(k=3\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "1335s",
+                    marks: [2, 3, 1],
           topics: ["Cubic/quartic expressions/equations: factorise or solve", "Identifying/sketching graphs of related functions (non-trigonometric)"]
         },
         {
@@ -100,6 +113,7 @@ export const higherPastPaper2022 = {
           answer: `(a)(i) Centre \\((7, -5)\\), Radius 10. (ii) Distance PC = 15, which is greater than radius 10.<br>(b) \\(r=5\\) or \\(r=25\\)`,
           videoId: "-McipY5Dx0I",
           timestamp: "1518s",
+                    marks: [2, 2, 2],
           topics: ["Circle equation from radius/centre or vice versa", "Intersections of two circles"]
         }
       ]
@@ -112,6 +126,7 @@ export const higherPastPaper2022 = {
           answer: `(a) \\(y=x-4\\)<br>(b) \\(y=5x-14\\)<br>(c) \\((2.5, -1.5)\\)`,
           videoId: "55pxnGty5co",
           timestamp: "10s",
+                    marks: [3, 3, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines"]
         },
         {
@@ -119,6 +134,7 @@ export const higherPastPaper2022 = {
           answer: `\\(p \\gt -4\\)`,
           videoId: "55pxnGty5co",
           timestamp: "345s",
+                    marks: [3],
           topics: ["Discriminant and Quadratics"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2022 = {
           answer: `(a) \\(\\sqrt{41} \\sin(x+0.896)\\)<br>(b) \\(x=0.137...\\) or \\(x=1.212...\\)`,
           videoId: "55pxnGty5co",
           timestamp: "431s",
+                    marks: [4, 3],
           topics: ["Wave function (y = asin x ± bcosx)", "Trig equation involving compound angle"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2022 = {
           answer: `(a) \\(\\frac{63}{4}\\) (or 15.75)<br>(b) \\(\\frac{253}{12}\\) (or 21.08...)`,
           videoId: "55pxnGty5co",
           timestamp: "768s",
+                    marks: [4, 3],
           topics: ["Areas using integration"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2022 = {
           answer: `(a)(i) \\((3x+5)^2 - 2\\) (ii) \\(3(x^2-2)+5\\)<br>(b) \\(-4 \\lt x \\lt -1\\)`,
           videoId: "55pxnGty5co",
           timestamp: "1136s",
+                    marks: [2, 1, 4],
           topics: ["Composite functions", "Quadratic inequations"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2022 = {
           answer: `\\(y=x+3x^{-1}+2\\)`,
           videoId: "55pxnGty5co",
           timestamp: "1351s",
+                    marks: [5],
           topics: ["Differential equation"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2022 = {
           answer: `\\(k=125, n=-2\\)`,
           videoId: "55pxnGty5co",
           timestamp: "1434s",
+                    marks: [5],
           topics: ["Deriving relationship y = ab^x or y = ax^b from straight line"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2022 = {
           answer: `(a) Proof<br>(b) 96 \\(m^2\\)`,
           videoId: "55pxnGty5co",
           timestamp: "1571s",
+                    marks: [3, 6],
           topics: ["Optimisation"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2022 = {
           answer: `(a) \\((0,7)\\) and \\((-2,1)\\)<br>(b) \\((x-2)^{2}+(y-3)^{2}=10\\)`,
           videoId: "55pxnGty5co",
           timestamp: "1901s",
+                    marks: [5, 4],
           topics: ["Intersections of lines and circles (including showing tangency)", "Circle equation from radius/centre or vice versa"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2022 = {
           answer: `(a) 929<br>(b) \\(k=1.41\\)`,
           videoId: "55pxnGty5co",
           timestamp: "2153s",
+                    marks: [1, 4],
           topics: ["Solving equations where the unknown is in the exponent"]
         }
       ]

@@ -9,6 +9,7 @@ export const higherPastPaper2024 = {
           answer: `\\(y=\\frac{1}{\\sqrt{3}}x+4\\) or \\(\\sqrt{3}y-x-4\\sqrt{3}=0\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "12s",
+                    marks: [3],
           topics: ["Angles and straight lines: m = tanθ"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2024 = {
           answer: `(a) 16<br>(b) (i) A limit exists because \\(-1 \\lt \\frac{1}{5} \\lt 1\\) (ii) \\(L=15\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "56s",
+                    marks: [1, 1, 2],
           topics: ["Find a specific term of a recurrence relation", "Limits of recurrence relations"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2024 = {
           answer: `\\(70x(5x^{2}+3)^{6}\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "123s",
+                    marks: [2],
           topics: ["Differentiate or evaluate derivative: composite function"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2024 = {
           answer: `R(-4, 5, -2)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "157s",
+                    marks: [2],
           topics: ["Ratio in which one point divides two others"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2024 = {
           answer: `\\(h^{-1}(x)=\\sqrt[3]{\\frac{x+7}{2}}\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "318s",
+                    marks: [3],
           topics: ["Inverse functions"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2024 = {
           answer: `(a) (i) \\(\\frac{4}{5}\\) (ii) \\(\\frac{3}{5}\\)<br>(b) \\(\\frac{24}{25}\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "357s",
+                    marks: [3, 1, 1],
           topics: ["Apply double angle formula to simplify or evaluate"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2024 = {
           answer: `(3, 6)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "493s",
+                    marks: [4],
           topics: ["Intersections of lines and circles (including showing tangency)"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2024 = {
           answer: `\\(2 \\lt m \\lt 14\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "570s",
+                    marks: [4],
           topics: ["Quadratic inequations", "Discriminant and Quadratics"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2024 = {
           answer: `\\(\\log_{a}4\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "680s",
+                    marks: [3],
           topics: ["Simplify numerical expression involving logs/exponentials"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2024 = {
           answer: `(a) Proof<br>(b) \\((x-1)(x+1)(x+2)(2x-1)\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "722s",
+                    marks: [2, 4],
           topics: ["Cubic/quartic expressions/equations: factorise or solve"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2024 = {
           answer: `(a) \\(2\\cos(x-60)^{\\circ}\\)<br>(b) Sketch of cosine wave with max at (60, 2) and min at (240, -2)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "843s",
+                    marks: [4, 3],
           topics: ["Wave function (y = asin x ± bcosx)", "Identifying/sketching graphs of related functions (trigonometric)"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2024 = {
           answer: `\\(a=8\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "1042s",
+                    marks: [4],
           topics: ["Find value of x for which a function has given gradient"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2024 = {
           answer: `(a) \\(x-4y+19=0\\) or \\(y=\\frac{1}{4}x+\\frac{19}{4}\\)<br>(b) \\((x-9)^{2}+(y-7)^{2}=34\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "1141s",
+                    marks: [4, 4],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines"]
         }
       ]
@@ -105,6 +118,7 @@ export const higherPastPaper2024 = {
           answer: `(a) \\(y=2x-4\\)<br>(b) \\(y=-2x+22\\)<br>(c) \\((\\frac{13}{2}, 9)\\) or (6.5, 9)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "12s",
+                    marks: [3, 3, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines", "Perpendicular and parallel lines"]
         },
         {
@@ -112,6 +126,7 @@ export const higherPastPaper2024 = {
           answer: `\\(3x+2y=8\\) or \\(y=-\\frac{3}{2}x+4\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "242s",
+                    marks: [5],
           topics: ["Equation of a tangent to a curve"]
         },
         {
@@ -119,6 +134,7 @@ export const higherPastPaper2024 = {
           answer: `(a) \\(\\overrightarrow{ED}=\\begin{pmatrix}1\\\\ -4\\\\ 6\\end{pmatrix}\\), \\(\\overrightarrow{EF}=\\begin{pmatrix}2\\\\ 1\\\\ 3\\end{pmatrix}\\)<br>(b) (i) 16 (ii) 54.0° or 0.943 rad`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "352s",
+                    marks: [2, 1, 4],
           topics: ["Calculating an angle using the scalar product", "Scalar product"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2024 = {
           answer: `(a) (3, 5)<br>(b) Sketch showing cubic curve with roots at x = -1 and x = 2 (touching axis)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "635s",
+                    marks: [2, 3],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)", "The graph of the derived function"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2024 = {
           answer: `0.325 (to 3 d.p.)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "794s",
+                    marks: [3],
           topics: ["Integrate (definite or indefinite): trigonometric expression"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2024 = {
           answer: `\\(a=\\frac{1}{25}, b=3\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "912s",
+                    marks: [5],
           topics: ["Deriving relationship y = ab^x or y = ax^b from straight line"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2024 = {
           answer: `\\(\\frac{14}{3}\\) or \\(4\\frac{2}{3}\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "1055s",
+                    marks: [5],
           topics: ["Areas using integration"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2024 = {
           answer: `(a) \\(2(x+1)^{2}-18\\)<br>(b) \\(x=-4, x=2\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "1248s",
+                    marks: [2, 2],
           topics: ["Composite functions", "Domain and range"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2024 = {
           answer: `(a) \\((-1, \\frac{8}{3})\\) and \\((3, -8)\\)<br>(b) Greatest = 19, Least = -8`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "1450s",
+                    marks: [4, 2],
           topics: ["Find stationary points and determine nature", "Optimisation on a closed interval"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2024 = {
           answer: `(a) Centre (-9, 1), Radius \\(\\sqrt{90}\\) or \\(3\\sqrt{10}\\)<br>(b) \\((x+6)^{2}+y^{2}=40\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "1714s",
+                    marks: [2, 2],
           topics: ["Circle equation from radius/centre or vice versa", "Intersections of two circles"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2024 = {
           answer: `(a) 6.8 million<br>(b) 0.291 (to 3 s.f.)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "1917s",
+                    marks: [1, 4],
           topics: ["Solving equations where the unknown is in the exponent"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2024 = {
           answer: `\\(x = 0, 76.0, 180, 256.0\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "2046s",
+                    marks: [5],
           topics: ["Solving a trigonometric equation using formula for sin(2x)"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2024 = {
           answer: `\\(f(x)=\\frac{1}{5}(x+1)(x-3)^{2}(x-5)\\)`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "2237s",
+                    marks: [3],
           topics: ["Identify polynomial equation when shown graph/roots"]
         }
       ]

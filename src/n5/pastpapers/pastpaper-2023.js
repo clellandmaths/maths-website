@@ -9,6 +9,7 @@ export const pastpaper2023 = {
                     answer: `\\(2\\frac{7}{16}\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "12s",
+                    marks: [2],
                     topics: ["Fractions and mixed numbers"]
                 },
                 {
@@ -16,6 +17,7 @@ export const pastpaper2023 = {
                     answer: `\\(7x^2+14x-11\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "145s",
+                    marks: [3],
                     topics: ["Expanding brackets"]
                 },
                 {
@@ -23,6 +25,7 @@ export const pastpaper2023 = {
                     answer: `\\(x=-2, y=4\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "221s",
+                    marks: [3],
                     topics: ["Simultaneous equations"]
                 },
                 {
@@ -30,6 +33,7 @@ export const pastpaper2023 = {
                     answer: `(a)(i) \\(a=-3\\) (ii) \\(b=2\\)<br>(b) \\(c=11\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "330s",
+                    marks: [1, 1, 1],
                     topics: ["Parabola Equation from Graph"]
                 },
                 {
@@ -37,6 +41,7 @@ export const pastpaper2023 = {
                     answer: `two distinct real roots`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "405s",
+                    marks: [2],
                     topics: ["Discriminant"]
                 },
                 {
@@ -44,6 +49,7 @@ export const pastpaper2023 = {
                     answer: `7 metres`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "496s",
+                    marks: [3],
                     topics: ["Cosine rule: calculate length"]
                 },
                 {
@@ -51,6 +57,7 @@ export const pastpaper2023 = {
                     answer: `(a) \\(P=1500T+12500\\)<br>(b) £24,500`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "630s",
+                    marks: [3, 1],
                     topics: ["Straight Line Equation", "Scatter Graph"]
                 },
                 {
@@ -58,6 +65,7 @@ export const pastpaper2023 = {
                     answer: `\\(\\frac{4\\sqrt{15}}{5}\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "874s",
+                    marks: [2],
                     topics: ["Rationalising the denominator"]
                 },
                 {
@@ -65,6 +73,7 @@ export const pastpaper2023 = {
                     answer: `(a) Median = 39.5 years, IQR = 7 years.<br>(b) On average, the readers of the newspaper are older, as \\(41>39.5\\). The ages of the newspaper readers are more varied, as \\(9>7\\).`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "937s",
+                    marks: [3, 2],
                     topics: ["Median/Quartiles/Interquartile Range", "Comparing Calculated Statistics"]
                 },
                 {
@@ -72,6 +81,7 @@ export const pastpaper2023 = {
                     answer: `10 cm`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1156s",
+                    marks: [4],
                     topics: ["Pythagoras in circle diagrams"]
                 },
                 {
@@ -79,6 +89,7 @@ export const pastpaper2023 = {
                     answer: `-0.5`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1285s",
+                    marks: [1],
                     topics: ["sin/cos/tan of related angles"]
                 },
                 {
@@ -86,6 +97,7 @@ export const pastpaper2023 = {
                     answer: `\\(\\frac{5}{c^9}\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1340s",
+                    marks: [3],
                     topics: ["Rewriting fraction or negative index in the form ax^n", "Laws of indices"]
                 },
                 {
@@ -93,6 +105,7 @@ export const pastpaper2023 = {
                     answer: `(a) \\(a=-45\\)<br>(b) \\(b=1\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1382s",
+                    marks: [1, 1],
                     topics: ["Identify equation of trigonometric graph"]
                 },
                 {
@@ -100,6 +113,7 @@ export const pastpaper2023 = {
                     answer: `\\(x \\lt -\\frac{25}{4}\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1475s",
+                    marks: [3],
                     topics: ["Linear equations and inequations"]
                 }
             ]
@@ -112,6 +126,7 @@ export const pastpaper2023 = {
                     answer: `£15,728.08`,
                     videoId: "wBABvZztps0",
                     timestamp: "10s",
+                    marks: [3],
                     topics: ["Appreciation and Depreciation"]
                 },
                 {
@@ -119,6 +134,7 @@ export const pastpaper2023 = {
                     answer: `\\(4.52 \\times 10^{25}\\) atoms`,
                     videoId: "wBABvZztps0",
                     timestamp: "64s",
+                    marks: [3],
                     topics: ["Scientific notation"]
                 },
                 {
@@ -126,6 +142,7 @@ export const pastpaper2023 = {
                     answer: `16.9 metres`,
                     videoId: "wBABvZztps0",
                     timestamp: "105s",
+                    marks: [3],
                     topics: ["Arc length"]
                 },
                 {
@@ -133,6 +150,7 @@ export const pastpaper2023 = {
                     answer: `37.1°`,
                     videoId: "wBABvZztps0",
                     timestamp: "159s",
+                    marks: [3],
                     topics: ["Sine rule: calculate angle"]
                 },
                 {
@@ -140,6 +158,7 @@ export const pastpaper2023 = {
                     answer: `126°`,
                     videoId: "wBABvZztps0",
                     timestamp: "262s",
+                    marks: [2],
                     topics: ["Angles in regular polygons"]
                 },
                 {
@@ -147,6 +166,7 @@ export const pastpaper2023 = {
                     answer: `£87,500`,
                     videoId: "wBABvZztps0",
                     timestamp: "366s",
+                    marks: [3],
                     topics: ["Reversing a percentage change"]
                 },
                 {
@@ -154,6 +174,7 @@ export const pastpaper2023 = {
                     answer: `\\(m = \\frac{3(P+r)}{n}\\)`,
                     videoId: "wBABvZztps0",
                     timestamp: "410s",
+                    marks: [3],
                     topics: ["Changing the subject of a formula"]
                 },
                 {
@@ -161,6 +182,7 @@ export const pastpaper2023 = {
                     answer: `Not perpendicular`,
                     videoId: "wBABvZztps0",
                     timestamp: "476s",
+                    marks: [4],
                     topics: ["Pythagoras converse"]
                 },
                 {
@@ -168,6 +190,7 @@ export const pastpaper2023 = {
                     answer: `266,000 cm³`,
                     videoId: "wBABvZztps0",
                     timestamp: "581s",
+                    marks: [4],
                     topics: ["Volume - composite shape"]
                 },
                 {
@@ -175,6 +198,7 @@ export const pastpaper2023 = {
                     answer: `\\(\\frac{5x+6}{x(x-3)}\\)`,
                     videoId: "wBABvZztps0",
                     timestamp: "696s",
+                    marks: [3],
                     topics: ["Add or subtract Algebraic Fractions"]
                 },
                 {
@@ -182,6 +206,7 @@ export const pastpaper2023 = {
                     answer: `81.4, 278.6`,
                     videoId: "wBABvZztps0",
                     timestamp: "764s",
+                    marks: [4],
                     topics: ["Trigonometric equation"]
                 },
                 {
@@ -189,6 +214,7 @@ export const pastpaper2023 = {
                     answer: `\\(\\frac{x+4}{x+5}\\)`,
                     videoId: "wBABvZztps0",
                     timestamp: "864s",
+                    marks: [3],
                     topics: ["Simplifying algebraic fraction"]
                 },
                 {
@@ -196,6 +222,7 @@ export const pastpaper2023 = {
                     answer: `\\(\\cos^2 x^\\circ\\)`,
                     videoId: "wBABvZztps0",
                     timestamp: "924s",
+                    marks: [2],
                     topics: ["Trigonometric identities"]
                 },
                 {
@@ -203,6 +230,7 @@ export const pastpaper2023 = {
                     answer: `(a) Proof, (b) \\(x=2.4\\)`,
                     videoId: "wBABvZztps0",
                     timestamp: "951s",
+                    marks: [2, 4],
                     topics: ["Create equation in geometric context", "Quadratic formula"]
                 },
                 {
@@ -210,6 +238,7 @@ export const pastpaper2023 = {
                     answer: `30 cm`,
                     videoId: "wBABvZztps0",
                     timestamp: "1174s",
+                    marks: [4],
                     topics: ["Area of a Triangle"]
                 }
             ]

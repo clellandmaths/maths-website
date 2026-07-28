@@ -9,6 +9,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\begin{pmatrix}-3\\\\ -4\\end{pmatrix}\\)`,
                     videoId: "nueOyweHSas",
                     timestamp: "0s",
+                    marks: [2],
                     topics: ["Adding and Subtracting vector components"]
                 },
                 {
@@ -16,6 +17,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\frac{13}{28}\\)`,
                     videoId: "nueOyweHSas",
                     timestamp: "42s",
+                    marks: [2],
                     topics: ["Fractions and mixed numbers"]
                 },
                 {
@@ -23,6 +25,7 @@ export const pastpaper2016 = {
                     answer: `157 cm²`,
                     videoId: "nueOyweHSas",
                     timestamp: "116s",
+                    marks: [3],
                     topics: ["Sector area"]
                 },
                 {
@@ -30,6 +33,7 @@ export const pastpaper2016 = {
                     answer: `(a) \\(2c+3d=9\\cdot6\\), (b) \\(3c+4d=13\\cdot3\\), (c) Cloak 1.5 m², Dress 2.2 m²`,
                     videoId: "nueOyweHSas",
                     timestamp: "203s",
+                    marks: [1, 1, 4],
                     topics: ["Simultaneous equations"]
                 },
                 {
@@ -37,6 +41,7 @@ export const pastpaper2016 = {
                     answer: `(a) \\(W=20A+40\\), (b) 280 kg`,
                     videoId: "nueOyweHSas",
                     timestamp: "433s",
+                    marks: [3, 1],
                     topics: ["Scatter Graph", "Straight Line Equation"]
                 },
                 {
@@ -44,6 +49,7 @@ export const pastpaper2016 = {
                     answer: `Real and distinct`,
                     videoId: "nueOyweHSas",
                     timestamp: "613s",
+                    marks: [2],
                     topics: ["Discriminant"]
                 },
                 {
@@ -51,6 +57,7 @@ export const pastpaper2016 = {
                     answer: `(a) (8, 4, 0), (b) 7`,
                     videoId: "nueOyweHSas",
                     timestamp: "689s",
+                    marks: [1, 3],
                     topics: ["3d Coordinates", "Pythagoras in 3d", "Magnitude"]
                 },
                 {
@@ -58,6 +65,7 @@ export const pastpaper2016 = {
                     answer: `\\(x=-\\frac{5}{8}\\)`,
                     videoId: "nueOyweHSas",
                     timestamp: "836s",
+                    marks: [3],
                     topics: ["Linear equations and inequations"]
                 },
                 {
@@ -65,6 +73,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\frac{2\\sqrt{5}}{5}\\)`,
                     videoId: "nueOyweHSas",
                     timestamp: "922s",
+                    marks: [2],
                     topics: ["Rationalising the denominator"]
                 },
                 {
@@ -72,6 +81,7 @@ export const pastpaper2016 = {
                     answer: `Turning point (3,1), y-intercept (0,10)`,
                     videoId: "nueOyweHSas",
                     timestamp: "962s",
+                    marks: [3],
                     topics: ["Sketch a parabola from equation"]
                 },
                 {
@@ -79,6 +89,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\sin^{2}x^{\\circ}\\)`,
                     videoId: "nueOyweHSas",
                     timestamp: "1051s",
+                    marks: [2],
                     topics: ["Trigonometric identities"]
                 },
                 {
@@ -86,6 +97,7 @@ export const pastpaper2016 = {
                     answer: `(a) \\((2x+1)(x+8)\\), (b) Proof, (c) Length 12 cm, Breadth 9 cm`,
                     videoId: "nueOyweHSas",
                     timestamp: "1093s",
+                    marks: [1, 3, 3],
                     topics: ["Quadratic equation by factorising", "Create equation in geometric context"]
                 }
             ]
@@ -98,6 +110,7 @@ export const pastpaper2016 = {
                     answer: `27.25 grams`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "0s",
+                    marks: [3],
                     topics: ["Appreciation and Depreciation"]
                 },
                 {
@@ -105,6 +118,7 @@ export const pastpaper2016 = {
                     answer: `\\(8\\times10^{-9}\\) grams`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "81s",
+                    marks: [2],
                     topics: ["Scientific notation"]
                 },
                 {
@@ -112,6 +126,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\mathbf{v}-\\mathbf{u}\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "157s",
+                    marks: [1],
                     topics: ["Vector pathways"]
                 },
                 {
@@ -119,6 +134,7 @@ export const pastpaper2016 = {
                     answer: `\\(3(x+4)(x-4)\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "204s",
+                    marks: [2],
                     topics: ["Factorising"]
                 },
                 {
@@ -126,6 +142,7 @@ export const pastpaper2016 = {
                     answer: `74°`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "248s",
+                    marks: [3],
                     topics: ["Angles in diagrams involving circles"]
                 },
                 {
@@ -133,6 +150,7 @@ export const pastpaper2016 = {
                     answer: `(a) Mean 13, Standard Deviation 5.7, (b) On average Sophie's waiting time was longer. Sophie's waiting times were more consistent.`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "333s",
+                    marks: [4, 2],
                     topics: ["Comparing Calculated Statistics", "Standard Deviation"]
                 },
                 {
@@ -140,6 +158,7 @@ export const pastpaper2016 = {
                     answer: `5300 cm³`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "623s",
+                    marks: [5],
                     topics: ["Volume - composite shape"]
                 },
                 {
@@ -147,6 +166,7 @@ export const pastpaper2016 = {
                     answer: `78°`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "760s",
+                    marks: [3],
                     topics: ["Sine rule: calculate angle"]
                 },
                 {
@@ -154,6 +174,7 @@ export const pastpaper2016 = {
                     answer: `\\((x+4)^{2}-23\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "904s",
+                    marks: [2],
                     topics: ["Completing the square"]
                 },
                 {
@@ -161,6 +182,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\frac{1}{n^{4}}\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "940s",
+                    marks: [3],
                     topics: ["Rewriting fraction or negative index in the form ax^n", "Laws of indices"]
                 },
                 {
@@ -168,6 +190,7 @@ export const pastpaper2016 = {
                     answer: `£4.95`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "975s",
+                    marks: [3],
                     topics: ["Similar areas/volumes"]
                 },
                 {
@@ -175,6 +198,7 @@ export const pastpaper2016 = {
                     answer: `\\(k=\\frac{L^{2}+p}{4t}\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "1043s",
+                    marks: [3],
                     topics: ["Changing the subject of a formula"]
                 },
                 {
@@ -182,6 +206,7 @@ export const pastpaper2016 = {
                     answer: `\\(\\frac{8x-7}{(x-2)(x+1)}\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "1098s",
+                    marks: [3],
                     topics: ["Add or subtract Algebraic Fractions"]
                 },
                 {
@@ -189,6 +214,7 @@ export const pastpaper2016 = {
                     answer: `\\(x=102.5, 282.5\\)`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "1173s",
+                    marks: [3],
                     topics: ["Trigonometric equation"]
                 },
                 {
@@ -196,6 +222,7 @@ export const pastpaper2016 = {
                     answer: `11.4 cm`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "1271s",
+                    marks: [4],
                     topics: ["Pythagoras in circle diagrams"]
                 },
                 {
@@ -203,6 +230,7 @@ export const pastpaper2016 = {
                     answer: `6.8 cm`,
                     videoId: "aYZJzX_drX4",
                     timestamp: "1360s",
+                    marks: [4],
                     topics: ["Cosine rule: calculate length"]
                 }
             ]

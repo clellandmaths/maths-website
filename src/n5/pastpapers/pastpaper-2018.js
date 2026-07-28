@@ -9,6 +9,7 @@ export const pastpaper2018 = {
                     answer: `\\(3\\frac{2}{15}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "0s",
+                    marks: [2],
                     topics: ["Fractions and mixed numbers"]
                 },
                 {
@@ -16,6 +17,7 @@ export const pastpaper2018 = {
                     answer: `\\(5x^2-2x-11\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "56s",
+                    marks: [3],
                     topics: ["Expanding brackets"]
                 },
                 {
@@ -23,6 +25,7 @@ export const pastpaper2018 = {
                     answer: `\\(x=\\frac{1}{2}, y=-1\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "138s",
+                    marks: [3],
                     topics: ["Simultaneous equations"]
                 },
                 {
@@ -30,6 +33,7 @@ export const pastpaper2018 = {
                     answer: `\\(\\begin{pmatrix}5\\\\ -9\\\\ 2\\end{pmatrix}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "236s",
+                    marks: [2],
                     topics: ["Adding and Subtracting vector components"]
                 },
                 {
@@ -37,6 +41,7 @@ export const pastpaper2018 = {
                     answer: `\\(x=3, x=8\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "286s",
+                    marks: [2],
                     topics: ["Quadratic equation by factorising"]
                 },
                 {
@@ -44,6 +49,7 @@ export const pastpaper2018 = {
                     answer: `\\(a=5, b=4\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "390s",
+                    marks: [2],
                     topics: ["Identify equation of trigonometric graph"]
                 },
                 {
@@ -51,6 +57,7 @@ export const pastpaper2018 = {
                     answer: `(a) \\(P=\\frac{3}{2}d+2\\) or \\(2P=3d+4\\), (b) £9.50`,
                     videoId: "zXipM1YMziU",
                     timestamp: "432s",
+                    marks: [3, 1],
                     topics: ["Straight Line Equation"]
                 },
                 {
@@ -58,6 +65,7 @@ export const pastpaper2018 = {
                     answer: `No real roots`,
                     videoId: "zXipM1YMziU",
                     timestamp: "608s",
+                    marks: [2],
                     topics: ["Discriminant"]
                 },
                 {
@@ -65,6 +73,7 @@ export const pastpaper2018 = {
                     answer: `127^{\\circ}`,
                     videoId: "zXipM1YMziU",
                     timestamp: "690s",
+                    marks: [2],
                     topics: ["Angles in regular polygons"]
                 },
                 {
@@ -72,6 +81,7 @@ export const pastpaper2018 = {
                     answer: `12 cm`,
                     videoId: "zXipM1YMziU",
                     timestamp: "810s",
+                    marks: [3],
                     topics: ["Cosine rule: calculate length"]
                 },
                 {
@@ -79,6 +89,7 @@ export const pastpaper2018 = {
                     answer: `\\(\\frac{3\\sqrt{6}}{2}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "879s",
+                    marks: [2],
                     topics: ["Rationalising the denominator", "Simplifying surds"]
                 },
                 {
@@ -86,6 +97,7 @@ export const pastpaper2018 = {
                     answer: `-0.5`,
                     videoId: "zXipM1YMziU",
                     timestamp: "909s",
+                    marks: [1],
                     topics: ["sin/cos/tan of related angles"]
                 },
                 {
@@ -93,6 +105,7 @@ export const pastpaper2018 = {
                     answer: `B(4,8,5), C(6,8,0)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "951s",
+                    marks: [2],
                     topics: ["3d Coordinates"]
                 },
                 {
@@ -100,6 +113,7 @@ export const pastpaper2018 = {
                     answer: `\\(x=\\left(\\frac{y-h}{g}\\right)^{2}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "1094s",
+                    marks: [3],
                     topics: ["Changing the subject of a formula"]
                 },
                 {
@@ -107,6 +121,7 @@ export const pastpaper2018 = {
                     answer: `\\(\\frac{4}{9}p^{8}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "1144s",
+                    marks: [2],
                     topics: ["Laws of indices"]
                 },
                 {
@@ -114,6 +129,7 @@ export const pastpaper2018 = {
                     answer: `Roots: -4, 6; y-intercept: -24; turning point: (1, -25)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "1185s",
+                    marks: [3],
                     topics: ["Sketch a parabola from equation"]
                 },
                 {
@@ -121,6 +137,7 @@ export const pastpaper2018 = {
                     answer: `11.5 cm`,
                     videoId: "zXipM1YMziU",
                     timestamp: "1350s",
+                    marks: [3],
                     topics: ["Volume - simple shape"]
                 },
                 {
@@ -128,6 +145,7 @@ export const pastpaper2018 = {
                     answer: `\\(\\sin^{2}x^{\\circ}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "1428s",
+                    marks: [2],
                     topics: ["Trigonometric identities"]
                 },
                 {
@@ -135,6 +153,7 @@ export const pastpaper2018 = {
                     answer: `(a) (i) \\((x-3)^{2}-90\\), (ii) \\(x=3\\)<br>(b) \\(d=3, e=10\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "1467s",
+                    marks: [2, 1, 4],
                     topics: ["Completing the square", "Turning Points and Axis of Symmetry", "Quadratic formula", "Simplifying surds"]
                 }
             ]
@@ -147,6 +166,7 @@ export const pastpaper2018 = {
                     answer: `117 649 tonnes`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "0s",
+                    marks: [3],
                     topics: ["Appreciation and Depreciation"]
                 },
                 {
@@ -154,6 +174,7 @@ export const pastpaper2018 = {
                     answer: `41.3 cm`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "68s",
+                    marks: [3],
                     topics: ["Arc length"]
                 },
                 {
@@ -161,6 +182,7 @@ export const pastpaper2018 = {
                     answer: `28`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "128s",
+                    marks: [2],
                     topics: ["Magnitude"]
                 },
                 {
@@ -168,6 +190,7 @@ export const pastpaper2018 = {
                     answer: `\\(x>6\\)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "175s",
+                    marks: [3],
                     topics: ["Linear equations and inequations"]
                 },
                 {
@@ -175,6 +198,7 @@ export const pastpaper2018 = {
                     answer: `(a) Mean = 126, Standard Deviation = 4.05<br>(b) On average the number of customers was higher on Saturday. The number of customers was less varied (more consistent) on Saturday.`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "277s",
+                    marks: [4, 2],
                     topics: ["Standard Deviation", "Comparing Calculated Statistics"]
                 },
                 {
@@ -182,6 +206,7 @@ export const pastpaper2018 = {
                     answer: `\\(a=17\\)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "562s",
+                    marks: [2],
                     topics: ["Function notation"]
                 },
                 {
@@ -189,6 +214,7 @@ export const pastpaper2018 = {
                     answer: `140 cm³`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "607s",
+                    marks: [3],
                     topics: ["Volume - simple shape"]
                 },
                 {
@@ -196,6 +222,7 @@ export const pastpaper2018 = {
                     answer: `\\(x=8.2, 171.8\\)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "659s",
+                    marks: [3],
                     topics: ["Trigonometric equation"]
                 },
                 {
@@ -203,6 +230,7 @@ export const pastpaper2018 = {
                     answer: `32.1 cm`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "715s",
+                    marks: [3],
                     topics: ["Sine rule: calculate length"]
                 },
                 {
@@ -210,6 +238,7 @@ export const pastpaper2018 = {
                     answer: `\\(\\mathbf{u}-\\frac{1}{2}\\mathbf{w}\\)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "799s",
+                    marks: [2],
                     topics: ["Vector pathways"]
                 },
                 {
@@ -217,6 +246,7 @@ export const pastpaper2018 = {
                     answer: `\\(1.1 \\times 10^{12}\\) km³`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "893s",
+                    marks: [3],
                     topics: ["Reversing a percentage change", "Scientific notation"]
                 },
                 {
@@ -224,6 +254,7 @@ export const pastpaper2018 = {
                     answer: `21.3 cm`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1004s",
+                    marks: [4],
                     topics: ["Pythagoras in circle diagrams"]
                 },
                 {
@@ -231,6 +262,7 @@ export const pastpaper2018 = {
                     answer: `282^{\\circ}`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1068s",
+                    marks: [4],
                     topics: ["Cosine rule: calculate angle", "Bearings in Trigonometry questions"]
                 },
                 {
@@ -238,6 +270,7 @@ export const pastpaper2018 = {
                     answer: `(0, -4)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1290s",
+                    marks: [2],
                     topics: ["Coordinate Geometry with straight line equation", "Straight Line Equation"]
                 },
                 {
@@ -245,6 +278,7 @@ export const pastpaper2018 = {
                     answer: `\\(\\frac{n}{3(n+2)}\\)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1331s",
+                    marks: [3],
                     topics: ["Multiply or divide Algebraic Fractions"]
                 },
                 {
@@ -252,6 +286,7 @@ export const pastpaper2018 = {
                     answer: `Yes, since 85 < 90`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1424s",
+                    marks: [4],
                     topics: ["Pythagoras in 3d"]
                 },
                 {
@@ -259,6 +294,7 @@ export const pastpaper2018 = {
                     answer: `420 cm²`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1522s",
+                    marks: [5],
                     topics: ["Area of a Triangle", "Sector area"]
                 },
                 {
@@ -266,6 +302,7 @@ export const pastpaper2018 = {
                     answer: `(a) Scale factors do not match<br>(b) 22 cm`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1731s",
+                    marks: [3, 2],
                     topics: ["Similar areas/volumes"]
                 }
             ]

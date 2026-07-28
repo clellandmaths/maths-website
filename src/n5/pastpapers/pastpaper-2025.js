@@ -9,6 +9,7 @@ export const pastpaper2025 = {
                     answer: `\\(\\frac{4}{5}\\)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "15s",
+                    marks: [2],
                     topics: ["Fractions and mixed numbers"]
                 },
                 {
@@ -16,6 +17,7 @@ export const pastpaper2025 = {
                     answer: `\\(x^{2}+12x+7\\)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "33s",
+                    marks: [3],
                     topics: ["Expanding brackets"]
                 },
                 {
@@ -23,6 +25,7 @@ export const pastpaper2025 = {
                     answer: `5`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "112s",
+                    marks: [2],
                     topics: ["Median/Quartiles/Interquartile Range"]
                 },
                 {
@@ -30,6 +33,7 @@ export const pastpaper2025 = {
                     answer: `£900`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "142s",
+                    marks: [3],
                     topics: ["Reversing a percentage change"]
                 },
                 {
@@ -37,6 +41,7 @@ export const pastpaper2025 = {
                     answer: `12 cm²`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "174s",
+                    marks: [2],
                     topics: ["Area of a Triangle"]
                 },
                 {
@@ -44,6 +49,7 @@ export const pastpaper2025 = {
                     answer: `\\(y=-2x+14\\)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "223s",
+                    marks: [3],
                     topics: ["Straight Line Equation"]
                 },
                 {
@@ -51,6 +57,7 @@ export const pastpaper2025 = {
                     answer: `(a) 25, (b) 4`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "278s",
+                    marks: [1, 2],
                     topics: ["Function notation"]
                 },
                 {
@@ -58,6 +65,7 @@ export const pastpaper2025 = {
                     answer: `(120, 2)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "317s",
+                    marks: [2],
                     topics: ["Identify equation of trigonometric graph"]
                 },
                 {
@@ -65,6 +73,7 @@ export const pastpaper2025 = {
                     answer: `(a) 3, (b) -5`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "358s",
+                    marks: [1, 1],
                     topics: ["Parabola Equation from Graph"]
                 },
                 {
@@ -72,6 +81,7 @@ export const pastpaper2025 = {
                     answer: `\\(n^{9}\\)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "387s",
+                    marks: [3],
                     topics: ["Laws of indices"]
                 },
                 {
@@ -79,6 +89,7 @@ export const pastpaper2025 = {
                     answer: `No real roots`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "410s",
+                    marks: [2],
                     topics: ["Discriminant"]
                 },
                 {
@@ -86,6 +97,7 @@ export const pastpaper2025 = {
                     answer: `\\(\\frac{3\\sqrt{10}}{5}\\)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "443s",
+                    marks: [2],
                     topics: ["Rationalising the denominator"]
                 },
                 {
@@ -93,6 +105,7 @@ export const pastpaper2025 = {
                     answer: `Drawing of vector (6, -1)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "471s",
+                    marks: [2],
                     topics: ["Adding and Subtracting vector components"]
                 },
                 {
@@ -100,6 +113,7 @@ export const pastpaper2025 = {
                     answer: `\\(\\frac{x+4}{x(x-1)}\\)`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "535s",
+                    marks: [3],
                     topics: ["Add or subtract Algebraic Fractions"]
                 },
                 {
@@ -107,6 +121,7 @@ export const pastpaper2025 = {
                     answer: `(a) \\((2x+3)(x+1)\\), (b) Proof, (c) Length 9 cm, Breadth 4 cm`,
                     videoId: "1QY10VDwJ6s",
                     timestamp: "572s",
+                    marks: [1, 2, 3],
                     topics: ["Create equation in geometric context", "Quadratic equation by factorising"]
                 }
             ]
@@ -119,6 +134,7 @@ export const pastpaper2025 = {
                     answer: `128 440`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "16s",
+                    marks: [3],
                     topics: ["Appreciation and Depreciation"]
                 },
                 {
@@ -126,6 +142,7 @@ export const pastpaper2025 = {
                     answer: `4850 cm³`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "57s",
+                    marks: [3],
                     topics: ["Volume - simple shape"]
                 },
                 {
@@ -133,6 +150,7 @@ export const pastpaper2025 = {
                     answer: `\\(1.99 \\times 10^{-23}\\) grams`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "151s",
+                    marks: [2],
                     topics: ["Scientific notation"]
                 },
                 {
@@ -140,6 +158,7 @@ export const pastpaper2025 = {
                     answer: `(a) Mean 98, SD 7.1, (b) Scotland players lighter on average. Scotland weights more varied.`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "209s",
+                    marks: [4, 2],
                     topics: ["Standard Deviation", "Comparing Calculated Statistics"]
                 },
                 {
@@ -147,6 +166,7 @@ export const pastpaper2025 = {
                     answer: `\\((x+5)^{2}-6\\)`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "509s",
+                    marks: [2],
                     topics: ["Completing the square"]
                 },
                 {
@@ -154,6 +174,7 @@ export const pastpaper2025 = {
                     answer: `334 cm²`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "534s",
+                    marks: [3],
                     topics: ["Sector area"]
                 },
                 {
@@ -161,6 +182,7 @@ export const pastpaper2025 = {
                     answer: `43°`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "587s",
+                    marks: [2],
                     topics: ["Angles in regular polygons"]
                 },
                 {
@@ -168,6 +190,7 @@ export const pastpaper2025 = {
                     answer: `(a) (4, 3, 12), (b) 13`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "692s",
+                    marks: [1, 3],
                     topics: ["Pythagoras in 3d", "3d Coordinates"]
                 },
                 {
@@ -175,6 +198,7 @@ export const pastpaper2025 = {
                     answer: `\\(k = \\frac{4(B+3c)}{c^{2}}\\)`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "818s",
+                    marks: [3],
                     topics: ["Changing the subject of a formula"]
                 },
                 {
@@ -182,6 +206,7 @@ export const pastpaper2025 = {
                     answer: `(a) \\(7p+3e=2400\\), (b) \\(3p+4e=1300\\), (c) 2300 kg`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "865s",
+                    marks: [1, 1, 4],
                     topics: ["Simultaneous equations"]
                 },
                 {
@@ -189,6 +214,7 @@ export const pastpaper2025 = {
                     answer: `121.5 cm²`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "1100s",
+                    marks: [3],
                     topics: ["Similar areas/volumes"]
                 },
                 {
@@ -196,6 +222,7 @@ export const pastpaper2025 = {
                     answer: `186°`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "1177s",
+                    marks: [4],
                     topics: ["Sine rule: calculate angle", "Bearings in Trigonometry questions"]
                 },
                 {
@@ -203,6 +230,7 @@ export const pastpaper2025 = {
                     answer: `\\(x=\\frac{3}{7}\\)`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "1385s",
+                    marks: [3],
                     topics: ["Linear equations and inequations"]
                 },
                 {
@@ -210,6 +238,7 @@ export const pastpaper2025 = {
                     answer: `\\(x=112, 248\\)`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "1447s",
+                    marks: [4],
                     topics: ["Trigonometric equation"]
                 },
                 {
@@ -217,6 +246,7 @@ export const pastpaper2025 = {
                     answer: `\\(\\frac{4}{3}\\mathbf{s}+\\frac{1}{3}\\mathbf{r}\\)`,
                     videoId: "0kEd8lvqwMQ",
                     timestamp: "1573s",
+                    marks: [2],
                     topics: ["Vector pathways"]
                 }
             ]

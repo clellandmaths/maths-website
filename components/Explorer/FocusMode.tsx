@@ -7,6 +7,7 @@ import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
+import Marks from '@/components/Marks';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -149,6 +150,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
                     {topic}
                   </span>
                 ))}
+                <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
               </div>
 
               {/* Question content */}

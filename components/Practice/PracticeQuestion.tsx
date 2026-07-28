@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Eye, Play, ExternalLink } from 'lucide-react';
+import Marks from '@/components/Marks';
 import type { CourseTheme } from '@/lib/course-theme';
 
 // One practice question. Question and answer HTML arrive already rendered to
@@ -23,11 +24,12 @@ interface Props {
   timestamp?: number;
   paper?: string;
   solutionUrl?: string;
+  marks?: number[];
   theme: CourseTheme;
 }
 
 export default function PracticeQuestion({
-  index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, theme,
+  index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks, theme,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -62,10 +64,15 @@ export default function PracticeQuestion({
       <div className="flex items-start gap-3 mb-3">
         <span className={`font-mono text-xs ${theme.text} shrink-0 mt-1`}>{index}</span>
         <div className="min-w-0 flex-1">
-          {paper && (
-            <span className="inline-block font-mono text-[11px] text-muted-foreground border border-border rounded px-1.5 py-0.5 mb-2">
-              {paper}
-            </span>
+          {(paper || marks) && (
+            <div className="flex items-center gap-2 flex-wrap mb-2">
+              {paper && (
+                <span className="inline-block font-mono text-[11px] text-muted-foreground border border-border rounded px-1.5 py-0.5">
+                  {paper}
+                </span>
+              )}
+              <Marks marks={marks} theme={theme} />
+            </div>
           )}
           <div
             className="prose-practice text-foreground"

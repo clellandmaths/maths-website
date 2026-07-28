@@ -9,6 +9,7 @@ export const higherPastPaper2019 = {
           answer: `\\(x=0\\) and \\(x=3\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "0s",
+                    marks: [4],
           topics: ["Find stationary points and determine nature"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2019 = {
           answer: `\\(k=3\\), \\(k=7\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "58s",
+                    marks: [3],
           topics: ["Discriminant and Quadratics"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2019 = {
           answer: `\\((x-4)^{2}+(y+2)^{2}=36\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "145s",
+                    marks: [2],
           topics: ["Circle equation from radius/centre or vice versa"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(m=\\frac{2}{3}\\), \\(c=5\\)<br>(b) \\(u_{4}=\\frac{37}{3}\\) (or \\(12\\frac{1}{3}\\))`,
           videoId: "I8WkRoWL8as",
           timestamp: "240s",
+                    marks: [3, 1],
           topics: ["Go backwards to find recurrence relation when terms known"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2019 = {
           answer: `(a) Proof (showing vectors are parallel and share a common point)<br>(b) 3:4`,
           videoId: "I8WkRoWL8as",
           timestamp: "349s",
+                    marks: [3, 1],
           topics: ["Collinearity (in 3d or 2d)", "Ratio in which one point divides two others"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2019 = {
           answer: `\\(15(1-3x)^{-6}\\) or \\(\\frac{15}{(1-3x)^{6}}\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "504s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: composite function"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2019 = {
           answer: `\\(y=-\\sqrt{3}x-4\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "549s",
+                    marks: [4],
           topics: ["Perpendicular and parallel lines", "Angles and straight lines: m = tanθ"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(\\int_{-1}^{2}(-x^{2}+x+2)dx\\)<br>(b) \\(\\frac{9}{2}\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "599s",
+                    marks: [1, 3],
           topics: ["Areas using integration"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2019 = {
           answer: `(a)(i) \\(2p^{2}+16p+30\\)<br>(a)(ii) \\(p=-5\\), \\(p=-3\\)<br>(b) \\(p=-32\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "831s",
+                    marks: [1, 3, 2],
           topics: ["Perpendicular vectors and the scalar product"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(a=3\\)<br>(b) \\(k=-2\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "1022s",
+                    marks: [1, 1],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2019 = {
           answer: `\\(\\frac{1}{3}\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "1101s",
+                    marks: [4],
           topics: ["Integrate (definite or indefinite): trigonometric expression"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(\\frac{1}{\\sqrt{5-x}}\\) <br>(b) \\(x\\ge 5\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "1329s",
+                    marks: [2, 1],
           topics: ["Domain and range", "Composite functions"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2019 = {
           answer: `(a)(i) \\(\\frac{2}{\\sqrt{5}}\\), (ii) \\(\\frac{3}{\\sqrt{10}}\\) <br>(b) \\(\\frac{1}{\\sqrt{2}}\\) (or \\(\\frac{\\sqrt{2}}{2}\\))`,
           videoId: "I8WkRoWL8as",
           timestamp: "1406s",
+                    marks: [1, 1, 3],
           topics: ["Apply compound angle formula to simplify or evaluate"]
         },
         {
@@ -100,6 +113,7 @@ export const higherPastPaper2019 = {
           answer: `(a) 2<br>(b) \\(x=14\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "1589s",
+                    marks: [3, 3],
           topics: ["Simplify numerical expression involving logs/exponentials", "Solving equations containing a logarithm"]
         },
         {
@@ -107,6 +121,7 @@ export const higherPastPaper2019 = {
           answer: `(a) 90, 270, no solutions<br>(b) 45, 135, 225, 315`,
           videoId: "I8WkRoWL8as",
           timestamp: "1706s",
+                    marks: [4, 1],
           topics: ["Solving a trigonometric equation using formula for sin(2x)"]
         },
         {
@@ -114,6 +129,7 @@ export const higherPastPaper2019 = {
           answer: `(a) Proof<br>(b) \\(k \\lt -6\\) or \\(k \\gt 2\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "1905s",
+                    marks: [2, 4],
           topics: ["Quadratic inequations"]
         },
         {
@@ -121,6 +137,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(1-\\sin 2x\\)<br>(b) \\(x+\\frac{1}{2}\\cos 2x+c\\)`,
           videoId: "I8WkRoWL8as",
           timestamp: "2089s",
+                    marks: [3, 2],
           topics: ["Proving a trigonometric identity"]
         }
       ]
@@ -133,6 +150,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(x+3y+13=0\\)<br>(b) \\(y=x-7\\) (or \\(x-y-7=0\\))<br>(c) \\((2,-5)\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "0s",
+                    marks: [3, 3, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2019 = {
           answer: `\\(4x^{\\frac{3}{2}}+2x^{-2}+5x+c\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "316s",
+                    marks: [4],
           topics: ["Integrate (definite or indefinite): polynomial"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(\\mathbf{r}-\\mathbf{p}\\)<br>(b) \\(\\mathbf{p}-\\mathbf{r}+\\frac{3}{4}\\mathbf{q}\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "417s",
+                    marks: [1, 2],
           topics: ["Ratio in which one point divides two others", "Basic vector paths (now in N5 maths)", "Vector pathways in geometric diagrams"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(a=0.973\\), \\(b=30\\)<br>(b)(i) Limit exists because \\(-1 \\lt 0.973 \\lt 1\\)<br>(b)(ii) 1100`,
           videoId: "Enrov8kIzeQ",
           timestamp: "512s",
+                    marks: [1, 1, 2],
           topics: ["Write a recurrence relation formula from a real-life situation", "Limits of recurrence relations"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2019 = {
           answer: `Sketch of a upward opening parabola (U Shape) crossing x-axis at -2 and 4.`,
           videoId: "Enrov8kIzeQ",
           timestamp: "635s",
+                    marks: [2],
           topics: ["The graph of the derived function"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(\\sqrt{13}\\cos(x+56.3)^{\\circ}\\)<br>(b) \\(x=270\\), \\(x=337.4\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "741s",
+                    marks: [4, 3],
           topics: ["Wave function (y = asin x ± bcosx)", "Trig equation involving compound angle"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(-6(x-2)^{2}-1\\)<br>(b) \\(f^{\\prime}(x) = -6(x-2)^{2}-1\\), which is always negative (since square term is non-negative and multiplied by -6, then subtract 1).`,
           videoId: "Enrov8kIzeQ",
           timestamp: "1049s",
+                    marks: [3, 3],
           topics: ["Completing the square", "Increasing/decreasing: show that, or find values for which"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(f^{-1}(x)=(x-8)^{3}\\)<br>(b) \\(9\\le x\\le18\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "1235s",
+                    marks: [3, 1],
           topics: ["Inverse functions", "Domain and range"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2019 = {
           answer: `(a) 120 watts<br>(b) 20.6 years`,
           videoId: "Enrov8kIzeQ",
           timestamp: "1356s",
+                    marks: [1, 4],
           topics: ["Solving equations where the unknown is in the exponent"]
         },
         {
@@ -196,6 +222,7 @@ export const higherPastPaper2019 = {
           answer: `(a) Proof (Remainder = 0)<br>(b) \\((x+3)(x-1)(3x^{2}+4x+2)\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "1539s",
+                    marks: [2, 5],
           topics: ["Cubic/quartic expressions/equations: factorise or solve"]
         },
         {
@@ -203,6 +230,7 @@ export const higherPastPaper2019 = {
           answer: `(a) Proof<br>(b) 1200`,
           videoId: "Enrov8kIzeQ",
           timestamp: "1730s",
+                    marks: [3, 6],
           topics: ["Optimisation"]
         },
         {
@@ -210,6 +238,7 @@ export const higherPastPaper2019 = {
           answer: `\\(a=\\frac{1}{4}\\), \\(b=64\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "2188s",
+                    marks: [5],
           topics: ["Deriving relationship y = ab^x or y = ax^b from straight line"]
         },
         {
@@ -217,6 +246,7 @@ export const higherPastPaper2019 = {
           answer: `\\(f(x)=x^{3}-8x^{2}+11x-28\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "2376s",
+                    marks: [5],
           topics: ["Differential equation"]
         },
         {
@@ -224,6 +254,7 @@ export const higherPastPaper2019 = {
           answer: `\\(75.5^{\\circ}\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "2538s",
+                    marks: [4],
           topics: ["Using the distributive law with the scalar product", "Calculating an angle using the scalar product"]
         },
         {
@@ -231,6 +262,7 @@ export const higherPastPaper2019 = {
           answer: `(a) \\(y=3x-2\\)<br>(b)(i) \\((0,-2)\\), (ii) \\((x-4)^{2}+(y-5)^{2}=65\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "2651s",
+                    marks: [3, 1, 3],
           topics: ["Equation of a tangent to a circle at a point", "Circle equation from radius/centre or vice versa"]
         }
       ]

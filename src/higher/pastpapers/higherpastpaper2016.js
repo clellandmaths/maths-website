@@ -9,6 +9,7 @@ export const higherPastPaper2016 = {
           answer: `\\(y+4x=-5\\) or \\(y=-4x-5\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "0s",
+                    marks: [2],
           topics: ["Perpendicular and parallel lines"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2016 = {
           answer: `\\(36x^{2}+4x^{-\\frac{1}{2}}\\) or \\(36x^{2}+\\frac{4}{\\sqrt{x}}\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "64s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: polynomial"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2016 = {
           answer: `(a) 12<br>(b) A limit exists because \\(-1 \\lt \\frac{1}{3} \\lt 1\\)<br>(c) 15`,
           videoId: "lOTDQhyKvRs",
           timestamp: "114s",
+                    marks: [1, 1, 2],
           topics: ["Find a specific term of a recurrence relation", "Limits of recurrence relations"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2016 = {
           answer: `\\((x+3)^{2}+(y-4)^{2}=17\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "224s",
+                    marks: [3],
           topics: ["Circle equation from radius/centre or vice versa"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2016 = {
           answer: `\\(2 \\sin(4x+1)+c\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "331s",
+                    marks: [2],
           topics: ["Integrate (definite or indefinite): trigonometric expression"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(f^{-1}(x)=\\frac{x-5}{3}\\)<br>(b) 2`,
           videoId: "lOTDQhyKvRs",
           timestamp: "368s",
+                    marks: [3, 1],
           topics: ["Inverse functions"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(\\mathbf{i}+3\\mathbf{j}-4\\mathbf{k}\\)<br>(b) \\(-\\mathbf{i}-5\\mathbf{k}\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "438s",
+                    marks: [2, 2],
           topics: ["Vector pathways in geometric diagrams"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2016 = {
           answer: `Proof (discriminant is 0 or repeated roots). Point of contact \\((2, 1).\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "604s",
+                    marks: [5],
           topics: ["Intersections of lines and circles (including showing tangency)"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(x=-4\\) and \\(x=2\\)<br>(b) \\(x \\lt -4\\) and \\(x \\gt 2\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "780s",
+                    marks: [4, 2],
           topics: ["Find stationary points and determine nature", "Quadratic inequations", "Increasing/decreasing: show that, or find values for which"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2016 = {
           answer: `Sketch of \\(y=4^x\\) passing through \\((0, 1)\\) and \\((1, 4).\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "972s",
+                    marks: [2],
           topics: ["Graphs of logarithmic or exponential functions"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\((2, 1, 0)\\)<br>(b) \\(k=\\frac{1}{9}\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "1031s",
+                    marks: [2, 3],
           topics: ["Ratio in which one point divides two others"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2016 = {
           answer: `(a) Proof<br>(b) \\(2(x-2)^{2}+3\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "1269s",
+                    marks: [2, 3],
           topics: ["Composite functions", "Completing the square"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2016 = {
           answer: `Proof showing \\(\\cos(q-p) = \\frac{19\\sqrt{17}}{85}\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "1458s",
+                    marks: [5],
           topics: ["Apply compound angle formula to simplify or evaluate"]
         },
         {
@@ -100,6 +113,7 @@ export const higherPastPaper2016 = {
           answer: `(a) 2<br>(b) \\(x=8\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "1632s",
+                    marks: [1, 5],
           topics: ["Simplify numerical expression involving logs/exponentials", "Solving equations containing a logarithm"]
         },
         {
@@ -107,6 +121,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(a=4, b=-5, k=-\\frac{1}{12}\\)<br>(b) \\(d \\gt 9\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "1743s",
+                    marks: [3, 1],
           topics: ["Identify polynomial equation when shown graph/roots", "Identifying/sketching graphs of related functions (non-trigonometric)"]
         }
       ]
@@ -119,6 +134,7 @@ export const higherPastPaper2016 = {
           answer: `(a)(i) \\((2, 4)\\), (ii) \\(y=4x-4\\)<br>(b) \\(y=-x+6\\)<br>(c) Midpoint of PR is \\((5, 1).\\) Check: \\(1 = -5 + 6.\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "0s",
+                    marks: [1, 2, 3, 3],
           topics: ["Altitudes, medians, perpendicular bisectors"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2016 = {
           answer: `\\(p \\lt 2\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "281s",
+                    marks: [3],
           topics: ["Discriminant and Quadratics"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2016 = {
           answer: `(a)(i) Proof (using synthetic division or substitution). (ii) \\(x=-1, 2, 3.5\\)<br>(b)(i) A(-1,0), B(2,0). (ii) 27`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "362s",
+                    marks: [2, 3, 1, 4],
           topics: ["Cubic/quartic expressions/equations: factorise or solve", "Areas using integration"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(C_1: (-5, 6), r_1=3\\); \\(C_2: (3, 0), r_2=5\\)<br>(b) Distance between centres is 10. Sum of radii is 8. \\(10 \\gt 8\\), so they do not intersect.`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "671s",
+                    marks: [4, 3],
           topics: ["Intersections of two circles", "Circle equation from radius/centre or vice versa"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(\\vec{AB}=\\begin{pmatrix}-8\\\\16\\\\2\\end{pmatrix}\\), \\(\\vec{AC}=\\begin{pmatrix}-2\\\\-8\\\\16\\end{pmatrix}\\)<br>(b) \\(104.3^{\\circ}\\) (or 1.82 rad)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "843s",
+                    marks: [2, 4],
           topics: ["Calculating an angle using the scalar product"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2016 = {
           answer: `(a) 200<br>(b) \\(t = 6.478\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "1103s",
+                    marks: [1, 4],
           topics: ["Solving equations where the unknown is in the exponent"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2016 = {
           answer: `(a) Proof<br>(b) \\(x=4\\) metres`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "1222s",
+                    marks: [3, 6],
           topics: ["Optimisation"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(\\sqrt{29}\\cos(x+0.38)\\)<br>(b) \\(x=0.8\\) and \\(x=4.7\\) (approx)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "1536s",
+                    marks: [4, 4],
           topics: ["Trig equation involving compound angle", "Wave function (y = asin x ± bcosx)"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2016 = {
           answer: `\\(f(x)=\\frac{4}{3}x^{\\frac{3}{2}}+2x^{\\frac{1}{2}}-2\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "1904s",
+                    marks: [4],
           topics: ["Differential equation"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2016 = {
           answer: `(a) \\(\\frac{x}{\\sqrt{x^2+7}}\\)<br>(b) \\(4(x^2+7)^{\\frac{1}{2}}+c\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "2125s",
+                    marks: [2, 1],
           topics: ["Integrate or differentiate non-standard function using given facts", "Differentiate or evaluate derivative: composite function"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2016 = {
           answer: `(a) Proof<br>(b) \\(2\\sin 2x\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "2235s",
+                    marks: [4, 2],
           topics: ["Proving a trigonometric identity", "Integrate or differentiate non-standard function using given facts", "Differentiate or evaluate derivative: trigonometric expression"]
         }
       ]

@@ -9,6 +9,7 @@ export const higherPastPaper2017 = {
           answer: `(a) 10<br>(b) \\(2 \\cos(5x)\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "0s",
+                    marks: [1, 2],
           topics: ["Composite functions"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2017 = {
           answer: `\\(y=-3x-5\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "84s",
+                    marks: [4],
           topics: ["Equation of a tangent to a circle at a point"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2017 = {
           answer: `\\(48(4x-1)^{11}\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "195s",
+                    marks: [2],
           topics: ["Differentiate or evaluate derivative: composite function"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2017 = {
           answer: `\\(k=9\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "221s",
+                    marks: [3],
           topics: ["Discriminant and Quadratics"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2017 = {
           answer: `(a) 1<br>(b) 4.5`,
           videoId: "-2Gcx6LHREc",
           timestamp: "289s",
+                    marks: [1, 3],
           topics: ["Scalar product"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2017 = {
           answer: `\\(h^{-1}(x)=\\sqrt[3]{x-7}\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "453s",
+                    marks: [3],
           topics: ["Inverse functions"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2017 = {
           answer: `\\(x=2\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "498s",
+                    marks: [3],
           topics: ["Altitudes, medians, perpendicular bisectors"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2017 = {
           answer: `\\(-\\frac{1}{50}\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "618s",
+                    marks: [3],
           topics: ["Differentiate or evaluate derivative: polynomial"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(m=\\frac{1}{4}\\)<br>(b) Limit is 8`,
           videoId: "-2Gcx6LHREc",
           timestamp: "680s",
+                    marks: [2, 1, 2],
           topics: ["Limits of recurrence relations", "Go backwards to find recurrence relation when terms known"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(\\frac{8}{3}\\)<br>(b) \\(\\frac{1}{2}\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "780s",
+                    marks: [5, 4],
           topics: ["Areas using integration"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2017 = {
           answer: `\\(a=10\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "1087s",
+                    marks: [3],
           topics: ["Perpendicular and parallel lines"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2017 = {
           answer: `\\(a=81\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "1156s",
+                    marks: [3],
           topics: ["Solving equations containing a logarithm"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2017 = {
           answer: `\\(-\\frac{1}{2}(5-4x)^{\\frac{1}{2}}+c\\)`,
           videoId: "-2Gcx6LHREc",
           timestamp: "1201s",
+                    marks: [4],
           topics: ["Integrate (definite or indefinite): (px + q)^n"]
         },
         {
@@ -100,6 +113,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(2\\sin(x-30)^{\\circ}\\)<br>(b) Sketch of sine wave with amplitude 2, shifted 30 degrees to the right.`,
           videoId: "-2Gcx6LHREc",
           timestamp: "1270s",
+                    marks: [4, 3],
           topics: ["Wave function (y = asin x ± bcosx)", "Identifying/sketching graphs of related functions (trigonometric)"]
         },
         {
@@ -107,6 +121,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(a=-5, b=3\\)<br>(b) 10<br>(c) -6`,
           videoId: "-2Gcx6LHREc",
           timestamp: "1514s",
+                    marks: [2, 1, 1],
           topics: ["Identifying/sketching graphs of related functions (non-trigonometric)"]
         }
       ]
@@ -119,6 +134,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(y=3x-19\\)<br>(b) \\(y=x-3\\)<br>(c) \\((8, 5)\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "0s",
+                    marks: [4, 2, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Angles and straight lines: m = tanθ", "Intersection of straight lines"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2017 = {
           answer: `(a) Proof (Remainder is 0)<br>(b) \\(x=-\\frac{1}{2}, 1, 2\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "196s",
+                    marks: [2, 3],
           topics: ["Cubic/quartic expressions/equations: factorise or solve"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2017 = {
           answer: `\\((2, 6)\\) and \\((-1, -3)\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "317s",
+                    marks: [5],
           topics: ["Intersections of lines and circles (including showing tangency)"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(3(x+4)^{2}+2\\)<br>(b) \\(3x^{2}+24x+50\\)<br>(c) \\(f'(x)=3(x+4)^{2}+2\\), which is always \\(\\ge 2\\) (positive), so strictly increasing.`,
           videoId: "VhgnQl6gh14",
           timestamp: "451s",
+                    marks: [3, 2, 2],
           topics: ["Completing the square", "Differentiate or evaluate derivative: polynomial", "Increasing/decreasing: show that, or find values for which"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(-3\\mathbf{i}-4\\mathbf{j}+5\\mathbf{k}\\)<br>(b) Proof<br>(c) \\(45.6^{\\circ}\\) (or 0.795 rad)`,
           videoId: "VhgnQl6gh14",
           timestamp: "638s",
+                    marks: [2, 2, 5],
           topics: ["Ratio in which one point divides two others", "Calculating an angle using the scalar product", "Vector pathways in geometric diagrams"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2017 = {
           answer: `\\(x=0.85, 2.29\\) radians`,
           videoId: "VhgnQl6gh14",
           timestamp: "930s",
+                    marks: [5],
           topics: ["Solving a trigonometric equation using formula for cos(2x)"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2017 = {
           answer: `(a) \\(x=4\\)<br>(b) Greatest value 8, least value 0`,
           videoId: "VhgnQl6gh14",
           timestamp: "1145s",
+                    marks: [4, 3],
           topics: ["Find stationary points and determine nature", "Optimisation on a closed interval"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2017 = {
           answer: `(a) Proof<br>(b) \\(-1 \\lt k \\lt 5\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "1330s",
+                    marks: [2, 4],
           topics: ["Find a specific term of a recurrence relation", "Quadratic inequations"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2017 = {
           answer: `\\(k=8, n=\\frac{1}{4}\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "1538s",
+                    marks: [5],
           topics: ["Deriving relationship y = ab^x or y = ax^b from straight line"]
         },
         {
@@ -182,6 +206,7 @@ export const higherPastPaper2017 = {
           answer: `(a) Proof (Gradients AB and BC are equal)<br>(b) \\((x-8)^{2}+(y-3)^{2}=360\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "1686s",
+                    marks: [3, 4],
           topics: ["Collinearity (in 3d or 2d)", "Circle equation from radius/centre or vice versa"]
         },
         {
@@ -189,6 +214,7 @@ export const higherPastPaper2017 = {
           answer: `(a) Proof<br>(b) \\(3\\sin^{2}x \\cos x\\)`,
           videoId: "VhgnQl6gh14",
           timestamp: "2013s",
+                    marks: [3, 3],
           topics: ["Proving a trigonometric identity", "Integrate or differentiate non-standard function using given facts"]
         }
       ]

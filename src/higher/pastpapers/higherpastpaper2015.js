@@ -9,6 +9,7 @@ export const higherPastPaper2015 = {
           answer: `\\(t=9\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "0m0s",
+                    marks: [2],
           topics: ["Perpendicular vectors and the scalar product"]
         },
         {
@@ -16,6 +17,7 @@ export const higherPastPaper2015 = {
           answer: `\\(y=24x+35\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "1m8s",
+                    marks: [4],
           topics: ["Equation of a tangent to a curve"]
         },
         {
@@ -23,6 +25,7 @@ export const higherPastPaper2015 = {
           answer: `\\((x+3)(x-4)(x-2)\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "2m35s",
+                    marks: [4],
           topics: ["Cubic/quartic expressions/equations: factorise or solve"]
         },
         {
@@ -30,6 +33,7 @@ export const higherPastPaper2015 = {
           answer: `\\(p=3, q=4, r=1\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "4m12s",
+                    marks: [3],
           topics: ["Identifying/sketching graphs of related functions (trigonometric)"]
         },
         {
@@ -37,6 +41,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(g^{-1}(x)=\\frac{6-x}{2}\\) or \\(3-\\frac{x}{2}\\)<br>(b) \\(x\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "5m46s",
+                    marks: [2, 1],
           topics: ["Inverse functions"]
         },
         {
@@ -44,6 +49,7 @@ export const higherPastPaper2015 = {
           answer: `\\(2\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "7m25s",
+                    marks: [3],
           topics: ["Simplify numerical expression involving logs/exponentials"]
         },
         {
@@ -51,6 +57,7 @@ export const higherPastPaper2015 = {
           answer: `\\(9\\frac{1}{8}\\) or \\(\\frac{73}{8}\\) or \\(9.125\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "8m15s",
+                    marks: [4],
           topics: ["Differentiate or evaluate derivative: polynomial"]
         },
         {
@@ -58,6 +65,7 @@ export const higherPastPaper2015 = {
           answer: `\\(2 \\lt x \\lt 5\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "10m30s",
+                    marks: [4],
           topics: ["Quadratic inequations"]
         },
         {
@@ -65,6 +73,7 @@ export const higherPastPaper2015 = {
           answer: `No, they are not collinear.`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "12m57s",
+                    marks: [3],
           topics: ["Angles and straight lines: m = tanθ", "Perpendicular and parallel lines", "Collinearity (in 3d or 2d)"]
         },
         {
@@ -72,6 +81,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(\\frac{4}{5}\\)<br>(b) \\(\\frac{3}{\\sqrt{10}}\\) or \\(\\frac{3\\sqrt{10}}{10}\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "15m23s",
+                    marks: [1, 2],
           topics: ["Apply double angle formula to simplify or evaluate"]
         },
         {
@@ -79,6 +89,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(y=2x-1\\)<br>(b) \\(p=10\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "17m26s",
+                    marks: [4, 6],
           topics: ["Equation of a tangent to a circle at a point", "Equation of a tangent to a curve"]
         },
         {
@@ -86,6 +97,7 @@ export const higherPastPaper2015 = {
           answer: `\\(-\\frac{1}{2}\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "22m23s",
+                    marks: [2],
           topics: ["Areas using integration"]
         },
         {
@@ -93,6 +105,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(b=5\\)<br>(b) (ii) P'(5,1), Q'(4,0)<br>(c) (2, -7)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "23m44s",
+                    marks: [1, 1, 3, 2],
           topics: ["Graphs of logarithmic or exponential functions", "Identifying/sketching graphs of related functions (non-trigonometric)"]
         },
         {
@@ -100,6 +113,7 @@ export const higherPastPaper2015 = {
           answer: `\\(k=0\\) or \\(k=25\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "28m7s",
+                    marks: [2],
           topics: ["Circle equation from radius/centre or vice versa"]
         },
         {
@@ -107,6 +121,7 @@ export const higherPastPaper2015 = {
           answer: `\\(T = \\frac{1}{50}t^2 - 2t + 100\\)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "31m15s",
+                    marks: [6],
           topics: ["Differential equation"]
         }
       ]
@@ -119,6 +134,7 @@ export const higherPastPaper2015 = {
           answer: `(a) Proof<br>(b) \\(y=2x-3\\)<br>(c) \\((1, -1)\\)`,
           videoId: "O9EH6ssn6WY",
           timestamp: "0m0s",
+                    marks: [4, 3, 2],
           topics: ["Altitudes, medians, perpendicular bisectors", "Intersection of straight lines"]
         },
         {
@@ -126,6 +142,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(15+2x-x^2\\)<br>(b) \\(-(x-1)^2+16\\)<br>(c) \\(x=-3, x=5\\)`,
           videoId: "O9EH6ssn6WY",
           timestamp: "5m0s",
+                    marks: [2, 3, 2],
           topics: ["Composite functions", "Completing the square", "Domain and range"]
         },
         {
@@ -133,6 +150,7 @@ export const higherPastPaper2015 = {
           answer: `(a) 22.75 ft<br>(b) The frog will not escape (limit 48 ft), but the toad will escape (limit 52 ft).`,
           videoId: "O9EH6ssn6WY",
           timestamp: "8m53s",
+                    marks: [1, 5],
           topics: ["Find a specific term of a recurrence relation", "Limits of recurrence relations"]
         },
         {
@@ -140,6 +158,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(x=2\\)<br>(b) \\(\\frac{19}{3}\\) square units`,
           videoId: "O9EH6ssn6WY",
           timestamp: "14m1s",
+                    marks: [2, 7],
           topics: ["Areas using integration"]
         },
         {
@@ -147,6 +166,7 @@ export const higherPastPaper2015 = {
           answer: `(a) 15<br>(b) \\((x-6)^{2}+(y-7)^{2}=400\\)`,
           videoId: "O9EH6ssn6WY",
           timestamp: "21m50s",
+                    marks: [4, 4],
           topics: ["Intersections of two circles", "Circle equation from radius/centre or vice versa"]
         },
         {
@@ -154,6 +174,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(4.5\\)<br>(b) \\(\\mathbf{p}-\\mathbf{q}+\\mathbf{r}\\)<br>(c) \\(|\\mathbf{r}|=6\\)`,
           videoId: "O9EH6ssn6WY",
           timestamp: "27m30s",
+                    marks: [3, 1, 3],
           topics: ["Using the distributive law with the scalar product", "Vector pathways in geometric diagrams", "Scalar product"]
         },
         {
@@ -161,6 +182,7 @@ export const higherPastPaper2015 = {
           answer: `(a) \\(\\frac{3}{2}\\sin 2x + x + c\\)<br>(b) Proof<br>(c) \\(-\\frac{3}{4}\\sin 2x - \\frac{1}{2}x + c\\)`,
           videoId: "O9EH6ssn6WY",
           timestamp: "35m1s",
+                    marks: [2, 2, 2],
           topics: ["Integrate (definite or indefinite): trigonometric expression", "Apply double angle formula to simplify or evaluate", "Proving a trigonometric identity"]
         },
         {
@@ -168,6 +190,7 @@ export const higherPastPaper2015 = {
           answer: `(a)(i) 104 tenths of a second<br>(ii) 110 tenths of a second<br>(b) \\(x=8\\), minimum time 98 tenths of a second`,
           videoId: "O9EH6ssn6WY",
           timestamp: "39m42s",
+                    marks: [1, 1, 8],
           topics: ["Optimisation"]
         },
         {
@@ -175,6 +198,7 @@ export const higherPastPaper2015 = {
           answer: `\\(k=39, a=0.395\\) rad (or \\(22.6^{\\circ}\\))<br>\\(t=1.006\\) s and \\(t=1.615\\) s`,
           videoId: "O9EH6ssn6WY",
           timestamp: "46m52s",
+                    marks: [8],
           topics: ["Apply compound angle formula to simplify or evaluate", "Wave function (y = asin x ± bcosx)", "Trig equation involving compound angle"]
         }
       ]
