@@ -71,11 +71,17 @@ than the two surfaces drifting apart.
 
 Measured, not assumed:
 
-| | |
-|---|---|
-| Total JS, whole site (code-split per route) | 1.8 MB across 81 files |
-| **Largest prerendered page** | **1.5 MB** — `ah/papers/2018/paper-1.html` |
-| KaTeX fonts | shipped as `.ttf`, `.woff` **and** `.woff2` |
+| | Raw | Downloaded (gzip) |
+|---|---|---|
+| Total JS, whole site (code-split per route) | 1.8 MB / 81 files | — |
+| Largest page — `ah/papers/2018/paper-1.html` | 1,593 KB | **78 KB** |
+| Explorer | 29 KB | 5 KB |
+| Past paper pages | 71 pages, mean 341 KB | — |
+
+**The large paper pages are not a problem.** Prerendered KaTeX is thousands of
+near-identical spans, which compresses ~95%. Cloudflare serves gzip/brotli, so
+the worst page on the site is about 78 KB over the wire. Judge page weight by
+the compressed figure; the raw number is misleading.
 
 ### What the site already does well
 
@@ -92,17 +98,13 @@ Most of what you'd do by hand in a vanilla app, Next does automatically:
 
 ### What actually needs attention
 
-1. **The 1.5 MB paper pages.** Maths is rendered to KaTeX HTML at build time so
-   it is crawlable and does not shift layout — a good trade, but KaTeX markup is
-   verbose. Worth checking whether the very largest AH paper pages should render
-   maths on the client instead, accepting a small layout shift for a much
-   smaller document.
-2. **Three font formats.** `woff2` covers every browser in use; `.ttf` and
-   `.woff` are dead weight unless we care about very old browsers.
-3. **Guided practice data is the next risk.** 406 National 5 questions, plus
-   Higher and Advanced Higher to come. If that is imported statically it lands
-   in the shared bundle and every page pays for it. It must be loaded with
-   `import()` per course — the same pattern `DataBookletModal` already uses.
+1. **Guided practice data — the one real risk.** 406 National 5 questions, plus
+   Higher and Advanced Higher to come. Imported statically it joins the shared
+   JS bundle and every page pays for it on first load, and unlike HTML that cost
+   does not compress away. It must be loaded with `import()` per course — the
+   pattern `DataBookletModal` already uses.
+2. **Three font formats.** KaTeX ships `.ttf`, `.woff` and `.woff2`. `woff2`
+   covers every browser in use; minor, and only worth doing opportunistically.
 
 ### Rule for the practice build
 
