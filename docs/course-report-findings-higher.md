@@ -16,9 +16,15 @@ published reports themselves.
 > document**. The text below was extracted from the PDF content streams directly.
 > Do not add to this file from a search summary.
 
-**Naming.** In notes content these are cited as "the 2025 Course Report" —
-dated and accurate, without an organisation name, matching the org-neutral
-box heading.
+**This file is internal and is never cited on the site.** The published notes
+must stay **evergreen**, so no traps box names a Course Report, a year, or an
+exam diet — content that says "in the 2024 exam" is stale by the next session.
+The findings below still drive what the boxes say; they are simply written as
+settled teaching knowledge ("negative indices are the most reliable source of
+dropped marks") rather than as dated citations.
+
+Keep adding to this file as new reports appear — it is what stops the traps
+drifting into invention — but keep the dates on this side of the line.
 
 ---
 

@@ -2528,9 +2528,9 @@ export const higherAppsData: Section[] = [
                 <p className="text-rose-100/80 mb-2">
                   An excess is a mandatory minimum amount that the customer must pay towards the cost of a claim before the insurance company pays the remainder.
                 </p>
-                <p className="text-rose-100/80 font-semibold mb-2">The SQA Examiner Trap:</p>
+                <p className="text-rose-100/80 font-semibold mb-2">Common Examiner Trap:</p>
                 <p className="text-rose-100/80 mb-2">
-                  In the 2024 exam, many students incorrectly stated that an excess is a "pot of money" that can be used to repair an item. You must <strong>never</strong> describe it this way; it is <em>your own money</em> that you must hand over when you make a claim!
+                  A very common error is to describe an excess as a &ldquo;pot of money&rdquo; that can be used to repair an item. You must <strong>never</strong> describe it this way; it is <em>your own money</em> that you must hand over when you make a claim!
                 </p>
                 <p className="text-rose-100/80">
                   <strong>Balancing Risk:</strong> Choosing a policy with a higher excess reduces the financial risk for the insurance company. Therefore, a higher excess will generally result in a lower premium for the customer.
