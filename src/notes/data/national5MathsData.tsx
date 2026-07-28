@@ -10,7 +10,7 @@ export const national5MathsData: Section[] = [
       {
         id: "fractions",
         title: "Fractions",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/53PsE0cXAu0",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -123,7 +123,7 @@ export const national5MathsData: Section[] = [
       {
         id: "percentages",
         title: "Percentages",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/Mi6kgQZmX7M",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -240,7 +240,7 @@ export const national5MathsData: Section[] = [
       {
         id: "surds",
         title: "Surds",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/EDgTB5nobk0",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -385,7 +385,7 @@ export const national5MathsData: Section[] = [
       {
         id: "indices",
         title: "Indices",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/DldNSN5D0vQ",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -534,7 +534,7 @@ export const national5MathsData: Section[] = [
       {
         id: "scientific-notation",
         title: "Scientific notation",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/fepyJHUAcRk",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -628,7 +628,7 @@ export const national5MathsData: Section[] = [
       {
         id: "rounding",
         title: "Rounding",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/AC00r7UwLEI",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -726,7 +726,7 @@ export const national5MathsData: Section[] = [
       {
         id: "expanding",
         title: "Expanding",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/HFK6XYYp-FU",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -823,7 +823,7 @@ export const national5MathsData: Section[] = [
       {
         id: "factorising",
         title: "Factorising",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/oOTGt2pm5is",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -951,7 +951,7 @@ export const national5MathsData: Section[] = [
       {
         id: "functions",
         title: "Functions",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/T__kY8zKOts",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -1058,7 +1058,7 @@ export const national5MathsData: Section[] = [
       {
         id: "straight-line",
         title: "Straight line",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -1183,7 +1183,7 @@ export const national5MathsData: Section[] = [
       {
         id: "equations",
         title: "Equations",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/Nw6MwxfxLak",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -1292,7 +1292,7 @@ export const national5MathsData: Section[] = [
       {
         id: "inequalities",
         title: "Inequalities",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/cB1vHiKQu2A",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -1383,7 +1383,7 @@ export const national5MathsData: Section[] = [
       {
         id: "algebraic-fractions",
         title: "Algebraic fractions",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/RQ9h0QdidV8",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -1527,7 +1527,7 @@ export const national5MathsData: Section[] = [
       {
         id: "change-of-subject",
         title: "Change of subject",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/i8gdFHvaL88",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -1636,7 +1636,7 @@ export const national5MathsData: Section[] = [
       {
         id: "simultaneous-equations",
         title: "Simultaneous equations",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/gJ4OMGXTCyI",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -1756,7 +1756,7 @@ export const national5MathsData: Section[] = [
       {
         id: "completing-the-square",
         title: "Completing the square",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/xfilfExHe2E",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -1835,7 +1835,7 @@ export const national5MathsData: Section[] = [
       {
         id: "quadratic-graphs",
         title: "Quadratic Graphs",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/G8dC4UTU4rY",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The graph of a quadratic function is a <strong>parabola</strong>. You should be able to read its key features straight from the equation, and — going the other way — work out the equation from a graph.</p>
@@ -1960,7 +1960,7 @@ export const national5MathsData: Section[] = [
       {
         id: "quadratics",
         title: "Solving Quadratic Equations",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/G8dC4UTU4rY",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -2099,7 +2099,7 @@ export const national5MathsData: Section[] = [
       {
         id: "gradient",
         title: "Gradient",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/pXnz7Xmx8R4",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -2180,7 +2180,7 @@ export const national5MathsData: Section[] = [
       {
         id: "arcs-sectors",
         title: "Arcs & sectors",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/B-KPRnhEcaQ",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -2281,7 +2281,7 @@ export const national5MathsData: Section[] = [
       {
         id: "volume",
         title: "Volume",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/BE2iN-HM2m0",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -2366,7 +2366,7 @@ export const national5MathsData: Section[] = [
       {
         id: "pythagoras",
         title: "Pythagoras",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/P7Kaza8Ot_w",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -2447,7 +2447,7 @@ export const national5MathsData: Section[] = [
       {
         id: "angles-in-shapes",
         title: "Angles in shapes",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/GPN6PXMDIPo",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -2531,7 +2531,7 @@ export const national5MathsData: Section[] = [
       {
         id: "similarity",
         title: "Similarity",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/Vdr3WypZJhk",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -2610,7 +2610,7 @@ export const national5MathsData: Section[] = [
       {
         id: "vectors",
         title: "Vectors",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/LbjRj3AIfyQ",
         theory: (
           <div className="space-y-4 text-slate-300">
             <div>
@@ -2708,7 +2708,7 @@ export const national5MathsData: Section[] = [
       {
         id: "3d-coordinates",
         title: "3D coordinates",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/PIwYneqDKXM",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>
@@ -2771,7 +2771,7 @@ export const national5MathsData: Section[] = [
       {
         id: "area-of-triangle",
         title: "Area of a Triangle",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/JbWh5FXL2HA",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The area of any non-right-angled triangle can be calculated if you know the lengths of two sides and the size of the angle included between them.</p>
@@ -2870,7 +2870,7 @@ export const national5MathsData: Section[] = [
       {
         id: "sine-rule",
         title: "Sine Rule",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/EKg4x9-JCIc",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The Sine Rule is used for non-right-angled triangles when you know one corresponding side-and-angle pair, plus one additional piece of information.</p>
@@ -2966,7 +2966,7 @@ export const national5MathsData: Section[] = [
       {
         id: "cosine-rule",
         title: "Cosine Rule",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/HOf68yEUcg4",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The Cosine Rule is used to find a missing side when two sides and the included angle are known, or to find a missing angle when all three sides are known.</p>
@@ -3053,7 +3053,7 @@ export const national5MathsData: Section[] = [
       {
         id: "bearings",
         title: "Bearings",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/BCpGCSUkdhg",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Bearings use trigonometry (often the sine or cosine rules) to calculate a distance or direction.</p>
@@ -3146,7 +3146,7 @@ export const national5MathsData: Section[] = [
       {
         id: "trig-graphs",
         title: "Trig Graphs",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/swTl5ge5HVA",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>You must be familiar with the basic shapes of <InlineMath math="y = \sin x" />, <InlineMath math="y = \cos x" />, and <InlineMath math="y = \tan x" /> graphs between <InlineMath math="0^\circ" /> and <InlineMath math="360^\circ" />.</p>
@@ -3234,7 +3234,7 @@ export const national5MathsData: Section[] = [
       {
         id: "trig-equations",
         title: "Trig Equations",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/z-LJgscYobI",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>You must be able to solve trigonometric equations for a given domain (usually <InlineMath math="0^\circ \le x \le 360^\circ" />).</p>
@@ -3357,7 +3357,7 @@ export const national5MathsData: Section[] = [
       {
         id: "trig-identities",
         title: "Trig Identities",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/7Mg-VlhLuO0",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Trigonometric identities are used to simplify expressions. While many exist, you are only required to memorise two for National 5:</p>
@@ -3473,7 +3473,7 @@ export const national5MathsData: Section[] = [
       {
         id: "comparing-data-sets",
         title: "Comparing Data Sets",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/KsQH1RBJQhw",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>Candidates must calculate averages (mean or median) and measures of spread (Standard Deviation or Interquartile Range) to analyse data.</p>
@@ -3592,7 +3592,7 @@ export const national5MathsData: Section[] = [
       {
         id: "line-of-best-fit",
         title: "Line of Best Fit",
-        videoUrl: "",
+        videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>A scattergraph plots data points to show the relationship between two variables. You must be able to draw a straight "line of best fit" through the data.</p>
