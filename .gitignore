@@ -42,3 +42,14 @@ next-env.d.ts
 
 # worksheet generator (separate repo — clellandmaths/clelland-maths-generator)
 /worksheet_generator/
+
+# third-party reference material — NEVER commit.
+# Heriot-Watt SCHOLAR study guides, "G Whyte 2016" notebooks and textbook units.
+# Used to audit our notes for coverage; the notes themselves are written fresh.
+/reference/
+/resources/
+
+# unrelated scratch: a separate AI Studio scaffold, and a stray Windows
+# redirect artefact. Neither belongs in this repo.
+/Course Notes/
+/nul

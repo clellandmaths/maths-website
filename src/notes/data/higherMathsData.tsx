@@ -159,7 +159,7 @@ export const higherMathsData: Section[] = [
              <GradientTriangle />
              <BlockMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />
              <p>The gradient is also related to the angle <InlineMath math="\theta" /> the line makes with the positive x-axis:</p>
-             <BlockMath math="m = \tan(\theta)" />
+             <BlockMath math="m = \tan\theta" />
              <GradientTypes />
            </div>
          ),
@@ -174,7 +174,7 @@ export const higherMathsData: Section[] = [
               ),
               solution: (
                 <div className="space-y-4">
-                  <BlockMath math="\begin{aligned} m &= \tan(\theta) \\ &= \tan(32^\circ) \\ &\approx 0.62 \end{aligned}" />
+                  <BlockMath math="\begin{aligned} m &= \tan\theta \\ &= \tan 32^\circ \\ &\approx 0.62 \end{aligned}" />
                 </div>
               )
            },
@@ -184,7 +184,7 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <BlockMath math="\begin{aligned} m_{PQ} &= \frac{7 - (-2)}{1 - (-2)} \\ &= \frac{9}{3} \\ &= 3 \end{aligned}" />
-                 <BlockMath math="\tan(\theta) = 3" />
+                 <BlockMath math="\tan\theta = 3" />
                  <BlockMath math="\theta = \tan^{-1}(3) \approx 71.6^\circ" />
                </div>
              )
@@ -200,7 +200,7 @@ export const higherMathsData: Section[] = [
               solution: (
                 <div className="space-y-4">
                   <p>The angle with the x-axis would be <InlineMath math="90^\circ - 60^\circ = 30^\circ" />.</p>
-                  <BlockMath math="\begin{aligned} m &= \tan(30^\circ) \\ &= \frac{1}{\sqrt{3}} \end{aligned}" />
+                  <BlockMath math="\begin{aligned} m &= \tan 30^\circ \\ &= \frac{1}{\sqrt{3}} \end{aligned}" />
                 </div>
               )
            },
@@ -215,7 +215,7 @@ export const higherMathsData: Section[] = [
               solution: (
                 <div className="space-y-4">
                   <p>The gradient <InlineMath math="m = 5" /> tells us the angle with the x-axis.</p>
-                  <BlockMath math="\tan(\alpha) = 5" />
+                  <BlockMath math="\tan\alpha = 5" />
                   <BlockMath math="\alpha = \tan^{-1}(5) \approx 78.7^\circ" />
                   <p>The angle <InlineMath math="\theta" /> with the y-axis is <InlineMath math="90^\circ - 78.7^\circ = 11.3^\circ" />.</p>
                 </div>
@@ -1960,10 +1960,18 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-6 text-lg text-slate-300">
             <p>Given a quadratic equation of the form, <InlineMath math="ax^2+bx+c=0" />, the <strong>discriminant</strong> is defined by <InlineMath math="b^2-4ac" />.</p>
+            <p>It is worth seeing where it comes from. Any quadratic equation can be solved with the <strong>quadratic formula</strong>:</p>
+            <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />
+            <p>The discriminant is exactly the expression <em>under the square root</em>. That is why it controls the roots: you cannot take the square root of a negative number, and a square root of zero adds nothing, so the sign of <InlineMath math="b^2-4ac" /> decides how many roots there are before you calculate anything.</p>
             <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
               <DiscriminantDiagram />
             </div>
+            <p>This gives three cases, which you should be able to state and recognise:</p>
+            <BlockMath math="\begin{aligned} b^2 - 4ac &\gt 0 &&\Rightarrow \text{two real and distinct roots} \\ b^2 - 4ac &= 0 &&\Rightarrow \text{two real and equal roots (a repeated root)} \\ b^2 - 4ac &\lt 0 &&\Rightarrow \text{no real roots} \end{aligned}" />
+            <p>When <InlineMath math="b^2-4ac = 0" /> the parabola touches the <InlineMath math="x" />-axis at exactly one point — its turning point sits on the axis. This is the case examiners use most, because &ldquo;equal roots&rdquo; and &ldquo;tangent to&rdquo; mean the same thing.</p>
+            <p>If <InlineMath math="b^2-4ac \gt 0" /> and is a <strong>perfect square</strong>, the roots are <em>rational</em> and the quadratic factorises; if it is positive but not a perfect square, the roots are <em>irrational</em>.</p>
             <p>The discriminant has many uses including finding unknown terms in a quadratic equation.</p>
+            <p><strong>The Golden Rule:</strong> before substituting, write the equation in the form <InlineMath math="ax^2+bx+c=0" /> with everything on one side — reading <InlineMath math="a" />, <InlineMath math="b" /> and <InlineMath math="c" /> off an equation that has not been rearranged is the most common way to lose these marks.</p>
           </div>
         ),
         examples: [
@@ -2089,12 +2097,8 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-6 text-lg text-slate-300">
             <p>Quadratic inequalities can come in one of the following forms:</p>
-            <ul className="list-disc list-inside space-y-2 mb-4 font-mono text-base bg-white/5 p-4 rounded-lg inline-block">
-              <li>ax² + bx + c &gt; 0</li>
-              <li>ax² + bx + c &ge; 0</li>
-              <li>ax² + bx + c &lt; 0</li>
-              <li>ax² + bx + c &le; 0</li>
-            </ul>
+            <BlockMath math="ax^2 + bx + c \gt 0 \qquad ax^2 + bx + c \geq 0" />
+            <BlockMath math="ax^2 + bx + c \lt 0 \qquad ax^2 + bx + c \leq 0" />
             <p>To solve a quadratic inequality we must determine which part of the graph lies above or below the x-axis. We can determine this via a sketch of the parabola.</p>
             <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
               <InequalitiesDiagram />
@@ -3844,11 +3848,11 @@ export const higherMathsData: Section[] = [
         examples: [
           {
             id: "chain-rule-ex5",
-            question: <p>If <InlineMath math="y = \sin(4x)" />, find <InlineMath math="\frac{dy}{dx}" />.</p>,
+            question: <p>If <InlineMath math="y = \sin 4x" />, find <InlineMath math="\frac{dy}{dx}" />.</p>,
             solution: (
               <div className="space-y-4">
-                <p>Apply the chain rule. The derivative of <InlineMath math="\sin(u)" /> is <InlineMath math="\cos(u)" />.</p>
-                <BlockMath math="\begin{aligned} \frac{dy}{dx} &= \cos(4x) \times \frac{d}{dx}(4x) \\ &= \cos(4x) \times 4 \\ &= 4\cos(4x) \end{aligned}" />
+                <p>Apply the chain rule. The derivative of <InlineMath math="\sin u" /> is <InlineMath math="\cos u" />.</p>
+                <BlockMath math="\begin{aligned} \frac{dy}{dx} &= \cos 4x \times \frac{d}{dx}(4x) \\ &= \cos 4x \times 4 \\ &= 4\cos 4x \end{aligned}" />
               </div>
             )
           },
@@ -3872,13 +3876,13 @@ export const higherMathsData: Section[] = [
           },
           {
             id: "chain-rule-ex8",
-            question: <p>If <InlineMath math="y = \sin^3(x)" />, find <InlineMath math="\frac{dy}{dx}" />.</p>,
+            question: <p>If <InlineMath math="y = \sin^3 x" />, find <InlineMath math="\frac{dy}{dx}" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>First, rewrite the function to clearly see the composite structure:</p>
                 <BlockMath math="y = (\sin x)^3" />
                 <p>Apply the chain rule, treating <InlineMath math="\sin x" /> as the inner bracket:</p>
-                <BlockMath math="\begin{aligned} \frac{dy}{dx} &= 3(\sin x)^2 \times \frac{d}{dx}(\sin x) \\ &= 3(\sin x)^2 \times \cos x \\ &= 3\sin^2(x) \cos x \end{aligned}" />
+                <BlockMath math="\begin{aligned} \frac{dy}{dx} &= 3(\sin x)^2 \times \frac{d}{dx}(\sin x) \\ &= 3(\sin x)^2 \times \cos x \\ &= 3\sin^2 x \cos x \end{aligned}" />
               </div>
             )
           }
@@ -4306,10 +4310,10 @@ id: "integration-of-brackets",
         examples: [
           {
             id: "further-int-trig-ex1",
-            question: <p>Find <InlineMath math="\int \cos(4x) \, dx" />.</p>,
+            question: <p>Find <InlineMath math="\int \cos 4x \, dx" />.</p>,
             solution: (
               <div className="space-y-4">
-                <BlockMath math="\int \cos(4x) \, dx = \frac{1}{4} \sin(4x) + C" />
+                <BlockMath math="\int \cos 4x \, dx = \frac{1}{4} \sin 4x + C" />
               </div>
             )
           },
@@ -4445,9 +4449,9 @@ title: "Trigonometry",
                     <tr>
                       <th className="border-b border-white/20 pb-2">Degrees</th>
                       <th className="border-b border-white/20 pb-2">Radians</th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="\sin(\theta)" /></th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="\cos(\theta)" /></th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="\tan(\theta)" /></th>
+                      <th className="border-b border-white/20 pb-2"><InlineMath math="\sin\theta" /></th>
+                      <th className="border-b border-white/20 pb-2"><InlineMath math="\cos\theta" /></th>
+                      <th className="border-b border-white/20 pb-2"><InlineMath math="\tan\theta" /></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -4503,19 +4507,19 @@ title: "Trigonometry",
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\sin(\theta)" /></td>
+                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\sin\theta" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{2}" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{\sqrt{2}}" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{\sqrt{3}}{2}" /></td>
                     </tr>
                     <tr>
-                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\cos(\theta)" /></td>
+                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\cos\theta" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{\sqrt{3}}{2}" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{\sqrt{2}}" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{2}" /></td>
                     </tr>
                     <tr>
-                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\tan(\theta)" /></td>
+                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\tan\theta" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{\sqrt{3}}" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="1" /></td>
                       <td className="py-4 border-b border-white/10"><InlineMath math="\sqrt{3}" /></td>
@@ -4575,34 +4579,34 @@ title: "Trigonometry",
         examples: [
           {
             id: "rel-ang-ex1",
-            question: <p>Find the exact value of <InlineMath math="\sin(150^\circ)" />.</p>,
+            question: <p>Find the exact value of <InlineMath math="\sin 150^\circ" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>1. <InlineMath math="150^\circ" /> is in the 2nd quadrant, where Sine is positive.</p>
                 <p>2. The related acute angle is <InlineMath math="180^\circ - 150^\circ = 30^\circ" />.</p>
-                <BlockMath math="\begin{aligned} \sin(150^\circ) &= \sin(30^\circ) \\ &= \frac{1}{2} \end{aligned}" />
+                <BlockMath math="\begin{aligned} \sin 150^\circ &= \sin 30^\circ \\ &= \frac{1}{2} \end{aligned}" />
               </div>
             )
           },
           {
             id: "rel-ang-ex2",
-            question: <p>Find the exact value of <InlineMath math="\tan(120^\circ)" />.</p>,
+            question: <p>Find the exact value of <InlineMath math="\tan 120^\circ" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>1. <InlineMath math="120^\circ" /> is in the 2nd quadrant, where Tangent is negative.</p>
                 <p>2. The related acute angle is <InlineMath math="180^\circ - 120^\circ = 60^\circ" />.</p>
-                <BlockMath math="\begin{aligned} \tan(120^\circ) &= -\tan(60^\circ) \\ &= -\sqrt{3} \end{aligned}" />
+                <BlockMath math="\begin{aligned} \tan 120^\circ &= -\tan 60^\circ \\ &= -\sqrt{3} \end{aligned}" />
               </div>
             )
           },
           {
             id: "rel-ang-ex3",
-            question: <p>Find the exact value of <InlineMath math="\cos(405^\circ)" />.</p>,
+            question: <p>Find the exact value of <InlineMath math="\cos 405^\circ" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>1. <InlineMath math="405^\circ" /> is more than one full circle (<InlineMath math="360^\circ" />).</p>
                 <p>2. The equivalent angle is <InlineMath math="405^\circ - 360^\circ = 45^\circ" />, which is in the 1st quadrant.</p>
-                <BlockMath math="\begin{aligned} \cos(405^\circ) &= \cos(45^\circ) \\ &= \frac{1}{\sqrt{2}} \end{aligned}" />
+                <BlockMath math="\begin{aligned} \cos 405^\circ &= \cos 45^\circ \\ &= \frac{1}{\sqrt{2}} \end{aligned}" />
               </div>
             )
           },
@@ -4650,7 +4654,7 @@ title: "Trigonometry",
           <div className="space-y-8 text-lg">
             <p className="mb-6">To solve basic trigonometric equations:</p>
             <ol className="list-decimal list-inside ml-4 space-y-4 mb-8">
-              <li>Rearrange the equation into the form <InlineMath math="\sin(x) = k" />, <InlineMath math="\cos(x) = k" /> or <InlineMath math="\tan(x) = k" />.</li>
+              <li>Rearrange the equation into the form <InlineMath math="\sin x = k" />, <InlineMath math="\cos x = k" /> or <InlineMath math="\tan x = k" />.</li>
               <li>Find the <strong>base angle</strong> (the related acute angle in the first quadrant) by taking the inverse trig function of the <strong>positive</strong> value of <InlineMath math="k" />.</li>
               <li>Use the CAST diagram to determine which two quadrants the solutions lie in based on the sign of <InlineMath math="k" />.</li>
               <li>Calculate your final answers using the base angle and the quadrants, checking that they fall inside the required domain.</li>
@@ -4660,7 +4664,7 @@ title: "Trigonometry",
         examples: [
           {
             id: "basic-eq-ex1",
-            question: <p>Solve <InlineMath math="\sin(x^\circ) = \frac{1}{2}" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
+            question: <p>Solve <InlineMath math="\sin x^\circ = \frac{1}{2}" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Base angle: <InlineMath math="\sin^{-1}\left(\frac{1}{2}\right) = 30^\circ" /></p>
@@ -4672,7 +4676,7 @@ title: "Trigonometry",
           },
           {
             id: "basic-eq-ex2",
-            question: <p>Solve <InlineMath math="\cos(x) = -\frac{1}{\sqrt{5}}" /> for <InlineMath math="0 < x < 2\pi" />.</p>,
+            question: <p>Solve <InlineMath math="\cos x = -\frac{1}{\sqrt{5}}" /> for <InlineMath math="0 < x < 2\pi" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Base angle: <InlineMath math="\cos^{-1}\left(\frac{1}{\sqrt{5}}\right) \approx  1.107 \text{ rad}" /></p>
@@ -4684,17 +4688,17 @@ title: "Trigonometry",
           },
           {
             id: "basic-eq-ex3",
-            question: <p>Solve <InlineMath math="\sin(x) = 3" /> for <InlineMath math="0 < x < 2\pi" />.</p>,
+            question: <p>Solve <InlineMath math="\sin x = 3" /> for <InlineMath math="0 < x < 2\pi" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>The maximum value of the sine function is 1 and the minimum is -1.</p>
-                <p>Therefore, there are <strong className="text-rose-400">no solutions</strong> because <InlineMath math="-1 \leq \sin(x) \leq 1" />.</p>
+                <p>Therefore, there are <strong className="text-rose-400">no solutions</strong> because <InlineMath math="-1 \leq \sin x \leq 1" />.</p>
               </div>
             )
           },
           {
             id: "basic-eq-ex4",
-            question: <p>Solve <InlineMath math="\tan(x^\circ) = -5" /> for <InlineMath math="0 < x^\circ < 720" />.</p>,
+            question: <p>Solve <InlineMath math="\tan x^\circ = -5" /> for <InlineMath math="0 < x^\circ < 720" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Base angle: <InlineMath math="\tan^{-1}(5) \approx 78.7^\circ" /></p>
@@ -4715,8 +4719,8 @@ title: "Trigonometry",
             <p className="mb-6">Multiple angles occur when the period of the given function is not <InlineMath math="360^\circ" /> or <InlineMath math="2\pi" />.</p>
             <p className="mb-6">The period is the length of one cycle of the given trigonometric function.</p>
             <ul className="list-disc list-inside ml-4 space-y-4 mb-8">
-              <li><InlineMath math="y = \sin(2x)" /> has a period of <InlineMath math="\pi" /> radians.</li>
-              <li><InlineMath math="y = \cos(4x^\circ)" /> has a period of <InlineMath math="90^\circ" />.</li>
+              <li><InlineMath math="y = \sin 2x" /> has a period of <InlineMath math="\pi" /> radians.</li>
+              <li><InlineMath math="y = \cos 4x^\circ" /> has a period of <InlineMath math="90^\circ" />.</li>
             </ul>
             <p className="mb-6">When solving multiple angle equations, adjust your domain to match the argument. E.g. if the domain is <InlineMath math="0 \leq x \leq 360" />, solve <InlineMath math="0 \leq 2x \leq 720" /> first, then divide your answers by 2.</p>
           </div>
@@ -4724,11 +4728,11 @@ title: "Trigonometry",
         examples: [
           {
             id: "multi-ang-ex1",
-            question: <p>Solve <InlineMath math="2\sin(2x^\circ) - 1 = 0" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
+            question: <p>Solve <InlineMath math="2\sin 2x^\circ - 1 = 0" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>First, isolate the trigonometric function:</p>
-                <BlockMath math="\begin{aligned} 2\sin(2x^\circ) &= 1 \\ \sin(2x^\circ) &= \frac{1}{2} \end{aligned}" />
+                <BlockMath math="\begin{aligned} 2\sin 2x^\circ &= 1 \\ \sin 2x^\circ &= \frac{1}{2} \end{aligned}" />
                 <p>Since the domain is <InlineMath math="0 < x < 360" />, the domain for <InlineMath math="2x" /> is <InlineMath math="0 < 2x < 720" />. We're looking for solutions up to <InlineMath math="720^\circ" />.</p>
                 <p>Base angle for <InlineMath math="2x" /> is <InlineMath math="\sin^{-1}\left(\frac{1}{2}\right) = 30^\circ" />. Sine is positive in Q1, Q2.</p>
                 <BlockMath math="\begin{aligned} 2x &= 30, 150 \quad \text{(First cycle)} \\ 2x &= 30 + 360 \\ &= 390 \quad \text{(Second cycle)} \\ 2x &= 150 + 360 \\ &= 510 \quad \text{(Second cycle)} \end{aligned}" />
@@ -4739,10 +4743,10 @@ title: "Trigonometry",
           },
           {
             id: "multi-ang-ex2",
-            question: <p>Solve <InlineMath math="\sqrt{2}\cos(2x) = 1" /> for <InlineMath math="0 < x < \pi" />.</p>,
+            question: <p>Solve <InlineMath math="\sqrt{2}\cos 2x = 1" /> for <InlineMath math="0 < x < \pi" />.</p>,
             solution: (
               <div className="space-y-4">
-                <BlockMath math="\cos(2x) = \frac{1}{\sqrt{2}}" />
+                <BlockMath math="\cos 2x = \frac{1}{\sqrt{2}}" />
                 <p>Domain for <InlineMath math="2x" /> is <InlineMath math="0 < 2x < 2\pi" />.</p>
                 <p>Base angle for <InlineMath math="2x" /> is <InlineMath math="\cos^{-1}\left(\frac{1}{\sqrt{2}}\right) = \frac{\pi}{4}" />. Cosine is positive in Q1, Q4.</p>
                 <BlockMath math="\begin{aligned} 2x &= \frac{\pi}{4}, \frac{7\pi}{4} \\ x &= \frac{\pi}{8}, \frac{7\pi}{8} \end{aligned}" />
@@ -4757,18 +4761,18 @@ title: "Trigonometry",
         videoUrl: "https://www.youtube.com/embed/placeholder",
         theory: (
           <div className="space-y-8 text-lg">
-            <p className="mb-6">When solving an equation involving a squared term (like <InlineMath math="\sin^2(x)" /> or <InlineMath math="\cos^2(x)" />), taking the square root requires remembering the <strong className="text-white">plus or minus (<InlineMath math="\pm" />)</strong> sign.</p>
+            <p className="mb-6">When solving an equation involving a squared term (like <InlineMath math="\sin^2 x" /> or <InlineMath math="\cos^2 x" />), taking the square root requires remembering the <strong className="text-white">plus or minus (<InlineMath math="\pm" />)</strong> sign.</p>
             <p className="mb-6">This means you will usually be looking for solutions in all four quadrants.</p>
           </div>
         ),
         examples: [
           {
             id: "sq-terms-ex1",
-            question: <p>Solve <InlineMath math="\tan^2(x^\circ) = 3" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
+            question: <p>Solve <InlineMath math="\tan^2 x^\circ = 3" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Take the square root of both sides:</p>
-                <BlockMath math="\tan(x^\circ) = \pm\sqrt{3}" />
+                <BlockMath math="\tan x^\circ = \pm\sqrt{3}" />
                 <p>Base angle: <InlineMath math="\tan^{-1}(\sqrt{3}) = 60^\circ" /></p>
                 <p>Since we have both positive and negative values, there will be solutions in all four quadrants.</p>
                 <BlockMath math="\begin{aligned} x &= 60 \quad \text{(Q1)} \\ x &= 180 - 60 \\ &= 120 \quad \text{(Q2)} \\ x &= 180 + 60 \\ &= 240 \quad \text{(Q3)} \\ x &= 360 - 60 \\ &= 300 \quad \text{(Q4)} \end{aligned}" />
@@ -4777,10 +4781,10 @@ title: "Trigonometry",
           },
           {
             id: "sq-terms-ex2",
-            question: <p>Solve <InlineMath math="4\cos^2(x) = 3" /> for <InlineMath math="0 < x < 2\pi" />.</p>,
+            question: <p>Solve <InlineMath math="4\cos^2 x = 3" /> for <InlineMath math="0 < x < 2\pi" />.</p>,
             solution: (
               <div className="space-y-4">
-                <BlockMath math="\begin{aligned} \cos^2(x) &= \frac{3}{4} \\ \cos(x) &= \pm\frac{\sqrt{3}}{2} \end{aligned}" />
+                <BlockMath math="\begin{aligned} \cos^2 x &= \frac{3}{4} \\ \cos x &= \pm\frac{\sqrt{3}}{2} \end{aligned}" />
                 <p>Base angle: <InlineMath math="\cos^{-1}\left(\frac{\sqrt{3}}{2}\right) = \frac{\pi}{6}" /></p>
                 <p>Solutions sit in all four quadrants.</p>
                 <BlockMath math="\begin{aligned} x &= \frac{\pi}{6} \quad \text{(Q1)} \\ x &= \pi - \frac{\pi}{6} \\ &= \frac{5\pi}{6} \quad \text{(Q2)} \\ x &= \pi + \frac{\pi}{6} \\ &= \frac{7\pi}{6} \quad \text{(Q3)} \\ x &= 2\pi - \frac{\pi}{6} \\ &= \frac{11\pi}{6} \quad \text{(Q4)} \end{aligned}" />
@@ -4796,27 +4800,27 @@ title: "Trigonometry",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Some trigonometric equations take the structure of a quadratic equation. You will need to factorise them to solve.</p>
-            <p className="mb-6">Sometimes, the equation contains both sine and cosine terms. You must use the identity <InlineMath math="\sin^2(x) + \cos^2(x) = 1" />. Rearrange it to replace one squared term, ensuring the whole equation is expressed using only one trigonometric function.</p>
+            <p className="mb-6">Sometimes, the equation contains both sine and cosine terms. You must use the identity <InlineMath math="\sin^2 x + \cos^2 x = 1" />. Rearrange it to replace one squared term, ensuring the whole equation is expressed using only one trigonometric function.</p>
           </div>
         ),
         examples: [
           {
             id: "quad-eq-ex1",
-            question: <p>Solve <InlineMath math="3\sin^2(x^\circ) - 4\sin(x^\circ) + 1 = 0" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
+            question: <p>Solve <InlineMath math="3\sin^2 x^\circ - 4\sin x^\circ + 1 = 0" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
             solution: (
               <div className="space-y-4">
-                <p>Let <InlineMath math="u = \sin(x^\circ)" /> to see the quadratic structure:</p>
+                <p>Let <InlineMath math="u = \sin x^\circ" /> to see the quadratic structure:</p>
                 <BlockMath math="\begin{aligned} 3u^2 - 4u + 1 &= 0 \\ (3u - 1)(u - 1) &= 0 \end{aligned}" />
                 <p>This means either <InlineMath math="3u - 1 = 0 \implies u = \frac{1}{3}" /> or <InlineMath math="u - 1 = 0 \implies u = 1" />.</p>
                 
                 <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\sin(x^\circ) = \frac{1}{3}" /></p>
+                  <p className="font-bold text-white mb-4">For <InlineMath math="\sin x^\circ = \frac{1}{3}" /></p>
                   <p>Base angle <InlineMath math="\approx 19.5^\circ" />. Sine is positive in Q1, Q2.</p>
                   <BlockMath math="\begin{aligned} x &= 19.5 \\ x &= 180 - 19.5 \\ &= 160.5 \end{aligned}" />
                 </div>
                 
                 <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\sin(x^\circ) = 1" /></p>
+                  <p className="font-bold text-white mb-4">For <InlineMath math="\sin x^\circ = 1" /></p>
                   <p>From the sine graph exact values:</p>
                   <BlockMath math="x = 90" />
                 </div>
@@ -4829,24 +4833,24 @@ title: "Trigonometry",
           },
           {
             id: "quad-eq-ex2",
-            question: <p>Solve <InlineMath math="5\cos^2(x^\circ) - 2\cos(x^\circ) = 3\sin^2(x^\circ)" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
+            question: <p>Solve <InlineMath math="5\cos^2 x^\circ - 2\cos x^\circ = 3\sin^2 x^\circ" /> for <InlineMath math="0 < x^\circ < 360" />.</p>,
             solution: (
               <div className="space-y-4">
-                <p>Use <InlineMath math="\sin^2(x^\circ) = 1 - \cos^2(x^\circ)" /> to replace the sine term:</p>
-                <BlockMath math="\begin{aligned} 5\cos^2(x^\circ) - 2\cos(x^\circ) &= 3(1 - \cos^2(x^\circ)) \\ 5\cos^2(x^\circ) - 2\cos(x^\circ) &= 3 - 3\cos^2(x^\circ) \end{aligned}" />
+                <p>Use <InlineMath math="\sin^2 x^\circ = 1 - \cos^2 x^\circ" /> to replace the sine term:</p>
+                <BlockMath math="\begin{aligned} 5\cos^2 x^\circ - 2\cos x^\circ &= 3(1 - \cos^2 x^\circ) \\ 5\cos^2 x^\circ - 2\cos x^\circ &= 3 - 3\cos^2 x^\circ \end{aligned}" />
                 <p>Bring everything to one side to form a quadratic=0:</p>
-                <BlockMath math="8\cos^2(x^\circ) - 2\cos(x^\circ) - 3 = 0" />
-                <p>Factorise (let <InlineMath math="u = \cos(x^\circ)" />):</p>
-                <BlockMath math="(4\cos(x^\circ) - 3)(2\cos(x^\circ) + 1) = 0" />
+                <BlockMath math="8\cos^2 x^\circ - 2\cos x^\circ - 3 = 0" />
+                <p>Factorise (let <InlineMath math="u = \cos x^\circ" />):</p>
+                <BlockMath math="(4\cos x^\circ - 3)(2\cos x^\circ + 1) = 0" />
                 
                 <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\cos(x^\circ) = \frac{3}{4}" /></p>
+                  <p className="font-bold text-white mb-4">For <InlineMath math="\cos x^\circ = \frac{3}{4}" /></p>
                   <p>Base angle <InlineMath math="\approx 41.4^\circ" />. Cosine is positive in Q1, Q4.</p>
                   <BlockMath math="\begin{aligned} x &= 41.4 \\ x &= 360 - 41.4 \\ &= 318.6 \end{aligned}" />
                 </div>
                 
                 <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\cos(x^\circ) = -\frac{1}{2}" /></p>
+                  <p className="font-bold text-white mb-4">For <InlineMath math="\cos x^\circ = -\frac{1}{2}" /></p>
                   <p>Base angle for <InlineMath math="\frac{1}{2}" /> is <InlineMath math="60^\circ" />. Cosine is negative in Q2, Q3.</p>
                   <BlockMath math="\begin{aligned} x &= 180 - 60 \\ &= 120 \\ x &= 180 + 60 \\ &= 240 \end{aligned}" />
                 </div>
@@ -4866,7 +4870,7 @@ title: "Trigonometry",
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Compound angles are formed by adding or subtracting angles, for example <InlineMath math="45^\circ + 30^\circ = 75^\circ" /> or <InlineMath math="45^\circ - 30^\circ = 15^\circ" />.</p>
-            <p className="mb-6">Note that <InlineMath math="\sin(A + B) \neq \sin(A) + \sin(B)" />. You can verify this by checking that <InlineMath math="\sin(45^\circ + 30^\circ)" /> and <InlineMath math="\sin(45^\circ) + \sin(30^\circ)" /> give different answers.</p>
+            <p className="mb-6">Note that <InlineMath math="\sin(A + B) \neq \sin A + \sin B" />. You can verify this by checking that <InlineMath math="\sin(45^\circ + 30^\circ)" /> and <InlineMath math="\sin 45^\circ + \sin 30^\circ" /> give different answers.</p>
             
             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
               <h4 className="font-bold text-white text-xl mb-6 text-center">Addition Formulae</h4>
@@ -4903,11 +4907,11 @@ title: "Trigonometry",
           },
           {
             id: "comp-ang-ex3",
-            question: <p>Find the exact value of <InlineMath math="\sin(75^\circ)" />.</p>,
+            question: <p>Find the exact value of <InlineMath math="\sin 75^\circ" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>We can write <InlineMath math="75^\circ" /> as <InlineMath math="45^\circ + 30^\circ" /> to use exact values we know.</p>
-                <BlockMath math="\begin{aligned} \sin(75^\circ) &= \sin(45^\circ + 30^\circ) \\ &= \sin 45^\circ \cos 30^\circ + \cos 45^\circ \sin 30^\circ \\ &= \left(\frac{1}{\sqrt{2}}\right)\left(\frac{\sqrt{3}}{2}\right) + \left(\frac{1}{\sqrt{2}}\right)\left(\frac{1}{2}\right) \\ &= \frac{\sqrt{3}}{2\sqrt{2}} + \frac{1}{2\sqrt{2}} \\ &= \frac{\sqrt{3} + 1}{2\sqrt{2}} \end{aligned}" />
+                <BlockMath math="\begin{aligned} \sin 75^\circ &= \sin(45^\circ + 30^\circ) \\ &= \sin 45^\circ \cos 30^\circ + \cos 45^\circ \sin 30^\circ \\ &= \left(\frac{1}{\sqrt{2}}\right)\left(\frac{\sqrt{3}}{2}\right) + \left(\frac{1}{\sqrt{2}}\right)\left(\frac{1}{2}\right) \\ &= \frac{\sqrt{3}}{2\sqrt{2}} + \frac{1}{2\sqrt{2}} \\ &= \frac{\sqrt{3} + 1}{2\sqrt{2}} \end{aligned}" />
               </div>
             )
           }
@@ -4986,23 +4990,23 @@ title: "Trigonometry",
             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
               <h4 className="font-bold text-white text-xl mb-6">Double Angle Formulae</h4>
               <div className="space-y-4 max-w-xl">
-                <BlockMath math="\sin(2A) = 2\sin A\cos A" />
-                <BlockMath math="\begin{aligned} \cos(2A) &= \cos^2 A - \sin^2 A \\ &= 2\cos^2 A - 1 \\ &= 1 - 2\sin^2 A \end{aligned}" />
+                <BlockMath math="\sin 2A = 2\sin A\cos A" />
+                <BlockMath math="\begin{aligned} \cos 2A &= \cos^2 A - \sin^2 A \\ &= 2\cos^2 A - 1 \\ &= 1 - 2\sin^2 A \end{aligned}" />
               </div>
             </div>
             
-            <p className="mb-6">The three versions of the <InlineMath math="\cos(2A)" /> formula are derived using the National 5 identity <InlineMath math="\sin^2 A + \cos^2 A = 1" />.</p>
+            <p className="mb-6">The three versions of the <InlineMath math="\cos 2A" /> formula are derived using the National 5 identity <InlineMath math="\sin^2 A + \cos^2 A = 1" />.</p>
           </div>
         ),
         examples: [
           {
             id: "double-ang-ex1",
-            question: <p>a) Write down the formula for <InlineMath math="\sin(2x)" />.<br />b) Write down the formula for <InlineMath math="\sin(6x)" />.</p>,
+            question: <p>a) Write down the formula for <InlineMath math="\sin 2x" />.<br />b) Write down the formula for <InlineMath math="\sin 6x" />.</p>,
             solution: (
               <div className="space-y-4">
-                <p><strong>a)</strong> <InlineMath math="\sin(2x) = 2\sin x \cos x" /></p>
+                <p><strong>a)</strong> <InlineMath math="\sin 2x = 2\sin x \cos x" /></p>
                 <p><strong>b)</strong> We can treat <InlineMath math="6x" /> as double <InlineMath math="3x" />. Let <InlineMath math="A = 3x" />:</p>
-                <BlockMath math="\sin(6x) = 2\sin(3x) \cos(3x)" />
+                <BlockMath math="\sin 6x = 2\sin 3x \cos 3x" />
               </div>
             )
           },
@@ -5011,14 +5015,14 @@ title: "Trigonometry",
             question: <p>Simplify <InlineMath math="\cos^2\left(\frac{\pi}{6}\right) - \sin^2\left(\frac{\pi}{6}\right)" />.</p>,
             solution: (
               <div className="space-y-4">
-                <p>This matches the structure of <InlineMath math="\cos^2 A - \sin^2 A = \cos(2A)" />, where <InlineMath math="A = \frac{\pi}{6}" />.</p>
+                <p>This matches the structure of <InlineMath math="\cos^2 A - \sin^2 A = \cos 2A" />, where <InlineMath math="A = \frac{\pi}{6}" />.</p>
                 <BlockMath math="\begin{aligned} \cos^2\left(\frac{\pi}{6}\right) - \sin^2\left(\frac{\pi}{6}\right) &= \cos\left(2\left(\frac{\pi}{6}\right)\right) \\ &= \cos\left(\frac{2\pi}{6}\right) \\ &= \cos\left(\frac{\pi}{3}\right) \\ &= \frac{1}{2} \end{aligned}" />
               </div>
             )
           },
           {
             id: "double-ang-ex3",
-            question: <p>If <InlineMath math="\tan p = \frac{4}{3}" /> for acute angle <InlineMath math="p" />, find the exact values of <InlineMath math="\sin(2p)" /> and <InlineMath math="\cos(2p)" />.</p>,
+            question: <p>If <InlineMath math="\tan p = \frac{4}{3}" /> for acute angle <InlineMath math="p" />, find the exact values of <InlineMath math="\sin 2p" /> and <InlineMath math="\cos 2p" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>First, set up a right-angled triangle with Opposite = 4, Adjacent = 3.</p>
@@ -5026,19 +5030,19 @@ title: "Trigonometry",
                 <p>Therefore, <InlineMath math="\sin p = \frac{4}{5}" /> and <InlineMath math="\cos p = \frac{3}{5}" />.</p>
                 
                 <div className="border-t border-white/10 pt-4 mt-4">
-                  <BlockMath math="\begin{aligned} \sin(2p) &= 2\sin p \cos p \\ &= 2\left(\frac{4}{5}\right)\left(\frac{3}{5}\right) \\ &= \frac{24}{25} \end{aligned}" />
+                  <BlockMath math="\begin{aligned} \sin 2p &= 2\sin p \cos p \\ &= 2\left(\frac{4}{5}\right)\left(\frac{3}{5}\right) \\ &= \frac{24}{25} \end{aligned}" />
                 </div>
                 
                 <div className="border-t border-white/10 pt-4 mt-4">
-                  <p>You can use any of the three <InlineMath math="\cos(2A)" /> formulae. Let's use <InlineMath math="\cos^2 A - \sin^2 A" />:</p>
-                  <BlockMath math="\begin{aligned} \cos(2p) &= \cos^2 p - \sin^2 p \\ &= \left(\frac{3}{5}\right)^2 - \left(\frac{4}{5}\right)^2 \\ &= \frac{9}{25} - \frac{16}{25} \\ &= -\frac{7}{25} \end{aligned}" />
+                  <p>You can use any of the three <InlineMath math="\cos 2A" /> formulae. Let's use <InlineMath math="\cos^2 A - \sin^2 A" />:</p>
+                  <BlockMath math="\begin{aligned} \cos 2p &= \cos^2 p - \sin^2 p \\ &= \left(\frac{3}{5}\right)^2 - \left(\frac{4}{5}\right)^2 \\ &= \frac{9}{25} - \frac{16}{25} \\ &= -\frac{7}{25} \end{aligned}" />
                 </div>
               </div>
             )
           },
           {
             id: "double-ang-ex4",
-            question: <p>Given that <InlineMath math="\cos(2x) = \frac{5}{13}" />, find the exact values of <InlineMath math="\sin x" /> and <InlineMath math="\cos x" /> (assume <InlineMath math="x" /> is acute).</p>,
+            question: <p>Given that <InlineMath math="\cos 2x = \frac{5}{13}" />, find the exact values of <InlineMath math="\sin x" /> and <InlineMath math="\cos x" /> (assume <InlineMath math="x" /> is acute).</p>,
             solution: (
                <div className="space-y-4">
                  <p>Use the double angle formulae that only contain one term:</p>
@@ -5107,25 +5111,25 @@ title: "Trigonometry",
         examples: [
           {
             id: "further-eq-ex1",
-            question: <p>Solve <InlineMath math="\sin(2x^\circ) + \sin(x^\circ) = 0" /> for <InlineMath math="0 \leq x^\circ < 360" />.</p>,
+            question: <p>Solve <InlineMath math="\sin 2x^\circ + \sin x^\circ = 0" /> for <InlineMath math="0 \leq x^\circ < 360" />.</p>,
             solution: (
               <div className="space-y-4">
-                <p>Replace <InlineMath math="\sin(2x^\circ)" /> using the exact formula <InlineMath math="2\sin(x^\circ)\cos(x^\circ)" />:</p>
-                <BlockMath math="2\sin(x^\circ)\cos(x^\circ) + \sin(x^\circ) = 0" />
-                <p>Factorise by taking out the common factor of <InlineMath math="\sin(x^\circ)" />:</p>
-                <BlockMath math="\sin(x^\circ)(2\cos(x^\circ) + 1) = 0" />
+                <p>Replace <InlineMath math="\sin 2x^\circ" /> using the exact formula <InlineMath math="2\sin x^\circ\cos x^\circ" />:</p>
+                <BlockMath math="2\sin x^\circ\cos x^\circ + \sin x^\circ = 0" />
+                <p>Factorise by taking out the common factor of <InlineMath math="\sin x^\circ" />:</p>
+                <BlockMath math="\sin x^\circ(2\cos x^\circ + 1) = 0" />
                 <p>This gives two equations to solve:</p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-6">
                   <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                    <BlockMath math="\sin(x^\circ) = 0" />
+                    <BlockMath math="\sin x^\circ = 0" />
                     <p className="mt-4">From the sine graph:</p>
                     <BlockMath math="x = 0, 180" />
                     <p className="text-sm text-slate-400">Note: 360 is not in the domain (<InlineMath math="<360" />).</p>
                   </div>
                   
                   <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                    <BlockMath math="\begin{aligned} 2\cos(x^\circ) + 1 &= 0 \\ \cos(x^\circ) &= -\frac{1}{2} \end{aligned}" />
+                    <BlockMath math="\begin{aligned} 2\cos x^\circ + 1 &= 0 \\ \cos x^\circ &= -\frac{1}{2} \end{aligned}" />
                     <p className="mt-4">Base angle: <InlineMath math="60^\circ" />. Q2, Q3.</p>
                     <BlockMath math="\begin{aligned} x &= 180 - 60 = 120 \\ x &= 180 + 60 = 240 \end{aligned}" />
                   </div>
@@ -5137,23 +5141,23 @@ title: "Trigonometry",
           },
           {
              id: "further-eq-ex2",
-             question: <p>Solve <InlineMath math="\cos(2x) = \cos(x)" /> for <InlineMath math="0 \leq x \leq 2\pi" />.</p>,
+             question: <p>Solve <InlineMath math="\cos 2x = \cos x" /> for <InlineMath math="0 \leq x \leq 2\pi" />.</p>,
              solution: (
                <div className="space-y-4">
-                 <p>For <InlineMath math="\cos(2x)" />, we have three choices. Since the other term is <InlineMath math="\cos(x)" />, we should pick the formula that only contains cosine: <InlineMath math="2\cos^2(x) - 1" />.</p>
-                 <BlockMath math="\begin{aligned} 2\cos^2(x) - 1 &= \cos(x) \\ 2\cos^2(x) - \cos(x) - 1 &= 0 \end{aligned}" />
+                 <p>For <InlineMath math="\cos 2x" />, we have three choices. Since the other term is <InlineMath math="\cos x" />, we should pick the formula that only contains cosine: <InlineMath math="2\cos^2 x - 1" />.</p>
+                 <BlockMath math="\begin{aligned} 2\cos^2 x - 1 &= \cos x \\ 2\cos^2 x - \cos x - 1 &= 0 \end{aligned}" />
                  <p>Factorise (let <InlineMath math="u = \cos x" />):</p>
-                 <BlockMath math="(2\cos(x) + 1)(\cos(x) - 1) = 0" />
+                 <BlockMath math="(2\cos x + 1)(\cos x - 1) = 0" />
                  
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-6">
                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                     <BlockMath math="\begin{aligned} 2\cos(x) + 1 &= 0 \\ \cos(x) &= -\frac{1}{2} \end{aligned}" />
+                     <BlockMath math="\begin{aligned} 2\cos x + 1 &= 0 \\ \cos x &= -\frac{1}{2} \end{aligned}" />
                      <p className="mt-4">Base angle: <InlineMath math="\frac{\pi}{3}" />. Q2, Q3.</p>
                      <BlockMath math="\begin{aligned} x &= \pi - \frac{\pi}{3} = \frac{2\pi}{3} \\ x &= \pi + \frac{\pi}{3} = \frac{4\pi}{3} \end{aligned}" />
                    </div>
                    
                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                     <BlockMath math="\cos(x) = 1" />
+                     <BlockMath math="\cos x = 1" />
                      <p className="mt-4">From the cosine graph:</p>
                      <BlockMath math="x = 0, 2\pi" />
                    </div>
@@ -5165,31 +5169,31 @@ title: "Trigonometry",
           },
           {
              id: "further-eq-ex3",
-             question: <p>Find the points of intersection of the graphs <InlineMath math="y = 3\sin(2x) + 1" /> and <InlineMath math="y = 2\sin(x) + 1" /> for <InlineMath math="0 \leq x \leq 2\pi" />.</p>,
+             question: <p>Find the points of intersection of the graphs <InlineMath math="y = 3\sin 2x + 1" /> and <InlineMath math="y = 2\sin x + 1" /> for <InlineMath math="0 \leq x \leq 2\pi" />.</p>,
              solution: (
                 <div className="space-y-4">
                   <p>Set them equal to find the intersection points:</p>
-                  <BlockMath math="\begin{aligned} 3\sin(2x) + 1 &= 2\sin(x) + 1 \\ 3\sin(2x) &= 2\sin(x) \end{aligned}" />
-                  <p>Substitute <InlineMath math="\sin(2x) = 2\sin(x)\cos(x)" />:</p>
-                  <BlockMath math="\begin{aligned} 3(2\sin(x)\cos(x)) &= 2\sin(x) \\ 6\sin(x)\cos(x) - 2\sin(x) &= 0 \end{aligned}" />
-                  <p>Factorise by taking out <InlineMath math="2\sin(x)" />:</p>
-                  <BlockMath math="2\sin(x)(3\cos(x) - 1) = 0" />
+                  <BlockMath math="\begin{aligned} 3\sin 2x + 1 &= 2\sin x + 1 \\ 3\sin 2x &= 2\sin x \end{aligned}" />
+                  <p>Substitute <InlineMath math="\sin 2x = 2\sin x\cos x" />:</p>
+                  <BlockMath math="\begin{aligned} 3(2\sin x\cos x) &= 2\sin x \\ 6\sin x\cos x - 2\sin x &= 0 \end{aligned}" />
+                  <p>Factorise by taking out <InlineMath math="2\sin x" />:</p>
+                  <BlockMath math="2\sin x(3\cos x - 1) = 0" />
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-6">
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                      <BlockMath math="\begin{aligned} 2\sin(x) &= 0 \\ \sin(x) &= 0 \end{aligned}" />
+                      <BlockMath math="\begin{aligned} 2\sin x &= 0 \\ \sin x &= 0 \end{aligned}" />
                       <p className="mt-4">From the sine graph:</p>
                       <BlockMath math="x = 0, \pi, 2\pi" />
                     </div>
                     
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                      <BlockMath math="\begin{aligned} 3\cos(x) - 1 &= 0 \\ \cos(x) &= \frac{1}{3} \end{aligned}" />
+                      <BlockMath math="\begin{aligned} 3\cos x - 1 &= 0 \\ \cos x &= \frac{1}{3} \end{aligned}" />
                       <p className="mt-4">Base angle <InlineMath math="\approx 1.231" /> rad. Q1, Q4.</p>
                       <BlockMath math="\begin{aligned} x &= 1.231 \\ x &= 2\pi - 1.231 = 5.052 \end{aligned}" />
                     </div>
                   </div>
                   
-                  <p>Usually, "points of intersection" requires coordinates. Substitute these x-values back into either original equation (e.g., <InlineMath math="y = 2\sin(x) + 1" />) to find y-coordinates.</p>
+                  <p>Usually, "points of intersection" requires coordinates. Substitute these x-values back into either original equation (e.g., <InlineMath math="y = 2\sin x + 1" />) to find y-coordinates.</p>
                   <ul className="list-disc list-inside ml-4 mt-2 mb-4 text-emerald-300">
                      <li>When <InlineMath math="x = 0" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-white"><InlineMath math="(0, 1)" /></strong></li>
                      <li>When <InlineMath math="x = \pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-white"><InlineMath math="(\pi, 1)" /></strong></li>
@@ -5307,16 +5311,30 @@ title: "Trigonometry",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We can combine everything learned so far to rewrite trigonometric sums as a single wave function.</p>
+            <p>The point is this: an expression like <InlineMath math="a\sin x^\circ + b\cos x^\circ" /> is the sum of <em>two</em> waves, which is awkward to work with. It can always be rewritten as a <strong>single</strong> wave — and once it is, the maximum, the minimum and the solutions of equations can all be read off almost immediately.</p>
+            <p>There are four possible target forms, and the question will always tell you which one to use:</p>
+            <BlockMath math="k\sin(x + \alpha)^\circ \qquad k\sin(x - \alpha)^\circ \qquad k\cos(x + \alpha)^\circ \qquad k\cos(x - \alpha)^\circ" />
+            <p>The method is the same every time: <strong>expand the target form</strong> using the appropriate addition formula, then <strong>equate coefficients</strong> with the expression you were given. Taking <InlineMath math="k\cos(x - \alpha)^\circ" /> as the example:</p>
+            <BlockMath math="k\cos(x - \alpha)^\circ = k\cos x^\circ\cos\alpha^\circ + k\sin x^\circ\sin\alpha^\circ" />
+            <p>Comparing that with <InlineMath math="a\cos x^\circ + b\sin x^\circ" /> gives two equations:</p>
+            <BlockMath math="k\cos\alpha^\circ = a \qquad\text{and}\qquad k\sin\alpha^\circ = b" />
+            <p><strong>Finding <InlineMath math="k" />:</strong> square both equations and add them. Because <InlineMath math="\cos^2\alpha^\circ + \sin^2\alpha^\circ = 1" />, this leaves</p>
+            <BlockMath math="k^2 = a^2 + b^2 \quad\Longrightarrow\quad k = \sqrt{a^2 + b^2}" />
+            <p>Always take the positive root — <InlineMath math="k" /> is an amplitude.</p>
+            <p><strong>Finding <InlineMath math="\alpha" />:</strong> divide one equation by the other, so that <InlineMath math="k" /> cancels:</p>
+            <BlockMath math="\frac{k\sin\alpha^\circ}{k\cos\alpha^\circ} = \tan\alpha^\circ = \frac{b}{a}" />
+            <p>On its own <InlineMath math="\tan^{-1}" /> cannot tell you which angle you want — it only ever returns one of two possibilities. The quadrant is decided by the <strong>signs</strong> of <InlineMath math="k\sin\alpha^\circ" /> and <InlineMath math="k\cos\alpha^\circ" />; since <InlineMath math="k" /> is positive, those are simply the signs of <InlineMath math="b" /> and <InlineMath math="a" />. Both positive puts <InlineMath math="\alpha" /> in the first quadrant, and so on round the CAST diagram.</p>
+            <p><strong>The Golden Rule:</strong> find <InlineMath math="k" /> by squaring and adding, find <InlineMath math="\alpha" /> by dividing — then let the <em>signs</em> of the two equations, not your calculator, decide the quadrant.</p>
           </div>
         ),
         examples: [
           {
             id: "wave-func-ex1",
-            question: <p>Write <InlineMath math="5\cos(x^\circ) + 12\sin(x^\circ)" /> in the form <InlineMath math="k\cos((x - \alpha)^\circ)" /> where <InlineMath math="k > 0" /> and <InlineMath math="0 \leq \alpha^\circ \leq 360" />.</p>,
+            question: <p>Write <InlineMath math="5\cos x^\circ + 12\sin x^\circ" /> in the form <InlineMath math="k\cos(x - \alpha)^\circ" /> where <InlineMath math="k > 0" /> and <InlineMath math="0 \leq \alpha^\circ \leq 360" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Expand <InlineMath math="k\cos(x - \alpha)" /> and equate coefficients:</p>
-                <BlockMath math="k\cos(x - \alpha) = k\cos(x^\circ)\cos(\alpha^\circ) + k\sin(x^\circ)\sin(\alpha^\circ)" />
+                <BlockMath math="k\cos(x - \alpha) = k\cos x^\circ\cos\alpha^\circ + k\sin x^\circ\sin\alpha^\circ" />
                 <BlockMath math="\begin{aligned} k\cos\alpha &= 5 \\ k\sin\alpha &= 12 \end{aligned}" />
                 <p>Find <InlineMath math="k" />:</p>
                 <BlockMath math="k = \sqrt{5^2 + 12^2} = \sqrt{25 + 144} = \sqrt{169} = 13" />
@@ -5351,12 +5369,12 @@ title: "Trigonometry",
           },
           {
             id: "wave-func-ex3",
-            question: <p>Write <InlineMath math="4\cos(x^\circ) + 3\sin(x^\circ)" /> in the form <InlineMath math="k\sin((x + \alpha)^\circ)" /> where <InlineMath math="k > 0" /> and <InlineMath math="0 \leq \alpha^\circ \leq 360" />.</p>,
+            question: <p>Write <InlineMath math="4\cos x^\circ + 3\sin x^\circ" /> in the form <InlineMath math="k\sin(x + \alpha)^\circ" /> where <InlineMath math="k > 0" /> and <InlineMath math="0 \leq \alpha^\circ \leq 360" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Expand <InlineMath math="k\sin(x + \alpha)" /> and equate coefficients:</p>
-                <BlockMath math="k\sin((x + \alpha)^\circ) = k\sin(x^\circ)\cos(\alpha^\circ) + k\cos(x^\circ)\sin(\alpha^\circ)" />
-                <p>Rearrange the given expression to match <InlineMath math="\sin" /> first: <InlineMath math="3\sin(x^\circ) + 4\cos(x^\circ)" /></p>
+                <BlockMath math="k\sin(x + \alpha)^\circ = k\sin x^\circ\cos\alpha^\circ + k\cos x^\circ\sin\alpha^\circ" />
+                <p>Rearrange the given expression to match <InlineMath math="\sin" /> first: <InlineMath math="3\sin x^\circ + 4\cos x^\circ" /></p>
                 <BlockMath math="\begin{aligned} k\cos\alpha &= 3 \\ k\sin\alpha &= 4 \end{aligned}" />
                 <p>Find <InlineMath math="k" />:</p>
                 <BlockMath math="k = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5" />
@@ -5382,12 +5400,12 @@ title: "Trigonometry",
         examples: [
           {
             id: "wave-multi-ang-ex1",
-            question: <p>Write <InlineMath math="5\cos(2x^\circ) + 12\sin(2x^\circ)" /> in the form <InlineMath math="k\sin((2x + \alpha)^\circ)" /> where <InlineMath math="k > 0" /> and <InlineMath math="0 \leq \alpha^\circ \leq 360" />.</p>,
+            question: <p>Write <InlineMath math="5\cos 2x^\circ + 12\sin 2x^\circ" /> in the form <InlineMath math="k\sin(2x + \alpha)^\circ" /> where <InlineMath math="k > 0" /> and <InlineMath math="0 \leq \alpha^\circ \leq 360" />.</p>,
             solution: (
               <div className="space-y-4">
                 <p>Expand <InlineMath math="k\sin(2x + \alpha)" /> and equate coefficients:</p>
-                <BlockMath math="k\sin((2x + \alpha)^\circ) = k\sin(2x^\circ)\cos(\alpha^\circ) + k\cos(2x^\circ)\sin(\alpha^\circ)" />
-                <p>Rearrange given: <InlineMath math="12\sin(2x^\circ) + 5\cos(2x^\circ)" /></p>
+                <BlockMath math="k\sin(2x + \alpha)^\circ = k\sin 2x^\circ\cos\alpha^\circ + k\cos 2x^\circ\sin\alpha^\circ" />
+                <p>Rearrange given: <InlineMath math="12\sin 2x^\circ + 5\cos 2x^\circ" /></p>
                 <BlockMath math="\begin{aligned} k\cos\alpha &= 12 \\ k\sin\alpha &= 5 \end{aligned}" />
                 <p>Find <InlineMath math="k" />:</p>
                 <BlockMath math="k = \sqrt{12^2 + 5^2} = \sqrt{144 + 25} = 13" />
@@ -5437,9 +5455,9 @@ title: "Trigonometry",
                  <p>Base angle <InlineMath math="\alpha \approx 1.326" /> rad (Q1). Then the function is <InlineMath math="\sqrt{17}\cos(x - 1.326)" />.</p>
                  <p>2. Maximum and minimum:</p>
                  <p>Max value is <InlineMath math="\sqrt{17}" />, Min value is <InlineMath math="-\sqrt{17}" />.</p>
-                 <p>Max occurs when <InlineMath math="\cos(x - 1.326) = 1" />. From graph, <InlineMath math="\cos(0) = 1" />.</p>
+                 <p>Max occurs when <InlineMath math="\cos(x - 1.326) = 1" />. From graph, <InlineMath math="\cos 0 = 1" />.</p>
                  <BlockMath math="\begin{aligned} x - 1.326 &= 0 \\ x &= 1.326 \end{aligned}" />
-                 <p>Min occurs when <InlineMath math="\cos(x - 1.326) = -1" />. From graph, <InlineMath math="\cos(\pi) = -1" />.</p>
+                 <p>Min occurs when <InlineMath math="\cos(x - 1.326) = -1" />. From graph, <InlineMath math="\cos\pi = -1" />.</p>
                  <BlockMath math="\begin{aligned} x - 1.326 &= \pi \\ x &= \pi + 1.326 \\ x &\approx 4.468 \end{aligned}" />
                </div>
             )
@@ -5462,7 +5480,7 @@ title: "Trigonometry",
             solution: (
               <div className="space-y-4">
                 <p>1. Convert to a single valid form, e.g., <InlineMath math="k\cos(x - \alpha)" />.</p>
-                <BlockMath math="k\cos(x - \alpha) = k\cos(x^\circ)\cos(\alpha^\circ) + k\sin(x^\circ)\sin(\alpha^\circ)" />
+                <BlockMath math="k\cos(x - \alpha) = k\cos x^\circ\cos\alpha^\circ + k\sin x^\circ\sin\alpha^\circ" />
                 <BlockMath math="\begin{aligned} k\cos\alpha &= \sqrt{3} \\ k\sin\alpha &= 1 \end{aligned}" />
                 <BlockMath math="k = \sqrt{(\sqrt{3})^2 + 1^2} = \sqrt{3 + 1} = \sqrt{4} = 2" />
                 <BlockMath math="\tan\alpha = \frac{1}{\sqrt{3}} \implies \alpha = 30^\circ \text{ (Q1)}" />
@@ -5491,10 +5509,10 @@ title: "Trigonometry",
         examples: [
           {
             id: "wave-solve-ex1",
-            question: <p>Solve <InlineMath math="5\cos(x^\circ) + \sin(x^\circ) = 2" /> for <InlineMath math="0 \leq x^\circ \leq 360" />.</p>,
+            question: <p>Solve <InlineMath math="5\cos x^\circ + \sin x^\circ = 2" /> for <InlineMath math="0 \leq x^\circ \leq 360" />.</p>,
             solution: (
               <div className="space-y-4">
-                 <p>Write <InlineMath math="5\cos(x^\circ) + \sin(x^\circ)" /> using <InlineMath math="k\cos((x - \alpha)^\circ)" />.</p>
+                 <p>Write <InlineMath math="5\cos x^\circ + \sin x^\circ" /> using <InlineMath math="k\cos(x - \alpha)^\circ" />.</p>
                  <BlockMath math="\begin{aligned} k\cos\alpha &= 5 \\ k\sin\alpha &= 1 \end{aligned}" />
                  <BlockMath math="k = \sqrt{5^2 + 1^2} = \sqrt{26}" />
                  <BlockMath math="\tan\alpha = \frac{1}{5} \implies \alpha \approx 11.3^\circ" />
@@ -5507,10 +5525,10 @@ title: "Trigonometry",
           },
           {
              id: "wave-solve-ex2",
-             question: <p>Solve <InlineMath math="2\cos(2x) + \sin(2x) = 1" /> for <InlineMath math="0 \leq x \leq 2\pi" />.</p>,
+             question: <p>Solve <InlineMath math="2\cos 2x + \sin 2x = 1" /> for <InlineMath math="0 \leq x \leq 2\pi" />.</p>,
              solution: (
                <div className="space-y-4">
-                  <p>Write <InlineMath math="2\cos(2x) + \sin(2x)" /> as <InlineMath math="k\cos(2x - \alpha)" />.</p>
+                  <p>Write <InlineMath math="2\cos 2x + \sin 2x" /> as <InlineMath math="k\cos(2x - \alpha)" />.</p>
                   <BlockMath math="\begin{aligned} k\cos\alpha &= 2 \\ k\sin\alpha &= 1 \end{aligned}" />
                   <BlockMath math="k = \sqrt{2^2 + 1^2} = \sqrt{5}" />
                   <BlockMath math="\tan\alpha = \frac{1}{2} \implies \alpha \approx 0.464 \text{ rad}" />
@@ -6196,7 +6214,7 @@ title: "Trigonometry",
              question: <p>Vectors <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> have magnitudes 7 and 3 units respectively and are at an angle of <InlineMath math="60^\circ" /> to each other. What is the value of <InlineMath math="\vec{a} \cdot \vec{b}" />?</p>,
              solution: (
                <div className="space-y-4">
-                 <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta = (7)(3) \cos(60^\circ) = 21 \left(\frac{1}{2}\right) = 10.5" />
+                 <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta = (7)(3) \cos 60^\circ = 21 \left(\frac{1}{2}\right) = 10.5" />
                </div>
              )
           }
@@ -6209,7 +6227,7 @@ title: "Trigonometry",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
-            <p>Since <InlineMath math="\cos(90^\circ) = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos(90^\circ) = 0" />.</p>
+            <p>Since <InlineMath math="\cos 90^\circ = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos 90^\circ = 0" />.</p>
             <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col text-emerald-300">
               <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then <InlineMath math="\vec{a} \cdot \vec{b} = 0" />.</p>
               <p>Conversely, if <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> then <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular.</p>
@@ -6304,7 +6322,7 @@ title: "Trigonometry",
              question: <p>Calculate <InlineMath math="\vec{p} \cdot (\vec{q} + \vec{r})" /> when <InlineMath math="|\vec{p}| = 3" />, <InlineMath math="|\vec{q}| = 4" /> and <InlineMath math="|\vec{r}| = 2" />, with the angle between <InlineMath math="\vec{p}" /> and <InlineMath math="\vec{q}" /> being <InlineMath math="60^\circ" /> and the angle between <InlineMath math="\vec{p}" /> and <InlineMath math="\vec{r}" /> being <InlineMath math="120^\circ" />.</p>,
              solution: (
                <div className="space-y-4">
-                 <BlockMath math="\begin{aligned} \vec{p} \cdot (\vec{q} + \vec{r}) &= \vec{p} \cdot \vec{q} + \vec{p} \cdot \vec{r} \\ &= |\vec{p}||\vec{q}|\cos(60^\circ) + |\vec{p}||\vec{r}|\cos(120^\circ) \\ &= (3)(4)(0.5) + (3)(2)(-0.5) \\ &= 6 - 3 \\ &= 3 \end{aligned}" />
+                 <BlockMath math="\begin{aligned} \vec{p} \cdot (\vec{q} + \vec{r}) &= \vec{p} \cdot \vec{q} + \vec{p} \cdot \vec{r} \\ &= |\vec{p}||\vec{q}|\cos 60^\circ + |\vec{p}||\vec{r}|\cos 120^\circ \\ &= (3)(4)(0.5) + (3)(2)(-0.5) \\ &= 6 - 3 \\ &= 3 \end{aligned}" />
                </div>
              )
           },
@@ -6313,7 +6331,7 @@ title: "Trigonometry",
              question: <p>If <InlineMath math="|\vec{a}| = |\vec{c}| = 2" /> and <InlineMath math="|\vec{b}| = 2\sqrt{3}" />, angle between <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> is <InlineMath math="30^\circ" />, angle between <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{c}" /> is <InlineMath math="150^\circ" />. Calculate <InlineMath math="\vec{a} \cdot (\vec{a} + \vec{b} + \vec{c})" />.</p>,
              solution: (
                <div className="space-y-4">
-                 <BlockMath math="\begin{aligned} \vec{a} \cdot (\vec{a} + \vec{b} + \vec{c}) &= \vec{a} \cdot \vec{a} + \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c} \\ &= |\vec{a}|^2 + |\vec{a}||\vec{b}|\cos(30^\circ) + |\vec{a}||\vec{c}|\cos(150^\circ) \\ &= 2^2 + (2)(2\sqrt{3})\left(\frac{\sqrt{3}}{2}\right) + (2)(2)\left(-\frac{\sqrt{3}}{2}\right) \\ &= 4 + 6 - 2\sqrt{3} \\ &= 10 - 2\sqrt{3} \end{aligned}" />
+                 <BlockMath math="\begin{aligned} \vec{a} \cdot (\vec{a} + \vec{b} + \vec{c}) &= \vec{a} \cdot \vec{a} + \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c} \\ &= |\vec{a}|^2 + |\vec{a}||\vec{b}|\cos 30^\circ + |\vec{a}||\vec{c}|\cos 150^\circ \\ &= 2^2 + (2)(2\sqrt{3})\left(\frac{\sqrt{3}}{2}\right) + (2)(2)\left(-\frac{\sqrt{3}}{2}\right) \\ &= 4 + 6 - 2\sqrt{3} \\ &= 10 - 2\sqrt{3} \end{aligned}" />
                </div>
              )
           }
