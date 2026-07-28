@@ -346,10 +346,12 @@ body {
     border: 1px solid #999 !important;
   }
 
-  /* The formula sheet follows the questions, starting its own page */
+  /* Formulae list sits at the FRONT, on its own page, then the questions
+     start on the page after — the same order as a real SQA paper. */
   .print-formula-sheet {
-    break-before: page;
-    page-break-before: always;
+    break-after: page;
+    page-break-after: always;
+    color: #111 !important;
   }
 
   .print-formula-sheet h2 {
@@ -358,5 +360,14 @@ body {
     margin-bottom: 0.75rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #111;
+  }
+
+  .print-formula-sheet h3 {
+    font-weight: 600;
+    margin: 0.75rem 0 0.25rem;
+  }
+
+  .print-formula-sheet * {
+    color: #111 !important;
   }
 }

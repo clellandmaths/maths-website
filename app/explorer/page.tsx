@@ -12,6 +12,7 @@ import WorksheetFAB from '@/components/Explorer/WorksheetFAB';
 import WorksheetDrawer from '@/components/Explorer/WorksheetDrawer';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
+import FormulaeSheet from '@/components/FormulaeSheet';
 import Marks from '@/components/Marks';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
@@ -551,6 +552,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       Free SQA maths revision — past papers, video solutions and course notes at{' '}
                       <strong>clellandmaths.com</strong>
                     </p>
+                  </div>
+
+                  {/* Formulae list — printed at the front, as on a real paper.
+                      Hidden on screen; the Formulae button covers that. */}
+                  <div className="print-only">
+                    <FormulaeSheet courseId={course} />
                   </div>
 
                   {/* Worksheet Questions - Linear List View */}
