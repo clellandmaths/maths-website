@@ -315,13 +315,48 @@ body {
     margin-bottom: 1.5rem;
   }
 
+  /* Says what the site is, not just its name — a printed worksheet gets
+     handed round a classroom by people who have never heard of us. */
+  .print-strapline {
+    font-size: 0.75rem;
+    color: #555 !important;
+    margin: 0 0 0.25rem;
+  }
+
   /* Print footer */
   .print-footer {
     margin-top: 2rem;
     padding-top: 0.5rem;
     border-top: 1px solid #ddd;
     text-align: center;
-    font-size: 0.7rem;
-    color: #999;
+    font-size: 0.75rem;
+    color: #555 !important;
+  }
+
+  /* Mark allocation sits hard right of the question, as on an exam paper.
+     Keep it on one line with the question header rather than wrapping. */
+  .q-marks {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .q-marks span {
+    color: #111 !important;
+    background: transparent !important;
+    border: 1px solid #999 !important;
+  }
+
+  /* The formula sheet follows the questions, starting its own page */
+  .print-formula-sheet {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .print-formula-sheet h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #111;
   }
 }

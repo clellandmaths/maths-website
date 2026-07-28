@@ -12,6 +12,7 @@ import WorksheetFAB from '@/components/Explorer/WorksheetFAB';
 import WorksheetDrawer from '@/components/Explorer/WorksheetDrawer';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
+import Marks from '@/components/Marks';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
 import QRCodeImage from '@/components/QRCodeImage';
@@ -109,6 +110,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
+
+  // Shown in the printed header — a pupil wants to know what the paper is worth
+  const totalMarks = useMemo(
+    () => worksheetItems.reduce((sum, q) => sum + (q.marks?.reduce((a, b) => a + b, 0) ?? 0), 0),
+    [worksheetItems]
+  );
 
   // Load questions async on mount
   useEffect(() => {
@@ -528,13 +535,22 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                   {/* Print-only header (hidden on screen) */}
                   <div className="print-only print-header">
-                    <div className="flex justify-between items-end mb-4">
+                    <div className="flex justify-between items-end mb-2">
                       <h1 className="text-2xl font-bold">Clelland Maths <span className="font-normal text-gray-500">{config.label} Worksheet</span></h1>
                       <div className="text-right">
                         <div className="text-sm text-gray-500">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
-                        <div className="text-sm font-medium">{worksheetItems.length} question{worksheetItems.length === 1 ? '' : 's'}</div>
+                        <div className="text-sm font-medium">
+                          {worksheetItems.length} question{worksheetItems.length === 1 ? '' : 's'}
+                          {totalMarks > 0 && <> &middot; {totalMarks} marks</>}
+                        </div>
                       </div>
                     </div>
+                    {/* A printed worksheet gets passed around a classroom, so
+                        say plainly what this is and where it came from. */}
+                    <p className="print-strapline">
+                      Free SQA maths revision — past papers, video solutions and course notes at{' '}
+                      <strong>clellandmaths.com</strong>
+                    </p>
                   </div>
 
                   {/* Worksheet Questions - Linear List View */}
@@ -560,6 +576,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 {topic}
                               </span>
                             ))}
+                            {/* Pushed right, where a pupil expects the mark
+                                allocation to sit on a printed paper */}
+                            <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
                           </div>
                           {/* Reorder buttons — compact horizontal */}
                           <div className="no-print flex items-center gap-0.5 shrink-0">
@@ -693,7 +712,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                   {/* Print-only footer */}
                   <div className="print-only print-footer">
-                    Clelland Maths &mdash; www.clellandmaths.com
+                    Created with <strong>Clelland Maths</strong> &mdash; free SQA maths revision,
+                    past papers and video solutions at <strong>clellandmaths.com</strong>
                   </div>
 
                   {/* Mobile bottom action bar — always visible on scroll */}
