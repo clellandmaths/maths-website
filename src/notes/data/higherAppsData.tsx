@@ -6736,7 +6736,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 There is a full interactive workbook covering everything you need: loading a dataset, descriptive statistics, boxplots, tables, histograms, scattergraphs, correlation and regression, t-tests and z-tests — with practice datasets to download and past paper questions worked through.
               </p>
               <p>
-                <a href="https://rstudio.clellandmaths.com" target="_blank" rel="noopener noreferrer" className="text-blue-300 underline font-semibold">Open the RStudio Workbook →</a>
+                <a href="/course/higher-apps/rstudio/" className="text-blue-300 underline font-semibold">Open the RStudio Workbook →</a>
               </p>
             </div>
 
