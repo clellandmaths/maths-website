@@ -1114,7 +1114,13 @@ export const national5AppsData: Section[] = [
             <h4 className="text-white font-semibold">4. Annual Percentage Rate (APR) & Credit</h4>
             <p>APR is a standardised calculation used to compare different loans and credit cards. Because it includes both the interest rate and any mandatory fees, looking for the lowest APRs is the most accurate way to find the true, overall cost of borrowing.</p>
 
-            <h4 className="text-white font-semibold">5. Shares</h4>
+            <h4 className="text-white font-semibold">5. Hire Purchase</h4>
+            <p><strong>Hire purchase</strong> lets you have an item straight away and pay for it in instalments, instead of saving up the full cash price. The convenience almost always costs more overall.</p>
+            <p>A plan is usually made of a <strong>deposit</strong> (often a percentage of the cash price), a number of <strong>monthly instalments</strong>, and sometimes a <strong>final payment</strong>. Total them all, then compare with the cash price:</p>
+            <BlockMath math="\text{Total HP Cost} = \text{Deposit} + (\text{Number of Instalments} \times \text{Instalment}) + \text{Final Payment}" />
+            <BlockMath math="\text{Extra Cost} = \text{Total HP Cost} - \text{Cash Price}" />
+
+            <h4 className="text-white font-semibold">6. Shares</h4>
             <p>A company can raise money by selling <strong>shares</strong>. Buying one makes you a shareholder, owning a small piece of the company. Share values rise and fall with the company's fortunes, so buying shares can produce a profit or a loss — it is not a guaranteed return like a savings rate.</p>
             <p>The calculation is always the same: total what was paid, total what was received, and compare.</p>
             <BlockMath math="\text{Profit or Loss} = (\text{Number} \times \text{Selling Price}) - (\text{Number} \times \text{Buying Price})" />
@@ -1172,6 +1178,33 @@ export const national5AppsData: Section[] = [
                 <p><strong>Step 3:</strong> Divide the total amount by 12 to find the monthly repayment.</p>
                 <BlockMath math="\pounds7052.50 \div 12 = \pounds587.70833..." />
                 <p><strong>Final Answer:</strong> Rounded to exactly two decimal places for money, the monthly payment is £587.71</p>
+              </div>
+            )
+          },
+          {
+            id: "savings-ex-hp",
+            question: (
+              <div className="space-y-2">
+                <p><strong>Hire Purchase</strong></p>
+                <p>A washing machine has a cash price of £480. It can also be bought on a payment plan:</p>
+                <ul className="list-disc list-inside ml-4">
+                  <li>a deposit of 15% of the cash price</li>
+                  <li>12 monthly instalments of £38</li>
+                </ul>
+                <p>Calculate how much more expensive the payment plan is than paying cash.</p>
+              </div>
+            ),
+            solution: (
+              <div className="space-y-2">
+                <p><strong>Step 1:</strong> Work out the deposit — 15% of the cash price:</p>
+                <BlockMath math="480 \times 0.15 = \pounds72" />
+                <p><strong>Step 2:</strong> Work out the total of the instalments:</p>
+                <BlockMath math="12 \times 38 = \pounds456" />
+                <p><strong>Step 3:</strong> Add them for the total cost of the plan:</p>
+                <BlockMath math="72 + 456 = \pounds528" />
+                <p><strong>Step 4:</strong> Compare with the cash price:</p>
+                <BlockMath math="528 - 480 = \pounds48" />
+                <p><strong>Answer:</strong> the payment plan costs <strong>£48 more</strong> than paying cash.</p>
               </div>
             )
           },
@@ -2587,7 +2620,17 @@ export const national5AppsData: Section[] = [
           <div className="space-y-4 text-slate-300">
             <p><strong>The Golden Rule:</strong> Before finding the median or quartiles, you must always rewrite your list of numbers in ascending order. When comparing the interquartile range or standard deviation, you must never use the phrase "on average," as these are measures of spread, not averages.</p>
 
-            <h4 className="text-white font-semibold">1. The Five-Figure Summary</h4>
+            <h4 className="text-white font-semibold">1. Mean, Mode, Median and Range</h4>
+            <p>Three of these are measures of <strong>average</strong>; the range is a measure of <strong>spread</strong>.</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Mean</strong> — add all the values and divide by how many there are.</li>
+              <li><strong>Mode</strong> — the value that appears most often (there can be more than one, or none).</li>
+              <li><strong>Median</strong> — the middle value once the data is in order.</li>
+              <li><strong>Range</strong> — the largest value minus the smallest.</li>
+            </ul>
+            <BlockMath math="\text{Mean} = \frac{\text{total of the values}}{\text{number of values}} \qquad \text{Range} = \text{Highest} - \text{Lowest}" />
+
+            <h4 className="text-white font-semibold">2. The Five-Figure Summary</h4>
             <p>A five-figure summary is used to describe the spread of a dataset and consists of five specific values: the Lowest value (L), the Lower Quartile (Q1), the Median (Q2), the Upper Quartile (Q3), and the Highest value (H).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Rewrite the raw list of numbers in order from lowest to highest.</li>
@@ -2595,14 +2638,14 @@ export const national5AppsData: Section[] = [
               <li><strong>Step 3:</strong> Find the middle of the lower half of the data to find the lower quartile, and the middle of the upper half to find the upper quartile.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Interquartile Range (IQR) & Semi-Interquartile Range (SIQR)</h4>
+            <h4 className="text-white font-semibold">3. Interquartile Range (IQR) & Semi-Interquartile Range (SIQR)</h4>
             <p>The Interquartile Range is calculated by subtracting the lower quartile from the upper quartile:</p>
             <BlockMath math="\text{IQR} = Q_3 - Q_1" />
             <p>The Semi-Interquartile Range is simply the IQR divided by 2:</p>
             <BlockMath math="\text{SIQR} = \frac{Q_3 - Q_1}{2}" />
             <p>where <InlineMath math="Q_1" /> is the lower quartile and <InlineMath math="Q_3" /> is the upper quartile.</p>
 
-            <h4 className="text-white font-semibold">3. Box Plots</h4>
+            <h4 className="text-white font-semibold">4. Box Plots</h4>
             <p>A box plot is a visual drawing of the five-figure summary.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The lowest and highest values form the ends of the "whiskers".</li>
@@ -2610,7 +2653,7 @@ export const national5AppsData: Section[] = [
               <li>A vertical line is drawn inside the box to represent the median.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Standard Deviation</h4>
+            <h4 className="text-white font-semibold">5. Standard Deviation</h4>
             <p>The standard deviation of a list of numbers is a measure of how spread out the numbers are from the mean.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>A lower standard deviation indicates that the numbers are more consistent.</li>
