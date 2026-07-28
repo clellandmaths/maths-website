@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getNotesForCourse } from '@/lib/notes-loader';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions } from '@/lib/data-loader';
+import { COURSES_WITH_PRACTICE, getPracticeTopics } from '@/lib/practice-loader';
 
 const BASE = 'https://clellandmaths.com';
 const COURSE_IDS = ['n5', 'higher', 'ah', 'n5-apps', 'higher-apps'];
@@ -18,6 +19,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // has to be listed by hand or crawlers only reach it via the notes link.
     { url: `${BASE}/course/higher-apps/rstudio/`, lastModified: now, priority: 0.8 },
   ];
+
+  // Guided practice — one page per topic, each targeting its own search term
+  for (const courseId of COURSES_WITH_PRACTICE) {
+    entries.push({ url: `${BASE}/course/${courseId}/practice`, lastModified: now, priority: 0.8 });
+    for (const { slug } of await getPracticeTopics(courseId)) {
+      entries.push({
+        url: `${BASE}/course/${courseId}/practice/${slug}`,
+        lastModified: now,
+        priority: 0.7,
+      });
+    }
+  }
 
   for (const courseId of COURSE_IDS) {
     entries.push({ url: `${BASE}/course/${courseId}`, lastModified: now, priority: 0.9 });
