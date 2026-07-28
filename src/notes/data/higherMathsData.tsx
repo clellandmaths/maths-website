@@ -4350,7 +4350,7 @@ id: "integration-of-brackets",
   },
   {
     id: "trigonometry",
-title: "Trigonometry",
+    title: "Trigonometry",
     topics: [
       {
         id: "radian-measure",
