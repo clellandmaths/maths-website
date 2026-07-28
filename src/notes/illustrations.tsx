@@ -1682,58 +1682,85 @@ export const AreaUnderXAxisEx2Graph = () => {
 }
 
 // Advanced Higher — Complex Numbers: plotting on an Argand diagram.
-// Shows z = -3 + 4i with its conjugate and negative, matching complex-ops-ex4.
+// Shows z = -3 + 4i with its conjugate and its negative, matching complex-ops-ex4.
+// Layout constants are chosen so no label overlaps an axis number: see the
+// comments on each block before moving anything.
 export const ArgandDiagramPlotting = () => {
-    const O = 180, s = 22;
-    const px = (re: number) => O + s * re;
-    const py = (im: number) => O - s * im;
-
-    const Point = ({ re, im, label, dx = 10, dy = -10 }: { re: number, im: number, label: string, dx?: number, dy?: number }) => (
-        <g>
-            <circle cx={px(re)} cy={py(im)} r="4.5" fill="#EF4444" />
-            <text x={px(re) + dx} y={py(im) + dy} fill="#EF4444" fontSize="14" fontWeight="bold"
-                textAnchor={dx < 0 ? "end" : "start"}>{label}</text>
-        </g>
-    );
+    const OX = 185, OY = 205, S = 24;          // origin and pixels-per-unit
+    const px = (re: number) => OX + S * re;    // -6 -> 41, 6 -> 329
+    const py = (im: number) => OY - S * im;    // 6 -> 61, -6 -> 349
+    const ticks = [-6, -4, -2, 2, 4, 6];
+    const num = (n: number) => (n < 0 ? `−${Math.abs(n)}` : `${n}`);
 
     return (
-        <svg viewBox="0 0 360 360" className="w-full max-w-md mx-auto my-6 font-sans" role="img"
-            aria-label="Argand diagram showing z equals minus 3 plus 4i, its conjugate and its negative">
-            {/* grid */}
-            {[-6, -4, -2, 2, 4, 6].map(n => (
+        <svg viewBox="0 0 400 375" className="w-full max-w-md mx-auto my-6 font-sans" role="img"
+            aria-label="Argand diagram plotting z = -3 + 4i, its conjugate -3 - 4i, and its negative 3 - 4i">
+
+            {/* Title — states what the diagram is showing */}
+            <text x="200" y="20" textAnchor="middle" fill="currentColor" fontSize="15" fontWeight="bold"
+                className="text-white">Plotting z = &#8722;3 + 4i on an Argand diagram</text>
+
+            {/* Grid, every 2 units, inside the axis extents */}
+            {ticks.map(n => (
                 <g key={n} className="text-slate-700">
-                    <line x1={px(n)} y1="20" x2={px(n)} y2="340" stroke="currentColor" strokeWidth="0.5" />
-                    <line x1="20" y1={py(n)} x2="340" y2={py(n)} stroke="currentColor" strokeWidth="0.5" />
+                    <line x1={px(n)} y1="52" x2={px(n)} y2="360" stroke="currentColor" strokeWidth="0.5" />
+                    <line x1="30" y1={py(n)} x2="345" y2={py(n)} stroke="currentColor" strokeWidth="0.5" />
                 </g>
             ))}
 
-            {/* axes */}
+            {/* Axes */}
             <g className="text-slate-400">
-                <line x1="20" y1={O} x2="345" y2={O} stroke="currentColor" strokeWidth="2" />
-                <line x1={O} y1="345" x2={O} y2="15" stroke="currentColor" strokeWidth="2" />
+                <line x1="30" y1={OY} x2="345" y2={OY} stroke="currentColor" strokeWidth="2" />
+                <line x1={OX} y1="360" x2={OX} y2="52" stroke="currentColor" strokeWidth="2" />
             </g>
-            <text x="348" y={O - 8} fill="currentColor" fontSize="13" className="text-slate-300">Re</text>
-            <text x={O + 8} y="22" fill="currentColor" fontSize="13" className="text-slate-300">Im</text>
+            {/* Axis names: Re ends at x=372 (inside the 400 viewBox); Im sits above the axis top */}
+            <text x="350" y={OY - 8} fill="currentColor" fontSize="14" fontStyle="italic"
+                className="text-slate-300">Re</text>
+            <text x={OX + 9} y="48" fill="currentColor" fontSize="14" fontStyle="italic"
+                className="text-slate-300">Im</text>
 
-            {/* axis numbers */}
-            {[-6, -4, -2, 4, 6].map(n => (
-                <text key={`x${n}`} x={px(n)} y={O + 16} textAnchor="middle" fill="currentColor" fontSize="11" className="text-slate-500">{n}</text>
+            {/* Axis numbers — every tick on both axes, including 2.
+                Uses a true minus sign (U+2212) to match the labels. */}
+            {ticks.map(n => (
+                <text key={`x${n}`} x={px(n)} y={OY + 17} textAnchor="middle" fill="currentColor"
+                    fontSize="11" className="text-slate-500">{num(n)}</text>
             ))}
-            {[-6, -4, -2, 2, 6].map(n => (
-                <text key={`y${n}`} x={O - 8} y={py(n) + 4} textAnchor="end" fill="currentColor" fontSize="11" className="text-slate-500">{n}</text>
+            {ticks.map(n => (
+                <text key={`y${n}`} x={OX - 9} y={py(n) + 4} textAnchor="end" fill="currentColor"
+                    fontSize="11" className="text-slate-500">{num(n)}</text>
             ))}
+            <text x={OX - 8} y={OY + 17} textAnchor="end" fill="currentColor" fontSize="11"
+                className="text-slate-500">O</text>
 
-            {/* guide lines showing how (-3, 4) is reached */}
-            <g stroke="#EF4444" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.65">
-                <line x1={O} y1={O} x2={px(-3)} y2={O} />
-                <line x1={px(-3)} y1={O} x2={px(-3)} y2={py(4)} />
+            {/* Guide lines showing how (-3, 4) is reached from the origin.
+                "3 left" sits ABOVE the real axis (y = 195) so it cannot collide
+                with the axis numbers, which sit below it at y = 222. */}
+            <g stroke="#EF4444" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.7">
+                <line x1={OX} y1={OY} x2={px(-3)} y2={OY} />
+                <line x1={px(-3)} y1={OY} x2={px(-3)} y2={py(4)} />
             </g>
-            <text x={px(-1.5)} y={O + 18} textAnchor="middle" fill="#EF4444" fontSize="11">3 left</text>
-            <text x={px(-3) - 8} y={py(2)} textAnchor="end" fill="#EF4444" fontSize="11">4 up</text>
+            <text x={(OX + px(-3)) / 2} y={OY - 9} textAnchor="middle" fill="#EF4444" fontSize="11">3 left</text>
+            <text x={px(-3) - 8} y={py(2) + 4} textAnchor="end" fill="#EF4444" fontSize="11">4 up</text>
 
-            <Point re={-3} im={4} label="z = -3 + 4i" dx={-10} dy={-12} />
-            <Point re={-3} im={-4} label="z̄ = -3 - 4i" dx={-10} dy={20} />
-            <Point re={3} im={-4} label="-z = 3 - 4i" dx={10} dy={20} />
+            {/* Points. Labels are centred on the point, clear above or below it. */}
+            <g fill="#EF4444">
+                <circle cx={px(-3)} cy={py(4)} r="4.5" />
+                <circle cx={px(-3)} cy={py(-4)} r="4.5" />
+                <circle cx={px(3)} cy={py(-4)} r="4.5" />
+            </g>
+            <g fill="#EF4444" fontSize="14" fontWeight="bold" textAnchor="middle">
+                <text x={px(-3)} y={py(4) - 14}>z = &#8722;3 + 4i</text>
+                <text x={px(3)} y={py(-4) + 24}>&#8722;z = 3 &#8722; 4i</text>
+            </g>
+            {/* The conjugate label needs a real overbar. text-decoration on a
+                <tspan> renders as a detached dash in Chrome, so the bar is drawn
+                as a line: the label is left-anchored at x0 so the "z" glyph
+                position is known (bold 14px sans ~ 8px wide). */}
+            <g fill="#EF4444" fontSize="14" fontWeight="bold">
+                <text x={px(-3) - 41} y={py(-4) + 24} textAnchor="start">z = &#8722;3 &#8722; 4i</text>
+                <line x1={px(-3) - 41} y1={py(-4) + 11} x2={px(-3) - 32} y2={py(-4) + 11}
+                    stroke="#EF4444" strokeWidth="1.5" />
+            </g>
         </svg>
     )
 }
