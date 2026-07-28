@@ -3592,7 +3592,10 @@ export const national5MathsData: Section[] = [
       {
         id: "line-of-best-fit",
         title: "Line of Best Fit",
-        videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE",
+        // Line of best fit is taught inside the Straight Line lesson video, so
+        // this one opens partway through. Every other N5 topic has its own
+        // lesson video and correctly starts at the beginning.
+        videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE?start=687",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>A scattergraph plots data points to show the relationship between two variables. You must be able to draw a straight "line of best fit" through the data.</p>
