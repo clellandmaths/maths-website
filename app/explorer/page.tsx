@@ -13,6 +13,7 @@ import WorksheetDrawer from '@/components/Explorer/WorksheetDrawer';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FocusMode from '@/components/Explorer/FocusMode';
 import FormulaeSheet from '@/components/FormulaeSheet';
+import FormulaeButton from '@/components/FormulaeButton';
 import Marks from '@/components/Marks';
 import MathRenderer from '@/components/MathRenderer';
 import VideoModal from '@/components/VideoModal';
@@ -690,6 +691,13 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 Data Booklet
                               </button>
                             )}
+                            {/* Renders nothing for Higher Apps — that course
+                                sits the exam with the booklet, not a formulae list */}
+                            <FormulaeButton
+                              courseId={course}
+                              theme={theme}
+                              className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.text} hover:opacity-80 rounded-lg text-sm font-medium transition-opacity`}
+                            />
                             {q.videoId ? (
                               <button
                                 onClick={() => setActiveVideo({
@@ -811,6 +819,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {presentStartIndex !== null && worksheetItems.length > 0 && (
         <QuestionPresenter
           theme={theme}
+          courseId={course}
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           startIndex={presentStartIndex}
@@ -822,6 +831,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       {showFocusMode && worksheetItems.length > 0 && (
         <FocusMode
           theme={theme}
+          courseId={course}
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           onClose={() => setShowFocusMode(false)}

@@ -5,13 +5,16 @@ import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, BookOpen, Paperclip, C
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
-import { QuestionWithMetadata } from '@/lib/data-loader';
+import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 
 interface QuestionPresenterProps {
+  /** Course this question set belongs to — enables the Formulae button. */
+  courseId?: string;
   theme: CourseTheme;
   hasDataBooklet?: boolean;
   questions: QuestionWithMetadata[];
@@ -40,7 +43,7 @@ function getTimestampSeconds(ts: string): number {
   return parseInt(ts, 10);
 }
 
-export default function QuestionPresenter({ theme, hasDataBooklet = false, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -104,7 +107,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
               <span className="text-slate-300">{questions.length}</span>
             </p>
             <p className="text-slate-500 text-xs mt-0.5">
-              {question.year} Paper {question.paperNumber} Q{question.questionIndex + 1}
+              {questionLabel(question)}
             </p>
             <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
           </div>
@@ -185,6 +188,13 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
                   <BookOpen className="h-5 w-5" />
                   Data Booklet
                 </button>
+              )}
+              {courseId && (
+                <FormulaeButton
+                  courseId={courseId}
+                  theme={theme}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                />
               )}
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
@@ -283,7 +293,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
         onClose={() => setShowVideo(false)}
         videoId={question.videoId}
         timestamp={getTimestampSeconds(question.timestamp)}
-        title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
+        title={questionLabel(question)}
       />
 
       {/* Data Booklet (Higher Apps) */}
@@ -302,7 +312,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, quest
           year={question.year}
           paperNumber={question.paperNumber}
           questionHtml={question.question}
-          title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
+          title={questionLabel(question)}
           onClose={() => setShowMarkscheme(false)}
         />
       )}

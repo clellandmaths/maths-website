@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, Flame, ArrowLeft } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, Flame, ArrowLeft, BookOpen } from 'lucide-react';
 import { QuestionWithMetadata, getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import FormulaeButton from '@/components/FormulaeButton';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
 
@@ -87,6 +89,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [showBooklet, setShowBooklet] = useState(false);
   const [finished, setFinished] = useState(false);
 
   const dateString = getUKDateString();
@@ -277,6 +280,23 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
 
             {/* Action Buttons */}
             <div className="shrink-0 flex flex-col sm:flex-row justify-center items-center gap-3 mt-4">
+              {/* Reference material, as in the exam: the booklet for Higher
+                  Apps, the formulae list for everyone else. */}
+              {course === 'higher-apps' ? (
+                <button
+                  onClick={() => setShowBooklet(true)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                >
+                  <BookOpen className="h-5 w-5" />
+                  Data Booklet
+                </button>
+              ) : (
+                <FormulaeButton
+                  courseId={course}
+                  theme={theme}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                />
+              )}
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
@@ -355,6 +375,16 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
         timestamp={getTimestampSeconds(question.timestamp)}
         title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
       />
+
+      {/* Data Booklet (Higher Apps) — the booklet is year-specific, so it
+          follows whichever paper today's question came from */}
+      {showBooklet && (
+        <DataBookletModal
+          year={question.year}
+          theme={theme}
+          onClose={() => setShowBooklet(false)}
+        />
+      )}
     </>
   );
 }

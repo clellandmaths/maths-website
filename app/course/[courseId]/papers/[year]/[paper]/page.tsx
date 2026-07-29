@@ -25,6 +25,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import MathHtml from '@/components/MathHtml';
 import WatchSolutionButton from '@/components/Papers/WatchSolutionButton';
 import BookletButton from '@/components/Papers/BookletButton';
+import FormulaeButton from '@/components/FormulaeButton';
 import { Paperclip } from 'lucide-react';
 
 // Every past paper is a statically generated page with all questions,
@@ -171,6 +172,8 @@ export default async function PaperPage(
             />
           )}
           {isHigherApps && <BookletButton year={year} theme={theme} />}
+          {/* Renders nothing for Higher Apps, which gets the booklet instead */}
+          <FormulaeButton courseId={courseId} theme={theme} />
         </div>
       </div>
 

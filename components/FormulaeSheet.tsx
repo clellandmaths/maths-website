@@ -35,7 +35,7 @@ export default function FormulaeSheet({
           <h3 className="font-semibold text-sm mb-1">{section.title}</h3>
           <div
             className="formula-content text-sm"
-            dangerouslySetInnerHTML={{ __html: renderMathHtml(section.content) }}
+            dangerouslySetInnerHTML={{ __html: renderMathHtml(section.content, { displayStyle: true }) }}
           />
         </div>
       ))}

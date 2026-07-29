@@ -5,12 +5,26 @@ import katex from 'katex';
 // crawlable. Use this on statically generated content pages; MathRenderer
 // remains for client-only surfaces (explorer, presenter).
 
-export function renderMathHtml(html: string): string {
+export interface MathHtmlOptions {
+  /**
+   * Render inline maths in display *style* — full-size fractions, roots and
+   * limits — while keeping it inline in the flow. Display *mode* would centre
+   * each expression on its own line, which is wrong for prose but right for a
+   * formulae sheet, where `1/√(1−x²)` squeezed to textstyle is unreadable.
+   */
+  displayStyle?: boolean;
+}
+
+export function renderMathHtml(html: string, options: MathHtmlOptions = {}): string {
   let processed = html;
 
   const render = (tex: string, displayMode: boolean) => {
+    const src = tex.trim();
     try {
-      return katex.renderToString(tex.trim(), { displayMode, throwOnError: false, trust: true });
+      return katex.renderToString(
+        !displayMode && options.displayStyle ? `\\displaystyle ${src}` : src,
+        { displayMode, throwOnError: false, trust: true }
+      );
     } catch {
       return `<span class="text-red-500">[Math Error]</span>`;
     }

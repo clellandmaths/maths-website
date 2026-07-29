@@ -103,6 +103,7 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
         </p>
         {/* Raw (unrendered) question html — Focus Mode renders maths itself */}
         <PracticeModes
+          courseId={courseId}
           questions={questions.map((q, i) => ({
             question: q.question,
             answer: q.answer,
@@ -111,6 +112,10 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
             topics: [topic.name],
             marks: q.marks,
             solutionUrl: q.solutionUrl,
+            // Past paper questions keep their paper reference; the rest are
+            // numbered within the topic. Guided practice has no paper number,
+            // so the caption is set explicitly rather than assembled.
+            label: q.paper ?? `${topic.name} · Question ${i + 1}`,
             year: q.paper ?? topic.name,
             paperNumber: 0,
             questionIndex: i,

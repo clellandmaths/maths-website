@@ -17,12 +17,13 @@ import type { CourseTheme } from '@/lib/course-theme';
 //                 and as past papers present
 
 interface Props {
+  courseId: string;
   questions: QuestionWithMetadata[];
   theme: CourseTheme;
   hasDataBooklet?: boolean;
 }
 
-export default function PracticeModes({ questions, theme, hasDataBooklet }: Props) {
+export default function PracticeModes({ courseId, questions, theme, hasDataBooklet }: Props) {
   const [focus, setFocus] = useState(false);
   const [presentFrom, setPresentFrom] = useState<number | null>(null);
 
@@ -46,6 +47,7 @@ export default function PracticeModes({ questions, theme, hasDataBooklet }: Prop
       {focus && (
         <FocusMode
           theme={theme}
+          courseId={courseId}
           questions={questions}
           hasDataBooklet={hasDataBooklet}
           onClose={() => setFocus(false)}
@@ -55,6 +57,7 @@ export default function PracticeModes({ questions, theme, hasDataBooklet }: Prop
       {presentFrom !== null && (
         <QuestionPresenter
           theme={theme}
+          courseId={courseId}
           questions={questions}
           startIndex={presentFrom}
           hasDataBooklet={hasDataBooklet}

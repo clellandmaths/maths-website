@@ -5,9 +5,10 @@ import { X, Eye, EyeOff, Play, Check, BookOpen, Paperclip, ClipboardCheck } from
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
-import { QuestionWithMetadata } from '@/lib/data-loader';
+import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -47,13 +48,15 @@ function saveDoneSet(questions: QuestionWithMetadata[], doneSet: Set<number>) {
 }
 
 interface FocusModeProps {
+  /** Course this question set belongs to — enables the Formulae button. */
+  courseId?: string;
   theme: CourseTheme;
   hasDataBooklet?: boolean;
   questions: QuestionWithMetadata[];
   onClose: () => void;
 }
 
-export default function FocusMode({ theme, hasDataBooklet = false, questions, onClose }: FocusModeProps) {
+export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose }: FocusModeProps) {
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
@@ -140,7 +143,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
                   {index + 1}
                 </span>
                 <span className="text-sm text-slate-500 shrink-0">
-                  {q.year} Paper {q.paperNumber} Q{q.questionIndex + 1}
+                  {questionLabel(q)}
                 </span>
                 {q.topics?.slice(0, 2).map((topic) => (
                   <span
@@ -201,12 +204,19 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
                     Data Booklet
                   </button>
                 )}
+                {courseId && (
+                  <FormulaeButton
+                    courseId={courseId}
+                    theme={theme}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm font-medium transition-colors"
+                  />
+                )}
                 {q.videoId ? (
                   <button
                     onClick={() => setActiveVideo({
                       videoId: q.videoId,
                       timestamp: getTimestampSeconds(q.timestamp),
-                      title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
+                      title: questionLabel(q)
                     })}
                     className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                   >
@@ -300,7 +310,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, questions, on
         year={markschemeQ.year}
         paperNumber={markschemeQ.paperNumber}
         questionHtml={markschemeQ.question}
-        title={`${markschemeQ.year} Paper ${markschemeQ.paperNumber} Q${markschemeQ.questionIndex + 1}`}
+        title={questionLabel(markschemeQ)}
         onClose={() => setMarkschemeQ(null)}
       />
     )}

@@ -46,6 +46,16 @@ export interface QuestionWithMetadata extends Question {
   year: number | string;
   paperNumber: number;
   questionIndex: number;
+  /**
+   * Overrides the "{year} Paper {n} Q{m}" caption. Guided practice questions
+   * have no paper number, so without this they read "Surds Paper 0 Q1".
+   */
+  label?: string;
+}
+
+/** The caption shown above a question in the full-screen and focus views. */
+export function questionLabel(q: QuestionWithMetadata): string {
+  return q.label ?? `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`;
 }
 
 function flattenPastPapers(pastPapers: PastPaper[]): QuestionWithMetadata[] {
