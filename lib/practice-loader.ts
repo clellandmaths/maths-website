@@ -1,5 +1,12 @@
 import type { PracticeCourse, PracticeTopic, PracticeQuestion } from '@/src/practice/types';
-import { getAllN5Questions } from '@/lib/data-loader';
+import {
+  getAllN5Questions,
+  getAllHigherQuestions,
+  getAllAHQuestions,
+  getAllN5AppsQuestions,
+  getAllHigherAppsQuestions,
+  type QuestionWithMetadata,
+} from '@/lib/data-loader';
 
 // Guided practice loader.
 //
@@ -90,12 +97,24 @@ const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*)?\s*P([12])\s*Q(\d+)/i;
 
 const paperIndexes: Record<string, Promise<Map<string, ResolvedQuestion>>> = {};
 
+// Where a practice question is a past paper question, we reference it rather
+// than restate it: the referenced copy brings its own video, marks and diagram.
+// Every course whose papers are loadable can be a reference source.
+const paperSources: Record<string, () => Promise<QuestionWithMetadata[]>> = {
+  n5: getAllN5Questions,
+  higher: getAllHigherQuestions,
+  ah: getAllAHQuestions,
+  'n5-apps': getAllN5AppsQuestions,
+  'higher-apps': getAllHigherAppsQuestions,
+};
+
 function indexFor(courseId: string): Promise<Map<string, ResolvedQuestion>> {
   if (!paperIndexes[courseId]) {
     paperIndexes[courseId] = (async () => {
       const map = new Map<string, ResolvedQuestion>();
-      if (courseId !== 'n5') return map;
-      for (const q of await getAllN5Questions()) {
+      const source = paperSources[courseId];
+      if (!source) return map;
+      for (const q of await source()) {
         const m = q.question.match(LABEL);
         if (!m) continue;
         const label = `${m[1]}${m[2] ? ' Spec' : ''} P${m[3]} Q${m[4]}`;
