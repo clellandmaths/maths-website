@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:math": "node scripts/check-math-render.mjs",
+    "check:latex": "node scripts/check-notes-latex.mjs",
+    "check": "npm run check:math && npm run check:latex"
   },
   "dependencies": {
     "katex": "^0.16.28",

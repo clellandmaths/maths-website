@@ -83,15 +83,18 @@ body {
   line-height: 1.75;
 }
 
-/* Inline maths is set in display style so fractions are full size and legible.
-   A two-level fraction is taller than the line box, and as a plain inline
-   element its height is not counted — so the bar of "3/7 of the guests chose
-   chicken" collided with the line above. As inline-block the height IS counted,
-   so only the lines that actually contain a fraction grow, rather than adding
-   leading to every line of prose. */
-.question-content .katex,
-.answer-content .katex,
-.prose-practice .katex {
+/* ── Inline maths ─────────────────────────────────────────────────
+   Deliberately unscoped: this applies to every .katex on the site, so a new
+   surface gets correct maths without being added to a list. It was once
+   scoped to three class names, which meant anywhere else silently lost it.
+
+   Inline maths is set in display style so fractions are full size and
+   legible. A two-level fraction is taller than the line box, and as a plain
+   inline element its height is not counted — so the bar of "3/7 of the guests
+   chose chicken" collided with the line above. As inline-block the height IS
+   counted, so only the lines that actually contain a fraction grow, rather
+   than adding leading to every line of prose. */
+.katex {
   display: inline-block;
   vertical-align: middle;
   line-height: 1.2;
@@ -101,11 +104,11 @@ body {
   margin-bottom: 0.18em;
 }
 
-/* …but centred display maths must stay a block */
-.question-content .katex-display > .katex,
-.answer-content .katex-display > .katex,
-.prose-practice .katex-display > .katex {
+/* …but centred display maths must stay a block, and needs no side margins */
+.katex-display > .katex {
   display: block;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .question-content img {
