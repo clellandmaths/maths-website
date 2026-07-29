@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { COURSES_WITH_PRACTICE, getPracticeForCourse, topicSlug } from '@/lib/practice-loader';
+import { COURSES_WITH_PRACTICE, getPracticeForCourse, topicSlug, resolveQuestions } from '@/lib/practice-loader';
 import { getCourseTheme } from '@/lib/course-theme';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -34,12 +34,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const questions = course.sections.reduce(
     (n, s) => n + s.topics.reduce((m, t) => m + t.questions.length, 0), 0
   );
+  const videos = (await Promise.all(
+    course.sections.flatMap(s => s.topics.map(t => resolveQuestions(courseId, t.questions)))
+  )).flat().filter(q => q.videoId).length;
 
   return {
     title: `${courseName} Practice Questions`,
     description:
       `${questions} guided practice questions across ${topics} ${courseName} topics, ` +
-      `with answers and video solutions for every question.`,
+      `with answers${videos === questions ? ' and video solutions' : ''} for every question.`,
     alternates: { canonical: `/course/${courseId}/practice/` },
   };
 }
@@ -54,6 +57,11 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
   const total = course.sections.reduce(
     (n, s) => n + s.topics.reduce((m, t) => m + t.questions.length, 0), 0
   );
+  // A referenced past paper question brings the paper's own video, so the
+  // references have to be resolved before the count means anything
+  const videos = (await Promise.all(
+    course.sections.flatMap(s => s.topics.map(t => resolveQuestions(courseId, t.questions)))
+  )).flat().filter(q => q.videoId).length;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -68,7 +76,11 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
         </h1>
         <p className="text-muted-foreground">
           {total} questions across {course.sections.reduce((n, s) => n + s.topics.length, 0)} topics.
-          Every question has an answer and a video solution.
+          {/* Only claim video where it exists — most Advanced Higher topics
+              have no guided practice filmed yet */}
+          {videos === total
+            ? ' Every question has an answer and a video solution.'
+            : ` Every question has an answer${videos ? `, and ${videos} have a video solution` : ''}.`}
         </p>
       </div>
 

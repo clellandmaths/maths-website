@@ -21,6 +21,7 @@ import {
 const loaders: Record<string, () => Promise<PracticeCourse>> = {
   n5: () => import('@/src/practice/data/national5Maths').then(m => m.national5MathsPractice),
   higher: () => import('@/src/practice/data/higherMaths').then(m => m.higherMathsPractice),
+  ah: () => import('@/src/practice/data/advancedHigherMaths').then(m => m.advancedHigherMathsPractice),
 };
 
 /** Course ids that have guided practice, for conditional nav. */
@@ -94,7 +95,25 @@ export interface ResolvedQuestion {
   marks?: number[];
 }
 
-const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*)?\s*P([12])\s*Q(\d+)/i;
+// Every past paper question opens with a badge naming it. Read the label from
+// that badge only — searching the whole question would let a year mentioned in
+// the question text be mistaken for the label.
+const BADGE = /^\s*<small>\s*<strong>[\s\S]*?>([^<]+)</i;
+
+// "2023 P2 Q14", and for Advanced Higher before 2020, when there was a single
+// paper, "2016 Q1" — so the paper number is optional. Part suffixes are kept
+// because the AH archive stores some questions split as Q1(a), Q1(b).
+const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*|Exemplar)?\s*(?:P([12])\s*)?Q(\d+)((?:\([a-z]\))*)/i;
+
+/** The reference string for a past paper question, or null if it has no badge. */
+function labelOf(questionHtml: string): string | null {
+  const badge = questionHtml.match(BADGE);
+  if (!badge) return null;
+  const m = badge[1].match(LABEL);
+  if (!m) return null;
+  const [, year, special, paper, num, parts] = m;
+  return `${year}${special ? ` ${special}` : ''}${paper ? ` P${paper}` : ''} Q${num}${parts ?? ''}`;
+}
 
 const paperIndexes: Record<string, Promise<Map<string, ResolvedQuestion>>> = {};
 
@@ -116,9 +135,8 @@ function indexFor(courseId: string): Promise<Map<string, ResolvedQuestion>> {
       const source = paperSources[courseId];
       if (!source) return map;
       for (const q of await source()) {
-        const m = q.question.match(LABEL);
-        if (!m) continue;
-        const label = `${m[1]}${m[2] ? ' Spec' : ''} P${m[3]} Q${m[4]}`;
+        const label = labelOf(q.question);
+        if (!label) continue;
         map.set(label, {
           // Strip the label prefix — the page shows it as a badge instead
           question: q.question.replace(
