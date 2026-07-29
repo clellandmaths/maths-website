@@ -39,7 +39,10 @@ export default function MathRenderer({ html, className = '', displayStyle = true
 
     // Replace inline math $...$ (single-dollar, used by worksheet generator)
     // Safe to apply here because $$...$$ has already been converted to HTML above
-    processed = processed.replace(/\$([^$\n]+?)\$/g, (_, tex) => {
+    // Must not span an HTML tag: "Price of silver ($)…Price of gold ($)" would
+    // otherwise pair the two currency symbols and send the markup between them
+    // to KaTeX. Genuine maths has no raw < or > here — those arrive escaped.
+    processed = processed.replace(/\$([^$\n<>]+?)\$/g, (_, tex) => {
       try {
         // `\\` — in a template literal `\d` is not an escape, so a single
         // backslash is dropped and KaTeX receives the word "displaystyle" as

@@ -37,7 +37,11 @@ export function renderMathHtml(html: string, options: MathHtmlOptions = {}): str
   };
 
   processed = processed.replace(/\$\$([\s\S]*?)\$\$/g, (_, tex) => render(tex, true));
-  processed = processed.replace(/\$([^$\n]+?)\$/g, (_, tex) => render(tex, false));
+  // Inline $…$ must not span an HTML tag. A table header reading
+  // "Price of silver ($)…Price of gold ($)" otherwise pairs the two currency
+  // symbols and hands the markup between them to KaTeX, wrecking the row.
+  // Genuine maths never contains a raw < or > here — those arrive escaped.
+  processed = processed.replace(/\$([^$\n<>]+?)\$/g, (_, tex) => render(tex, false));
   processed = processed.replace(/\\\(([\s\S]*?)\\\)/g, (_, tex) => render(tex, false));
   processed = processed.replace(/<img /g, '<img loading="lazy" ');
 
