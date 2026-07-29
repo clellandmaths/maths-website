@@ -22,6 +22,7 @@ const loaders: Record<string, () => Promise<PracticeCourse>> = {
   n5: () => import('@/src/practice/data/national5Maths').then(m => m.national5MathsPractice),
   higher: () => import('@/src/practice/data/higherMaths').then(m => m.higherMathsPractice),
   ah: () => import('@/src/practice/data/advancedHigherMaths').then(m => m.advancedHigherMathsPractice),
+  'n5-apps': () => import('@/src/practice/data/national5Apps').then(m => m.national5AppsPractice),
 };
 
 /** Course ids that have guided practice, for conditional nav. */
