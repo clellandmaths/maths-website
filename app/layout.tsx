@@ -25,8 +25,11 @@ export const metadata: Metadata = {
     default: "Clelland Maths | Free Scottish Maths Revision",
     template: "%s | Clelland Maths",
   },
-  description: "Free maths revision for Scottish students. Course notes, past papers, video solutions and worksheets for National 5, Higher, Advanced Higher and Applications of Maths.",
-  keywords: "clelland maths, national 5 maths, higher maths, advanced higher maths, sqa maths, scottish maths revision, maths past papers",
+  description: "Free maths revision for Scottish students. Course notes, past papers, video solutions and worksheets for National 5, Higher, Advanced Higher and Applications of Maths — every SQA and Qualifications Scotland past paper, worked through.",
+  // Both names on purpose. Pupils search "SQA" today and will increasingly
+  // search "Qualifications Scotland" and "QS maths" as the rename beds in, so
+  // we want to be found either way rather than betting on one.
+  keywords: "clelland maths, national 5 maths, higher maths, advanced higher maths, sqa maths, sqa past papers, qualifications scotland maths, qualifications scotland past papers, qs maths, scottish maths revision, maths past papers",
   // Self-referencing canonical per route — also stops the .pages.dev
   // preview domain competing with the real domain in search results
   alternates: {

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { examBoardFor, examBoardWithAlias } from '@/lib/exam-board';
 import Marks from '@/components/Marks';
 import { notFound } from 'next/navigation';
 import {
@@ -97,11 +98,17 @@ export async function generateMetadata(
     q => String(q.year) === year && q.paperNumber === paperNumber
   );
   const withVideo = paperQuestions.some(q => q.videoId);
-  const solutions = withVideo ? 'step-by-step video solutions' : 'full SQA marking instructions';
+  // The body that actually set this paper — SQA up to 2025, Qualifications
+  // Scotland from 2026. The alias form keeps pre-2026 papers findable under
+  // both names as search shifts to the new one.
+  const board = examBoardFor(year);
+  const solutions = withVideo
+    ? 'step-by-step video solutions'
+    : `full ${board} marking instructions`;
 
   return {
     title: `${courseName} ${year} Paper ${paperNumber} — Questions & ${withVideo ? 'Video Solutions' : 'Marking Instructions'}`,
-    description: `All ${paperQuestions.length} questions from the ${year} ${courseName} Paper ${paperNumber} (${paperKind(courseId, year, paperNumber).toLowerCase()}) with answers and ${solutions}. Free SQA past paper practice.`,
+    description: `All ${paperQuestions.length} questions from the ${year} ${courseName} Paper ${paperNumber} (${paperKind(courseId, year, paperNumber).toLowerCase()}) with answers and ${solutions}. Free ${examBoardWithAlias(year)} past paper practice.`,
   };
 }
 
@@ -146,7 +153,7 @@ export default async function PaperPage(
       {/* Paper header */}
       <div className="mb-10">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
-          {courseName} · Past paper
+          {courseName} · {examBoardFor(year)} past paper
         </p>
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
           {year} Paper {paperNumber}
