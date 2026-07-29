@@ -225,9 +225,11 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'quadratic-graphs': 'quadratics',
   },
   'n5-apps': {
-    // "Ratio & Proportion" slugs to ratio-and-proportion; the notes id predates
-    // that convention
+    // Notes ids drop the "and"; the practice slug comes from the topic name,
+    // which keeps it. Without these the notes page offers no practice link.
     'ratio-proportion': 'ratio-and-proportion',
+    'budgeting-best-deals': 'budgeting-and-best-deals',
+    'saving-borrowing': 'saving-and-borrowing',
   },
 };
 
