@@ -82,13 +82,24 @@ export default function PracticeQuestion({
       </div>
 
       {!open && (
-        <button
-          onClick={reveal}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
-        >
-          <Eye className="h-3.5 w-3.5" />
-          Show answer
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={reveal}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
+          >
+            <Eye className="h-3.5 w-3.5" />
+            Show answer
+          </button>
+          {/* On the collapsed card, not inside the answer: a pupil scanning the
+              list needs to see which questions have a video without revealing
+              every answer to find out. Not a spoiler, so it can show here. */}
+          {!embedSrc && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground/70 text-sm">
+              <Play className="h-3.5 w-3.5" />
+              Video solution coming soon
+            </span>
+          )}
+        </div>
       )}
 
       {/* Always rendered so it is indexable; hidden until asked for. */}

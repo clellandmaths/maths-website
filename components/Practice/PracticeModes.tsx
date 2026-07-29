@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Maximize2, Presentation } from 'lucide-react';
+import { Maximize2, Presentation, BookOpen } from 'lucide-react';
 import FocusMode from '@/components/Explorer/FocusMode';
+import FormulaeButton from '@/components/FormulaeButton';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -26,6 +28,7 @@ interface Props {
 export default function PracticeModes({ courseId, questions, theme, hasDataBooklet }: Props) {
   const [focus, setFocus] = useState(false);
   const [presentFrom, setPresentFrom] = useState<number | null>(null);
+  const [booklet, setBooklet] = useState(false);
 
   if (!questions.length) return null;
 
@@ -42,7 +45,25 @@ export default function PracticeModes({ courseId, questions, theme, hasDataBookl
           <Maximize2 className="h-4 w-4" />
           Focus
         </button>
+        {/* The formulae list is issued with the exam, so it belongs on the
+            question list too — not only inside the full-screen modes. Renders
+            nothing for Higher Apps, which sits the exam with the booklet. */}
+        <FormulaeButton courseId={courseId} theme={theme} className={btn} />
+        {hasDataBooklet && (
+          <button onClick={() => setBooklet(true)} className={btn}>
+            <BookOpen className="h-4 w-4" />
+            Data Booklet
+          </button>
+        )}
       </div>
+
+      {booklet && (
+        <DataBookletModal
+          year={questions[0]?.year ?? new Date().getFullYear()}
+          theme={theme}
+          onClose={() => setBooklet(false)}
+        />
+      )}
 
       {focus && (
         <FocusMode
