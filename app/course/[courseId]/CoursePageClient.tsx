@@ -130,6 +130,8 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
     return (
       <QuestionPresenter
         theme={theme}
+        courseId={courseId}
+        hasDataBooklet={courseId === 'higher-apps'}
         questions={presenterQuestions}
         startIndex={presenterStartIndex}
         onClose={() => setPresenterQuestions(null)}
@@ -141,6 +143,8 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
     return (
       <FocusMode
         theme={theme}
+        courseId={courseId}
+        hasDataBooklet={courseId === 'higher-apps'}
         questions={focusQuestions}
         onClose={() => setFocusQuestions(null)}
       />

@@ -421,6 +421,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <QuestionCard
                       key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
                       theme={theme}
+                      courseId={course}
                       hasDataBooklet={config.hasDataBooklet}
                       question={q}
                       year={q.year}

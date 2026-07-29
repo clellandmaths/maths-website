@@ -7,6 +7,7 @@ import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
+import FormulaeButton from '@/components/FormulaeButton';
 import Marks from '@/components/Marks';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -25,6 +26,8 @@ export interface Question {
 
 interface QuestionCardProps {
   theme: CourseTheme;
+  /** Course this question belongs to — enables the Formulae button. */
+  courseId?: string;
   // Higher Apps — show the year's data booklet alongside the question
   hasDataBooklet?: boolean;
   question: Question;
@@ -36,6 +39,7 @@ interface QuestionCardProps {
 
 export default function QuestionCard({
   theme,
+  courseId,
   hasDataBooklet = false,
   question,
   year,
@@ -164,6 +168,14 @@ export default function QuestionCard({
               <BookOpen className="h-4 w-4" />
               Data Booklet
             </button>
+          )}
+          {/* Renders nothing for Higher Apps, which gets the booklet above */}
+          {courseId && (
+            <FormulaeButton
+              courseId={courseId}
+              theme={theme}
+              className={`shrink-0 flex items-center gap-1.5 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}
+            />
           )}
         </div>
 
