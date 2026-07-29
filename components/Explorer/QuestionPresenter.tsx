@@ -224,7 +224,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   <Play className="h-5 w-5" />
                   Watch Solution
                 </button>
-              ) : hasMarkscheme(question.year, question.paperNumber) && (
+              ) : hasMarkscheme(question.year, question.paperNumber) ? (
                 <button
                   onClick={() => setShowMarkscheme(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -232,6 +232,13 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   <ClipboardCheck className="h-5 w-5" />
                   Markscheme
                 </button>
+              ) : (
+                // Neither a video nor marking instructions: say so, rather
+                // than leaving a gap that reads as a missing button
+                <span className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-dashed border-slate-700 text-slate-500 font-medium">
+                  <Play className="h-5 w-5" />
+                  Video solution coming soon
+                </span>
               )}
             </div>
 

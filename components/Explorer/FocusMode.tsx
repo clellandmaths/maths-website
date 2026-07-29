@@ -223,7 +223,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     <Play className="h-4 w-4" />
                     Watch Solution
                   </button>
-                ) : hasMarkscheme(q.year, q.paperNumber) && (
+                ) : hasMarkscheme(q.year, q.paperNumber) ? (
                   <button
                     onClick={() => setMarkschemeQ(q)}
                     className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
@@ -231,6 +231,13 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     <ClipboardCheck className="h-4 w-4" />
                     Markscheme
                   </button>
+                ) : (
+                  // Neither a video nor marking instructions: say so, rather
+                  // than leaving a gap that reads as a missing button
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-slate-700 text-slate-500 text-sm">
+                    <Play className="h-4 w-4" />
+                    Video solution coming soon
+                  </span>
                 )}
                 <button
                   onClick={() => toggleDone(index)}
