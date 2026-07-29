@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run check:math && next build",
+    "build:only": "next build",
     "start": "next start",
     "lint": "eslint",
     "check:math": "node scripts/check-math-render.mjs",
