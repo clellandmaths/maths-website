@@ -6,9 +6,15 @@ import katex from 'katex';
 interface MathRendererProps {
   html: string;
   className?: string;
+  /**
+   * Inline maths in display *style* — full-size fractions and roots, still
+   * inline. On by default so the client surfaces match the server-rendered
+   * pages; see MathHtml.
+   */
+  displayStyle?: boolean;
 }
 
-export default function MathRenderer({ html, className = '' }: MathRendererProps) {
+export default function MathRenderer({ html, className = '', displayStyle = true }: MathRendererProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,7 +41,10 @@ export default function MathRenderer({ html, className = '' }: MathRendererProps
     // Safe to apply here because $$...$$ has already been converted to HTML above
     processed = processed.replace(/\$([^$\n]+?)\$/g, (_, tex) => {
       try {
-        return katex.renderToString(tex.trim(), {
+        // `\\` — in a template literal `\d` is not an escape, so a single
+        // backslash is dropped and KaTeX receives the word "displaystyle" as
+        // text to set in italics.
+        return katex.renderToString(displayStyle ? `\\displaystyle ${tex.trim()}` : tex.trim(), {
           displayMode: false,
           throwOnError: false,
           trust: true,
@@ -48,7 +57,10 @@ export default function MathRenderer({ html, className = '' }: MathRendererProps
     // Replace inline math \(...\)
     processed = processed.replace(/\\\(([\s\S]*?)\\\)/g, (_, tex) => {
       try {
-        return katex.renderToString(tex.trim(), {
+        // `\\` — in a template literal `\d` is not an escape, so a single
+        // backslash is dropped and KaTeX receives the word "displaystyle" as
+        // text to set in italics.
+        return katex.renderToString(displayStyle ? `\\displaystyle ${tex.trim()}` : tex.trim(), {
           displayMode: false,
           throwOnError: false,
           trust: true,
@@ -63,7 +75,7 @@ export default function MathRenderer({ html, className = '' }: MathRendererProps
 
     // Set innerHTML once with fully processed content
     ref.current.innerHTML = processed;
-  }, [html]);
+  }, [html, displayStyle]);
 
   return <div ref={ref} className={className} />;
 }

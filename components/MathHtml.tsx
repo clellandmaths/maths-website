@@ -9,20 +9,26 @@ export interface MathHtmlOptions {
   /**
    * Render inline maths in display *style* — full-size fractions, roots and
    * limits — while keeping it inline in the flow. Display *mode* would centre
-   * each expression on its own line, which is wrong for prose but right for a
-   * formulae sheet, where `1/√(1−x²)` squeezed to textstyle is unreadable.
+   * each expression on its own line, which is wrong for prose.
+   *
+   * On by default. Everything rendered through here is exam content —
+   * questions, answers, markschemes, formulae — where textstyle squeezes
+   * f(x) = 3x/(x²−4x−5) down to something a pupil has to squint at. Pass
+   * false for surfaces that genuinely want inline sizing.
    */
   displayStyle?: boolean;
 }
 
 export function renderMathHtml(html: string, options: MathHtmlOptions = {}): string {
   let processed = html;
+  const displayStyle = options.displayStyle ?? true;
 
   const render = (tex: string, displayMode: boolean) => {
     const src = tex.trim();
     try {
       return katex.renderToString(
-        !displayMode && options.displayStyle ? `\\displaystyle ${src}` : src,
+        // $$…$$ is already display style; only inline runs need the hint
+        !displayMode && displayStyle ? `\\displaystyle ${src}` : src,
         { displayMode, throwOnError: false, trust: true }
       );
     } catch {
