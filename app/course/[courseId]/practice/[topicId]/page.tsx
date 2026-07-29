@@ -48,13 +48,17 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   // A past paper question is either a reference to one we hold, or written in
   // because the archive lacks that year
   const papers = found.topic.questions.filter(q => q.ref || q.paper).length;
+  // Referenced past paper questions bring the paper's own video, so resolve
+  // before deciding whether to advertise video solutions
+  const resolved = await resolveQuestions(courseId, found.topic.questions);
+  const hasVideo = resolved.some(q => q.videoId);
 
   return {
     title: `${found.topic.name} — ${courseName} Practice Questions`,
     description:
       `${n} ${found.topic.name.toLowerCase()} practice questions for ${courseName}` +
       (papers ? `, including ${papers} past paper questions` : '') +
-      `, with answers and video solutions.`,
+      `, with answers${hasVideo ? ' and video solutions' : ''}.`,
     alternates: { canonical: `/course/${courseId}/practice/${topicId}/` },
   };
 }
@@ -98,8 +102,11 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           {topic.name}
         </h1>
         <p className="text-muted-foreground mb-5">
-          {questions.length} question{questions.length === 1 ? '' : 's'} with answers and video
-          solutions. Try each one before revealing the answer.
+          {questions.length} question{questions.length === 1 ? '' : 's'} with answers
+          {/* Only promise video where there is video: several Higher topics
+              have no guided practice filmed yet */}
+          {questions.some(q => q.videoId) && ' and video solutions'}. Try each one before
+          revealing the answer.
         </p>
         {/* Raw (unrendered) question html — Focus Mode renders maths itself */}
         <PracticeModes

@@ -115,6 +115,15 @@ export default function PracticeQuestion({
               Watch the solution
             </button>
           )}
+          {!embedSrc && (
+            // Say so rather than showing nothing: on topics whose guided
+            // practice is not filmed yet, a missing button reads as an
+            // oversight. The written solution link below still applies.
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground/70 text-sm">
+              <Play className="h-3.5 w-3.5" />
+              Video solution coming soon
+            </span>
+          )}
           {solutionUrl && (
             // Condition of using these questions: the full written solution
             // stays on maths.scot. See docs/guided-practice-attribution.md
