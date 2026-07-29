@@ -20,6 +20,7 @@ import {
 
 const loaders: Record<string, () => Promise<PracticeCourse>> = {
   n5: () => import('@/src/practice/data/national5Maths').then(m => m.national5MathsPractice),
+  higher: () => import('@/src/practice/data/higherMaths').then(m => m.higherMathsPractice),
 };
 
 /** Course ids that have guided practice, for conditional nav. */
@@ -153,8 +154,19 @@ export async function resolveQuestions(
   for (const q of questions) {
     if (q.ref) {
       const hit = index.get(q.ref);
-      if (hit) out.push(hit);
-      else console.warn(`[practice] unresolved past paper reference: ${courseId} ${q.ref}`);
+      if (!hit) {
+        console.warn(`[practice] unresolved past paper reference: ${courseId} ${q.ref}`);
+        continue;
+      }
+      // A reference may retarget the video: in guided practice the useful
+      // solution is the topic lesson at a timestamp, not the whole-paper
+      // walkthrough the archive copy points at. Everything else — question,
+      // answer, marks, diagram — still comes from the one stored copy.
+      out.push(
+        q.videoId
+          ? { ...hit, videoId: q.videoId, timestamp: q.timestamp }
+          : hit
+      );
       continue;
     }
     if (q.question === undefined || q.answer === undefined) continue;
