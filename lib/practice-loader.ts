@@ -102,18 +102,24 @@ export interface ResolvedQuestion {
 const BADGE = /^\s*<small>\s*<strong>[\s\S]*?>([^<]+)</i;
 
 // "2023 P2 Q14", and for Advanced Higher before 2020, when there was a single
-// paper, "2016 Q1" — so the paper number is optional. Part suffixes are kept
-// because the AH archive stores some questions split as Q1(a), Q1(b).
-const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*|Exemplar)?\s*(?:P([12])\s*)?Q(\d+)((?:\([a-z]\))*)/i;
+// paper, "2016 Q1" — so the paper number is optional.
+//
+// Everything after the question number is kept as the part suffix, with spaces
+// removed. The archive writes parts inconsistently — "Q7(a)", "Q7 (a)",
+// "Q7 (b), (c), (d)", "Q4 (a) - (d)" — and matching only the tight form made
+// seven N5 Apps questions collapse onto four keys, so a reference to one part
+// silently resolved to whichever was indexed last.
+const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*|Exemplar)?\s*(?:P([12])\s*)?Q(\d+)\s*(.*)$/i;
 
 /** The reference string for a past paper question, or null if it has no badge. */
 function labelOf(questionHtml: string): string | null {
   const badge = questionHtml.match(BADGE);
   if (!badge) return null;
-  const m = badge[1].match(LABEL);
+  const m = badge[1].trim().match(LABEL);
   if (!m) return null;
-  const [, year, special, paper, num, parts] = m;
-  return `${year}${special ? ` ${special}` : ''}${paper ? ` P${paper}` : ''} Q${num}${parts ?? ''}`;
+  const [, year, special, paper, num, rest] = m;
+  const parts = (rest ?? '').replace(/\s+/g, '');
+  return `${year}${special ? ` ${special}` : ''}${paper ? ` P${paper}` : ''} Q${num}${parts}`;
 }
 
 const paperIndexes: Record<string, Promise<Map<string, ResolvedQuestion>>> = {};
