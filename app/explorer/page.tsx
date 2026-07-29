@@ -549,7 +549,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     {/* A printed worksheet gets passed around a classroom, so
                         say plainly what this is and where it came from. */}
                     <p className="print-strapline">
-                      Free SQA maths revision — past papers, video solutions and course notes at{' '}
+                      Free Qualifications Scotland maths revision — past papers, video solutions and course notes at{' '}
                       <strong>clellandmaths.com</strong>
                     </p>
                   </div>
@@ -719,7 +719,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                   {/* Print-only footer */}
                   <div className="print-only print-footer">
-                    Created with <strong>Clelland Maths</strong> &mdash; free SQA maths revision,
+                    Created with <strong>Clelland Maths</strong> &mdash; free Qualifications Scotland maths revision,
                     past papers and video solutions at <strong>clellandmaths.com</strong>
                   </div>
 
@@ -885,7 +885,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
         <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
         <h1 className="font-display text-3xl font-bold mb-3">Topic Explorer</h1>
         <p className="text-slate-400 mb-10 text-lg">
-          Browse SQA past paper questions by topic and year, then build a custom
+          Browse Qualifications Scotland past paper questions by topic and year, then build a custom
           maths worksheet with answers, QR-coded video solutions and PDF export —
           free for students and teachers. Choose your course to start.
         </p>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getFormulae, type FormulaeList } from '@/lib/formulae-loader';
 import { renderMathHtml } from '@/components/MathHtml';
 
-// The formulae list, printed at the front of a worksheet — page 2, where SQA
+// The formulae list, printed at the front of a worksheet — page 2, where Qualifications Scotland
 // puts it on a real paper, so a pupil finds it where they expect.
 //
 // Print-only by default: on screen the same content is available from the

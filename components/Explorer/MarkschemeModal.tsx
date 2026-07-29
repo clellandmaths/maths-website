@@ -6,7 +6,7 @@ import { getMarkschemeEntries, type MarkschemeEntry } from '@/lib/ah-markschemes
 import { renderMathHtml } from '@/components/MathHtml';
 import type { CourseTheme } from '@/lib/course-theme';
 
-// Full SQA marking instructions for an AH question without a video solution.
+// Full Qualifications Scotland marking instructions for an AH question without a video solution.
 
 interface Props {
   theme: CourseTheme;

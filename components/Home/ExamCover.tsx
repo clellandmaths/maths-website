@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export interface CourseCover {
   id: string;
-  band: string;        // qualification band, e.g. "SQA · S4/S5"
+  band: string;        // qualification band, e.g. "S4/S5 · National 5"
   name: string;        // e.g. "National 5"
   subject: string;     // "Mathematics" | "Applications of Mathematics"
   gradient: string;    // tailwind gradient stops
