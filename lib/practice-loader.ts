@@ -218,6 +218,11 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     // Both notes topics drill the same practice set
     'quadratic-graphs': 'quadratics',
   },
+  'n5-apps': {
+    // "Ratio & Proportion" slugs to ratio-and-proportion; the notes id predates
+    // that convention
+    'ratio-proportion': 'ratio-and-proportion',
+  },
 };
 
 /** The practice page for a notes topic, or null if there isn't one. */
