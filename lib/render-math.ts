@@ -40,16 +40,43 @@ export interface RenderMathOptions {
  * maths. `\(…\)` needs none of this — it is unambiguous, which is why the
  * question data uses it.
  */
+/**
+ * English words that turn up in the prose between two currency amounts.
+ *
+ * Three letters minimum, deliberately: "at", "or", "in" and "to" are all
+ * plausible juxtaposed variables — `$V = at$` is maths, not a sentence — and
+ * the digit-opening rule below catches the money cases they would have.
+ * No maths function name (sin, cos, log, max, det …) may appear in this list.
+ */
+const ENGLISH_WORD =
+  /\b(altogether|and|are|available|bought|but|buy|buys|change|cost|costs|each|for|from|has|have|her|his|how|its|less|many|more|much|not|note|notes|paid|pay|pays|per|plus|price|prices|save|saved|saves|spend|spends|spent|than|that|the|then|they|this|total|use|used|was|were|what|when|which|with|worth|you|your)\b/i;
+
 function looksLikeMaths(tex: string): boolean {
-  if (tex.length === 0 || tex.length > 400) return false;
+  // Cheap, absolute disqualifiers first.
+  if (tex.length === 0 || tex.length > 1200) return false;
   if (/[<>]/.test(tex)) return false;               // never span a tag
   if (/^[\s)\].,;:!?]/.test(tex)) return false;     // "($) … ($)" style pairing
-  return (
-    /\\[a-zA-Z]/.test(tex) ||    // a LaTeX command
-    /[\^_{}]/.test(tex) ||       // powers, subscripts, groups
-    /[=<>+\-*/]/.test(tex) ||    // an operator
-    /^[a-zA-Z]$/.test(tex)       // a bare variable, e.g. $x$
-  );
+
+  // The real test, and it is the inverse of the obvious one: ask whether this
+  // reads as PROSE, rather than whether it looks mathematical enough.
+  //
+  // Listing the marks of maths kept refusing genuine maths that carried no
+  // operator — "$(a,b)$" on the Higher circle equation, "$f(x)$" and "$f'(x)$"
+  // heading the derivative tables — all of which printed their dollar signs to
+  // pupils. Prose is the thing with the short definition: when two currency
+  // amounts pair up, what falls between them is a fragment of English.
+  //
+  // LaTeX commands go first, with their brace arguments, so "\text{the total}"
+  // is not mistaken for the sentence it contains.
+  const prose = tex.replace(/\\[a-zA-Z]+\s*(?:\{[^{}]*\})*/g, ' ');
+  if (ENGLISH_WORD.test(prose)) return false;
+
+  // Still needs some positive sign, or "$10, $20, $30" pairs on "10, ".
+  const symbol = /[\\^_{}=+\-*/]/.test(tex);
+  // A run opening with a digit and carrying no operator is the tail of a money
+  // amount: "$5 to $7" pairs on "5 to ", "$1,000$" on "1,000".
+  if (/^\d/.test(tex) && !symbol) return false;
+  return symbol || /[a-zA-Z]/.test(tex);
 }
 
 export function renderMath(html: string, options: RenderMathOptions = {}): string {

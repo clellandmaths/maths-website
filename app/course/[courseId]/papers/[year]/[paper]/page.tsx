@@ -219,6 +219,14 @@ export default async function PaperPage(
                   ))}
                 </div>
               )}
+              {/* The reference sheet belongs on every question, not only in the
+                  page header: by question 12 the header has scrolled away, and
+                  a question saying "refer to the data booklet" is unanswerable
+                  without it. Exactly one of these renders per course. */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                {isHigherApps && <BookletButton year={year} theme={theme} compact />}
+                <FormulaeButton courseId={courseId} theme={theme} compact />
+              </div>
             </div>
 
             <details className="group border-t border-border">

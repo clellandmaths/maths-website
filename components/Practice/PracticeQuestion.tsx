@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { Eye, Play, ExternalLink, BookOpen } from 'lucide-react';
 import Marks from '@/components/Marks';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
+import FormulaeButton from '@/components/FormulaeButton';
 import type { CourseTheme } from '@/lib/course-theme';
 
 // One practice question. Question and answer HTML arrive already rendered to
@@ -30,12 +31,14 @@ interface Props {
    *  that says "refer to the data booklet" is unanswerable without it, and a
    *  button at the top of the page is no use when you are on question 7. */
   hasDataBooklet?: boolean;
+  /** Course this question belongs to — enables the formulae list. */
+  courseId?: string;
   theme: CourseTheme;
 }
 
 export default function PracticeQuestion({
   index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks,
-  hasDataBooklet = false, theme,
+  hasDataBooklet = false, courseId, theme,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -88,8 +91,12 @@ export default function PracticeQuestion({
         </div>
       </div>
 
-      {!open && (
-        <div className="flex flex-wrap items-center gap-2">
+      {/* This row stays whether or not the answer is open. The reference sheets
+          in particular must: they are what you need to ATTEMPT the question,
+          and behind "Show answer" they were only reachable by revealing the
+          very thing you were working towards. */}
+      <div className="flex flex-wrap items-center gap-2">
+        {!open && (
           <button
             onClick={reveal}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
@@ -97,17 +104,35 @@ export default function PracticeQuestion({
             <Eye className="h-3.5 w-3.5" />
             Show answer
           </button>
-          {/* On the collapsed card, not inside the answer: a pupil scanning the
-              list needs to see which questions have a video without revealing
-              every answer to find out. Not a spoiler, so it can show here. */}
-          {!embedSrc && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground/70 text-sm">
-              <Play className="h-3.5 w-3.5" />
-              Video solution coming soon
-            </span>
-          )}
-        </div>
-      )}
+        )}
+        {hasDataBooklet && (
+          <button
+            onClick={() => setBooklet(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+          >
+            <BookOpen className="h-3.5 w-3.5" />
+            Data Booklet
+          </button>
+        )}
+        {/* Renders nothing for Higher Apps, which gets the booklet above, so
+            the two are mutually exclusive without a check here. */}
+        {courseId && (
+          <FormulaeButton
+            courseId={courseId}
+            theme={theme}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+          />
+        )}
+        {/* On the collapsed card, not inside the answer: a pupil scanning the
+            list needs to see which questions have a video without revealing
+            every answer to find out. Not a spoiler, so it can show here. */}
+        {!open && !embedSrc && (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground/70 text-sm">
+            <Play className="h-3.5 w-3.5" />
+            Video solution coming soon
+          </span>
+        )}
+      </div>
 
       {/* Always rendered so it is indexable; hidden until asked for. */}
       <div
@@ -133,15 +158,8 @@ export default function PracticeQuestion({
               Watch the solution
             </button>
           )}
-          {hasDataBooklet && (
-            <button
-              onClick={() => setBooklet(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
-            >
-              <BookOpen className="h-3.5 w-3.5" />
-              Data Booklet
-            </button>
-          )}
+          {/* No booklet or formulae button here — they live on the row above,
+              which is visible while the answer is still hidden. */}
           {!embedSrc && (
             // Say so rather than showing nothing: on topics whose guided
             // practice is not filmed yet, a missing button reads as an

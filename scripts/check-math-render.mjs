@@ -53,6 +53,72 @@ const check = (name, actual, assertion, detail) => {
   check('currency with a bracketed unit',
     out, !out.includes('katex'), 'no run here is maths');
 }
+// The coordinate rule below admits comma-separated single characters. These
+// prove it cannot swallow money: a comma between two amounts is not a point.
+{
+  const s = '<p>It costs $5, or $7 with delivery.</p>';
+  const out = renderMath(s);
+  check('two amounts separated by a comma',
+    out, !out.includes('katex'), '"5, or " is not a coordinate');
+}
+{
+  const s = '<p>The prize was $1,000$ and change.</p>';
+  const out = renderMath(s);
+  check('thousands separator inside a dollar pair',
+    out, !out.includes('katex'), '"1,000" has a two-digit term, so it is not a coordinate');
+}
+{
+  const s = '<p>Tickets are $3, $4 and $5 each.</p>';
+  const out = renderMath(s);
+  check('three amounts in a list',
+    out, !out.includes('katex'), 'no run between these is maths');
+}
+
+// ── maths carrying no operator at all ────────────────────────────
+// These all reached the site. The guard used to list the marks of maths, so
+// anything with no operator, command or brace was called prose and printed its
+// own dollar signs — on the formulae lists, which every pupil opens.
+{
+  const out = renderMath('represents a circle centre $(a,b)$ and radius $r$.');
+  check('coordinate pair in $…$',
+    out, out.includes('katex') && !out.includes('$(a,b)$'),
+    '$(a,b)$ must render as maths, not print its dollar signs');
+}
+{
+  const out = renderMath('the points $(x, y)$ and $(p,q,r)$');
+  check('spaced and three-term coordinates',
+    out, !out.includes('$('), 'both must render');
+}
+{
+  // Headed the derivative and integral tables in Higher and AH.
+  const out = renderMath('<th>$f(x)$</th><th>$f\'(x)$</th>');
+  check('function notation as a table heading',
+    out, !out.includes('$f('), 'f(x) and f\'(x) must render');
+}
+{
+  // The AH vector product determinant is 405 characters — it was refused by a
+  // 400-character cap and shown to pupils as raw LaTeX.
+  const long = '\\left| \\begin{matrix} \\mathbf{i} & \\mathbf{j} & \\mathbf{k} \\\\ '
+    + 'a_1 & a_2 & a_3 \\\\ b_1 & b_2 & b_3 \\end{matrix} \\right|'.padEnd(340, ' ');
+  const out = renderMath(`$${long}$`);
+  check('formula longer than 400 characters',
+    out, out.includes('katex'), 'length alone must not disqualify maths');
+}
+
+// ── maths that must NOT be re-classified as prose ────────────────
+// Juxtaposed variables look like short words. Caught by sweeping the corpus:
+// a first attempt at the prose rule broke all of these.
+for (const [name, tex] of [
+  ['trig with juxtaposed variables', '\\cos ax'],
+  ['prism volume', 'V = Ah'],
+  ['triangle area', 'A = \\frac{1}{2}ab \\sin C'],
+  ['binomial coefficient', '\\binom{n}{r} = {}^nC_r'],
+  ['spreadsheet variable name', 'Interest_Rate'],
+]) {
+  const out = renderMath(`the formula $${tex}$ here`);
+  check(`${name} stays maths`,
+    out, out.includes('katex'), `"${tex}" is maths, not a sentence`);
+}
 
 // ── the worksheet generator's $…$ must still work ────────────────
 {
