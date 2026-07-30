@@ -94,10 +94,7 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `A loan of \\(\\pounds 15000\\) is charged an effective rate of interest of \\(1.6\\%\\) per quarter.<br>No repayments are made.<br>Calculate the amount owed after \\(2\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 17031.03\\)` },
             { question: `\\(\\pounds 6250\\) is invested in a bond with an effective rate of interest of \\(1.85\\%\\) per half-year.<br>Calculate the value of the bond after \\(3\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 6976.64\\)` },
             { question: `\\(\\pounds 2400\\) is deposited in an account with an effective rate of interest of \\(0.25\\%\\) per month.<br>Calculate the value of the account after \\(18\\) months.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 2510.33\\)` },
-            { ref: "2022 Q1" },
-            { ref: "2022 Q9" },
             { ref: "2024 Q1" },
-            { ref: "2025 Q11" },
           ],
         },
         {
@@ -119,7 +116,6 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `\\(\\pounds 1000\\) is deposited at the start of each year for \\(4\\) years into an account with an effective rate of interest of \\(3\\%\\) per year.<br>Calculate the value of the account at the end of the \\(4\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 4309.14\\)` },
             { question: `\\(\\pounds 600\\) is deposited at the start of each year for \\(3\\) years into an account with an effective rate of interest of \\(4\\%\\) per year.<br>Calculate the value of the account at the end of the \\(3\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 1947.88\\)` },
             { ref: "2022 Q4" },
-            { ref: "Specimen Q10" },
           ],
         },
         {
@@ -129,9 +125,96 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `An account has an effective rate of interest of \\(3\\%\\) per year.<br>\\(\\pounds 5000\\) is deposited at the start of year \\(1\\).<br>At the start of year \\(2\\), \\(\\pounds 800\\) is withdrawn.<br>Calculate the value of the account at the end of year \\(2\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 4480.50\\)` },
             { question: `A loan of \\(\\pounds 10000\\) is charged an effective rate of interest of \\(4\\%\\) per year.<br>At the end of year \\(1\\) a repayment of \\(\\pounds 3000\\) is made.<br>Calculate the amount owed at the end of year \\(2\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 7696.00\\)` },
             { question: `An account has an effective rate of interest of \\(2.5\\%\\) per year.<br>\\(\\pounds 2000\\) is deposited at the start of year \\(1\\) and \\(\\pounds 2000\\) at the start of year \\(2\\).<br>At the start of year \\(3\\), \\(\\pounds 1500\\) is withdrawn.<br>Calculate the value of the account at the end of year \\(3\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 2717.53\\)` },
-            { ref: "2023 Q11" },
-            { ref: "2025 Q6" },
             { ref: "2025 Q8" },
+          ],
+        },
+        {
+          name: "Converting Time Frequencies",
+          questions: [
+            { question: `A credit card charges an effective rate of interest of \\(1.4\\%\\) per month.<br>Calculate the annual effective rate of interest.<br>Give your answer as a percentage to 1 decimal place.`, answer: `\\(18.2\\%\\)` },
+            { question: `A savings account offers an effective rate of interest of \\(5.2\\%\\) per year.<br>Calculate the monthly effective rate of interest.<br>Give your answer as a percentage to 3 decimal places.`, answer: `\\(0.423\\%\\)` },
+            { question: `An account offers an effective rate of interest of \\(2.4\\%\\) per quarter.<br>Calculate the annual effective rate of interest.<br>Give your answer as a percentage to 2 decimal places.`, answer: `\\(9.95\\%\\)` },
+            { question: `A bond offers an effective rate of interest of \\(3.6\\%\\) per half-year.<br>Calculate the monthly effective rate of interest.<br>Give your answer as a percentage to 3 decimal places.`, answer: `\\(0.591\\%\\)` },
+          ],
+        },
+        {
+          name: "Start and End Values",
+          questions: [
+            { question: `An investment of \\(\\pounds 3500\\) grows to \\(\\pounds 3950\\) over \\(4\\) years.<br>Calculate the annual effective rate of interest.<br>Give your answer as a percentage to 2 decimal places.`, answer: `\\(3.07\\%\\)` },
+            { question: `A deposit of \\(\\pounds 8200\\) grows to \\(\\pounds 9100\\) over \\(30\\) months.<br>Calculate the monthly effective rate of interest.<br>Give your answer as a percentage to 3 decimal places.`, answer: `\\(0.348\\%\\)` },
+            { question: `\\(\\pounds 600\\) is borrowed and no repayments are made.<br>After \\(7\\) months the amount owed is \\(\\pounds 693\\).<br>Calculate the monthly effective rate of interest.<br>Give your answer as a percentage to 2 decimal places.`, answer: `\\(2.08\\%\\)` },
+            { question: `An account pays an effective rate of interest of \\(3\\%\\) per year.<br>After \\(5\\) years the balance is \\(\\pounds 9280\\).<br>Calculate the amount originally deposited.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 8005.01\\)` },
+          ],
+        },
+        {
+          name: "Present Value",
+          questions: [
+            { question: `An account pays an effective rate of interest of \\(3\\%\\) per year.<br>Calculate the amount that must be deposited now to have \\(\\pounds 12000\\) in \\(3\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 10981.70\\)` },
+            { question: `An account pays an effective rate of interest of \\(0.4\\%\\) per month.<br>Calculate the amount that must be deposited now to have \\(\\pounds 15000\\) in \\(24\\) months.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 13629.57\\)` },
+            { question: `A bond pays an effective rate of interest of \\(1.9\\%\\) per half-year.<br>Calculate the amount that must be invested now to have \\(\\pounds 7000\\) in \\(8\\) half-years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 6021.50\\)` },
+            { question: `An investment matured after \\(42\\) months at \\(\\pounds 9600\\).<br>The account paid an effective rate of interest of \\(0.35\\%\\) per month.<br>Calculate the amount originally invested.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 8289.75\\)` },
+          ],
+        },
+        {
+          name: "Present Value with Variable Rates",
+          questions: [
+            { question: `A savings bond paid an effective rate of interest of \\(2\\%\\) in the first year, \\(3\\%\\) in the second year and \\(2.5\\%\\) in the third year.<br>After \\(3\\) years the balance was \\(\\pounds 8000\\).<br>Calculate the amount originally deposited.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 7428.97\\)` },
+            { question: `An account paid an effective rate of interest of \\(1.5\\%\\) per year for \\(2\\) years and then \\(2.2\\%\\) per year for \\(2\\) years.<br>After \\(4\\) years the balance was \\(\\pounds 5400\\).<br>Calculate the amount originally deposited.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 5018.34\\)` },
+            { question: `An account paid an effective rate of interest of \\(0.5\\%\\) per month for \\(6\\) months and then \\(0.3\\%\\) per month for \\(6\\) months.<br>After \\(12\\) months the balance was \\(\\pounds 3200\\).<br>Calculate the amount originally deposited.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 3050.34\\)` },
+            { question: `A corporate account paid an effective rate of interest of \\(4\\%\\) in the first year and \\(1.8\\%\\) in the second year.<br>After \\(2\\) years the balance was \\(\\pounds 4500\\).<br>Calculate the amount originally deposited.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 4250.42\\)` },
+          ],
+        },
+        {
+          name: "Investment Schedules",
+          questions: [
+            { question: `An account pays an effective rate of interest of \\(4.8\\%\\) per year.<br>Calculate the monthly effective rate of interest.<br>Give your answer as a percentage to 4 decimal places.`, answer: `\\(0.3914\\%\\)` },
+            { question: `An investment schedule starts with \\(\\pounds 2000\\).<br>The monthly effective rate of interest is \\(0.4\\%\\) and \\(\\pounds 100\\) is added at the end of each month.<br>Calculate the balance at the end of month \\(1\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 2108.00\\)` },
+            { question: `An investment schedule starts with \\(\\pounds 3000\\).<br>The monthly effective rate of interest is \\(0.4\\%\\) and \\(\\pounds 100\\) is added at the end of each month.<br>Calculate the balance at the end of the second month.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 3224.45\\)` },
+            { question: `An account pays an effective rate of interest of \\(0.25\\%\\) per month.<br>A balance of \\(\\pounds 5000\\) has \\(\\pounds 250\\) added at the end of each month.<br>Calculate the balance at the end of the second month.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 5525.66\\)` },
+            { ref: "Specimen Q10" },
+          ],
+        },
+        {
+          name: "Loans and Loan Schedules",
+          questions: [
+            { question: `A loan of \\(\\pounds 8000\\) has a monthly effective rate of interest of \\(0.6\\%\\).<br>A repayment of \\(\\pounds 250\\) is made at the end of each month.<br>Calculate the balance owed after \\(1\\) month.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 7798.00\\)` },
+            { question: `A loan of \\(\\pounds 9000\\) has a monthly effective rate of interest of \\(0.6\\%\\).<br>A repayment of \\(\\pounds 250\\) is made at the end of each month.<br>Calculate the balance owed after the second month.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 8606.82\\)` },
+            { question: `A loan has an annual effective rate of interest of \\(9\\%\\).<br>Calculate the monthly effective rate of interest.<br>Give your answer as a percentage to 3 decimal places.`, answer: `\\(0.721\\%\\)` },
+            { question: `A loan of \\(\\pounds 3000\\) has a monthly effective rate of interest of \\(1.2\\%\\).<br>A repayment of \\(\\pounds 420\\) is made at the end of each month.<br>Calculate the balance owed after the third month.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 1834.12\\)` },
+            { ref: "2022 Q1" },
+            { ref: "2022 Q9" },
+            { ref: "2023 Q11" },
+            { ref: "2024 Q1" },
+            { ref: "2025 Q11" },
+          ],
+        },
+        {
+          name: "Inflation",
+          questions: [
+            { question: `The Consumer Price Index was \\(108.6\\) in August \\(2019\\) and \\(130.2\\) in August \\(2023\\).<br>Calculate the total percentage increase in prices over that period.<br>Give your answer to 1 decimal place.`, answer: `\\(19.9\\%\\)` },
+            { question: `The Consumer Price Index rose from a baseline of \\(100\\) to \\(121.8\\).<br>Calculate what \\(\\pounds 500\\) at the baseline is worth in real terms at the later date.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 410.51\\)` },
+            { question: `Prices rose by \\(3.1\\%\\), then \\(2.4\\%\\), then \\(1.8\\%\\) in three successive years.<br>Calculate the overall percentage increase over the three years.<br>Give your answer to 2 decimal places.`, answer: `\\(7.47\\%\\)` },
+            { question: `An item cost \\(\\pounds 240\\) and inflation over the next \\(4\\) years averaged \\(2.6\\%\\) per year.<br>Calculate the expected cost of the item after \\(4\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 265.95\\)` },
+            { ref: "2023 Q9" },
+          ],
+        },
+        {
+          name: "Pension Savings",
+          questions: [
+            { question: `An employee earns \\(\\pounds 36000\\) a year and contributes \\(5\\%\\) of it to a pension.<br>The employer contributes a further \\(3\\%\\) of the salary.<br>Calculate the total annual amount paid into the pension.`, answer: `\\(\\pounds 2880.00\\)` },
+            { question: `A Lifetime ISA pays a government bonus of \\(25\\%\\) on each deposit.<br>A saver deposits \\(\\pounds 4000\\) in a year.<br>Calculate the total added to the account that year.`, answer: `\\(\\pounds 5000.00\\)` },
+            { question: `A pension pot of \\(\\pounds 240000\\) pays an effective rate of interest of \\(3\\%\\) per year.<br>\\(\\pounds 15000\\) is withdrawn at the end of each year.<br>Calculate the value of the pot after \\(1\\) year.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 232200.00\\)` },
+            { question: `A pension pot of \\(\\pounds 180000\\) pays an effective rate of interest of \\(3\\%\\) per year.<br>\\(\\pounds 12000\\) is withdrawn at the end of each year.<br>Calculate the value of the pot after the second year.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 166602.00\\)` },
+            { ref: "2025 Q6" },
+          ],
+        },
+        {
+          name: "Insurance",
+          questions: [
+            { question: `A phone insurance policy has a compulsory excess of \\(\\pounds 150\\).<br>A repair is quoted at \\(\\pounds 420\\).<br>Calculate the amount the insurer pays.`, answer: `\\(\\pounds 270.00\\)` },
+            { question: `A policy has an excess of \\(\\pounds 195\\).<br>A repair is quoted at \\(\\pounds 180\\).<br>Determine whether it is worth making a claim. Use your working to justify your answer.`, answer: `The repair costs \\(\\pounds 180\\), which is less than the \\(\\pounds 195\\) excess.<br>It is not worth claiming, as the policyholder would pay the full cost anyway.` },
+            { question: `Policy A costs \\(\\pounds 320\\) a year with an excess of \\(\\pounds 100\\).<br>Policy B costs \\(\\pounds 260\\) a year with an excess of \\(\\pounds 250\\).<br>One claim is made during the year.<br>Determine which policy costs the customer less in total. Use your working to justify your answer.`, answer: `Policy A: \\(\\pounds 420\\)<br>Policy B: \\(\\pounds 510\\)<br>Policy A costs less.` },
+            { question: `An annual insurance premium is \\(\\pounds 480\\).<br>Paying monthly adds \\(7.5\\%\\) to the total.<br>Calculate the total cost if paid monthly.`, answer: `\\(\\pounds 516.00\\)` },
           ],
         },
       ],
