@@ -230,6 +230,9 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'ratio-proportion': 'ratio-and-proportion',
     'budgeting-best-deals': 'budgeting-and-best-deals',
     'saving-borrowing': 'saving-and-borrowing',
+    'reading-scales-tolerance': 'reading-scales-and-tolerance',
+    'speed-distance-time': 'speed-distance-and-time',
+    'perimeter-circumference-area': 'perimeter-circumference-and-area',
   },
 };
 
