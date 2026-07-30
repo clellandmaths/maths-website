@@ -190,7 +190,7 @@ Parts (b) (ii), (c) and (d) must be completed in the answer space provided.</str
 <p>After 52 weeks, the warehouse company plans to move to a smaller building with space for 1400 units of stock.</p>
 <p>(c) Comment on whether the smaller building will have enough space for the stock. Justify your answer.</p>
 <p>(d) State one reason why this mathematical model may not be realistic.</p>`,
-          answer: `<p>(a) 1500 (using appropriate formula, e.g., <code>=INT(C13*$C$8+$C$9)</code>).<br>
+          answer: `<p>(a) 1500 (using appropriate formula, e.g., <code class="text-green-400 bg-gray-800 px-1 rounded">=INT(C13*$C$8+$C$9)</code>).<br>
 (b)(i) Graph plotted tending downwards to 1500 units.<br>
 (b)(ii) Exponential (decay) or recurrence relation.<br>
 (c) No, the building will not have enough space as units of stock are expected to level out at 1500 units of stock.<br>
