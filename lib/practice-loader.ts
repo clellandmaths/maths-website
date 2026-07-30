@@ -235,6 +235,9 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'perimeter-circumference-area': 'perimeter-circumference-and-area',
     'time-management-zones': 'time-management-and-time-zones',
     'scale-drawing-navigation': 'scale-drawing-and-navigation',
+    'averages-spread': 'averages-and-spread',
+    'interpreting-data': 'interpreting-graphs-and-tables',
+    'probability-risk': 'probability-and-risk',
   },
 };
 
