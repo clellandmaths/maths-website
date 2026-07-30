@@ -20,7 +20,8 @@ const ts = await import('node:fs').then(fs =>
 const js = ts
   .replace(/^import katex from 'katex';/m, '')
   .replace(/export interface[\s\S]*?\n}\n/m, '')
-  .replace(/: RenderMathOptions|: string|: boolean|: number/g, '')
+  // Array types first: ": string" alone would leave "const vault[] = []".
+  .replace(/: (?:RenderMathOptions|string|boolean|number)(?:\[\])?/g, '')
   .replace(/export type[^\n]*\n/g, '')
   .replace(/export /g, '');
 const katex = require('katex');
@@ -103,6 +104,36 @@ const check = (name, actual, assertion, detail) => {
   const out = renderMath(`$${long}$`);
   check('formula longer than 400 characters',
     out, out.includes('katex'), 'length alone must not disqualify maths');
+}
+
+// ── code is never maths ──────────────────────────────────────────
+// A spreadsheet formula fixes a cell with dollar signs. The inline pass paired
+// them and typeset the column letter, so the stored answer to Higher Apps 2023
+// Q8 reached pupils as "=INT(C13*C8+C9)" — a formula that walks down the sheet
+// and gives a different answer on every row.
+{
+  const src = '<code>=INT(C13*$C$8+$C$9)</code>';
+  const out = renderMath(src);
+  check('absolute cell references inside <code>',
+    out, out === src, 'the formula must pass through byte for byte');
+}
+{
+  const src = '<p>(a) 1500 (using <code>=B2*$D$1+$D$2</code>).</p>';
+  const out = renderMath(src);
+  check('code span inside a sentence',
+    out, out === src, 'surrounding prose has no maths, so nothing may change');
+}
+{
+  const out = renderMath('<pre>=SUM($A$1:$A$9)</pre>');
+  check('<pre> is protected too',
+    out, out.includes('$A$1:$A$9'), 'pre blocks are code as well');
+}
+{
+  // Protecting code must not stop maths outside it from rendering.
+  const out = renderMath('<code>=A1*2</code> and then \\(\\frac{1}{2}\\) of it');
+  check('maths outside a code span still renders',
+    out, out.includes('<code>=A1*2</code>') && out.includes('katex'),
+    'only the code span is exempt');
 }
 
 // ── maths that must NOT be re-classified as prose ────────────────

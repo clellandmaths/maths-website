@@ -254,6 +254,9 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'start-and-end-values': 'start-and-end-values',
     'present-value-variable': 'present-value-with-variable-rates',
     'loans-and-schedules': 'loans-and-loan-schedules',
+    // Modelling: the practice topic names spell out what the notes ids abbreviate
+    'modelling-intro': 'introduction-to-modelling',
+    'modelling-graphs': 'modelling-situations-with-graphs',
   },
 };
 
