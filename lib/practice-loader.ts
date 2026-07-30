@@ -23,6 +23,7 @@ const loaders: Record<string, () => Promise<PracticeCourse>> = {
   higher: () => import('@/src/practice/data/higherMaths').then(m => m.higherMathsPractice),
   ah: () => import('@/src/practice/data/advancedHigherMaths').then(m => m.advancedHigherMathsPractice),
   'n5-apps': () => import('@/src/practice/data/national5Apps').then(m => m.national5AppsPractice),
+  'higher-apps': () => import('@/src/practice/data/higherApps').then(m => m.higherAppsPractice),
 };
 
 /** Course ids that have guided practice, for conditional nav. */
@@ -238,6 +239,13 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'averages-spread': 'averages-and-spread',
     'interpreting-data': 'interpreting-graphs-and-tables',
     'probability-risk': 'probability-and-risk',
+  },
+  'higher-apps': {
+    // The notes ids are longer or shorter than the practice topic names
+    'finance-revision-and-gross-income': 'gross-income',
+    'interest-varying-time-units': 'interest-with-varying-time-units',
+    'accumulation-calculations': 'accumulation-with-regular-payments',
+    'accumulation-irregular': 'accumulation-with-irregular-payments',
   },
 };
 

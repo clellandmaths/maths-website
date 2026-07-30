@@ -108,9 +108,12 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           {questions.some(q => q.videoId) && ' and video solutions'}. Try each one before
           revealing the answer.
         </p>
-        {/* Raw (unrendered) question html — Focus Mode renders maths itself */}
+        {/* Raw (unrendered) question html — Focus Mode renders maths itself.
+            Higher Apps sits the exam with the data booklet rather than a
+            formulae list, so practice offers the booklet for that course. */}
         <PracticeModes
           courseId={courseId}
+          hasDataBooklet={courseId === 'higher-apps'}
           questions={questions.map((q, i) => ({
             question: q.question,
             answer: q.answer,
