@@ -257,6 +257,8 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     // Modelling: the practice topic names spell out what the notes ids abbreviate
     'modelling-intro': 'introduction-to-modelling',
     'modelling-graphs': 'modelling-situations-with-graphs',
+    // Planning & Decision Making: the notes id drops the "and"
+    'risk-control-measures': 'risk-and-control-measures',
   },
 };
 
