@@ -233,6 +233,8 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'reading-scales-tolerance': 'reading-scales-and-tolerance',
     'speed-distance-time': 'speed-distance-and-time',
     'perimeter-circumference-area': 'perimeter-circumference-and-area',
+    'time-management-zones': 'time-management-and-time-zones',
+    'scale-drawing-navigation': 'scale-drawing-and-navigation',
   },
 };
 
