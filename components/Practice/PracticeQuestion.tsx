@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Eye, Play, ExternalLink } from 'lucide-react';
+import { Eye, Play, ExternalLink, BookOpen } from 'lucide-react';
 import Marks from '@/components/Marks';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import type { CourseTheme } from '@/lib/course-theme';
 
 // One practice question. Question and answer HTML arrive already rendered to
@@ -25,14 +26,20 @@ interface Props {
   paper?: string;
   solutionUrl?: string;
   marks?: number[];
+  /** Higher Apps: offer the data booklet on the question itself. A question
+   *  that says "refer to the data booklet" is unanswerable without it, and a
+   *  button at the top of the page is no use when you are on question 7. */
+  hasDataBooklet?: boolean;
   theme: CourseTheme;
 }
 
 export default function PracticeQuestion({
-  index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks, theme,
+  index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks,
+  hasDataBooklet = false, theme,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [booklet, setBooklet] = useState(false);
   const answerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
 
@@ -126,6 +133,15 @@ export default function PracticeQuestion({
               Watch the solution
             </button>
           )}
+          {hasDataBooklet && (
+            <button
+              onClick={() => setBooklet(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+            >
+              <BookOpen className="h-3.5 w-3.5" />
+              Data Booklet
+            </button>
+          )}
           {!embedSrc && (
             // Say so rather than showing nothing: on topics whose guided
             // practice is not filmed yet, a missing button reads as an
@@ -162,6 +178,16 @@ export default function PracticeQuestion({
           </div>
         )}
       </div>
+
+      {/* The booklet is year-specific, so it follows the paper this question
+          came from; authored questions fall back to the newest edition. */}
+      {booklet && (
+        <DataBookletModal
+          year={paper ?? ''}
+          theme={theme}
+          onClose={() => setBooklet(false)}
+        />
+      )}
     </div>
   );
 }

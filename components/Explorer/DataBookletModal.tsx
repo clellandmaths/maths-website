@@ -24,7 +24,28 @@ const bookletFiles: Record<string, () => Promise<Booklet>> = {
   '2023': () => import('@/src/higherapps/databooklet2023').then(m => m.higherAppsDataBooklet2023 as Booklet),
   '2024': () => import('@/src/higherapps/databooklet2024').then(m => m.higherAppsDataBooklet2024 as Booklet),
   '2025': () => import('@/src/higherapps/databooklet2025').then(m => m.higherAppsDataBooklet2025 as Booklet),
+  '2026': () => import('@/src/higherapps/databooklet2026').then(m => m.higherAppsDataBooklet2026 as Booklet),
 };
+
+/** Newest booklet, used when a question is not tied to a particular paper. */
+const LATEST = '2026';
+
+/**
+ * Which booklet to show for a given label.
+ *
+ * Callers pass whatever they have: a year, a paper reference like "2023 Q4",
+ * or a guided practice topic name. The previous exact-key lookup found nothing
+ * for the last two and rendered an empty booklet — worse than no button at
+ * all, since a question saying "refer to the data booklet" then gave a pupil
+ * no way to see the tax bands.
+ */
+export function resolveBookletYear(label: number | string): { key: string; exact: boolean } {
+  const s = String(label);
+  if (/spec/i.test(s)) return { key: 'Specimen', exact: true };
+  const year = s.match(/(?:19|20)\d{2}/)?.[0];
+  if (year && bookletFiles[year]) return { key: year, exact: true };
+  return { key: LATEST, exact: false };
+}
 
 interface Props {
   year: number | string;
@@ -35,18 +56,15 @@ interface Props {
 export default function DataBookletModal({ year, theme, onClose }: Props) {
   const [booklet, setBooklet] = useState<Booklet | null>(null);
   const [loading, setLoading] = useState(true);
+  const { key, exact } = resolveBookletYear(year);
 
   useEffect(() => {
-    const load = bookletFiles[String(year)];
-    if (!load) {
-      setLoading(false);
-      return;
-    }
-    load().then(data => {
+    setLoading(true);
+    bookletFiles[key]().then(data => {
       setBooklet(data);
       setLoading(false);
     });
-  }, [year]);
+  }, [key]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -69,8 +87,13 @@ export default function DataBookletModal({ year, theme, onClose }: Props) {
           <div className="flex items-center gap-2 min-w-0">
             <BookOpen className={`h-5 w-5 ${theme.text} shrink-0`} />
             <h2 className="font-semibold truncate">
-              {booklet?.title ?? `Data Booklet — ${year}`}
+              {booklet?.title ?? `Data Booklet — ${key}`}
             </h2>
+            {/* Say so when this is not the booklet for that paper's year —
+                tax bands change, so a silent substitution would mislead */}
+            {!exact && (
+              <span className="text-xs text-muted-foreground shrink-0">({key} edition)</span>
+            )}
           </div>
           <button
             onClick={onClose}

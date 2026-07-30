@@ -110,7 +110,9 @@ const BADGE = /^\s*<small>\s*<strong>[\s\S]*?>([^<]+)</i;
 // "Q7 (b), (c), (d)", "Q4 (a) - (d)" — and matching only the tight form made
 // seven N5 Apps questions collapse onto four keys, so a reference to one part
 // silently resolved to whichever was indexed last.
-const LABEL = /\b((?:19|20)\d{2})\s*(Spec\w*|Exemplar)?\s*(?:P([12])\s*)?Q(\d+)\s*(.*)$/i;
+// The year is optional too: the Higher Apps specimen paper badges its questions
+// "Specimen Q10", with no year at all.
+const LABEL = /\b(?:((?:19|20)\d{2})\s*)?(Spec\w*|Exemplar)?\s*(?:P([12])\s*)?Q(\d+)\s*(.*)$/i;
 
 /** The reference string for a past paper question, or null if it has no badge. */
 function labelOf(questionHtml: string): string | null {
@@ -119,8 +121,10 @@ function labelOf(questionHtml: string): string | null {
   const m = badge[1].trim().match(LABEL);
   if (!m) return null;
   const [, year, special, paper, num, rest] = m;
+  if (!year && !special) return null;      // "Q4" alone identifies nothing
   const parts = (rest ?? '').replace(/\s+/g, '');
-  return `${year}${special ? ` ${special}` : ''}${paper ? ` P${paper}` : ''} Q${num}${parts}`;
+  const head = [year, special].filter(Boolean).join(' ');
+  return `${head}${paper ? ` P${paper}` : ''} Q${num}${parts}`;
 }
 
 const paperIndexes: Record<string, Promise<Map<string, ResolvedQuestion>>> = {};

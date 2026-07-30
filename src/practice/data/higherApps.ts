@@ -37,7 +37,6 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `A technician works \\(37.5\\) basic hours at \\(\\pounds 16.40\\) per hour.<br>She also works \\(6\\) hours of overtime, paid at time-and-a-half.<br>Calculate her gross pay for the week.`, answer: `\\(\\pounds 762.60\\)` },
             { question: `A sales adviser is paid a basic monthly salary of \\(\\pounds 1900\\).<br>She also earns \\(4\\%\\) commission on monthly sales above \\(\\pounds 25000\\).<br>Her sales for the month were \\(\\pounds 61000\\).<br>Calculate her gross pay for the month.`, answer: `\\(\\pounds 3340.00\\)` },
             { question: `Contract A pays \\(\\pounds 420\\) per week.<br>Contract B pays \\(\\pounds 1850\\) per month.<br>Assuming \\(52\\) weeks in a year, determine which contract pays more per year. Use your working to justify your answer.`, answer: `Contract A: \\(\\pounds 21840\\) per year<br>Contract B: \\(\\pounds 22200\\) per year<br>Contract B pays more.` },
-            { ref: "2024 Q1" },
           ],
         },
         {
@@ -56,7 +55,7 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `Scottish income tax bands \\(2025/26\\):<br>Up to \\(\\pounds 12570\\): \\(0\\%\\)<br>\\(\\pounds 12570\\) to \\(\\pounds 15397\\): \\(19\\%\\)<br>\\(\\pounds 15397\\) to \\(\\pounds 27491\\): \\(20\\%\\)<br>\\(\\pounds 27491\\) to \\(\\pounds 43662\\): \\(21\\%\\)<br>An employee has a gross annual salary of \\(\\pounds 40000\\) and makes no pension contributions.<br>Calculate his annual income tax.`, answer: `\\(\\pounds 5582.82\\)` },
             { question: `Scottish income tax bands \\(2025/26\\):<br>Up to \\(\\pounds 12570\\): \\(0\\%\\)<br>\\(\\pounds 12570\\) to \\(\\pounds 15397\\): \\(19\\%\\)<br>\\(\\pounds 15397\\) to \\(\\pounds 27491\\): \\(20\\%\\)<br>\\(\\pounds 27491\\) to \\(\\pounds 43662\\): \\(21\\%\\)<br>An employee has a gross annual salary of \\(\\pounds 45000\\) and pays \\(5\\%\\) of it into a pension.<br>Income tax is calculated after the pension contribution is deducted.<br>Calculate her annual income tax.`, answer: `\\(\\pounds 6160.32\\)` },
             { question: `Scottish income tax bands \\(2025/26\\):<br>Up to \\(\\pounds 12570\\): \\(0\\%\\)<br>\\(\\pounds 12570\\) to \\(\\pounds 15397\\): \\(19\\%\\)<br>\\(\\pounds 15397\\) to \\(\\pounds 27491\\): \\(20\\%\\)<br>\\(\\pounds 27491\\) to \\(\\pounds 43662\\): \\(21\\%\\)<br>\\(\\pounds 43662\\) to \\(\\pounds 75000\\): \\(42\\%\\)<br>An employee has a gross annual salary of \\(\\pounds 60000\\) and makes no pension contributions.<br>Calculate his annual income tax.`, answer: `\\(\\pounds 13213.80\\)` },
-            { ref: "2022 Q1" },
+            { ref: "2023 Q4" },
           ],
         },
         {
@@ -66,7 +65,8 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `An employee earns \\(\\pounds 48000\\) a year and contributes \\(5.5\\%\\) of her gross monthly salary into a pension.<br>Calculate her monthly pension contribution.`, answer: `\\(\\pounds 220.00\\)` },
             { question: `An employee has a gross monthly salary of \\(\\pounds 3200\\).<br>Her monthly deductions are income tax \\(\\pounds 412.50\\), National Insurance \\(\\pounds 172.16\\) and pension \\(\\pounds 192\\).<br>Calculate her monthly net pay.`, answer: `\\(\\pounds 2423.34\\)` },
             { question: `An employee has a gross annual salary of \\(\\pounds 45000\\).<br>Over the year she pays \\(\\pounds 6160.32\\) income tax, \\(\\pounds 3072\\) National Insurance and \\(\\pounds 2250\\) in pension contributions.<br>Calculate her annual net pay.`, answer: `\\(\\pounds 33517.68\\)` },
-            { ref: "2023 Q4" },
+            { ref: "2022 Q8" },
+            { ref: "2025 Q3" },
           ],
         },
         {
@@ -76,7 +76,6 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `A tradesperson charges \\(\\pounds 640\\) for a job, before VAT.<br>VAT is charged at \\(20\\%\\).<br>Calculate the total the customer pays.`, answer: `\\(\\pounds 768.00\\)` },
             { question: `The annual council tax for a Band C property is \\(\\pounds 1428\\).<br>A single occupant receives a \\(25\\%\\) discount.<br>Calculate the annual amount payable.`, answer: `\\(\\pounds 1071.00\\)` },
             { question: `The annual council tax for a property is \\(\\pounds 1560\\), paid in \\(10\\) equal monthly instalments.<br>Calculate each monthly instalment.`, answer: `\\(\\pounds 156.00\\)` },
-            { ref: "2025 Q3" },
           ],
         },
         {
@@ -95,6 +94,10 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `A loan of \\(\\pounds 15000\\) is charged an effective rate of interest of \\(1.6\\%\\) per quarter.<br>No repayments are made.<br>Calculate the amount owed after \\(2\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 17031.03\\)` },
             { question: `\\(\\pounds 6250\\) is invested in a bond with an effective rate of interest of \\(1.85\\%\\) per half-year.<br>Calculate the value of the bond after \\(3\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 6976.64\\)` },
             { question: `\\(\\pounds 2400\\) is deposited in an account with an effective rate of interest of \\(0.25\\%\\) per month.<br>Calculate the value of the account after \\(18\\) months.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 2510.33\\)` },
+            { ref: "2022 Q1" },
+            { ref: "2022 Q9" },
+            { ref: "2024 Q1" },
+            { ref: "2025 Q11" },
           ],
         },
         {
@@ -104,6 +107,8 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `A loan of \\(\\pounds 4200\\) is charged an effective rate of interest of \\(0.9\\%\\) per month for \\(6\\) months, then \\(2.4\\%\\) per quarter for a further \\(2\\) quarters.<br>No repayments are made.<br>Calculate the amount owed at the end.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 4647.25\\)` },
             { question: `\\(\\pounds 8000\\) is invested at an effective rate of interest of \\(1.4\\%\\) per half-year for \\(2\\) years, then \\(3.2\\%\\) per year for \\(1\\) year.<br>Calculate the value of the investment after \\(3\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 8728.14\\)` },
             { question: `\\(\\pounds 1500\\) is invested at an effective rate of interest of \\(2.5\\%\\) per year for \\(3\\) years, then \\(0.3\\%\\) per month for \\(4\\) months.<br>Calculate the value of the investment after the full period.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 1634.81\\)` },
+            { ref: "2022 Q6" },
+            { ref: "2023 Q7" },
           ],
         },
         {
@@ -113,6 +118,8 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `\\(\\pounds 250\\) is deposited at the start of each year for \\(2\\) years into an account with an effective rate of interest of \\(1.5\\%\\) per year.<br>Calculate the value of the account at the end of the \\(2\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 511.31\\)` },
             { question: `\\(\\pounds 1000\\) is deposited at the start of each year for \\(4\\) years into an account with an effective rate of interest of \\(3\\%\\) per year.<br>Calculate the value of the account at the end of the \\(4\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 4309.14\\)` },
             { question: `\\(\\pounds 600\\) is deposited at the start of each year for \\(3\\) years into an account with an effective rate of interest of \\(4\\%\\) per year.<br>Calculate the value of the account at the end of the \\(3\\) years.<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 1947.88\\)` },
+            { ref: "2022 Q4" },
+            { ref: "Specimen Q10" },
           ],
         },
         {
@@ -122,6 +129,9 @@ export const higherAppsPractice: PracticeCourse = {
             { question: `An account has an effective rate of interest of \\(3\\%\\) per year.<br>\\(\\pounds 5000\\) is deposited at the start of year \\(1\\).<br>At the start of year \\(2\\), \\(\\pounds 800\\) is withdrawn.<br>Calculate the value of the account at the end of year \\(2\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 4480.50\\)` },
             { question: `A loan of \\(\\pounds 10000\\) is charged an effective rate of interest of \\(4\\%\\) per year.<br>At the end of year \\(1\\) a repayment of \\(\\pounds 3000\\) is made.<br>Calculate the amount owed at the end of year \\(2\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 7696.00\\)` },
             { question: `An account has an effective rate of interest of \\(2.5\\%\\) per year.<br>\\(\\pounds 2000\\) is deposited at the start of year \\(1\\) and \\(\\pounds 2000\\) at the start of year \\(2\\).<br>At the start of year \\(3\\), \\(\\pounds 1500\\) is withdrawn.<br>Calculate the value of the account at the end of year \\(3\\).<br>Give your answer to the nearest penny.`, answer: `\\(\\pounds 2717.53\\)` },
+            { ref: "2023 Q11" },
+            { ref: "2025 Q6" },
+            { ref: "2025 Q8" },
           ],
         },
       ],

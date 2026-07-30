@@ -146,6 +146,7 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
             paper={q.paper}
             solutionUrl={q.solutionUrl}
             marks={q.marks}
+            hasDataBooklet={courseId === 'higher-apps'}
             theme={theme}
           />
         ))}
