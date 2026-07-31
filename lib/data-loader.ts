@@ -180,6 +180,7 @@ export async function getAllHigherQuestions(): Promise<QuestionWithMetadata[]> {
 export async function getAllAHQuestions(): Promise<QuestionWithMetadata[]> {
   const modules = await Promise.all([
     import('@/src/ah/pastpapers/AHMaths2026_P1'),
+    import('@/src/ah/pastpapers/AHMaths2026_P2'),
     import('@/src/ah/pastpapers/AHMaths2025_P1'),
     import('@/src/ah/pastpapers/AHMaths2025_P2'),
     import('@/src/ah/pastpapers/AHMaths2024_P1'),
@@ -201,7 +202,7 @@ export async function getAllAHQuestions(): Promise<QuestionWithMetadata[]> {
   // nothing failing to compile.
   const byName: Record<string, PastPaper> = Object.assign({}, ...modules);
   const papers: PastPaper[] = [
-    'advHigherMaths2026P1',
+    'advHigherMaths2026P1', 'advHigherMaths2026P2',
     'advHigherMaths2025P1', 'advHigherMaths2025P2',
     'advHigherMaths2024P1', 'advHigherMaths2024P2',
     'advHigherMaths2023P1', 'advHigherMaths2023P2',
