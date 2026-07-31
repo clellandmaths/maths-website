@@ -125,6 +125,7 @@ export async function getAllN5Questions(): Promise<QuestionWithMetadata[]> {
 // Higher — dynamic imports, only loaded when Higher is selected
 export async function getAllHigherQuestions(): Promise<QuestionWithMetadata[]> {
   const [
+    { higherPastPaper2026 },
     { higherPastPaper2025 },
     { higherPastPaper2024 },
     { higherPastPaper2023 },
@@ -135,6 +136,7 @@ export async function getAllHigherQuestions(): Promise<QuestionWithMetadata[]> {
     { higherPastPaper2016 },
     { higherPastPaper2015 },
   ] = await Promise.all([
+    import('@/src/higher/pastpapers/higherpastpaper2026'),
     import('@/src/higher/pastpapers/higherpastpaper2025'),
     import('@/src/higher/pastpapers/higherpastpaper2024'),
     import('@/src/higher/pastpapers/higherpastpaper2023'),
@@ -147,6 +149,7 @@ export async function getAllHigherQuestions(): Promise<QuestionWithMetadata[]> {
   ]);
 
   const higherPastPapers: PastPaper[] = [
+    higherPastPaper2026 as PastPaper,
     higherPastPaper2025 as PastPaper,
     higherPastPaper2024 as PastPaper,
     higherPastPaper2023 as PastPaper,
@@ -269,7 +272,7 @@ export function getAvailableN5Years(): number[] {
 }
 
 export function getAvailableHigherYears(): number[] {
-  return [2025, 2024, 2023, 2022, 2019, 2018, 2017, 2016, 2015];
+  return [2026, 2025, 2024, 2023, 2022, 2019, 2018, 2017, 2016, 2015];
 }
 
 export function getAvailableAHYears(): number[] {
