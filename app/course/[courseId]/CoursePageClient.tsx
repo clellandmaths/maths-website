@@ -287,7 +287,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                   onClick={() => handleStartPaper(paper.year, paper.paperNumber, idx)}
                                   className={`shrink-0 h-8 w-8 flex items-center justify-center ${theme.tint} ${theme.text} text-sm font-bold rounded-lg hover:bg-white/10 transition-colors`}
                                 >
-                                  {q.questionIndex + 1}
+                                  {q.questionNumber}
                                 </button>
 
                                 {/* Topic chips */}
@@ -311,7 +311,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                     onClick={() => setActiveVideo({
                                       videoId: q.videoId,
                                       timestamp: timestampToSeconds(q.timestamp),
-                                      title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionIndex + 1}`,
+                                      title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionNumber}`,
                                     })}
                                     className={`shrink-0 flex items-center gap-1 px-2 py-1 ${theme.text} hover:opacity-80 text-xs font-medium transition-opacity`}
                                   >

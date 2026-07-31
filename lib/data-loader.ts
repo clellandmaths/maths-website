@@ -2,6 +2,8 @@
 // Aggregates all past paper data for the Explorer
 // Uses dynamic imports so data only loads when a course is selected
 
+import { questionNumber } from '@/lib/question-number';
+
 export interface QuestionAttachment {
   name: string;
   url: string;
@@ -47,6 +49,11 @@ export interface QuestionWithMetadata extends Question {
   paperNumber: number;
   questionIndex: number;
   /**
+   * The number the exam prints — "6(b)-(c)", not the entry's position. Equal to
+   * questionIndex + 1 on papers that are not split by part.
+   */
+  questionNumber: string;
+  /**
    * Overrides the "{year} Paper {n} Q{m}" caption. Guided practice questions
    * have no paper number, so without this they read "Surds Paper 0 Q1".
    */
@@ -55,7 +62,9 @@ export interface QuestionWithMetadata extends Question {
 
 /** The caption shown above a question in the full-screen and focus views. */
 export function questionLabel(q: QuestionWithMetadata): string {
-  return q.label ?? `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`;
+  // questionNumber, not questionIndex + 1: on a split paper the two differ, and
+  // the index is the one that does not appear in the pupil's booklet.
+  return q.label ?? `${q.year} Paper ${q.paperNumber} Q${q.questionNumber ?? q.questionIndex + 1}`;
 }
 
 function flattenPastPapers(pastPapers: PastPaper[]): QuestionWithMetadata[] {
@@ -69,6 +78,9 @@ function flattenPastPapers(pastPapers: PastPaper[]): QuestionWithMetadata[] {
           year: pastPaper.year,
           paperNumber: paper.paperNumber,
           questionIndex: index,
+          // The number the exam prints, which is not the entry's position once a
+          // paper is split by part: entry 12 of N5 Apps 2026 P2 is "6(b)-(c)".
+          questionNumber: questionNumber(q.question) ?? String(index + 1),
         });
       });
     }

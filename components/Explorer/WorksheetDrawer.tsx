@@ -108,7 +108,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                             Q{index + 1}
                           </span>
                           <span className="text-xs text-slate-500">
-                            {item.year} P{item.paperNumber} Q{item.questionIndex + 1}
+                            {item.year} P{item.paperNumber} Q{item.questionNumber}
                           </span>
                         </div>
                         {mainTopic && (

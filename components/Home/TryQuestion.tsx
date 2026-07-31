@@ -6,6 +6,7 @@ import { Eye, EyeOff, RefreshCw } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import type { PastPaper, QuestionWithMetadata } from '@/lib/data-loader';
+import { questionNumber } from '@/lib/question-number';
 
 // One file imported per question shown — keeps the homepage payload small.
 // That is why this list is written out rather than read from data-loader:
@@ -37,7 +38,10 @@ function pickQuestion(course: string, paper: PastPaper): Picked | null {
     p.questions.forEach((q, i) => {
       // Homepage tile wants short, self-contained, text-only questions
       if (!q.question.includes('<img') && q.question.length < 380 && q.answer) {
-        pool.push({ ...q, course, year: paper.year, paperNumber: p.paperNumber, questionIndex: i });
+        pool.push({
+          ...q, course, year: paper.year, paperNumber: p.paperNumber, questionIndex: i,
+          questionNumber: questionNumber(q.question) ?? String(i + 1),
+        });
       }
     });
   }
@@ -72,7 +76,7 @@ export default function TryQuestion() {
         {question && (
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs text-signal-mint/80">
-              {question.course} · {question.year} · P{question.paperNumber} · Q{question.questionIndex + 1}
+              {question.course} · {question.year} · P{question.paperNumber} · Q{question.questionNumber}
             </span>
             <Marks marks={question.marks} />
           </div>

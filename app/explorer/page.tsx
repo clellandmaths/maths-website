@@ -567,7 +567,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                               {index + 1}
                             </span>
                             <span className="text-sm text-slate-500">
-                              {q.year} Paper {q.paperNumber} Q{q.questionIndex + 1}
+                              {q.year} Paper {q.paperNumber} Q{q.questionNumber}
                             </span>
                             {q.topics?.slice(0, 2).map((topic) => (
                               <span
@@ -696,7 +696,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 onClick={() => setActiveVideo({
                                   videoId: q.videoId,
                                   timestamp: timestampToSeconds(q.timestamp),
-                                  title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
+                                  title: `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`
                                 })}
                                 className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                               >
@@ -838,7 +838,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           year={markschemeQ.year}
           paperNumber={markschemeQ.paperNumber}
           questionHtml={markschemeQ.question}
-          title={`${markschemeQ.year} Paper ${markschemeQ.paperNumber} Q${markschemeQ.questionIndex + 1}`}
+          title={`${markschemeQ.year} Paper ${markschemeQ.paperNumber} Q${markschemeQ.questionNumber}`}
           onClose={() => setMarkschemeQ(null)}
         />
       )}

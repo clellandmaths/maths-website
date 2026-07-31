@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen } from 'lucide
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
+import { questionNumber } from '@/lib/question-number';
 import MathRenderer from '@/components/MathRenderer';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FormulaeButton from '@/components/FormulaeButton';
@@ -55,6 +56,7 @@ export default function QuestionCard({
     year,
     paperNumber,
     questionIndex,
+    questionNumber: questionNumber(question.question) ?? String(questionIndex + 1),
   };
 
   const inWorksheet = isInWorksheet(fullQuestion);
@@ -83,7 +85,7 @@ export default function QuestionCard({
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
             <p className="text-slate-200 font-semibold text-sm">
-              {year} Paper {paperNumber} Q{questionIndex + 1}
+              {year} Paper {paperNumber} Q{fullQuestion.questionNumber}
             </p>
             <div className="flex flex-wrap items-center gap-1.5 mt-1">
               {mainTopics.slice(0, 2).map((topic) => (

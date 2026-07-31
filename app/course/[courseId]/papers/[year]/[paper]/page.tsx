@@ -19,6 +19,7 @@ import {
   type PaperVideo,
 } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
+import { questionNumber } from '@/lib/question-number';
 import { hasMarkscheme, getMarkschemeEntries } from '@/lib/ah-markschemes';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -186,11 +187,13 @@ export default async function PaperPage(
           >
             <div className="p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-4 flex-wrap">
-                <span className={`flex items-center justify-center h-8 w-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
-                  {idx + 1}
+                {/* The exam's number, not the entry's position — a paper split
+                    by part has more entries than questions. */}
+                <span className={`flex items-center justify-center min-w-8 h-8 px-1.5 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
+                  {questionNumber(q.question) ?? idx + 1}
                 </span>
                 <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  Question {idx + 1}
+                  Question {questionNumber(q.question) ?? idx + 1}
                 </h2>
                 {q.topics?.slice(0, 2).map(topic => (
                   <span key={topic} className="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded">

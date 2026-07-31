@@ -225,7 +225,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               <span className="text-slate-300">{questions!.length}</span>
             </p>
             <p className="text-slate-500 text-xs mt-0.5">
-              {question.year} Paper {question.paperNumber} Q{question.questionIndex + 1}
+              {question.year} Paper {question.paperNumber} Q{question.questionNumber}
             </p>
             <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
           </div>
@@ -365,7 +365,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
         onClose={() => setShowVideo(false)}
         videoId={question.videoId}
         timestamp={timestampToSeconds(question.timestamp)}
-        title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
+        title={`${question.year} Paper ${question.paperNumber} Q${question.questionNumber}`}
       />
 
       {/* Data Booklet (Higher Apps) — the booklet is year-specific, so it

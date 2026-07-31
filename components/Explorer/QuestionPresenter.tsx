@@ -6,6 +6,7 @@ import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
+import { isWholePaper, lastQuestionNumber } from '@/lib/question-number';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
@@ -43,6 +44,16 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
   const question = questions[currentIndex];
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === questions.length - 1;
+
+  // Count in the exam's own numbering when this IS the exam. N5 Applications
+  // and Advanced Higher papers are split into one entry per part, so 2026 P2
+  // is 17 entries but 7 questions — "9 of 17" names a question the pupil's
+  // booklet does not contain. A worksheet assembled in the Explorer is a set of
+  // N and counts as one. Mirrors the live app.
+  const wholePaper = isWholePaper(questions);
+  const position = wholePaper
+    ? { current: question.questionNumber, total: lastQuestionNumber(questions, questions.length) }
+    : { current: String(currentIndex + 1), total: String(questions.length) };
 
   const goNext = useCallback(() => {
     if (!isLast) {
@@ -92,8 +103,8 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
           </button>
           <div className="text-right">
             <p className="text-slate-400 text-sm">
-              Question <span className={`${theme.text} font-medium`}>{currentIndex + 1}</span> of{' '}
-              <span className="text-slate-300">{questions.length}</span>
+              Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
+              <span className="text-slate-300">{position.total}</span>
             </p>
             <p className="text-slate-500 text-xs mt-0.5">
               {questionLabel(question)}

@@ -129,6 +129,9 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
             year: q.paper ?? topic.name,
             paperNumber: 0,
             questionIndex: i,
+            // Practice questions are numbered within the topic, and `label`
+            // above is what actually shows; this only satisfies the shape.
+            questionNumber: String(i + 1),
           }))}
           theme={theme}
         />
