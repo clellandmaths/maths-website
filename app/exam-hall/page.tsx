@@ -278,7 +278,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                               >
                                 {isChecked && <Check className="h-3 w-3 text-white" />}
                               </div>
-                              <span className={`text-sm transition-colors ${isChecked ? 'text-slate-400 line-through' : 'text-slate-400'}`}>
+                              <span className={`text-sm transition-colors ${isChecked ? 'text-slate-400 line-through' : 'text-slate-300'}`}>
                                 {sub}
                               </span>
                             </button>

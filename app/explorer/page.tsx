@@ -670,7 +670,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <div className="no-print flex items-center justify-between mt-4 pt-4 border-t border-slate-800">
                           <button
                             onClick={() => setPresentStartIndex(index)}
-                            className="text-xs text-slate-400 hover:text-slate-400 transition-colors"
+                            className="text-xs text-slate-400 hover:text-slate-300 transition-colors"
                           >
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
