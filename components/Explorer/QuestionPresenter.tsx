@@ -11,6 +11,7 @@ import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
+import { timestampToSeconds } from '@/lib/timestamp';
 
 interface QuestionPresenterProps {
   /** Course this question set belongs to — enables the Formulae button. */
@@ -30,17 +31,6 @@ function extractImageSrcs(html: string): string[] {
     srcs.push(match[1]);
   }
   return srcs;
-}
-
-function getTimestampSeconds(ts: string): number {
-  if (ts.endsWith('s')) {
-    return parseInt(ts.replace('s', ''), 10);
-  }
-  if (ts.includes(':')) {
-    const [mins, secs] = ts.split(':').map(Number);
-    return mins * 60 + secs;
-  }
-  return parseInt(ts, 10);
 }
 
 export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
@@ -87,7 +77,6 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
       document.body.style.overflow = '';
     };
   }, []);
-
 
   return (
     <>
@@ -299,7 +288,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
         isOpen={showVideo}
         onClose={() => setShowVideo(false)}
         videoId={question.videoId}
-        timestamp={getTimestampSeconds(question.timestamp)}
+        timestamp={timestampToSeconds(question.timestamp)}
         title={questionLabel(question)}
       />
 

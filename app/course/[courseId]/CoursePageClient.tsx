@@ -11,6 +11,7 @@ import FocusMode from '@/components/Explorer/FocusMode';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos, n5AppsPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
+import { timestampToSeconds } from '@/lib/timestamp';
 
 interface CoursePageProps {
   courseId: string;
@@ -38,15 +39,6 @@ const courseNames: Record<string, string> = {
   'n5-apps': 'N5 Applications',
   'higher-apps': 'Higher Applications',
 };
-
-function getTimestampSeconds(ts: string): number {
-  if (ts.endsWith('s')) return parseInt(ts.replace('s', ''), 10);
-  if (ts.includes(':')) {
-    const [mins, secs] = ts.split(':').map(Number);
-    return mins * 60 + secs;
-  }
-  return parseInt(ts, 10);
-}
 
 export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   // Lazy question loading
@@ -318,7 +310,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                   <button
                                     onClick={() => setActiveVideo({
                                       videoId: q.videoId,
-                                      timestamp: getTimestampSeconds(q.timestamp),
+                                      timestamp: timestampToSeconds(q.timestamp),
                                       title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionIndex + 1}`,
                                     })}
                                     className={`shrink-0 flex items-center gap-1 px-2 py-1 ${theme.text} hover:opacity-80 text-xs font-medium transition-opacity`}

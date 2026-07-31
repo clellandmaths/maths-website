@@ -9,6 +9,7 @@ import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
+import { timestampToSeconds } from '@/lib/timestamp';
 
 const DAILY_COUNT = 5;
 
@@ -46,15 +47,6 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
 
 function getUKDateString(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
-}
-
-function getTimestampSeconds(ts: string): number {
-  if (ts.endsWith('s')) return parseInt(ts.replace('s', ''), 10);
-  if (ts.includes(':')) {
-    const [mins, secs] = ts.split(':').map(Number);
-    return mins * 60 + secs;
-  }
-  return parseInt(ts, 10);
 }
 
 function extractImageSrcs(html: string): string[] {
@@ -372,7 +364,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
         isOpen={showVideo}
         onClose={() => setShowVideo(false)}
         videoId={question.videoId}
-        timestamp={getTimestampSeconds(question.timestamp)}
+        timestamp={timestampToSeconds(question.timestamp)}
         title={`${question.year} Paper ${question.paperNumber} Q${question.questionIndex + 1}`}
       />
 

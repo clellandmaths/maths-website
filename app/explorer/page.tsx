@@ -27,6 +27,7 @@ import { higherAppsTopicCategories, higherAppsTopics } from '@/lib/higher-apps-t
 import { n5AppsTopicCategories, n5AppsTopics } from '@/lib/n5-apps-topics';
 import { getAvailableN5Years, getAvailableHigherYears, getAvailableAHYears, getAvailableHigherAppsYears, getAvailableN5AppsYears } from '@/lib/data-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+import { timestampToSeconds } from '@/lib/timestamp';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
 
@@ -79,15 +80,6 @@ const courseConfig = {
     hasDataBooklet: false,
   },
 } as const;
-
-function getTimestampSeconds(ts: string): number {
-  if (ts.endsWith('s')) return parseInt(ts.replace('s', ''), 10);
-  if (ts.includes(':')) {
-    const [mins, secs] = ts.split(':').map(Number);
-    return mins * 60 + secs;
-  }
-  return parseInt(ts, 10);
-}
 
 function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeCourse: () => void }) {
   const config = courseConfig[course];
@@ -634,7 +626,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           </button>
                           {showQRCodes && q.videoId && (
                             <QRCodeImage
-                              url={`https://www.youtube.com/watch?v=${q.videoId}&t=${getTimestampSeconds(q.timestamp)}`}
+                              url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
                               size={64}
                               className="shrink-0 rounded"
                             />
@@ -703,7 +695,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                               <button
                                 onClick={() => setActiveVideo({
                                   videoId: q.videoId,
-                                  timestamp: getTimestampSeconds(q.timestamp),
+                                  timestamp: timestampToSeconds(q.timestamp),
                                   title: `${q.year} Paper ${q.paperNumber} Q${q.questionIndex + 1}`
                                 })}
                                 className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}

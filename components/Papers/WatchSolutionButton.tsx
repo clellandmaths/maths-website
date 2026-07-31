@@ -4,15 +4,7 @@ import { useState } from 'react';
 import { Play } from 'lucide-react';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
-
-function getTimestampSeconds(ts: string): number {
-  if (ts.endsWith('s')) return parseInt(ts.replace('s', ''), 10);
-  if (ts.includes(':')) {
-    const [mins, secs] = ts.split(':').map(Number);
-    return mins * 60 + secs;
-  }
-  return parseInt(ts, 10) || 0;
-}
+import { timestampToSeconds } from '@/lib/timestamp';
 
 interface Props {
   theme: CourseTheme;
@@ -38,7 +30,7 @@ export default function WatchSolutionButton({ theme, videoId, timestamp, title }
           isOpen={true}
           onClose={() => setOpen(false)}
           videoId={videoId}
-          timestamp={getTimestampSeconds(timestamp)}
+          timestamp={timestampToSeconds(timestamp)}
           title={title}
         />
       )}

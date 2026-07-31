@@ -11,15 +11,7 @@ import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
-
-function getTimestampSeconds(ts: string): number {
-  if (ts.endsWith('s')) return parseInt(ts.replace('s', ''), 10);
-  if (ts.includes(':')) {
-    const [mins, secs] = ts.split(':').map(Number);
-    return mins * 60 + secs;
-  }
-  return parseInt(ts, 10);
-}
+import { timestampToSeconds } from '@/lib/timestamp';
 
 // localStorage helpers for done tracking
 function getDoneKey(questions: QuestionWithMetadata[]): string {
@@ -215,7 +207,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   <button
                     onClick={() => setActiveVideo({
                       videoId: q.videoId,
-                      timestamp: getTimestampSeconds(q.timestamp),
+                      timestamp: timestampToSeconds(q.timestamp),
                       title: questionLabel(q)
                     })}
                     className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}

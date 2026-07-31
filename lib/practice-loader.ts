@@ -7,6 +7,7 @@ import {
   getAllHigherAppsQuestions,
   type QuestionWithMetadata,
 } from '@/lib/data-loader';
+import { timestampToSeconds } from '@/lib/timestamp';
 
 // Guided practice loader.
 //
@@ -156,7 +157,9 @@ function indexFor(courseId: string): Promise<Map<string, ResolvedQuestion>> {
           ),
           answer: q.answer,
           videoId: q.videoId || undefined,
-          timestamp: q.timestamp ? parseInt(q.timestamp, 10) : undefined,
+          // not parseInt: these are past-paper timestamps, and 104 of them are
+          // written "3m35s", which parseInt reads as 3
+          timestamp: q.timestamp ? timestampToSeconds(q.timestamp) : undefined,
           paper: label,
           marks: q.marks,
         });
