@@ -10,6 +10,7 @@ export interface PaperVideo {
 }
 
 export const n5PaperVideos: PaperVideo[] = [
+  { year: 2026, paperNumber: 1, videoId: 'rCQLNrGQlGk', questionCount: 14 },
   { year: 2025, paperNumber: 1, videoId: '1QY10VDwJ6s', questionCount: 15 },
   { year: 2025, paperNumber: 2, videoId: '0kEd8lvqwMQ', questionCount: 15 },
   { year: 2024, paperNumber: 1, videoId: 'DL-cJTghJVw', questionCount: 14 },

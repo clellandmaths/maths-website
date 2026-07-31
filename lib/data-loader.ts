@@ -80,6 +80,7 @@ function flattenPastPapers(pastPapers: PastPaper[]): QuestionWithMetadata[] {
 // N5 — dynamic imports, only loaded when N5 is selected
 export async function getAllN5Questions(): Promise<QuestionWithMetadata[]> {
   const [
+    { pastpaper2026 },
     { pastpaper2025 },
     { pastpaper2024 },
     { pastpaper2023 },
@@ -91,6 +92,7 @@ export async function getAllN5Questions(): Promise<QuestionWithMetadata[]> {
     { pastpaper2015 },
     { pastpaper2014 },
   ] = await Promise.all([
+    import('@/src/n5/pastpapers/pastpaper-2026'),
     import('@/src/n5/pastpapers/pastpaper-2025'),
     import('@/src/n5/pastpapers/pastpaper-2024'),
     import('@/src/n5/pastpapers/pastpaper-2023'),
@@ -104,6 +106,7 @@ export async function getAllN5Questions(): Promise<QuestionWithMetadata[]> {
   ]);
 
   const n5PastPapers: PastPaper[] = [
+    pastpaper2026 as PastPaper,
     pastpaper2025 as PastPaper,
     pastpaper2024 as PastPaper,
     pastpaper2023 as PastPaper,
@@ -262,7 +265,7 @@ export function filterQuestions(
 
 // Available years per course (static — no data import needed)
 export function getAvailableN5Years(): number[] {
-  return [2025, 2024, 2023, 2022, 2019, 2018, 2017, 2016, 2015, 2014];
+  return [2026, 2025, 2024, 2023, 2022, 2019, 2018, 2017, 2016, 2015, 2014];
 }
 
 export function getAvailableHigherYears(): number[] {
