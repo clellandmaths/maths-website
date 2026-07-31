@@ -36,6 +36,7 @@ export const n5PaperVideos: PaperVideo[] = [
 
 export const higherPaperVideos: PaperVideo[] = [
   { year: 2026, paperNumber: 1, videoId: '_T7mKP02b9U', questionCount: 12 },
+  { year: 2026, paperNumber: 2, videoId: 'szSfvfyDP3M', questionCount: 15 },
   { year: 2025, paperNumber: 1, videoId: 't1_htB2awtg', questionCount: 13 },
   { year: 2025, paperNumber: 2, videoId: 'NNOugVXypYo', questionCount: 14 },
   { year: 2024, paperNumber: 1, videoId: 'Vkp2t9gy3DA', questionCount: 13 },
