@@ -179,6 +179,7 @@ export async function getAllHigherQuestions(): Promise<QuestionWithMetadata[]> {
 // Advanced Higher — single-file years 2016–2019, split P1/P2 from 2021
 export async function getAllAHQuestions(): Promise<QuestionWithMetadata[]> {
   const modules = await Promise.all([
+    import('@/src/ah/pastpapers/AHMaths2026_P1'),
     import('@/src/ah/pastpapers/AHMaths2025_P1'),
     import('@/src/ah/pastpapers/AHMaths2025_P2'),
     import('@/src/ah/pastpapers/AHMaths2024_P1'),
@@ -194,15 +195,25 @@ export async function getAllAHQuestions(): Promise<QuestionWithMetadata[]> {
     import('@/src/ah/pastpapers/AHMaths2017'),
     import('@/src/ah/pastpapers/AHMaths2016'),
   ]);
+  // By name, not by position — see the note in getAllN5AppsQuestions. This list
+  // was indexed positionally, so adding 2026 at the top would have shifted every
+  // entry below it and resolved every year from 2025 down to undefined, with
+  // nothing failing to compile.
+  const byName: Record<string, PastPaper> = Object.assign({}, ...modules);
   const papers: PastPaper[] = [
-    modules[0].advHigherMaths2025P1, modules[1].advHigherMaths2025P2,
-    modules[2].advHigherMaths2024P1, modules[3].advHigherMaths2024P2,
-    modules[4].advHigherMaths2023P1, modules[5].advHigherMaths2023P2,
-    modules[6].advHigherMaths2022P1, modules[7].advHigherMaths2022P2,
-    modules[8].advHigherMaths2021P1, modules[9].advHigherMaths2021P2,
-    modules[10].advHigherMaths2019, modules[11].advHigherMaths2018,
-    modules[12].advHigherMaths2017, modules[13].advHigherMaths2016,
-  ] as PastPaper[];
+    'advHigherMaths2026P1',
+    'advHigherMaths2025P1', 'advHigherMaths2025P2',
+    'advHigherMaths2024P1', 'advHigherMaths2024P2',
+    'advHigherMaths2023P1', 'advHigherMaths2023P2',
+    'advHigherMaths2022P1', 'advHigherMaths2022P2',
+    'advHigherMaths2021P1', 'advHigherMaths2021P2',
+    'advHigherMaths2019', 'advHigherMaths2018',
+    'advHigherMaths2017', 'advHigherMaths2016',
+  ].map(name => {
+    const paper = byName[name];
+    if (!paper) throw new Error(`data-loader: AH paper ${name} not exported by any imported module`);
+    return paper;
+  });
   return flattenPastPapers(papers);
 }
 
@@ -215,11 +226,16 @@ export async function getAllHigherAppsQuestions(): Promise<QuestionWithMetadata[
     import('@/src/higherapps/HApps2022'),
     import('@/src/higherapps/HAppsSpec1'),
   ]);
+  // By name, not by position — the same trap as the other two loaders.
+  const byName: Record<string, PastPaper> = Object.assign({}, ...modules);
   const papers: PastPaper[] = [
-    modules[0].higherAppsMaths2025, modules[1].higherAppsMaths2024,
-    modules[2].higherAppsMaths2023, modules[3].higherAppsMaths2022,
-    modules[4].higherAppsMathsSpecimen,
-  ] as PastPaper[];
+    'higherAppsMaths2025', 'higherAppsMaths2024', 'higherAppsMaths2023',
+    'higherAppsMaths2022', 'higherAppsMathsSpecimen',
+  ].map(name => {
+    const paper = byName[name];
+    if (!paper) throw new Error(`data-loader: Higher Apps paper ${name} not exported by any imported module`);
+    return paper;
+  });
   return flattenPastPapers(papers);
 }
 
@@ -300,7 +316,7 @@ export function getAvailableHigherYears(): number[] {
 }
 
 export function getAvailableAHYears(): number[] {
-  return [2025, 2024, 2023, 2022, 2021, 2019, 2018, 2017, 2016];
+  return [2026, 2025, 2024, 2023, 2022, 2021, 2019, 2018, 2017, 2016];
 }
 
 export function getAvailableHigherAppsYears(): (number | string)[] {

@@ -59,6 +59,7 @@ export const higherPaperVideos: PaperVideo[] = [
 
 // Generated from the AH data files — 2016–2021 have no videos (markschemes instead)
 export const ahPaperVideos: PaperVideo[] = [
+  { year: 2026, paperNumber: 1, videoId: 'VoRxJtMeAY4', questionCount: 7 },
   { year: 2025, paperNumber: 1, videoId: 'gxLiBmE_TqM', questionCount: 8 },
   { year: 2025, paperNumber: 2, videoId: 'SoqgtES7sRA', questionCount: 18 },
   { year: 2024, paperNumber: 1, videoId: 'zPqCso-_dBg', questionCount: 8 },
