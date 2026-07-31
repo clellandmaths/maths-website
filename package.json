@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run check:math && npm run check:homepage && next build",
+    "build": "npm run check:math && npm run check:homepage && npm run check:papers && next build",
     "build:only": "next build",
     "start": "next start",
     "lint": "eslint",
     "check:math": "node scripts/check-math-render.mjs",
     "check:latex": "node scripts/check-notes-latex.mjs",
-    "check": "npm run check:math && npm run check:latex && npm run check:homepage",
-    "check:homepage": "node scripts/check-homepage-years.mjs"
+    "check": "npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers",
+    "check:homepage": "node scripts/check-homepage-years.mjs",
+    "check:papers": "node scripts/check-paper-registry.mjs"
   },
   "dependencies": {
     "katex": "^0.16.28",

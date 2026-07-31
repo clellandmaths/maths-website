@@ -21,7 +21,7 @@ export const n5PaperVideos: PaperVideo[] = [
   { year: 2022, paperNumber: 1, videoId: 'KS2EpwO4xfI', questionCount: 15 },
   { year: 2022, paperNumber: 2, videoId: 'dFdKdzadNUE', questionCount: 14 },
   { year: 2019, paperNumber: 1, videoId: '0ZcNrPB1w3s', questionCount: 15 },
-  { year: 2019, paperNumber: 2, videoId: 'mH8kVu6QMjU', questionCount: 18 },
+  { year: 2019, paperNumber: 2, videoId: 'mH8kVu6QMjU', questionCount: 19 },
   { year: 2018, paperNumber: 1, videoId: 'zXipM1YMziU', questionCount: 19 },
   { year: 2018, paperNumber: 2, videoId: 'pV_mPS5bNG0', questionCount: 18 },
   { year: 2017, paperNumber: 1, videoId: 'RgoTxLmU1Pc', questionCount: 15 },
@@ -85,6 +85,7 @@ export const higherAppsPaperVideos: PaperVideo[] = [
 
 export const n5AppsPaperVideos: PaperVideo[] = [
   { year: 2026, paperNumber: 1, videoId: 'y8NNGijXZ3o', questionCount: 13 },
+  { year: 2026, paperNumber: 2, videoId: 'wL0IR2kIpBU', questionCount: 17 },
   { year: 2025, paperNumber: 1, videoId: 'TymgQ-X3W28', questionCount: 11 },
   { year: 2025, paperNumber: 2, videoId: 'v95kOj4eiLI', questionCount: 18 },
   { year: 2024, paperNumber: 1, videoId: 'XADVJKvGWAs', questionCount: 11 },
