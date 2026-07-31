@@ -84,6 +84,7 @@ export const higherAppsPaperVideos: PaperVideo[] = [
 ];
 
 export const n5AppsPaperVideos: PaperVideo[] = [
+  { year: 2026, paperNumber: 1, videoId: 'y8NNGijXZ3o', questionCount: 13 },
   { year: 2025, paperNumber: 1, videoId: 'TymgQ-X3W28', questionCount: 11 },
   { year: 2025, paperNumber: 2, videoId: 'v95kOj4eiLI', questionCount: 18 },
   { year: 2024, paperNumber: 1, videoId: 'XADVJKvGWAs', questionCount: 11 },

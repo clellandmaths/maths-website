@@ -214,6 +214,7 @@ export async function getAllHigherAppsQuestions(): Promise<QuestionWithMetadata[
 // N5 Applications — separate P1/P2 files per year
 export async function getAllN5AppsQuestions(): Promise<QuestionWithMetadata[]> {
   const modules = await Promise.all([
+    import('@/src/n5apps/n5apps2026P1'),
     import('@/src/n5apps/n5apps2025P1'), import('@/src/n5apps/n5apps2025P2'),
     import('@/src/n5apps/n5apps2024P1'), import('@/src/n5apps/n5apps2024P2'),
     import('@/src/n5apps/n5apps2023P1'), import('@/src/n5apps/n5apps2023P2'),
@@ -222,15 +223,26 @@ export async function getAllN5AppsQuestions(): Promise<QuestionWithMetadata[]> {
     import('@/src/n5apps/n5apps2019P1'), import('@/src/n5apps/n5apps2019P2'),
     import('@/src/n5apps/n5apps2018P1'), import('@/src/n5apps/n5apps2018P2'),
   ]);
+  // Read each paper off whichever module exports it, not by position. Adding a
+  // year at the top of the import list shifts every index below it, and adding
+  // 2026 did exactly that: modules[2] stopped being the 2024 P1 module, so
+  // every year from 2024 down resolved to undefined. Nothing failed to compile
+  // — the papers simply disappeared. Names cannot drift that way.
+  const byName: Record<string, PastPaper> = Object.assign({}, ...modules);
   const papers: PastPaper[] = [
-    modules[0].n5AppsMaths2025P1, modules[1].n5AppsMaths2025P2,
-    modules[2].n5AppsMaths2024P1, modules[3].n5AppsMaths2024P2,
-    modules[4].n5AppsMaths2023P1, modules[5].n5AppsMaths2023P2,
-    modules[6].n5AppsMaths2022P1, modules[7].n5AppsMaths2022P2,
-    modules[8].n5AppsMaths2021P1, modules[9].n5AppsMaths2021P2,
-    modules[10].n5AppsMaths2019P1, modules[11].n5AppsMaths2019P2,
-    modules[12].n5AppsMaths2018P1, modules[13].n5AppsMaths2018P2,
-  ] as PastPaper[];
+    'n5AppsMaths2026P1',
+    'n5AppsMaths2025P1', 'n5AppsMaths2025P2',
+    'n5AppsMaths2024P1', 'n5AppsMaths2024P2',
+    'n5AppsMaths2023P1', 'n5AppsMaths2023P2',
+    'n5AppsMaths2022P1', 'n5AppsMaths2022P2',
+    'n5AppsMaths2021P1', 'n5AppsMaths2021P2',
+    'n5AppsMaths2019P1', 'n5AppsMaths2019P2',
+    'n5AppsMaths2018P1', 'n5AppsMaths2018P2',
+  ].map(name => {
+    const paper = byName[name];
+    if (!paper) throw new Error(`data-loader: N5 Apps paper ${name} not exported by any imported module`);
+    return paper;
+  });
   return flattenPastPapers(papers);
 }
 
@@ -284,5 +296,5 @@ export function getAvailableHigherAppsYears(): (number | string)[] {
 }
 
 export function getAvailableN5AppsYears(): number[] {
-  return [2025, 2024, 2023, 2022, 2021, 2019, 2018];
+  return [2026, 2025, 2024, 2023, 2022, 2021, 2019, 2018];
 }
