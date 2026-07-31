@@ -422,7 +422,7 @@ export const national5AppsPractice: PracticeCourse = {
             { question: `Calculate the mean of \\(12, 15, 11, 18, 14\\)`, answer: `\\(14\\)` },
             { question: `For the data set \\(5, 8, 9, 12, 14, 15, 20, 22\\) calculate:<br>(a) the median<br>(b) the lower quartile<br>(c) the upper quartile<br>(d) the interquartile range`, answer: `(a) \\(13\\)<br>(b) \\(8.5\\)<br>(c) \\(17.5\\)<br>(d) \\(9\\)` },
             { question: `Calculate the standard deviation of \\(6, 8, 10, 12, 14\\)<br>Give your answer to 1 decimal place.`, answer: `\\(3.2\\)` },
-            { question: `Two machines fill bags of flour. A sample from each is weighed.<br>Machine A: mean \\(502\\) g, standard deviation \\(4.1\\) g<br>Machine B: mean \\(498\\) g, standard deviation \\(7.3\\) g<br>Make two valid comparisons between the two machines.`, answer: `On average, Machine A fills the bags more heavily, since \\(502 > 498\\).<br>Machine A is more consistent, since \\(4.1 < 7.3\\).` },
+            { question: `Two machines fill bags of flour. A sample from each is weighed.<br>Machine A: mean \\(502\\) g, standard deviation \\(4.1\\) g<br>Machine B: mean \\(498\\) g, standard deviation \\(7.3\\) g<br>Make two valid comparisons between the two machines.`, answer: `On average, the bags from Machine A are heavier, since \\(502 > 498\\).<br>The masses of the bags from Machine A are more consistent, since \\(4.1 < 7.3\\).` },
             { ref: "2022 P2 Q2" },
             { ref: "2023 P2 Q5(a),(b)" },
             { ref: "2019 P1 Q7" },
