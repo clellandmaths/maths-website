@@ -259,6 +259,10 @@ const NOTES_TO_PRACTICE: Record<string, Record<string, string>> = {
     'modelling-graphs': 'modelling-situations-with-graphs',
     // Planning & Decision Making: the notes id drops the "and"
     'risk-control-measures': 'risk-and-control-measures',
+    // Statistics: same again, plus two the notes ids shorten
+    'samples-populations-outliers': 'samples-populations-and-outliers',
+    'hypothesis-testing': 'hypothesis-testing-and-errors',
+    'confidence-intervals': 'confidence-intervals-and-p-values',
   },
 };
 
