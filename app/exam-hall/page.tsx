@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { GraduationCap, Flame, CheckSquare, Clock, ArrowLeft, Check, ChevronDown, ChevronRight } from 'lucide-react';
+import { GraduationCap, Flame, CheckSquare, Clock, ArrowLeft, Check, ChevronDown, ChevronRight, Timer } from 'lucide-react';
 import { n5ChecklistCategories, higherChecklistCategories } from '@/lib/checklist-topics';
 import { ahTopicCategories } from '@/lib/ah-topics';
 import { higherAppsTopicCategories } from '@/lib/higher-apps-topics';
 import { n5AppsTopicCategories } from '@/lib/n5-apps-topics';
 import type { TopicCategory } from '@/lib/n5-topics';
 import WarmUp from '@/components/ExamHall/WarmUp';
+import Marathon from '@/components/ExamHall/Marathon';
+import { hasSpecial } from '@/lib/specials-loader';
 import { getCourseTheme } from '@/lib/course-theme';
 import { courseExamDates } from '@/lib/exam-dates';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
@@ -305,6 +307,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [countdown, setCountdown] = useState(() => getCountdown(info.examDate));
   const [showChecklist, setShowChecklist] = useState(false);
   const [showWarmUp, setShowWarmUp] = useState(false);
+  const [showMarathon, setShowMarathon] = useState(false);
 
   // Live checklist stats for the dashboard card
   const [checkedCount, setCheckedCount] = useState(0);
@@ -375,12 +378,41 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
         </div>
 
         {/* Conditional: Dashboard cards, Warm Up, or Checklist view */}
-        {showWarmUp ? (
+        {showMarathon ? (
+          <Marathon courseId={course} courseLabel={info.label} onBack={() => setShowMarathon(false)} />
+        ) : showWarmUp ? (
           <WarmUp course={course} onBack={() => setShowWarmUp(false)} />
         ) : showChecklist ? (
           <TopicChecklist course={course} onBack={() => setShowChecklist(false)} />
         ) : (
           <div className="grid md:grid-cols-2 gap-6">
+            {/* Revision marathon — the whole course in one session. Full width:
+                it is the biggest thing in the Exam Hall and reads as a headline
+                rather than a third equal option. */}
+            {hasSpecial(course) && (
+              <div
+                onClick={() => setShowMarathon(true)}
+                className={`md:col-span-2 bg-gradient-to-r ${theme.gradient} rounded-xl p-6 hover:opacity-95 transition-opacity cursor-pointer group`}
+              >
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="p-3 bg-black/25 rounded-lg">
+                    <Timer className="h-8 w-8 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">{info.label} in one session</h2>
+                    <p className="text-white/80">Every topic, start to finish</p>
+                  </div>
+                </div>
+                <p className="text-white/90 mb-4">
+                  The full revision marathon — every topic in {info.label}, worked through with
+                  video solutions and a printable booklet.
+                </p>
+                <span className="text-white font-medium group-hover:opacity-80 transition-opacity">
+                  Open the marathon &rarr;
+                </span>
+              </div>
+            )}
+
             {/* Warm Up Card */}
             <div
               onClick={() => setShowWarmUp(true)}
