@@ -214,7 +214,7 @@ export async function getAllHigherAppsQuestions(): Promise<QuestionWithMetadata[
 // N5 Applications — separate P1/P2 files per year
 export async function getAllN5AppsQuestions(): Promise<QuestionWithMetadata[]> {
   const modules = await Promise.all([
-    import('@/src/n5apps/n5apps2026P1'),
+    import('@/src/n5apps/n5apps2026P1'), import('@/src/n5apps/n5apps2026P2'),
     import('@/src/n5apps/n5apps2025P1'), import('@/src/n5apps/n5apps2025P2'),
     import('@/src/n5apps/n5apps2024P1'), import('@/src/n5apps/n5apps2024P2'),
     import('@/src/n5apps/n5apps2023P1'), import('@/src/n5apps/n5apps2023P2'),
@@ -230,7 +230,7 @@ export async function getAllN5AppsQuestions(): Promise<QuestionWithMetadata[]> {
   // — the papers simply disappeared. Names cannot drift that way.
   const byName: Record<string, PastPaper> = Object.assign({}, ...modules);
   const papers: PastPaper[] = [
-    'n5AppsMaths2026P1',
+    'n5AppsMaths2026P1', 'n5AppsMaths2026P2',
     'n5AppsMaths2025P1', 'n5AppsMaths2025P2',
     'n5AppsMaths2024P1', 'n5AppsMaths2024P2',
     'n5AppsMaths2023P1', 'n5AppsMaths2023P2',

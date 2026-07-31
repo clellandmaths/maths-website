@@ -77,7 +77,7 @@ export const pastpaper2026 = {
                     topics: ["Parabola Equation from Graph"]
                 },
                 {
-                    question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q10</span></strong></small><p>The diagram shows a circle with centre O.</p><img src="/img/N5_Past_Papers/2026/2026_P1_Q10.webp" alt="Circle with centre O, tangent DE touching the circle at B, with points A and C on the circumference"><p>DE is a tangent to the circle at the point B.<br>Angle OBC is \\(40^{\\circ}.\\)<br>Angle ABE is \\(63^{\\circ}.\\)<br>Calculate the size of the reflex angle AOC.</p>`,
+                    question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q10</span></strong></small><p>The diagram shows a circle with centre O.</p><img src="/img/N5_Past_Papers/2026/2026_P1_Q10.webp" alt="Circle with centre O, tangent DE touching the circle at B, with points A and C on the circumference"><ul class="list-disc pl-6"><li>DE is a tangent to the circle at the point B.</li><li>Angle OBC is \\(40^{\\circ}.\\)</li><li>Angle ABE is \\(63^{\\circ}.\\)</li></ul><p>Calculate the size of the reflex angle AOC.</p>`,
                     answer: `\\(226^{\\circ}\\)`,
                     videoId: "rCQLNrGQlGk",
                     timestamp: "835s",
@@ -85,7 +85,7 @@ export const pastpaper2026 = {
                     topics: ["Angles in diagrams involving circles"]
                 },
                 {
-                    question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q11</span></strong></small><p>The diagram shows a cuboid, ABCDEFGH, relative to the coordinate axes.</p><img src="/img/N5_Past_Papers/2026/2026_P1_Q11.webp" alt="Cuboid ABCDEFGH relative to 3D coordinate axes, with B at (0, 8, 4) and H at (12, 2, 0)"><p>B has coordinates \\((0,8,4).\\)<br>H has coordinates \\((12,2,0).\\)<br>EH is parallel to the x-axis.<br><b>(a)</b>&nbsp;&nbsp;State the coordinates of G.<br><b>(b)</b>&nbsp;&nbsp;M is the midpoint of CD.<br>State the coordinates of M.</p>`,
+                    question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q11</span></strong></small><p>The diagram shows a cuboid, ABCDEFGH, relative to the coordinate axes.</p><img src="/img/N5_Past_Papers/2026/2026_P1_Q11.webp" alt="Cuboid ABCDEFGH relative to 3D coordinate axes, with B at (0, 8, 4) and H at (12, 2, 0)"><ul class="list-disc pl-6"><li>B has coordinates \\((0,8,4).\\)</li><li>H has coordinates \\((12,2,0).\\)</li><li>EH is parallel to the x-axis.</li></ul><p><b>(a)</b>&nbsp;&nbsp;State the coordinates of G.<br><b>(b)</b>&nbsp;&nbsp;M is the midpoint of CD.<br>State the coordinates of M.</p>`,
                     answer: `(a) \\((12,8,0)\\)<br>(b) \\((12,5,4)\\)`,
                     videoId: "rCQLNrGQlGk",
                     timestamp: "909s",

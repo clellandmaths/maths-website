@@ -14,7 +14,12 @@ export const n5AppsMaths2026P1 = {
           subtopics: ["Reading Measurement Scales"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q2</span></strong></small><p>Craig is a farmer.<br>Each of Craig's sheep receives one dose of vitamins.<br>On Monday he gave \\(\\frac{1}{7}\\) of his sheep a dose of vitamins.<br>On Tuesday he gave a different \\(\\frac{2}{3}\\) of his sheep a dose of vitamins.<br>Calculate the fraction of Craig's sheep that have not yet had a dose of vitamins.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q2</span></strong></small><p>Craig is a farmer.<br>Each of Craig's sheep receives one dose of vitamins.</p>
+          <ul class="list-disc pl-6">
+            <li>On Monday he gave \\(\\frac{1}{7}\\) of his sheep a dose of vitamins.</li>
+            <li>On Tuesday he gave a different \\(\\frac{2}{3}\\) of his sheep a dose of vitamins.</li>
+          </ul>
+          <p>Calculate the fraction of Craig's sheep that have not yet had a dose of vitamins.</p>`,
           answer: `<p>\\(\\frac{1}{7}+\\frac{2}{3}=\\frac{3}{21}+\\frac{14}{21}=\\frac{17}{21}\\) have had a dose.</p><p>\\(1-\\frac{17}{21}=\\frac{4}{21}\\)</p>`,
           videoId: "y8NNGijXZ3o",
           timestamp: "181s",
@@ -23,7 +28,13 @@ export const n5AppsMaths2026P1 = {
           subtopics: ["Adding and Subtracting Fractions"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q3</span></strong></small><p>Helen is saving to buy a puppy.<br>Her monthly net pay is £1770.<br>Her monthly expenses are £1420.<br>She plans to save 20% of her remaining money each month.<br>The puppy will cost £1250.<br>Calculate the minimum number of months it will take to save this amount.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q3</span></strong></small><p>Helen is saving to buy a puppy.</p>
+          <ul class="list-disc pl-6">
+            <li>Her monthly net pay is £1770.</li>
+            <li>Her monthly expenses are £1420.</li>
+            <li>She plans to save 20% of her remaining money each month.</li>
+          </ul>
+          <p>The puppy will cost £1250.<br>Calculate the minimum number of months it will take to save this amount.</p>`,
           answer: `<p>Remaining each month = £1770 − £1420 = £350, so she saves 20% of £350 = £70.</p><p>\\(1250\\div70=17.85\\ldots\\), and 17 months gives only £1190, so she needs <strong>18 months</strong>.</p>`,
           videoId: "y8NNGijXZ3o",
           timestamp: "244s",
@@ -130,7 +141,12 @@ export const n5AppsMaths2026P1 = {
           subtopics: ["Direct Proportion"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q11</span></strong></small><p>Ann is playing a game which involves rolling a fair dice and flipping a fair coin.<br>The dice has six sides numbered 1, 2, 3, 4, 5, 6.<br>The coin has two sides, heads and tails.<br>There are two possible ways to win the game:</p>
+          question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q11</span></strong></small><p>Ann is playing a game which involves rolling a fair dice and flipping a fair coin.</p>
+          <ul class="list-disc pl-6">
+            <li>The dice has six sides numbered 1, 2, 3, 4, 5, 6.</li>
+            <li>The coin has two sides, heads and tails.</li>
+          </ul>
+          <p>There are two possible ways to win the game:</p>
           <ol class="list-decimal pl-6">
             <li>The coin landing on tails and the dice landing on a multiple of 3.</li>
             <li>The coin landing on heads and the dice landing on an odd number.</li>
