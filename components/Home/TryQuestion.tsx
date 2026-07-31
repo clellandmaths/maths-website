@@ -8,11 +8,23 @@ import Marks from '@/components/Marks';
 import type { PastPaper, QuestionWithMetadata } from '@/lib/data-loader';
 
 // One file imported per question shown — keeps the homepage payload small.
+// That is why this list is written out rather than read from data-loader:
+// pulling every paper in would defeat the point.
+//
+// ADD THE NEW YEAR HERE when a past paper is added. Nothing else on the site
+// needs it — course pages, Explorer, Exam Hall, the sitemap and the practice
+// references all read data-loader and pick a new year up on their own. This
+// list is the one place that goes stale silently, and it did: it sat on
+// 2023/2024 for the whole 2025 diet, so the homepage never offered a 2025
+// question and nothing complained. scripts/check-homepage-years.mjs now fails
+// the build when a course's newest paper is missing here.
 const sources = [
+  { course: 'National 5', load: () => import('@/src/n5/pastpapers/pastpaper-2026').then(m => m.pastpaper2026) },
+  { course: 'National 5', load: () => import('@/src/n5/pastpapers/pastpaper-2025').then(m => m.pastpaper2025) },
   { course: 'National 5', load: () => import('@/src/n5/pastpapers/pastpaper-2024').then(m => m.pastpaper2024) },
-  { course: 'National 5', load: () => import('@/src/n5/pastpapers/pastpaper-2023').then(m => m.pastpaper2023) },
+  { course: 'Higher', load: () => import('@/src/higher/pastpapers/higherpastpaper2026').then(m => m.higherPastPaper2026) },
+  { course: 'Higher', load: () => import('@/src/higher/pastpapers/higherpastpaper2025').then(m => m.higherPastPaper2025) },
   { course: 'Higher', load: () => import('@/src/higher/pastpapers/higherpastpaper2024').then(m => m.higherPastPaper2024) },
-  { course: 'Higher', load: () => import('@/src/higher/pastpapers/higherpastpaper2023').then(m => m.higherPastPaper2023) },
 ];
 
 interface Picked extends QuestionWithMetadata {
