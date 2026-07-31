@@ -4,6 +4,12 @@ import LogoAnimation from '@/components/LogoAnimation';
 import ExamCover, { type CourseCover } from '@/components/Home/ExamCover';
 import TryQuestion from '@/components/Home/TryQuestion';
 import CountdownTile from '@/components/Home/CountdownTile';
+import {
+  n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos,
+  paperYearRange, siteTotals,
+} from '@/lib/past-paper-videos';
+
+const totals = siteTotals();
 
 const courses: CourseCover[] = [
   {
@@ -12,7 +18,7 @@ const courses: CourseCover[] = [
     name: 'National 5',
     subject: 'Mathematics',
     gradient: 'from-cyan-600 to-blue-600',
-    contents: ['Past papers 2014–2025', 'Video solutions', 'Worksheet builder'],
+    contents: [`Past papers ${paperYearRange(n5PaperVideos)}`, 'Video solutions', 'Worksheet builder'],
   },
   {
     id: 'higher',
@@ -20,7 +26,7 @@ const courses: CourseCover[] = [
     name: 'Higher',
     subject: 'Mathematics',
     gradient: 'from-orange-600 to-red-600',
-    contents: ['Past papers 2015–2025', 'Video solutions', 'Worksheet builder'],
+    contents: [`Past papers ${paperYearRange(higherPaperVideos)}`, 'Video solutions', 'Worksheet builder'],
   },
   {
     id: 'ah',
@@ -28,7 +34,7 @@ const courses: CourseCover[] = [
     name: 'Advanced Higher',
     subject: 'Mathematics',
     gradient: 'from-emerald-600 to-teal-600',
-    contents: ['Course notes', 'Video lessons'],
+    contents: [`Past papers ${paperYearRange(ahPaperVideos)}`, 'Course notes', 'Video lessons'],
   },
   {
     id: 'n5-apps',
@@ -36,7 +42,7 @@ const courses: CourseCover[] = [
     name: 'N5 Applications',
     subject: 'Applications of Maths',
     gradient: 'from-amber-500 to-orange-500',
-    contents: ['Course notes', 'Video lessons'],
+    contents: [`Past papers ${paperYearRange(n5AppsPaperVideos)}`, 'Course notes', 'Video lessons'],
   },
   {
     id: 'higher-apps',
@@ -44,7 +50,7 @@ const courses: CourseCover[] = [
     name: 'Higher Applications',
     subject: 'Applications of Maths',
     gradient: 'from-violet-600 to-purple-600',
-    contents: ['Course notes', 'Video lessons'],
+    contents: [`Past papers ${paperYearRange(higherAppsPaperVideos)}`, 'Course notes', 'Video lessons'],
   },
 ];
 
@@ -86,7 +92,7 @@ export default function Home() {
             </Link>
           </div>
             <p className="font-mono text-xs sm:text-sm text-muted-foreground">
-              5 courses · 19 years of past papers · 370+ solved questions · 100% free
+              {totals.courses} courses · {totals.years} years of past papers · {totals.questions} solved questions · 100% free
             </p>
           </div>
 

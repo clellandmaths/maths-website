@@ -130,3 +130,30 @@ export function paperSummary(registry: PaperVideo[], tail = 'Questions'): string
   const { papers, questions } = paperStats(registry);
   return `${papers} Past Papers · ${tail === 'Questions' ? `${questions} Questions` : tail}`;
 }
+
+/** "2014–2026" for a course, from the registry. Non-numeric years (Higher
+ *  Applications' Specimen) are not part of the range. */
+export function paperYearRange(registry: PaperVideo[]): string {
+  const years = registry.map(p => Number(p.year)).filter(Number.isFinite);
+  if (!years.length) return '';
+  return `${Math.min(...years)}\u2013${Math.max(...years)}`;
+}
+
+/**
+ * Site-wide totals for the homepage strapline.
+ *
+ * It read "19 years of past papers · 370+ solved questions". There are 12 years
+ * (2014–2026; no exams sat in 2020) and 1120 questions, so one number was wrong
+ * and the other undersold the site by a factor of three.
+ */
+export function siteTotals(): { courses: number; papers: number; questions: number; years: number } {
+  const all = [n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos];
+  const years = new Set<number>();
+  for (const r of all) for (const p of r) if (Number.isFinite(Number(p.year))) years.add(Number(p.year));
+  return {
+    courses: all.length,
+    papers: all.reduce((n, r) => n + r.length, 0),
+    questions: all.reduce((n, r) => n + r.reduce((m, p) => m + p.questionCount, 0), 0),
+    years: years.size,
+  };
+}
