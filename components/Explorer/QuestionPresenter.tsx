@@ -106,7 +106,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
               <span className="text-slate-300">{position.total}</span>
             </p>
-            <p className="text-slate-500 text-xs mt-0.5">
+            <p className="text-slate-400 text-xs mt-0.5">
               {questionLabel(question)}
             </p>
             <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
@@ -235,7 +235,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               ) : (
                 // Neither a video nor marking instructions: say so, rather
                 // than leaving a gap that reads as a missing button
-                <span className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-dashed border-slate-700 text-slate-500 font-medium">
+                <span className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-dashed border-slate-700 text-slate-400 font-medium">
                   <Play className="h-5 w-5" />
                   Video solution coming soon
                 </span>

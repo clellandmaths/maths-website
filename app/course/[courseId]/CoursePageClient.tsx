@@ -203,7 +203,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                               ) : (
                                 <div className="w-full h-full flex flex-col items-center justify-center gap-1">
                                   <FileText className={`h-8 w-8 ${theme.text}`} />
-                                  <span className="font-mono text-[11px] text-slate-500">Markscheme available</span>
+                                  <span className="font-mono text-[11px] text-slate-400">Markscheme available</span>
                                 </div>
                               )}
                             </div>
@@ -220,7 +220,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                   {year} Paper {paper.paperNumber}
                                 </Link>
                               </h4>
-                              <p className="text-sm text-slate-500">
+                              <p className="text-sm text-slate-400">
                                 {paper.questionCount} Questions
                               </p>
                             </div>

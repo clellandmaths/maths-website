@@ -127,7 +127,7 @@ export default function PracticeQuestion({
             list needs to see which questions have a video without revealing
             every answer to find out. Not a spoiler, so it can show here. */}
         {!open && !embedSrc && (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground/70 text-sm">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground text-sm">
             <Play className="h-3.5 w-3.5" />
             Video solution coming soon
           </span>
@@ -164,7 +164,7 @@ export default function PracticeQuestion({
             // Say so rather than showing nothing: on topics whose guided
             // practice is not filmed yet, a missing button reads as an
             // oversight. The written solution link below still applies.
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground/70 text-sm">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-border text-muted-foreground text-sm">
               <Play className="h-3.5 w-3.5" />
               Video solution coming soon
             </span>

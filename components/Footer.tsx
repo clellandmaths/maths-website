@@ -19,7 +19,7 @@ export default function Footer() {
 
           <div className="flex flex-wrap gap-x-12 gap-y-6">
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-1">Courses</span>
+              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Courses</span>
               <Link href="/course/n5" className="hover:text-foreground transition-colors">National 5</Link>
               <Link href="/course/higher" className="hover:text-foreground transition-colors">Higher</Link>
               <Link href="/course/ah" className="hover:text-foreground transition-colors">Advanced Higher</Link>
@@ -27,7 +27,7 @@ export default function Footer() {
               <Link href="/course/higher-apps" className="hover:text-foreground transition-colors">Higher Applications</Link>
             </nav>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-1">Tools</span>
+              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Tools</span>
               <Link href="/explorer" className="hover:text-foreground transition-colors">Topic Explorer</Link>
               <Link href="/exam-hall" className="hover:text-foreground transition-colors">Exam Hall</Link>
               <a
@@ -50,7 +50,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="font-mono text-xs text-muted-foreground/70 mt-8">
+        <p className="font-mono text-xs text-muted-foreground mt-8">
           © {new Date().getFullYear()} Clelland Maths
         </p>
       </div>

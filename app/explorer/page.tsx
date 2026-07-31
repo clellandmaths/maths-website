@@ -27,6 +27,7 @@ import { higherAppsTopicCategories, higherAppsTopics } from '@/lib/higher-apps-t
 import { n5AppsTopicCategories, n5AppsTopics } from '@/lib/n5-apps-topics';
 import { getAvailableN5Years, getAvailableHigherYears, getAvailableAHYears, getAvailableHigherAppsYears, getAvailableN5AppsYears } from '@/lib/data-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -366,7 +367,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   <h3 className="text-xl font-medium text-slate-400 mb-2">
                     Build Your Worksheet
                   </h3>
-                  <p className="text-slate-500 max-w-md mx-auto mb-6">
+                  <p className="text-slate-400 max-w-md mx-auto mb-6">
                     Use the filters to find questions by topic and year.
                     Click &quot;+ Add&quot; on any question to add it to your worksheet.
                   </p>
@@ -431,7 +432,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   <h3 className="text-lg font-medium text-slate-400 mb-2">
                     No questions found
                   </h3>
-                  <p className="text-slate-500">
+                  <p className="text-slate-400">
                     Try adjusting your filters to find questions.
                   </p>
                 </div>
@@ -448,7 +449,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   <h3 className="text-xl font-medium text-slate-400 mb-2">
                     Your Worksheet is Empty
                   </h3>
-                  <p className="text-slate-500 max-w-md mx-auto mb-6">
+                  <p className="text-slate-400 max-w-md mx-auto mb-6">
                     Switch to &quot;Browse Questions&quot; and use the filters to find questions.
                     Click &quot;+ Add&quot; to build your worksheet.
                   </p>
@@ -566,7 +567,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <span className={`q-badge flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
-                            <span className="text-sm text-slate-500">
+                            <span className="text-sm text-slate-400">
                               {q.year} Paper {q.paperNumber} Q{q.questionNumber}
                             </span>
                             {q.topics?.slice(0, 2).map((topic) => (
@@ -594,7 +595,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index - 1)}
                               disabled={index === 0}
-                              className="p-3 lg:p-1 text-slate-500 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-slate-400 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move up"
                             >
                               <ChevronUp className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -602,7 +603,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index + 1)}
                               disabled={index === worksheetItems.length - 1}
-                              className="p-3 lg:p-1 text-slate-500 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-slate-400 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move down"
                             >
                               <ChevronDown className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -619,7 +620,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           {/* Remove button */}
                           <button
                             onClick={() => removeItem(q)}
-                            className="no-print shrink-0 p-1.5 text-slate-500 hover:text-red-400 rounded-lg hover:bg-slate-800 transition-colors"
+                            className="no-print shrink-0 p-1.5 text-slate-400 hover:text-red-400 rounded-lg hover:bg-slate-800 transition-colors"
                             title="Remove from worksheet"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -669,7 +670,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <div className="no-print flex items-center justify-between mt-4 pt-4 border-t border-slate-800">
                           <button
                             onClick={() => setPresentStartIndex(index)}
-                            className="text-xs text-slate-500 hover:text-slate-400 transition-colors"
+                            className="text-xs text-slate-400 hover:text-slate-400 transition-colors"
                           >
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
@@ -874,11 +875,14 @@ const explorerFeatures = [
 ];
 
 const courseCards: { id: Course; name: string; subtitle: string }[] = [
-  { id: 'n5', name: 'National 5', subtitle: '10 Past Papers · 200+ Questions' },
-  { id: 'higher', name: 'Higher', subtitle: '9 Past Papers · 170+ Questions' },
-  { id: 'ah', name: 'Advanced Higher', subtitle: '14 Past Papers · 230+ Questions' },
-  { id: 'n5-apps', name: 'N5 Applications', subtitle: '14 Past Papers · 190+ Questions' },
-  { id: 'higher-apps', name: 'Higher Applications', subtitle: '5 Past Papers · Data Booklets & Files' },
+  // Counted from the paper registry, not typed. Every one of these was stale
+  // after the 2026 diet went in — N5 said 10 papers when it has 22, and AH
+  // advertised more questions than it actually has.
+  { id: 'n5', name: 'National 5', subtitle: paperSummary(n5PaperVideos) },
+  { id: 'higher', name: 'Higher', subtitle: paperSummary(higherPaperVideos) },
+  { id: 'ah', name: 'Advanced Higher', subtitle: paperSummary(ahPaperVideos) },
+  { id: 'n5-apps', name: 'N5 Applications', subtitle: paperSummary(n5AppsPaperVideos) },
+  { id: 'higher-apps', name: 'Higher Applications', subtitle: paperSummary(higherAppsPaperVideos, 'Data Booklets & Files') },
 ];
 
 function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
@@ -904,7 +908,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
                 <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
                   {course.name}
                 </h2>
-                <p className="text-sm text-slate-500 mb-6">{course.subtitle}</p>
+                <p className="text-sm text-slate-400 mb-6">{course.subtitle}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {explorerFeatures.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-slate-300">

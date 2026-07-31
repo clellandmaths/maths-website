@@ -14,7 +14,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs">
         {items.map((item, idx) => (
           <li key={idx} className="flex items-center gap-2">
-            {idx > 0 && <span className="text-muted-foreground/50">/</span>}
+            {idx > 0 && <span aria-hidden="true" className="text-muted-foreground">/</span>}
             {item.href ? (
               <Link
                 href={item.href}

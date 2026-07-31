@@ -87,7 +87,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
             <div className="text-center py-12">
               <FileText className="h-12 w-12 mx-auto text-slate-600 mb-4" />
               <p className="text-slate-400">No questions added yet</p>
-              <p className="text-slate-500 text-sm mt-1">
+              <p className="text-slate-400 text-sm mt-1">
                 Click &quot;+ Add&quot; on questions to build your worksheet
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                           <span className="text-sm font-medium text-slate-300">
                             Q{index + 1}
                           </span>
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-slate-400">
                             {item.year} P{item.paperNumber} Q{item.questionNumber}
                           </span>
                         </div>
@@ -117,7 +117,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                           </span>
                         )}
                         {item.topics?.[0] && (
-                          <p className="text-xs text-slate-500 mt-1 truncate">
+                          <p className="text-xs text-slate-400 mt-1 truncate">
                             {item.topics[0]}
                           </p>
                         )}
@@ -136,7 +136,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                         <button
                           onClick={() => moveUp(index)}
                           disabled={index === 0}
-                          className="p-2 lg:p-0.5 text-slate-500 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          className="p-2 lg:p-0.5 text-slate-400 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                           title="Move up"
                         >
                           <ChevronUp className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -144,7 +144,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                         <button
                           onClick={() => moveDown(index)}
                           disabled={index === items.length - 1}
-                          className="p-2 lg:p-0.5 text-slate-500 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          className="p-2 lg:p-0.5 text-slate-400 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                           title="Move down"
                         >
                           <ChevronDown className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -162,7 +162,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                       {/* Remove button */}
                       <button
                         onClick={() => removeItem(item)}
-                        className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded"
+                        className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>

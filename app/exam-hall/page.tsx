@@ -10,6 +10,7 @@ import type { TopicCategory } from '@/lib/n5-topics';
 import WarmUp from '@/components/ExamHall/WarmUp';
 import { getCourseTheme } from '@/lib/course-theme';
 import { courseExamDates } from '@/lib/exam-dates';
+import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 
 type Course = 'n5' | 'higher' | 'ah' | 'n5-apps' | 'higher-apps';
 
@@ -18,35 +19,35 @@ const courseInfo: Record<Course, { label: string; examDate: Date; estimated: boo
     label: 'National 5',
     examDate: courseExamDates.n5.date,
     estimated: courseExamDates.n5.estimated,
-    papers: '10 Past Papers · 200+ Questions',
+    papers: paperSummary(n5PaperVideos),
     categories: n5ChecklistCategories,
   },
   higher: {
     label: 'Higher',
     examDate: courseExamDates.higher.date,
     estimated: courseExamDates.higher.estimated,
-    papers: '9 Past Papers · 170+ Questions',
+    papers: paperSummary(higherPaperVideos),
     categories: higherChecklistCategories,
   },
   ah: {
     label: 'Advanced Higher',
     examDate: courseExamDates.ah.date,
     estimated: courseExamDates.ah.estimated,
-    papers: '14 Past Papers · 230+ Questions',
+    papers: paperSummary(ahPaperVideos),
     categories: ahTopicCategories,
   },
   'n5-apps': {
     label: 'N5 Applications',
     examDate: courseExamDates['n5-apps'].date,
     estimated: courseExamDates['n5-apps'].estimated,
-    papers: '14 Past Papers · 190+ Questions',
+    papers: paperSummary(n5AppsPaperVideos),
     categories: n5AppsTopicCategories,
   },
   'higher-apps': {
     label: 'Higher Applications',
     examDate: courseExamDates['higher-apps'].date,
     estimated: courseExamDates['higher-apps'].estimated,
-    papers: '5 Past Papers · Data Booklets & Files',
+    papers: paperSummary(higherAppsPaperVideos, 'Data Booklets & Files'),
     categories: higherAppsTopicCategories,
   },
 };
@@ -140,7 +141,7 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
                 <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
                   {info.label}
                 </h2>
-                <p className="text-sm text-slate-500 mb-6">{info.papers}</p>
+                <p className="text-sm text-slate-400 mb-6">{info.papers}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {lobbyFeatures.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-slate-300">
@@ -248,7 +249,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                   )}
                   <span className="text-lg font-semibold">{cat.category}</span>
                 </div>
-                <span className={`text-sm font-medium ${catChecked === catTotal ? theme.text : 'text-slate-500'}`}>
+                <span className={`text-sm font-medium ${catChecked === catTotal ? theme.text : 'text-slate-400'}`}>
                   {catChecked}/{catTotal}
                 </span>
               </button>
@@ -277,7 +278,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                               >
                                 {isChecked && <Check className="h-3 w-3 text-white" />}
                               </div>
-                              <span className={`text-sm transition-colors ${isChecked ? 'text-slate-500 line-through' : 'text-slate-400'}`}>
+                              <span className={`text-sm transition-colors ${isChecked ? 'text-slate-400 line-through' : 'text-slate-400'}`}>
                                 {sub}
                               </span>
                             </button>
@@ -359,7 +360,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
                 {info.examDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}{', '}
                 {info.examDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true })}
                 {info.estimated && (
-                  <span className="ml-2 font-mono text-xs text-slate-500">est. — official timetable TBC</span>
+                  <span className="ml-2 font-mono text-xs text-slate-400">est. — official timetable TBC</span>
                 )}
               </p>
             </div>

@@ -104,3 +104,29 @@ export const n5AppsPaperVideos: PaperVideo[] = [
   { year: 2018, paperNumber: 1, videoId: 'lHjwJFKx3ko', questionCount: 15 },
   { year: 2018, paperNumber: 2, videoId: 'wR64HEQ-iuQ', questionCount: 18 },
 ];
+
+/**
+ * "22 Past Papers · 328 Questions" for a course, counted rather than typed.
+ *
+ * These lines were hardcoded in two places — the Explorer course chooser and
+ * the Exam Hall — and every one of them was wrong. Adding the 2026 diet left
+ * National 5 advertising 10 papers when it has 22, and Advanced Higher claimed
+ * "230+ Questions" while actually offering 215, which is the direction that
+ * matters: the site was overstating what a pupil would find.
+ *
+ * scripts/check-paper-registry.mjs already proves this registry matches the
+ * question data, paper for paper and count for count, so deriving from it is
+ * as accurate as reading the papers themselves and costs nothing to render.
+ */
+export function paperStats(registry: PaperVideo[]): { papers: number; questions: number } {
+  return {
+    papers: registry.length,
+    questions: registry.reduce((total, p) => total + p.questionCount, 0),
+  };
+}
+
+/** The subtitle shown on a course card. */
+export function paperSummary(registry: PaperVideo[], tail = 'Questions'): string {
+  const { papers, questions } = paperStats(registry);
+  return `${papers} Past Papers · ${tail === 'Questions' ? `${questions} Questions` : tail}`;
+}
