@@ -11,7 +11,7 @@ import FocusMode from '@/components/Explorer/FocusMode';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos, n5AppsPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 interface CoursePageProps {
   courseId: string;

@@ -19,7 +19,7 @@ import {
   type PaperVideo,
 } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
-import { questionNumber } from '@/lib/question-number';
+import { questionNumber } from '@/lib/question-number.mjs';
 import { hasMarkscheme, getMarkschemeEntries } from '@/lib/ah-markschemes';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';

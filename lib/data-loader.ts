@@ -2,7 +2,7 @@
 // Aggregates all past paper data for the Explorer
 // Uses dynamic imports so data only loads when a course is selected
 
-import { questionNumber } from '@/lib/question-number';
+import { questionNumber } from '@/lib/question-number.mjs';
 
 export interface QuestionAttachment {
   name: string;

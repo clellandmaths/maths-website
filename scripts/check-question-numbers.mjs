@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { questionNumber, lastQuestionNumber, isWholePaper } from '../lib/question-number.ts';
+import { questionNumber, lastQuestionNumber, isWholePaper } from '../lib/question-number.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 let failures = 0;

@@ -6,7 +6,7 @@ import { Eye, EyeOff, RefreshCw } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import type { PastPaper, QuestionWithMetadata } from '@/lib/data-loader';
-import { questionNumber } from '@/lib/question-number';
+import { questionNumber } from '@/lib/question-number.mjs';
 
 // One file imported per question shown — keeps the homepage payload small.
 // That is why this list is written out rather than read from data-loader:

@@ -9,7 +9,7 @@ import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 const DAILY_COUNT = 5;
 

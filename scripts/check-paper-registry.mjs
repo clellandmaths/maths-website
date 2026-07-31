@@ -23,6 +23,30 @@ const root = path.resolve(import.meta.dirname, '..');
 const loaderSrc = fs.readFileSync(path.join(root, 'lib/data-loader.ts'), 'utf8');
 const videosSrc = fs.readFileSync(path.join(root, 'lib/past-paper-videos.ts'), 'utf8');
 
+// No build script may import a .ts file.
+//
+// Node only strips types unflagged from 22.18; Cloudflare builds on 22.16 and
+// dies with ERR_UNKNOWN_FILE_EXTENSION. Two checks imported lib/*.ts, passed
+// locally on 22.19, and took the whole deployment down — the site sat on "no
+// deployment available" until the modules were moved to .mjs. Nothing else
+// would have caught it, because locally it works.
+{
+  const scripts = path.join(root, 'scripts');
+  const offenders = [];
+  for (const f of fs.readdirSync(scripts).filter(f => f.endsWith('.mjs'))) {
+    const src = fs.readFileSync(path.join(scripts, f), 'utf8');
+    for (const m of src.matchAll(/^\s*import\s[^;]*?from\s+['"]([^'"]+\.ts)['"]/gm)) {
+      offenders.push(`scripts/${f} imports ${m[1]}`);
+    }
+  }
+  if (offenders.length) {
+    console.log('build scripts must not import TypeScript — Cloudflare runs Node 22.16:');
+    for (const o of offenders) console.log(`   ${o}`);
+    console.log('   move the shared module to .mjs (see lib/timestamp.mjs)');
+    process.exit(1);
+  }
+}
+
 /** The import paths inside one getAll…Questions function — what the site loads. */
 function importedPapers(fnName) {
   const start = loaderSrc.indexOf(`export async function ${fnName}`);

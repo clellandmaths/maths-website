@@ -7,7 +7,7 @@ import {
   getAllHigherAppsQuestions,
   type QuestionWithMetadata,
 } from '@/lib/data-loader';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 // Guided practice loader.
 //

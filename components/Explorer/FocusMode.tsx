@@ -11,7 +11,7 @@ import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 // localStorage helpers for done tracking
 function getDoneKey(questions: QuestionWithMetadata[]): string {

@@ -2,7 +2,7 @@
 // the button still works, the video still opens, it just starts in the wrong
 // place — and only someone who watches it finds out.
 //
-//   1. lib/timestamp.ts against a table of cases, including every case the old
+//   1. lib/timestamp.mjs against a table of cases, including every case the old
 //      copied-into-seven-files parser got wrong.
 //   2. every timestamp in every past paper, asserting it is a shape the parser
 //      understands and lands somewhere plausible.
@@ -15,7 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { timestampToSeconds } from '../lib/timestamp.ts';
+import { timestampToSeconds } from '../lib/timestamp.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 let failures = 0;

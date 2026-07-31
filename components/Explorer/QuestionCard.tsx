@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen } from 'lucide
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
-import { questionNumber } from '@/lib/question-number';
+import { questionNumber } from '@/lib/question-number.mjs';
 import MathRenderer from '@/components/MathRenderer';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FormulaeButton from '@/components/FormulaeButton';

@@ -6,13 +6,13 @@ import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
-import { isWholePaper, lastQuestionNumber } from '@/lib/question-number';
+import { isWholePaper, lastQuestionNumber } from '@/lib/question-number.mjs';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 interface QuestionPresenterProps {
   /** Course this question set belongs to — enables the Formulae button. */

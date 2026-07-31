@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Play } from 'lucide-react';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 interface Props {
   theme: CourseTheme;

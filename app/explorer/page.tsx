@@ -27,7 +27,7 @@ import { higherAppsTopicCategories, higherAppsTopics } from '@/lib/higher-apps-t
 import { n5AppsTopicCategories, n5AppsTopics } from '@/lib/n5-apps-topics';
 import { getAvailableN5Years, getAvailableHigherYears, getAvailableAHYears, getAvailableHigherAppsYears, getAvailableN5AppsYears } from '@/lib/data-loader';
 import { getCourseTheme } from '@/lib/course-theme';
-import { timestampToSeconds } from '@/lib/timestamp';
+import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
 
