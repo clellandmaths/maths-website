@@ -221,6 +221,7 @@ export async function getAllAHQuestions(): Promise<QuestionWithMetadata[]> {
 // Higher Applications — one paper per year, plus the Specimen
 export async function getAllHigherAppsQuestions(): Promise<QuestionWithMetadata[]> {
   const modules = await Promise.all([
+    import('@/src/higherapps/HApps2026'),
     import('@/src/higherapps/HApps2025'),
     import('@/src/higherapps/HApps2024'),
     import('@/src/higherapps/HApps2023'),
@@ -230,7 +231,7 @@ export async function getAllHigherAppsQuestions(): Promise<QuestionWithMetadata[
   // By name, not by position — the same trap as the other two loaders.
   const byName: Record<string, PastPaper> = Object.assign({}, ...modules);
   const papers: PastPaper[] = [
-    'higherAppsMaths2025', 'higherAppsMaths2024', 'higherAppsMaths2023',
+    'higherAppsMaths2026', 'higherAppsMaths2025', 'higherAppsMaths2024', 'higherAppsMaths2023',
     'higherAppsMaths2022', 'higherAppsMathsSpecimen',
   ].map(name => {
     const paper = byName[name];
@@ -321,7 +322,7 @@ export function getAvailableAHYears(): number[] {
 }
 
 export function getAvailableHigherAppsYears(): (number | string)[] {
-  return [2025, 2024, 2023, 2022, 'Specimen'];
+  return [2026, 2025, 2024, 2023, 2022, 'Specimen'];
 }
 
 export function getAvailableN5AppsYears(): number[] {

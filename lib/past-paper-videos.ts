@@ -78,6 +78,7 @@ export const ahPaperVideos: PaperVideo[] = [
 ];
 
 export const higherAppsPaperVideos: PaperVideo[] = [
+  { year: 2026, paperNumber: 1, videoId: 'VkJiGeFTw9s', questionCount: 11 },
   { year: 2025, paperNumber: 1, videoId: 'CPtCgqgoab0', questionCount: 12 },
   { year: 2024, paperNumber: 1, videoId: 'tpAnZSEkKgU', questionCount: 10 },
   { year: 2023, paperNumber: 1, videoId: 'sjQYsyPN6Ds', questionCount: 11 },

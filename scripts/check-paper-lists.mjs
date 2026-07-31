@@ -46,9 +46,23 @@ function bulletsInPdf(file) {
     // and let it pass this check silently.
     if (!/\bBT\b/.test(c) || !/\/[A-Za-z0-9_]+\s+[\d.]+\s+Tf/.test(c)) continue;
     streams++;
+
+    // Count bullets on QUESTION pages only. Higher Applications puts 13 of them
+    // on its "Information and instructions for candidates" page — the list of
+    // electronic files, and how to print each worksheet — which no paper on the
+    // site reproduces, and which made a correctly built paper look as though
+    // half its lists had been flattened. The other courses have no bullets in
+    // their front matter, which is why this only showed up here.
+    const isFrontOrBackMatter =
+      /Information and instructions for candidates/i.test(c) ||
+      /Fill in these boxes and read what is printed/i.test(c) ||
+      /FORMULAE LIST/i.test(c) ||
+      /ADDITIONAL SPACE FOR ANSWERS/i.test(c) ||
+      /DO NOT WRITE ON THIS PAGE/i.test(c);
+
     for (const t of c.matchAll(/\(((?:[^()\\]|\\[\s\S])*)\)/g)) {
       letters += (t[1].match(/[A-Za-z]/g) ?? []).length;
-      count += (t[1].match(/\\225/g) ?? []).length;
+      if (!isFrontOrBackMatter) count += (t[1].match(/\\225/g) ?? []).length;
     }
   }
   return { count, streams, letters };
