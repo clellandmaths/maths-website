@@ -273,24 +273,32 @@ export default function AcademyPage() {
         <p className="text-muted-foreground mb-6">No long-term contracts. No hidden fees.</p>
 
         <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 max-w-2xl">
-          <p className="font-display text-3xl font-bold mb-1">
-            Try the first week for {TRIAL_PRICE}
+          <p className="font-display text-4xl font-bold mb-2">
+            {TRIAL_PRICE} a week
           </p>
-          <p className="text-muted-foreground mb-6">Then a flat {MONTHLY_PRICE} per month.</p>
+          <p className="text-lg text-foreground/90 mb-1">
+            Full Academy membership, billed at a flat {MONTHLY_PRICE} a month.
+          </p>
+          <p className="text-muted-foreground mb-6">
+            A single hour with a qualified maths teacher costs £45 to £60. This is {TRIAL_PRICE} a
+            week for the masterclass, the recordings, the notes, the mock papers and support all
+            week long.
+          </p>
 
           <dl className="space-y-4 text-sm">
             <div>
-              <dt className="font-semibold mb-1">Due today: {TRIAL_PRICE} trial</dt>
+              <dt className="font-semibold mb-1">Try your first week for {TRIAL_PRICE}</dt>
               <dd className="text-muted-foreground">
                 This instantly secures your child&rsquo;s seat (1 of {SEATS_PER_COURSE}) and fully
                 covers their first live masterclass week, to make sure it is the right fit.
               </dd>
             </div>
             <div>
-              <dt className="font-semibold mb-1">The monthly tuition</dt>
+              <dt className="font-semibold mb-1">Then {MONTHLY_PRICE} a month</dt>
               <dd className="text-muted-foreground">
-                To keep billing predictable without weekly charges, the weekly rate is levelled into
-                a flat {MONTHLY_PRICE} monthly membership.
+                Membership is {TRIAL_PRICE} a week, taken monthly so your billing stays predictable
+                rather than hitting your card every week. It covers everything the Academy includes,
+                for as long as your child is a member.
               </dd>
             </div>
             <div>
