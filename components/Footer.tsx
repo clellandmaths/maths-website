@@ -64,6 +64,8 @@ export default function Footer() {
 
         <p className="font-mono text-xs text-muted-foreground mt-6">
           © {new Date().getFullYear()} Clelland Maths
+          <span className="mx-2 text-muted-dim">·</span>
+          <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
         </p>
       </div>
     </footer>

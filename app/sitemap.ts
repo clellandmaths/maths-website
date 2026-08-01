@@ -15,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/`, lastModified: now, priority: 1 },
     { url: `${BASE}/explorer`, lastModified: now, priority: 0.8 },
     { url: `${BASE}/exam-hall`, lastModified: now, priority: 0.6 },
+    { url: `${BASE}/privacy`, lastModified: now, priority: 0.3 },
     // Static page served from public/ — Next generates no route for it, so it
     // has to be listed by hand or crawlers only reach it via the notes link.
     { url: `${BASE}/course/higher-apps/rstudio/`, lastModified: now, priority: 0.8 },
