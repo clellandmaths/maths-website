@@ -39,14 +39,7 @@ export default function Footer() {
               >
                 Revision App
               </a>
-              <a
-                href="https://academy.clellandmaths.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                Academy
-              </a>
+              <Link href="/academy" className="hover:text-foreground transition-colors">Academy</Link>
             </nav>
           </div>
         </div>

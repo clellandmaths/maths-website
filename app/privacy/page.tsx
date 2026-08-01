@@ -104,6 +104,15 @@ export default function PrivacyPage() {
         </p>
       </Section>
 
+      <Section title="Paying for the Academy">
+        <p>
+          The Academy is the one paid part of Clelland Maths. If you buy a place, the checkout
+          itself happens on Stripe&rsquo;s own website, not here — your card details are handled by
+          Stripe and never touch this site. What you type into the checkout, including the email
+          address you give for the member vault, goes to Stripe and to us as the seller.
+        </p>
+      </Section>
+
       <Section title="What we do not do">
         <ul className="list-disc pl-5 space-y-2">
           <li>No accounts, no passwords, no email addresses.</li>
