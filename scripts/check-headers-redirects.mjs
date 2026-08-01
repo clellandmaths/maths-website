@@ -74,6 +74,24 @@ for (const [what, re] of needs) {
   console.log(`  ${ok ? 'yes' : 'NO '}  ${what}`);
 }
 
+// ── a path must not end up with two CSPs ───────────────────────────
+// _headers rules add to /* rather than replacing it, so a per-path policy
+// arrives alongside the global one and the browser enforces the intersection.
+// The stricter rule wins, the looser one is decoration, and the page it was
+// written for breaks while the config looks right.
+const blocks = headers.split(/\n(?=\S)/).filter(b => b.trim() && !b.trim().startsWith('#'));
+const globalHasCsp = /^\/\*/m.test(headers) && /Content-Security-Policy:/.test(blocks.find(b => b.trim().startsWith('/*')) ?? '');
+console.log('\n── per-path CSP overrides ──');
+for (const b of blocks) {
+  const pathMatch = b.trim().split('\n')[0].trim();
+  if (pathMatch === '/*' || !/Content-Security-Policy:/.test(b)) continue;
+  const unsets = /^\s*!\s*Content-Security-Policy\s*$/mi.test(b);
+  if (globalHasCsp && !unsets) {
+    fail.push(`${pathMatch} sets its own CSP but does not unset the one from /* — the browser would enforce both`);
+  }
+  console.log(`  ${unsets ? 'unsets /* first' : 'NO UNSET'}  ${pathMatch}`);
+}
+
 // ── redirects must not shadow real pages ───────────────────────────
 const redirects = fs.readFileSync(path.join(OUT, '_redirects'), 'utf8')
   .split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'))

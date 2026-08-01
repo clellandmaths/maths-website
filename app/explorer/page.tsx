@@ -807,27 +807,44 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         {showClearConfirm ? 'Confirm?' : 'Clear all'}
                       </button>
                     </div>
-                    <div className="flex items-center justify-center gap-3">
+                    {/* Share and the data files were only ever in the desktop
+                        toolbar, which is `hidden lg:block` — so on a phone a
+                        finished worksheet could not be shared at all, and
+                        Higher Apps pupils could not get the spreadsheets. Both
+                        belong here: sharing a sheet to a class group chat is a
+                        phone job more than a desktop one. */}
+                    <div className="flex flex-wrap items-center justify-center gap-2">
                       <button
                         onClick={() => setPresentStartIndex(0)}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
                       >
                         <Maximize2 className="h-4 w-4" />
                         Present
                       </button>
                       <button
                         onClick={() => setShowFocusMode(true)}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
                       >
                         <BookOpen className="h-4 w-4" />
                         Focus
                       </button>
                       <button
+                        onClick={() => setShowShare(true)}
+                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                      >
+                        <Share2 className="h-4 w-4" />
+                        Share
+                      </button>
+                      <DownloadFilesButton
+                        questions={worksheetItems}
+                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                      />
+                      <button
                         onClick={() => window.print()}
-                        className={`flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
+                        className={`flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                       >
                         <Printer className="h-4 w-4" />
-                        Print / Save PDF
+                        Print
                       </button>
                     </div>
                   </div>

@@ -40,6 +40,11 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # Rules here ADD to the /* block, they do not replace it. Two CSP headers
+  # means the browser enforces both, and the strict one above would have
+  # blocked webR — killing the workbook while looking like it was configured
+  # correctly. Drop the inherited one first, then set this path's own.
+  ! Content-Security-Policy
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://webr.r-wasm.org; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://raw.githubusercontent.com; font-src 'self' data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; connect-src 'self' https://webr.r-wasm.org https://repo.r-wasm.org https://raw.githubusercontent.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'
 
 # Hashed build assets never change under the same name, so they can be cached
