@@ -442,3 +442,9 @@ body {
     font-weight: 600;
   }
 }
+
+/* <summary> as a custom row: list-none removes the marker in Firefox, but
+   WebKit paints its own disclosure triangle from a shadow pseudo-element. */
+summary::-webkit-details-marker {
+  display: none;
+}

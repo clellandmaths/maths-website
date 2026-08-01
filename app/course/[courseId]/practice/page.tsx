@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 import type { Metadata } from 'next';
 import { COURSES_WITH_PRACTICE, getPracticeForCourse, topicSlug, resolveQuestions } from '@/lib/practice-loader';
 import { getCourseTheme } from '@/lib/course-theme';
@@ -63,8 +64,40 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
     course.sections.flatMap(s => s.topics.map(t => resolveQuestions(courseId, t.questions)))
   )).flat().filter(q => q.videoId).length;
 
+  // Two shapes of course, and they want different pages.
+  //
+  // Higher and Advanced Higher have one topic per section, and the topic is
+  // named after the section — so the old layout printed 10 and 14 headings
+  // each sitting above a single card, in a two-column grid that never had a
+  // second item. That is a list of cards with every entry labelled twice.
+  //
+  // National 5, N5 Applications and Higher Applications genuinely group:
+  // Higher Applications alone has 51 topics, 19 of them under Finance, which
+  // is far too long a page to scroll to find one topic.
+  const isFlat = course.sections.every(
+    s => s.topics.length === 1 && s.topics[0].name === s.title
+  );
+  const flatTopics = course.sections.flatMap(s => s.topics);
+
+  const topicCard = (topic: (typeof flatTopics)[number]) => {
+    const papers = topic.questions.filter(q => q.paper).length;
+    return (
+      <Link
+        key={topic.name}
+        href={`/course/${courseId}/practice/${topicSlug(topic.name)}`}
+        className="block rounded-xl border border-border p-4 hover:border-white/25 hover:bg-white/5 transition-colors"
+      >
+        <p className="font-medium mb-1">{topic.name}</p>
+        <p className="font-mono text-xs text-muted-dim">
+          {topic.questions.length} questions
+          {papers > 0 && ` · ${papers} past paper`}
+        </p>
+      </Link>
+    );
+  };
+
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-8">
       <Breadcrumbs
         items={[{ label: courseName, href: `/course/${courseId}` }, { label: 'Practice' }]}
       />
@@ -84,33 +117,44 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
         </p>
       </div>
 
-      <div className="space-y-10">
-        {course.sections.map(section => (
-          <section key={section.id}>
-            <h2 className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-4`}>
-              {section.title}
-            </h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {section.topics.map(topic => {
-                const papers = topic.questions.filter(q => q.paper).length;
-                return (
-                  <Link
-                    key={topic.name}
-                    href={`/course/${courseId}/practice/${topicSlug(topic.name)}`}
-                    className={`block rounded-xl border border-border p-4 hover:border-white/25 hover:bg-white/5 transition-colors`}
-                  >
-                    <p className="font-medium mb-1">{topic.name}</p>
-                    <p className="font-mono text-xs text-muted-foreground">
-                      {topic.questions.length} questions
-                      {papers > 0 && ` · ${papers} past paper`}
-                    </p>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        ))}
-      </div>
+      {isFlat ? (
+        // One grid, no headings — the card already carries the topic name.
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {flatTopics.map(topicCard)}
+        </div>
+      ) : (
+        // Collapsible sections. <details> rather than a JS accordion: the links
+        // stay in the DOM either way, so crawlers still reach every topic page,
+        // and it works before hydration. The first section is open so the page
+        // does not land looking empty.
+        <div className="space-y-3">
+          {course.sections.map((section, i) => {
+            const questions = section.topics.reduce((n, t) => n + t.questions.length, 0);
+            return (
+              <details
+                key={section.id}
+                open={i === 0}
+                className="group rounded-xl border border-border overflow-hidden"
+              >
+                <summary className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer list-none hover:bg-white/5 transition-colors">
+                  <span className={`font-mono text-xs uppercase tracking-widest ${theme.text}`}>
+                    {section.title}
+                  </span>
+                  <span className="flex items-center gap-3 shrink-0">
+                    <span className="font-mono text-xs text-muted-dim">
+                      {section.topics.length} topics · {questions} questions
+                    </span>
+                    <ChevronDown className="h-4 w-4 text-muted-dim transition-transform group-open:rotate-180" />
+                  </span>
+                </summary>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 p-4 pt-1">
+                  {section.topics.map(topicCard)}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
