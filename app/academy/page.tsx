@@ -5,7 +5,7 @@ import {
   Lock, ShieldCheck, CalendarDays, Clock, ChevronRight, Rewind, GraduationCap,
   Target, PiggyBank,
 } from 'lucide-react';
-import { ACADEMY_COURSES, ACADEMY_IMAGES, SEATS_PER_COURSE, TRIAL_PRICE, MONTHLY_PRICE } from '@/lib/academy';
+import { ACADEMY_COURSES, ACADEMY_IMAGES, ACADEMY_PRESS, SEATS_PER_COURSE, TRIAL_PRICE, MONTHLY_PRICE } from '@/lib/academy';
 import { getCourseTheme } from '@/lib/course-theme';
 
 export const metadata: Metadata = {
@@ -75,7 +75,7 @@ export default function AcademyPage() {
           </h1>
           <p className="text-lg text-foreground/90 leading-relaxed mb-4">
             For the 2026/2027 academic year, taught directly by David Clelland — the Scottish maths
-            teacher interviewed by BBC News about his exam predictions.
+            teacher BBC News turned to for comment on the 2026 Higher Maths exam.
           </p>
           <p className="text-muted-foreground leading-relaxed mb-6">
             Last year, over 2,400 students relied on my live streams for their final exam
@@ -115,8 +115,15 @@ export default function AcademyPage() {
         <p className="font-mono text-xs uppercase tracking-widest text-muted-dim mb-3 text-center">
           As featured on
         </p>
-        <p className="text-center text-lg font-display font-semibold">
-          BBC News <span className="text-muted-dim mx-2">·</span> Alloa Advertiser
+        <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-lg font-display font-semibold">
+          {ACADEMY_PRESS.map((p, i) => (
+            <span key={p.url} className="inline-flex items-center gap-4">
+              {i > 0 && <span className="text-muted-dim">·</span>}
+              <a href={p.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
+                {p.name}
+              </a>
+            </span>
+          ))}
         </p>
       </section>
 
@@ -128,24 +135,43 @@ export default function AcademyPage() {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              A few months ago, the Higher Maths exam made national news when 14,000 people signed a
-              petition because the questions felt &ldquo;unrecognisable&rdquo; under the new exam
-              board.
+              In May 2026, the first Higher Maths exam under Qualifications Scotland made national
+              news. More than 14,000 people signed a petition calling for a review of paper one, and
+              pupils told BBC Scotland the questions were &ldquo;unrecognisable&rdquo; from what
+              they had prepared for.
             </p>
             <p>
-              I was interviewed by the BBC about this exact paper, because the night before the exam
-              I ran a live stream predicting the types of curveball question that would appear — and
-              they did.
+              BBC News asked me about that paper. This is what I told them:
+            </p>
+            <blockquote className="border-l-2 border-accent pl-4 text-foreground/90 italic">
+              &ldquo;I run a last-minute livestream the night before the exam, and a lot of the
+              questions I went through were pretty much in the exam.&rdquo;
+              <cite className="block not-italic text-sm text-muted-dim mt-2">
+                —{' '}
+                <a
+                  href={ACADEMY_PRESS[0].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-foreground"
+                >
+                  BBC News, 12 May 2026
+                </a>
+              </cite>
+            </blockquote>
+            <p>
+              I built that livestream out of previous papers. The command words had not changed —
+              what caught pupils out was how abstract some of the questions were compared with what
+              they had practised.
             </p>
             <p className="text-foreground/90 font-medium">
-              Rote memorisation does not work any more. Students need to know how to decode abstract
-              questions, and that is exactly what we do inside the Academy.
+              Rote memorisation does not work any more. Decoding an unfamiliar question is a skill,
+              it can be taught, and it is exactly what we do inside the Academy.
             </p>
           </div>
           <ImageSlot
             name="bbc"
             alt="BBC News article about the Higher Maths exam"
-            hint="Screenshot of the BBC article headline showing David's name, quote or photo. Keep it to the headline and byline rather than the full article."
+            hint="Screenshot of the BBC article headline and byline. The portrait in that article is credited 'Image source: David Clelland', so that photo is yours to reuse here or as the hero."
           />
         </div>
       </section>
@@ -315,7 +341,9 @@ export default function AcademyPage() {
       <section id="secure-your-seat" className="mt-16 scroll-mt-20">
         <h2 className="font-display text-3xl font-bold tracking-tight mb-3">Secure your seat</h2>
         <p className="text-muted-foreground mb-2">
-          Select your course below. Places are limited to {SEATS_PER_COURSE} per course.
+          Select your course below. Each link closes automatically once its {SEATS_PER_COURSE} seats
+          are taken — Stripe stops accepting payments at the cap, so a link that still works is a
+          seat that is still free.
         </p>
         <p className="text-sm text-muted-foreground mb-6">
           At checkout, please give your child&rsquo;s preferred email address so they can be added
