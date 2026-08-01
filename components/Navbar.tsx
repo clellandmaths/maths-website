@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Compass, GraduationCap, Home, ChevronDown } from 'lucide-react';
+import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/explorer', label: 'Explorer', icon: Compass },
   { href: '/exam-hall', label: 'Exam Hall', icon: GraduationCap },
+  // Carries the accent colour: it is the one paid thing on the site, and four
+  // identically-styled items would bury it among the free ones.
+  { href: '/academy', label: 'Academy', icon: Sparkles, highlight: true },
 ];
 
 // Course-colour dots match each course's gradient identity
@@ -74,7 +77,11 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-slate-300 hover:text-signal-magenta hover:bg-slate-800/50 transition-all duration-200"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-800/50 transition-all duration-200 ${
+                    link.highlight
+                      ? 'text-signal-magenta font-semibold hover:brightness-110'
+                      : 'text-slate-300 hover:text-signal-magenta'
+                  }`}
                 >
                   <Icon className="h-4 w-4" />
                   <span>{link.label}</span>
@@ -105,7 +112,9 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:text-signal-magenta hover:bg-slate-800/50 transition-all duration-200"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800/50 transition-all duration-200 ${
+                    link.highlight ? 'text-signal-magenta' : 'text-slate-300 hover:text-signal-magenta'
+                  }`}
                 >
                   <Icon className="h-5 w-5" />
                   <span className="font-medium">{link.label}</span>
