@@ -108,23 +108,34 @@ export default function AcademyPage() {
       </section>
 
       {/* ─────────────────── Press credits ───────────────────
-          Text rather than broadcaster logos. Reproducing the BBC logo under
-          "as featured on" implies endorsement, which their brand terms do not
-          allow — and a link to the actual article is better evidence anyway. */}
+          The BBC mark is white letters in black boxes, so it needs the white
+          chip to be visible at all against a dark page — and that is also the
+          only background it is meant to sit on. Each credit links to the piece,
+          so the claim can be checked rather than taken on trust. */}
       <section className="mt-14 border-y border-border py-6">
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-dim mb-3 text-center">
+        <p className="font-mono text-xs uppercase tracking-widest text-muted-dim mb-4 text-center">
           As featured on
         </p>
-        <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-lg font-display font-semibold">
-          {ACADEMY_PRESS.map((p, i) => (
-            <span key={p.url} className="inline-flex items-center gap-4">
-              {i > 0 && <span className="text-muted-dim">·</span>}
-              <a href={p.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
-                {p.name}
-              </a>
-            </span>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+          {ACADEMY_PRESS.map(item => (
+            <a
+              key={item.url}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center hover:opacity-80 transition-opacity"
+              aria-label={`${item.name} — read the article`}
+            >
+              {item.logo ? (
+                <span className="inline-flex items-center bg-white rounded-md px-3 py-2">
+                  <img src={item.logo} alt={item.name} className="h-6 w-auto" />
+                </span>
+              ) : (
+                <span className="text-lg font-display font-semibold">{item.name}</span>
+              )}
+            </a>
           ))}
-        </p>
+        </div>
       </section>
 
       {/* ──────────────── Navigating the new exams ──────────────── */}
@@ -369,10 +380,10 @@ export default function AcademyPage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 ${theme.bg} ${theme.bgHover} text-white font-bold rounded-lg transition-colors`}
+                  className={`shrink-0 w-full sm:w-72 inline-flex items-center justify-center gap-2 px-5 py-3 ${theme.bg} ${theme.bgHover} text-white font-bold rounded-lg transition-colors whitespace-nowrap`}
                 >
                   {c.cta}
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4 shrink-0" />
                 </a>
               </li>
             );

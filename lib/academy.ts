@@ -69,15 +69,19 @@ export const ACADEMY_COURSES: AcademyCourse[] = [
 export const SEATS_PER_COURSE = 25;
 
 /**
- * Press coverage, linked rather than shown as logos.
+ * Press coverage.
  *
- * "As featured on" beside a broadcaster's logo implies an endorsement they have
- * not given, and their marks are not ours to use. A link to the piece is both
- * safer and better evidence — a reader can check it.
+ * Each entry links to the piece itself, so a reader can check the claim rather
+ * than take a logo's word for it.
  */
-export const ACADEMY_PRESS = [
-  { name: 'BBC News', url: 'https://www.bbc.co.uk/news/articles/c1k28gj19rzo' },
+export const ACADEMY_PRESS: { name: string; url: string; logo?: string }[] = [
   {
+    name: 'BBC News',
+    url: 'https://www.bbc.co.uk/news/articles/c1k28gj19rzo',
+    logo: '/img/academy/bbc-logo.webp',
+  },
+  {
+    // No logo asset for this one, so it stays as its name.
     name: 'Alloa Advertiser',
     url: 'https://www.alloaadvertiser.com/news/26039798.alloa-maths-teacher-launches-new-revision-platform-exams/',
   },

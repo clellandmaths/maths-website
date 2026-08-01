@@ -18,16 +18,36 @@ import path from 'node:path';
 const SRC = 'public/img/academy';
 const ORIGINALS = '../reference/academy-originals';
 
+// Originals live outside public/ so they are never deployed; the script reads
+// from there and writes the built images back into public/img/academy.
+const IN = ORIGINALS;
+
 const JOBS = [
   {
-    // Teaching at the board with real Higher trig on it. Cropped to portrait
-    // around him, keeping the numbered questions on the left — they are what
-    // makes it read as a maths lesson rather than a stock headshot.
-    from: 'IMG_5594.jpeg',
+    // Pointing at the "Whole of Differentiation" board.
+    //
+    // The crop is doing one specific job: the board also reads "HIGHER MATHS
+    // 2023 EXAMS", and a 2023 date on a page selling 2026/27 tuition makes the
+    // whole thing look stale. Cutting at x=2604 drops that block.
+    //
+    // It costs the fingertip. His raised arm and hand overlap the text block
+    // horizontally, so no rectangular crop keeps the full gesture and loses the
+    // year — the arm reading as pointing off-frame is the better trade.
+    from: 'IMG_0244.JPG',
     to: 'hero.webp',
-    crop: { left: 250, top: 0, width: 2419, height: 3024 },
+    crop: { left: 790, top: 0, width: 1814, height: 2268 },
     width: 1000,
     quality: 82,
+  },
+  {
+    // The BBC blocks from the article screenshot, cropped tight. Sits on a
+    // white chip on the page — the logo is white letters in black boxes, which
+    // would vanish against a dark background.
+    from: 'IMG_6066.jpg',
+    to: 'bbc-logo.webp',
+    crop: { left: 405, top: 38, width: 360, height: 118 },
+    width: 300,
+    quality: 90,
   },
   {
     // The BBC piece: his own portrait, the caption naming the channel, and the
@@ -54,7 +74,7 @@ const JOBS = [
 let failed = false;
 
 for (const job of JOBS) {
-  const from = path.join(SRC, job.from);
+  const from = path.join(IN, job.from);
   if (!fs.existsSync(from)) {
     console.error(`MISSING  ${job.from}`);
     failed = true;
