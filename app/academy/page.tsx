@@ -141,7 +141,17 @@ export default function AcademyPage() {
             >
               {item.logo ? (
                 <span className="inline-flex items-center bg-white rounded-md px-3 py-2">
-                  <img src={item.logo} alt={item.name} className="h-6 w-auto" />
+                  {/* lazy and sized: eager, it became a preload hint that
+                      route-prefetching then dragged onto every other page,
+                      where it is downloaded and never used. */}
+                  <img
+                    src={item.logo}
+                    alt={item.name}
+                    width={300}
+                    height={98}
+                    loading="lazy"
+                    className="h-6 w-auto"
+                  />
                 </span>
               ) : (
                 <span className="text-lg font-display font-semibold">{item.name}</span>
