@@ -10,13 +10,13 @@ import Link from 'next/link';
  * out of date is worse than none: it is a statement to the reader that happens
  * to be false.
  *
- * ⚠️ The analytics section describes the intended launch setup, and one half of
- * it is not built yet. Cloudflare Web Analytics is cookieless and needs no
- * permission. Google Analytics sets cookies, and under PECR non-essential
- * cookies need consent BEFORE they are set — so GA must not be added to the
- * layout until there is a consent banner that defaults to off and only loads
- * the tag once someone agrees. Until that exists, this page promises something
- * the site does not do.
+ * Measurement is Cloudflare Web Analytics, which is cookieless — so there is no
+ * consent banner and this page can promise none. Google Search Console is a
+ * webmaster tool reading Google's own search logs: it puts no script on the
+ * page and sees nothing about a reader, so it is not described here. If a
+ * cookie-setting tracker is ever added, it needs consent BEFORE it is set
+ * under PECR, which means a banner defaulting to off — and this page changes
+ * in that same commit.
  *
  * The audience is largely school pupils, so this is deliberately plain English
  * rather than legal boilerplate. The ICO's Children's Code asks for exactly
@@ -99,9 +99,8 @@ export default function PrivacyPage() {
           you in it.
         </p>
         <p>
-          We also use Google Analytics, which does set cookies and does tell Google something about
-          your visit. That one is your choice: we ask before it is switched on, and if you say no
-          it is never loaded. You can change your mind at any time.
+          That is the only thing measuring visits. We do not use Google Analytics or any other
+          tracking script, and nothing on this site sets a cookie.
         </p>
       </Section>
 
@@ -109,6 +108,7 @@ export default function PrivacyPage() {
         <ul className="list-disc pl-5 space-y-2">
           <li>No accounts, no passwords, no email addresses.</li>
           <li>No advertising, and nothing sold or shared with anyone.</li>
+          <li>No advertising cookies, no tracking scripts, and no cookies set by us.</li>
           <li>Nothing you type into the site — worksheets, notes progress — is sent to us.</li>
           <li>
             QR codes and worksheet links are made inside your browser, not by a service somewhere
@@ -129,8 +129,8 @@ export default function PrivacyPage() {
       <Section title="If you are under 13">
         <p>
           You are welcome to use the site. There is nothing to sign up for and nothing to fill in,
-          so we hold nothing about you. If you are asked about Google Analytics and you are not
-          sure, say no — everything on the site works exactly the same either way.
+          so we hold nothing about you at all. Nothing here asks your age, because nothing here
+          needs to know it.
         </p>
         <p>
           If a parent or teacher wants to check what the site does, this page is the whole of it.
