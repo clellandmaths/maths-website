@@ -86,16 +86,18 @@ export const TRIAL_PRICE = '£20';
 export const MONTHLY_PRICE = '£86.67';
 
 /**
- * Images the page wants but the repo does not have yet.
+ * The page's three images.
  *
- * Set a path here once the file is in public/img/academy/ and the slot renders
- * the picture instead of a description of the picture. Left as null the page
- * still reads correctly — a missing photo becomes a labelled gap rather than a
- * broken image icon, which is the difference between "not finished" and
- * "looks broken" on a page asking parents for money.
+ * Built by scripts/build-academy-images.mjs from the originals in
+ * reference/academy-originals/ — rerun it rather than recropping by hand, so
+ * the crops stay recorded if a screenshot is ever retaken.
+ *
+ * A null here renders a labelled slot describing what belongs there instead of
+ * a broken image, which is the difference between "not finished" and "looks
+ * broken" on a page asking parents for money.
  */
 export const ACADEMY_IMAGES: Record<string, string | null> = {
-  hero: null,      // photo of David — teaching, holding an iPad, or to camera
-  bbc: null,       // screenshot of the BBC article headline
-  youtube: null,   // screenshot of the YouTube channel banner with subscriber count
+  hero: '/img/academy/hero.webp',
+  bbc: '/img/academy/bbc.webp',
+  youtube: '/img/academy/youtube.webp',
 };
