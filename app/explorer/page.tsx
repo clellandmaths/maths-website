@@ -31,6 +31,8 @@ import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
+import DataBookletSheet from '@/components/DataBookletSheet';
+import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet } from '@/lib/worksheet-share';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -550,6 +552,10 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           <Share2 className="h-4 w-4" />
                           Share
                         </button>
+                        <DownloadFilesButton
+                          questions={worksheetItems}
+                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        />
                         <button
                           onClick={() => window.print()}
                           className={`flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
@@ -588,6 +594,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       Hidden on screen; the Formulae button covers that. */}
                   <div className="print-only">
                     <FormulaeSheet courseId={course} />
+                    {course === 'higher-apps' && (
+                      <DataBookletSheet years={worksheetItems.map(q => q.year)} />
+                    )}
                   </div>
 
                   {/* Worksheet Questions - Linear List View */}

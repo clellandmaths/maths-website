@@ -2,12 +2,17 @@
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Printer, Eye, EyeOff, Compass, Maximize2, Play } from 'lucide-react';
+import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
 import { decodeWorksheet, resolveWorksheet, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
+import FormulaeSheet from '@/components/FormulaeSheet';
+import DataBookletSheet from '@/components/DataBookletSheet';
+import DownloadFilesButton from '@/components/DownloadFilesButton';
+import FormulaeButton from '@/components/FormulaeButton';
+import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
 import {
   getAllN5Questions, getAllHigherQuestions, getAllAHQuestions,
@@ -50,6 +55,7 @@ function SharedWorksheet() {
   const [video, setVideo] = useState<{ videoId: string; timestamp: number; title: string } | null>(null);
   const [options, setOptions] = useState<WorksheetOptions>(NO_OPTIONS);
   const [fullScreenFrom, setFullScreenFrom] = useState<number | null>(null);
+  const [booklet, setBooklet] = useState<string | number | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -134,6 +140,7 @@ function SharedWorksheet() {
           <Maximize2 className="h-4 w-4" />
           Full screen
         </button>
+        <DownloadFilesButton questions={questions} title={title} />
         {options.answers && (
           <button
             onClick={() => setRevealed(r => r.size === questions.length ? new Set() : new Set(questions.map((_, i) => i)))}
@@ -158,6 +165,20 @@ function SharedWorksheet() {
           </div>
         </div>
       </div>
+
+      {/* Printed at the front by default. A shared sheet is handed to a pupil
+          who has no Formulae button to reach for, so leaving it out made the
+          handout less usable than the sheet it was built from. */}
+      {courseId && (
+        <div className="print-only">
+          <FormulaeSheet courseId={courseId} />
+          {/* Higher Apps gets a data booklet rather than a formulae list, and
+              its questions say "refer to the data booklet" outright. */}
+          {courseId === 'higher-apps' && (
+            <DataBookletSheet years={questions.map(q => q.year)} />
+          )}
+        </div>
+      )}
 
       <ol className="worksheet-container space-y-6">
         {questions.map((q, i) => {
@@ -190,9 +211,24 @@ function SharedWorksheet() {
 
               {/* Whatever the maker granted, offered here on the card as well as
                   in full screen — a pupil reading down the page should not have
-                  to go full screen to get at an answer they were given. */}
-              {(options.answers || (options.video && q.videoId)) && (
-                <div className="no-print flex flex-wrap gap-2 mt-4">
+                  to go full screen to get at an answer they were given.
+
+                  Formulae, the data booklet and the data files are not options:
+                  they are what the question cannot be attempted without, so
+                  they are always here regardless of what the maker chose. */}
+              <div className="no-print flex flex-wrap gap-2 mt-4">
+                  {courseId && (
+                    <FormulaeButton courseId={courseId} theme={theme} />
+                  )}
+                  {courseId === 'higher-apps' && (
+                    <button
+                      onClick={() => setBooklet(q.year)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      Data Booklet
+                    </button>
+                  )}
                   {options.answers && (
                     <button
                       onClick={() => setRevealed(r => {
@@ -219,6 +255,23 @@ function SharedWorksheet() {
                       Watch solution
                     </button>
                   )}
+              </div>
+
+              {/* Higher Apps data files. The question cannot be attempted
+                  without them, so they are on the card, not behind full screen. */}
+              {q.attachments && q.attachments.length > 0 && (
+                <div className="no-print flex flex-wrap gap-2 mt-3">
+                  {q.attachments.map(file => (
+                    <a
+                      key={file.url}
+                      href={file.url}
+                      download
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                    >
+                      <Paperclip className="h-3 w-3" />
+                      {file.name}
+                    </a>
+                  ))}
                 </div>
               )}
 
@@ -240,6 +293,14 @@ function SharedWorksheet() {
         <p>clellandmaths.com — free past papers, video solutions and worksheets</p>
         <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
       </div>
+
+      {booklet !== null && (
+        <DataBookletModal
+          year={booklet}
+          theme={theme}
+          onClose={() => setBooklet(null)}
+        />
+      )}
 
       {video && (
         <VideoModal
