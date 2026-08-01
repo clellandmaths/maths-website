@@ -22,6 +22,14 @@ interface QuestionPresenterProps {
   questions: QuestionWithMetadata[];
   startIndex?: number;
   onClose: () => void;
+  /**
+   * A shared handout can withhold the answers or the video. Default true so
+   * every existing use — papers, worksheets, marathons — is unaffected; a
+   * locked worksheet passes false and full screen then shows exactly what the
+   * person who set it decided to give.
+   */
+  allowAnswers?: boolean;
+  allowVideo?: boolean;
 }
 
 function extractImageSrcs(html: string): string[] {
@@ -34,7 +42,7 @@ function extractImageSrcs(html: string): string[] {
   return srcs;
 }
 
-export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, allowAnswers = true, allowVideo = true }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -220,6 +228,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
                 />
               )}
+              {allowAnswers && (
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
@@ -240,7 +249,8 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   </>
                 )}
               </button>
-              {question.videoId ? (
+              )}
+              {allowVideo && question.videoId ? (
                 <button
                   onClick={() => setShowVideo(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -248,7 +258,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   <Play className="h-5 w-5" />
                   Watch Solution
                 </button>
-              ) : hasMarkscheme(question.year, question.paperNumber) ? (
+              ) : allowVideo && hasMarkscheme(question.year, question.paperNumber) ? (
                 <button
                   onClick={() => setShowMarkscheme(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -267,7 +277,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             </div>
 
             {/* Answer Section */}
-            {showAnswer && (
+            {allowAnswers && showAnswer && (
               <div ref={answerRef} className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer

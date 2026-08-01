@@ -2,11 +2,12 @@
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Printer, Eye, EyeOff, Compass } from 'lucide-react';
+import { Printer, Eye, EyeOff, Compass, Maximize2 } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
-import { decodeWorksheet, resolveWorksheet } from '@/lib/worksheet-share';
+import { decodeWorksheet, resolveWorksheet, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
+import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import {
   getAllN5Questions, getAllHigherQuestions, getAllAHQuestions,
   getAllN5AppsQuestions, getAllHigherAppsQuestions,
@@ -44,6 +45,8 @@ function SharedWorksheet() {
   const [courseId, setCourseId] = useState<string | null>(null);
   const [title, setTitle] = useState<string | undefined>();
   const [showAnswers, setShowAnswers] = useState(false);
+  const [options, setOptions] = useState<WorksheetOptions>(NO_OPTIONS);
+  const [fullScreenFrom, setFullScreenFrom] = useState<number | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -51,6 +54,7 @@ function SharedWorksheet() {
     if (!shared || !LOADERS[shared.courseId]) { setNotFound(true); return; }
     setCourseId(shared.courseId);
     setTitle(shared.title);
+    setOptions(shared.options);
     LOADERS[shared.courseId]().then(all => {
       const { questions: qs, missing: m } = resolveWorksheet(shared.refs, all);
       setQuestions(qs);
@@ -117,13 +121,25 @@ function SharedWorksheet() {
           <Printer className="h-4 w-4" />
           Print
         </button>
+        {/* Working through it full screen changes how the questions are read,
+            not what was handed over, so it is always offered — and it obeys the
+            same answer and video settings. */}
         <button
-          onClick={() => setShowAnswers(s => !s)}
+          onClick={() => setFullScreenFrom(0)}
           className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
         >
-          {showAnswers ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          {showAnswers ? 'Hide answers' : 'Show answers'}
+          <Maximize2 className="h-4 w-4" />
+          Full screen
         </button>
+        {options.answers && (
+          <button
+            onClick={() => setShowAnswers(s => !s)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
+          >
+            {showAnswers ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {showAnswers ? 'Hide answers' : 'Show answers'}
+          </button>
+        )}
       </div>
 
       <ol className="space-y-6">
@@ -138,7 +154,7 @@ function SharedWorksheet() {
               <Marks marks={q.marks} theme={theme} className="ml-auto" />
             </div>
             <MathRenderer html={q.question} className="question-content text-foreground/90" />
-            {q.videoId && (
+            {options.qrCodes && q.videoId && (
               <div className="mt-4 print-only">
                 <QRCodeImage
                   url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
@@ -146,7 +162,7 @@ function SharedWorksheet() {
                 />
               </div>
             )}
-            {showAnswers && (
+            {options.answers && showAnswers && (
               <div className="mt-4 pt-4 border-t border-border">
                 <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Answer</p>
                 <MathRenderer html={q.answer} className="answer-content text-foreground/80" />
@@ -155,6 +171,19 @@ function SharedWorksheet() {
           </li>
         ))}
       </ol>
+
+      {fullScreenFrom !== null && (
+        <QuestionPresenter
+          theme={theme}
+          courseId={courseId ?? undefined}
+          hasDataBooklet={courseId === 'higher-apps'}
+          questions={questions}
+          startIndex={fullScreenFrom}
+          allowAnswers={options.answers}
+          allowVideo={options.video}
+          onClose={() => setFullScreenFrom(null)}
+        />
+      )}
 
       <div className="mt-10 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4 no-print">
         <p className="text-sm text-muted-foreground">
