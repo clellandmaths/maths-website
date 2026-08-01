@@ -452,6 +452,31 @@ body {
     background: #f1f5f9 !important;
     font-weight: 600;
   }
+
+  /* Same problem again, outside tables. The Higher Applications data booklets
+     tint the R commands and their panels with dark fills for screen —
+     bg-gray-800 and friends. Tailwind's greys are blue-tinted, so on paper
+     those came out as blue boxes with the near-black text the rule above
+     paints onto them: unreadable, and the one thing on the page a pupil has
+     to copy character for character.
+     Repainted as a light tint, which keeps them reading as code. */
+  .print-formula-sheet [class*="bg-gray-"],
+  .print-formula-sheet [class*="bg-slate-"],
+  .print-formula-sheet [class*="bg-zinc-"],
+  .print-formula-sheet [class*="bg-neutral-"] {
+    background: #f1f5f9 !important;
+  }
+
+  /* An inline command needs an edge to still look like a command once its
+     fill is nearly the colour of the page. The booklets mark these up as
+     <code>, so keep the monospace face too — for R commands the difference
+     between l and 1, or O and 0, is the difference between working and not. */
+  .print-formula-sheet code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 3px;
+    padding: 0 0.2rem;
+  }
 }
 
 /* <summary> as a custom row: list-none removes the marker in Firefox, but

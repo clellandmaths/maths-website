@@ -72,7 +72,7 @@ export const SUPPORT_LINKS: ConnectLink[] = [
  * guessed inbox is worse than no mailto at all, because the sender believes it
  * arrived.
  */
-export const CONTACT_EMAIL: string | null = null;
+export const CONTACT_EMAIL: string | null = 'clellandmaths@gmail.com';
 
 export function contactHref(): string {
   return CONTACT_EMAIL ? `mailto:${CONTACT_EMAIL}` : '/connect';
