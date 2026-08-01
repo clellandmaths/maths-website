@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip } from 'lucide-react';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2 } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -29,6 +29,8 @@ import { getAvailableN5Years, getAvailableHigherYears, getAvailableAHYears, getA
 import { getCourseTheme } from '@/lib/course-theme';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
+import { decodeWorksheet, resolveWorksheet } from '@/lib/worksheet-share';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
 
@@ -103,6 +105,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [showFocusMode, setShowFocusMode] = useState(false);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
   const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
+  const [showShare, setShowShare] = useState(false);
 
   const { items: worksheetItems, addItem, removeItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
 
@@ -131,6 +134,23 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [viewMode]);
+
+  // A shared link arrives as ?c=<course>&q=<refs>. Wait for the course data,
+  // then add exactly those questions, in the order they were shared. Done once:
+  // the query is cleared afterwards so a refresh does not re-add them on top of
+  // whatever the recipient has since changed.
+  useEffect(() => {
+    if (!allQuestions.length) return;
+    const shared = decodeWorksheet(window.location.search);
+    if (!shared || shared.courseId !== course) return;
+    const { questions: incoming } = resolveWorksheet(shared.refs, allQuestions);
+    if (incoming.length) {
+      clearAll();
+      incoming.forEach(addItem);
+      setViewMode('worksheet');
+    }
+    window.history.replaceState(null, '', window.location.pathname);
+  }, [allQuestions, course, addItem, clearAll]);
 
   // Reorder with visual feedback
   const handleReorder = (from: number, to: number) => {
@@ -523,6 +543,13 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           Focus
                         </button>
                         <button
+                          onClick={() => setShowShare(true)}
+                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        >
+                          <Share2 className="h-4 w-4" />
+                          Share
+                        </button>
+                        <button
                           onClick={() => window.print()}
                           className={`flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                         >
@@ -817,6 +844,15 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       />
 
       {/* Full-screen Presentation Mode */}
+      {showShare && worksheetItems.length > 0 && (
+        <ShareWorksheet
+          theme={theme}
+          courseId={course}
+          questions={worksheetItems}
+          onClose={() => setShowShare(false)}
+        />
+      )}
+
       {presentStartIndex !== null && worksheetItems.length > 0 && (
         <QuestionPresenter
           theme={theme}
@@ -942,6 +978,11 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
 export default function ExplorerPage() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(() => {
     if (typeof window === 'undefined') return null;
+    // A shared worksheet names its own course, and it wins: a recipient whose
+    // last course was Higher must still land in National 5 to see a National 5
+    // sheet, rather than meeting the chooser or an empty worksheet.
+    const shared = new URLSearchParams(window.location.search).get('c');
+    if (COURSE_IDS.includes(shared as Course)) return shared as Course;
     const saved = localStorage.getItem('preferredCourse');
     return COURSE_IDS.includes(saved as Course) ? (saved as Course) : null;
   });
