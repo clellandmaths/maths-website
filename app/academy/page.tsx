@@ -5,7 +5,7 @@ import {
   Lock, ShieldCheck, CalendarDays, Clock, ChevronRight, Rewind, GraduationCap,
   Target, PiggyBank, Mail,
 } from 'lucide-react';
-import { ACADEMY_COURSES, ACADEMY_IMAGES, ACADEMY_PRESS, SEATS_PER_COURSE, TRIAL_PRICE, MONTHLY_PRICE } from '@/lib/academy';
+import { ACADEMY_COURSES, ACADEMY_IMAGES, ACADEMY_IMAGE_SIZES, ACADEMY_PRESS, SEATS_PER_COURSE, TRIAL_PRICE, MONTHLY_PRICE } from '@/lib/academy';
 import { getCourseTheme } from '@/lib/course-theme';
 import { contactHref } from '@/lib/connect';
 
@@ -28,7 +28,19 @@ function ImageSlot({
 }: { name: keyof typeof ACADEMY_IMAGES; alt: string; hint: string; className?: string; aspect?: string }) {
   const src = ACADEMY_IMAGES[name];
   if (src) {
-    return <img src={src} alt={alt} className={`w-full rounded-2xl ${className}`} loading="lazy" />;
+    // Intrinsic sizes from scripts/build-academy-images.mjs, so the browser
+    // reserves the box and the page does not jump as each one arrives.
+    const dims = ACADEMY_IMAGE_SIZES[name];
+    return (
+      <img
+        src={src}
+        alt={alt}
+        width={dims?.[0]}
+        height={dims?.[1]}
+        className={`w-full rounded-2xl ${className}`}
+        loading="lazy"
+      />
+    );
   }
   return (
     <div

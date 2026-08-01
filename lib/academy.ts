@@ -105,3 +105,10 @@ export const ACADEMY_IMAGES: Record<string, string | null> = {
   bbc: '/img/academy/bbc.webp',
   youtube: '/img/academy/youtube.webp',
 };
+
+/** Intrinsic [width, height] of each built image, so the page can reserve space. */
+export const ACADEMY_IMAGE_SIZES: Record<string, [number, number]> = {
+  hero: [1000, 1250],
+  bbc: [900, 1408],
+  youtube: [1345, 486],
+};

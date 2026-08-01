@@ -67,9 +67,13 @@ export default function TopicView({
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           {sectionTitle} · Topic {topicNumber} of {topicCount}
         </p>
-        <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        {/* h1, not h2: this is the page's own subject. Every notes topic is a
+            standalone page targeting its own search term ("higher maths
+            binomial expansion"), and 278 of them were shipping with no h1 at
+            all — the strongest on-page signal there is, left empty. */}
+        <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
           {topic.title}
-        </h2>
+        </h1>
         <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
           <span className="inline-flex items-center gap-1.5 font-mono text-xs">
             <Play className="h-3.5 w-3.5" />

@@ -33,9 +33,15 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
+            {/* Intrinsic size given so the browser reserves the box before the
+                file arrives. Without it the whole page jumped as the logo
+                loaded — on every one of 519 pages. Not lazy: it is the first
+                thing painted. */}
             <img
               src="/img/logo/clelland-maths-logo.png"
               alt="Clelland Maths"
+              width={836}
+              height={536}
               className="h-11 w-auto group-hover:opacity-90 transition-opacity"
             />
           </Link>

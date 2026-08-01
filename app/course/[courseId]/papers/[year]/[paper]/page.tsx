@@ -111,7 +111,11 @@ export async function generateMetadata(
 
   return {
     title: `${courseName} ${year} Paper ${paperNumber} — Questions & ${withVideo ? 'Video Solutions' : 'Marking Instructions'}`,
-    description: `All ${paperQuestions.length} questions from the ${year} ${courseName} Paper ${paperNumber} (${paperKind(courseId, year, paperNumber).toLowerCase()}) with answers and ${solutions}. Free ${examBoardWithAlias(year)} past paper practice.`,
+    // Kept under ~160 characters: past that, Google truncates mid-sentence and
+    // the call to action is the part that gets cut. examBoardFor rather than
+    // examBoardWithAlias here — the parenthesised alias was the longest thing
+    // in the line and the page body already carries both names for search.
+    description: `All ${paperQuestions.length} questions from the ${year} ${courseName} Paper ${paperNumber}, with answers and ${solutions}. Free ${examBoardFor(year)} past paper practice.`,
   };
 }
 

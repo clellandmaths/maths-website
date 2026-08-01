@@ -1,0 +1,35 @@
+# Cloudflare Pages redirects.
+#
+# www.clellandmaths.com is currently a Google Site (CNAME -> ghs.googlehosted.com)
+# with its own URLs, all of which Google has indexed. When this site takes over
+# that hostname those URLs stop existing, and without these lines every one of
+# them 404s and loses whatever ranking it has built up.
+#
+# 301, not 302: the moves are permanent, and only a 301 passes ranking on.
+
+# ── the old Google Site ─────────────────────────────────────────────
+/home                                 /                       301
+/national-5-maths                     /course/n5              301
+/higher-maths                         /course/higher          301
+/ah-maths                             /course/ah              301
+/national-5-applications-of-maths     /course/n5-apps         301
+/higher-applications-of-maths         /course/higher-apps     301
+# /connect already exists on this site at the same path, so it needs no rule.
+
+# The old site's practice papers page. Exam Hall is the closest equivalent —
+# it holds the revision marathons and the paper archive.
+/2026-practice-papers                 /exam-hall              301
+
+# ── common guesses and old shapes ───────────────────────────────────
+# Cheap to add, and they catch links typed from memory or printed on handouts.
+/national5                            /course/n5              301
+/national-5                           /course/n5              301
+/n5                                   /course/n5              301
+/higher                               /course/higher          301
+/advanced-higher                      /course/ah              301
+/ah                                   /course/ah              301
+/n5-apps                              /course/n5-apps         301
+/higher-apps                          /course/higher-apps     301
+/papers                               /exam-hall              301
+/past-papers                          /exam-hall              301
+/notes                                /course/n5/notes        301

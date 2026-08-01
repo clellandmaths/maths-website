@@ -10,6 +10,8 @@ export default function Footer() {
             <img
               src="/img/logo/clelland-maths-logo.png"
               alt="Clelland Maths"
+              width={836}
+              height={536}
               className="h-9 w-auto mb-2"
               loading="lazy"
             />
@@ -21,26 +23,26 @@ export default function Footer() {
           <div className="flex flex-wrap gap-x-12 gap-y-6">
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
               <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Courses</span>
-              <Link href="/course/n5" className="hover:text-foreground transition-colors">National 5</Link>
-              <Link href="/course/higher" className="hover:text-foreground transition-colors">Higher</Link>
-              <Link href="/course/ah" className="hover:text-foreground transition-colors">Advanced Higher</Link>
-              <Link href="/course/n5-apps" className="hover:text-foreground transition-colors">N5 Applications</Link>
-              <Link href="/course/higher-apps" className="hover:text-foreground transition-colors">Higher Applications</Link>
+              <Link href="/course/n5" className="py-1 hover:text-foreground transition-colors">National 5</Link>
+              <Link href="/course/higher" className="py-1 hover:text-foreground transition-colors">Higher</Link>
+              <Link href="/course/ah" className="py-1 hover:text-foreground transition-colors">Advanced Higher</Link>
+              <Link href="/course/n5-apps" className="py-1 hover:text-foreground transition-colors">N5 Applications</Link>
+              <Link href="/course/higher-apps" className="py-1 hover:text-foreground transition-colors">Higher Applications</Link>
             </nav>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
               <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Tools</span>
-              <Link href="/explorer" className="hover:text-foreground transition-colors">Topic Explorer</Link>
-              <Link href="/exam-hall" className="hover:text-foreground transition-colors">Exam Hall</Link>
+              <Link href="/explorer" className="py-1 hover:text-foreground transition-colors">Topic Explorer</Link>
+              <Link href="/exam-hall" className="py-1 hover:text-foreground transition-colors">Exam Hall</Link>
               <a
                 href="https://app.clellandmaths.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
+                className="py-1 hover:text-foreground transition-colors"
               >
                 Revision App
               </a>
-              <Link href="/academy" className="hover:text-foreground transition-colors">Academy</Link>
-              <Link href="/connect" className="hover:text-foreground transition-colors">Connect</Link>
+              <Link href="/academy" className="py-1 hover:text-foreground transition-colors">Academy</Link>
+              <Link href="/connect" className="py-1 hover:text-foreground transition-colors">Connect</Link>
             </nav>
           </div>
         </div>
@@ -59,7 +61,7 @@ export default function Footer() {
         <p className="font-mono text-xs text-muted-foreground mt-6">
           © {new Date().getFullYear()} Clelland Maths
           <span className="mx-2 text-muted-dim">·</span>
-          <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+          <Link href="/privacy" className="py-1 hover:text-foreground transition-colors">Privacy</Link>
         </p>
       </div>
     </footer>
