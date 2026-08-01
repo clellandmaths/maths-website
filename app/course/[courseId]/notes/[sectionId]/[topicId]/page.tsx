@@ -6,6 +6,7 @@ import { getNotesForCourse } from '@/lib/notes-loader';
 import { getPracticeSlugForTopic } from '@/lib/practice-loader';
 import NotesTopicShell, { type NotesNav } from '@/components/Notes/NotesTopicShell';
 import CourseTabs from '@/components/CourseTabs';
+import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 // Every notes topic is a statically generated, crawlable page:
@@ -111,7 +112,7 @@ export default async function NotesTopicPage(
         { label: section.title },
         { label: topic.title },
       ]} />
-      <CourseTabs courseId={courseId} active="notes" />
+      <CourseTabs courseId={courseId} active="notes" notesHref={await notesEntryHref(courseId)} />
       <NotesTopicShell
         courseId={courseId}
         nav={nav}

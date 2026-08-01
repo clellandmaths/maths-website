@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap } from 'lucide-react';
 import CourseTabs from '@/components/CourseTabs';
@@ -51,6 +51,13 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   const [presenterStartIndex, setPresenterStartIndex] = useState(0);
   const [focusQuestions, setFocusQuestions] = useState<QuestionWithMetadata[] | null>(null);
   const [activeVideo, setActiveVideo] = useState<{ videoId: string; timestamp: number; title: string } | null>(null);
+
+  // Explorer and the Exam Hall both open on `preferredCourse`. Until now only
+  // choosing a course inside one of those set it, so arriving from a course
+  // page still met the chooser — having already said which course you wanted.
+  useEffect(() => {
+    try { localStorage.setItem('preferredCourse', courseId); } catch { /* private mode */ }
+  }, [courseId]);
 
   const courseName = courseNames[courseId] || 'Course';
   const config = courseConfig[courseId];

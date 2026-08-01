@@ -31,3 +31,21 @@ export async function getNotesForCourse(courseId: string): Promise<Course | null
   const meta = COURSE_META[courseId] ?? { title: courseId, description: '' };
   return { id: courseId, title: meta.title, description: meta.description, sections };
 }
+
+/**
+ * Where the Course Notes tab should land: the first topic, not the all-topics
+ * hub.
+ *
+ * The hub is a grid of every topic, which is a useful page but a poor landing
+ * spot — a pupil clicking "Course Notes" wants to read notes, not choose from a
+ * list again. Only the course page used to pass this through, so from Practice
+ * or a past paper the tab dropped you on the grid instead.
+ */
+export async function notesEntryHref(courseId: string): Promise<string> {
+  const course = await getNotesForCourse(courseId);
+  const section = course?.sections[0];
+  const topic = section?.topics[0];
+  return section && topic
+    ? `/course/${courseId}/notes/${section.id}/${topic.id}`
+    : `/course/${courseId}/notes`;
+}

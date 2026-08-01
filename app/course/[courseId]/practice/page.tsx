@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { COURSES_WITH_PRACTICE, getPracticeForCourse, topicSlug, resolveQuestions } from '@/lib/practice-loader';
 import { getCourseTheme } from '@/lib/course-theme';
 import CourseTabs from '@/components/CourseTabs';
+import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 // Index of practice topics for a course. Deliberately a hub page: it links to
@@ -101,7 +102,7 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
       <Breadcrumbs
         items={[{ label: courseName, href: `/course/${courseId}` }, { label: 'Practice' }]}
       />
-      <CourseTabs courseId={courseId} active="practice" />
+      <CourseTabs courseId={courseId} active="practice" notesHref={await notesEntryHref(courseId)} />
 
       <div className="mb-10">
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">

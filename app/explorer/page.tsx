@@ -125,6 +125,13 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     return () => { cancelled = true; };
   }, [config]);
 
+  // Browse and worksheet are one page swapping content, so switching kept the
+  // old scroll position. Always start at the top: on a long question list the
+  // alternative is landing in the middle of the worksheet.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [viewMode]);
+
   // Reorder with visual feedback
   const handleReorder = (from: number, to: number) => {
     reorderItems(from, to);

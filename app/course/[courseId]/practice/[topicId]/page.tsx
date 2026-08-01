@@ -8,6 +8,7 @@ import { getCourseTheme } from '@/lib/course-theme';
 import PracticeQuestion from '@/components/Practice/PracticeQuestion';
 import PracticeModes from '@/components/Practice/PracticeModes';
 import CourseTabs from '@/components/CourseTabs';
+import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 // A page per topic rather than one page for the whole course: each targets a
@@ -92,7 +93,7 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           { label: topic.name },
         ]}
       />
-      <CourseTabs courseId={courseId} active="practice" />
+      <CourseTabs courseId={courseId} active="practice" notesHref={await notesEntryHref(courseId)} />
 
       <div className="mb-8">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>

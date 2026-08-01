@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
@@ -41,6 +41,13 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
   const [showBooklet, setShowBooklet] = useState(false);
   const [showMarkscheme, setShowMarkscheme] = useState(false);
 
+  // The question card and the answer below it share one scroller. On a long
+  // question the answer opens below the fold, so "Show Answer" looked like it
+  // did nothing; and moving to the next question kept the previous scroll
+  // position, dropping you into the middle of it.
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+
   const question = questions[currentIndex];
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === questions.length - 1;
@@ -68,6 +75,23 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
       setShowAnswer(false);
     }
   }, [isFirst]);
+
+  // Every move starts at the top of the new question
+  useEffect(() => {
+    scrollerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentIndex]);
+
+  // Bring the answer into view when it is revealed, but only if it is not
+  // already on screen — scrolling when nothing needed to move is disorienting.
+  useEffect(() => {
+    if (!showAnswer) return;
+    const el = answerRef.current;
+    if (!el) return;
+    const box = el.getBoundingClientRect();
+    if (box.bottom > window.innerHeight || box.top < 0) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [showAnswer]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -114,7 +138,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div ref={scrollerRef} className="flex-1 overflow-y-auto">
           <div className="min-h-full flex flex-col max-w-4xl lg:max-w-none mx-auto p-4 sm:p-6 md:p-8 lg:px-12 xl:px-16">
             {/* Topic Tags */}
             <div className="shrink-0 flex flex-wrap gap-2 mb-4">
@@ -244,7 +268,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
 
             {/* Answer Section */}
             {showAnswer && (
-              <div className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
+              <div ref={answerRef} className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={question.answer}

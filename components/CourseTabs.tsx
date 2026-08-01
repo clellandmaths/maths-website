@@ -26,9 +26,10 @@ export default function CourseTabs({ courseId, active, notesHref }: Props) {
   return (
     <div className="flex gap-2 mb-8 border-b border-slate-800">
       <Link
-        href={active === 'notes' ? `/course/${courseId}/notes` : (notesHref ?? `/course/${courseId}/notes`)}
+        // Always the first topic. Landing on the all-topics grid means asking
+        // a pupil to choose again when they have already said what they want.
+        href={notesHref ?? `/course/${courseId}/notes`}
         className={`${base} ${active === 'notes' ? activeClasses : inactiveClasses}`}
-        title={active === 'notes' ? 'All topics' : undefined}
       >
         <GraduationCap className="h-4 w-4" />
         Course Notes

@@ -22,6 +22,7 @@ import { getCourseTheme } from '@/lib/course-theme';
 import { questionNumber } from '@/lib/question-number.mjs';
 import { hasMarkscheme, getMarkschemeEntries } from '@/lib/ah-markschemes';
 import CourseTabs from '@/components/CourseTabs';
+import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import MathHtml from '@/components/MathHtml';
 import WatchSolutionButton from '@/components/Papers/WatchSolutionButton';
@@ -150,7 +151,7 @@ export default async function PaperPage(
         { label: courseName, href: `/course/${courseId}` },
         { label: `${year} Paper ${paperNumber}` },
       ]} />
-      <CourseTabs courseId={courseId} active="papers" />
+      <CourseTabs courseId={courseId} active="papers" notesHref={await notesEntryHref(courseId)} />
 
       {/* Paper header */}
       <div className="mb-10">

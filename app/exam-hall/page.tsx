@@ -309,6 +309,13 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [showWarmUp, setShowWarmUp] = useState(false);
   const [showMarathon, setShowMarathon] = useState(false);
 
+  // These views swap in place rather than navigating, so nothing resets the
+  // scroll — you would arrive in the middle of the Warm Up because that was
+  // how far down the dashboard you had scrolled to click it.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [showWarmUp, showChecklist, showMarathon]);
+
   // Live checklist stats for the dashboard card
   const [checkedCount, setCheckedCount] = useState(0);
   const totalSubtopics = useMemo(() => countSubtopics(info.categories), [info.categories]);
