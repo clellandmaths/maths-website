@@ -15,6 +15,7 @@ import {
   type QuestionWithMetadata,
 } from '@/lib/data-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 // A shared worksheet, locked. Everything comes from the query string, so this
@@ -232,8 +233,12 @@ function SharedWorksheet() {
         })}
       </ol>
 
+      {/* The site footer is hidden on print, so a printed handout would leave
+          the building carrying no attribution at all. The notice travels with
+          the questions instead. */}
       <div className="print-only print-footer">
-        clellandmaths.com — free past papers, video solutions and worksheets
+        <p>clellandmaths.com — free past papers, video solutions and worksheets</p>
+        <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
       </div>
 
       {video && (

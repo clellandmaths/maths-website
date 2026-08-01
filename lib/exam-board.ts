@@ -37,3 +37,28 @@ export function examBoardShortFor(year: number | string): string {
 export function examBoardWithAlias(year: number | string): string {
   return examBoardFor(year) === 'SQA' ? 'SQA (Qualifications Scotland)' : 'Qualifications Scotland';
 }
+
+/**
+ * The copyright notice Qualifications Scotland requires on reproduced material,
+ * word for word. Do not paraphrase or trim it.
+ *
+ * Kept as one constant because it has to be identical on the site and on
+ * anything printed from it, and a notice that drifts between copies is worse
+ * than useless. Qualifications Scotland is the successor body, so this covers
+ * the pre-2026 SQA papers too.
+ */
+export const QS_COPYRIGHT_NOTICE =
+  'This content is an original creation of Qualifications Scotland. ' +
+  'Qualifications Scotland does not promote or endorse the use of any content ' +
+  'associated with its reproduction. Copyright © Qualifications Scotland.';
+
+/**
+ * What the notice is about.
+ *
+ * The notice opens "This content is an original creation of..." — true of the
+ * papers, but the site is mostly not theirs: the course notes, the authored
+ * practice questions and maths.scot's questions are all someone else's work.
+ * Printed bare it would read as crediting them with all of it, so it never
+ * appears without this scope in front of it.
+ */
+export const QS_NOTICE_SCOPE = 'Past paper questions and marking instructions:';

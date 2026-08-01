@@ -377,6 +377,17 @@ body {
     color: #555 !important;
   }
 
+  /* The Qualifications Scotland notice. Smaller than the strapline because it
+     is a legal condition rather than something anyone reads by choice — but
+     not so small it stops being readable on paper, which would defeat the
+     point of printing it. */
+  .print-notice {
+    margin-top: 0.35rem;
+    font-size: 0.625rem;
+    line-height: 1.4;
+    color: #666 !important;
+  }
+
   /* Mark allocation sits hard right of the question, as on an exam paper.
      Keep it on one line with the question header rather than wrapping. */
   .q-marks {

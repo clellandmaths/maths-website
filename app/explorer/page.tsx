@@ -27,6 +27,7 @@ import { higherAppsTopicCategories, higherAppsTopics } from '@/lib/higher-apps-t
 import { n5AppsTopicCategories, n5AppsTopics } from '@/lib/n5-apps-topics';
 import { getAvailableN5Years, getAvailableHigherYears, getAvailableAHYears, getAvailableHigherAppsYears, getAvailableN5AppsYears } from '@/lib/data-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
@@ -755,8 +756,11 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                   {/* Print-only footer */}
                   <div className="print-only print-footer">
-                    Created with <strong>Clelland Maths</strong> &mdash; free Qualifications Scotland maths revision,
-                    past papers and video solutions at <strong>clellandmaths.com</strong>
+                    <p>
+                      Created with <strong>Clelland Maths</strong> &mdash; free Qualifications Scotland maths revision,
+                      past papers and video solutions at <strong>clellandmaths.com</strong>
+                    </p>
+                    <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
                   </div>
 
                   {/* Mobile bottom action bar — always visible on scroll */}
