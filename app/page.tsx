@@ -6,10 +6,39 @@ import TryQuestion from '@/components/Home/TryQuestion';
 import CountdownTile from '@/components/Home/CountdownTile';
 import {
   n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos,
-  paperYearRange, siteTotals,
+  paperYearRange, siteTotals, type PaperVideo,
 } from '@/lib/past-paper-videos';
+import { hasSpecial } from '@/lib/specials-loader';
 
 const totals = siteTotals();
+
+/**
+ * What each course actually offers, in the same order on every card.
+ *
+ * These lines were written by hand and had drifted apart: National 5 and Higher
+ * advertised "Video solutions / Worksheet builder" while the other three said
+ * "Course notes / Video lessons", so the same product read as two different
+ * things depending on the course, and three of them appeared to have no past
+ * papers at all. Every course has notes, practice, a paper archive, the
+ * worksheet builder and a revision marathon; only the last two rows differ, and
+ * only where the difference is real.
+ */
+function courseFeatures(id: string, registry: PaperVideo[]): string[] {
+  const rows = [
+    `Past papers ${paperYearRange(registry)}`,
+    // Advanced Higher's 2016-2021 papers predate the video walkthroughs and
+    // carry the full marking instructions instead — 98 of its 215 questions.
+    id === 'ah' ? 'Video solutions & markschemes' : 'Video solutions',
+    'Course notes & worked examples',
+    'Guided practice by topic',
+    'Worksheet builder',
+  ];
+  if (hasSpecial(id)) rows.push('Whole-course revision marathon');
+  // Higher Applications sits its exam with the data booklet and a set of
+  // spreadsheet/RStudio files rather than a formulae sheet.
+  if (id === 'higher-apps') rows.push('Data booklets & data files');
+  return rows;
+}
 
 const courses: CourseCover[] = [
   {
@@ -18,7 +47,7 @@ const courses: CourseCover[] = [
     name: 'National 5',
     subject: 'Mathematics',
     gradient: 'from-cyan-600 to-blue-600',
-    contents: [`Past papers ${paperYearRange(n5PaperVideos)}`, 'Video solutions', 'Worksheet builder'],
+    contents: courseFeatures('n5', n5PaperVideos),
   },
   {
     id: 'higher',
@@ -26,7 +55,7 @@ const courses: CourseCover[] = [
     name: 'Higher',
     subject: 'Mathematics',
     gradient: 'from-orange-600 to-red-600',
-    contents: [`Past papers ${paperYearRange(higherPaperVideos)}`, 'Video solutions', 'Worksheet builder'],
+    contents: courseFeatures('higher', higherPaperVideos),
   },
   {
     id: 'ah',
@@ -34,7 +63,7 @@ const courses: CourseCover[] = [
     name: 'Advanced Higher',
     subject: 'Mathematics',
     gradient: 'from-emerald-600 to-teal-600',
-    contents: [`Past papers ${paperYearRange(ahPaperVideos)}`, 'Course notes', 'Video lessons'],
+    contents: courseFeatures('ah', ahPaperVideos),
   },
   {
     id: 'n5-apps',
@@ -42,7 +71,7 @@ const courses: CourseCover[] = [
     name: 'N5 Applications',
     subject: 'Applications of Maths',
     gradient: 'from-amber-500 to-orange-500',
-    contents: [`Past papers ${paperYearRange(n5AppsPaperVideos)}`, 'Course notes', 'Video lessons'],
+    contents: courseFeatures('n5-apps', n5AppsPaperVideos),
   },
   {
     id: 'higher-apps',
@@ -50,7 +79,7 @@ const courses: CourseCover[] = [
     name: 'Higher Applications',
     subject: 'Applications of Maths',
     gradient: 'from-violet-600 to-purple-600',
-    contents: [`Past papers ${paperYearRange(higherAppsPaperVideos)}`, 'Course notes', 'Video lessons'],
+    contents: courseFeatures('higher-apps', higherAppsPaperVideos),
   },
 ];
 
