@@ -143,7 +143,7 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
                 <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
                   {info.label}
                 </h2>
-                <p className="text-sm text-slate-400 mb-6">{info.papers}</p>
+                <p className="text-sm text-muted-dim mb-6">{info.papers}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {lobbyFeatures.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-slate-300">
@@ -251,7 +251,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                   )}
                   <span className="text-lg font-semibold">{cat.category}</span>
                 </div>
-                <span className={`text-sm font-medium ${catChecked === catTotal ? theme.text : 'text-slate-400'}`}>
+                <span className={`text-sm font-medium ${catChecked === catTotal ? theme.text : 'text-muted-dim'}`}>
                   {catChecked}/{catTotal}
                 </span>
               </button>
@@ -280,7 +280,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                               >
                                 {isChecked && <Check className="h-3 w-3 text-white" />}
                               </div>
-                              <span className={`text-sm transition-colors ${isChecked ? 'text-slate-400 line-through' : 'text-slate-300'}`}>
+                              <span className={`text-sm transition-colors ${isChecked ? 'text-muted-dim line-through' : 'text-slate-300'}`}>
                                 {sub}
                               </span>
                             </button>
@@ -363,7 +363,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
                 {info.examDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}{', '}
                 {info.examDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true })}
                 {info.estimated && (
-                  <span className="ml-2 font-mono text-xs text-slate-400">est. — official timetable TBC</span>
+                  <span className="ml-2 font-mono text-xs text-muted-dim">est. — official timetable TBC</span>
                 )}
               </p>
             </div>

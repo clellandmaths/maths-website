@@ -134,7 +134,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                 <span className={`flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full shrink-0`}>
                   {index + 1}
                 </span>
-                <span className="text-sm text-slate-400 shrink-0">
+                <span className="text-sm text-muted-dim shrink-0">
                   {questionLabel(q)}
                 </span>
                 {q.topics?.slice(0, 2).map((topic) => (
@@ -226,7 +226,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                 ) : (
                   // Neither a video nor marking instructions: say so, rather
                   // than leaving a gap that reads as a missing button
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-slate-700 text-slate-400 text-sm">
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-slate-700 text-muted-dim text-sm">
                     <Play className="h-4 w-4" />
                     Video solution coming soon
                   </span>

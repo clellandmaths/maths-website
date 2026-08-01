@@ -183,7 +183,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           <p className="text-slate-400 text-lg mb-2">
             You completed today&apos;s {DAILY_COUNT} questions
           </p>
-          <p className="text-slate-400 text-sm mb-8">{dateString}</p>
+          <p className="text-muted-dim text-sm mb-8">{dateString}</p>
           <button
             onClick={onBack}
             className={`px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`}
@@ -214,7 +214,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             <span className="hidden sm:inline text-sm">Close</span>
           </button>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-slate-400 hidden sm:inline">{dateString}</span>
+            <span className="text-xs text-muted-dim hidden sm:inline">{dateString}</span>
             <div className="px-2 py-1 bg-orange-600/20 text-orange-400 text-xs font-medium rounded">
               Daily Warm Up
             </div>
@@ -224,7 +224,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               Question <span className={`${theme.text} font-medium`}>{currentIndex + 1}</span> of{' '}
               <span className="text-slate-300">{questions!.length}</span>
             </p>
-            <p className="text-slate-400 text-xs mt-0.5">
+            <p className="text-muted-dim text-xs mt-0.5">
               {question.year} Paper {question.paperNumber} Q{question.questionNumber}
             </p>
             <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />

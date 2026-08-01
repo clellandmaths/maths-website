@@ -190,11 +190,11 @@ export default function FilterSidebar({
             value={topicSearch}
             onChange={(e) => setTopicSearch(e.target.value)}
             placeholder="Search topics..."
-            className="w-full pl-8 pr-8 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-sm text-slate-300 placeholder:text-slate-400 focus:outline-none focus:border-white/40"
+            className="w-full pl-8 pr-8 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-sm text-slate-300 placeholder:text-muted-dim focus:outline-none focus:border-white/40"
           />
           {topicSearch && (
             <button onClick={() => setTopicSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2">
-              <X className="h-3.5 w-3.5 text-slate-400 hover:text-slate-300" />
+              <X className="h-3.5 w-3.5 text-muted-dim hover:text-slate-300" />
             </button>
           )}
         </div>
@@ -212,7 +212,7 @@ export default function FilterSidebar({
             .map(({ category, topics }, catIndex) => (
             <div key={category}>
               {/* Category Header */}
-              <h4 className={`text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ${catIndex > 0 ? 'mt-4' : ''}`}>
+              <h4 className={`text-xs font-semibold text-muted-dim uppercase tracking-wider mb-2 ${catIndex > 0 ? 'mt-4' : ''}`}>
                 {category}
               </h4>
               {Object.entries(topics)
@@ -320,7 +320,7 @@ export default function FilterSidebar({
       {/* Active Filter Pills */}
       {hasActiveFilters && (
         <div className="mt-4">
-          <h4 className="text-xs font-medium text-slate-400 mb-2 uppercase">Active</h4>
+          <h4 className="text-xs font-medium text-muted-dim mb-2 uppercase">Active</h4>
           <div className="flex flex-wrap gap-1">
             {selectedYears.map((year) => (
               <button
@@ -353,7 +353,7 @@ export default function FilterSidebar({
               </button>
             ))}
             {selectedSubtopics.length > 5 && (
-              <span className="px-2 py-1 text-slate-400 text-xs">
+              <span className="px-2 py-1 text-muted-dim text-xs">
                 +{selectedSubtopics.length - 5} more
               </span>
             )}

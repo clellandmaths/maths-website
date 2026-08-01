@@ -367,7 +367,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   <h3 className="text-xl font-medium text-slate-400 mb-2">
                     Build Your Worksheet
                   </h3>
-                  <p className="text-slate-400 max-w-md mx-auto mb-6">
+                  <p className="text-muted-dim max-w-md mx-auto mb-6">
                     Use the filters to find questions by topic and year.
                     Click &quot;+ Add&quot; on any question to add it to your worksheet.
                   </p>
@@ -432,7 +432,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   <h3 className="text-lg font-medium text-slate-400 mb-2">
                     No questions found
                   </h3>
-                  <p className="text-slate-400">
+                  <p className="text-muted-dim">
                     Try adjusting your filters to find questions.
                   </p>
                 </div>
@@ -449,7 +449,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   <h3 className="text-xl font-medium text-slate-400 mb-2">
                     Your Worksheet is Empty
                   </h3>
-                  <p className="text-slate-400 max-w-md mx-auto mb-6">
+                  <p className="text-muted-dim max-w-md mx-auto mb-6">
                     Switch to &quot;Browse Questions&quot; and use the filters to find questions.
                     Click &quot;+ Add&quot; to build your worksheet.
                   </p>
@@ -567,7 +567,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <span className={`q-badge flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
-                            <span className="text-sm text-slate-400">
+                            <span className="text-sm text-muted-dim">
                               {q.year} Paper {q.paperNumber} Q{q.questionNumber}
                             </span>
                             {q.topics?.slice(0, 2).map((topic) => (
@@ -595,7 +595,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index - 1)}
                               disabled={index === 0}
-                              className="p-3 lg:p-1 text-slate-400 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-muted-dim hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move up"
                             >
                               <ChevronUp className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -603,7 +603,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index + 1)}
                               disabled={index === worksheetItems.length - 1}
-                              className="p-3 lg:p-1 text-slate-400 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-muted-dim hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move down"
                             >
                               <ChevronDown className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -620,7 +620,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           {/* Remove button */}
                           <button
                             onClick={() => removeItem(q)}
-                            className="no-print shrink-0 p-1.5 text-slate-400 hover:text-red-400 rounded-lg hover:bg-slate-800 transition-colors"
+                            className="no-print shrink-0 p-1.5 text-muted-dim hover:text-red-400 rounded-lg hover:bg-slate-800 transition-colors"
                             title="Remove from worksheet"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -670,7 +670,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <div className="no-print flex items-center justify-between mt-4 pt-4 border-t border-slate-800">
                           <button
                             onClick={() => setPresentStartIndex(index)}
-                            className="text-xs text-slate-400 hover:text-slate-300 transition-colors"
+                            className="text-xs text-muted-dim hover:text-slate-300 transition-colors"
                           >
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
@@ -908,7 +908,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
                 <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
                   {course.name}
                 </h2>
-                <p className="text-sm text-slate-400 mb-6">{course.subtitle}</p>
+                <p className="text-sm text-muted-dim mb-6">{course.subtitle}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {explorerFeatures.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-slate-300">
