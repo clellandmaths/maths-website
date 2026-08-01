@@ -1,27 +1,44 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Mail, ExternalLink, Sparkles } from 'lucide-react';
+import { Mail, Youtube, Music2, Smartphone, Star, Shirt, Coffee, Video, Sparkles, type LucideIcon } from 'lucide-react';
 import { FOLLOW_LINKS, SUPPORT_LINKS, CONTACT_EMAIL, type ConnectLink } from '@/lib/connect';
 
 export const metadata: Metadata = {
   title: 'Connect',
   description:
-    'Get in touch with Clelland Maths, or find the YouTube channel, TikTok, revision app, channel membership and merch store.',
+    'Get in touch with Clelland Maths by email, or find the YouTube channel, TikTok, revision app, channel membership and merch store.',
 };
 
-function Tile({ link }: { link: ConnectLink }) {
+// lucide has no TikTok mark; Music2 is the closest honest stand-in and the
+// black button colour carries the recognition anyway.
+const ICONS: Record<ConnectLink['icon'], LucideIcon> = {
+  youtube: Youtube,
+  tiktok: Music2,
+  app: Smartphone,
+  star: Star,
+  shirt: Shirt,
+  coffee: Coffee,
+  cameo: Video,
+};
+
+/**
+ * Solid colour, white text, icon on the left — the same shape as the live
+ * app's Connect buttons, so someone arriving from there recognises the page.
+ */
+function LinkButton({ link }: { link: ConnectLink }) {
+  const Icon = ICONS[link.icon];
   return (
     <a
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-start gap-3 bg-card border border-border rounded-xl p-5 hover:border-white/20 transition-colors"
+      className={`flex items-center gap-3 ${link.colour} text-white font-semibold py-3 px-4 rounded-lg transition-colors`}
     >
-      <div className="flex-1">
-        <p className={`font-display font-bold mb-1 ${link.accent}`}>{link.name}</p>
-        <p className="text-sm text-muted-foreground leading-relaxed">{link.description}</p>
-      </div>
-      <ExternalLink className="h-4 w-4 text-muted-dim shrink-0 mt-1 group-hover:text-foreground transition-colors" />
+      <Icon className="h-5 w-5 shrink-0" />
+      <span className="flex-1">
+        {link.name}
+        <span className="block text-xs font-normal text-white/80">{link.description}</span>
+      </span>
     </a>
   );
 }
@@ -37,24 +54,27 @@ export default function ConnectPage() {
       </p>
 
       <section className="mt-10">
-        <h2 className="font-display text-xl font-bold tracking-tight mb-3">Get in touch</h2>
+        <h2 className="font-display text-xl font-bold tracking-tight mb-4">Get in touch</h2>
         {CONTACT_EMAIL ? (
-          <>
+          <div className="bg-card border border-border rounded-2xl p-6">
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="inline-flex items-center gap-2 px-5 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
+              className="inline-flex items-center gap-3 bg-accent hover:bg-accent-hover text-background font-bold py-3 px-5 rounded-lg transition-colors"
             >
-              <Mail className="h-4 w-4" />
+              <Mail className="h-5 w-5" />
               Email me
             </a>
-            <p className="mt-3 text-sm text-muted-foreground">
-              <span className="font-mono">{CONTACT_EMAIL}</span> — I read everything, though it can
-              take a few days during term time.
+            <p className="mt-4 text-sm text-muted-foreground">
+              {/* Written out as well as linked: on a shared or school computer a
+                  mailto: often opens nothing, and then the address itself is the
+                  only useful thing on the page. */}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="font-mono underline hover:text-foreground">
+                {CONTACT_EMAIL}
+              </a>
+              {' '}— I read everything, though replies can take a few days in term time.
             </p>
-          </>
+          </div>
         ) : (
-          /* No address set yet. Rather than a dead mailto:, point at the channel,
-             which is where messages actually get seen today. */
           <p className="text-muted-foreground leading-relaxed">
             The quickest way to reach me is a comment on the{' '}
             <a
@@ -73,14 +93,14 @@ export default function ConnectPage() {
       <section className="mt-10">
         <h2 className="font-display text-xl font-bold tracking-tight mb-4">Where the maths is</h2>
         <div className="grid sm:grid-cols-2 gap-3">
-          {FOLLOW_LINKS.map(link => <Tile key={link.url} link={link} />)}
+          {FOLLOW_LINKS.map(link => <LinkButton key={link.url} link={link} />)}
         </div>
       </section>
 
       <section className="mt-10">
         <h2 className="font-display text-xl font-bold tracking-tight mb-4">Support and extras</h2>
         <div className="grid sm:grid-cols-2 gap-3">
-          {SUPPORT_LINKS.map(link => <Tile key={link.url} link={link} />)}
+          {SUPPORT_LINKS.map(link => <LinkButton key={link.url} link={link} />)}
         </div>
       </section>
 

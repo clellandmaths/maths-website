@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles, Mail } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
@@ -11,6 +11,7 @@ const navLinks = [
   // Carries the accent colour: it is the one paid thing on the site, and four
   // identically-styled items would bury it among the free ones.
   { href: '/academy', label: 'Academy', icon: Sparkles, highlight: true },
+  { href: '/connect', label: 'Connect', icon: Mail },
 ];
 
 // Course-colour dots match each course's gradient identity
