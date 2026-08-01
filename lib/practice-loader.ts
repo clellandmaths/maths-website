@@ -195,11 +195,17 @@ export async function resolveQuestions(
       // solution is the topic lesson at a timestamp, not the whole-paper
       // walkthrough the archive copy points at. Everything else — question,
       // answer, marks, diagram — still comes from the one stored copy.
-      out.push(
-        q.videoId
-          ? { ...hit, videoId: q.videoId, timestamp: q.timestamp }
-          : hit
-      );
+      //
+      // solutionUrl rides along too. He works these past papers through on
+      // maths.scot as well, and linking is a condition of the arrangement —
+      // but the link belongs to the practice entry, not to the stored copy, so
+      // it is spread onto a fresh object rather than written into the shared
+      // one. That is why the archive and the Explorer show no maths.scot link
+      // for the very same question.
+      out.push({
+        ...(q.videoId ? { ...hit, videoId: q.videoId, timestamp: q.timestamp } : { ...hit }),
+        ...(q.solutionUrl ? { solutionUrl: q.solutionUrl } : {}),
+      });
       continue;
     }
     if (q.question === undefined || q.answer === undefined) continue;

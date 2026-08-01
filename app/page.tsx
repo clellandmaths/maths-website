@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Compass } from 'lucide-react';
+import { Compass, Sparkles, ChevronRight } from 'lucide-react';
+import { SEATS_PER_COURSE } from '@/lib/academy';
 import LogoAnimation from '@/components/LogoAnimation';
 import ExamCover, { type CourseCover } from '@/components/Home/ExamCover';
 import TryQuestion from '@/components/Home/TryQuestion';
@@ -151,6 +152,40 @@ export default function Home() {
               <TryQuestion />
             </div>
             <CountdownTile />
+          </div>
+        </div>
+      </section>
+
+      {/* Academy — the one paid thing, and it comes last on purpose. Someone
+          arriving here is looking for free past papers; they get the whole
+          site first and the offer afterwards, framed as an addition to it
+          rather than a gate in front of it. */}
+      <section className="px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/10 to-transparent p-6 sm:p-8">
+            <div className="flex flex-col md:flex-row md:items-center gap-6">
+              <div className="flex-1">
+                <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent mb-2">
+                  <Sparkles className="h-4 w-4" />
+                  Clelland Maths Academy
+                </p>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+                  Want live teaching too?
+                </h2>
+                <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                  Everything above is free and always will be. The Academy adds a weekly live
+                  masterclass with an active Scottish maths teacher — recorded, with notes, mock
+                  papers and support through the week. Strictly {SEATS_PER_COURSE} seats a course.
+                </p>
+              </div>
+              <Link
+                href="/academy"
+                className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
+              >
+                See the Academy
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
