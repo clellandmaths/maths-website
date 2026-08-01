@@ -6,30 +6,64 @@
 # them 404s and loses whatever ranking it has built up.
 #
 # 301, not 302: the moves are permanent, and only a 301 passes ranking on.
+#
+# A first pass listed only the eight pages in the top nav. A proper crawl found
+# fourteen — the extra six are course sub-pages, and one of those
+# (/national-5-maths/n5-maths-past-papers) is linked from nowhere at all and
+# only turned up by guessing the URL. So the per-course wildcards below matter
+# more than the exact list: an orphan nobody has linked for years can still be
+# sitting in Google's index, and the wildcard catches it whether we knew about
+# it or not.
+#
+# Order matters — Cloudflare takes the first match, so specific rules come
+# before the wildcard that would otherwise swallow them.
 
-# ── the old Google Site ─────────────────────────────────────────────
-/home                                 /                       301
-/national-5-maths                     /course/n5              301
-/higher-maths                         /course/higher          301
-/ah-maths                             /course/ah              301
-/national-5-applications-of-maths     /course/n5-apps         301
-/higher-applications-of-maths         /course/higher-apps     301
-# /connect already exists on this site at the same path, so it needs no rule.
+# ── National 5 Maths ────────────────────────────────────────────────
+/national-5-maths/n5-maths-past-papers        /course/n5                   301
+/national-5-maths                             /course/n5                   301
+/national-5-maths/*                           /course/n5                   301
 
-# The old site's practice papers page. Exam Hall is the closest equivalent —
-# it holds the revision marathons and the paper archive.
-/2026-practice-papers                 /exam-hall              301
+# ── Higher Maths ────────────────────────────────────────────────────
+/higher-maths/higher-maths-past-papers        /course/higher               301
+/higher-maths/higher-2025-practice-papers     /exam-hall                   301
+/higher-maths                                 /course/higher               301
+/higher-maths/*                               /course/higher               301
+
+# ── Advanced Higher ─────────────────────────────────────────────────
+/ah-maths/ah-2025-practice-papers             /exam-hall                   301
+/ah-maths                                     /course/ah                   301
+/ah-maths/*                                   /course/ah                   301
+
+# ── National 5 Applications ─────────────────────────────────────────
+/national-5-applications-of-maths/n5-apps-practice-papers  /exam-hall      301
+/national-5-applications-of-maths             /course/n5-apps              301
+/national-5-applications-of-maths/*           /course/n5-apps              301
+
+# ── Higher Applications ─────────────────────────────────────────────
+# No sub-pages found, but it is the same shape of page as the other four and
+# an unlinked child would look exactly like the National 5 one did.
+/higher-applications-of-maths                 /course/higher-apps          301
+/higher-applications-of-maths/*               /course/higher-apps          301
+
+# ── top-level pages ─────────────────────────────────────────────────
+/home                                         /                            301
+# /connect already exists here at the same path, so it needs no rule.
+
+# His own practice papers. Exam Hall is the closest equivalent — it holds the
+# revision marathons and the paper archive.
+/2026-practice-papers                         /exam-hall                   301
+/2026-practice-papers/*                       /exam-hall                   301
 
 # ── common guesses and old shapes ───────────────────────────────────
 # Cheap to add, and they catch links typed from memory or printed on handouts.
-/national5                            /course/n5              301
-/national-5                           /course/n5              301
-/n5                                   /course/n5              301
-/higher                               /course/higher          301
-/advanced-higher                      /course/ah              301
-/ah                                   /course/ah              301
-/n5-apps                              /course/n5-apps         301
-/higher-apps                          /course/higher-apps     301
-/papers                               /exam-hall              301
-/past-papers                          /exam-hall              301
-/notes                                /course/n5/notes        301
+/national5                                    /course/n5                   301
+/national-5                                   /course/n5                   301
+/n5                                           /course/n5                   301
+/higher                                       /course/higher               301
+/advanced-higher                              /course/ah                   301
+/ah                                           /course/ah                   301
+/n5-apps                                      /course/n5-apps              301
+/higher-apps                                  /course/higher-apps          301
+/papers                                       /exam-hall                   301
+/past-papers                                  /exam-hall                   301
+/notes                                        /course/n5/notes             301
