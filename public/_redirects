@@ -20,12 +20,17 @@
 
 # ── National 5 Maths ────────────────────────────────────────────────
 /national-5-maths/n5-maths-past-papers        /course/n5                   301
+# Already 404 on the old site, but still in Google's index — a 301 to something
+# real beats a 404, and it clears them out of Search Console faster.
+/national-5-maths/n5-2025-practice-papers     /exam-hall                   301
+/national-5-maths/national-5-maths-quizzes    /course/n5/practice          301
 /national-5-maths                             /course/n5                   301
 /national-5-maths/*                           /course/n5                   301
 
 # ── Higher Maths ────────────────────────────────────────────────────
 /higher-maths/higher-maths-past-papers        /course/higher               301
 /higher-maths/higher-2025-practice-papers     /exam-hall                   301
+/higher-maths/2024-practice-papers            /exam-hall                   301
 /higher-maths                                 /course/higher               301
 /higher-maths/*                               /course/higher               301
 
@@ -44,6 +49,13 @@
 # an unlinked child would look exactly like the National 5 one did.
 /higher-applications-of-maths                 /course/higher-apps          301
 /higher-applications-of-maths/*               /course/higher-apps          301
+
+# ── the Academy page ────────────────────────────────────────────────
+# Indexed, live, and linked from nowhere — it is not in the site nav, so no
+# crawl finds it. It only turned up in the Search Console export, which is the
+# real lesson here: on Google Sites, crawling is not enough.
+/maths-tutoring                               /academy                     301
+/maths-tutoring/*                             /academy                     301
 
 # ── top-level pages ─────────────────────────────────────────────────
 /home                                         /                            301
