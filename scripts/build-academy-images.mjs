@@ -24,18 +24,15 @@ const IN = ORIGINALS;
 
 const JOBS = [
   {
-    // Pointing at the "Whole of Differentiation" board.
+    // Teaching at the board with real Higher trig on it. Cropped to portrait
+    // around him, keeping the numbered questions on the left — they are what
+    // makes it read as a maths lesson rather than a stock headshot.
     //
-    // The crop is doing one specific job: the board also reads "HIGHER MATHS
-    // 2023 EXAMS", and a 2023 date on a page selling 2026/27 tuition makes the
-    // whole thing look stale. Cutting at x=2604 drops that block.
-    //
-    // It costs the fingertip. His raised arm and hand overlap the text block
-    // horizontally, so no rectangular crop keeps the full gesture and loses the
-    // year — the arm reading as pointing off-frame is the better trade.
-    from: 'IMG_0244.JPG',
+    // The Whole of Differentiation shot was tried here and reverted: cropping
+    // out its "HIGHER MATHS 2023 EXAMS" board also cut his pointing hand.
+    from: 'IMG_5594.jpeg',
     to: 'hero.webp',
-    crop: { left: 790, top: 0, width: 1814, height: 2268 },
+    crop: { left: 250, top: 0, width: 2419, height: 3024 },
     width: 1000,
     quality: 82,
   },

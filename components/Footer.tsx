@@ -40,6 +40,7 @@ export default function Footer() {
                 Revision App
               </a>
               <Link href="/academy" className="hover:text-foreground transition-colors">Academy</Link>
+              <Link href="/connect" className="hover:text-foreground transition-colors">Connect</Link>
             </nav>
           </div>
         </div>

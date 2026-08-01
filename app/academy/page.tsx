@@ -3,10 +3,11 @@ import Link from 'next/link';
 import {
   Video, Archive, FileText, ClipboardList, MessageCircle, UserCheck, HeartHandshake,
   Lock, ShieldCheck, CalendarDays, Clock, ChevronRight, Rewind, GraduationCap,
-  Target, PiggyBank,
+  Target, PiggyBank, Mail,
 } from 'lucide-react';
 import { ACADEMY_COURSES, ACADEMY_IMAGES, ACADEMY_PRESS, SEATS_PER_COURSE, TRIAL_PRICE, MONTHLY_PRICE } from '@/lib/academy';
 import { getCourseTheme } from '@/lib/course-theme';
+import { contactHref } from '@/lib/connect';
 
 export const metadata: Metadata = {
   title: 'Academy — Live Masterclasses',
@@ -424,19 +425,19 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      <p className="mt-14 pt-6 border-t border-border text-sm text-muted-dim">
-        Questions before you buy? Ask on the{' '}
-        <a
-          href="https://www.youtube.com/clellandmaths"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-foreground"
+      <div className="mt-14 pt-6 border-t border-border flex flex-wrap items-center gap-4">
+        <Link
+          href={contactHref()}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
         >
-          Clelland Maths YouTube channel
-        </a>
-        . The rest of the site — past papers, video solutions and course notes — is{' '}
-        <Link href="/" className="underline hover:text-foreground">free and always will be</Link>.
-      </p>
+          <Mail className="h-4 w-4" />
+          Questions before you buy?
+        </Link>
+        <p className="text-sm text-muted-dim">
+          The rest of the site — past papers, video solutions and course notes — is{' '}
+          <Link href="/" className="underline hover:text-foreground">free and always will be</Link>.
+        </p>
+      </div>
     </div>
   );
 }

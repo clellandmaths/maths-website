@@ -149,16 +149,7 @@ export default function PrivacyPage() {
       <Section title="Questions">
         <p>
           If something here is unclear, or you think the site is doing something this page does not
-          describe, get in touch through the{' '}
-          <a
-            href="https://www.youtube.com/clellandmaths"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-foreground"
-          >
-            Clelland Maths YouTube channel
-          </a>
-          .
+          describe, <Link href="/connect" className="underline hover:text-foreground">get in touch</Link>.
         </p>
       </Section>
 
