@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run check:math && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && next build",
+    "postbuild": "node scripts/check-headers-redirects.mjs",
     "build:only": "next build",
     "start": "next start",
     "lint": "eslint",
