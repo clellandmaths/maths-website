@@ -270,7 +270,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 mt-4 text-sm text-slate-400 hover:text-slate-200 underline transition-colors"
                     >
-                      Full written solution at maths.scot
+                      Full written solution at Maths.scot
                     </a>
                   )}
                 </div>

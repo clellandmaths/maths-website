@@ -179,7 +179,7 @@ export default function PracticeQuestion({
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              Full written solution at maths.scot
+              Full written solution at Maths.scot
             </a>
           )}
         </div>

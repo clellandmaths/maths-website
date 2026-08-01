@@ -166,7 +166,7 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
             rel="noopener noreferrer"
             className="underline hover:text-foreground"
           >
-            maths.scot
+            Maths.scot
           </a>
           . Full written solutions are on his site — the links above go straight to them.
         </p>

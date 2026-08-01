@@ -51,22 +51,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Attributions. Both are conditions of using the material rather than
-            courtesies, so they sit on every page rather than on an about page
-            nobody opens. */}
-        <div className="mt-8 pt-6 border-t border-border space-y-2">
-          <p className="text-xs text-muted-foreground">
-            Guided practice questions ©{' '}
-            <a
-              href="https://www.maths.scot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-foreground transition-colors"
-            >
-              maths.scot
-            </a>
-            , used with permission. An outstanding resource for learners and teachers.
-          </p>
+        {/* Past paper material appears all over the site, so its notice belongs
+            on every page. The Maths.scot credit does not live here: his
+            questions only appear in guided practice, and it sits on those pages
+            and on each question instead, where it is actually about what the
+            reader is looking at. */}
+        <div className="mt-8 pt-6 border-t border-border">
           <p className="text-xs text-muted-dim">
             {QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}
           </p>
