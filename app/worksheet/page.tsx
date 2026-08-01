@@ -2,12 +2,13 @@
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Printer, Eye, EyeOff, Compass, Maximize2 } from 'lucide-react';
+import { Printer, Eye, EyeOff, Compass, Maximize2, Play } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
 import { decodeWorksheet, resolveWorksheet, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
+import VideoModal from '@/components/VideoModal';
 import {
   getAllN5Questions, getAllHigherQuestions, getAllAHQuestions,
   getAllN5AppsQuestions, getAllHigherAppsQuestions,
@@ -44,7 +45,8 @@ function SharedWorksheet() {
   const [missing, setMissing] = useState(0);
   const [courseId, setCourseId] = useState<string | null>(null);
   const [title, setTitle] = useState<string | undefined>();
-  const [showAnswers, setShowAnswers] = useState(false);
+  const [revealed, setRevealed] = useState<Set<number>>(new Set());
+  const [video, setVideo] = useState<{ videoId: string; timestamp: number; title: string } | null>(null);
   const [options, setOptions] = useState<WorksheetOptions>(NO_OPTIONS);
   const [fullScreenFrom, setFullScreenFrom] = useState<number | null>(null);
   const [notFound, setNotFound] = useState(false);
@@ -94,8 +96,8 @@ function SharedWorksheet() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <div className="mb-8">
-        <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2 no-print`}>
+      <div className="mb-8 no-print">
+        <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           {COURSE_NAMES[courseId ?? ''] ?? 'Worksheet'} · shared worksheet
         </p>
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-2">
@@ -133,44 +135,116 @@ function SharedWorksheet() {
         </button>
         {options.answers && (
           <button
-            onClick={() => setShowAnswers(s => !s)}
+            onClick={() => setRevealed(r => r.size === questions.length ? new Set() : new Set(questions.map((_, i) => i)))}
             className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
           >
-            {showAnswers ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            {showAnswers ? 'Hide answers' : 'Show answers'}
+            {revealed.size === questions.length ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {revealed.size === questions.length ? 'Hide all answers' : 'Show all answers'}
           </button>
         )}
       </div>
 
-      <ol className="space-y-6">
-        {questions.map((q, i) => (
-          <li key={`${q.year}-${q.paperNumber}-${q.questionIndex}`} className="bg-card border border-border rounded-xl p-5 sm:p-6 break-inside-avoid">
-            <div className="flex items-center gap-3 mb-3 flex-wrap">
-              <span className={`flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
-                {i + 1}
-              </span>
-              {/* No paper reference here: every question's own html opens with
-                  its "2026 P1 Q1" label, so repeating it prints it twice. */}
-              <Marks marks={q.marks} theme={theme} className="ml-auto" />
-            </div>
-            <MathRenderer html={q.question} className="question-content text-foreground/90" />
-            {options.qrCodes && q.videoId && (
-              <div className="mt-4 print-only">
-                <QRCodeImage
-                  url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
-                  size={64}
-                />
+      {/* Print-only header. The worksheet print stylesheet already knows these
+          class names from the Explorer, so a handout comes out of the printer
+          looking like one built there rather than a screenshot of a dark app. */}
+      <div className="print-only print-header">
+        <p className="print-strapline">clellandmaths.com — free maths revision for Scottish students</p>
+        <div className="flex justify-between items-end">
+          <h1 className="text-2xl font-bold">{title || `${COURSE_NAMES[courseId ?? ''] ?? ''} Worksheet`}</h1>
+          <div className="text-right text-sm">
+            <div>{questions.length} question{questions.length === 1 ? '' : 's'}</div>
+            {totalMarks > 0 && <div>{totalMarks} marks</div>}
+          </div>
+        </div>
+      </div>
+
+      <ol className="worksheet-container space-y-6">
+        {questions.map((q, i) => {
+          const isOpen = revealed.has(i);
+          return (
+            <li
+              key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
+              className="worksheet-question bg-card border border-border rounded-xl p-5 sm:p-6 break-inside-avoid"
+            >
+              <div className="flex items-center gap-3 mb-3 flex-wrap">
+                <span className={`q-badge flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
+                  {i + 1}
+                </span>
+                {/* No paper reference here: every question's own html opens with
+                    its "2026 P1 Q1" label, so repeating it prints it twice. */}
+                <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
+                {/* Beside the number rather than under the question, matching
+                    the Explorer's sheet — it keeps the QR out of the reading
+                    flow, on screen and on paper alike. */}
+                {options.qrCodes && q.videoId && (
+                  <QRCodeImage
+                    url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
+                    size={64}
+                    className="shrink-0 rounded"
+                  />
+                )}
               </div>
-            )}
-            {options.answers && showAnswers && (
-              <div className="mt-4 pt-4 border-t border-border">
-                <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Answer</p>
-                <MathRenderer html={q.answer} className="answer-content text-foreground/80" />
-              </div>
-            )}
-          </li>
-        ))}
+
+              <MathRenderer html={q.question} className="question-content text-foreground/90" />
+
+              {/* Whatever the maker granted, offered here on the card as well as
+                  in full screen — a pupil reading down the page should not have
+                  to go full screen to get at an answer they were given. */}
+              {(options.answers || (options.video && q.videoId)) && (
+                <div className="no-print flex flex-wrap gap-2 mt-4">
+                  {options.answers && (
+                    <button
+                      onClick={() => setRevealed(r => {
+                        const next = new Set(r);
+                        if (next.has(i)) next.delete(i); else next.add(i);
+                        return next;
+                      })}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
+                    >
+                      {isOpen ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      {isOpen ? 'Hide answer' : 'Show answer'}
+                    </button>
+                  )}
+                  {options.video && q.videoId && (
+                    <button
+                      onClick={() => setVideo({
+                        videoId: q.videoId,
+                        timestamp: timestampToSeconds(q.timestamp),
+                        title: `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`,
+                      })}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 text-sm font-medium rounded-lg transition-colors`}
+                    >
+                      <Play className="h-4 w-4" />
+                      Watch solution
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {options.answers && isOpen && (
+                <div className="answer-section mt-4 pt-4 border-t border-border">
+                  <p className={`answer-label font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Answer</p>
+                  <MathRenderer html={q.answer} className="answer-content text-foreground/80" />
+                </div>
+              )}
+            </li>
+          );
+        })}
       </ol>
+
+      <div className="print-only print-footer">
+        clellandmaths.com — free past papers, video solutions and worksheets
+      </div>
+
+      {video && (
+        <VideoModal
+          isOpen={true}
+          onClose={() => setVideo(null)}
+          videoId={video.videoId}
+          timestamp={video.timestamp}
+          title={video.title}
+        />
+      )}
 
       {fullScreenFrom !== null && (
         <QuestionPresenter
