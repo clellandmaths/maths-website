@@ -45,7 +45,13 @@
   # blocked webR — killing the workbook while looking like it was configured
   # correctly. Drop the inherited one first, then set this path's own.
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://webr.r-wasm.org; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://raw.githubusercontent.com; font-src 'self' data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; connect-src 'self' https://webr.r-wasm.org https://repo.r-wasm.org https://raw.githubusercontent.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'
+  # Quarto's Bootstrap theme @imports Lato from Google Fonts, and webR pulls
+  # its runtime and packages from the r-wasm hosts. The datasets come from
+  # raw.githubusercontent.com, which 302s to objects.githubusercontent.com
+  # for the actual bytes — CSP checks the redirect target as well as the
+  # first URL, so the whole family has to be allowed or the fetch dies
+  # halfway with nothing useful in the console.
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://*.r-wasm.org; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: blob: https://*.githubusercontent.com; font-src 'self' data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' blob: https://*.r-wasm.org https://*.githubusercontent.com; worker-src 'self' blob:; child-src 'self' blob:; object-src 'none'; base-uri 'self'
 
 # Hashed build assets never change under the same name, so they can be cached
 # hard. Everything else stays on Cloudflare's default so a deploy is visible.

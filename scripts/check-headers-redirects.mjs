@@ -18,14 +18,25 @@ const fail = [];
 const warn = [];
 
 // ── gather every external origin the built site references ─────────
-const origins = new Map(); // origin -> example file
+const origins = new Map();   // origin -> example file  (main site)
+const rsOrigins = new Map(); // origin -> example file  (RStudio workbook)
+
+function scanRStudio(p) {
+  const src = fs.readFileSync(p, 'utf8');
+  for (const m of src.matchAll(/https:\/\/([a-zA-Z0-9.-]+\.[a-z]{2,})/g)) {
+    const host = m[1];
+    if (host.endsWith('clellandmaths.com')) continue;
+    if (!rsOrigins.has(host)) rsOrigins.set(host, p.slice(OUT.length));
+  }
+}
 function scan(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) { scan(p); continue; }
     if (!/\.(html|js|css|json|webmanifest)$/.test(e.name)) continue;
-    // The Quarto workbook has its own policy; scanned separately below.
-    if (p.includes(path.join('rstudio'))) continue;
+    // The workbook is scanned too, against its own policy — skipping it here
+    // is precisely how a blocked Google Fonts import reached production.
+    if (p.includes('rstudio')) { scanRStudio(p); continue; }
     const src = fs.readFileSync(p, 'utf8');
     for (const m of src.matchAll(/https?:\/\/([a-zA-Z0-9.-]+\.[a-z]{2,})/g)) {
       const host = m[1];
@@ -72,6 +83,19 @@ for (const [what, re] of needs) {
   const ok = re.test(csp);
   if (!ok) fail.push(`CSP does not allow: ${what}`);
   console.log(`  ${ok ? 'yes' : 'NO '}  ${what}`);
+}
+
+// ── the workbook, against its own policy ───────────────────────────
+const rsBlock = headers.split(/\n(?=\S)/).find(b => b.trim().startsWith('/course/higher-apps/rstudio')) ?? '';
+const rsCsp = (rsBlock.match(/^\s*Content-Security-Policy:\s*(.+)$/m) ?? [])[1] ?? '';
+const rsAllowed = [...rsCsp.matchAll(/https:\/\/(\*\.)?([a-zA-Z0-9.-]+)/g)].map(m => (m[1] ? '*.' : '') + m[2]);
+const rsFetched = /fonts\.googleapis\.com|fonts\.gstatic\.com|r-wasm\.org|githubusercontent\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com/;
+console.log('\n── RStudio workbook origins ──');
+for (const [host, example] of [...rsOrigins].sort()) {
+  if (!rsFetched.test(host)) continue;   // the rest are comments and source-map URLs
+  const ok = rsAllowed.some(a => a === host || (a.startsWith('*.') && host.endsWith(a.slice(1))));
+  if (!ok) fail.push(`workbook fetches ${host} but its CSP does not allow it (e.g. ${example})`);
+  console.log(`  ${ok ? 'in CSP  ' : 'NOT ALLOWED'} ${host}`);
 }
 
 // ── a path must not end up with two CSPs ───────────────────────────
