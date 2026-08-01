@@ -1,22 +1,31 @@
 // Exam diet dates — single source of truth for countdowns.
-// UPDATE when Qualifications Scotland publishes the official 2027 timetable;
-// until then `estimated: true` keeps the UI honest about it.
+//
+// These are the official Qualifications Scotland 2027 slots, not estimates, so
+// `estimated: false` turns off the hedging the UI shows while dates are
+// guesses.
+//
+// Times are the start of each paper in BST (+01:00). May is always British
+// Summer Time, and a bare Z here would put every countdown an hour out.
+//
+// Two courses sit on 13 May and two on 21 May at different times, which is why
+// each carries a full timestamp rather than a date.
 
 export const examDiet = {
   year: 2027,
-  // Placeholder: recent diets have started maths papers in late April / early May
-  start: new Date('2027-04-30T09:00:00+01:00'),
-  estimated: true,
+  // The first maths paper of the diet: National 5, Thursday 13 May, 9am.
+  start: new Date('2027-05-13T09:00:00+01:00'),
+  estimated: false,
 };
 
-// Per-course exam dates — estimates until the official 2027 timetable is
-// published. Keep `estimated: true` so the UI labels them honestly.
 export const courseExamDates: Record<string, { date: Date; estimated: boolean }> = {
-  n5: { date: new Date('2027-04-30T09:00:00+01:00'), estimated: true },
-  higher: { date: new Date('2027-05-06T09:00:00+01:00'), estimated: true },
-  ah: { date: new Date('2027-05-04T09:00:00+01:00'), estimated: true },
-  'n5-apps': { date: new Date('2027-05-11T09:00:00+01:00'), estimated: true },
-  'higher-apps': { date: new Date('2027-05-11T09:00:00+01:00'), estimated: true },
+  // Thursday 13 May 2027
+  n5: { date: new Date('2027-05-13T09:00:00+01:00'), estimated: false },
+  ah: { date: new Date('2027-05-13T12:30:00+01:00'), estimated: false },
+  // Friday 14 May 2027
+  higher: { date: new Date('2027-05-14T09:00:00+01:00'), estimated: false },
+  // Friday 21 May 2027
+  'n5-apps': { date: new Date('2027-05-21T09:00:00+01:00'), estimated: false },
+  'higher-apps': { date: new Date('2027-05-21T13:00:00+01:00'), estimated: false },
 };
 
 export function daysUntilDiet(now: Date = new Date()): number {
