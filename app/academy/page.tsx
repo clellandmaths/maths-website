@@ -120,11 +120,7 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* ─────────────────── Press credits ───────────────────
-          The BBC mark is white letters in black boxes, so it needs the white
-          chip to be visible at all against a dark page — and that is also the
-          only background it is meant to sit on. Each credit links to the piece,
-          so the claim can be checked rather than taken on trust. */}
+      {/* ─────────────────── Press credits ─────────────────── */}
       <section className="mt-14 border-y border-border py-6">
         <p className="font-mono text-xs uppercase tracking-widest text-muted-dim mb-4 text-center">
           As featured on
@@ -141,9 +137,6 @@ export default function AcademyPage() {
             >
               {item.logo ? (
                 <span className="inline-flex items-center bg-white rounded-md px-3 py-2">
-                  {/* lazy and sized: eager, it became a preload hint that
-                      route-prefetching then dragged onto every other page,
-                      where it is downloaded and never used. */}
                   <img
                     src={item.logo}
                     alt={item.name}
@@ -201,6 +194,17 @@ export default function AcademyPage() {
               Rote memorisation does not work any more. Decoding an unfamiliar question is a skill,
               it can be taught, and it is exactly what we do inside the Academy.
             </p>
+            
+            {/* Added: Anchor Bypass */}
+            <div className="pt-4">
+              <a
+                href="#secure-your-seat"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors w-full sm:w-auto shadow-sm"
+              >
+                View Available Seats
+                <ChevronRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
           <ImageSlot
             name="bbc"
@@ -371,47 +375,57 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* ──────────────── Checkout ──────────────── */}
+      {/* ──────────────── Checkout (Updated Scarcity Box) ──────────────── */}
       <section id="secure-your-seat" className="mt-16 scroll-mt-20">
         <h2 className="font-display text-3xl font-bold tracking-tight mb-3">Secure your seat</h2>
-        <p className="text-muted-foreground mb-2">
-          Select your course below. Each link closes automatically once its {SEATS_PER_COURSE} seats
-          are taken — Stripe stops accepting payments at the cap, so a link that still works is a
-          seat that is still free.
-        </p>
+        
         <p className="text-sm text-muted-foreground mb-6">
           At checkout, please give your child&rsquo;s preferred email address so they can be added
           to the private member vault.
         </p>
 
-        <ul className="space-y-3">
-          {ACADEMY_COURSES.map(c => {
-            const theme = getCourseTheme(c.courseId);
-            return (
-              <li
-                key={c.courseId}
-                className="flex flex-col sm:flex-row sm:items-center gap-4 bg-card border border-border rounded-xl p-5"
-              >
-                <div className="flex-1">
-                  <p className="font-semibold">{c.name}</p>
-                  <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                    <Clock className="h-3.5 w-3.5" />
-                    {c.day} @ {c.time}
-                  </p>
-                </div>
-                <a
-                  href={c.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`shrink-0 w-full sm:w-72 inline-flex items-center justify-center gap-2 px-5 py-3 ${theme.bg} ${theme.bgHover} text-white font-bold rounded-lg transition-colors whitespace-nowrap`}
+        <div className="bg-accent/5 border-2 border-accent rounded-2xl p-5 sm:p-8">
+          <div className="flex items-start gap-4 mb-6 pb-6 border-b border-accent/20">
+            <div className="bg-accent text-background p-2 rounded-full shrink-0 mt-1">
+              <Lock className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="font-display text-xl font-bold text-foreground">Strictly limited capacity</h3>
+              <p className="text-muted-foreground mt-1">
+                Each link closes automatically once its {SEATS_PER_COURSE} seats are taken. Stripe stops accepting payments at the cap, so a link that still works is a seat that is still free.
+              </p>
+            </div>
+          </div>
+
+          <ul className="space-y-3">
+            {ACADEMY_COURSES.map(c => {
+              const theme = getCourseTheme(c.courseId);
+              return (
+                <li
+                  key={c.courseId}
+                  className="flex flex-col sm:flex-row sm:items-center gap-4 bg-card border border-border rounded-xl p-5 shadow-sm"
                 >
-                  {c.cta}
-                  <ChevronRight className="h-4 w-4 shrink-0" />
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+                  <div className="flex-1">
+                    <p className="font-bold text-lg">{c.name}</p>
+                    <p className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
+                      <Clock className="h-4 w-4" />
+                      {c.day} @ {c.time}
+                    </p>
+                  </div>
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`shrink-0 w-full sm:w-72 inline-flex items-center justify-center gap-2 px-5 py-3.5 ${theme.bg} ${theme.bgHover} text-white font-bold rounded-lg transition-transform hover:scale-[1.02] active:scale-95 whitespace-nowrap`}
+                  >
+                    {c.cta}
+                    <ChevronRight className="h-5 w-5 shrink-0" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
         <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-6 text-sm text-muted-foreground">
           <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5" /> Secure Stripe checkout</span>
