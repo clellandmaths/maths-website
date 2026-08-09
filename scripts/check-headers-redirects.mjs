@@ -61,9 +61,11 @@ for (const [host, example] of [...origins].sort()) {
   const allowed = allowedHosts.some(a => a === host || host.endsWith('.' + a));
   // Hosts that only ever appear as link targets or as prose. Verified by hand
   // when added: react.dev is the URL React builds into error messages, and
-  // gov.uk is a citation typed into a question's text. Neither is fetched, so
-  // neither needs a CSP entry.
-  const linkOnly = /youtube\.com$|tiktok\.com$|teemill\.com$|cameo\.com$|buymeacoffee\.com$|maths\.scot$|bbc\.co\.uk$|alloaadvertiser\.com$|stripe\.com$|schema\.org$|w3\.org$|nextjs\.org$|github\.com$|googlehosted\.com$|react\.dev$|gov\.uk$/.test(host);
+  // gov.uk is a citation typed into a question's text. hsn.uk.net and
+  // creativecommons.org are the source and licence links in the Higher notes
+  // credit — both plain anchors. None of these is fetched, so none needs a CSP
+  // entry. Anything genuinely loaded must go in the policy instead.
+  const linkOnly = /youtube\.com$|tiktok\.com$|teemill\.com$|cameo\.com$|buymeacoffee\.com$|maths\.scot$|bbc\.co\.uk$|alloaadvertiser\.com$|stripe\.com$|schema\.org$|w3\.org$|nextjs\.org$|github\.com$|googlehosted\.com$|react\.dev$|gov\.uk$|hsn\.uk\.net$|creativecommons\.org$/.test(host);
   const mark = allowed ? 'in CSP  ' : linkOnly ? 'link only' : 'NOT ALLOWED';
   if (!allowed && !linkOnly) fail.push(`origin ${host} is fetched but not in the CSP (e.g. ${example})`);
   console.log(`  ${mark.padEnd(12)} ${host}`);
