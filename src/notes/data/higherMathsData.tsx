@@ -2526,24 +2526,24 @@ export const higherMathsData: Section[] = [
                 <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="0.5" />
                 <polygon points="50,0 47,-2 47,2" fill="currentColor" />
                 <polygon points="0,50 -2,47 2,47" fill="currentColor" />
-                <text x="52" y="2" fill="currentColor" fontSize="4" fontStyle="italic">x</text>
-                <text x="2" y="52" fill="currentColor" fontSize="4" fontStyle="italic">y</text>
+                <text x="52" y="2" fill="currentColor" fontSize="6" fontStyle="italic">x</text>
+                <text x="2" y="52" fill="currentColor" fontSize="6" fontStyle="italic">y</text>
                 
                 <circle cx="0" cy="0" r="35" fill="none" stroke="#EF4444" strokeWidth="1" />
                 <circle cx="0" cy="0" r="1.5" fill="#EF4444" />
-                <text x="-3" y="-3" fill="#EF4444" fontSize="4" textAnchor="end">(0,0)</text>
+                <text x="-3" y="-3" fill="#EF4444" fontSize="6" textAnchor="end">(0,0)</text>
                 
                 <circle cx="21" cy="28" r="1.5" fill="#EF4444" />
-                <text x="24" y="29" fill="#EF4444" fontSize="4">(x,y)</text>
+                <text x="24" y="29" fill="#EF4444" fontSize="6">(x,y)</text>
                 
                 <line x1="0" y1="0" x2="21" y2="28" stroke="#EF4444" strokeWidth="0.5" />
-                <text x="8" y="15" fill="#EF4444" fontSize="4" fontStyle="italic">r</text>
+                <text x="8" y="15" fill="#EF4444" fontSize="6" fontStyle="italic">r</text>
                 
                 <line x1="21" y1="0" x2="21" y2="28" stroke="#EF4444" strokeWidth="0.5" strokeDasharray="1,1" />
-                <text x="23" y="14" fill="#EF4444" fontSize="4" fontStyle="italic">y</text>
+                <text x="23" y="14" fill="#EF4444" fontSize="6" fontStyle="italic">y</text>
                 
                 <line x1="0" y1="0" x2="21" y2="0" stroke="#EF4444" strokeWidth="0.5" strokeDasharray="1,1" />
-                <text x="10" y="-3" fill="#EF4444" fontSize="4" fontStyle="italic">x</text>
+                <text x="10" y="-3" fill="#EF4444" fontSize="6" fontStyle="italic">x</text>
                 
                 <polyline points="18,0 18,3 21,3" fill="none" stroke="#EF4444" strokeWidth="0.5" />
               </svg>
@@ -2712,7 +2712,7 @@ export const higherMathsData: Section[] = [
             <p>Given a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units, we can determine whether a point <InlineMath math="(p,q)" /> lies within the circle, on the circumference of the circle or out with the circle.</p>
             <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-white/10 rounded-xl">
               <div className="flex flex-col items-center">
-                <svg viewBox="0 0 100 100" className="w-24 h-24">
+                <svg viewBox="0 0 111 100" className="w-24 h-24">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
                   <circle cx="50" cy="50" r="4" fill="#EF4444" />
                 </svg>
@@ -2722,7 +2722,7 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <svg viewBox="0 0 100 100" className="w-24 h-24">
+                <svg viewBox="0 0 111 100" className="w-24 h-24">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
                   <circle cx="85" cy="30" r="4" fill="#EF4444" stroke="black" strokeWidth="1" />
                 </svg>
@@ -2732,7 +2732,7 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <svg viewBox="0 0 100 100" className="w-24 h-24">
+                <svg viewBox="0 0 111 100" className="w-24 h-24">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
                   <circle cx="105" cy="50" r="4" fill="#EF4444" stroke="black" strokeWidth="1" />
                 </svg>
@@ -2910,7 +2910,7 @@ export const higherMathsData: Section[] = [
                         <line x1="0" y1="0" x2="70" y2="0" stroke="currentColor" strokeWidth="1" />
                         <circle cx="0" cy="0" r="2" fill="#A855F7" />
                         <circle cx="70" cy="0" r="2" fill="#22C55E" />
-                        <text x="35" y="-5" fill="currentColor" fontSize="8" fontStyle="italic">d</text>
+                        <text x="35" y="-5" fill="currentColor" fontSize="11" fontStyle="italic">d</text>
                       </svg>
                       <div className="mt-2"><InlineMath math="d > r_1 + r_2" /></div>
                     </td>
@@ -2921,7 +2921,7 @@ export const higherMathsData: Section[] = [
                         <line x1="0" y1="0" x2="40" y2="0" stroke="currentColor" strokeWidth="1" />
                         <circle cx="0" cy="0" r="2" fill="#A855F7" />
                         <circle cx="40" cy="0" r="2" fill="#22C55E" />
-                        <text x="20" y="-5" fill="currentColor" fontSize="8" fontStyle="italic">d</text>
+                        <text x="20" y="-5" fill="currentColor" fontSize="11" fontStyle="italic">d</text>
                       </svg>
                       <div className="mt-2"><InlineMath math="d = r_1 + r_2" /></div>
                     </td>
@@ -2932,7 +2932,7 @@ export const higherMathsData: Section[] = [
                         <line x1="0" y1="0" x2="30" y2="0" stroke="currentColor" strokeWidth="1" />
                         <circle cx="0" cy="0" r="2" fill="#A855F7" />
                         <circle cx="30" cy="0" r="2" fill="#22C55E" />
-                        <text x="15" y="-5" fill="currentColor" fontSize="8" fontStyle="italic">d</text>
+                        <text x="15" y="-5" fill="currentColor" fontSize="11" fontStyle="italic">d</text>
                       </svg>
                       <div className="mt-2 text-xs"><InlineMath math="r_1 - r_2 < d < r_1 + r_2" /></div>
                     </td>
@@ -2946,7 +2946,7 @@ export const higherMathsData: Section[] = [
                         <line x1="0" y1="0" x2="-5" y2="0" stroke="currentColor" strokeWidth="1" />
                         <circle cx="0" cy="0" r="2" fill="#A855F7" />
                         <circle cx="-5" cy="0" r="2" fill="#22C55E" />
-                        <text x="-2.5" y="-5" fill="currentColor" fontSize="8" fontStyle="italic">d</text>
+                        <text x="-2.5" y="-5" fill="currentColor" fontSize="11" fontStyle="italic">d</text>
                       </svg>
                       <div className="mt-2"><InlineMath math="d < r_1 - r_2" /></div>
                     </td>
@@ -2957,7 +2957,7 @@ export const higherMathsData: Section[] = [
                         <line x1="0" y1="0" x2="10" y2="0" stroke="currentColor" strokeWidth="1" />
                         <circle cx="0" cy="0" r="2" fill="#A855F7" />
                         <circle cx="10" cy="0" r="2" fill="#22C55E" />
-                        <text x="5" y="-5" fill="currentColor" fontSize="8" fontStyle="italic">d</text>
+                        <text x="5" y="-5" fill="currentColor" fontSize="11" fontStyle="italic">d</text>
                       </svg>
                       <div className="mt-2"><InlineMath math="d = r_1 - r_2" /></div>
                     </td>
@@ -3118,7 +3118,7 @@ export const higherMathsData: Section[] = [
             <p>We have previously studied the intersection of lines and curves. Similarly, lines and circles can intersect at two points, one point (tangent), or no points.</p>
             <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-white/10 rounded-xl">
               <div className="flex flex-col items-center">
-                <svg viewBox="-50 -50 100 100" className="w-24 h-24">
+                <svg viewBox="-50 -50 126 100" className="w-24 h-24">
                   <circle cx="0" cy="0" r="35" fill="none" stroke="#22C55E" strokeWidth="3" />
                   <line x1="-30" y1="-50" x2="30" y2="50" stroke="currentColor" strokeWidth="2" />
                   <circle cx="-17" cy="-28" r="3" fill="#22C55E" />
@@ -3129,7 +3129,7 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <svg viewBox="-50 -50 100 100" className="w-24 h-24">
+                <svg viewBox="-50 -50 126 100" className="w-24 h-24">
                   <circle cx="0" cy="0" r="35" fill="none" stroke="#22C55E" strokeWidth="3" />
                   <line x1="20" y1="-50" x2="50" y2="50" stroke="currentColor" strokeWidth="2" />
                   <circle cx="34" cy="-5" r="3" fill="#22C55E" />
@@ -3139,7 +3139,7 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <svg viewBox="-50 -50 100 100" className="w-24 h-24">
+                <svg viewBox="-50 -50 126 100" className="w-24 h-24">
                   <circle cx="0" cy="0" r="35" fill="none" stroke="#22C55E" strokeWidth="3" />
                   <line x1="45" y1="-50" x2="70" y2="50" stroke="currentColor" strokeWidth="2" />
                 </svg>
