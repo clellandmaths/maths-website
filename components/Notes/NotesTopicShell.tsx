@@ -76,6 +76,24 @@ export default function NotesTopicShell({
     setCompleted(loadCompleted(courseId));
   }, [courseId]);
 
+  // Lock the page behind the topics drawer, the same way every Explorer
+  // overlay does. Without it a drag that starts anywhere the topic list
+  // cannot itself consume — the short lists, the gaps, or past either end of
+  // the list — chains through to the notes underneath, so the page moves
+  // while the drawer sits still. Escape closes it, matching the modals.
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSidebarOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [sidebarOpen]);
+
   const currentKey = `${sectionId}/${topicId}`;
   const flatTopics = nav.sections.flatMap(s => s.topics.map(t => `${s.id}/${t.id}`));
   const completedCount = flatTopics.filter(k => completed.has(k)).length;
@@ -211,7 +229,9 @@ export default function NotesTopicShell({
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
-          <div className="absolute left-0 top-0 bottom-0 w-80 max-w-[85vw] bg-card border-r border-border overflow-y-auto z-50">
+          {/* overscroll-contain: once the list hits either end, the drag stops
+              there instead of handing the remaining momentum to the page. */}
+          <div className="absolute left-0 top-0 bottom-0 w-80 max-w-[85vw] bg-card border-r border-border overflow-y-auto overscroll-contain z-50">
             <div className={`h-1 bg-gradient-to-r ${theme.gradient}`} />
             <div className="flex items-center justify-between px-4 pt-3">
               <span className="font-display font-semibold text-foreground">{nav.courseTitle}</span>
