@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronDown, ChevronRight, Menu, X, Check } from 'lucide-react';
 import { getCourseTheme } from '@/lib/course-theme';
 import TopicView from './TopicView';
+import SourceCredit from './SourceCredit';
 import type { Topic } from '@/src/notes/types';
 
 // Serializable curriculum model — ids and titles only, no JSX
@@ -272,6 +273,8 @@ export default function NotesTopicShell({
           nextHref={nextHref}
           nextTitle={nextTitle}
         />
+
+        <SourceCredit courseId={courseId} theme={theme} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { getCourseTheme } from '@/lib/course-theme';
 import CourseTabs from '@/components/CourseTabs';
 import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import SourceCredit from '@/components/Notes/SourceCredit';
 
 // Crawlable all-topics hub — every topic page linked from one URL.
 // Users normally enter the notes straight at a topic; this page is the
@@ -117,6 +118,8 @@ export default async function NotesHubPage(
             </div>
           </section>
         ))}
+
+        <SourceCredit courseId={courseId} theme={theme} />
       </div>
     </div>
   );
