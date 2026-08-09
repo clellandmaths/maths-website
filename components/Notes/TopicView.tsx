@@ -136,7 +136,7 @@ export default function TopicView({
               </h3>
               <div className="flex-1 h-px bg-border" />
             </div>
-            <div className="text-foreground/85 leading-relaxed space-y-3 text-[15px]">
+            <div className="notes-body text-foreground/85 leading-relaxed space-y-3 text-[15px]">
               {topic.theory}
             </div>
           </section>
@@ -160,7 +160,7 @@ export default function TopicView({
                       <p className={`font-mono text-xs font-semibold uppercase tracking-widest ${theme.text} mb-3`}>
                         Example {idx + 1}
                       </p>
-                      <div className="text-foreground/90 text-[15px] leading-relaxed">
+                      <div className="notes-body text-foreground/90 text-[15px] leading-relaxed">
                         {example.question}
                       </div>
                     </div>
@@ -177,7 +177,7 @@ export default function TopicView({
                     </button>
                     <div className={`grid transition-all duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                       <div className="overflow-hidden">
-                        <div className="px-5 py-5 border-t border-border text-foreground/85 text-[15px] leading-relaxed space-y-2">
+                        <div className="notes-body px-5 py-5 border-t border-border text-foreground/85 text-[15px] leading-relaxed space-y-2">
                           {example.solution}
                         </div>
                       </div>

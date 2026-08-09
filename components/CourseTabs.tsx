@@ -21,18 +21,25 @@ export default function CourseTabs({ courseId, active, notesHref }: Props) {
   const theme = getCourseTheme(courseId);
   const activeClasses = `${theme.text} ${theme.border}`;
   const inactiveClasses = 'text-slate-400 border-transparent hover:text-slate-200';
-  const base = 'flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px';
+  // whitespace-nowrap + shrink-0: at 345px the three full labels measure ~464px,
+  // so "Past Paper Archive" wrapped onto three lines and its last line was cut
+  // off at the viewport edge. Tighter padding and short labels below `sm` bring
+  // the row to ~292px, so all three stay visible without a scrolling tab strip
+  // — with only three tabs, one off-screen is worse than a shorter word.
+  const base =
+    'flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-3 font-medium transition-colors border-b-2 -mb-px whitespace-nowrap shrink-0';
 
   return (
-    <div className="flex gap-2 mb-8 border-b border-slate-800">
+    <div className="flex gap-1 sm:gap-2 mb-8 border-b border-slate-800">
       <Link
         // Always the first topic. Landing on the all-topics grid means asking
         // a pupil to choose again when they have already said what they want.
         href={notesHref ?? `/course/${courseId}/notes`}
         className={`${base} ${active === 'notes' ? activeClasses : inactiveClasses}`}
       >
-        <GraduationCap className="h-4 w-4" />
-        Course Notes
+        <GraduationCap className="h-4 w-4 shrink-0" />
+        <span className="sm:hidden">Notes</span>
+        <span className="hidden sm:inline">Course Notes</span>
       </Link>
 
       {/* Only shown where practice questions exist, so courses without them
@@ -42,7 +49,7 @@ export default function CourseTabs({ courseId, active, notesHref }: Props) {
           href={`/course/${courseId}/practice`}
           className={`${base} ${active === 'practice' ? activeClasses : inactiveClasses}`}
         >
-          <PencilLine className="h-4 w-4" />
+          <PencilLine className="h-4 w-4 shrink-0" />
           Practice
         </Link>
       )}
@@ -51,8 +58,9 @@ export default function CourseTabs({ courseId, active, notesHref }: Props) {
         href={`/course/${courseId}`}
         className={`${base} ${active === 'papers' ? activeClasses : inactiveClasses}`}
       >
-        <FileText className="h-4 w-4" />
-        Past Paper Archive
+        <FileText className="h-4 w-4 shrink-0" />
+        <span className="sm:hidden">Papers</span>
+        <span className="hidden sm:inline">Past Paper Archive</span>
       </Link>
     </div>
   );
