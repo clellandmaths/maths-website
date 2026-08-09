@@ -136,7 +136,7 @@ export default function TopicView({
               </h3>
               <div className="flex-1 h-px bg-border" />
             </div>
-            <div className="text-foreground/85 leading-relaxed space-y-3 text-[15px]">
+            <div className="notes-body text-foreground/85 leading-relaxed space-y-3 text-[15px]">
               {topic.theory}
             </div>
           </section>
@@ -160,7 +160,7 @@ export default function TopicView({
                       <p className={`font-mono text-xs font-semibold uppercase tracking-widest ${theme.text} mb-3`}>
                         Example {idx + 1}
                       </p>
-                      <div className="text-foreground/90 text-[15px] leading-relaxed">
+                      <div className="notes-body text-foreground/90 text-[15px] leading-relaxed">
                         {example.question}
                       </div>
                     </div>
@@ -177,7 +177,7 @@ export default function TopicView({
                     </button>
                     <div className={`grid transition-all duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                       <div className="overflow-hidden">
-                        <div className="px-5 py-5 border-t border-border text-foreground/85 text-[15px] leading-relaxed space-y-2">
+                        <div className="notes-body px-5 py-5 border-t border-border text-foreground/85 text-[15px] leading-relaxed space-y-2">
                           {example.solution}
                         </div>
                       </div>
@@ -195,7 +195,11 @@ export default function TopicView({
             {prevHref ? (
               <Link
                 href={prevHref}
-                className="group flex items-center gap-3 px-4 py-3 bg-card border border-border hover:border-white/20 rounded-xl text-left transition-colors"
+                // min-w-0: a grid item defaults to min-width:auto, so it refuses
+                // to shrink below its content and the truncate below never gets
+                // to fire. On a 320px screen that pushed the card 18px past its
+                // column and the page into horizontal scroll.
+                className="group flex min-w-0 items-center gap-3 px-4 py-3 bg-card border border-border hover:border-white/20 rounded-xl text-left transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 text-muted-foreground group-hover:text-foreground shrink-0" />
                 <span className="min-w-0">
@@ -207,7 +211,7 @@ export default function TopicView({
             {nextHref && (
               <Link
                 href={nextHref}
-                className="group flex items-center justify-end gap-3 px-4 py-3 bg-card border border-border hover:border-white/25 rounded-xl text-right transition-colors"
+                className="group flex min-w-0 items-center justify-end gap-3 px-4 py-3 bg-card border border-border hover:border-white/25 rounded-xl text-right transition-colors"
               >
                 <span className="min-w-0">
                   <span className={`block font-mono text-[10px] uppercase tracking-widest ${theme.text}`}>Next</span>

@@ -3483,7 +3483,7 @@ export const national5MathsData: Section[] = [
             <p>and</p>
             <BlockMath math="s = \sqrt{\frac{\sum x^2 - (\sum x)^2 / n}{n - 1}}" />
             <h4 className="text-white font-semibold mt-4">Comparing Data</h4>
-            <p>When comparing two datasets, you must provide two distinct statements using standard SQA phraseology:</p>
+            <p>When comparing two datasets, you must provide two distinct statements using standard Qualifications Scotland phraseology:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Compare the average (e.g., "On average, [Subject A] was higher/lower...").</li>
               <li>Compare the spread using standard deviation or IQR (e.g., "The data for [Subject A] was more/less consistent" or "more/less varied").</li>

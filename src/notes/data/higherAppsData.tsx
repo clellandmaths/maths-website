@@ -151,7 +151,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The "Before Deductions" Rule (The Ultimate SQA Trap)</h4>
+                <h4 className="text-lg font-semibold text-white">1. The "Before Deductions" Rule (The Ultimate Exam Trap)</h4>
                 <p>
                   The most important rule to remember for National Insurance is that it is calculated on a person's salary <strong>before</strong> any other deductions (such as pension contributions) are taken away.
                 </p>
@@ -282,7 +282,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Pension Trap (The Ultimate SQA Trick)</h4>
+                <h4 className="text-lg font-semibold text-white">1. The Pension Trap (The Ultimate Exam Trick)</h4>
                 <p>
                   Unlike National Insurance, which is calculated before pension deductions, Income Tax is strictly calculated on a person's <strong>Taxable Income</strong>.
                 </p>
@@ -596,7 +596,7 @@ export const higherAppsData: Section[] = [
                   <li>The standard rate of VAT in the UK is 20%. Some essential or child-related items have a reduced rate (e.g., 5%), while others have no VAT at all.</li>
                 </ul>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">The Classic SQA Trap:</p>
+                  <p className="font-semibold text-amber-300 mb-1">The Classic Exam Trap:</p>
                   <p className="text-amber-100/80">
                     To find a price before 20% VAT was added, you <strong>cannot</strong> simply subtract 20% from the final price. The final price represents 120%. You must divide by 1.20 to work backwards.
                   </p>
@@ -973,7 +973,7 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-white mt-6">2. The "Counting Time" Trap</h4>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">The Classic SQA Trap:</p>
+                  <p className="font-semibold text-amber-300 mb-1">The Classic Exam Trap:</p>
                   <p className="text-amber-100/80">
                     According to your course notes, miscounting the number of months between two dates is one of the most common errors made in these types of questions.
                   </p>
@@ -1107,7 +1107,7 @@ export const higherAppsData: Section[] = [
               When a person makes regular payments into a savings account (e.g., depositing &pound;100 on the 1st of every month), you cannot simply add the payments together and calculate the interest at the end. Because the deposits are made at different times, each deposit sits in the account earning interest for a different length of time.
             </p>
             <p>
-              To calculate the final accumulated balance, you can choose between two valid mathematical methods. The SQA awards full marks for both, so you should use the one that makes the most logical sense to you.
+              To calculate the final accumulated balance, you can choose between two valid mathematical methods. Qualifications Scotland awards full marks for both, so you should use the one that makes the most logical sense to you.
             </p>
 
             <div className="space-y-4">
@@ -1407,7 +1407,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">1. The Division Trap (A Major SQA Warning)</h4>
+                <h4 className="text-lg font-semibold text-amber-300 mb-1">1. The Division Trap (A Major Exam Warning)</h4>
                 <p className="text-amber-100/80">
                   You <strong>cannot simply divide</strong> an annual interest rate by 12 to find the monthly rate.
                 </p>
@@ -2381,7 +2381,7 @@ export const higherAppsData: Section[] = [
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
                 <h4 className="text-lg font-semibold text-amber-300 mb-1">2. The Lifetime ISA (LISA)</h4>
                 <p className="text-amber-100/80">
-                  The SQA frequently uses the government's Lifetime ISA scheme as an exam context for retirement or first-time buyer savings. You must be familiar with its specific rules:
+                  Qualifications Scotland frequently uses the government's Lifetime ISA scheme as an exam context for retirement or first-time buyer savings. You must be familiar with its specific rules:
                 </p>
                 <ul className="list-disc list-inside mt-2 text-amber-100/80 space-y-1">
                   <li>You can save up to &pound;4,000 a year, and the government will add a <strong>25% bonus</strong> to your new deposits every month.</li>
@@ -2524,7 +2524,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-rose-300 mb-1">2. The Excess (A Major SQA Warning)</h4>
+                <h4 className="text-lg font-semibold text-rose-300 mb-1">2. The Excess (A Major Exam Warning)</h4>
                 <p className="text-rose-100/80 mb-2">
                   An excess is a mandatory minimum amount that the customer must pay towards the cost of a claim before the insurance company pays the remainder.
                 </p>
@@ -2782,7 +2782,7 @@ export const higherAppsData: Section[] = [
                   A sample must be <strong>representative</strong>, meaning it accurately reflects the diverse characteristics of the whole population. If a data collection method unfairly favours a certain group, it introduces <strong>bias</strong>.
                 </p>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <p className="text-amber-200 font-semibold mb-1">Common SQA Exam Trap:</p>
+                  <p className="text-amber-200 font-semibold mb-1">Common Exam Trap:</p>
                   <p className="text-amber-100/80">
                     You must be able to identify why a survey might be biased. For example, an online survey on social media is biased because it excludes people without internet access and relies on "self-selection" (only people with strong opinions usually bother to reply).
                   </p>
@@ -3159,7 +3159,7 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-white mt-6">3. Making Valid Comparisons</h4>
                 <p className="mb-2">
-                  A massive part of the Higher Applications course is comparing two datasets. To gain full marks from the SQA, you must always write two separate sentences in the context of the question:
+                  A massive part of the Higher Applications course is comparing two datasets. To gain full marks, you must always write two separate sentences in the context of the question:
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -3312,7 +3312,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>r = 0:</strong> No linear relationship.</li>
                 </ul>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <p className="text-amber-200 font-semibold mb-1">SQA Rule:</p>
+                  <p className="text-amber-200 font-semibold mb-1">Exam Rule:</p>
                   <p className="text-amber-100/80">
                     When interpreting an r value, you must state both the <strong>strength</strong> (weak, moderate, or strong) and the <strong>direction</strong> (positive or negative) in the context of the question.
                   </p>
@@ -3320,7 +3320,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Correlation vs. Causation (The SQA Trap)</h4>
+                <h4 className="text-lg font-semibold text-white mt-6">3. Correlation vs. Causation (The Exam Trap)</h4>
                 <p className="mb-2">
                   This is one of the most frequently tested concepts in the Higher Applications course.
                 </p>
@@ -3433,7 +3433,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Interpreting the Slope and Intercept (The SQA Rules)</h4>
+                <h4 className="text-lg font-semibold text-white mt-6">2. Interpreting the Slope and Intercept (The Exam Rules)</h4>
                 <p className="mb-2">
                   When asked to interpret these parameters, you must relate them directly to the context of the data:
                 </p>
@@ -3595,7 +3595,7 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-white mt-6">2. The p-value and Making a Decision</h4>
                 <p className="mb-2">
-                  When you run a test in statistical software, it generates a <strong>p-value</strong>. This is the probability of getting your observed results purely by random chance if the null hypothesis is true. We test this against a standard 95% significance level (a 0.05 threshold):
+                  When you run a test in statistical software, it generates a <strong>p-value</strong>. This is the probability of getting data as extreme as the data you actually observed, if the null hypothesis is true. We test this against a standard 5% significance level (a 0.05 threshold):
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -3606,9 +3606,9 @@ export const higherAppsData: Section[] = [
                   </li>
                 </ul>
                 <div className="mt-4 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg">
-                  <p className="text-rose-200 font-semibold mb-1">Massive SQA Trap:</p>
+                  <p className="text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
                   <p className="text-rose-100/80">
-                    Never write "we accept the null hypothesis". You can never be 100% certain it is true, so you must always use the phrase <strong>"fail to reject"</strong>.
+                    Never write "we accept the null hypothesis". The test only ever looks for evidence <em>against</em> H<sub>0</sub>, and finding none is not the same as showing H<sub>0</sub> is true. Always use the phrase <strong>"fail to reject"</strong>.
                   </p>
                 </div>
               </div>
@@ -3616,7 +3616,7 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-white mt-6">3. Statistical Errors</h4>
                 <p className="mb-2">
-                  Because hypothesis testing is based on probabilities (with a 95% confidence level), we will naturally make the wrong decision 1 in 20 times.
+                  Because hypothesis testing is based on probabilities, we will sometimes reach the wrong conclusion. At the 5% significance level, <strong>if the null hypothesis is actually true</strong>, we will wrongly reject it about 1 time in 20. There are two ways a test can be wrong:
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -3673,7 +3673,7 @@ export const higherAppsData: Section[] = [
             id: "hypothesis-testing-ex3",
             question: (
               <div className="space-y-2">
-                <p><strong>Example 3: The SQA "Fail to Reject" Trap</strong></p>
+                <p><strong>Example 3: The "Fail to Reject" Trap</strong></p>
                 <p>A botanist is testing whether a new type of soil increases the mean height of tomato plants. An independent t-test generates a p-value of 0.182. A student concludes: <em>"Since 0.182 is greater than 0.05, we accept the null hypothesis. The soil makes no difference."</em></p>
                 <p>Explain why the student's conclusion is statistically incorrect, and state what they should have written.</p>
               </div>
@@ -3726,7 +3726,7 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-white">1. Understanding the p-value</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    A <strong>p-value</strong> is the probability that your observed data could have occurred purely by random chance, assuming that the null hypothesis is actually true.
+                    A <strong>p-value</strong> is the probability of getting data as extreme as the data you actually observed, assuming that the null hypothesis is true.
                   </li>
                   <li>
                     A small p-value (typically less than 0.05) indicates that the result is statistically significant, providing evidence to <strong>reject</strong> the null hypothesis.
@@ -3741,16 +3741,19 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-white mt-6">2. Confidence Intervals (CIs)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    Because it is usually impossible to test an entire population, we cannot know the exact population mean or proportion. Instead, software generates a confidence interval—a range of values where there is a high probability (typically 95%) that the true population parameter lies.
+                    Because it is usually impossible to test an entire population, we cannot know the exact population mean or proportion. Instead, software generates a confidence interval—a range of plausible values for the true population parameter. If the study were repeated 100 times, about 95 of the intervals produced this way would contain the true value. That is what the "95%" refers to: how reliable the method is, not the probability that this particular interval is right.
                   </li>
                   <li>
                     Wider confidence intervals indicate more uncertainty in the data, whereas narrower confidence intervals indicate less uncertainty.
                   </li>
                 </ul>
+                <p className="text-slate-400 text-sm mt-3">
+                  You may see some books say there is a 95% <em>probability</em> that the true value lies in the interval. That is a common shorthand, but strictly the true value is fixed—it is the interval that changes from sample to sample. Either phrasing has been accepted in the exam.
+                </p>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The "100 Times" Rule (Crucial SQA Definition)</h4>
+                <h4 className="text-lg font-semibold text-white mt-6">3. The "100 Times" Rule (Crucial Exam Definition)</h4>
                 <p className="mb-2">
                   If an exam question asks you to interpret what a 95% confidence interval <em>literally</em> means, you must memorise and use this exact phrasing:
                 </p>
@@ -3771,7 +3774,7 @@ export const higherAppsData: Section[] = [
                     If your calculated 95% confidence interval ranges from a negative number to a positive number, it <strong>contains zero</strong>.
                   </li>
                   <li>
-                    An interval containing zero provides further mathematical evidence that there might be no actual difference between the groups, supporting a decision to <strong>fail to reject</strong> the null hypothesis.
+                    An interval containing zero means zero is a plausible value for the difference, so there is <strong>not enough evidence of a difference</strong> between the groups. This is consistent with a decision to <strong>fail to reject</strong> the null hypothesis.
                   </li>
                 </ul>
               </div>
@@ -3811,7 +3814,7 @@ export const higherAppsData: Section[] = [
                   <p><strong>(a)</strong> Since the p-value (0.612) is greater than 0.05, the nutritionist must <strong>fail to reject</strong> the null hypothesis.</p>
                 </div>
                 <div>
-                  <p><strong>(b)</strong> We can be 95% confident that the true mean difference in sugar content lies between -1.45g and 2.15g. Because this interval <strong>contains zero</strong>, it provides further evidence that there may be absolutely no difference in the mean sugar content between the two brands.</p>
+                  <p><strong>(b)</strong> We can be 95% confident that the true mean difference in sugar content lies between -1.45g and 2.15g. Because this interval <strong>contains zero</strong>, zero is a plausible value for the difference, so there is not enough evidence of a difference in the mean sugar content between the two brands.</p>
                 </div>
               </div>
             )
@@ -3854,13 +3857,13 @@ export const higherAppsData: Section[] = [
             <div className="space-y-4">
               <div>
                 <h4 className="text-lg font-semibold text-white">1. Formulating Hypotheses for Correlation</h4>
-                <p className="mb-2">For a correlation test, the hypotheses are always written in terms of a "relationship":</p>
+                <p className="mb-2">For a correlation test, the hypotheses are always written in terms of a <strong>linear</strong> relationship. Pearson's coefficient only measures how close the points lie to a straight line, so the word "linear" matters:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no relationship between [Variable 1] and [Variable 2].
+                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no linear relationship between [Variable 1] and [Variable 2].
                   </li>
                   <li>
-                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a relationship between [Variable 1] and [Variable 2].
+                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a linear relationship between [Variable 1] and [Variable 2].
                   </li>
                 </ul>
               </div>
@@ -3874,10 +3877,10 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Interpreting the Output (The SQA Rules)</h4>
+                <h4 className="text-lg font-semibold text-white mt-6">3. Interpreting the Output (The Exam Rules)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">The p-value:</strong> Look at the p-value. If p &lt; 0.05, you <strong>reject</strong> the null hypothesis and conclude there is evidence of a relationship. If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis.
+                    <strong className="text-emerald-300">The p-value:</strong> Look at the p-value. If p &lt; 0.05, you <strong>reject</strong> the null hypothesis and conclude there is evidence of a linear relationship. If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis.
                   </li>
                   <li>
                     <strong className="text-emerald-300">The Correlation Coefficient (cor):</strong> This is found at the very bottom of the R Studio output under <code>sample estimates: cor</code>. You must use this number to comment on the <strong>strength</strong> (weak, moderate, strong) and <strong>direction</strong> (positive, negative) of the linear relationship.
@@ -3885,7 +3888,7 @@ export const higherAppsData: Section[] = [
                   <li>
                     <strong className="text-emerald-300">The Confidence Interval:</strong> We can be 95% confident that the true population correlation lies between the two numbers given in the interval.
                     <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-slate-400">
-                      <li>If the interval <strong>contains zero</strong> (i.e., it goes from a negative number to a positive number), the true correlation could be 0. This strongly supports a decision to <strong>fail to reject</strong> the null hypothesis.</li>
+                      <li>If the interval <strong>contains zero</strong> (i.e., it goes from a negative number to a positive number), zero is a plausible value for the true correlation, so there is not enough evidence of a linear relationship. This is consistent with a decision to <strong>fail to reject</strong> the null hypothesis.</li>
                       <li>If the interval <strong>does not contain zero</strong>, it provides further statistical evidence that a relationship truly exists.</li>
                     </ul>
                   </li>
@@ -3954,7 +3957,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p><strong>(a)</strong> Since the p-value (0.415) is greater than 0.05, the student must <strong>fail to reject</strong> the null hypothesis. There is no evidence to suggest a relationship between shoe size and typing speed.</p>
+                  <p><strong>(a)</strong> Since the p-value (0.415) is greater than 0.05, the student must <strong>fail to reject</strong> the null hypothesis. There is no evidence to suggest a linear relationship between shoe size and typing speed.</p>
                 </div>
                 <div>
                   <p><strong>(b)</strong> The correlation coefficient of 0.112 is very close to zero, indicating almost no linear relationship. Furthermore, the 95% confidence interval [-0.215, 0.455] <strong>contains zero</strong>, meaning it is entirely possible that the true population correlation is exactly 0.</p>
@@ -4144,7 +4147,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div>
                 <h4 className="text-lg font-semibold text-white mt-6">2. Formulating Hypotheses for Z-Tests (The "Proportion" Trap)</h4>
                 <div className="mt-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg mb-4">
-                  <p className="text-rose-200 font-semibold mb-1">Massive SQA Trap:</p>
+                  <p className="text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
                   <p className="text-rose-100/80">
                     Just as t-tests require the word "mean", z-test hypotheses must explicitly use the word <strong>proportion</strong> (or percentage).
                   </p>
@@ -4168,7 +4171,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <li>
                     <strong className="text-emerald-300">The Confidence Interval:</strong> This gives the 95% confidence interval for the true difference between the two proportions.
                     <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-slate-400">
-                      <li>If the interval <strong>contains zero</strong> (goes from a negative number to a positive number), it provides further evidence that there is no statistically significant difference between the proportions.</li>
+                      <li>If the interval <strong>contains zero</strong> (goes from a negative number to a positive number), zero is a plausible value for the difference, so there is not enough evidence of a difference between the proportions.</li>
                       <li>If the interval <strong>does not contain zero</strong>, it provides further evidence that a statistical difference between the proportions truly exists.</li>
                     </ul>
                   </li>
@@ -4230,7 +4233,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <p><strong>(a)</strong> Since the p-value (0.214) is greater than 0.05, we <strong>fail to reject</strong> the null hypothesis. There is not enough evidence to suggest a statistically significant difference between the proportion of adults and teenagers who prefer shopping online.</p>
                 </div>
                 <div>
-                  <p><strong>(b)</strong> We can be 95% confident that the true difference in the proportions lies between -0.125 and 0.042. Because this interval <strong>contains zero</strong>, it provides further evidence that there is no statistically significant difference between the two proportions.</p>
+                  <p><strong>(b)</strong> We can be 95% confident that the true difference in the proportions lies between -0.125 and 0.042. Because this interval <strong>contains zero</strong>, zero is a plausible value for the difference, so there is not enough evidence of a difference between the two proportions.</p>
                 </div>
               </div>
             )
@@ -4272,7 +4275,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         theory: (
           <div className="space-y-6 text-slate-300">
             <p>
-              In the real world, and specifically in your final SQA exam and project, you will not always be told which statistical test to run. You must be able to analyse the research question and the type of data provided to choose the correct test yourself.
+              In the real world, and specifically in your final Qualifications Scotland exam and project, you will not always be told which statistical test to run. You must be able to analyse the research question and the type of data provided to choose the correct test yourself.
             </p>
 
             <div className="space-y-4">
@@ -4329,7 +4332,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                     <strong className="text-emerald-300">p &ge; 0.05:</strong> The result is not statistically significant. You must <strong>fail to reject</strong> the null hypothesis.
                   </li>
                   <li>
-                    <strong className="text-blue-300">Confidence Intervals:</strong> If the 95% confidence interval <strong>contains zero</strong>, it supports failing to reject the null hypothesis. If it <strong>does not contain zero</strong>, it provides further evidence to reject the null hypothesis.
+                    <strong className="text-blue-300">Confidence Intervals:</strong> If the 95% confidence interval <strong>contains zero</strong>, zero is a plausible value for the difference, which is consistent with failing to reject the null hypothesis. If it <strong>does not contain zero</strong>, it provides further evidence to reject the null hypothesis.
                   </li>
                 </ul>
               </div>
@@ -4534,7 +4537,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             </ul>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 SQA Exam Rule 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">🚨 Exam Rule 🚨</h4>
               <p>In an exam, you will rarely be penalised for the specific numbers you choose for your assumptions (as long as they are physically realistic). However, you must explicitly state your assumptions in writing before you do the calculation to be awarded the marks.</p>
             </div>
           </div>
@@ -4714,7 +4717,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             <p>In mathematical modelling, paying close attention to units of measure is essential. You must ensure that your units make logical sense and remain consistent throughout your calculations.</p>
 
             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Important SQA Note 🚨</h4>
+              <h4 className="text-white font-semibold mb-2">🚨 Important Exam Note 🚨</h4>
               <p>Because this is Applications of Mathematics (not Physics or Chemistry), you are never expected to have prior scientific knowledge of complex units. You simply need to be able to substitute given units into a formula and simplify them.</p>
             </div>
 
@@ -5833,9 +5836,9 @@ t = 2.9143, df = 59, p-value = 0.005022
                   On a Gantt chart, float time is usually represented by a lightly shaded box or a thin line extending out from the end of the solid duration block, stretching all the way to the LET.
                 </p>
                 <div className="mt-4 bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
-                  <p className="font-semibold text-amber-300 mb-1">Massive SQA Trap:</p>
+                  <p className="font-semibold text-amber-300 mb-1">Massive Exam Trap:</p>
                   <p className="text-amber-100/80">
-                    The SQA strict marking instructions state that colours <strong>cannot</strong> be used in exams. If you are asked to draw float time, you must use a different pattern (like cross-hatching) or a thin line, rather than switching from a blue pen to a red pen! Sometimes, an exam question will explicitly ask you to draw a Gantt chart <em>without</em> float times, so always read the question carefully.
+                    The marking instructions state that colours <strong>cannot</strong> be used in exams. If you are asked to draw float time, you must use a different pattern (like cross-hatching) or a thin line, rather than switching from a blue pen to a red pen! Sometimes, an exam question will explicitly ask you to draw a Gantt chart <em>without</em> float times, so always read the question carefully.
                   </p>
                 </div>
               </div>
@@ -6320,7 +6323,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div>
                 <h4 className="text-lg font-semibold text-white mt-6">3. Constructing Venn Diagrams (The Subtraction Trap)</h4>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Massive SQA Trap:</p>
+                  <p className="font-semibold text-amber-300 mb-1">Massive Exam Trap:</p>
                   <p className="text-amber-100/80">
                     When you are given the total number of people in a category, that total <em>includes</em> the people in the overlapping sections. You must <strong>always subtract the intersection</strong> from the group totals to find the number of people who belong to "only" one category.
                   </p>

@@ -90,6 +90,44 @@ body {
   line-height: 1.75;
 }
 
+/* ── Tables on narrow screens ──────────────────────────────────────
+   A table is the one piece of content that cannot wrap. A seven-column
+   past paper table measures ~455px; on a 345px phone, inside a 271px
+   card, it escaped the card, clipped against the viewport and dragged
+   the whole page into horizontal scroll. Measured on N5 Apps 2025 P1 Q4
+   and Higher Apps 2024 P1.
+
+   Scoped to content surfaces rather than every table on the site: the
+   printed formula sheets and data booklets have to lay out at full
+   width on paper, where a scroll container means nothing.
+
+   display:block is what lets overflow-x apply to a table at all — on a
+   real `display:table` box it is ignored. width:fit-content then stops
+   a narrow table stretching to fill the card, which is what a plain
+   block would otherwise do. */
+.question-content table,
+.answer-content table,
+.prose-practice table,
+.notes-body table {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Printing has no viewport to overflow, and a scroll container would
+   silently crop columns off the page. Put the table back. */
+@media print {
+  .question-content table,
+  .answer-content table,
+  .prose-practice table,
+  .notes-body table {
+    display: table;
+    width: auto;
+    overflow-x: visible;
+  }
+}
+
 /* ── Inline maths ─────────────────────────────────────────────────
    Deliberately unscoped: this applies to every .katex on the site, so a new
    surface gets correct maths without being added to a list. It was once
