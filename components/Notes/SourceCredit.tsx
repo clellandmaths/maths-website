@@ -17,7 +17,15 @@ import type { CourseTheme } from '@/lib/course-theme';
  *   BY  — name the original author and link the licence
  *   SA  — release the derivative under the same licence, stated explicitly
  *         (a credit alone is not enough; the ShareAlike line is the licence
- *         grant, not decoration)
+ *         grant, not decoration). It also names the conditions a reuser is
+ *         bound by, and puts Clelland Maths in the attribution chain rather
+ *         than only HSN — under SA these notes are licensed onward too, so
+ *         the terms protecting them need to be visible.
+ *
+ * The last sentence bounds the scope on purpose. The notice sits at the foot
+ * of a notes page and would otherwise read as covering the site: the videos,
+ * the practice bank and the past paper material are not derived from HSN and
+ * are not offered under this licence.
  *   NC  — non-commercial. The notes are free to read. If the site's footing
  *         ever changes, HSN ask to be contacted for permission.
  *
@@ -58,8 +66,14 @@ export default function SourceCredit({ courseId, theme }: { courseId: string; th
         >
           Creative Commons Attribution-NonCommercial-ShareAlike 2.5 Scotland
         </a>{' '}
-        licence. The material has been rewritten, restructured and extended for this site, and this
-        adapted version is offered under the same licence.
+        licence. The material has been rewritten, restructured and extended for this site.
+      </p>
+      <p className="text-xs text-muted-dim leading-relaxed mt-2">
+        That licence is <strong className="font-medium">ShareAlike</strong>, so these adapted notes
+        carry the same terms: you may share and adapt them for non-commercial purposes, provided you
+        credit both Higher Still Notes and Clelland Maths, and release any adaptation under the same
+        licence. This applies to the Higher notes on this page only — not to the video lessons,
+        practice questions, past paper material or anything else on the site.
       </p>
     </aside>
   );
