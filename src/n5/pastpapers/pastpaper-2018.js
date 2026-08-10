@@ -70,7 +70,7 @@ export const pastpaper2018 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2018 P1 Q9</span></strong></small><p>In the diagram shown below, ABCDEFGHJK is a regular decagon.<br>&bull;&nbsp;&nbsp;Angle KLJ is 17°.<br>&bull;&nbsp;&nbsp;AKL is a straight line.</p><img src="/img/N5_Past_Papers/2018/2018_P1_Q9.png" alt="Regular decagon diagram"><p>Calculate the size of shaded angle KJL.</p>`,
-                    answer: `127^{\\circ}`,
+                    answer: `\\(127^{\\circ}\\)`,
                     videoId: "zXipM1YMziU",
                     timestamp: "690s",
                     marks: [2],
@@ -259,7 +259,7 @@ export const pastpaper2018 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2018 P2 Q13</span></strong></small><p>A ferry and a trawler receive a request for help from a stranded yacht.<br>On the diagram the points F, T and Y show the positions of the ferry, the trawler and the yacht respectively.</p><img src="/img/N5_Past_Papers/2018/2018_P2_Q13.png" alt="Bearings diagram"><p>• FY is 7.2 kilometres.<br>• TY is 5.6 kilometres.<br>• FT is 10.3 kilometres.<br>• F is on a bearing of \\(240^{\\circ}\\) from T.<br>Calculate the bearing of the yacht from the trawler.</p>`,
-                    answer: `282^{\\circ}`,
+                    answer: `\\(282^{\\circ}\\)`,
                     videoId: "pV_mPS5bNG0",
                     timestamp: "1068s",
                     marks: [4],
