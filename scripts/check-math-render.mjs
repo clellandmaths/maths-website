@@ -209,6 +209,28 @@ for (const [name, tex] of [
     out, out.includes('loading="lazy"'), 'off-screen diagrams must not block load');
 }
 
+// ── a matrix of fractions must not be cramped ────────────────────
+// \displaystyle cannot reach array cells, so KaTeX set these at script size
+// with the rows nearly touching. Advanced Higher Matrices, "show that A is
+// orthogonal", was unreadable on the live site.
+{
+  const out = renderMath('\\(A=\\begin{pmatrix} \\frac{3}{5} & -\\frac{4}{5}\\\\ \\frac{4}{5} & \\frac{3}{5} \\end{pmatrix}\\)');
+  check('fractions in a matrix are display size',
+    out, out.includes('mfrac') && !/katex-error/.test(out),
+    'the cells must render as real fractions, not an error');
+}
+{
+  // the transform is what gives the rows their gap; assert on the TeX it builds
+  const spaced = renderMath('\\(\\begin{pmatrix} \\frac{1}{2} \\\\ \\frac{3}{4} \\end{pmatrix}\\)');
+  const plainMatrix = renderMath('\\(\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\)');
+  check('a matrix with no fractions is left alone',
+    plainMatrix, !plainMatrix.includes('mfrac') && plainMatrix.length > 0,
+    'only fraction-bearing matrices may be rewritten');
+  check('a matrix of fractions still renders',
+    spaced, spaced.includes('mfrac') && !/katex-error/.test(spaced),
+    'row spacing must not break the environment');
+}
+
 console.log(`math renderer fixtures: ${pass} passed, ${failures.length} failed`);
 for (const f of failures) console.log(`\n  FAIL ${f}`);
 process.exit(failures.length ? 1 : 0);
