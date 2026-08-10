@@ -35,6 +35,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `Evaluate \\(5 \\frac{1}{2}-1\\frac{2}{7}.\\)`, answer: `\\(4 \\frac{3}{14}\\)`, videoId: "53PsE0cXAu0", timestamp: 910, paper: "2021 P1 Q2" },
             { ref: "2023 P1 Q1", solutionUrl: "https://www.maths.scot/nat5/fractions#16" },
             { ref: "2024 P1 Q1", solutionUrl: "https://www.maths.scot/nat5/fractions#17" },
+            { ref: "2026 P1 Q5", solutionUrl: "https://www.maths.scot/nat5/fractions#19" },
           ],
         },
         {
@@ -54,6 +55,8 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2023 P2 Q1", solutionUrl: "https://www.maths.scot/nat5/percentages#12" },
             { ref: "2024 P2 Q1", solutionUrl: "https://www.maths.scot/nat5/percentages#13" },
             { ref: "2024 P2 Q5", solutionUrl: "https://www.maths.scot/nat5/percentages#14" },
+            { ref: "2026 P1 Q2", solutionUrl: "https://www.maths.scot/nat5/percentages#17" },
+            { ref: "2026 P2 Q1", solutionUrl: "https://www.maths.scot/nat5/percentages#18" },
           ],
         },
         {
@@ -101,6 +104,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2022 P1 Q11" },
             { ref: "2023 P1 Q12" },
             { ref: "2024 P1 Q13" },
+            { ref: "2026 P2 Q11", solutionUrl: "https://www.maths.scot/nat5/indices#13" },
           ],
         },
         {
@@ -154,6 +158,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2019 P1 Q3", solutionUrl: "https://www.maths.scot/nat5/expanding-brackets#13" },
             { ref: "2023 P1 Q2", solutionUrl: "https://www.maths.scot/nat5/expanding-brackets#14" },
             { ref: "2024 P1 Q3", solutionUrl: "https://www.maths.scot/nat5/expanding-brackets#15" },
+            { ref: "2026 P1 Q1", solutionUrl: "https://www.maths.scot/nat5/expanding-brackets#17" },
           ],
         },
         {
@@ -198,6 +203,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2023 P2 Q12" },
             { ref: "2024 P2 Q6" },
             { ref: "2024 P2 Q12" },
+            { ref: "2026 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#22" },
           ],
         },
         {
@@ -217,6 +223,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>The function \\(f(x)\\) is defined by <span style="white-space: nowrap;">\\(f(x) = 4\\,sin\\,3x^\\circ.\\)</span><br>Evaluate <span style="white-space: nowrap;">\\(f(90).\\)</span></p>`, answer: `\\(-4\\)`, videoId: "T__kY8zKOts", timestamp: 514, paper: "2021 P1 Q16", solutionUrl: "https://www.maths.scot/nat5/functions#12" },
             { ref: "2022 P1 Q2", solutionUrl: "https://www.maths.scot/nat5/functions#13" },
             { ref: "2024 P1 Q2", solutionUrl: "https://www.maths.scot/nat5/functions#14" },
+            { ref: "2026 P1 Q13", solutionUrl: "https://www.maths.scot/nat5/functions#16" },
           ],
         },
         {
@@ -236,6 +243,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>A straight line has equation \\(3x+4y-8=0.\\)<br>                  <b>(a)</b>&nbsp;&nbsp;Find the gradient of the line.<br>                  <b>(b)</b>&nbsp;&nbsp;State the coordinates of the point where the line crosses the <span style="white-space: nowrap;">\\(y\\)-axis.</span></p>`, answer: `(a) \\(m=-\\frac{3}{4}\\), (b) \\((0,2)\\)`, videoId: "KDpwtkvSYMQ", timestamp: 0, paper: "2021 P2 Q9" },
             { ref: "2022 P1 Q6", solutionUrl: "https://www.maths.scot/nat5/straight-line#13" },
             { ref: "2024 P1 Q11", solutionUrl: "https://www.maths.scot/nat5/straight-line#14" },
+            { ref: "2025 P1 Q6", solutionUrl: "https://www.maths.scot/nat5/straight-line#15" },
           ],
         },
         {
@@ -273,6 +281,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>Solve, algebraically, the inequation<br> \\(1-(x+4)\\gt 2x\\)</p>`, answer: `\\(x \\lt -1\\)`, videoId: "cB1vHiKQu2A", timestamp: 685, paper: "2021 P1 Q11", solutionUrl: "https://www.maths.scot/nat5/linear-inequalities#12" },
             { ref: "2023 P1 Q14", solutionUrl: "https://www.maths.scot/nat5/linear-inequalities#13" },
             { ref: "2024 P2 Q4", solutionUrl: "https://www.maths.scot/nat5/linear-inequalities#14" },
+            { ref: "2026 P1 Q4", solutionUrl: "https://www.maths.scot/nat5/linear-inequalities#15" },
           ],
         },
         {
@@ -289,6 +298,8 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2016 P1 Q4", solutionUrl: "https://www.maths.scot/nat5/simultaneous-equations#9" },
             { ref: "2019 P1 Q8", solutionUrl: "https://www.maths.scot/nat5/simultaneous-equations#10" },
             { ref: "2022 P2 Q4", solutionUrl: "https://www.maths.scot/nat5/simultaneous-equations#11" },
+            { ref: "2025 P2 Q10", solutionUrl: "https://www.maths.scot/nat5/simultaneous-equations#12" },
+            { ref: "2026 P2 Q4", solutionUrl: "https://www.maths.scot/nat5/simultaneous-equations#13" },
           ],
         },
         {
@@ -310,6 +321,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2022 P1 Q7", solutionUrl: "https://www.maths.scot/nat5/change-of-subject#14" },
             { ref: "2023 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/change-of-subject#15" },
             { ref: "2024 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/change-of-subject#16" },
+            { ref: "2026 P1 Q8", solutionUrl: "https://www.maths.scot/nat5/change-of-subject#18" },
           ],
         },
         {
@@ -351,6 +363,8 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2024 P2 Q8", solutionUrl: "https://www.maths.scot/nat5/quadratics#18" },
             { question: `Find the roots of \\(y=x^2+4x-1\\)`, answer: `\\(x=0.24, x=-4.24\\)`, videoId: "G8dC4UTU4rY", timestamp: 800, solutionUrl: "https://www.maths.scot/nat5/quadratics" },
             { question: `What is the nature of the roots of<br> \\(2x^2+5x-1=0\\)?`, answer: `Two real, distinct roots`, videoId: "G8dC4UTU4rY", timestamp: 885, solutionUrl: "https://www.maths.scot/nat5/quadratics" },
+            { ref: "2025 P1 Q9", solutionUrl: "https://www.maths.scot/nat5/quadratics#19" },
+            { ref: "2026 P1 Q14", solutionUrl: "https://www.maths.scot/nat5/quadratics#20" },
           ],
         },
       ],
@@ -389,6 +403,8 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2018 P2 Q2", solutionUrl: "https://www.maths.scot/nat5/arcs-and-sectors#12" },
             { ref: "2019 P1 Q4", solutionUrl: "https://www.maths.scot/nat5/arcs-and-sectors#13" },
             { ref: "2023 P2 Q3", solutionUrl: "https://www.maths.scot/nat5/arcs-and-sectors#14" },
+            { ref: "2024 P2 Q15", solutionUrl: "https://www.maths.scot/nat5/arcs-and-sectors#15" },
+            { ref: "2025 P2 Q6", solutionUrl: "https://www.maths.scot/nat5/arcs-and-sectors#16" },
           ],
         },
         {
@@ -404,6 +420,8 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2018 P1 Q17", solutionUrl: "https://www.maths.scot/nat5/volume#8" },
             { question: `<p>The diagram shows a hemisphere relative to the coordinate axes.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/Volume/Example_9.png" alt="Hemisphere relative to coordinate axes"><p>&bull;&nbsp;&nbsp;A is the point (6,0,0)<br>&bull;&nbsp;&nbsp;C is the midpoint of diameter OA<br>&bull;&nbsp;&nbsp;B is vertically below C</p><p>Calculate the volume of the hemisphere.<br>                  Give your answer in its simplest form in terms of \\(\\pi.\\)</p>`, answer: `\\(18\\pi\\) cm³`, videoId: "BE2iN-HM2m0", timestamp: 757, paper: "2021 P1 Q14", solutionUrl: "https://www.maths.scot/nat5/volume#10" },
             { ref: "2023 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/volume#10" },
+            { ref: "2024 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/volume#11" },
+            { ref: "2025 P2 Q2", solutionUrl: "https://www.maths.scot/nat5/volume#12" },
           ],
         },
         {
@@ -419,6 +437,9 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2015 P2 Q12", solutionUrl: "https://www.maths.scot/nat5/pythagoras#8" },
             { ref: "2017 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/pythagoras#9" },
             { ref: "2018 P2 Q12", solutionUrl: "https://www.maths.scot/nat5/pythagoras#10" },
+            { ref: "2022 P2 Q11", solutionUrl: "https://www.maths.scot/nat5/pythagoras#11" },
+            { ref: "2023 P1 Q10", solutionUrl: "https://www.maths.scot/nat5/pythagoras#12" },
+            { ref: "2024 P2 Q10", solutionUrl: "https://www.maths.scot/nat5/pythagoras#13" },
           ],
         },
         {
@@ -430,6 +451,8 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2017 P1 Q9", solutionUrl: "https://www.maths.scot/nat5/angles-in-shapes#4" },
             { ref: "2022 P1 Q4", solutionUrl: "https://www.maths.scot/nat5/angles-in-shapes#5" },
             { ref: "2023 P2 Q5", solutionUrl: "https://www.maths.scot/nat5/angles-in-shapes#6" },
+            { ref: "2024 P1 Q10", solutionUrl: "https://www.maths.scot/nat5/angles-in-shapes#7" },
+            { ref: "2025 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/angles-in-shapes#8" },
           ],
         },
         {
@@ -444,6 +467,8 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>Screenwash is available in bottles which are mathematically similar.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/Similarity/Example_7.png" alt="Two mathematically similar screenwash bottles"><p>The smaller bottle has a height of 15 centimetres and a volume of 250 millilitres.<br>                  The larger bottle has a height of 36 centimetres.<br>                  Calculate the volume of the larger bottle.</p>`, answer: `3456 ml`, videoId: "Vdr3WypZJhk", timestamp: 736, paper: "2017 Spec P2 Q7", solutionUrl: "https://www.maths.scot/nat5/similar-shapes#7" },
             { ref: "2018 P2 Q18", solutionUrl: "https://www.maths.scot/nat5/similar-shapes#8" },
             { question: `<p>The two photographs shown are mathematically similar.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/Similarity/Example_9.png" alt="Two mathematically similar photographs"><p>The small photograph has an area of 80 square centimetres, and is 12 centimetres wide.<br>                  The large photograph has an area of 500 square centimetres.<br>                  Calculate the width of the large photograph.</p>`, answer: `30 cm`, videoId: "Vdr3WypZJhk", timestamp: 1037, paper: "2021 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/similar-shapes#9" },
+            { ref: "2024 P1 Q14", solutionUrl: "https://www.maths.scot/nat5/similar-shapes#10" },
+            { ref: "2025 P2 Q11", solutionUrl: "https://www.maths.scot/nat5/similar-shapes#11" },
           ],
         },
         {
@@ -463,6 +488,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>The vectors \\( \\boldsymbol u \\) and \\( \\boldsymbol v \\) are shown in the diagram below.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/Vectors/Example_12.png" alt="Vectors u and v on a grid">               <p>Find the resultant vector \\( \\boldsymbol u - \\boldsymbol v.\\)<br>                  Express your answer in component form.</p>`, answer: `\\(\\left( \\begin{matrix} \\phantom{.}2\\phantom{.} \\\\ \\phantom{.}6\\phantom{.} \\end{matrix} \\right)\\)`, videoId: "LbjRj3AIfyQ", timestamp: 1340, paper: "2021 P2 Q5" },
             { question: `<p>The triangle ABC is shown below</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/Vectors/Example_13.png" alt="Triangle ABC with point G"><p>\\(\\overrightarrow{\\textsf{AB}} =\\boldsymbol u\\) and \\(\\overrightarrow{\\textsf{AC}}=\\boldsymbol t.\\)<br>                  G is the point such that <span style="white-space: nowrap;">CG = \\(\\large\\frac{1}{3}\\)CB.</span><br>                  Express \\(\\overrightarrow{\\textsf{AG}}\\) in terms of \\(\\boldsymbol u\\) and \\(\\boldsymbol t.\\)<br>                  Give your answer in simplest form.</p>`, answer: `\\(\\frac{2}{3}\\underline t + \\frac{1}{3}\\underline u\\)`, videoId: "LbjRj3AIfyQ", timestamp: 1480, paper: "2021 P2 Q17" },
             { ref: "2024 P1 Q4", solutionUrl: "https://www.maths.scot/nat5/vectors#14" },
+            { ref: "2026 P1 Q7", solutionUrl: "https://www.maths.scot/nat5/vectors#15" },
           ],
         },
         {
@@ -479,6 +505,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2018 P1 Q13" },
             { ref: "2019 P2 Q5" },
             { question: `<p>The diagram shows a hemisphere relative to the coordinate axes.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/3D_Coordinates/Example_7.png" alt="Hemisphere in 3D coordinates">               <p>&bull;&nbsp;&nbsp;A is the point (6,0,0)<br>&bull;&nbsp;&nbsp;C is the midpoint of diameter OA<br>&bull;&nbsp;&nbsp;B is vertically below C<br>                  State the coordinates of B.</p>`, answer: `B(3,0,-3)`, videoId: "PIwYneqDKXM", timestamp: 679, paper: "2021 P1 Q14" },
+            { ref: "2025 P2 Q8", solutionUrl: "https://www.maths.scot/nat5/3d-coordinates#8" },
           ],
         },
       ],
@@ -514,6 +541,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2019 P2 Q19", solutionUrl: "https://www.maths.scot/nat5/sine-rule#4" },
             { question: `<p>In triangle PQR<br>&bull;&nbsp;&nbsp;PR = 11.3 metres<br>&bull;&nbsp;&nbsp;QR = 9.8 metres<br>&bull;&nbsp;&nbsp;angle QPR = 54&deg;</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/sine-rule/2021-P2-Q4.png" alt="Triangle PQR with side lengths and angle"><p>Calculate the size of acute angle PQR.</p>`, answer: `68.9°`, videoId: "EKg4x9-JCIc", timestamp: 1277, paper: "2021 P2 Q4", solutionUrl: "https://www.maths.scot/nat5/sine-rule#8" },
             { ref: "2023 P2 Q4", solutionUrl: "https://www.maths.scot/nat5/sine-rule#9" },
+            { ref: "2024 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/sine-rule#10" },
           ],
         },
         {
@@ -529,6 +557,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2018 P1 Q10", solutionUrl: "https://www.maths.scot/nat5/cosine-rule#8" },
             { ref: "2019 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/cosine-rule#4" },
             { ref: "2023 P1 Q6", solutionUrl: "https://www.maths.scot/nat5/cosine-rule#10" },
+            { ref: "2024 P2 Q3", solutionUrl: "https://www.maths.scot/nat5/cosine-rule#11" },
           ],
         },
         {
@@ -570,6 +599,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2019 P2 Q14", solutionUrl: "https://www.maths.scot/nat5/trig-equations#11" },
             { ref: "2022 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/trig-equations#12" },
             { ref: "2024 P2 Q11", solutionUrl: "https://www.maths.scot/nat5/trig-equations#13" },
+            { ref: "2026 P2 Q8", solutionUrl: "https://www.maths.scot/nat5/trig-equations#14" },
           ],
         },
         {
@@ -584,6 +614,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2024 P2 Q16", solutionUrl: "https://www.maths.scot/nat5/trig-identities#9" },
             { question: `Solve the equation \\(3\\ sin\\ x = 2\\ cos\\ x\\), for \\(0 \\le x < 360^\\circ.\\)`, answer: `\\(x=33.7^\\circ\\) or \\(x=213.7^\\circ\\) (to 1 d.p.)`, videoId: "7Mg-VlhLuO0", timestamp: 437, solutionUrl: "https://www.maths.scot/nat5/trig-identities#8" },
             { question: `Prove that, for all values of \\(x^\\circ\\), \\(cos^2 x(1+tan^2 x)=1.\\)`, answer: `The proof shows that the LHS simplifies to 1, which equals the RHS.`, solutionUrl: "https://www.maths.scot/nat5/trig-identities#9" },
+            { ref: "2026 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/trig-identities#10" },
           ],
         },
       ],
@@ -602,6 +633,9 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>A company operates a bus route from the city centre to the airport. The number of passengers on six of its buses on a Monday was</p><p class="text-2xl font-mono tracking-widest">32 27 34 29 31 33</p><p>(a) Calculate the mean and standard deviation of the number of passengers.</p><p>(b) The mean number of passengers the following Saturday was 28 and the standard deviation was 3.2. Make two valid comments comparing the number of passengers on each bus on Monday and Saturday.</p>`, answer: `(a) Mean = 31, Standard Deviation ≈ 2.6<br>(b) On average, the Monday buses had more passengers, as \\(31>28.\\) The number of passengers on each bus varied more on Saturday, as \\(3.2>2.6.\\)`, videoId: "KsQH1RBJQhw", timestamp: 855, paper: "2021 P2 Q6", solutionUrl: "https://www.maths.scot/nat5/data-sets#5" },
             { ref: "2023 P1 Q9", solutionUrl: "https://www.maths.scot/nat5/data-sets#6" },
             { ref: "2024 P1 Q5", solutionUrl: "https://www.maths.scot/nat5/data-sets#7" },
+            { ref: "2025 P1 Q3", solutionUrl: "https://www.maths.scot/nat5/data-sets#8" },
+            { ref: "2025 P2 Q4", solutionUrl: "https://www.maths.scot/nat5/data-sets#9" },
+            { ref: "2026 P1 Q3", solutionUrl: "https://www.maths.scot/nat5/data-sets#10" },
           ],
         },
         {
@@ -613,6 +647,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2018 P1 Q7" },
             { ref: "2019 P1 Q6" },
             { ref: "2023 P1 Q7" },
+            { ref: "2024 P1 Q9", solutionUrl: "https://www.maths.scot/nat5/line-of-best-fit#7" },
           ],
         },
       ],
