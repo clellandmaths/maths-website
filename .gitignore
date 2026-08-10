@@ -53,3 +53,8 @@ next-env.d.ts
 # redirect artefact. Neither belongs in this repo.
 /Course Notes/
 /nul
+
+# Working reports from the maths.scot sync scripts — regenerate, do not commit
+mathsscot-reconciled.json
+scan-mathsscot-new.json
+mathsscot-additions.json
