@@ -1,4 +1,5 @@
 import type { QuestionWithMetadata } from '@/lib/data-loader';
+import { packRef, decodeRefs } from '@/lib/worksheet-refs.mjs';
 
 /**
  * Sharing a worksheet as a link.
@@ -71,7 +72,14 @@ export function questionRef(q: QuestionWithMetadata): string {
 export function encodeWorksheet(courseId: string, questions: QuestionWithMetadata[]): string {
   const params = new URLSearchParams();
   params.set('c', courseId);
-  params.set('q', questions.map(questionRef).join(SEP));
+  // Anything that will not pack falls back to its spelled-out reference, so a
+  // question outside the ranges costs length rather than dropping out of the
+  // sheet. The build gate exists so this never actually happens.
+  const packed = questions.map(q => packRef(q));
+  const q = packed.every(Boolean)
+    ? packed.join('')
+    : questions.map(questionRef).join(SEP);
+  params.set('q', q);
   return params.toString();
 }
 
@@ -81,7 +89,7 @@ export function decodeWorksheet(search: string): SharedWorksheet | null {
   const courseId = params.get('c');
   const q = params.get('q');
   if (!courseId || !q) return null;
-  const refs = q.split(SEP).map(r => r.trim()).filter(Boolean);
+  const refs = decodeRefs(q);
   if (!refs.length) return null;
   return {
     courseId,

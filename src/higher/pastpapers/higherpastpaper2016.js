@@ -13,7 +13,7 @@ export const higherPastPaper2016 = {
           topics: ["Perpendicular and parallel lines"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 P1 Q2</span></strong></small><br>Given that<br>\\(y=12x^{3}+8\\sqrt{x}\\)<br>where \\(x \\gt 0\\), find \\(\\frac{dy}{dx}.\\)`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 P1 Q2</span></strong></small><br>Given that<br>\\(y=12x^{3}+8\\sqrt{x}\\) where \\(x \\gt 0\\),<br>find \\(\\frac{dy}{dx}.\\)`,
           answer: `\\(36x^{2}+4x^{-\\frac{1}{2}}\\) or \\(36x^{2}+\\frac{4}{\\sqrt{x}}\\)`,
           videoId: "lOTDQhyKvRs",
           timestamp: "64s",

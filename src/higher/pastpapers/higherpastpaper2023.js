@@ -5,7 +5,7 @@ export const higherPastPaper2023 = {
       paperNumber: 1,
       questions: [
         {
-          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q1</span></strong></small><br>Given that<br>\\(y=x^{\\frac{5}{3}}-\\frac{10}{x^{4}}\\)<br>where \\(x\\ne0\\) find \\(\\frac{dy}{dx}\\).`,
+          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q1</span></strong></small><br>Given that<br>\\(y=x^{\\frac{5}{3}}-\\frac{10}{x^{4}}\\) where \\(x\\ne0\\)<br>find \\(\\frac{dy}{dx}\\).`,
           answer: `\\(\\frac{5}{3}x^{\\frac{2}{3}}+40x^{-5}\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "8s",

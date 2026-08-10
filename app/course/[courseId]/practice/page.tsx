@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import type { Metadata } from 'next';
-import { COURSES_WITH_PRACTICE, getPracticeForCourse, topicSlug, resolveQuestions } from '@/lib/practice-loader';
+import { COURSES_WITH_PRACTICE, getPracticeForCourse, topicSlug, resolveQuestions, type ResolvedQuestion } from '@/lib/practice-loader';
 import { getCourseTheme } from '@/lib/course-theme';
 import CourseTabs from '@/components/CourseTabs';
 import { notesEntryHref } from '@/lib/notes-loader';
@@ -56,14 +56,30 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
 
   const theme = getCourseTheme(courseId);
   const courseName = COURSE_NAMES[courseId] ?? courseId;
-  const total = course.sections.reduce(
-    (n, s) => n + s.topics.reduce((m, t) => m + t.questions.length, 0), 0
+  // Every count on this page reads the RESOLVED questions, never the raw list.
+  //
+  // Most practice questions are stored as a reference to a past paper question
+  // rather than a copy, and a reference carries no `paper` field until it is
+  // resolved. Counting the raw list therefore found 43 past paper questions
+  // where the site holds 596, and showed none whatsoever for the two
+  // Applications courses, which are referenced end to end — 122 and 51
+  // questions apiece, every one of them reported as guided practice.
+  //
+  // Resolving also drops any reference that no longer points at a question, so
+  // the totals cannot drift above what a reader will actually be shown.
+  const resolved = new Map<string, ResolvedQuestion[]>();
+  await Promise.all(
+    course.sections.flatMap(s =>
+      s.topics.map(async t => {
+        resolved.set(t.name, await resolveQuestions(courseId, t.questions));
+      })
+    )
   );
-  // A referenced past paper question brings the paper's own video, so the
-  // references have to be resolved before the count means anything
-  const videos = (await Promise.all(
-    course.sections.flatMap(s => s.topics.map(t => resolveQuestions(courseId, t.questions)))
-  )).flat().filter(q => q.videoId).length;
+  const questionsIn = (topics: { name: string }[]) =>
+    topics.reduce((n, t) => n + (resolved.get(t.name)?.length ?? 0), 0);
+
+  const total = course.sections.reduce((n, s) => n + questionsIn(s.topics), 0);
+  const videos = [...resolved.values()].flat().filter(q => q.videoId).length;
 
   // Two shapes of course, and they want different pages.
   //
@@ -81,7 +97,8 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
   const flatTopics = course.sections.flatMap(s => s.topics);
 
   const topicCard = (topic: (typeof flatTopics)[number]) => {
-    const papers = topic.questions.filter(q => q.paper).length;
+    const questions = resolved.get(topic.name) ?? [];
+    const papers = questions.filter(q => q.paper).length;
     return (
       <Link
         key={topic.name}
@@ -90,8 +107,8 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
       >
         <p className="font-medium mb-1">{topic.name}</p>
         <p className="font-mono text-xs text-muted-dim">
-          {topic.questions.length} questions
-          {papers > 0 && ` · ${papers} past paper`}
+          {questions.length} question{questions.length === 1 ? '' : 's'}
+          {papers > 0 && ` · ${papers} past paper${papers === 1 ? '' : 's'}`}
         </p>
       </Link>
     );
@@ -130,7 +147,7 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
         // does not land looking empty.
         <div className="space-y-3">
           {course.sections.map((section, i) => {
-            const questions = section.topics.reduce((n, t) => n + t.questions.length, 0);
+            const questions = questionsIn(section.topics);
             return (
               <details
                 key={section.id}

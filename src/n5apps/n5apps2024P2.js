@@ -33,7 +33,7 @@ export const n5AppsMaths2024P2 = {
     },
     {
      question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q4</span></strong></small><p>A section of garden is in the shape of four identical right-angled triangles.<br>It consists of a circular flower bed surrounded by a patio as shown.<br>The flower bed has a radius of 4 metres.</p><img src="/img/N5_Apps_Past_Papers/2024/2024_P2_Q4.webp" alt="Garden shape with four identical right-angled triangles forming a rhombus, surrounding a circular flower bed"><p>The patio is represented by the shaded area.<br>Calculate the area of the patio.</p>`,
-     answer: `<p>Area of circle = \\(\\pi \\times 4^2 = 50.265...\\) m²<br>Dimensions of triangles: Base = 5 + 4 = 9 m, Height = 3 + 4 = 7 m<br>Total area of 4 triangles = 4 \\times (\\frac{1}{2} \\times 9 \\times 7) = 126 m²<br>Area of patio = \\(126 - 50.265... = 75.734...\\) m²</p>`,
+     answer: `<p>Area of circle = \\(\\pi \\times 4^2 = 50.265...\\) m²<br>Dimensions of triangles: Base = 5 + 4 = 9 m, Height = 3 + 4 = 7 m<br>Total area of 4 triangles = \\(4 \\times (\\frac{1}{2} \\times 9 \\times 7) = 126\\) m²<br>Area of patio = \\(126 - 50.265... = 75.734...\\) m²</p>`,
      topics: ['Geometry'],
      subtopics: ['Area: Shapes Including Circles'],
      marks: [4],

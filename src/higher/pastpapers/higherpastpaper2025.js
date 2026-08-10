@@ -61,7 +61,7 @@ export const higherPastPaper2025 = {
           topics: ["Cubic/quartic expressions/equations: factorise or solve"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q8</span></strong></small><br>Given that<br>\\(\\log_{a}75=2+\\log_{a}3\\)<br>where \\(a \\gt 0\\), find the value of a.`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q8</span></strong></small><br>Given that<br>\\(\\log_{a}75=2+\\log_{a}3\\) where \\(a \\gt 0\\),<br>find the value of \\(a.\\)`,
           answer: `\\(a = 5\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "872s",
