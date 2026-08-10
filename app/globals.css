@@ -302,10 +302,7 @@ body {
 
 @media print {
   @page {
-    /* Bottom margin is deeper than the rest to leave a strip for
-       .print-running-foot, which is position:fixed and so reserves no
-       space of its own. Reduce this and text prints over the footer. */
-    margin: 1.5cm 1.5cm 2.2cm;
+    margin: 1.5cm;
     size: A4;
   }
 
@@ -408,33 +405,7 @@ body {
     margin: 0 0 0.25rem;
   }
 
-  /* ── The line that repeats on every sheet ──────────────────────────
-     A worksheet gets photocopied, stapled badly and separated; without
-     this, page 3 carries nothing saying what it is or where it came from.
-
-     position:fixed is what makes Chrome repeat it on every printed page.
-     The catch is that a fixed element reserves no space in the flow, so
-     text will print straight through it unless the page gives it room —
-     hence the extra bottom margin on @page above, with the strip sitting
-     down inside that margin. Change one and you must change the other.
-
-     Not the place for a page number: @page margin boxes and
-     counter(page) are in the spec but Chrome does not implement them, so
-     "page 2 of 4" has to come from the browser's own print dialog. */
-  .print-running-foot {
-    position: fixed;
-    bottom: -1cm;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 0.625rem;
-    color: #777 !important;
-    background: white;
-  }
-
-  /* Print footer — last page only, because it carries the full copyright
-     notice. Three lines of legal text on every sheet would crowd out the
-     maths, and one notice per document is what it is for. */
+  /* Print footer */
   .print-footer {
     margin-top: 2rem;
     padding-top: 0.5rem;
