@@ -286,9 +286,22 @@ function SharedWorksheet() {
         })}
       </ol>
 
+      {/* A slim line repeated on every sheet of paper.
+          Worksheets get photocopied, stapled badly and separated on a
+          classroom floor; without this, page 3 says nothing about what it is
+          or where it came from. Position fixed is what repeats it in print —
+          CSS page counters are in the spec but Chrome does not implement the
+          margin boxes, so "page 2 of 4" has to come from the browser's own
+          print dialog rather than from here. */}
+      <div className="print-only print-running-foot" aria-hidden="true">
+        {title || `${COURSE_NAMES[courseId ?? ''] ?? ''} Worksheet`} · clellandmaths.com
+      </div>
+
       {/* The site footer is hidden on print, so a printed handout would leave
           the building carrying no attribution at all. The notice travels with
-          the questions instead. */}
+          the questions instead. It stays on the last page only: three lines of
+          copyright on every sheet would crowd out the maths, and one notice per
+          document is what it is for. */}
       <div className="print-only print-footer">
         <p>clellandmaths.com — free past papers, video solutions and worksheets</p>
         <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
