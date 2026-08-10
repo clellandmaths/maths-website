@@ -4,21 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run check:math && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && next build",
+    "build": "npm run check:math && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:qbreaks && next build",
     "postbuild": "node scripts/check-headers-redirects.mjs && node scripts/check-rendered-math.mjs",
     "build:only": "next build",
     "start": "next start",
     "lint": "eslint",
     "check:math": "node scripts/check-math-render.mjs",
     "check:latex": "node scripts/check-notes-latex.mjs",
-    "check": "npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims",
+    "check": "npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:qbreaks",
     "check:homepage": "node scripts/check-homepage-years.mjs",
     "check:papers": "node scripts/check-paper-registry.mjs",
     "check:timestamps": "node scripts/check-timestamps.mjs",
     "check:qnumbers": "node scripts/check-question-numbers.mjs",
     "check:sharerefs": "node scripts/check-share-refs.mjs",
     "check:rendered": "node scripts/check-rendered-math.mjs",
-    "check:latexdelims": "node scripts/check-latex-delimiters.mjs"
+    "check:latexdelims": "node scripts/check-latex-delimiters.mjs",
+    "check:qbreaks": "node scripts/check-question-breaks.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",
