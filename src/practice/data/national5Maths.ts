@@ -603,7 +603,7 @@ export const national5MathsPractice: PracticeCourse = {
         {
           name: "Trig Equations",
           questions: [
-            { question: `Solve the equation \\(cos\\ x^\\circ = 0.5\\), for \\(0 \\le x < 360.\\)`, answer: `\\(x=60^\\circ\\) or \\(x=300^\\circ\\)`, videoId: "z-LJgscYobI", timestamp: 12, solutionUrl: "https://www.maths.scot/nat5/trig-equations#2" },
+            { question: `Solve the equation \\(cos\\ x^\\circ = 0.5\\), for \\(0 \\le x < 360.\\)`, answer: `\\(x=60^\\circ\\) or \\(x=300^\\circ\\)`, videoId: "z-LJgscYobI", timestamp: 12, solutionUrl: "https://www.maths.scot/nat5/trig-equations#1" },
             { question: `Solve the equation \\(cos\\ x^\\circ = -0.5\\), for \\(0 \\le x < 360.\\)`, answer: `\\(x=120^\\circ\\) or \\(x=240^\\circ\\)`, videoId: "z-LJgscYobI", timestamp: 80, solutionUrl: "https://www.maths.scot/nat5/trig-equations#2" },
             { question: `Solve the equation \\(sin\\ x^\\circ = -0.4\\), for \\(0 \\le x < 360.\\)`, answer: `\\(x=203.6^\\circ\\) or \\(x=336.4^\\circ\\) (to 1 d.p.)`, videoId: "z-LJgscYobI", timestamp: 180, solutionUrl: "https://www.maths.scot/nat5/trig-equations#3" },
             { question: `Solve the equation \\(tan\\ x^\\circ = 5\\), for \\(0 \\le x < 360.\\)`, answer: `\\(x=78.7^\\circ\\) or \\(x=258.7^\\circ\\) (to 1 d.p.)`, videoId: "z-LJgscYobI", timestamp: 246, solutionUrl: "https://www.maths.scot/nat5/trig-equations#4" },
