@@ -198,7 +198,7 @@ export const advancedHigherMathsPractice: PracticeCourse = {
             { question: `Use the answers from the previous two examples to obtain the Maclaurin expansion for \\(e^{3x}\\sin 4x\\) up to, and including, the term in \\(x^3\\).`, answer: `\\(4x+12x^2+\\frac{22}{3}x^3+\\cdots\\)`, solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#3" },
             { question: `Use the answer to Example 3 to obtain the first three non-zero terms of the Maclaurin expansion for \\(\\frac{d}{dx}(e^{3x}\\sin 4x)\\).`, answer: `\\(4+24x+22x^2+\\cdots\\)`, solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#4" },
             { question: `Given the following power series: \\(\\sec^2 x = 1+x^2+\\frac{2}{3}x^4+\\cdots\\) deduce the Maclaurin series for \\(\\tan 2x\\) up to, and including the term in \\(x^5\\).`, answer: `\\(2x+\\frac{8}{3}x^3+\\frac{64}{15}x^5+\\cdots\\)`, solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#5" },
-            { ref: "2023 P2 Q15" },
+            { ref: "2023 P2 Q15", solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#6" },
             { ref: "2024 P2 Q7", solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#7" },
             { ref: "2025 P2 Q6", solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#8" },
             { ref: "2026 P2 Q3", solutionUrl: "https://www.maths.scot/advanced-higher/maclaurin-series#9" },
