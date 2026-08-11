@@ -114,7 +114,35 @@ has to survive the trip:
 - `$` is a math delimiter in the app but not here.
 - In `.ts` source, delimiters are `\\(` … `\\)`.
 
-### 5. Never edit these files through a shell heredoc
+### 5. Higher Applications is spreadsheet-first — no Higher Maths notation
+
+Recurrence relations are genuinely in the Higher Applications course; the spec
+names them. But the spec's verbs are *suggest a model* and *implement models
+based on recurrence relations* **in a spreadsheet**, and across all six papers
+(2022–2026 and the specimen) there is **not one** question asking a pupil to
+write down a recurrence relation, and **not one** use of uₙ or u₀. The single
+appearance of the phrase is inside a marking answer, naming a model type.
+
+So state the relation in the words of the context, and pair it with the cell
+formula — the style `worksheet_generator` already uses:
+
+```
+Pests next week = Pests this week × 0.45 + 400        =B2*0.45+400
+Roll next year  = Roll this year  × 0.85 + 140        =INT(C13*$C$8+$C$9)
+```
+
+`worksheet_generator/src/lib/generators/apps.ts` is the reference for this
+topic — every variation there is tagged to the paper it models, and it contains
+no uₙ anywhere. **Check it before authoring Higher Apps practice.**
+
+This drifted in once already: notes were written from `reference/Higher
+Apps/Modelling.txt`, which does use "write down a recurrence relation" and uₙ
+because that is how it is taught in class, and practice was then written from
+the notes. The chain worked exactly as designed and carried it through. The
+notes now keep one line acknowledging pupils will meet uₙ and u₀ in class, and
+say plainly that Higher Applications does not ask for that form.
+
+### 6. Never edit these files through a shell heredoc
 
 Heredocs halve backslashes, turning `\\(` into `\(`. In the app that renders as
 literal bracket characters — it has already shipped once. Use an editor or a
