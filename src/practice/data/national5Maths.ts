@@ -200,7 +200,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2015 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#8" },
             { ref: "2016 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#9" },
             { question: `<p>Express \\(\\large\\frac{4}{x+2}-\\frac{3}{x-4}\\small,\\:\\: x\\neq-2,\\ x\\neq 4\\:\\:\\)<br>as a single fraction in its simplest form.</p>`, answer: `\\(\\frac{x-22}{(x-4)(x+2)}\\)`, videoId: "z5HbmufBngU", timestamp: 727, paper: "2017 Spec P1 Q14", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#10" },
-            { question: `<p>Simplify \\(\\large\\frac{x^2-4x}{x^2+x-20}\\small.\\)</p>`, answer: `\\(\\frac{x}{x+5}\\)`, videoId: "RQ9h0QdidV8", timestamp: 0, paper: "2017 Spec P2 Q13", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#11" },
+            { question: `<p>Simplify \\(\\large\\frac{x^2-4x}{x^2+x-20}\\small.\\)</p>`, answer: `\\(\\frac{x}{x+5}\\)`, paper: "2017 Spec P2 Q13", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#11" },
             { ref: "2017 P1 Q11", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#12" },
             { ref: "2017 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#13" },
             { ref: "2018 P2 Q15", solutionUrl: "https://www.maths.scot/nat5/algebraic-fractions#14" },

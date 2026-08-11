@@ -274,7 +274,7 @@ export const advancedHigherMathsPractice: PracticeCourse = {
             { ref: "2024 P2 Q2", videoId: "nVZV1HfcKPg", timestamp: 2021, solutionUrl: "https://www.maths.scot/advanced-higher/number-theory#9" },
             { ref: "2019 Q12", videoId: "nVZV1HfcKPg", timestamp: 2183 },
             { ref: "2023 P2 Q9", videoId: "nVZV1HfcKPg", timestamp: 2306, solutionUrl: "https://www.maths.scot/advanced-higher/number-theory#8" },
-            { ref: "2025 P2 Q4", videoId: "nVZV1HfcKPg", timestamp: 0, solutionUrl: "https://www.maths.scot/advanced-higher/number-theory#10" },
+            { ref: "2025 P2 Q4", solutionUrl: "https://www.maths.scot/advanced-higher/number-theory#10" },
             { ref: "2026 P2 Q4", solutionUrl: "https://www.maths.scot/advanced-higher/number-theory#11" },
             { ref: "2026 P2 Q9", solutionUrl: "https://www.maths.scot/advanced-higher/number-theory#12" },
           ],
