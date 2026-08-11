@@ -91,6 +91,112 @@ for (const d of dirs) {
 console.log(`  ${total} checked`);
 for (const [s, n] of [...shapes].sort((a, b) => b[1] - a[1])) console.log(`     ${String(n).padStart(4)}  ${s}`);
 
+// ------------------------------------------- guided practice, specials, notes
+//
+// The section above only ever looked at past papers, and it skipped falsy
+// timestamps outright (`if (!q.timestamp) return`). Both blind spots mattered:
+// two guided practice questions sat at timestamp 0 for months, opening their
+// video from the beginning, and neither was a past paper entry nor a truthy
+// value, so nothing looked at them.
+//
+// The rule that catches this: a video's FIRST appearance may legitimately start
+// at 0 — a dedicated single-question video opens on the question. A later
+// appearance of the SAME video at 0 cannot be right, because the earlier
+// entries are already further in.
+
+/**
+ * videoId/timestamp pairs in source order. Objects may span lines.
+ *
+ * The search must not cross an object boundary. An earlier version scanned a
+ * fixed 600 characters either side, which let a videoId with no timestamp of
+ * its own borrow the neighbouring entry's and report as healthy — exactly the
+ * fault the check exists to catch. So scan outward only as far as the first
+ * `}` or the next `videoId:`, whichever comes first.
+ *
+ * Brace counting is deliberately avoided: question and answer strings are full
+ * of LaTeX braces, so `{` and `}` are not reliable structure in this data. The
+ * one thing that does hold is that a `timestamp` belonging to this entry is
+ * never separated from its `videoId` by an object terminator.
+ */
+function pairs(text) {
+  const STOP = /timestamp:\s*(?:(["'`])(.*?)\1|(\d+))|(\}\s*[,;\]])|videoId:/g;
+  const vids = [...text.matchAll(/videoId:\s*(["'`])(.*?)\1/g)];
+  const found = [];
+
+  for (const m of vids) {
+    const from = m.index + m[0].length;
+    STOP.lastIndex = from;
+    const ahead = STOP.exec(text);
+    let raw;
+    // A timestamp reached before any terminator belongs to this entry.
+    if (ahead && ahead[4] === undefined && !ahead[0].startsWith('videoId')) {
+      raw = ahead[2] !== undefined ? ahead[2] : Number(ahead[3]);
+    } else {
+      // Fields can also be written the other way round. Look back, but only to
+      // this entry's opening — the previous terminator or videoId.
+      const before = text.slice(0, m.index);
+      const bound = Math.max(before.lastIndexOf('},'), before.lastIndexOf('videoId:'));
+      const behind = before.slice(bound + 1);
+      const hit = /timestamp:\s*(?:(["'`])(.*?)\1|(\d+))/.exec(behind);
+      if (hit) raw = hit[2] !== undefined ? hit[2] : Number(hit[3]);
+    }
+    found.push({ videoId: m[2], raw, line: text.slice(0, m.index).split('\n').length });
+  }
+  return found;
+}
+
+const dataFiles = [
+  ...fs.readdirSync(path.join(root, 'src/practice/data'))
+      .filter(f => f.endsWith('.ts')).map(f => `src/practice/data/${f}`),
+  ...['n5', 'higher', 'ah', 'n5apps', 'higherapps']
+      .map(c => `src/${c}/specials`)
+      .filter(d => fs.existsSync(path.join(root, d)))
+      .flatMap(d => fs.readdirSync(path.join(root, d))
+        .filter(f => f.endsWith('.js')).map(f => `${d}/${f}`)),
+];
+
+let checked = 0;
+console.log('\nguided practice and specials:');
+for (const rel of dataFiles) {
+  const text = fs.readFileSync(path.join(root, rel), 'utf8');
+  const seen = new Map();                       // videoId -> times seen so far
+  for (const p of pairs(text)) {
+    checked++;
+    const n = (seen.get(p.videoId) ?? 0) + 1;
+    seen.set(p.videoId, n);
+    const where = `${rel}:${p.line} ${p.videoId}`;
+
+    if (p.raw === undefined) { fail(`${where}: videoId with no timestamp — the embed opens at 0`); continue; }
+    const ts = String(p.raw).trim();
+    if (ts && !SHAPE.test(ts)) { fail(`${where}: "${ts}" is not a shape the parser understands`); continue; }
+
+    const secs = timestampToSeconds(p.raw);
+    if (secs <= 0 && n > 1) {
+      fail(`${where}: ${JSON.stringify(p.raw)} is use ${n} of this video and parses to ${secs}s — ` +
+           `earlier uses are further in, so this cannot be the start`);
+    }
+    if (secs > 6 * 3600) fail(`${where}: "${ts}" parses to ${secs}s — over six hours`);
+  }
+}
+console.log(`  ${checked} videoId/timestamp pairs checked across ${dataFiles.length} files`);
+
+// Notes carry the whole URL rather than a timestamp field, so `start=` must
+// already be seconds — YouTube ignores start=3m35s and opens at the beginning.
+const notesDir = path.join(root, 'src/notes/data');
+let starts = 0;
+if (fs.existsSync(notesDir)) {
+  for (const f of fs.readdirSync(notesDir).filter(f => /\.(tsx?|jsx?)$/.test(f))) {
+    const text = fs.readFileSync(path.join(notesDir, f), 'utf8');
+    for (const m of text.matchAll(/youtube\.com\/embed\/[^"'`?\s]+\?start=([^"'`&\s]+)/g)) {
+      starts++;
+      if (!/^\d+$/.test(m[1])) {
+        fail(`src/notes/data/${f}: start=${m[1]} — YouTube only accepts whole seconds here`);
+      }
+    }
+  }
+}
+console.log(`  ${starts} hardcoded notes start= values checked`);
+
 if (failures) {
   console.log(`\ntimestamp check FAILED (${failures})`);
   process.exit(1);
