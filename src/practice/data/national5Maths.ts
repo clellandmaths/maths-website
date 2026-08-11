@@ -91,6 +91,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2022 P1 Q13", solutionUrl: "https://www.maths.scot/nat5/surds#9" },
             { ref: "2023 P1 Q8", solutionUrl: "https://www.maths.scot/nat5/surds#10" },
             { ref: "2024 P1 Q6", solutionUrl: "https://www.maths.scot/nat5/surds#11" },
+            { ref: "2025 P1 Q12", solutionUrl: "https://www.maths.scot/nat5/surds#12" },
           ],
         },
         {
