@@ -306,7 +306,7 @@ export const advancedHigherMathsPractice: PracticeCourse = {
             { question: `Express \\(\\frac{3x^4-3x^3+7x^2-5x+6}{x^3-x^2+x-1}\\) in partial fractions.`, answer: `\\(3x+\\frac{4}{x-1}-\\frac{2}{x^2+1}\\)`, solutionUrl: "https://www.maths.scot/advanced-higher/partial-fractions#8" },
             { ref: "2022 P2 Q1", solutionUrl: "https://www.maths.scot/advanced-higher/partial-fractions#9" },
             { ref: "2023 P1 Q2", solutionUrl: "https://www.maths.scot/advanced-higher/partial-fractions#10" },
-            { ref: "2024 P2 Q13" },
+            { ref: "2024 P2 Q13", solutionUrl: "https://www.maths.scot/advanced-higher/partial-fractions#11" },
             { ref: "2025 P2 Q3", solutionUrl: "https://www.maths.scot/advanced-higher/partial-fractions#12" },
             { ref: "2026 P2 Q13", solutionUrl: "https://www.maths.scot/advanced-higher/partial-fractions#13" },
           ],
