@@ -349,6 +349,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2016 P2 Q9", solutionUrl: "https://www.maths.scot/nat5/completing-the-square#9" },
             { ref: "2019 P2 Q10", solutionUrl: "https://www.maths.scot/nat5/completing-the-square#10" },
             { ref: "2022 P1 Q5", solutionUrl: "https://www.maths.scot/nat5/completing-the-square#11" },
+            { ref: "2025 P2 Q5", solutionUrl: "https://www.maths.scot/nat5/completing-the-square#12" },
           ],
         },
         {
