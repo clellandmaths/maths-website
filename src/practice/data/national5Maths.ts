@@ -575,13 +575,15 @@ export const national5MathsPractice: PracticeCourse = {
         {
           name: "Bearings",
           questions: [
-            { question: `The map, which is not to scale, shows three villages K, L and M.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/Bearings/Example_1.png" alt="Map with three villages K, L, M and bearings">               <ul>                  <li>M is due north of L.</li>                  <li>The bearing of K from M is 234&deg;.</li>               </ul>               <p>Calculate the bearing of K from L.</p>`, answer: `254.4°`, videoId: "BCpGCSUkdhg", timestamp: 23, solutionUrl: "https://www.maths.scot/nat5/bearings" },
-            { question: `A boat leaves a port A and sails 22&nbsp;km north to B.</p><p>It then turns and sails 70&nbsp;km to C.</p><p>Finally, it sails 85&nbsp;km back to A.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/Bearings/Example_2.png" alt="Boat journey from A to B to C and back to A">               <p>Calculate the bearing of A from C.</p>`, answer: `221.3°`, videoId: "BCpGCSUkdhg", timestamp: 290, solutionUrl: "https://www.maths.scot/nat5/bearings" },
-            { question: `Alan and Claire are in their garden, thinking about some possible improvements to its layout.</p><p>They stand back-to-back and then walk in different straight-line directions from the same starting point.</p><p>Alan walks 2.3 metres on a bearing of 60&deg;. Claire walks 3.8 metres on a bearing of 110&deg;.</p><p>How far apart are Alan and Claire now?</p>`, answer: `2.91 metres`, videoId: "BCpGCSUkdhg", timestamp: 454, solutionUrl: "https://www.maths.scot/nat5/bearings" },
-            { ref: "2014 P2 Q10" },
-            { ref: "2015 P2 Q13" },
-            { ref: "2017 P2 Q10" },
-            { ref: "2018 P2 Q13" },
+            { question: `The map, which is not to scale, shows three villages K, L and M.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/Bearings/Example_1.png" alt="Map with three villages K, L, M and bearings">               <ul>                  <li>M is due north of L.</li>                  <li>The bearing of K from M is 234&deg;.</li>               </ul>               <p>Calculate the bearing of K from L.</p>`, answer: `254.4°`, videoId: "BCpGCSUkdhg", timestamp: 23, solutionUrl: "https://www.maths.scot/nat5/bearings#1" },
+            { question: `A boat leaves a port A and sails 22&nbsp;km north to B.</p><p>It then turns and sails 70&nbsp;km to C.</p><p>Finally, it sails 85&nbsp;km back to A.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/Bearings/Example_2.png" alt="Boat journey from A to B to C and back to A">               <p>Calculate the bearing of A from C.</p>`, answer: `221.3°`, videoId: "BCpGCSUkdhg", timestamp: 290, solutionUrl: "https://www.maths.scot/nat5/bearings#2" },
+            { question: `Alan and Claire are in their garden, thinking about some possible improvements to its layout.</p><p>They stand back-to-back and then walk in different straight-line directions from the same starting point.</p><p>Alan walks 2.3 metres on a bearing of 60&deg;. Claire walks 3.8 metres on a bearing of 110&deg;.</p><p>How far apart are Alan and Claire now?</p>`, answer: `2.91 metres`, videoId: "BCpGCSUkdhg", timestamp: 454, solutionUrl: "https://www.maths.scot/nat5/bearings#3" },
+            { ref: "2014 P2 Q10", solutionUrl: "https://www.maths.scot/nat5/bearings#4" },
+            { ref: "2015 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/bearings#5" },
+            { ref: "2017 P2 Q10", solutionUrl: "https://www.maths.scot/nat5/bearings#6" },
+            { ref: "2018 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/bearings#7" },
+            { question: `<p>A fishing boat and a yacht left a harbour at the point H.</p><p>The fishing boat travelled 3.4 kilometres on a bearing of 047&deg; to the point F.</p><p>The yacht travelled 5.7 kilometres on a bearing of 115&deg; to the point Y.</p><p>Calculate the distance between the fishing boat at F and the yacht at Y.</p>`, answer: `5.43 km`, paper: "2021 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/bearings#8" },
+            { ref: "2025 P2 Q12", solutionUrl: "https://www.maths.scot/nat5/bearings#9" },
           ],
         },
         {
