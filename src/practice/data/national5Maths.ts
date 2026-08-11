@@ -230,6 +230,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `<p>The function \\(f(x)\\) is defined by <span style="white-space: nowrap;">\\(f(x) = 4\\,sin\\,3x^\\circ.\\)</span><br>Evaluate <span style="white-space: nowrap;">\\(f(90).\\)</span></p>`, answer: `\\(-4\\)`, videoId: "T__kY8zKOts", timestamp: 514, paper: "2021 P1 Q16", solutionUrl: "https://www.maths.scot/nat5/functions#12" },
             { ref: "2022 P1 Q2", solutionUrl: "https://www.maths.scot/nat5/functions#13" },
             { ref: "2024 P1 Q2", solutionUrl: "https://www.maths.scot/nat5/functions#14" },
+            { ref: "2025 P1 Q7", solutionUrl: "https://www.maths.scot/nat5/functions#15" },
             { ref: "2026 P1 Q13", solutionUrl: "https://www.maths.scot/nat5/functions#16" },
           ],
         },
