@@ -590,12 +590,14 @@ export const national5MathsPractice: PracticeCourse = {
         {
           name: "Trig Graphs",
           questions: [
-            { ref: "2015 P1 Q6" },
-            { ref: "2018 P1 Q6" },
-            { ref: "2019 P1 Q13" },
-            { question: `<p>The graph of \\(y=a\\ cos\\ x^\\circ +b\\), \\(0\\leq x\\leq 360\\), is given.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/trig_graphs/Example_4.png" alt="Graph of y=a cos x + b"><p>State the values of \\(a\\) and \\(b.\\)</p>`, answer: `\\(a=2, b=3\\)`, videoId: "swTl5ge5HVA", timestamp: 1873, paper: "2021 P1 Q13" },
-            { ref: "2022 P1 Q8" },
-            { ref: "2023 P1 Q13" },
+            { ref: "2015 P1 Q6", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#1" },
+            { ref: "2018 P1 Q6", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#2" },
+            { ref: "2019 P1 Q13", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#3" },
+            { question: `<p>The graph of \\(y=a\\ cos\\ x^\\circ +b\\), \\(0\\leq x\\leq 360\\), is given.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/trig_graphs/Example_4.png" alt="Graph of y=a cos x + b"><p>State the values of \\(a\\) and \\(b.\\)</p>`, answer: `\\(a=2, b=3\\)`, videoId: "swTl5ge5HVA", timestamp: 1873, paper: "2021 P1 Q13", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#4" },
+            { ref: "2022 P1 Q8", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#5" },
+            { ref: "2023 P1 Q13", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#6" },
+            { ref: "2024 P1 Q8", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#7" },
+            { ref: "2025 P1 Q8", solutionUrl: "https://www.maths.scot/nat5/trig-graphs#8" },
           ],
         },
         {
