@@ -4928,16 +4928,20 @@ t = 2.9143, df = 59, p-value = 0.005022
 
             <h4 className="text-white font-semibold">1. The Structure of the Model</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
-              <li>A recurrence relation is a formula which generates a sequence of numbers in which each term is a function of previous terms.</li>
-              <li>It is often written using <InlineMath math="u_n" /> to represent the current value and <InlineMath math="u_{n+1}" /> to represent the next value.</li>
-              <li>You must always state your initial value (the starting amount), which is denoted as <InlineMath math="u_0" />.</li>
+              <li>A recurrence relation is a formula which generates a sequence of numbers, where each value is worked out from the one before it.</li>
+              <li>Write it in the words of the question, so that it says exactly what you do to one value to get the next:</li>
+            </ul>
+            <p className="ml-4 text-white"><strong>Pests next week = Pests this week &times; 0.45 + 400</strong></p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li>Always state your starting value &mdash; the amount at the very beginning, before any change has happened.</li>
+              <li>In class, and in some textbooks, you will sometimes see this written with symbols instead: <InlineMath math="u_{n+1} = 0.45u_n + 400" />, with a starting value <InlineMath math="u_0 = 1500" />. That means exactly the same thing. In Higher Applications the question is always set in a context and answered in a spreadsheet, so you will not be asked to write it in that form.</li>
             </ul>
 
             <h4 className="text-white font-semibold">2. Recurrence Relations in Spreadsheets (Excel)</h4>
             <p>At this level, we use spreadsheet software to do the hard work of calculating recurrence relations:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
-              <li><strong>Setup:</strong> First, set up two columns. Call one column <InlineMath math="n" /> (for the time periods) and the other column <InlineMath math="u_n" /> (for the values).</li>
-              <li><strong>Entering the Formula:</strong> In the first cell of the <InlineMath math="u_n" /> column, enter your initial value (<InlineMath math="u_0" />). In the second cell, type your equation starting with an <code className="bg-slate-700 px-1 rounded">=</code> sign, making sure to click and reference the cell directly above it.</li>
+              <li><strong>Setup:</strong> First, set up two columns &mdash; one for the time period (year, week or day) and one for the quantity you are modelling.</li>
+              <li><strong>Entering the Formula:</strong> Put your starting value in the first cell of the quantity column. In the cell below it, type a formula starting with an <code className="bg-slate-700 px-1 rounded">=</code> sign, clicking on the cell directly above so that the formula references it.</li>
               <li><strong>Generate the Sequence:</strong> Click and drag the formula down to automatically fill the column and generate your sequence of numbers.</li>
             </ul>
 
@@ -4955,7 +4959,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Example 1: Setting up a Spreadsheet Model</strong></p>
                 <p>A local town has a population of 8,500 people. Each year, the population grows by 3%. At the same time, 150 people leave the town each year to move to a nearby city.</p>
-                <p>(a) Write down a recurrence relation to model the town's population.</p>
+                <p>(a) The starting population is in cell B2 of a spreadsheet. Write down the formula you would enter in cell B3 so that it can be filled down the column.</p>
                 <p>(b) Explain the steps required to calculate the population of the town over the next 5 years using a spreadsheet.</p>
               </div>
             ),
@@ -4963,8 +4967,8 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Solutions:</strong></p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li><strong>(a)</strong> <InlineMath math="u_{n+1} = 1.03u_n - 150" /> (where <InlineMath math="u_0 = 8500" />).</li>
-                  <li><strong>(b)</strong> First, set up two columns called <InlineMath math="n" /> and <InlineMath math="u_n" />. In the <InlineMath math="n" /> column, fill in the numbers 0 to 5. In the <InlineMath math="u_n" /> column, enter the initial value of 8500 next to week 0. In the cell below it, type a formula to multiply the cell above by 1.03 and subtract 150. Finally, drag the formula down to fill the rows up to year 5.</li>
+                  <li><strong>(a)</strong> Growing by 3% multiplies the population by 1.03, then 150 leave:<br /><strong>Population next year = Population this year &times; 1.03 &minus; 150</strong><br />In the spreadsheet: <code className="bg-slate-700 px-1 rounded">=B2*1.03-150</code></li>
+                  <li><strong>(b)</strong> First, set up two columns, one for the year and one for the population. In the year column, fill in the numbers 0 to 5. In the population column, enter the starting value of 8500 next to year 0. In the cell below it, type a formula to multiply the cell above by 1.03 and subtract 150. Finally, drag the formula down to fill the rows up to year 5.</li>
                 </ul>
               </div>
             )
@@ -4974,14 +4978,15 @@ t = 2.9143, df = 59, p-value = 0.005022
             question: (
               <div className="space-y-2">
                 <p><strong>Example 2: Extracting the Multiplier</strong></p>
-                <p>A farmer adds 25 kg of compost to a field every month. Over the course of a month, 18% of the compost is absorbed by the soil or washed away. The farmer starts with an empty field (0 kg of compost). Write down a recurrence relation to describe the amount of compost in the field at the end of each month.</p>
+                <p>A farmer adds 25 kg of compost to a field every month. Over the course of a month, 18% of the compost is absorbed by the soil or washed away. The farmer starts with an empty field (0 kg of compost).</p>
+                <p>The starting amount is in cell B2 of a spreadsheet. Write down the formula you would enter in cell B3 to model the amount of compost in the field at the end of each month.</p>
               </div>
             ),
             solution: (
               <div className="space-y-2">
                 <p><strong>Solution:</strong> If 18% is lost, then 82% remains. Therefore, the multiplier is 0.82.</p>
-                <BlockMath math="u_{n+1} = 0.82u_n + 25" />
-                <p>(where <InlineMath math="u_0 = 0" />).</p>
+                <p className="text-white"><strong>Compost next month = Compost this month &times; 0.82 + 25</strong></p>
+                <p>In the spreadsheet: <code className="bg-slate-700 px-1 rounded">=B2*0.82+25</code>, with the starting value of 0 kg in cell B2.</p>
               </div>
             )
           },
@@ -4991,7 +4996,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Example 3: Finding the Long-Term Limit</strong></p>
                 <p>Some trees in a local orchard are infested with pests. The trees are sprayed weekly with a pesticide that manufacturers claim will destroy 55% of all pests. However, between weekly sprayings, it is estimated that 400 new pests invade the trees. Initially, there are 1,500 pests.</p>
-                <p>(a) Write down a recurrence relation for the number of pests in the trees.</p>
+                <p>(a) The number of pests before the first spraying is in cell B2 of a spreadsheet. Write down the formula you would enter in cell B3 so that it can be filled down the column.</p>
                 <p>(b) Describe how to use a spreadsheet to determine what happens to the number of pests in the long term, and state the expected outcome.</p>
               </div>
             ),
@@ -4999,7 +5004,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Solutions:</strong></p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li><strong>(a)</strong> If 55% are destroyed, 45% survive. <InlineMath math="u_{n+1} = 0.45u_n + 400" /> (where <InlineMath math="u_0 = 1500" />).</li>
+                  <li><strong>(a)</strong> If 55% are destroyed, 45% survive:<br /><strong>Pests next week = Pests this week &times; 0.45 + 400</strong><br />In the spreadsheet: <code className="bg-slate-700 px-1 rounded">=B2*0.45+400</code></li>
                   <li><strong>(b)</strong> Enter the starting value of 1500 in the spreadsheet and create a formula in the cell below to multiply the previous cell by 0.45 and add 400. Drag the formula down to generate a sequence of numbers. By looking at the extended list of numbers, we can see the long-term effect: the population stabilises and levels out at approximately 727 pests.</li>
                 </ul>
               </div>
