@@ -539,6 +539,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2017 P1 Q7", solutionUrl: "https://www.maths.scot/nat5/triangle-area#8" },
             { ref: "2019 P2 Q3", solutionUrl: "https://www.maths.scot/nat5/triangle-area#9" },
             { ref: "2023 P2 Q15", solutionUrl: "https://www.maths.scot/nat5/triangle-area#10" },
+            { ref: "2025 P1 Q5", solutionUrl: "https://www.maths.scot/nat5/triangle-area#11" },
           ],
         },
         {
