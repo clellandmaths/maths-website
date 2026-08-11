@@ -270,6 +270,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2017 P1 Q15", solutionUrl: "https://www.maths.scot/nat5/linear-equations#11" },
             { ref: "2019 P1 Q14", solutionUrl: "https://www.maths.scot/nat5/linear-equations#12" },
             { ref: "2022 P1 Q15", solutionUrl: "https://www.maths.scot/nat5/linear-equations#13" },
+            { ref: "2025 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/linear-equations#14" },
           ],
         },
         {
