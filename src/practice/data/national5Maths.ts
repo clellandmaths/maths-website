@@ -75,6 +75,7 @@ export const national5MathsPractice: PracticeCourse = {
             { question: `Light travels at <span style="white-space: nowrap;">3 \\(\\times\\) 10<sup>8</sup>&nbsp;</span>metres per second. A star is <span style="white-space: nowrap;">4.2 \\(\\times\\) 10<sup>17</sup>&nbsp;metres&nbsp;</span>away from Earth.<br>Calculate the number of seconds it takes for light from this star to reach Earth.<br>Give your answer in scientific notation.`, answer: `\\(1.4 \\times 10^9\\) seconds`, videoId: "fepyJHUAcRk", timestamp: 546, paper: "2021 P2 Q2", solutionUrl: "https://www.maths.scot/nat5/scientific-notation#8" },
             { ref: "2023 P2 Q2", solutionUrl: "https://www.maths.scot/nat5/scientific-notation#9" },
             { ref: "2024 P2 Q2", solutionUrl: "https://www.maths.scot/nat5/scientific-notation#10" },
+            { ref: "2025 P2 Q3", solutionUrl: "https://www.maths.scot/nat5/scientific-notation#11" },
           ],
         },
         {
