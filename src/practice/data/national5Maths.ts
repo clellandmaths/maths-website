@@ -582,7 +582,7 @@ export const national5MathsPractice: PracticeCourse = {
             { ref: "2015 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/bearings#5" },
             { ref: "2017 P2 Q10", solutionUrl: "https://www.maths.scot/nat5/bearings#6" },
             { ref: "2018 P2 Q13", solutionUrl: "https://www.maths.scot/nat5/bearings#7" },
-            { question: `<p>A fishing boat and a yacht left a harbour at the point H.</p><p>The fishing boat travelled 3.4 kilometres on a bearing of 047&deg; to the point F.</p><p>The yacht travelled 5.7 kilometres on a bearing of 115&deg; to the point Y.</p><p>Calculate the distance between the fishing boat at F and the yacht at Y.</p>`, answer: `5.43 km`, paper: "2021 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/bearings#8" },
+            { question: `<p>A fishing boat and a yacht left a harbour at the point H.</p><p>The fishing boat travelled 3.4 kilometres on a bearing of 047&deg; to the point F.</p><p>The yacht travelled 5.7 kilometres on a bearing of 115&deg; to the point Y.</p><img class="mx-auto my-4 rounded-lg w-full max-w-sm h-auto" src="/img/practice/trigonometry/Bearings/Example_8.png" alt="Triangle HFY with north arrow at H, HF 3.4 km and HY 5.7 km"><p>Calculate the distance between the fishing boat at F and the yacht at Y.</p>`, answer: `5.43 km`, paper: "2021 P2 Q7", solutionUrl: "https://www.maths.scot/nat5/bearings#8" },
             { ref: "2025 P2 Q12", solutionUrl: "https://www.maths.scot/nat5/bearings#9" },
           ],
         },
