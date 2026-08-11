@@ -156,6 +156,7 @@ export const higherMathsPractice: PracticeCourse = {
             { ref: "2024 P1 Q7", solutionUrl: "https://www.maths.scot/higher/circles#13" },
             { ref: "2024 P2 Q10", solutionUrl: "https://www.maths.scot/higher/circles#14" },
             { ref: "2025 P1 Q9", solutionUrl: "https://www.maths.scot/higher/circles#15" },
+            { ref: "2025 P2 Q14", solutionUrl: "https://www.maths.scot/higher/circles#16" },
             { ref: "2026 P1 Q3", solutionUrl: "https://www.maths.scot/higher/circles#17" },
             { ref: "2026 P2 Q4", solutionUrl: "https://www.maths.scot/higher/circles#18" },
           ],
