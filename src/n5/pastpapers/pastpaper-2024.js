@@ -242,8 +242,8 @@ export const pastpaper2024 = {
                     topics: ["Sector area"]
                 },
                 {
-                    question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q16</span></strong></small><p>Express \\(\\cos^2 x^{\\circ} - 3 \\sin^2 x^{\\circ}\\) in the form \\(a + b \\sin^2 x^{\\circ}.\\)<br>Show your working.</p>`,
-                    answer: `\\(1 - 4 \\sin^2 x^{\\circ}\\)`,
+                    question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q16</span></strong></small><p>Express \\(3\\cos^2 x^{\\circ} - 1\\) in the form \\(a + b \\sin^2 x^{\\circ}.\\)<br>Show your working.</p>`,
+                    answer: `\\(2 - 3 \\sin^2 x^{\\circ}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "1430s",
                     marks: [2],
