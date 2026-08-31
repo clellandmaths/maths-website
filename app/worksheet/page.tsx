@@ -7,6 +7,7 @@ import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
 import { decodeWorksheet, resolveWorksheet, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
+import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FormulaeSheet from '@/components/FormulaeSheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
@@ -76,6 +77,17 @@ function SharedWorksheet() {
     [questions]
   );
 
+  // Diagrams are lazy, and a lazy image that never scrolled into view prints
+  // blank — WebKit does not force them in the way Chromium does. Warm them
+  // once the questions are actually on the page: they arrive asynchronously
+  // here, so at mount there is nothing in the DOM to find.
+  useEffect(() => {
+    if (questions) warmWorksheetImages();
+  }, [questions]);
+
+  // Cmd-P and the browser's own menu bypass the Print button entirely.
+  useEffect(() => watchSystemPrint(), []);
+
   if (notFound) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-20 text-center">
@@ -124,7 +136,7 @@ function SharedWorksheet() {
 
       <div className="flex flex-wrap gap-3 mb-8 no-print">
         <button
-          onClick={() => window.print()}
+          onClick={() => printWorksheet()}
           className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-background text-sm font-bold rounded-lg transition-colors"
         >
           <Printer className="h-4 w-4" />
