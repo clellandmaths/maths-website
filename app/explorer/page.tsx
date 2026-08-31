@@ -34,6 +34,7 @@ import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet } from '@/lib/worksheet-share';
+import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
 
@@ -168,6 +169,17 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       return () => clearTimeout(timer);
     }
   }, [lastMovedIndex]);
+
+  // Diagrams are lazy, and a lazy image that never scrolled into view prints
+  // blank — WebKit does not force them in the way Chromium does. Warm the
+  // sheet's own images whenever it changes; the browse grid is left alone, so
+  // filtering a course full of diagrams is unaffected.
+  useEffect(() => {
+    if (worksheetItems.length) warmWorksheetImages();
+  }, [worksheetItems]);
+
+  // Cmd-P and the browser's own menu bypass the Print button entirely.
+  useEffect(() => watchSystemPrint(), []);
 
   // Filter questions based on selections
   const filteredQuestions = useMemo(
@@ -557,7 +569,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
                         />
                         <button
-                          onClick={() => window.print()}
+                          onClick={() => printWorksheet()}
                           className={`flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                         >
                           <Printer className="h-4 w-4" />
@@ -840,7 +852,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
                       />
                       <button
-                        onClick={() => window.print()}
+                        onClick={() => printWorksheet()}
                         className={`flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
                       >
                         <Printer className="h-4 w-4" />
