@@ -7,9 +7,10 @@
 // and carries `solutionUrl` linking to his written solution, which is a
 // condition of using them — see docs/guided-practice-attribution.md.
 //
-// Straight Line, Polynomials & Quadratics and Recurrence Relations came from the
-// app and carry videoId/timestamp. The other seven have no guided practice video
-// filmed yet; referenced past paper questions still bring the paper's own video.
+// Straight Line, Polynomials & Quadratics, Recurrence Relations and Functions
+// carry a guided practice videoId/timestamp on every question. The other six
+// have no guided practice video filmed yet; referenced past paper questions
+// still bring the paper's own video.
 //
 // Loaded with import() from the practice route only — never import this from a
 // notes or paper page, or it lands in the shared bundle.
@@ -118,22 +119,22 @@ export const higherMathsPractice: PracticeCourse = {
         {
           name: "Functions",
           questions: [
-            { question: `Function \\(f\\) is defined on a suitable domain by \\(f(x)=\\frac{3x}{x^2-4x-5}\\).<br>What values of \\(x\\) cannot be in the domain of \\(f\\)?`, answer: `\\(x=-1\\) and \\(x=5\\)`, solutionUrl: "https://www.maths.scot/higher/functions#1" },
-            { question: `Function \\(g\\) is defined on a suitable domain as \\(g(x)=\\sqrt{x^2+x-12}\\).<br>State the largest possible domain of \\(g\\).`, answer: `\\(\\{x : x\\in \\mathbb{R},\\:x\\leqslant -4,\\:x\\geqslant 3\\}\\)`, solutionUrl: "https://www.maths.scot/higher/functions#2" },
-            { question: `Function \\(h\\) is defined by \\(h(x)=1+\\cos x\\) on the domain \\(\\{\\,x : x\\in \\mathbb{R},\\,\\frac{\\pi}{2}\\leqslant x\\leqslant \\frac{3\\pi}{2}\\,\\}\\).<br>Identify the range of \\(h\\).`, answer: `\\(\\{\\,y : y\\in \\mathbb{R},\\,0\\leqslant y\\leqslant 1\\,\\}\\)`, solutionUrl: "https://www.maths.scot/higher/functions#3" },
-            { question: `Functions \\(f\\) and \\(g\\) are defined on \\(\\mathbb{R}\\) by \\(f(x)=1-2x\\) and \\(g(x)=3x^2-5\\).<br>Find and simplify expressions for the composite functions:<br>(a) \\(f(g(x))\\)<br>(b) \\(g(f(x))\\)`, answer: `(a) \\(11-6x^2\\)<br>(b) \\(12x^2-12x-2\\)`, solutionUrl: "https://www.maths.scot/higher/functions#4" },
-            { question: `Function \\(f\\) is defined on a suitable domain by \\(f(x)=\\frac{x-1}{x+1},\\:x\\neq-1\\).<br>Find and simplify an expression for \\(f^{2}(x)\\).`, answer: `\\(-\\frac{1}{x}\\)`, solutionUrl: "https://www.maths.scot/higher/functions#5" },
-            { question: `Functions \\(f\\) and \\(g\\) are defined on \\(\\mathbb{R}\\). The inverse functions \\(f^{-1}\\) and \\(g^{-1}\\) both exist.<br>(a) Given \\(f(x)=3-2x\\), find \\(f^{-1}(x)\\).<br>(b) Given \\(g(4)=5\\), write down the value of \\(g^{-1}(5)\\).<br>(c) Write down an expression for \\(g(g^{-1}(x))\\).`, answer: `(a) \\(f^{-1}(x) = \\frac{3-x}{2}\\)<br>(b) \\(4\\)<br>(c) \\(x\\)`, solutionUrl: "https://www.maths.scot/higher/functions#6" },
-            { question: `The graph of a function \\(f\\) has turning points at \\((0,\\,2)\\) and \\((3,\\,-1)\\).<br>State the coordinates of each of these turning points on the following graphs:<br>(a) \\(y=f(x-3)\\)<br>(b) \\(y=2f(x)\\)<br>(c) \\(y=-4f(x+2)\\)<br>(d) \\(y=f(3x)-1\\)<br>(e) \\(y=\\frac{1}{2}f(x)+4\\)`, answer: `<br>(a) \\((3,\\,2)\\) and \\((6,\\,-1)\\)<br>(b) \\((0,\\,4)\\) and \\((3,\\,-2)\\)<br>(c) \\((-2,\\,-8)\\) and \\((1,\\,4)\\)<br>(d) \\((0,1)\\) and \\((1,-2)\\)<br>(e) \\((0,\\,5)\\) and \\((3,\\,\\frac{7}{2})\\)`, solutionUrl: "https://www.maths.scot/higher/functions#7" },
-            { ref: "2019 P1 Q12", solutionUrl: "https://www.maths.scot/higher/functions#8" },
-            { ref: "2019 P2 Q8", solutionUrl: "https://www.maths.scot/higher/functions#9" },
-            { ref: "2022 P1 Q3", solutionUrl: "https://www.maths.scot/higher/functions#10" },
-            { ref: "2023 P2 Q6", solutionUrl: "https://www.maths.scot/higher/functions#11" },
-            { ref: "2024 P1 Q5", solutionUrl: "https://www.maths.scot/higher/functions#12" },
-            { ref: "2025 P1 Q5", solutionUrl: "https://www.maths.scot/higher/functions#13" },
-            { ref: "2025 P2 Q4", solutionUrl: "https://www.maths.scot/higher/functions#14" },
-            { ref: "2026 P1 Q5", solutionUrl: "https://www.maths.scot/higher/functions#15" },
-            { ref: "2026 P2 Q3", solutionUrl: "https://www.maths.scot/higher/functions#16" },
+            { question: `Function \\(f\\) is defined on a suitable domain by \\(f(x)=\\frac{3x}{x^2-4x-5}\\).<br>What values of \\(x\\) cannot be in the domain of \\(f\\)?`, answer: `\\(x=-1\\) and \\(x=5\\)`, videoId: "Hvy-iZWtUf0", timestamp: 20, solutionUrl: "https://www.maths.scot/higher/functions#1" },
+            { question: `Function \\(g\\) is defined on a suitable domain as \\(g(x)=\\sqrt{x^2+x-12}\\).<br>State the largest possible domain of \\(g\\).`, answer: `\\(\\{x : x\\in \\mathbb{R},\\:x\\leqslant -4,\\:x\\geqslant 3\\}\\)`, videoId: "Hvy-iZWtUf0", timestamp: 86, solutionUrl: "https://www.maths.scot/higher/functions#2" },
+            { question: `Function \\(h\\) is defined by \\(h(x)=1+\\cos x\\) on the domain \\(\\{\\,x : x\\in \\mathbb{R},\\,\\frac{\\pi}{2}\\leqslant x\\leqslant \\frac{3\\pi}{2}\\,\\}\\).<br>Identify the range of \\(h\\).`, answer: `\\(\\{\\,y : y\\in \\mathbb{R},\\,0\\leqslant y\\leqslant 1\\,\\}\\)`, videoId: "Hvy-iZWtUf0", timestamp: 198, solutionUrl: "https://www.maths.scot/higher/functions#3" },
+            { question: `Functions \\(f\\) and \\(g\\) are defined on \\(\\mathbb{R}\\) by \\(f(x)=1-2x\\) and \\(g(x)=3x^2-5\\).<br>Find and simplify expressions for the composite functions:<br>(a) \\(f(g(x))\\)<br>(b) \\(g(f(x))\\)`, answer: `(a) \\(11-6x^2\\)<br>(b) \\(12x^2-12x-2\\)`, videoId: "Hvy-iZWtUf0", timestamp: 361, solutionUrl: "https://www.maths.scot/higher/functions#4" },
+            { question: `Function \\(f\\) is defined on a suitable domain by \\(f(x)=\\frac{x-1}{x+1},\\:x\\neq-1\\).<br>Find and simplify an expression for \\(f^{2}(x)\\).`, answer: `\\(-\\frac{1}{x}\\)`, videoId: "Hvy-iZWtUf0", timestamp: 485, solutionUrl: "https://www.maths.scot/higher/functions#5" },
+            { question: `Functions \\(f\\) and \\(g\\) are defined on \\(\\mathbb{R}\\). The inverse functions \\(f^{-1}\\) and \\(g^{-1}\\) both exist.<br>(a) Given \\(f(x)=3-2x\\), find \\(f^{-1}(x)\\).<br>(b) Given \\(g(4)=5\\), write down the value of \\(g^{-1}(5)\\).<br>(c) Write down an expression for \\(g(g^{-1}(x))\\).`, answer: `(a) \\(f^{-1}(x) = \\frac{3-x}{2}\\)<br>(b) \\(4\\)<br>(c) \\(x\\)`, videoId: "Hvy-iZWtUf0", timestamp: 645, solutionUrl: "https://www.maths.scot/higher/functions#6" },
+            { question: `The graph of a function \\(f\\) has turning points at \\((0,\\,2)\\) and \\((3,\\,-1)\\).<br>State the coordinates of each of these turning points on the following graphs:<br>(a) \\(y=f(x-3)\\)<br>(b) \\(y=2f(x)\\)<br>(c) \\(y=-4f(x+2)\\)<br>(d) \\(y=f(3x)-1\\)<br>(e) \\(y=\\frac{1}{2}f(x)+4\\)`, answer: `<br>(a) \\((3,\\,2)\\) and \\((6,\\,-1)\\)<br>(b) \\((0,\\,4)\\) and \\((3,\\,-2)\\)<br>(c) \\((-2,\\,-8)\\) and \\((1,\\,4)\\)<br>(d) \\((0,1)\\) and \\((1,-2)\\)<br>(e) \\((0,\\,5)\\) and \\((3,\\,\\frac{7}{2})\\)`, videoId: "Hvy-iZWtUf0", timestamp: 777, solutionUrl: "https://www.maths.scot/higher/functions#7" },
+            { ref: "2019 P1 Q12", videoId: "Hvy-iZWtUf0", timestamp: 1027, solutionUrl: "https://www.maths.scot/higher/functions#8" },
+            { ref: "2019 P2 Q8", videoId: "Hvy-iZWtUf0", timestamp: 1109, solutionUrl: "https://www.maths.scot/higher/functions#9" },
+            { ref: "2022 P1 Q3", videoId: "Hvy-iZWtUf0", timestamp: 1234, solutionUrl: "https://www.maths.scot/higher/functions#10" },
+            { ref: "2023 P2 Q6", videoId: "Hvy-iZWtUf0", timestamp: 1551, solutionUrl: "https://www.maths.scot/higher/functions#11" },
+            { ref: "2024 P1 Q5", videoId: "Hvy-iZWtUf0", timestamp: 1602, solutionUrl: "https://www.maths.scot/higher/functions#12" },
+            { ref: "2025 P1 Q5", videoId: "Hvy-iZWtUf0", timestamp: 1646, solutionUrl: "https://www.maths.scot/higher/functions#13" },
+            { ref: "2025 P2 Q4", videoId: "Hvy-iZWtUf0", timestamp: 1780, solutionUrl: "https://www.maths.scot/higher/functions#14" },
+            { ref: "2026 P1 Q5", videoId: "Hvy-iZWtUf0", timestamp: 1885, solutionUrl: "https://www.maths.scot/higher/functions#15" },
+            { ref: "2026 P2 Q3", videoId: "Hvy-iZWtUf0", timestamp: 2037, solutionUrl: "https://www.maths.scot/higher/functions#16" },
           ],
         },
       ],
