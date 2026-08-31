@@ -378,9 +378,15 @@ body {
     color: #16a34a !important;
   }
 
-  /* Images */
+  /* Images
+     190px is the size the real papers print at, not a guess: the diagrams on
+     Higher 2025 Paper 2 measure ~145pt, which is 193px at 96dpi. At the old
+     280px a question could not fit its own page — an <img> cannot be split
+     across a page, so one that did not fit the space left was pushed whole to
+     the next page, stranding the question text on its own above a gap. Worst
+     on the two-diagram questions (2025 P2 Q10 ran to three pages). */
   .question-content img {
-    max-height: 280px;
+    max-height: 190px;
     max-width: 85%;
     border-radius: 4px;
   }
