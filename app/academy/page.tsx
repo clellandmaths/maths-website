@@ -115,7 +115,7 @@ export default function AcademyPage() {
             </a>
             <blockquote className="border-l-2 border-accent/50 pl-3 text-sm text-muted-foreground italic max-w-md">
               &ldquo;Got an A in Nat 5 maths today... post getting a D in prelim. Can&rsquo;t thank you enough!&rdquo;
-              <span className="block mt-1 font-semibold not-italic text-xs text-muted-dim">— 2026 Academy Parent</span>
+              <span className="block mt-1 font-semibold not-italic text-xs text-muted-dim">— 2026 National 5 Maths Student</span>
             </blockquote>
           </div>
         </div>
