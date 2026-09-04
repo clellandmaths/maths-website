@@ -96,18 +96,27 @@ export default function AcademyPage() {
             direct, personalised support to students navigating the new Qualifications Scotland
             exams.
           </p>
-          <p className="inline-flex items-center gap-2 text-sm font-semibold bg-accent/10 text-accent rounded-full px-4 py-2 mb-6">
-            <Lock className="h-4 w-4" />
-            Strictly limited — only {SEATS_PER_COURSE} seats per course
-          </p>
-          <div>
+               <div className="flex flex-col items-start gap-3 mb-6">
+            <p className="inline-flex items-center gap-2 text-sm font-semibold bg-accent/10 text-accent rounded-full px-4 py-2">
+              <Lock className="h-4 w-4" />
+              Strictly limited — only {SEATS_PER_COURSE} seats per course
+            </p>
+            <p className="text-sm font-medium text-foreground/90">
+              Start with a {TRIAL_PRICE} trial week, then {MONTHLY_PRICE}/month (Cancel anytime).
+            </p>
+          </div>
+          <div className="flex flex-col items-start gap-5">
             <a
               href="#secure-your-seat"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors shadow-sm"
             >
               Secure your child&rsquo;s seat today
               <ChevronRight className="h-4 w-4" />
             </a>
+            <blockquote className="border-l-2 border-accent/50 pl-3 text-sm text-muted-foreground italic max-w-md">
+              &ldquo;Got an A in Nat 5 maths today... post getting a D in prelim. Can&rsquo;t thank you enough!&rdquo;
+              <span className="block mt-1 font-semibold not-italic text-xs text-muted-dim">— 2026 Academy Parent</span>
+            </blockquote>
           </div>
         </div>
         <div className="order-1 md:order-2">
@@ -306,9 +315,15 @@ export default function AcademyPage() {
       {/* ──────────────── Schedule ──────────────── */}
       <section className="mt-16">
         <h2 className="font-display text-3xl font-bold tracking-tight mb-3">The schedule</h2>
-        <p className="text-muted-foreground mb-6">
-          Classes commence mid-August. All classes are hosted via a secure, private video link.
-        </p>
+         <div className="mb-6 space-y-2">
+          <p className="text-foreground/90 font-medium">
+            Enrolling now. All classes are hosted via a secure, private video link.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            <strong className="text-foreground font-semibold">Join today and get instant access</strong> to the private member vault containing all previous video replays and notes, so your child is immediately caught up.
+          </p>
+        </div>
+
         <ul className="grid sm:grid-cols-2 gap-3">
           {ACADEMY_COURSES.map(c => {
             const theme = getCourseTheme(c.courseId);
