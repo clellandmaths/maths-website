@@ -201,6 +201,18 @@ Separate curriculum-level topic list for self-assessment. Not connected to past 
 - Files in `public/img/N5_Past_Papers/YYYY/` and `public/img/Higher_Past_Papers/YYYY/`
 - Referenced in question HTML as `<img src="/img/..." alt="...">` — no inline classes
 - `MathRenderer` injects `loading="lazy"` via regex on all img tags
+- **New images are optimised `.webp`.** 2014–2025 are `.png` because that is what
+  they were added as; 2026 and all of N5 Apps are `.webp`, and everything added
+  from now on should be. These are line art on white, so they compress to a few
+  KB — a whole paper's diagrams come to under 50 KB. A new image dropped into an
+  older year's folder still goes in as `.webp`; matching that folder's old
+  format is not a reason to ship a file several times the size.
+- **`npm run check:qimages` must stay green.** It fails on an image nothing
+  references, and on a question whose words promise a diagram that is not there.
+  Both have happened: five questions referred to a diagram they did not have,
+  three of them with the picture already sitting in `public/img/` and simply
+  never linked. It reads as "diagrams sometimes fail to print", because whether
+  it bites depends on which questions are on the sheet.
 
 ### Image CSS (in `app/globals.css` — unlayered, beats Tailwind utilities)
 | Context | CSS Class | Max Height |

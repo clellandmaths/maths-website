@@ -45,7 +45,7 @@ export const higherPastPaper2024 = {
           topics: ["Inverse functions"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P1 Q6</span></strong></small><p>The right-angled triangle in the diagram is such that \\(\\sin p=\\frac{1}{\\sqrt{5}}\\) and \\(0 \\lt p \\lt \\frac{\\pi}{4}.\\)<br><b>(a)</b>&nbsp;&nbsp;Determine the value of:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i) \\(\\sin 2p\\)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) \\(\\cos 2p\\)<br><b>(b)</b>&nbsp;&nbsp;Hence determine the value of \\(\\sin 4p\\).</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P1 Q6</span></strong></small><p>The right-angled triangle in the diagram is such that \\(\\sin p=\\frac{1}{\\sqrt{5}}\\) and \\(0 \\lt p \\lt \\frac{\\pi}{4}.\\)</p><img src="/img/Higher_Past_Papers/2024/2024_P1_Q6.png" alt="Right-angled triangle with hypotenuse root 5 and the side opposite angle p of length 1"><p><b>(a)</b>&nbsp;&nbsp;Determine the value of:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i) \\(\\sin 2p\\)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) \\(\\cos 2p\\)<br><b>(b)</b>&nbsp;&nbsp;Hence determine the value of \\(\\sin 4p\\).</p>`,
           answer: `(a) (i) \\(\\frac{4}{5}\\) (ii) \\(\\frac{3}{5}\\)<br>(b) \\(\\frac{24}{25}\\)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "357s",

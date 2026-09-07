@@ -85,7 +85,7 @@ export const higherPastPaper2023 = {
           topics: ["Cubic/quartic expressions/equations: factorise or solve", "Discriminant and Quadratics"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q11</span></strong></small><p>(a) Evaluate<br>\\(\\int_{\\frac{\\pi}{2}}^{\\pi}(5\\sin x-3\\cos x)dx\\)<br>The diagram in your answer booklet shows the graphs with equations \\(y=5\\sin x\\) and \\(y=3\\cos x\\), \\(0\\le x\\le2\\pi\\).<br>(b) On the diagram in your answer booklet, shade the area represented by the integral in (a).</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q11</span></strong></small><p>(a) Evaluate<br>\\(\\int_{\\frac{\\pi}{2}}^{\\pi}(5\\sin x-3\\cos x)dx\\)<br>The diagram in your answer booklet shows the graphs with equations \\(y=5\\sin x\\) and \\(y=3\\cos x\\), \\(0\\le x\\le2\\pi\\).</p><img src="/img/Higher_Past_Papers/2023/2023_P1_Q11.webp" alt="Graphs of y = 5 sin x and y = 3 cos x for x from 0 to 2 pi"><p>(b) On the diagram in your answer booklet, shade the area represented by the integral in (a).</p>`,
           answer: `(a) 8<br>(b) Area shaded between \\(x=\\frac{\\pi}{2}\\) and \\(x=\\pi\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1515s",

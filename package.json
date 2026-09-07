@@ -11,7 +11,7 @@
     "lint": "eslint",
     "check:math": "node scripts/check-math-render.mjs",
     "check:latex": "node scripts/check-notes-latex.mjs",
-    "check": "npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:qbreaks",
+    "check": "npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:qbreaks && npm run check:qimages",
     "check:homepage": "node scripts/check-homepage-years.mjs",
     "check:papers": "node scripts/check-paper-registry.mjs",
     "check:timestamps": "node scripts/check-timestamps.mjs",
@@ -19,7 +19,8 @@
     "check:sharerefs": "node scripts/check-share-refs.mjs",
     "check:rendered": "node scripts/check-rendered-math.mjs",
     "check:latexdelims": "node scripts/check-latex-delimiters.mjs",
-    "check:qbreaks": "node scripts/check-question-breaks.mjs"
+    "check:qbreaks": "node scripts/check-question-breaks.mjs",
+    "check:qimages": "node scripts/check-question-images.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",

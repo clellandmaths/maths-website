@@ -130,7 +130,7 @@ export const higherPastPaper2016 = {
       paperNumber: 2,
       questions: [
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 P2 Q1</span></strong></small><p>PQR is a triangle with vertices \\(P(0,-4)\\), \\(Q(-6,2)\\) and \\(R(10,6).\\)<br><b>(a)</b>&nbsp;&nbsp;(i) State the coordinates of M, the midpoint of QR.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) Hence find the equation of PM, the median through P.<br><b>(b)</b>&nbsp;&nbsp;Find the equation of the line, L, passing through M and perpendicular to PR.<br><b>(c)</b>&nbsp;&nbsp;Show that line L passes through the midpoint of PR.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 P2 Q1</span></strong></small><p>PQR is a triangle with vertices \\(P(0,-4)\\), \\(Q(-6,2)\\) and \\(R(10,6).\\)</p><img src="/img/Higher_Past_Papers/2016/2016_P2_Q1.png" alt="Triangle PQR on coordinate axes, with M marked on QR and the median PM drawn"><p><b>(a)</b>&nbsp;&nbsp;(i) State the coordinates of M, the midpoint of QR.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) Hence find the equation of PM, the median through P.<br><b>(b)</b>&nbsp;&nbsp;Find the equation of the line, L, passing through M and perpendicular to PR.<br><b>(c)</b>&nbsp;&nbsp;Show that line L passes through the midpoint of PR.</p>`,
           answer: `(a)(i) \\((2, 4)\\), (ii) \\(y=4x-4\\)<br>(b) \\(y=-x+6\\)<br>(c) Midpoint of PR is \\((5, 1).\\) Check: \\(1 = -5 + 6.\\)`,
           videoId: "CBT_cz_j1Xk",
           timestamp: "0s",
