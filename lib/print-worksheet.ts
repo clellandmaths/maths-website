@@ -95,38 +95,66 @@ export function warmWorksheetImages(root: ParentNode = document): void {
   whenIdle(() => warmNow(root));
 }
 
+/** A promise that settles after ms, for racing anything that might not. */
+const after = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
+
+/**
+ * How long the click may wait for images before printing anyway.
+ *
+ * Capped rather than unbounded because window.print() needs the tap that
+ * triggered it to still count as recent — transient activation lapses after
+ * about five seconds on iOS — so waiting on a slow image would trade a missing
+ * diagram for a Print button that silently does nothing at all. Worse bug.
+ *
+ * 3.5s, not 2s: a full-course sheet is about 1 MB of diagrams, which needs
+ * roughly 5 Mbps to arrive inside two seconds. At 3.5s that drops to about
+ * 3 Mbps, which covers weak 4G. Still comfortably inside the iOS window.
+ * A normal 10–20 question sheet is 45–80 KB and clears either budget on 3G.
+ */
+const BUDGET_MS = 3500;
+
 /**
  * Print, having given anything still in flight a moment to arrive.
  *
- * The two second cap is deliberate and is the whole reason this is not a
- * simple "await every image". window.print() needs the tap that triggered it
- * to still count as recent — transient activation lapses after about five
- * seconds on iOS — so waiting on a slow image would trade a missing diagram
- * for a Print button that silently does nothing at all. Worse bug. So: a
- * brief top-up, then print regardless of what arrived.
+ * **Waits on the elements, not on copies of them.** This used to fetch each
+ * pending source into the HTTP cache through a throwaway `new Image()` and
+ * then allow a single animation frame for the real `<img>` to catch up. That
+ * is a guess: nothing verified the elements on the page were ready, and the
+ * frame is about 16ms. `decode()` resolves precisely when an element is
+ * decoded and ready to paint, so "ready" becomes a fact rather than a hope.
  *
- * In practice the wait is near zero, because warmWorksheetImages has already
- * run while the sheet was on screen.
+ * In practice the wait is near zero, because warmWorksheetImages has usually
+ * run while the sheet was on screen — and when every image is already loaded
+ * this does not wait at all.
  */
 export async function printWorksheet(root: ParentNode = document): Promise<void> {
   const imgs = Array.from(root.querySelectorAll<HTMLImageElement>(SELECTOR));
 
   // Release anything the browser is still holding back. Honoured from Chrome
-  // 77 / Safari 15.4; older WebKit ignores it and the fetch below covers it.
+  // 77 / Safari 15.4; older WebKit ignores it and decode() below covers it.
   for (const img of imgs) img.loading = 'eager';
 
-  const pending = imgs
-    .filter(img => !(img.complete && img.naturalWidth > 0))
-    .map(img => img.currentSrc || img.src)
-    .filter(src => Boolean(src) && !src.startsWith('data:'));
+  const waiting = imgs.filter(img => !(img.complete && img.naturalWidth > 0));
 
-  if (pending.length) {
+  if (waiting.length) {
+    // decode() rejects on a broken or src-less image; a missing diagram must
+    // never be able to hold up somebody's print, so every one of them is
+    // swallowed and the sheet prints with whatever arrived.
     await Promise.race([
-      pool(pending.map(src => () => fetchOne(src))),
-      new Promise<void>(resolve => setTimeout(resolve, 2000)),
+      Promise.all(waiting.map(img => img.decode().catch(() => {}))),
+      after(BUDGET_MS),
     ]);
-    // One frame for the cached bytes to reach the real <img> elements.
-    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+
+    // One frame to paint what just decoded — raced, never awaited on its own.
+    // A bare requestAnimationFrame does not fire in a page with no compositor
+    // (a backgrounded tab, some mobile suspend states), and this is the last
+    // step before window.print(): awaiting it unguarded turns "a diagram is
+    // missing" into "the Print button does nothing at all", which is worse and
+    // silent. Found by a test harness hanging here forever.
+    await Promise.race([
+      new Promise<void>(resolve => requestAnimationFrame(() => resolve())),
+      after(50),
+    ]);
   }
 
   window.print();
