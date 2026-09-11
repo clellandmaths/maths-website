@@ -34,6 +34,7 @@ import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
+import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
@@ -191,7 +192,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     try {
       const { generateForSubtopics } = await import('@/lib/generated-question');
       const made = await generateForSubtopics(selectedSubtopics, genCount);
-      made.forEach(addItem);
+      made.map(q => withParentVideo(q, paperIndex)).forEach(addItem);
       if (!made.length) {
         setGenNote('No new questions could be made for this filter.');
       } else if (made.length < genCount) {
@@ -259,6 +260,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
   // Are filters active?
   const hasFilters = selectedSubtopics.length > 0 || selectedYears.length > 0 || selectedPapers.length > 0;
+
+  // Past paper questions by their printed label, so a generated question can
+  // borrow the video of the one it was modelled on. Built from every question
+  // in the course, not the filtered set: the paper behind a variation is often
+  // not one the current filter shows.
+  const paperIndex = useMemo(() => byPaperLabel(allQuestions), [allQuestions]);
 
   // Filter helpers
   const clearAllFilters = () => {
@@ -566,6 +573,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
                       theme={theme}
                       courseId={course}
+                      paperIndex={paperIndex}
                       hasDataBooklet={config.hasDataBooklet}
                       question={q}
                       year={q.year}
@@ -818,11 +826,21 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <Trash2 className="h-4 w-4" />
                           </button>
                           {showQRCodes && q.videoId && (
-                            <QRCodeImage
-                              url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
-                              size={64}
-                              className="shrink-0 rounded"
-                            />
+                            <div className="shrink-0 flex flex-col items-center gap-0.5">
+                              <QRCodeImage
+                                url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
+                                size={64}
+                                className="rounded"
+                              />
+                              {/* On paper this caption is the only thing between
+                                  a pupil and the belief that they are wrong: the
+                                  video works the original's numbers, not theirs. */}
+                              {q.videoOf && (
+                                <span className="q-qr-note text-[9px] leading-tight text-muted-dim text-center max-w-[64px]">
+                                  {q.videoOf}<br />same method
+                                </span>
+                              )}
+                            </div>
                           )}
                         </div>
 
@@ -894,7 +912,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                               >
                                 <Play className="h-4 w-4" />
-                                Watch Solution
+                                {q.videoOf ? 'Watch the original' : 'Watch Solution'}
                               </button>
                             ) : hasMarkscheme(q.year, q.paperNumber) && (
                               <button

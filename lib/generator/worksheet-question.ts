@@ -39,6 +39,38 @@ export interface WorksheetQuestion {
   questionNumber: string;
   label?: string;
   uid?: string;
+  /**
+   * The past paper questions this was modelled on, **best first**.
+   *
+   * The website turns the first of these into a video link, so a pupil meeting
+   * a generated question can watch the original being worked. Empty for
+   * anything with no registry behind it.
+   */
+  basedOn?: string[];
+}
+
+/**
+ * Paper labels ordered most recent first.
+ *
+ * A variation can be modelled on several past paper questions - 63 of the 197
+ * offered are - so something has to choose which one's video to offer. The most
+ * recent is the one whose wording and marking most resemble what a pupil is
+ * sitting now.
+ *
+ * **Ordered here rather than chosen by the caller, and this matters.** The
+ * question a teacher clicked "Variation" on is not necessarily the one that
+ * ends up first, which is a small loss - but the alternative is worse: a link
+ * carries only the code and the seed, so a pupil's copy has no way to know
+ * which question the teacher was looking at. Choosing per-caller would mean the
+ * teacher and the pupil saw different videos under identical questions, and
+ * nothing on either screen would say so.
+ */
+function bestFirst(labels: readonly string[]): string[] {
+  const rank = (s: string) => {
+    const m = /^(\d{4}) P(\d) Q(\d+)/.exec(s.trim());
+    return m ? Number(m[1]) * 10000 + Number(m[2]) * 100 + Number(m[3]) : -1;
+  };
+  return [...labels].sort((a, b) => rank(b) - rank(a));
 }
 
 /** Marks the boundary between the two sources in a share link and a basket. */
@@ -103,6 +135,8 @@ export function toWorksheetQuestion(
   // previews there and what a pupil gets are the same question. One of these
   // lines may be an inline <svg>, which carries its own width and needs no
   // website CSS — see "The display requirement" in the porting plan.
+  const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
+
   const question = q.questionLines.join('<br><br>');
 
   // The total, as one part — not the per-step split.
@@ -140,6 +174,11 @@ export function toWorksheetQuestion(
     // the sheet would read " Paper 0 Q1". The skill is what the teacher picked,
     // so it is what the caption should say.
     label: q.subTopic,
+
+    // The papers behind this question, so the website can offer the original
+    // being worked as a tutorial. Ordered here so that the teacher's copy and
+    // every pupil's copy agree on which video that is.
+    ...(meta?.basedOn?.length ? { basedOn: bestFirst(meta.basedOn) } : {}),
 
     uid: generatedUid(q.code, seed),
   };

@@ -89,6 +89,24 @@ export interface QuestionWithMetadata extends Question {
    * one field. Until then, nothing dedupes on it.
    */
   uid?: string;
+  /**
+   * The past paper questions a generated question was modelled on, best first.
+   *
+   * Set by the engine. The first is the one whose video is offered as the
+   * tutorial — see `withParentVideo` in `lib/similar-questions.ts`. Absent on
+   * paper questions, which are their own source.
+   */
+  basedOn?: string[];
+  /**
+   * The paper reference the `videoId` on this question actually solves.
+   *
+   * Only ever set where that is **not this question** — a generated question
+   * borrowing the video of the paper question behind it. It is what tells a
+   * surface to say "the original, different numbers" rather than presenting
+   * the video as a solution to what is on the page. A pupil checking their
+   * working against a video of other numbers concludes they are wrong.
+   */
+  videoOf?: string;
 }
 
 /** The caption shown above a question in the full-screen and focus views. */

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen, Dices, Loader2 } from 'lucide-react';
-import { canAddVariation, variationLabel } from '@/lib/similar-questions';
+import { canAddVariation, variationLabel, withParentVideo } from '@/lib/similar-questions';
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
@@ -30,6 +30,12 @@ interface QuestionCardProps {
   theme: CourseTheme;
   /** Course this question belongs to — enables the Formulae button. */
   courseId?: string;
+  /**
+   * Past paper questions by label, so a generated variation can borrow the
+   * video of the question it was modelled on. Omitted where there is no index
+   * to hand; the variation simply arrives without a video.
+   */
+  paperIndex?: Map<string, QuestionWithMetadata>;
   // Higher Apps — show the year's data booklet alongside the question
   hasDataBooklet?: boolean;
   question: Question;
@@ -42,6 +48,7 @@ interface QuestionCardProps {
 export default function QuestionCard({
   theme,
   courseId,
+  paperIndex,
   hasDataBooklet = false,
   question,
   year,
@@ -84,7 +91,9 @@ export default function QuestionCard({
     setFailed(false);
     try {
       const { similarTo } = await import('@/lib/generated-question');
-      const [made] = await similarTo(label, 1);
+      const [raw] = await similarTo(label, 1);
+      // The paper behind it brings the video that teaches the method.
+      const made = raw && paperIndex ? withParentVideo(raw, paperIndex) : raw;
       // Nothing back is possible — a thin variation, or one withdrawn — and it
       // has to say so. A sheet silently one question short, with nothing naming
       // the question that did it, is the failure worth avoiding.

@@ -1,4 +1,5 @@
 import { paperRef } from '@/lib/question-number.mjs';
+import type { QuestionWithMetadata } from '@/lib/data-loader';
 
 /**
  * Which past paper questions can offer a freshly generated variation.
@@ -49,4 +50,49 @@ export function canAddVariation(
   questionHtml: string | undefined,
 ): boolean {
   return courseId === 'n5' && variationLabel(questionHtml) !== null;
+}
+
+/** Past paper questions by their printed label, for finding a parent video. */
+export function byPaperLabel(
+  questions: readonly QuestionWithMetadata[],
+): Map<string, QuestionWithMetadata> {
+  const out = new Map<string, QuestionWithMetadata>();
+  for (const q of questions) {
+    const ref = paperRef(q.question);
+    if (ref && !out.has(ref)) out.set(ref, q);
+  }
+  return out;
+}
+
+/**
+ * Give a generated question the video of the paper question behind it.
+ *
+ * A generated question has no solution of its own filmed, but the question it
+ * was modelled on does — all 328 National 5 past paper questions carry a video
+ * and a timestamp. Watching the original worked is the tutorial for the
+ * generated one: same method, different numbers.
+ *
+ * **`basedOn[0]` and nothing else.** The engine orders those most recent first
+ * so that a teacher's copy and a pupil's copy of the same question resolve to
+ * the same video — a shared link carries only a code and a seed, so there is no
+ * other way for the two to agree.
+ *
+ * Returns the question unchanged when it is not generated, when it names no
+ * paper, or when that paper is not among the ones loaded.
+ */
+export function withParentVideo(
+  q: QuestionWithMetadata,
+  byLabel: Map<string, QuestionWithMetadata>,
+): QuestionWithMetadata {
+  const parent = q.basedOn?.length ? byLabel.get(q.basedOn[0]) : undefined;
+  if (!parent?.videoId) return q;
+  return {
+    ...q,
+    videoId: parent.videoId,
+    timestamp: parent.timestamp,
+    // What the video actually shows. Every surface that offers it reads this,
+    // so the wording is in one place: a pupil checking their answer against a
+    // video of different numbers has to be told, or they conclude they are wrong.
+    videoOf: q.basedOn![0],
+  };
 }

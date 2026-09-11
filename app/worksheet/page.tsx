@@ -214,11 +214,21 @@ function SharedWorksheet() {
                     the Explorer's sheet — it keeps the QR out of the reading
                     flow, on screen and on paper alike. */}
                 {options.qrCodes && q.videoId && (
-                  <QRCodeImage
-                    url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
-                    size={64}
-                    className="shrink-0 rounded"
-                  />
+                  <div className="shrink-0 flex flex-col items-center gap-0.5">
+                    <QRCodeImage
+                      url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
+                      size={64}
+                      className="rounded"
+                    />
+                    {/* On paper this caption is the only thing standing between
+                        a pupil and the belief that they have got it wrong: the
+                        video works the original's numbers, not theirs. */}
+                    {q.videoOf && (
+                      <span className="q-qr-note text-[9px] leading-tight text-muted-foreground text-center max-w-[64px]">
+                        {q.videoOf}<br />same method
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
 
@@ -262,12 +272,16 @@ function SharedWorksheet() {
                       onClick={() => setVideo({
                         videoId: q.videoId,
                         timestamp: timestampToSeconds(q.timestamp),
-                        title: `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`,
+                        // A generated question's video solves the paper question
+                        // behind it, so the modal is titled with that one.
+                        title: q.videoOf
+                          ? `${q.videoOf} — the original question`
+                          : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`,
                       })}
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 text-sm font-medium rounded-lg transition-colors`}
                     >
                       <Play className="h-4 w-4" />
-                      Watch solution
+                      {q.videoOf ? 'Watch the original' : 'Watch solution'}
                     </button>
                   )}
               </div>

@@ -2,6 +2,7 @@ import type { QuestionWithMetadata } from '@/lib/data-loader';
 import {
   packRef, decodeRefs, packGenerated, parseGeneratedRef,
 } from '@/lib/worksheet-refs.mjs';
+import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 
 /**
  * Sharing a worksheet as a link.
@@ -160,14 +161,22 @@ export async function resolveWorksheet(
   // Loaded on demand, and at most once. A static import here would put the
   // engine in the bundle of every page that can open a shared sheet.
   let engine: typeof import('./generated-question') | null = null;
+  // Built once, and only if a generated question actually turns up: a sheet of
+  // paper questions should not pay for a lookup it never reads.
+  let byLabel: Map<string, QuestionWithMetadata> | null = null;
 
   for (const ref of refs) {
     const gen = parseGeneratedRef(ref);
     if (gen) {
       engine ??= await import('./generated-question');
       const made = await engine.questionFromCode(gen.code, gen.seed, questions.length);
-      if (made) questions.push(made);
-      else missing++;
+      if (made) {
+        // The original being worked, as the tutorial for this one.
+        byLabel ??= byPaperLabel(available);
+        questions.push(withParentVideo(made, byLabel));
+      } else {
+        missing++;
+      }
       continue;
     }
     const q = byRef.get(ref);
