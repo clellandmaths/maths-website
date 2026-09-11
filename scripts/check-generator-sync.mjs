@@ -61,7 +61,12 @@ for (const rel of present) {
 }
 
 console.log(`\n  ${recorded.length} files checked against the manifest`
-  + ` (generator commit ${String(manifest.sourceCommit ?? '?').slice(0, 7)})`);
+  + ` (generator commit ${String(manifest.sourceCommit ?? '?').slice(0, 7)}`
+  + `${manifest.sourceDirty ? ', plus uncommitted changes' : ''})`);
+if (manifest.sourceDirty) {
+  console.log('  - this copy was synced from a working tree with uncommitted');
+  console.log('    changes, so that commit does not contain it');
+}
 
 // ── 2. the copy is current, where that can be answered ────────────────────
 if (!existsSync(SRC)) {

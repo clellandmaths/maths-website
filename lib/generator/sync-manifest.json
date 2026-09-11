@@ -1,7 +1,8 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "ebbd71580e97e43204c15a3f3fc0e8cc7b67b7b9",
-  "count": 88,
+  "sourceCommit": "8181a67e240b234af1f1e97910dc084e3f4a11d2",
+  "sourceDirty": false,
+  "count": 90,
   "files": {
     "diagrams/render.ts": "2d7dd5f97a034115",
     "diagrams/scene.ts": "4d67bd71de935188",
@@ -37,7 +38,7 @@
     "diagrams/shapes/vector-figure.ts": "ad5107575edfc220",
     "diagrams/shapes/vector-grid.ts": "f172ca16f9bc344e",
     "diagrams/verify.ts": "ece077a484254a6c",
-    "generator.ts": "a1df47f54b4fd31c",
+    "generator.ts": "be22d8269892c862",
     "generators/apps.ts": "86479fd7c8a3132f",
     "generators/circle.ts": "b810b6204e5b2541",
     "generators/differentiation.ts": "246fdc8a7311ce93",
@@ -77,7 +78,7 @@
     "generators/n5-trig-diagram.ts": "47814cf7a93c5e3f",
     "generators/n5-trig-graph.ts": "78ed9fdaeafb8121",
     "generators/n5-trig.ts": "f9fc726386b6edc8",
-    "generators/n5-variations.ts": "854673ab02d9cbbb",
+    "generators/n5-variations.ts": "dbf049a3f34295a6",
     "generators/n5-vector-pathway.ts": "475c704b389fe442",
     "generators/n5-vectors.ts": "513239dc77f80f35",
     "generators/n5-volume.ts": "a7033fb6cd0f59e2",
@@ -86,10 +87,12 @@
     "generators/sequences.ts": "da6e13b9f7f65e2b",
     "generators/straight_line.ts": "1e4d7b6b59cee3e9",
     "generators/trigonometry.ts": "5713efebb1d7500f",
-    "generators/types.ts": "2bb92e1059fdbb79",
+    "generators/types.ts": "c204b40f6fdd688d",
     "generators/utils.ts": "f1f53564386a6be9",
+    "generators/variation-codes.ts": "6a1a0a95b2a45159",
     "generators/vectors.ts": "ab577290300ead00",
     "question-key.ts": "e19cd1e62a551149",
-    "sheet-plan.ts": "4a8117b129446b3b"
+    "sheet-plan.ts": "4a8117b129446b3b",
+    "worksheet-question.ts": "2dff1667f2ee4047"
   }
 }

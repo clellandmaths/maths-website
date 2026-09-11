@@ -812,6 +812,18 @@ export interface GeneratedQuestion {
   /** Key into the course's variation registry — see n5-variations.ts. */
   variationId?: string;
   /**
+   * The variation's permanent public code — see `variation-codes.ts`.
+   *
+   * Set from the registry on the way out, alongside `difficulty` and
+   * `webTopics`, for the same reason: it is a property of the variation, not
+   * of the draw. A shared worksheet link carries this and a seed, and nothing
+   * else, so it is the half of that pair which must never move.
+   *
+   * Absent on Higher and Apps questions, which have no registry and are not
+   * shareable yet.
+   */
+  code?: string;
+  /**
    * The diagram's model, when the question carries one.
    *
    * The rendered SVG goes into `questionLines`; this is the scene it came from,

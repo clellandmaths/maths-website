@@ -72,22 +72,40 @@ function main() {
     manifest[key(rel)] = sha(body);
   }
 
+  // Where the copy came from - and whether that is the whole truth.
+  //
+  // HEAD alone is not: syncing with uncommitted changes records a commit that
+  // does not contain the files just copied. That happened the first time this
+  // ran during phase 3, on a `worksheet-question.ts` that existed only in the
+  // working tree. The drift half of the check would still have caught a stale
+  // copy, but the provenance line is what anyone reads first, and it was
+  // stating something untrue with no way to tell.
   let commit = 'unknown';
+  let dirty = false;
   try {
-    commit = execFileSync('git', ['rev-parse', 'HEAD'], {
-      cwd: join(ROOT, 'worksheet_generator'), encoding: 'utf8',
-    }).trim();
+    const gen = { cwd: join(ROOT, 'worksheet_generator'), encoding: 'utf8' };
+    commit = execFileSync('git', ['rev-parse', 'HEAD'], gen).trim();
+    dirty = execFileSync('git', ['status', '--porcelain', '--', 'src/lib'], gen).trim() !== '';
   } catch { /* a generator checkout without git history is not a reason to stop */ }
 
   writeFileSync(MANIFEST, `${JSON.stringify({
     note: 'Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.',
     sourceCommit: commit,
+    // True when src/lib had uncommitted changes at sync time, so `sourceCommit`
+    // names a commit that does not contain what was copied. Not an error -
+    // syncing mid-work is normal - but it must not be silent.
+    sourceDirty: dirty,
     count: files.length,
     files: manifest,
   }, null, 2)}\n`);
 
   console.log(`\n  copied ${files.length} files to ${relative(ROOT, DEST)}`);
-  console.log(`  from generator commit ${commit.slice(0, 7)}\n`);
+  console.log(`  from generator commit ${commit.slice(0, 7)}${dirty ? ' plus uncommitted changes' : ''}`);
+  if (dirty) {
+    console.log('  - src/lib has uncommitted changes, so that commit does not');
+    console.log('    contain this copy. Commit the generator and sync again.');
+  }
+  console.log('');
 }
 
 if (process.argv[1] && process.argv[1].endsWith('sync-generator.mjs')) main();

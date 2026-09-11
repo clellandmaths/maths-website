@@ -3057,3 +3057,23 @@ export function variationsInTier(topic: string, tier: Tier): string[] {
     .filter(([, m]) => m.topic === topic && m.difficulty === tier)
     .map(([id]) => id);
 }
+
+/**
+ * The variations the website may offer: exam tier, and nothing else.
+ *
+ * Warm-ups are deliberately out of scope for the port — they are starters to
+ * put on a board, not questions to print on a homework, and a sheet that
+ * mixed them in would be a sheet whose difficulty nobody chose.
+ *
+ * It lives here rather than in the website's adapter so that the check which
+ * enforces it can live with the other checks, and so both sides read one list
+ * rather than each carrying its own idea of what is offered. `codes.ts` fails
+ * if a warm-up appears here, and the adapter refuses one it is handed anyway —
+ * a filter and a guard, because the filter is the thing a future caller can
+ * forget to apply.
+ */
+export function offeredVariationIds(): string[] {
+  return Object.entries(N5_VARIATIONS)
+    .filter(([, m]) => m.difficulty === 'exam')
+    .map(([id]) => id);
+}

@@ -20,6 +20,24 @@ export interface Question {
   // subtopics here; N5/Higher put subtopic strings straight in `topics`
   subtopics?: string[];
   marks?: number[];
+  /**
+   * The worked solution, one string of HTML per step.
+   *
+   * Generated questions only. Paper questions have video solutions; this is
+   * what a generated one has instead, and it is checked against the real
+   * marking instructions rather than written from the answer backwards.
+   */
+  steps?: string[];
+  /**
+   * What each step in `steps` is worth, in the same order.
+   *
+   * Separate from `marks` on purpose. `marks` is the per-*part* breakdown, and
+   * `Marks` prints it as one — a generated question putting its step split
+   * there would read "(1, 1, 1) 3 Marks" where a paper question worth the same
+   * reads "3 Marks". These sum to the `marks` total; the generator's
+   * `markschemes.ts` is what proves they do.
+   */
+  stepMarks?: number[];
   // Higher Apps: downloadable data files (CSV/XLSX/DOCX) per question
   attachments?: QuestionAttachment[];
   dataBookletSection?: number;
@@ -58,6 +76,19 @@ export interface QuestionWithMetadata extends Question {
    * have no paper number, so without this they read "Surds Paper 0 Q1".
    */
   label?: string;
+  /**
+   * A stable identity that does not depend on a paper reference.
+   *
+   * Set on generated questions, where it is `g:<variation code>:<seed>` — the
+   * pair `withSeed` needs to make the same question again. See
+   * `lib/generated-question.ts`.
+   *
+   * Absent on paper questions today: the basket and the share link still key
+   * those on (year, paperNumber, questionIndex), which is what they have
+   * always done. Phase 4 of the port is where both sources start reading this
+   * one field. Until then, nothing dedupes on it.
+   */
+  uid?: string;
 }
 
 /** The caption shown above a question in the full-screen and focus views. */

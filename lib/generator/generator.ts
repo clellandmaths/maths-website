@@ -1,6 +1,7 @@
 import { Topic, TOPIC_GROUPS, ALL_TOPICS, GeneratedQuestion, COURSES } from './generators/types';
 import { questionKey } from './question-key';
 import { N5_VARIATIONS, variationsBasedOn, topicsBasedOn } from './generators/n5-variations';
+import { VARIATION_CODES } from './generators/variation-codes';
 import { mulberry32, random, seedFrom, setRandomStream } from './generators/utils';
 
 export { type Topic, TOPIC_GROUPS, ALL_TOPICS, type GeneratedQuestion, COURSES };
@@ -176,7 +177,14 @@ export async function generateQuestion(
   return {
     ...q,
     topic: parentTopic,
-    ...(meta ? { difficulty: meta.difficulty, webTopics: meta.webTopics } : {}),
+    ...(meta ? {
+      difficulty: meta.difficulty,
+      webTopics: meta.webTopics,
+      // The code comes from its own table rather than from `meta`, so that a
+      // public identifier is never something a variation's author sets in
+      // passing. `__checks__/codes.ts` proves the two sets line up.
+      code: VARIATION_CODES[q.variationId!],
+    } : {}),
   } as GeneratedQuestion;
 }
 
