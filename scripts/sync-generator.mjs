@@ -42,7 +42,24 @@ export function collect(dir, base = dir, out = []) {
   return out;
 }
 
-export const sha = (buf) => createHash('sha256').update(buf).digest('hex').slice(0, 16);
+/**
+ * Line endings, normalised, before anything is hashed or written.
+ *
+ * `core.autocrlf` is on for at least one machine here and neither repo has a
+ * `.gitattributes`, so a plain `git checkout` rewrites LF to CRLF in the
+ * working tree. That is invisible, routine, and changes every byte on every
+ * line — so hashing raw bytes made four files go STALE the moment a branch was
+ * switched, with no code changed at all.
+ *
+ * Line endings are not part of the question this check asks. Normalising both
+ * sides means the answer is the same on Windows and on the build machine, and
+ * a copy that arrives with CRLF from this repo's own checkout still matches its
+ * manifest.
+ */
+export const eol = (buf) => Buffer.from(
+  buf.toString('utf8').split('\r\n').join('\n'), 'utf8');
+
+export const sha = (buf) => createHash('sha256').update(eol(buf)).digest('hex').slice(0, 16);
 
 /** Posix separators, so the manifest is the same on every machine. */
 export const key = (rel) => rel.split(sep).join('/');
@@ -65,7 +82,11 @@ function main() {
 
   const manifest = {};
   for (const rel of files) {
-    const body = readFileSync(join(SRC, rel));
+    // Written normalised, not copied verbatim: the copy is committed here, so
+    // letting it inherit whichever line endings the generator's working tree
+    // happens to hold would put a whole-file diff in this repo every time it is
+    // synced from a machine configured differently.
+    const body = eol(readFileSync(join(SRC, rel)));
     const to = join(DEST, rel);
     mkdirSync(dirname(to), { recursive: true });
     writeFileSync(to, body);
