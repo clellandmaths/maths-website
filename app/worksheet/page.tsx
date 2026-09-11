@@ -4,6 +4,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
+import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
 import {
@@ -234,6 +235,11 @@ function SharedWorksheet() {
 
               <MathRenderer html={q.question} className="question-content text-foreground/90" />
 
+              {/* Staged help, only where the maker granted it. */}
+              {options.hints && (
+                <Hints question={q} theme={theme} courseId={courseId ?? undefined} className="mt-3" />
+              )}
+
               {/* Whatever the maker granted, offered here on the card as well as
                   in full screen — a pupil reading down the page should not have
                   to go full screen to get at an answer they were given.
@@ -323,10 +329,16 @@ function SharedWorksheet() {
           past paper question on it. QS_NOTICE_SCOPE already says what it covers,
           so a mixed sheet is right as it stands — but a sheet of only generated
           questions would be announcing past paper material that is not there,
-          and crediting someone else with work that is ours. */}
+          and crediting someone else with work that is ours.
+
+          Hints are the exception that proves it. They are the markscheme's own
+          method, so a sheet showing them carries Qualifications Scotland
+          material even when every question on it is ours — and the notice's own
+          scope line already says "past paper questions AND MARKING
+          INSTRUCTIONS", which is exactly what that is. */}
       <div className="print-only print-footer">
         <p>clellandmaths.com — free past papers, video solutions and worksheets</p>
-        {(questions ?? []).some(q => !isGenerated(q)) && (
+        {((questions ?? []).some(q => !isGenerated(q)) || options.hints) && (
           <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
         )}
       </div>

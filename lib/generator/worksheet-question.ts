@@ -59,6 +59,28 @@ export interface WorksheetQuestion {
    * not carried there cannot be recovered, and teacher and pupil would differ.
    */
   parentIndex?: number;
+  /** What this question is asking the pupil to do. The first hint. */
+  skill?: string;
+  /** How the marks are earned, in one line. The second hint. */
+  method?: string;
+}
+
+/**
+ * The first sentence of a variation's markscheme route, as a method hint.
+ *
+ * `route` is written for whoever is checking a variation against its marking
+ * instructions, so it often carries a second sentence about how a particular
+ * mark is worded. That is detail for a marker, not help for a pupil - the
+ * first sentence is the method and stands on its own.
+ *
+ * The leading mark split goes too. 39 of the 328 open with one - "3 + 1 - find
+ * the gradient..." - which tells a pupil how many steps there are before they
+ * have had a go at it.
+ */
+export function methodOf(route: string | undefined): string {
+  let first = (route ?? '').split(/\.\s/)[0].trim();
+  first = first.replace(/^\s*\d+(\s*\+\s*\d+)*\s*[-\u2013]\s*/, '').trim();
+  return first ? first.charAt(0).toUpperCase() + first.slice(1) : '';
 }
 
 /**
@@ -195,6 +217,11 @@ export function toWorksheetQuestion(
     ...(meta?.basedOn?.length
       ? { basedOn: bestFirst(meta.basedOn), parentIndex }
       : {}),
+
+    // Staged help, from the same registry the question came from. A generated
+    // question also carries `steps`, so it can go further than a paper one.
+    ...(meta?.skill ? { skill: meta.skill } : {}),
+    ...(methodOf(meta?.route) ? { method: methodOf(meta?.route) } : {}),
 
     uid: generatedUid(q.code, seed, parentIndex),
   };

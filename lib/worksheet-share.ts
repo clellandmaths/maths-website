@@ -41,14 +41,27 @@ export interface WorksheetOptions {
   answers: boolean;   // a — pupils can reveal the answers
   qrCodes: boolean;   // q — QR codes to the video solutions on the printout
   video: boolean;     // v — a watch-solution button
+  /**
+   * h — staged help: what the question asks, then how the marks are earned,
+   * then the worked steps where the question has them.
+   *
+   * Separate from `answers` on purpose. A hint and an answer are different
+   * things to hand a pupil: one gets them started, the other ends the
+   * exercise. A teacher setting homework may well want the first and not the
+   * second, and off by default means neither travels unless it was chosen.
+   */
+  hints: boolean;
 }
 
-export const NO_OPTIONS: WorksheetOptions = { answers: false, qrCodes: false, video: false };
+export const NO_OPTIONS: WorksheetOptions = {
+  answers: false, qrCodes: false, video: false, hints: false,
+};
 
 const FLAGS: [keyof WorksheetOptions, string][] = [
   ['answers', 'a'],
   ['qrCodes', 'q'],
   ['video', 'v'],
+  ['hints', 'h'],
 ];
 
 export function encodeOptions(o: WorksheetOptions): string {
@@ -57,7 +70,12 @@ export function encodeOptions(o: WorksheetOptions): string {
 
 export function decodeOptions(s: string | null): WorksheetOptions {
   const set = new Set((s ?? '').toLowerCase());
-  return { answers: set.has('a'), qrCodes: set.has('q'), video: set.has('v') };
+  return {
+    answers: set.has('a'),
+    qrCodes: set.has('q'),
+    video: set.has('v'),
+    hints: set.has('h'),
+  };
 }
 
 export interface SharedWorksheet {

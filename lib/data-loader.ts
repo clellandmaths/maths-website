@@ -106,6 +106,17 @@ export interface QuestionWithMetadata extends Question {
    */
   parentIndex?: number;
   /**
+   * What the question is asking the pupil to do — the first hint.
+   *
+   * Generated questions carry it from the variation registry. Past paper
+   * questions do not: theirs live in `lib/generator/generators/paper-hints.ts`,
+   * keyed on the printed paper label, so that showing one line of help does not
+   * mean downloading the engine.
+   */
+  skill?: string;
+  /** How the marks are earned, in one line — the second hint. */
+  method?: string;
+  /**
    * The paper reference the `videoId` on this question actually solves.
    *
    * Only ever set where that is **not this question** — a generated question

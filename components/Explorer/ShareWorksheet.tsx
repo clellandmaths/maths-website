@@ -31,6 +31,14 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
   const origin = typeof window === 'undefined' ? '' : window.location.origin;
   const links = shareLinks(origin, courseId, questions, title, options);
   const withVideo = questions.filter(q => q.videoId).length;
+  // A generated question's video solves the past paper question it was
+  // modelled on, not itself. That is a useful thing to hand a pupil and a
+  // misleading one to hand them unlabelled, so the maker is told which it is.
+  const borrowed = questions.filter(q => q.videoOf).length;
+  // Only a generated question carries worked steps, and the last of them
+  // reaches the answer — so granting hints on one is a larger thing than
+  // granting them on a past paper question, and the maker should be told.
+  const generated = questions.filter(q => q.uid?.startsWith('g:')).length;
 
   const toggle = (key: keyof WorksheetOptions) =>
     setOptions(o => ({ ...o, [key]: !o[key] }));
@@ -138,7 +146,12 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
               {check('video', 'Video solutions', withVideo
                 ? `A watch button on the ${withVideo} question${withVideo === 1 ? '' : 's'} that have one`
                 : 'None of these questions has a video', withVideo === 0)}
-              {check('qrCodes', 'QR codes', 'Printed beside each question, linking to its video', withVideo === 0)}
+              {check('qrCodes', 'QR codes', borrowed > 0
+                ? `Printed beside each question. On the ${borrowed} generated question${borrowed === 1 ? '' : 's'} the code opens a tutorial — the past paper question it was modelled on, worked through with different numbers — not a solution to the question on the sheet`
+                : 'Printed beside each question, linking to its video', withVideo === 0)}
+              {check('hints', 'Hints', generated > 0
+                ? `What the question asks, then how the marks are earned. On the ${generated} generated question${generated === 1 ? '' : 's'} it goes on to the worked steps, and the last of those reaches the answer`
+                : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')}
             </div>
           </div>
 

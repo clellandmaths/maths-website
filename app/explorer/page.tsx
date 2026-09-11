@@ -16,6 +16,7 @@ import FormulaeSheet from '@/components/FormulaeSheet';
 import FormulaeButton from '@/components/FormulaeButton';
 import Marks from '@/components/Marks';
 import MathRenderer from '@/components/MathRenderer';
+import Hints from '@/components/Hints';
 import VideoModal from '@/components/VideoModal';
 import QRCodeImage from '@/components/QRCodeImage';
 import { WorksheetProvider, useWorksheet } from '@/lib/worksheet-context';
@@ -109,6 +110,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [viewMode, setViewMode] = useState<'browse' | 'worksheet'>('browse');
   const [showAnswersInView, setShowAnswersInView] = useState(false);
   const [showQRCodes, setShowQRCodes] = useState(false);
+  const [showHints, setShowHints] = useState(false);
   const [presentStartIndex, setPresentStartIndex] = useState<number | null>(null);
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -660,6 +662,15 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           />
                           <span className="text-sm text-slate-400">QR codes</span>
                         </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={showHints}
+                            onChange={(e) => setShowHints(e.target.checked)}
+                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                          />
+                          <span className="text-sm text-slate-400">Hints</span>
+                        </label>
                         <button
                           onClick={() => setPresentStartIndex(0)}
                           className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
@@ -866,6 +877,10 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           </div>
                         )}
 
+                        {showHints && (
+                          <Hints question={q} theme={theme} courseId={course} className="mt-4" />
+                        )}
+
                         {showAnswersInView && (
                           <div className="answer-section mt-4 pt-4 border-t border-slate-800">
                             <p className={`answer-label text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
@@ -935,9 +950,11 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       Created with <strong>Clelland Maths</strong> &mdash; free Qualifications Scotland maths revision,
                       past papers and video solutions at <strong>clellandmaths.com</strong>
                     </p>
-                    {/* Only when a past paper question is actually on the
-                        sheet — see the note in app/worksheet/page.tsx. */}
-                    {worksheetItems.some(q => !isGenerated(q)) && (
+                    {/* A past paper question on the sheet, or hints on — the
+                        hints are the markscheme's method, so a sheet showing
+                        them carries Qualifications Scotland material even when
+                        every question on it is ours. See app/worksheet/page.tsx. */}
+                    {(worksheetItems.some(q => !isGenerated(q)) || showHints) && (
                       <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
                     )}
                   </div>

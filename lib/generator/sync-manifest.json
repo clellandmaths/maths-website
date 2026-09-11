@@ -1,8 +1,8 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "2be95a11d5456d081616efad7d9288705c2f8723",
+  "sourceCommit": "35d1e266a144d6fbd18324acd1da3a780ab0deb3",
   "sourceDirty": false,
-  "count": 90,
+  "count": 91,
   "files": {
     "diagrams/render.ts": "9db428c2903cfefd",
     "diagrams/scene.ts": "29a4e3a4ef04069e",
@@ -83,6 +83,7 @@
     "generators/n5-vectors.ts": "513239dc77f80f35",
     "generators/n5-volume.ts": "018e8125d95accc1",
     "generators/n5.ts": "4d2c0cd694c9d400",
+    "generators/paper-hints.ts": "55ed92f6d839acb9",
     "generators/quadratics.ts": "892aff1b7bb0d069",
     "generators/sequences.ts": "da6e13b9f7f65e2b",
     "generators/straight_line.ts": "1e4d7b6b59cee3e9",
@@ -93,6 +94,6 @@
     "generators/vectors.ts": "ab577290300ead00",
     "question-key.ts": "7c3ac724371a27e8",
     "sheet-plan.ts": "4a8117b129446b3b",
-    "worksheet-question.ts": "303fc1bacec97c6b"
+    "worksheet-question.ts": "f92c7a63b2863b0c"
   }
 }
