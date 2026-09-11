@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2 } from 'lucide-react';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2 } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -33,7 +33,8 @@ import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
-import { decodeWorksheet, resolveWorksheet, isGenerated } from '@/lib/worksheet-share';
+import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
+import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -95,6 +96,11 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
+  // Generating against the current filter. National 5 only — see canGenerate.
+  const [genCount, setGenCount] = useState(5);
+  const [generating, setGenerating] = useState(false);
+  const [genNote, setGenNote] = useState<string | null>(null);
+  const [rerolling, setRerolling] = useState<string | null>(null);
   const [selectedYears, setSelectedYears] = useState<(number | string)[]>([]);
   const [selectedPapers, setSelectedPapers] = useState<number[]>([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -111,7 +117,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
   const [showShare, setShowShare] = useState(false);
 
-  const { items: worksheetItems, addItem, removeItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
+  const { items: worksheetItems, addItem, removeItem, replaceItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
 
   // Shown in the printed header — a pupil wants to know what the paper is worth
   const totalMarks = useMemo(
@@ -165,6 +171,60 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     });
     return () => { cancelled = true; };
   }, [allQuestions, course, addItem, clearAll]);
+
+  /**
+   * Generate questions on the subtopics the teacher has already filtered to.
+   *
+   * The filter is the topic list — the Explorer and the variation registry
+   * spell the website's subtopics identically, so there is nothing to map.
+   *
+   * National 5 only: no other course has audited variations. The engine is
+   * imported here and nowhere else in this file; it is 33,000 lines and a
+   * static import would put it on the browse page for every course.
+   */
+  const canGenerate = course === 'n5' && selectedSubtopics.length > 0;
+
+  const handleGenerate = async () => {
+    if (!canGenerate || generating) return;
+    setGenerating(true);
+    setGenNote(null);
+    try {
+      const { generateForSubtopics } = await import('@/lib/generated-question');
+      const made = await generateForSubtopics(selectedSubtopics, genCount);
+      made.forEach(addItem);
+      if (!made.length) {
+        setGenNote('No new questions could be made for this filter.');
+      } else if (made.length < genCount) {
+        // Short is legitimate — a thin variation cannot make more DIFFERENT
+        // questions — but it must be said, or the sheet is quietly short and
+        // nothing names the topic that did it.
+        setGenNote(
+          `Added ${made.length}. These topics cannot make ${genCount} different questions.`);
+      } else {
+        setGenNote(`Added ${made.length} to your worksheet.`);
+      }
+    } catch {
+      setGenNote('Something went wrong generating those.');
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  /** Re-roll one generated question: same variation, new numbers. */
+  const handleReroll = async (q: QuestionWithMetadata) => {
+    const gen = parseGeneratedRef(questionRef(q));
+    if (!gen || rerolling) return;
+    setRerolling(q.uid ?? null);
+    try {
+      const { questionFromCode, newSeed } = await import('@/lib/generated-question');
+      const fresh = await questionFromCode(gen.code, newSeed(), q.questionIndex);
+      // In place: a teacher re-rolling question 3 expects a new question 3, not
+      // the sheet reordered.
+      if (fresh) replaceItem(q, fresh);
+    } finally {
+      setRerolling(null);
+    }
+  };
 
   // Reorder with visual feedback
   const handleReorder = (from: number, to: number) => {
@@ -456,7 +516,46 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       : `Add all ${filteredQuestions.length} to worksheet`
                     }
                   </button>
+
+                  {/* Generate on the filter already set. National 5 only —
+                      absent elsewhere rather than disabled. */}
+                  {canGenerate && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-slate-600">|</span>
+                      <button
+                        onClick={handleGenerate}
+                        disabled={generating}
+                        className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                      >
+                        {generating
+                          ? <Loader2 className="h-4 w-4 animate-spin" />
+                          : <Dices className="h-4 w-4" />}
+                        {generating ? 'Generating…' : `Generate ${genCount} new on these topics`}
+                      </button>
+                      <label className="sr-only" htmlFor="gen-count">How many to generate</label>
+                      <select
+                        id="gen-count"
+                        value={genCount}
+                        onChange={e => setGenCount(Number(e.target.value))}
+                        className="bg-slate-800 text-slate-300 text-sm rounded px-2 py-1.5 border border-slate-700"
+                      >
+                        {[3, 5, 10, 15, 20].map(n => (
+                          <option key={n} value={n}>{n}</option>
+                        ))}
+                      </select>
+                      <a
+                        href={`/course/${course}/generate`}
+                        className="text-xs text-muted-foreground underline hover:text-slate-300"
+                      >
+                        by skill…
+                      </a>
+                    </div>
+                  )}
                 </div>
+              )}
+
+              {genNote && (
+                <p className="mb-4 text-sm text-slate-400">{genNote}</p>
               )}
 
               {/* Questions Grid - Only Show When Filters Active */}
@@ -633,9 +732,20 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <span className={`q-badge flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
+                            {/* A generated question has no paper, so building
+                                 the caption from year and paper number reads
+                                 " Paper 0 Q1". `label` is what it carries
+                                 instead — the skill it practises. */}
                             <span className="text-sm text-muted-dim">
-                              {q.year} Paper {q.paperNumber} Q{q.questionNumber}
+                              {isGenerated(q)
+                                ? q.label
+                                : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`}
                             </span>
+                            {isGenerated(q) && (
+                              <span className={`q-source px-2 py-1 ${theme.tint} ${theme.text} text-xs font-medium rounded`}>
+                                New question
+                              </span>
+                            )}
                             {q.topics?.slice(0, 2).map((topic) => (
                               <span
                                 key={topic}
@@ -683,6 +793,22 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                               <ChevronsDown className="h-3.5 w-3.5" />
                             </button>
                           </div>
+                          {/* Same question, new numbers. Generated items only:
+                               a past paper question is a fixed historical
+                               document and there is nothing to re-roll. */}
+                          {isGenerated(q) && (
+                            <button
+                              onClick={() => handleReroll(q)}
+                              disabled={rerolling !== null}
+                              className="no-print shrink-0 p-1.5 text-muted-dim hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-40"
+                              title="New numbers for this question"
+                              aria-label="New numbers for this question"
+                            >
+                              {rerolling === q.uid
+                                ? <Loader2 className="h-4 w-4 animate-spin" />
+                                : <Dices className="h-4 w-4" />}
+                            </button>
+                          )}
                           {/* Remove button */}
                           <button
                             onClick={() => removeItem(q)}

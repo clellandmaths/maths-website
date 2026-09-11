@@ -3,6 +3,8 @@ import type { GeneratedQuestion } from './generator/generators/types';
 import {
   toWorksheetQuestion as build,
   questionFromCode as fromCode,
+  similarTo as fromLabel,
+  generateForSubtopics as fromSubtopics,
   type ToWorksheetOptions,
 } from './generator/worksheet-question';
 import { SEED_LENGTH } from './worksheet-refs.mjs';
@@ -49,6 +51,41 @@ export async function questionFromCode(
   index: number,
 ): Promise<QuestionWithMetadata | null> {
   return fromCode(code, seed, index);
+}
+
+/**
+ * Fresh questions modelled on one past paper question.
+ *
+ * Backs "add a variation of this" in the Explorer. The label comes from the
+ * question's printed badge — `variationLabel()` in `lib/similar-questions.ts`.
+ *
+ * Returns fewer than asked, or none at all, when the variations behind that
+ * question cannot make that many different ones. **The caller must handle a
+ * short answer**: a sheet quietly coming up shorter than the teacher asked for,
+ * with nothing saying which question did it, is the failure worth avoiding.
+ *
+ * Every question that comes back carries a `uid` that regenerates it, so it can
+ * go in a sheet and survive being shared.
+ */
+export async function similarTo(
+  paperLabel: string,
+  count: number,
+): Promise<QuestionWithMetadata[]> {
+  return fromLabel(paperLabel, count, newSeed);
+}
+
+/**
+ * Fresh questions across a set of the website's own subtopics.
+ *
+ * What the Explorer's filter produces. Returns fewer than asked, or none, when
+ * those subtopics cannot make that many different questions — the caller must
+ * say so rather than let the sheet come up quietly short.
+ */
+export async function generateForSubtopics(
+  subtopics: readonly string[],
+  count: number,
+): Promise<QuestionWithMetadata[]> {
+  return fromSubtopics(subtopics, count, newSeed);
 }
 
 const BASE36 = '0123456789abcdefghijklmnopqrstuvwxyz';

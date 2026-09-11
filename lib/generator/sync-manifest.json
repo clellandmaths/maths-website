@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "c970b7055491ba5e56a3d46fa6d919ed745ea60d",
+  "sourceCommit": "c574122ae1050a16cc74209dff4c258a1de861ec",
   "sourceDirty": false,
   "count": 90,
   "files": {
@@ -78,7 +78,7 @@
     "generators/n5-trig-diagram.ts": "fa2e462ff6de539c",
     "generators/n5-trig-graph.ts": "78ed9fdaeafb8121",
     "generators/n5-trig.ts": "f9fc726386b6edc8",
-    "generators/n5-variations.ts": "06a23f74c9769b2c",
+    "generators/n5-variations.ts": "484337da4c60d0fa",
     "generators/n5-vector-pathway.ts": "5b14c1f7c26ce442",
     "generators/n5-vectors.ts": "513239dc77f80f35",
     "generators/n5-volume.ts": "018e8125d95accc1",
@@ -93,6 +93,6 @@
     "generators/vectors.ts": "ab577290300ead00",
     "question-key.ts": "7c3ac724371a27e8",
     "sheet-plan.ts": "4a8117b129446b3b",
-    "worksheet-question.ts": "87e41c64860f2c33"
+    "worksheet-question.ts": "57dd8fd18c26036f"
   }
 }

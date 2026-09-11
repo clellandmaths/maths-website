@@ -7,6 +7,8 @@ interface WorksheetContextType {
   items: QuestionWithMetadata[];
   addItem: (question: QuestionWithMetadata) => void;
   removeItem: (question: QuestionWithMetadata) => void;
+  /** Swap one question for another, keeping its position on the sheet. */
+  replaceItem: (question: QuestionWithMetadata, next: QuestionWithMetadata) => void;
   clearAll: () => void;
   isInWorksheet: (question: QuestionWithMetadata) => boolean;
   reorderItems: (fromIndex: number, toIndex: number) => void;
@@ -76,6 +78,26 @@ export function WorksheetProvider({ course, children }: { course: string; childr
     });
   };
 
+  /**
+   * Swap one question for another without moving it.
+   *
+   * Re-rolling question 3 should give a new question 3, not send it to the end
+   * of the sheet. Doing that as remove-then-add works only by accident — the
+   * list is the same length afterwards, so a position captured before the
+   * change happens to still point at the right slot — and it stops being true
+   * as soon as anything else touches the basket in between.
+   */
+  const replaceItem = (question: QuestionWithMetadata, next: QuestionWithMetadata) => {
+    const id = identity(question);
+    setItems((prev) => {
+      const at = prev.findIndex((q) => identity(q) === id);
+      if (at === -1) return prev;
+      const out = [...prev];
+      out[at] = next;
+      return out;
+    });
+  };
+
   const removeItem = (question: QuestionWithMetadata) => {
     const id = identity(question);
     setItems((prev) => prev.filter((q) => identity(q) !== id));
@@ -101,7 +123,7 @@ export function WorksheetProvider({ course, children }: { course: string; childr
 
   return (
     <WorksheetContext.Provider
-      value={{ items, addItem, removeItem, clearAll, isInWorksheet, reorderItems }}
+      value={{ items, addItem, removeItem, replaceItem, clearAll, isInWorksheet, reorderItems }}
     >
       {children}
     </WorksheetContext.Provider>

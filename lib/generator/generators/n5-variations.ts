@@ -3110,3 +3110,22 @@ export function offeredTopicGroups(): Record<string, Topic[]> {
 export function offeredTopics(): Topic[] {
   return Object.values(offeredTopicGroups()).flat();
 }
+
+/**
+ * The variations filing under one of the website's own subtopics.
+ *
+ * This is the bridge that lets the Explorer generate from the filter a teacher
+ * has already set. `webTopics` is spelled in the website's vocabulary - the 57
+ * strings in its `lib/n5-topics.ts` - and the Explorer filters on exactly those
+ * strings. So "five more on Rationalising the denominator" needs no second
+ * topic picker and no mapping table: the two sides were already saying the same
+ * word, and `webtopics.ts` is what keeps that true.
+ *
+ * Exam tier only, like everything else offered. Empty for a subtopic nothing
+ * files under - which `webtopics.ts` reports cannot happen today, since all 57
+ * carry at least one variation.
+ */
+export function variationsForSubtopic(subtopic: string): string[] {
+  return offeredVariationIds()
+    .filter(id => N5_VARIATIONS[id].webTopics.includes(subtopic));
+}

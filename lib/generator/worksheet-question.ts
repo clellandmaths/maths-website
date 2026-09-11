@@ -1,6 +1,9 @@
 import { generateQuestion, withSeed } from './generator';
-import { N5_VARIATIONS } from './generators/n5-variations';
-import { VARIATION_BY_CODE } from './generators/variation-codes';
+import {
+  N5_VARIATIONS, variationsBasedOn, variationsForSubtopic,
+} from './generators/n5-variations';
+import { VARIATION_BY_CODE, VARIATION_CODES } from './generators/variation-codes';
+import { questionKey } from './question-key';
 import type { GeneratedQuestion, Topic } from './generators/types';
 
 /**
@@ -140,6 +143,125 @@ export function toWorksheetQuestion(
 
     uid: generatedUid(q.code, seed),
   };
+}
+
+/**
+ * Fresh questions modelled on one past paper question.
+ *
+ * "Add a variation of this" in the Explorer. The label is the paper's own -
+ * `'2023 P1 Q8'` - and it should be read from the question's printed badge
+ * rather than rebuilt from metadata, because one surface synthesises its
+ * question numbers and would produce a plausible, wrong label.
+ *
+ * **Why this does not wrap `questionsLike()`.** That draws unseeded, and a seed
+ * cannot be attached to a question after the fact: the seed is what *produces*
+ * the question. A `uid` carrying a seed that did not make the question would
+ * regenerate something else from a shared link - silently, and only for the
+ * pupil. So these are drawn through `questionFromCode`, the same path a link
+ * resolves through, and every one that comes back is shareable.
+ *
+ * `questionsLike()` stays as it is: the right shape for a caller that only
+ * wants to *show* questions and never needs to name them again.
+ *
+ * The seed comes from the caller because its shape belongs to the link rather
+ * than to the generator - six base36 characters, fixed by `worksheet-refs.mjs`.
+ *
+ * Sequential, necessarily: the stream is module-level.
+ *
+ * Returns fewer than asked when the variations cannot make that many
+ * *different* questions. That is a property of the variation, not a failure -
+ * `pool.ts` reports which are thin. Handing back the same question twice would
+ * be worse than handing back one.
+ */
+export async function similarTo(
+  paperLabel: string,
+  count: number,
+  makeSeed: () => string,
+): Promise<WorksheetQuestion[]> {
+  // Exam tier only. `variationsBasedOn` does not filter, and a warm-up would be
+  // refused by `toWorksheetQuestion` anyway - better not to draw it at all.
+  return drawFrom(
+    variationsBasedOn(paperLabel).filter(id => N5_VARIATIONS[id]?.difficulty === 'exam'),
+    count, makeSeed);
+}
+
+/**
+ * Fresh questions across a set of the website's own subtopics.
+ *
+ * What the Explorer's filter produces. A teacher who has narrowed to
+ * "Rationalising the denominator" and "Simplifying surds" can ask for five more
+ * on the same footing, without meeting a second topic picker - the filter is
+ * already the topic list, in the website's own words.
+ *
+ * Draws across all the matching variations rather than exhausting one, so five
+ * questions over two subtopics gives both rather than five of whichever came
+ * first.
+ *
+ * Empty when nothing files under any of them. Returns short when the variations
+ * cannot make that many *different* questions.
+ */
+export async function generateForSubtopics(
+  subtopics: readonly string[],
+  count: number,
+  makeSeed: () => string,
+): Promise<WorksheetQuestion[]> {
+  // Interleaved, not concatenated. `drawFrom` walks its candidates in order, so
+  // a flat list of "everything under the first subtopic, then everything under
+  // the second" balances by how many variations each happens to have: filtering
+  // to two topics and asking for six returned six of the first. Taking one from
+  // each subtopic in turn, then a second from each, gives the teacher the
+  // topics they picked rather than the topics with the most variations.
+  const perSubtopic = subtopics.map(s => variationsForSubtopic(s));
+  const ids: string[] = [];
+  for (let rank = 0; ; rank++) {
+    let anyLeft = false;
+    for (const list of perSubtopic) {
+      if (rank >= list.length) continue;
+      anyLeft = true;
+      // A variation can carry more than one subtopic - 42 of them do - so a
+      // filter naming two of its tags must not make it twice as likely.
+      if (!ids.includes(list[rank])) ids.push(list[rank]);
+    }
+    if (!anyLeft) break;
+  }
+  return drawFrom(ids, count, makeSeed);
+}
+
+/**
+ * Draw `count` different questions from a set of variations.
+ *
+ * Shared by both of the above, because they differ only in which variations are
+ * candidates - and a second copy of this is exactly where the two would drift
+ * apart on seeding, ordering or distinctness.
+ *
+ * Sequential, necessarily: the stream is module-level, so overlapping draws
+ * take each other's numbers.
+ */
+async function drawFrom(
+  ids: readonly string[],
+  count: number,
+  makeSeed: () => string,
+): Promise<WorksheetQuestion[]> {
+  if (!ids.length) return [];
+
+  const seen = new Set<string>();
+  const out: WorksheetQuestion[] = [];
+  // Bounded the way `questionsLike` is: a thin variation returns short rather
+  // than spinning after a question that does not exist.
+  for (let draw = 0; draw < count * 8 && out.length < count; draw++) {
+    // Round-robin rather than random, so asking for three across two variations
+    // gives both rather than the same one three times by chance.
+    const id = ids[draw % ids.length];
+    const made = await questionFromCode(VARIATION_CODES[id], makeSeed(), out.length);
+    if (!made) continue;
+    // Not the raw text: `x^2+5x+6` and `y^2+5y+6` are one question, and handing
+    // a teacher both is handing them the same question twice.
+    const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(made);
+  }
+  return out;
 }
 
 /**

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen, Dices, Loader2 } from 'lucide-react';
+import { canAddVariation, variationLabel } from '@/lib/similar-questions';
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
@@ -49,6 +50,9 @@ export default function QuestionCard({
 }: QuestionCardProps) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showBooklet, setShowBooklet] = useState(false);
+  const [drawing, setDrawing] = useState(false);
+  const [added, setAdded] = useState(0);
+  const [failed, setFailed] = useState(false);
   const { addItem, removeItem, isInWorksheet } = useWorksheet();
 
   const fullQuestion: QuestionWithMetadata = {
@@ -65,6 +69,37 @@ export default function QuestionCard({
   const mainTopics = question.subtopics
     ? [...new Set(question.topics)]
     : [...new Set(question.topics.map((t) => getMainTopic(t)).filter(Boolean))];
+
+  /**
+   * Add a freshly generated question modelled on this one.
+   *
+   * The engine is imported here, at the click, and nowhere else. It is 33,000
+   * lines and this card is drawn for every question in the archive — a static
+   * import would put the whole generator on the browse page.
+   */
+  const handleAddVariation = async () => {
+    const label = variationLabel(question.question);
+    if (!label || drawing) return;
+    setDrawing(true);
+    setFailed(false);
+    try {
+      const { similarTo } = await import('@/lib/generated-question');
+      const [made] = await similarTo(label, 1);
+      // Nothing back is possible — a thin variation, or one withdrawn — and it
+      // has to say so. A sheet silently one question short, with nothing naming
+      // the question that did it, is the failure worth avoiding.
+      if (made) {
+        addItem(made);
+        setAdded((n) => n + 1);
+      } else {
+        setFailed(true);
+      }
+    } catch {
+      setFailed(true);
+    } finally {
+      setDrawing(false);
+    }
+  };
 
   const handleToggleWorksheet = () => {
     if (inWorksheet) {
@@ -99,27 +134,57 @@ export default function QuestionCard({
               <Marks marks={question.marks} theme={theme} />
             </div>
           </div>
-          <button
-            onClick={handleToggleWorksheet}
-            className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${
-              inWorksheet
-                ? `${theme.tint} ${theme.text} hover:bg-white/10`
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300'
-            }`}
-          >
-            {inWorksheet ? (
-              <>
-                <Check className="h-3 w-3" />
-                Added
-              </>
-            ) : (
-              <>
-                <Plus className="h-3 w-3" />
-                Add
-              </>
+          <div className="shrink-0 flex items-center gap-1">
+            <button
+              onClick={handleToggleWorksheet}
+              className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${
+                inWorksheet
+                  ? `${theme.tint} ${theme.text} hover:bg-white/10`
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300'
+              }`}
+            >
+              {inWorksheet ? (
+                <>
+                  <Check className="h-3 w-3" />
+                  Added
+                </>
+              ) : (
+                <>
+                  <Plus className="h-3 w-3" />
+                  Add
+                </>
+              )}
+            </button>
+
+            {/* National 5 only. On the other four courses this is absent, not
+                disabled: a dead control on every card of four courses reads as
+                a broken site rather than as a roadmap. */}
+            {canAddVariation(courseId, question.question) && (
+              <button
+                onClick={handleAddVariation}
+                disabled={drawing}
+                title="Add a new question like this one"
+                aria-label="Add a new question like this one"
+                className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors disabled:opacity-50 ${
+                  added > 0
+                    ? `${theme.tint} ${theme.text} hover:bg-white/10`
+                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300'
+                }`}
+              >
+                {drawing
+                  ? <Loader2 className="h-3 w-3 animate-spin" />
+                  : <Dices className="h-3 w-3" />}
+                {added > 0 ? `Variation ×${added}` : 'Variation'}
+              </button>
             )}
-          </button>
+          </div>
         </div>
+
+        {failed && (
+          <p className="text-xs text-amber-300/90 mb-2">
+            Could not make a new question like this one just now.
+          </p>
+        )}
 
         {/* Question */}
         <MathRenderer
