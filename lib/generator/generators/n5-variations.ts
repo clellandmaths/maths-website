@@ -1,3 +1,4 @@
+import { TOPIC_GROUPS_N5 } from './types';
 import type { Difficulty, Topic } from './types';
 
 /**
@@ -3076,4 +3077,36 @@ export function offeredVariationIds(): string[] {
   return Object.entries(N5_VARIATIONS)
     .filter(([, m]) => m.difficulty === 'exam')
     .map(([id]) => id);
+}
+
+/**
+ * The groups and topics a teacher may be shown, in the course's own order.
+ *
+ * **Not `TOPIC_GROUPS_N5`.** 36 of the 210 topics have only warm-up variations,
+ * and two whole groups — "N5 Rounding" and "N5 Arcs, Sectors and Volume" —
+ * have nothing exam-tier in them at all. A picker built from the raw groups
+ * would offer "Arc Length", take a count for it, and hand back nothing: the
+ * sheet would silently come up short and the teacher would have no idea which
+ * topic did it.
+ *
+ * So the picker is derived from what can actually be generated rather than
+ * from what exists. A group with nothing offerable does not appear; a topic
+ * with only warm-ups does not appear inside one.
+ *
+ * The order is the course's, because `planTopics` orders a grouped sheet by
+ * `courseOrder` and a sheet should read down the picker.
+ */
+export function offeredTopicGroups(): Record<string, Topic[]> {
+  const offerable = new Set(offeredVariationIds().map(id => N5_VARIATIONS[id].topic));
+  const out: Record<string, Topic[]> = {};
+  for (const [group, topics] of Object.entries(TOPIC_GROUPS_N5)) {
+    const keep = topics.filter(t => offerable.has(t));
+    if (keep.length) out[group] = keep;
+  }
+  return out;
+}
+
+/** Every offerable topic, flat, in the order the picker shows them. */
+export function offeredTopics(): Topic[] {
+  return Object.values(offeredTopicGroups()).flat();
 }

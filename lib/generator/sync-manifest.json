@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "ffdfab9caf1436cd0d3b4fec933accb9a5d549b9",
+  "sourceCommit": "c970b7055491ba5e56a3d46fa6d919ed745ea60d",
   "sourceDirty": false,
   "count": 90,
   "files": {
@@ -78,7 +78,7 @@
     "generators/n5-trig-diagram.ts": "fa2e462ff6de539c",
     "generators/n5-trig-graph.ts": "78ed9fdaeafb8121",
     "generators/n5-trig.ts": "f9fc726386b6edc8",
-    "generators/n5-variations.ts": "dbf049a3f34295a6",
+    "generators/n5-variations.ts": "06a23f74c9769b2c",
     "generators/n5-vector-pathway.ts": "5b14c1f7c26ce442",
     "generators/n5-vectors.ts": "513239dc77f80f35",
     "generators/n5-volume.ts": "018e8125d95accc1",
