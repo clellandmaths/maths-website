@@ -150,7 +150,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
                 ? `Printed beside each question. On the ${borrowed} generated question${borrowed === 1 ? '' : 's'} the code opens a tutorial — the past paper question it was modelled on, worked through with different numbers — not a solution to the question on the sheet`
                 : 'Printed beside each question, linking to its video', withVideo === 0)}
               {check('hints', 'Hints', generated > 0
-                ? `What the question asks, then how the marks are earned. On the ${generated} generated question${generated === 1 ? '' : 's'} it goes on to the worked steps, and the last of those reaches the answer`
+                ? `What the question asks, then how the marks are earned, then the working on the ${generated} generated question${generated === 1 ? '' : 's'} — stopping before the step that lands the answer`
                 : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')}
             </div>
           </div>

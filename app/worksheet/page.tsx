@@ -331,14 +331,15 @@ function SharedWorksheet() {
           questions would be announcing past paper material that is not there,
           and crediting someone else with work that is ours.
 
-          Hints are the exception that proves it. They are the markscheme's own
-          method, so a sheet showing them carries Qualifications Scotland
-          material even when every question on it is ours — and the notice's own
-          scope line already says "past paper questions AND MARKING
-          INSTRUCTIONS", which is exactly what that is. */}
+          Hints do not change that. A generated question is ours, and so is the
+          help offered with it: `skill` is our description of what the question
+          asks, and `method` is our one-line record of how the marks are earned,
+          not the scheme's wording — `methodOf` drops any clause that comments
+          on how a mark is phrased, which is where the only two quotations
+          were. */}
       <div className="print-only print-footer">
         <p>clellandmaths.com — free past papers, video solutions and worksheets</p>
-        {((questions ?? []).some(q => !isGenerated(q)) || options.hints) && (
+        {(questions ?? []).some(q => !isGenerated(q)) && (
           <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
         )}
       </div>

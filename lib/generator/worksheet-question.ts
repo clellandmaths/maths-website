@@ -79,7 +79,45 @@ export interface WorksheetQuestion {
  */
 export function methodOf(route: string | undefined): string {
   let first = (route ?? '').split(/\.\s/)[0].trim();
+
+  // `route` mentions the scheme in two shapes, and a pupil should see neither.
+  //
+  //   a preamble   "Inferred, no published 2026 scheme: start the addition..."
+  //   an aside     "Substitute, evaluate, round - the scheme exactly"
+  //
+  // A colon soon after the mention means the first: the note says where the
+  // marks came from and the method follows it. Anything else is the second, and
+  // is cut back to the separator before it - those trailing clauses are also
+  // the only two places a quotation from the scheme survives.
+  //
+  // The distinction matters. Applying the preamble rule to every colon threw
+  // away the whole method of a route whose only colon introduced a quoted
+  // phrase at the very end.
+  const at = first.search(/scheme/i);
+  if (at !== -1) {
+    // The method is the longer part. A position threshold got this wrong both
+    // ways: one route's colon sat past it and the whole method was cut to the
+    // word "Inferred", while another's arrived early enough to strip a method
+    // and keep a quoted fragment.
+    const colon = first.indexOf(': ', at);
+    if (colon !== -1 && first.length - colon > 30) {
+      first = first.slice(colon + 2).trim();
+    } else {
+      const before = first.slice(0, at);
+      const cut = Math.max(
+        before.lastIndexOf(' - '),
+        before.lastIndexOf(' \u2014 '),
+        before.lastIndexOf(', '),
+      );
+      if (cut > 0) first = first.slice(0, cut).trim();
+    }
+  }
+
+  // The mark split the scheme awards - "3 + 1 - find the gradient...". 39 of the
+  // 328 opened with one, and it tells a pupil how many steps there are before
+  // they have had a go.
   first = first.replace(/^\s*\d+(\s*\+\s*\d+)*\s*[-\u2013]\s*/, '').trim();
+
   return first ? first.charAt(0).toUpperCase() + first.slice(1) : '';
 }
 

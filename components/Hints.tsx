@@ -41,6 +41,8 @@ interface Staged {
   method: string;
   steps: string[];
   stepMarks: number[];
+  /** True when a final step was withheld because it lands the answer. */
+  heldBack: boolean;
 }
 
 export default function Hints({ question, theme, courseId, className = '' }: Props) {
@@ -71,18 +73,27 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
     try {
       let next: Staged | null = null;
       if (own) {
+        // All but the last step. The steps ARE the worked solution, so the
+        // final one lands the answer — and a hint that finishes the question is
+        // not a hint. What is left is the method and the setup; the landing is
+        // the pupil's, and `Show answer` is a separate thing a maker grants
+        // separately.
+        const all = question.steps ?? [];
         next = {
           skill: question.skill!,
           method: question.method!,
-          steps: question.steps ?? [],
-          stepMarks: question.stepMarks ?? [],
+          steps: all.slice(0, -1),
+          stepMarks: (question.stepMarks ?? []).slice(0, -1),
+          heldBack: all.length > 0,
         };
       } else if (label) {
         const { PAPER_HINTS } = await import('@/lib/generator/generators/paper-hints');
         const hit = PAPER_HINTS[label];
         // A paper question has no worked solution on this site, so its help
         // stops at the method. The video is what comes after.
-        if (hit) next = { skill: hit.skill, method: hit.method, steps: [], stepMarks: [] };
+        if (hit) {
+          next = { skill: hit.skill, method: hit.method, steps: [], stepMarks: [], heldBack: false };
+        }
       }
       if (next) {
         setStaged(next);
@@ -120,10 +131,11 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
               )}
             </div>
           ))}
-          {!more && !staged.steps.length && (
+          {!more && (
             <p className="border-t border-slate-800 pt-2 text-xs text-muted-foreground">
-              That is as far as a hint goes for a past paper question — the full
-              working is in the video solution.
+              {staged.heldBack
+                ? 'That is as far as a hint goes — the last step is the answer itself.'
+                : 'That is as far as a hint goes for a past paper question — the full working is in the video solution.'}
             </p>
           )}
         </div>

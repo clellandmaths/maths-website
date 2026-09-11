@@ -950,11 +950,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       Created with <strong>Clelland Maths</strong> &mdash; free Qualifications Scotland maths revision,
                       past papers and video solutions at <strong>clellandmaths.com</strong>
                     </p>
-                    {/* A past paper question on the sheet, or hints on — the
-                        hints are the markscheme's method, so a sheet showing
-                        them carries Qualifications Scotland material even when
-                        every question on it is ours. See app/worksheet/page.tsx. */}
-                    {(worksheetItems.some(q => !isGenerated(q)) || showHints) && (
+                    {/* Only when a past paper question is actually on the
+                        sheet — see the note in app/worksheet/page.tsx. */}
+                    {worksheetItems.some(q => !isGenerated(q)) && (
                       <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
                     )}
                   </div>
