@@ -99,7 +99,7 @@ export function encodeWorksheet(courseId: string, questions: QuestionWithMetadat
     // A generated question packs to its own twelve-character token. Both shapes
     // go in one ordered stream, because the order of a sheet is part of it.
     const gen = parseGeneratedRef(questionRef(q));
-    return gen ? packGenerated(gen.code, gen.seed) : packRef(q);
+    return gen ? packGenerated(gen.code, gen.seed, gen.parentIndex) : packRef(q);
   });
   const q = packed.every(Boolean)
     ? packed.join('')
@@ -169,7 +169,8 @@ export async function resolveWorksheet(
     const gen = parseGeneratedRef(ref);
     if (gen) {
       engine ??= await import('./generated-question');
-      const made = await engine.questionFromCode(gen.code, gen.seed, questions.length);
+      const made = await engine.questionFromCode(
+        gen.code, gen.seed, questions.length, gen.parentIndex);
       if (made) {
         // The original being worked, as the tutorial for this one.
         byLabel ??= byPaperLabel(available);

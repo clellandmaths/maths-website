@@ -47,6 +47,18 @@ export interface WorksheetQuestion {
    * anything with no registry behind it.
    */
   basedOn?: string[];
+  /**
+   * Which of `basedOn` the video should be, as an index into it.
+   *
+   * 0 - the most recent paper - unless the caller knew better. `similarTo`
+   * does: a teacher clicking "Variation" on a 2014 question was looking at the
+   * 2014 question, so that is the video they and their pupils get.
+   *
+   * **It is in the uid, and therefore in the link.** That is the whole point:
+   * a pupil's browser resolves the question from the link alone, so anything
+   * not carried there cannot be recovered, and teacher and pupil would differ.
+   */
+  parentIndex?: number;
 }
 
 /**
@@ -86,8 +98,8 @@ export const GENERATED_UID_PREFIX = 'g';
  * See `generators/variation-codes.ts` for why the code is not the variation id,
  * and why it never changes.
  */
-export function generatedUid(code: string, seed: string): string {
-  return `${GENERATED_UID_PREFIX}:${code}:${seed}`;
+export function generatedUid(code: string, seed: string, parentIndex = 0): string {
+  return `${GENERATED_UID_PREFIX}:${code}:${seed}:${parentIndex.toString(36)}`;
 }
 
 export interface ToWorksheetOptions {
@@ -95,6 +107,8 @@ export interface ToWorksheetOptions {
   seed: string;
   /** Position on the sheet. Only used for the synthesised paper fields. */
   index: number;
+  /** Which of the variation's papers the video is of. Defaults to the most recent. */
+  parentIndex?: number;
 }
 
 /**
@@ -114,7 +128,7 @@ export interface ToWorksheetOptions {
  */
 export function toWorksheetQuestion(
   q: GeneratedQuestion,
-  { seed, index }: ToWorksheetOptions,
+  { seed, index, parentIndex = 0 }: ToWorksheetOptions,
 ): WorksheetQuestion {
   // Warm-ups are not ported. `offeredVariationIds()` is the list the picker
   // works from, and `codes.ts` proves it is the exam tier exactly. This is the
@@ -178,9 +192,11 @@ export function toWorksheetQuestion(
     // The papers behind this question, so the website can offer the original
     // being worked as a tutorial. Ordered here so that the teacher's copy and
     // every pupil's copy agree on which video that is.
-    ...(meta?.basedOn?.length ? { basedOn: bestFirst(meta.basedOn) } : {}),
+    ...(meta?.basedOn?.length
+      ? { basedOn: bestFirst(meta.basedOn), parentIndex }
+      : {}),
 
-    uid: generatedUid(q.code, seed),
+    uid: generatedUid(q.code, seed, parentIndex),
   };
 }
 
@@ -221,7 +237,21 @@ export async function similarTo(
   // refused by `toWorksheetQuestion` anyway - better not to draw it at all.
   return drawFrom(
     variationsBasedOn(paperLabel).filter(id => N5_VARIATIONS[id]?.difficulty === 'exam'),
-    count, makeSeed);
+    count, makeSeed,
+    // The teacher was looking at THIS question, so it is the video they get -
+    // and because the index travels in the uid, their pupils get it too.
+    // Measured before adding it: without this, 138 of 335 question/variation
+    // pairs offered a sibling paper's video instead. Not wrong, since a sibling
+    // is the same question shape, but surprising on a sheet built from 2014.
+    (id) => parentIndexOf(id, paperLabel));
+}
+
+/** Where `paperLabel` sits in a variation's papers, best-first. 0 if unknown. */
+function parentIndexOf(variationId: string, paperLabel: string): number {
+  const stem = (s: string) => s.trim().replace(/([a-z])$/, '');
+  const papers = bestFirst(N5_VARIATIONS[variationId]?.basedOn ?? []);
+  const at = papers.findIndex(p => stem(p) === stem(paperLabel));
+  return at === -1 ? 0 : at;
 }
 
 /**
@@ -280,6 +310,7 @@ async function drawFrom(
   ids: readonly string[],
   count: number,
   makeSeed: () => string,
+  parentFor: (variationId: string) => number = () => 0,
 ): Promise<WorksheetQuestion[]> {
   if (!ids.length) return [];
 
@@ -291,7 +322,8 @@ async function drawFrom(
     // Round-robin rather than random, so asking for three across two variations
     // gives both rather than the same one three times by chance.
     const id = ids[draw % ids.length];
-    const made = await questionFromCode(VARIATION_CODES[id], makeSeed(), out.length);
+    const made = await questionFromCode(
+      VARIATION_CODES[id], makeSeed(), out.length, parentFor(id));
     if (!made) continue;
     // Not the raw text: `x^2+5x+6` and `y^2+5y+6` are one question, and handing
     // a teacher both is handing them the same question twice.
@@ -331,6 +363,7 @@ export async function questionFromCode(
   code: string,
   seed: string,
   index: number,
+  parentIndex = 0,
 ): Promise<WorksheetQuestion | null> {
   const variationId = VARIATION_BY_CODE[code];
   if (!variationId) return null;
@@ -339,5 +372,5 @@ export async function questionFromCode(
 
   const q = await withSeed(seed, () =>
     generateQuestion([meta.topic as Topic], { variationIds: [variationId] }));
-  return toWorksheetQuestion(q, { seed, index });
+  return toWorksheetQuestion(q, { seed, index, parentIndex });
 }

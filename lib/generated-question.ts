@@ -49,8 +49,9 @@ export async function questionFromCode(
   code: string,
   seed: string,
   index: number,
+  parentIndex = 0,
 ): Promise<QuestionWithMetadata | null> {
-  return fromCode(code, seed, index);
+  return fromCode(code, seed, index, parentIndex);
 }
 
 /**

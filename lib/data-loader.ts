@@ -98,6 +98,14 @@ export interface QuestionWithMetadata extends Question {
    */
   basedOn?: string[];
   /**
+   * Which of `basedOn` the `videoId` belongs to, as an index into it.
+   *
+   * Carried in the uid, so a teacher and every one of their pupils resolve the
+   * same question to the same video. Without it the sheet a teacher built from
+   * 2014 papers would send their class to a sibling year's video.
+   */
+  parentIndex?: number;
+  /**
    * The paper reference the `videoId` on this question actually solves.
    *
    * Only ever set where that is **not this question** — a generated question

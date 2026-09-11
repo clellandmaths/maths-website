@@ -158,15 +158,16 @@ console.log('\ngenerated questions:');
 {
   const code = 'xqt6z';
   const seed = '3f9a1b';
-  const token = packGenerated(code, seed);
+  const parent = 2;
+  const token = packGenerated(code, seed, parent);
 
-  if (token !== GENERATED_MARK + code + seed) {
+  if (token !== GENERATED_MARK + code + seed + parent.toString(36)) {
     fail(`packGenerated gave "${token}"`);
   }
   if (token && token.length !== GENERATED_TOKEN_LENGTH) {
     fail(`a generated token is ${token.length} characters, not ${GENERATED_TOKEN_LENGTH}`);
   }
-  if (unpackGenerated(token) !== generatedRef(code, seed)) {
+  if (unpackGenerated(token) !== generatedRef(code, seed, parent)) {
     fail(`a generated token does not round-trip: ${unpackGenerated(token)}`);
   }
 
@@ -184,9 +185,10 @@ console.log('\ngenerated questions:');
   // Mixed streams, in both orders, and the paper half unchanged either way.
   const paper = packRef({ year: 2026, paperNumber: 1, questionIndex: 6 });
   const cases = [
-    [paper + token, ['2026-1-6', generatedRef(code, seed)]],
-    [token + paper, [generatedRef(code, seed), '2026-1-6']],
-    [paper + token + paper, ['2026-1-6', generatedRef(code, seed), '2026-1-6']],
+    [paper + token, ['2026-1-6', generatedRef(code, seed, parent)]],
+    [token + paper, [generatedRef(code, seed, parent), '2026-1-6']],
+    [paper + token + paper,
+      ['2026-1-6', generatedRef(code, seed, parent), '2026-1-6']],
   ];
   for (const [input, expected] of cases) {
     const got = decodeRefs(input);
@@ -198,7 +200,7 @@ console.log('\ngenerated questions:');
   // A malformed generated token must be skipped WHOLE. Resyncing one character
   // at a time would read its tail as paper tokens and put questions on the
   // sheet that nobody picked — worse than losing one.
-  const broken = GENERATED_MARK + 'XXXXXXXXXXX';
+  const broken = GENERATED_MARK + 'XXXXXXXXXXXX';
   if (JSON.stringify(decodeRefs(broken + paper)) !== JSON.stringify(['2026-1-6'])) {
     fail('a malformed generated token was not skipped whole');
   }
@@ -209,8 +211,9 @@ console.log('\ngenerated questions:');
     fail('paper-only links no longer decode as they did');
   }
 
-  if (parseGeneratedRef(generatedRef(code, seed))?.code !== code) {
-    fail('parseGeneratedRef does not invert generatedRef');
+  const parsed = parseGeneratedRef(generatedRef(code, seed, parent));
+  if (parsed?.code !== code || parsed?.parentIndex !== parent) {
+    fail(`parseGeneratedRef does not invert generatedRef: ${JSON.stringify(parsed)}`);
   }
   console.log(`  ok  ${token} round-trips, mixed streams keep their order`);
 }
@@ -226,7 +229,8 @@ console.log('\nthe identity is spelled the same on both sides:');
   const engine = fs.readFileSync(
     path.join(root, 'lib/generator/worksheet-question.ts'), 'utf8');
 
-  const wanted = 'return `${GENERATED_UID_PREFIX}:${code}:${seed}`;';
+  const wanted =
+    'return `${GENERATED_UID_PREFIX}:${code}:${seed}:${parentIndex.toString(36)}`;';
   if (!engine.includes(wanted)) {
     fail('the engine no longer builds a uid as `${GENERATED_UID_PREFIX}:${code}:${seed}` '
       + '— generatedRef in lib/worksheet-refs.mjs must be changed to match');
@@ -234,8 +238,8 @@ console.log('\nthe identity is spelled the same on both sides:');
   if (!/GENERATED_UID_PREFIX = 'g'/.test(engine)) {
     fail("the engine's GENERATED_UID_PREFIX is no longer 'g'");
   }
-  if (generatedRef('abcde', 'fghij1') !== 'g:abcde:fghij1') {
-    fail(`generatedRef gives ${generatedRef('abcde', 'fghij1')}`);
+  if (generatedRef('abcde', 'fghij1', 3) !== 'g:abcde:fghij1:3') {
+    fail(`generatedRef gives ${generatedRef('abcde', 'fghij1', 3)}`);
   }
 
   // The code and seed widths are the link's business, and the engine's codes

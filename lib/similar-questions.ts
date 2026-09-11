@@ -84,7 +84,10 @@ export function withParentVideo(
   q: QuestionWithMetadata,
   byLabel: Map<string, QuestionWithMetadata>,
 ): QuestionWithMetadata {
-  const parent = q.basedOn?.length ? byLabel.get(q.basedOn[0]) : undefined;
+  // `parentIndex` is which paper the maker was looking at, carried in the uid
+  // so that every copy of this question resolves to the same video.
+  const label = q.basedOn?.[q.parentIndex ?? 0];
+  const parent = label ? byLabel.get(label) : undefined;
   if (!parent?.videoId) return q;
   return {
     ...q,
@@ -93,6 +96,6 @@ export function withParentVideo(
     // What the video actually shows. Every surface that offers it reads this,
     // so the wording is in one place: a pupil checking their answer against a
     // video of different numbers has to be told, or they conclude they are wrong.
-    videoOf: q.basedOn![0],
+    videoOf: label,
   };
 }
