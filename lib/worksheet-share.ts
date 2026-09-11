@@ -1,5 +1,7 @@
 import type { QuestionWithMetadata } from '@/lib/data-loader';
-import { packRef, decodeRefs } from '@/lib/worksheet-refs.mjs';
+import {
+  packRef, decodeRefs, packGenerated, parseGeneratedRef,
+} from '@/lib/worksheet-refs.mjs';
 
 /**
  * Sharing a worksheet as a link.
@@ -64,9 +66,26 @@ export interface SharedWorksheet {
   options: WorksheetOptions;
 }
 
-/** "2026-1-4" for one question. */
+/**
+ * "2026-1-4" for a paper question, "g:xqt6z:3f9a1b" for a generated one.
+ *
+ * A generated question has no paper, so its `uid` — variation code and seed —
+ * is its reference. It is the same string the basket dedupes on, which is the
+ * point: one identity, whatever the source.
+ */
 export function questionRef(q: QuestionWithMetadata): string {
-  return `${q.year}-${q.paperNumber}-${q.questionIndex}`;
+  return q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`;
+}
+
+/**
+ * Did this question come from the generator rather than a past paper?
+ *
+ * Asked of the reference rather than of a field, so there is one answer to
+ * "where did this come from" and the link, the basket and the printed
+ * attribution all read it the same way.
+ */
+export function isGenerated(q: QuestionWithMetadata): boolean {
+  return parseGeneratedRef(questionRef(q)) !== null;
 }
 
 export function encodeWorksheet(courseId: string, questions: QuestionWithMetadata[]): string {
@@ -75,7 +94,12 @@ export function encodeWorksheet(courseId: string, questions: QuestionWithMetadat
   // Anything that will not pack falls back to its spelled-out reference, so a
   // question outside the ranges costs length rather than dropping out of the
   // sheet. The build gate exists so this never actually happens.
-  const packed = questions.map(q => packRef(q));
+  const packed = questions.map(q => {
+    // A generated question packs to its own twelve-character token. Both shapes
+    // go in one ordered stream, because the order of a sheet is part of it.
+    const gen = parseGeneratedRef(questionRef(q));
+    return gen ? packGenerated(gen.code, gen.seed) : packRef(q);
+  });
   const q = packed.every(Boolean)
     ? packed.join('')
     : questions.map(questionRef).join(SEP);
@@ -105,16 +129,47 @@ export function decodeWorksheet(search: string): SharedWorksheet | null {
  * Anything that does not resolve is dropped rather than faked — a link built
  * against a paper that has since been re-split should lose that one question,
  * not silently show a different one. The caller is told how many went missing
- * so it can say so.
+ * so it can say so. A generated question whose code names no variation is
+ * treated exactly the same way.
+ *
+ * ## One at a time, and this is not a style preference
+ *
+ * Generated questions are regenerated from their seed, and the generator's
+ * random stream is **module-level**. Two overlapping `withSeed` calls draw from
+ * each other. Measured rather than assumed: resolving a ten-question sheet with
+ * `Promise.all` changed **all ten** questions, and two concurrent runs did not
+ * even match each other — so every pupil would get a different sheet, and a
+ * different one each time they opened the link. That is the exact failure this
+ * whole phase exists to prevent.
+ *
+ * So: sequential `for ... await`, never `Promise.all`, never `map` with
+ * promises. `check-share-refs.mjs` fails if that ever appears here.
+ *
+ * Async because of it. The paper half is still a map lookup and costs nothing;
+ * the engine is only imported once a link actually contains a generated
+ * question, so a sheet of paper questions never loads it at all.
  */
-export function resolveWorksheet(
+export async function resolveWorksheet(
   refs: string[],
   available: QuestionWithMetadata[]
-): { questions: QuestionWithMetadata[]; missing: number } {
+): Promise<{ questions: QuestionWithMetadata[]; missing: number }> {
   const byRef = new Map(available.map(q => [questionRef(q), q]));
   const questions: QuestionWithMetadata[] = [];
   let missing = 0;
+
+  // Loaded on demand, and at most once. A static import here would put the
+  // engine in the bundle of every page that can open a shared sheet.
+  let engine: typeof import('./generated-question') | null = null;
+
   for (const ref of refs) {
+    const gen = parseGeneratedRef(ref);
+    if (gen) {
+      engine ??= await import('./generated-question');
+      const made = await engine.questionFromCode(gen.code, gen.seed, questions.length);
+      if (made) questions.push(made);
+      else missing++;
+      continue;
+    }
     const q = byRef.get(ref);
     if (q) questions.push(q);
     else missing++;

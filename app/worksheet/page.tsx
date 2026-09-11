@@ -6,7 +6,9 @@ import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip } f
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
-import { decodeWorksheet, resolveWorksheet, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
+import {
+  decodeWorksheet, resolveWorksheet, isGenerated, NO_OPTIONS, type WorksheetOptions,
+} from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FormulaeSheet from '@/components/FormulaeSheet';
@@ -65,11 +67,12 @@ function SharedWorksheet() {
     setCourseId(shared.courseId);
     setTitle(shared.title);
     setOptions(shared.options);
-    LOADERS[shared.courseId]().then(all => {
-      const { questions: qs, missing: m } = resolveWorksheet(shared.refs, all);
-      setQuestions(qs);
-      setMissing(m);
-    });
+    LOADERS[shared.courseId]()
+      .then(all => resolveWorksheet(shared.refs, all))
+      .then(({ questions: qs, missing: m }) => {
+        setQuestions(qs);
+        setMissing(m);
+      });
   }, []);
 
   const totalMarks = useMemo(
@@ -300,10 +303,18 @@ function SharedWorksheet() {
 
       {/* The site footer is hidden on print, so a printed handout would leave
           the building carrying no attribution at all. The notice travels with
-          the questions instead. */}
+          the questions instead.
+
+          The Qualifications Scotland notice appears only when the sheet has a
+          past paper question on it. QS_NOTICE_SCOPE already says what it covers,
+          so a mixed sheet is right as it stands — but a sheet of only generated
+          questions would be announcing past paper material that is not there,
+          and crediting someone else with work that is ours. */}
       <div className="print-only print-footer">
         <p>clellandmaths.com — free past papers, video solutions and worksheets</p>
-        <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
+        {(questions ?? []).some(q => !isGenerated(q)) && (
+          <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
+        )}
       </div>
 
       {booklet !== null && (

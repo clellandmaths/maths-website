@@ -20,7 +20,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { packRef, unpackRef, decodeRefs, TOKEN_LENGTH, SPECIAL_YEARS } from '../lib/worksheet-refs.mjs';
+import {
+  packRef, unpackRef, decodeRefs, TOKEN_LENGTH, SPECIAL_YEARS,
+  packGenerated, unpackGenerated, generatedRef, parseGeneratedRef,
+  GENERATED_MARK, GENERATED_TOKEN_LENGTH, CODE_LENGTH, SEED_LENGTH,
+} from '../lib/worksheet-refs.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 let failures = 0;
@@ -144,6 +148,140 @@ for (const d of dirs) {
       }
     }
   }
+}
+
+// ------------------------------------------------- generated questions
+// A generated question travels as a marker, a variation code and a seed, in
+// the SAME ordered stream as the paper ones. The order of a sheet is part of
+// the sheet, so a second parameter would have lost it.
+console.log('\ngenerated questions:');
+{
+  const code = 'xqt6z';
+  const seed = '3f9a1b';
+  const token = packGenerated(code, seed);
+
+  if (token !== GENERATED_MARK + code + seed) {
+    fail(`packGenerated gave "${token}"`);
+  }
+  if (token && token.length !== GENERATED_TOKEN_LENGTH) {
+    fail(`a generated token is ${token.length} characters, not ${GENERATED_TOKEN_LENGTH}`);
+  }
+  if (unpackGenerated(token) !== generatedRef(code, seed)) {
+    fail(`a generated token does not round-trip: ${unpackGenerated(token)}`);
+  }
+
+  // The marker must be outside base36, or it could begin a paper token, and it
+  // must survive URLSearchParams untouched or every link grows by two
+  // characters a question and stops being readable by eye.
+  if (/[0-9a-z]/.test(GENERATED_MARK)) {
+    fail(`the generated marker "${GENERATED_MARK}" is a base36 character`);
+  }
+  const encoded = new URLSearchParams({ q: token }).toString();
+  if (encoded !== `q=${token}`) {
+    fail(`a generated token is percent-encoded in a link: ${encoded}`);
+  }
+
+  // Mixed streams, in both orders, and the paper half unchanged either way.
+  const paper = packRef({ year: 2026, paperNumber: 1, questionIndex: 6 });
+  const cases = [
+    [paper + token, ['2026-1-6', generatedRef(code, seed)]],
+    [token + paper, [generatedRef(code, seed), '2026-1-6']],
+    [paper + token + paper, ['2026-1-6', generatedRef(code, seed), '2026-1-6']],
+  ];
+  for (const [input, expected] of cases) {
+    const got = decodeRefs(input);
+    if (JSON.stringify(got) !== JSON.stringify(expected)) {
+      fail(`mixed stream "${input}" gave ${JSON.stringify(got)}`);
+    }
+  }
+
+  // A malformed generated token must be skipped WHOLE. Resyncing one character
+  // at a time would read its tail as paper tokens and put questions on the
+  // sheet that nobody picked — worse than losing one.
+  const broken = GENERATED_MARK + 'XXXXXXXXXXX';
+  if (JSON.stringify(decodeRefs(broken + paper)) !== JSON.stringify(['2026-1-6'])) {
+    fail('a malformed generated token was not skipped whole');
+  }
+
+  // And a sheet of only paper questions packs to exactly what it always did.
+  // Links are printed on handouts; they do not get to expire.
+  if (decodeRefs('c16a23').join() !== '2026-1-6,2024-2-3') {
+    fail('paper-only links no longer decode as they did');
+  }
+
+  if (parseGeneratedRef(generatedRef(code, seed))?.code !== code) {
+    fail('parseGeneratedRef does not invert generatedRef');
+  }
+  console.log(`  ok  ${token} round-trips, mixed streams keep their order`);
+}
+
+// ------------------------------------------- the two spellings must agree
+// `generatedRef` is defined here and `generatedUid` in the engine, and they
+// must produce the same string: the basket dedupes on one and the link carries
+// the other. The duplication is forced — this file is .mjs because build
+// scripts import it, and a build script that imports a .ts file kills the
+// Cloudflare build — so it is pinned instead.
+console.log('\nthe identity is spelled the same on both sides:');
+{
+  const engine = fs.readFileSync(
+    path.join(root, 'lib/generator/worksheet-question.ts'), 'utf8');
+
+  const wanted = 'return `${GENERATED_UID_PREFIX}:${code}:${seed}`;';
+  if (!engine.includes(wanted)) {
+    fail('the engine no longer builds a uid as `${GENERATED_UID_PREFIX}:${code}:${seed}` '
+      + '— generatedRef in lib/worksheet-refs.mjs must be changed to match');
+  }
+  if (!/GENERATED_UID_PREFIX = 'g'/.test(engine)) {
+    fail("the engine's GENERATED_UID_PREFIX is no longer 'g'");
+  }
+  if (generatedRef('abcde', 'fghij1') !== 'g:abcde:fghij1') {
+    fail(`generatedRef gives ${generatedRef('abcde', 'fghij1')}`);
+  }
+
+  // The code and seed widths are the link's business, and the engine's codes
+  // have to fit them.
+  const codes = fs.readFileSync(
+    path.join(root, 'lib/generator/generators/variation-codes.ts'), 'utf8');
+  const literals = [...codes.matchAll(/'([0-9a-z]{2,12})',/g)].map(m => m[1]);
+  const wrong = literals.filter(c => c.length !== CODE_LENGTH);
+  if (!literals.length) {
+    fail('no variation codes found in the engine — has the table moved?');
+  } else if (wrong.length) {
+    fail(`${wrong.length} variation codes are not ${CODE_LENGTH} characters: ${wrong.slice(0, 5)}`);
+  } else {
+    console.log(`  ok  ${literals.length} variation codes, all ${CODE_LENGTH} characters, seed ${SEED_LENGTH}`);
+  }
+}
+
+// --------------------------------------- a sheet is resolved one at a time
+// The generator's random stream is module-level, so two overlapping `withSeed`
+// calls draw from each other. This was measured, not assumed: resolving a
+// ten-question sheet with `Promise.all` changed ALL TEN questions, and two
+// concurrent runs did not match each other either. Every pupil would get a
+// different sheet, and a different one each time they opened the link.
+//
+// A source scan, because there is no output to inspect — the wrong sheet is a
+// perfectly good sheet.
+console.log('\nresolveWorksheet resolves sequentially:');
+{
+  const src = fs.readFileSync(path.join(root, 'lib/worksheet-share.ts'), 'utf8');
+  const body = src.slice(src.indexOf('export async function resolveWorksheet'));
+  const code = body.split('\n').filter(l => {
+    const t = l.trim();
+    return !t.startsWith('*') && !t.startsWith('//') && !t.startsWith('/*');
+  }).join('\n');
+
+  for (const banned of ['Promise.all', 'Promise.allSettled', 'Promise.race']) {
+    if (code.includes(banned)) {
+      fail(`resolveWorksheet uses ${banned}. The generator's stream is module-level: `
+        + 'overlapping withSeed calls draw from each other and the sheet stops '
+        + 'reproducing. Use a sequential for ... await.');
+    }
+  }
+  if (!/for \(const ref of refs\)/.test(code)) {
+    fail('resolveWorksheet no longer walks its refs in a plain for ... of loop');
+  }
+  console.log('  ok  no concurrent resolution');
 }
 
 const unlisted = [...years].filter(y => !/^\d{4}$/.test(y) && !(y in SPECIAL_YEARS));

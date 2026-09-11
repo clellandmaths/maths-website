@@ -14,6 +14,24 @@ interface WorksheetContextType {
 
 const WorksheetContext = createContext<WorksheetContextType | null>(null);
 
+/**
+ * What makes two entries the same question.
+ *
+ * Paper questions key on where they came from. Generated ones have no paper, so
+ * they carry a `uid` — variation code and seed — and every one of them would
+ * otherwise look like "year undefined, paper 0" and the second would be
+ * silently refused as a duplicate of the first.
+ *
+ * `questionRef()` in worksheet-share.ts computes the same string for the link.
+ * Kept as its own function here rather than imported so the basket does not
+ * depend on the sharing module, but they must agree — a question that dedupes
+ * one way and shares another would come back from its own link as a different
+ * sheet.
+ */
+function identity(q: QuestionWithMetadata): string {
+  return q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`;
+}
+
 function getStorageKey(course: string) {
   return `worksheet_${course}`;
 }
@@ -52,28 +70,15 @@ export function WorksheetProvider({ course, children }: { course: string; childr
   const addItem = (question: QuestionWithMetadata) => {
     setItems((prev) => {
       // Prevent duplicates
-      const exists = prev.some(
-        (q) =>
-          q.year === question.year &&
-          q.paperNumber === question.paperNumber &&
-          q.questionIndex === question.questionIndex
-      );
-      if (exists) return prev;
+      const id = identity(question);
+      if (prev.some((q) => identity(q) === id)) return prev;
       return [...prev, question];
     });
   };
 
   const removeItem = (question: QuestionWithMetadata) => {
-    setItems((prev) =>
-      prev.filter(
-        (q) =>
-          !(
-            q.year === question.year &&
-            q.paperNumber === question.paperNumber &&
-            q.questionIndex === question.questionIndex
-          )
-      )
-    );
+    const id = identity(question);
+    setItems((prev) => prev.filter((q) => identity(q) !== id));
   };
 
   const clearAll = () => {
@@ -81,12 +86,8 @@ export function WorksheetProvider({ course, children }: { course: string; childr
   };
 
   const isInWorksheet = (question: QuestionWithMetadata) => {
-    return items.some(
-      (q) =>
-        q.year === question.year &&
-        q.paperNumber === question.paperNumber &&
-        q.questionIndex === question.questionIndex
-    );
+    const id = identity(question);
+    return items.some((q) => identity(q) === id);
   };
 
   const reorderItems = (fromIndex: number, toIndex: number) => {

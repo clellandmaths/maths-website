@@ -33,7 +33,7 @@ import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
-import { decodeWorksheet, resolveWorksheet } from '@/lib/worksheet-share';
+import { decodeWorksheet, resolveWorksheet, isGenerated } from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -147,13 +147,23 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     if (!allQuestions.length) return;
     const shared = decodeWorksheet(window.location.search);
     if (!shared || shared.courseId !== course) return;
-    const { questions: incoming } = resolveWorksheet(shared.refs, allQuestions);
-    if (incoming.length) {
+
+    // Clear the query first, then resolve. This effect re-runs on every render
+    // — `addItem` and `clearAll` are new functions each time — and what stops
+    // it doing the work twice is finding no link in the URL. That worked while
+    // resolving was synchronous. It is not: a generated question has to be
+    // regenerated from its seed, so a second run could start before the first
+    // had finished and the sheet would be built twice.
+    window.history.replaceState(null, '', window.location.pathname);
+
+    let cancelled = false;
+    resolveWorksheet(shared.refs, allQuestions).then(({ questions: incoming }) => {
+      if (cancelled || !incoming.length) return;
       clearAll();
       incoming.forEach(addItem);
       setViewMode('worksheet');
-    }
-    window.history.replaceState(null, '', window.location.pathname);
+    });
+    return () => { cancelled = true; };
   }, [allQuestions, course, addItem, clearAll]);
 
   // Reorder with visual feedback
@@ -781,7 +791,11 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       Created with <strong>Clelland Maths</strong> &mdash; free Qualifications Scotland maths revision,
                       past papers and video solutions at <strong>clellandmaths.com</strong>
                     </p>
-                    <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
+                    {/* Only when a past paper question is actually on the
+                        sheet — see the note in app/worksheet/page.tsx. */}
+                    {worksheetItems.some(q => !isGenerated(q)) && (
+                      <p className="print-notice">{QS_NOTICE_SCOPE} {QS_COPYRIGHT_NOTICE}</p>
+                    )}
                   </div>
 
                   {/* Mobile bottom action bar — always visible on scroll */}

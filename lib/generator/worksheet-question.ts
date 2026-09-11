@@ -1,4 +1,7 @@
-import type { GeneratedQuestion } from './generators/types';
+import { generateQuestion, withSeed } from './generator';
+import { N5_VARIATIONS } from './generators/n5-variations';
+import { VARIATION_BY_CODE } from './generators/variation-codes';
+import type { GeneratedQuestion, Topic } from './generators/types';
 
 /**
  * A generated question, in the shape the website shows questions in.
@@ -137,4 +140,43 @@ export function toWorksheetQuestion(
 
     uid: generatedUid(q.code, seed),
   };
+}
+
+/**
+ * The one way a generated question is made, from its code and its seed.
+ *
+ * **Both sides of the promise run through here.** The builder calls it to show
+ * a teacher a question; `resolveWorksheet` calls it to make that same question
+ * again in every pupil's browser. If those were two call sites that merely
+ * agreed, "the sheet is what the teacher previewed" would hold until someone
+ * changed one of them.
+ *
+ * The draw is `generateQuestion` narrowed to the one variation, which retries
+ * until that variation comes up. How many retries that takes depends on what
+ * else lives in the topic - but it is the same number every time for a given
+ * seed, which is all reproducibility needs. It is also why the builder must not
+ * draw some other way.
+ *
+ * **Never run two of these at once.** `withSeed` sets a module-level stream, so
+ * overlapping calls draw from each other and neither reproduces. Sequential
+ * `for ... await`, never `Promise.all`. See the note on `withSeed` itself.
+ *
+ * Returns null when the code names no variation - a link made by a newer
+ * version of the site, or a variation withdrawn since. The caller counts that
+ * as a missing question rather than substituting a different one, which is the
+ * same thing the paper path does with a reference it cannot resolve.
+ */
+export async function questionFromCode(
+  code: string,
+  seed: string,
+  index: number,
+): Promise<WorksheetQuestion | null> {
+  const variationId = VARIATION_BY_CODE[code];
+  if (!variationId) return null;
+  const meta = N5_VARIATIONS[variationId];
+  if (!meta) return null;
+
+  const q = await withSeed(seed, () =>
+    generateQuestion([meta.topic as Topic], { variationIds: [variationId] }));
+  return toWorksheetQuestion(q, { seed, index });
 }
