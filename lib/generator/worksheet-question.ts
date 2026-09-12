@@ -162,6 +162,55 @@ export function generatedUid(code: string, seed: string, parentIndex = 0): strin
   return `${GENERATED_UID_PREFIX}:${code}:${seed}:${parentIndex.toString(36)}`;
 }
 
+/**
+ * The generator's inline maths delimiter, turned into the website's.
+ *
+ * This generator writes inline maths as `$…$`. Every question already on the
+ * website writes it as `\(…\)`. The site's renderer understands both — but not
+ * equally, and that asymmetry is the whole of this function.
+ *
+ * `\(…\)` is unambiguous. `$…$` is not, because a dollar sign is also money,
+ * and the site had a real fault where "Price of silver ($) … Price of gold ($)"
+ * paired its two dollars and handed the markup between them to KaTeX. So
+ * `render-math.ts` makes a `$…$` run *earn* its treatment: a run that opens
+ * with a digit and carries no operator is read as the tail of a money amount
+ * and left alone.
+ *
+ * That rule is right for prose written by a human and wrong for everything
+ * here. **Measured across 1,182 drawn questions: 725 fields printed a literal
+ * dollar sign to the pupil** — `$11$`, `$15.2$`, `$(3, 0, 0)$`, `$18s$` — in
+ * 110 of the 197 variations. Bare numbers, decimals, coordinates and
+ * number-letter products are exactly what an answer or a worked step is made
+ * of, and not one of them carries an operator.
+ *
+ * Converting here rather than loosening the site's rule is deliberate. That
+ * rule protects five courses of human-written questions, three of which teach
+ * currency; this touches only what this generator emits.
+ *
+ * **What makes the conversion safe is a property of the source, so it is
+ * checked rather than assumed.** Across the same 1,182 questions: every `$` is
+ * paired (0 unpaired), no run between a pair reads as prose, and money is
+ * written `£` — 105 fields use it, none use `$`. `adapter.ts` asserts the
+ * result carries no bare dollar at all, so a variation that ever writes one as
+ * currency fails the check instead of reaching a pupil.
+ *
+ * `$$…$$` is left alone — two dollars are already unambiguous, and the site
+ * handles them first — and a literal dollar escapes as `\$`. Both are handled
+ * by matching them in the same pass and handing them back untouched, rather
+ * than by lifting them out and putting them back: a placeholder is one more
+ * thing that can collide with the content it is hiding in.
+ */
+export function toSiteMaths(html: string): string {
+  if (!html.includes('$')) return html;
+  // Alternation, tried left to right, so a `$$…$$` run is consumed whole
+  // before the single-dollar branch can pair into the middle of it.
+  return html.replace(
+    /\$\$[\s\S]*?\$\$|(^|[^\\])\$([^$\n]+?)\$/g,
+    (whole, before: string | undefined, tex: string | undefined) =>
+      tex === undefined ? whole : `${before}\\(${tex}\\)`,
+  );
+}
+
 export interface ToWorksheetOptions {
   /** The seed this question was generated from. Half of its identity. */
   seed: string;
@@ -211,7 +260,10 @@ export function toWorksheetQuestion(
   // website CSS — see "The display requirement" in the porting plan.
   const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
 
-  const question = q.questionLines.join('<br><br>');
+  // Delimiters converted on the way out — see `toSiteMaths`. Every field that
+  // can carry maths goes through it: the question, the answer and every worked
+  // step, which is what a hint shows.
+  const question = toSiteMaths(q.questionLines.join('<br><br>'));
 
   // The total, as one part — not the per-step split.
   //
@@ -224,8 +276,8 @@ export function toWorksheetQuestion(
 
   return {
     question,
-    answer: q.finalAnswer,
-    steps: q.solutionSteps,
+    answer: toSiteMaths(q.finalAnswer),
+    steps: q.solutionSteps?.map(toSiteMaths),
     stepMarks: q.stepMarks,
     ...(total ? { marks: [total] } : {}),
     topics: q.webTopics ?? [],
