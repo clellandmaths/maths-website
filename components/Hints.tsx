@@ -111,15 +111,23 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
     <div className={`no-print ${className}`}>
       {shown > 0 && staged && (
         <div className="mb-2 space-y-2 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
-          <p className="text-sm">
+          {/*
+            Both prose lines go through the renderer, not just the steps.
+            They are mostly words, but a dozen of them name the thing they are
+            about — "Write x² + bx + c in the form (x + p)² + q" — and until
+            this they were the one part of a hint shown as raw text, carets and
+            all. A div rather than a p: MathRenderer renders an element, and an
+            element inside a p is invalid nesting.
+          */}
+          <div className="text-sm">
             <span className={`font-semibold ${theme.text}`}>What it asks: </span>
-            <span className="text-slate-300">{staged.skill}</span>
-          </p>
+            <MathRenderer html={staged.skill} className="inline text-slate-300" />
+          </div>
           {shown > 1 && (
-            <p className="text-sm">
+            <div className="text-sm">
               <span className={`font-semibold ${theme.text}`}>How the marks go: </span>
-              <span className="text-slate-300">{staged.method}</span>
-            </p>
+              <MathRenderer html={staged.method} className="inline text-slate-300" />
+            </div>
           )}
           {staged.steps.slice(0, Math.max(0, shown - 2)).map((step, i) => (
             <div key={i} className="flex items-start gap-2 border-t border-slate-800 pt-2">

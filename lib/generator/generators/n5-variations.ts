@@ -546,7 +546,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     source: 'paper',
     basedOn: ['2019 P2 Q16'],
     marks: 3,
-    route: 'apply a^m x ka^n = ka^(m+n), then show evidence of the square root as a power of a half, then complete the simplification. The middle mark is for writing the root as a power at all - until then there is nothing to divide',
+    route: 'apply $a^m \\times ka^n = ka^{m+n}$, then show evidence of the square root as a power of a half, then complete the simplification. The middle mark is for writing the root as a power at all - until then there is nothing to divide',
     answerShape: 'expression',
     webTopics: ['Laws of indices'],
     skill: 'Turn a root into a fractional index so the division law applies',
@@ -558,7 +558,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     source: 'paper',
     basedOn: ['2017 P2 Q12'],
     marks: 2,
-    route: 'apply the nth root of x^m = x^(m/n), then apply 1/x^n = x^(-n). One mark per law, and it runs the opposite way to indices.negative-power, which turns a negative index back into a fraction',
+    route: 'apply $\\sqrt[n]{x^m} = x^{m/n}$, then apply $\\dfrac{1}{x^n} = x^{-n}$. One mark per law, and it runs the opposite way to indices.negative-power, which turns a negative index back into a fraction',
     answerShape: 'expression',
     webTopics: ['Rewriting fraction or negative index in the form ax^n'],
     skill: 'Write a reciprocal root as a single negative fractional power',
@@ -815,7 +815,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'correct bracket with square, then complete the process. Writing out the finished expression is part of the second mark',
     answerShape: 'expression',
     webTopics: ['Completing the square'],
-    skill: 'Write x^2+bx+c in the form (x+p)^2+q',
+    skill: 'Write $x^2+bx+c$ in the form $(x+p)^2+q$',
   },
   // 2024 P1 Q12 is the one cited question in this group that carries an image,
   // and only in its part (c), which asks about a line PQ drawn across the graph.
@@ -989,7 +989,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2014 P1 Q7', '2026 P1 Q9'],
     marks: 2,
-    route: 'know to substitute the marked point into y = ax^2, then solve for a',
+    route: 'know to substitute the marked point into $y = ax^2$, then solve for $a$',
     answerShape: 'integer',
     webTopics: ['Parabola Equation from Graph'],
     skill: 'Substitute a point on a parabola to find its stretch',
@@ -1043,7 +1043,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '1 + 1 + 1 - the axis of symmetry from the turning point, then a, then b. The only parabola of the seven that opens downwards, so the square is subtracted and b is the height of the maximum, but the bracket is (x + a) as in the other six and a = -h. Note 1 accepts the equation written out in place of the two values, and the working says so',
     answerShape: 'integer',
     webTopics: ['Turning Points and Axis of Symmetry', 'Parabola Equation from Graph'],
-    skill: 'Read a maximum turning point off a graph and match it to y = b - (x - a)^2',
+    skill: 'Read a maximum turning point off a graph and match it to $y = b - (x - a)^2$',
   },
 
   'quadratics.reaches-height': {
@@ -1075,7 +1075,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'calculate the discriminant, then state the nature of the roots. Naming the coefficients earns nothing',
     answerShape: 'text',
     webTopics: ['Discriminant'],
-    skill: 'Calculate b^2-4ac and state the nature of the roots',
+    skill: 'Calculate $b^2-4ac$ and state the nature of the roots',
   },
   'quadratics.formula': {
     topic: 'The Quadratic Formula',
@@ -1452,7 +1452,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'find the mean, find the squared differences, substitute into the formula and start to evaluate, then state a and b',
     answerShape: 'integer',
     webTopics: ['Standard Deviation', 'Simplifying surds'],
-    skill: 'Express the standard deviation of five values in the form a√b/2',
+    skill: 'Express the standard deviation of five values in the form $\\dfrac{a\\sqrt{b}}{2}$',
   },
 
   // Runs backwards, and bare: five tiny numbers with no story, where a is what
@@ -1517,7 +1517,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'identify and substitute the correct identity, then express the result in simplest form',
     answerShape: 'expression',
     webTopics: ['Trigonometric identities'],
-    skill: 'Replace tan with sin/cos, or take out a common factor, then use sin^2+cos^2=1',
+    skill: 'Replace $\\tan x$ with $\\dfrac{\\sin x}{\\cos x}$, or take out a common factor, then use $\\sin^2 x + \\cos^2 x = 1$',
   },
   'trig-identities.expand': {
     topic: 'Expanding Trigonometric Brackets',
@@ -1527,7 +1527,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'expand the brackets, then simplify using sin squared plus cos squared equals one',
     answerShape: 'expression',
     webTopics: ['Trigonometric identities', 'Expanding brackets'],
-    skill: 'Expand the square, then collect sin^2 + cos^2 into 1',
+    skill: 'Expand the square, then collect $\\sin^2 x + \\cos^2 x$ into $1$',
   },
   'trig-identities.fractions': {
     topic: 'Trigonometric Fractions',
@@ -1547,7 +1547,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'a valid substitution, then express the result in the form the question asks for',
     answerShape: 'expression',
     webTopics: ['Trigonometric identities'],
-    skill: 'Substitute cos^2 = 1 - sin^2, then collect terms into the given form',
+    skill: 'Substitute $\\cos^2 x = 1 - \\sin^2 x$, then collect terms into the given form',
   },
 
   // ── Vectors — 9 paper questions, and NOT all the same idea ──────────────
@@ -1756,7 +1756,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: [],
     answerShape: 'rounded',
     webTopics: ['Area of a Triangle'],
-    skill: 'Area = 1/2 ab sin C, with the angle between the two sides',
+    skill: 'Area $= \\tfrac{1}{2}ab\\sin C$, with the angle between the two sides',
   },
 
   // ── Rounding — the largest gap the practice audit found ─────────────────
@@ -1885,7 +1885,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // Method 1 of the two the scheme accepts: substitute and solve, rather
     // than change the subject first. Its note requires the final division to
     // be by a number greater than 10, which the base area always is here.
-    route: 'substitute into V = Ah/3 and solve, the scheme\'s method 1',
+    route: 'substitute into $V = \\dfrac{Ah}{3}$ and solve, the scheme\'s method 1',
   },
   'volume.sphere-cone-equal': {
     topic: 'A Cone Matching a Sphere',
@@ -2769,7 +2769,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2018 P2 Q17'],
     marks: 5,
-    route: 'the triangle by (1/2)ab sin C, the fraction of the circle, the sector area, know to subtract, then evaluate with units. The sector and the triangle share the angle at O, which is what makes it one question',
+    route: 'the triangle by $\\tfrac{1}{2}ab\\sin C$, the fraction of the circle, the sector area, know to subtract, then evaluate with units. The sector and the triangle share the angle at O, which is what makes it one question',
     answerShape: 'rounded',
     webTopics: ['Area of a Triangle', 'Sector area'],
     skill: 'Subtract a sector from the triangle that shares its apex and its angle',

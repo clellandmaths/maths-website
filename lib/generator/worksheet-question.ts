@@ -310,8 +310,13 @@ export function toWorksheetQuestion(
 
     // Staged help, from the same registry the question came from. A generated
     // question also carries `steps`, so it can go further than a paper one.
-    ...(meta?.skill ? { skill: meta.skill } : {}),
-    ...(methodOf(meta?.route) ? { method: methodOf(meta?.route) } : {}),
+    // Both go through `toSiteMaths` too. They are prose, but a dozen of them
+    // name the thing they are about — "Write $x^2+bx+c$ in the form
+    // $(x+p)^2+q$" — and a hint is the one place a pupil reads them.
+    ...(meta?.skill ? { skill: toSiteMaths(meta.skill) } : {}),
+    ...(methodOf(meta?.route)
+      ? { method: toSiteMaths(methodOf(meta?.route)) }
+      : {}),
 
     uid: generatedUid(q.code, seed, parentIndex),
   };
