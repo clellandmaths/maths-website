@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Lightbulb } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
-import { variationLabel } from '@/lib/similar-questions';
+import { variationLabel, courseHasHints } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -53,7 +53,7 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
   const label = variationLabel(question.question);
   // A generated question brings its own; a paper one needs the table.
   const own = question.skill && question.method;
-  const possible = courseId === 'n5' && (own || label !== null);
+  const possible = courseHasHints(courseId) && (own || label !== null);
 
   // Reset when the question in this slot changes — a re-rolled question must
   // not arrive with the previous one's hints already open.

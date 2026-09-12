@@ -45,6 +45,19 @@ export function variationLabel(questionHtml: string | undefined): string | null 
  * `paper-coverage` check keeps that true, but the caller must still handle
  * getting nothing back.
  */
+/**
+ * Does this course have hints behind it at all?
+ *
+ * National 5 only, like everything else the generator backs. Kept as one
+ * function rather than three `=== 'n5'` literals because the controls that read
+ * it live in three files, and a control that renders where nothing can answer
+ * it is a dead control — which on four courses out of five reads as a broken
+ * site rather than as a roadmap.
+ */
+export function courseHasHints(courseId: string | undefined): boolean {
+  return courseId === 'n5';
+}
+
 export function canAddVariation(
   courseId: string | undefined,
   questionHtml: string | undefined,

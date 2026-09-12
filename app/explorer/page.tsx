@@ -35,7 +35,7 @@ import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
-import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
+import { byPaperLabel, withParentVideo, courseHasHints } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
@@ -662,6 +662,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           />
                           <span className="text-sm text-slate-400">QR codes</span>
                         </label>
+                        {courseHasHints(course) && (
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
@@ -671,6 +672,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           />
                           <span className="text-sm text-slate-400">Hints</span>
                         </label>
+                        )}
                         <button
                           onClick={() => setPresentStartIndex(0)}
                           className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
