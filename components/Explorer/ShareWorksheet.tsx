@@ -143,9 +143,14 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
             </p>
             <div className="grid sm:grid-cols-3 gap-2">
               {check('answers', 'Answers', 'They can reveal the answer to each question')}
-              {check('video', 'Video solutions', withVideo
-                ? `A watch button on the ${withVideo} question${withVideo === 1 ? '' : 's'} that have one`
-                : 'None of these questions has a video', withVideo === 0)}
+              {check('video', 'Video solutions', !withVideo
+                ? 'None of these questions has a video'
+                : borrowed === 0
+                  ? `A watch button on the ${withVideo} question${withVideo === 1 ? '' : 's'} that have one`
+                  : borrowed === withVideo
+                    ? `A watch button on all ${withVideo}. Every one is generated, so it opens a worked example — the past paper question behind it, not a solution to what is on the sheet`
+                    : `A watch button on ${withVideo} questions. ${withVideo - borrowed} open their own solution; the other ${borrowed} are generated, so they open a worked example of the paper question behind them`,
+                withVideo === 0)}
               {check('qrCodes', 'QR codes', borrowed > 0
                 ? `Printed beside each question. On the ${borrowed} generated question${borrowed === 1 ? '' : 's'} the code opens a tutorial — the past paper question it was modelled on, worked through with different numbers — not a solution to the question on the sheet`
                 : 'Printed beside each question, linking to its video', withVideo === 0)}

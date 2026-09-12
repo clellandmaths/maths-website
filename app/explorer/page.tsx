@@ -837,20 +837,19 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <Trash2 className="h-4 w-4" />
                           </button>
                           {showQRCodes && q.videoId && (
-                            <div className="shrink-0 flex flex-col items-center gap-0.5">
+                            <div className="shrink-0 flex items-center gap-1.5">
+                              {/* Beside the code rather than beneath it — see
+                                  the note in app/worksheet/page.tsx. */}
+                              {q.videoOf && (
+                                <span className="q-qr-note text-[9px] leading-tight text-muted-dim text-right max-w-[52px]">
+                                  worked example<br />{q.videoOf}
+                                </span>
+                              )}
                               <QRCodeImage
                                 url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
                                 size={64}
                                 className="rounded"
                               />
-                              {/* On paper this caption is the only thing between
-                                  a pupil and the belief that they are wrong: the
-                                  video works the original's numbers, not theirs. */}
-                              {q.videoOf && (
-                                <span className="q-qr-note text-[9px] leading-tight text-muted-dim text-center max-w-[64px]">
-                                  {q.videoOf}<br />same method
-                                </span>
-                              )}
                             </div>
                           )}
                         </div>
@@ -927,7 +926,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                               >
                                 <Play className="h-4 w-4" />
-                                {q.videoOf ? 'Watch the original' : 'Watch Solution'}
+                                {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
                               </button>
                             ) : hasMarkscheme(q.year, q.paperNumber) && (
                               <button

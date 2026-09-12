@@ -208,27 +208,39 @@ function SharedWorksheet() {
                 <span className={`q-badge flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
                   {i + 1}
                 </span>
-                {/* No paper reference here: every question's own html opens with
-                    its "2026 P1 Q1" label, so repeating it prints it twice. */}
+                {/* No paper reference here: a past paper question's own html
+                    opens with its "2026 P1 Q1" label, so repeating it prints it
+                    twice. A generated question has no such badge and nothing
+                    else on the card says what it is, so its skill goes here. */}
+                {q.label && (
+                  <span className="q-source text-sm text-muted-foreground">{q.label}</span>
+                )}
                 <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
                 {/* Beside the number rather than under the question, matching
                     the Explorer's sheet — it keeps the QR out of the reading
                     flow, on screen and on paper alike. */}
                 {options.qrCodes && q.videoId && (
-                  <div className="shrink-0 flex flex-col items-center gap-0.5">
+                  <div className="shrink-0 flex items-center gap-1.5">
+                    {/* Beside the code, not beneath it. Beneath, this caption
+                        added 36px to every generated question's header and
+                        pushed its text down by the same — measured, and over a
+                        ten-question sheet that is a third of a page.
+                        Here it costs no height at all.
+
+                        It is not decoration: on paper it is the only thing
+                        standing between a pupil and the belief that they have
+                        got it wrong, because the video works the original's
+                        numbers rather than theirs. */}
+                    {q.videoOf && (
+                      <span className="q-qr-note text-[9px] leading-tight text-muted-foreground text-right max-w-[52px]">
+                        worked example<br />{q.videoOf}
+                      </span>
+                    )}
                     <QRCodeImage
                       url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
                       size={64}
                       className="rounded"
                     />
-                    {/* On paper this caption is the only thing standing between
-                        a pupil and the belief that they have got it wrong: the
-                        video works the original's numbers, not theirs. */}
-                    {q.videoOf && (
-                      <span className="q-qr-note text-[9px] leading-tight text-muted-foreground text-center max-w-[64px]">
-                        {q.videoOf}<br />same method
-                      </span>
-                    )}
                   </div>
                 )}
               </div>
@@ -281,13 +293,13 @@ function SharedWorksheet() {
                         // A generated question's video solves the paper question
                         // behind it, so the modal is titled with that one.
                         title: q.videoOf
-                          ? `${q.videoOf} — the original question`
+                          ? `A worked example — ${q.videoOf}`
                           : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`,
                       })}
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 text-sm font-medium rounded-lg transition-colors`}
                     >
                       <Play className="h-4 w-4" />
-                      {q.videoOf ? 'Watch the original' : 'Watch solution'}
+                      {q.videoOf ? 'Watch a worked example' : 'Watch solution'}
                     </button>
                   )}
               </div>
@@ -370,6 +382,7 @@ function SharedWorksheet() {
           questions={questions}
           startIndex={fullScreenFrom}
           allowAnswers={options.answers}
+          allowHints={options.hints}
           allowVideo={options.video}
           onClose={() => setFullScreenFrom(null)}
         />

@@ -7,6 +7,7 @@ import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
+import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
@@ -187,6 +188,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     <><Eye className="h-4 w-4" /> Show Answer</>
                   )}
                 </button>
+                <Hints question={q} theme={theme} courseId={courseId} />
                 {hasDataBooklet && (
                   <button
                     onClick={() => setBookletYear(q.year)}
@@ -213,7 +215,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
                   >
                     <Play className="h-4 w-4" />
-                    Watch Solution
+                    {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
                   </button>
                 ) : hasMarkscheme(q.year, q.paperNumber) ? (
                   <button

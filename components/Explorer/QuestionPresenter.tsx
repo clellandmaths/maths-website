@@ -8,6 +8,7 @@ import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
 import { isWholePaper, lastQuestionNumber } from '@/lib/question-number.mjs';
 import MathRenderer from '@/components/MathRenderer';
+import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
@@ -29,6 +30,8 @@ interface QuestionPresenterProps {
    * person who set it decided to give.
    */
   allowAnswers?: boolean;
+  /** A handout can grant hints without granting answers. They are not the same. */
+  allowHints?: boolean;
   allowVideo?: boolean;
 }
 
@@ -42,7 +45,7 @@ function extractImageSrcs(html: string): string[] {
   return srcs;
 }
 
-export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, allowAnswers = true, allowVideo = true }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, allowAnswers = true, allowVideo = true, allowHints = true }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -228,6 +231,11 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
                 />
               )}
+              {/* Before the answer button, deliberately: a pupil who is stuck
+                  should meet help before they meet the answer. */}
+              {allowHints && (
+                <Hints question={question} theme={theme} courseId={courseId} className="w-full" />
+              )}
               {allowAnswers && (
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
@@ -256,7 +264,10 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
                 >
                   <Play className="h-5 w-5" />
-                  Watch Solution
+                  {/* A generated question's video solves the paper question it
+                      was modelled on, not itself. Calling that "Watch Solution"
+                      sends a pupil to check an answer that is not theirs. */}
+                  {question.videoOf ? 'Watch a worked example' : 'Watch Solution'}
                 </button>
               ) : allowVideo && hasMarkscheme(question.year, question.paperNumber) ? (
                 <button
