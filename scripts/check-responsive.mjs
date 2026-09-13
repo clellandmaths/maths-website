@@ -183,6 +183,10 @@ const NOT_BASELINEABLE = [
   '/explorer.html',
   '/worksheet.html',
   '/course/n5/generate.html',
+  // An embedded R runtime with async status text — "Running hidden code
+  // cells" is present or absent depending on how far it has got when the
+  // measurement is taken.
+  '/course/higher-apps/rstudio/index.html',
 ];
 
 const every = (await htmlPages(OUT))
@@ -325,7 +329,19 @@ const AUDIT = `(async () => {
     const words = (el.textContent || '').replace(/[\\s\\u200b\\u00a0\\u200c\\u200d]/g, '');
     if (!words) continue;
     const px = parseFloat(getComputedStyle(el).fontSize);
-    if (px < 12) add('text-floor', px + 'px  "' + words.slice(0, 24) + '"', 'text');
+    if (px < 12) {
+      // Identified by WHERE it is, not by what it says.
+      //
+      // The text used to be in the key, and the homepage has digits that
+      // change between loads — so the same undersized element was "8.8px 2"
+      // one run and "8.8px 3" the next. Against a baseline recorded minutes
+      // earlier on an unchanged build that read as 8 violations fixed, and a
+      // key that comes and goes will eventually read as one ADDED and fail a
+      // build for nothing.
+      const cls = typeof el.className === 'string' && el.className
+        ? '.' + el.className.trim().split(/\\s+/)[0] : '';
+      add('text-floor', px + 'px  <' + el.tagName.toLowerCase() + cls + '>', 'text');
+    }
   }
 
   // ── reading measure ─────────────────────────────────────────────────
