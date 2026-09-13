@@ -31,7 +31,7 @@ export default function FormulaeSheet({
     <div className={`print-formula-sheet ${className}`}>
       <h2>{list.title}</h2>
       {list.sections.map(section => (
-        <div key={section.title} className="mb-4">
+        <div key={section.title} className="formula-section mb-4">
           <h3 className="font-semibold text-sm mb-1">{section.title}</h3>
           <div
             className="formula-content text-sm"
