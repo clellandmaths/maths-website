@@ -1133,11 +1133,11 @@ export const higherMathsData: Section[] = [
                  <div className="font-mono">x = 5</div>
                  <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
-                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(5) =" /></span></div>
+                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(5) = 14" /></span></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
                  <div className="flex flex-col text-xs font-mono items-start">
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(14) =" /></div>
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(5)) =" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(14) = 5" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(5)) = 5" /></div>
                  </div>
                </div>
                
@@ -1145,11 +1145,11 @@ export const higherMathsData: Section[] = [
                  <div className="font-mono">x</div>
                  <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
-                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(x) =" /></span></div>
+                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(x) = 3x - 1" /></span></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
                  <div className="flex flex-col text-xs font-mono items-start">
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(3x-1) =" /></div>
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(x)) =" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(3x-1) = x" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(x)) = x" /></div>
                  </div>
                </div>
             </div>

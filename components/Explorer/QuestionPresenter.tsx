@@ -174,7 +174,14 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   <div className={hasImages ? 'lg:[&_img]:!hidden' : ''}>
                     <MathRenderer
                       html={question.question}
-                      className="text-slate-200 question-content text-lg sm:text-xl md:text-2xl leading-relaxed"
+                      // 20px from the smallest phone, not 18px.
+                      //
+                      // `sm:` is 640px, so no phone in portrait ever reached
+                      // the 20px step — full screen was 18px on the exact
+                      // device it matters most on, while the page behind it
+                      // was 20px. The app sets 20px from the start and that is
+                      // the size this was being measured against.
+                      className="text-slate-200 question-content text-xl md:text-2xl leading-relaxed"
                     />
                   </div>
                   {/* Desktop only: images absolutely positioned so they never affect layout sizing */}
@@ -293,7 +300,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={question.answer}
-                  className="text-slate-200 answer-content text-lg leading-relaxed"
+                  className="text-slate-200 answer-content text-xl leading-relaxed"
                 />
                 {question.solutionUrl && (
                   // Guided practice questions from maths.scot: linking to his

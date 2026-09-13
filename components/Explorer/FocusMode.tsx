@@ -152,7 +152,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
               {/* Question content */}
               <MathRenderer
                 html={q.question}
-                className="text-slate-200 question-content text-lg leading-relaxed"
+                className="text-slate-200 question-content text-xl leading-relaxed"
               />
 
               {/* Higher Apps data files */}
@@ -260,7 +260,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   <p className={`text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                   <MathRenderer
                     html={q.answer}
-                    className="text-slate-300 answer-content"
+                    className="text-slate-300 answer-content text-xl leading-relaxed"
                   />
                   {q.solutionUrl && (
                     // Guided practice questions from maths.scot: linking to his

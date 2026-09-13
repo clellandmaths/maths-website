@@ -251,7 +251,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               <div className={hasImages ? 'lg:[&_img]:!hidden' : ''}>
                 <MathRenderer
                   html={question.question}
-                  className="text-slate-200 question-content text-lg sm:text-xl md:text-2xl leading-relaxed"
+                  className="text-slate-200 question-content text-xl md:text-2xl leading-relaxed"
                 />
               </div>
               {hasImages && (
@@ -326,7 +326,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={question.answer}
-                  className="text-slate-200 answer-content text-lg leading-relaxed"
+                  className="text-slate-200 answer-content text-xl leading-relaxed"
                 />
               </div>
             )}
