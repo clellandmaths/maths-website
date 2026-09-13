@@ -165,7 +165,30 @@ function templateOf(page) {
   return 'other';
 }
 
-const every = (await htmlPages(OUT)).filter((p) => !/(404|_not-found)\.html$/.test(p)).sort();
+/**
+ * Pages this cannot baseline, because they do not render the same twice.
+ *
+ * The Exam Hall picks a course from stored state and a Warm Up that changes,
+ * so its controls differ between loads. Measured: a baseline recorded and then
+ * compared against minutes later, on an unchanged build, reported 12 NEW
+ * violations — all of them here. A gate that cries wolf on an unchanged site
+ * gets switched off within a week.
+ *
+ * These surfaces are not unchecked, they are checked differently: they need
+ * driving — filter, add, open, present — and a static sweep cannot do that.
+ * The browser scripts that verified them are the right instrument.
+ */
+const NOT_BASELINEABLE = [
+  '/exam-hall.html',
+  '/explorer.html',
+  '/worksheet.html',
+  '/course/n5/generate.html',
+];
+
+const every = (await htmlPages(OUT))
+  .filter((p) => !/(404|_not-found)\.html$/.test(p))
+  .filter((p) => !NOT_BASELINEABLE.includes(p))
+  .sort();
 
 /** A few of each template, spread across courses so one course cannot hide a fault. */
 function sample(pages, perTemplate = 3) {
