@@ -1,0 +1,33 @@
+{
+ "recordedAt": "2026-09-13T15:42:49.076Z",
+ "rule": "a full stop belongs INSIDE the closing maths delimiter — see docs/maths-punctuation.md",
+ "total": 666,
+ "byFile": {
+  "src/ah/specials/ah-2026-in-5-hours.js": 4,
+  "src/higher/pastpapers/higherpastpaper2015.js": 1,
+  "src/higher/pastpapers/higherpastpaper2016.js": 2,
+  "src/higher/pastpapers/higherpastpaper2017.js": 39,
+  "src/higher/pastpapers/higherpastpaper2018.js": 27,
+  "src/higher/pastpapers/higherpastpaper2019.js": 11,
+  "src/higher/pastpapers/higherpastpaper2022.js": 33,
+  "src/higher/pastpapers/higherpastpaper2023.js": 11,
+  "src/higher/pastpapers/higherpastpaper2024.js": 14,
+  "src/higher/pastpapers/higherpastpaper2025.js": 8,
+  "src/higher/topics/polynomials_and_quadratics.js": 8,
+  "src/higher/topics/recurrence_relations.js": 4,
+  "src/higher/topics/straight_line.js": 12,
+  "src/higherapps/HApps2026.js": 1,
+  "src/n5/pastpapers/pastpaper-2014.js": 6,
+  "src/n5/pastpapers/pastpaper-2016.js": 23,
+  "src/n5/pastpapers/pastpaper-2018.js": 17,
+  "src/n5/pastpapers/pastpaper-2022.js": 19,
+  "src/n5/pastpapers/pastpaper-2023.js": 4,
+  "src/n5/pastpapers/pastpaper-2024.js": 3,
+  "src/n5/pastpapers/pastpaper-2025.js": 2,
+  "src/n5apps/n5apps2026P2.js": 8,
+  "src/practice/data/advancedHigherMaths.ts": 121,
+  "src/practice/data/higherApps.ts": 144,
+  "src/practice/data/higherMaths.ts": 94,
+  "src/practice/data/national5Apps.ts": 50
+ }
+}
