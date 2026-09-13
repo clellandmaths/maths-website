@@ -1129,7 +1129,7 @@ export const higherMathsData: Section[] = [
             </div>
             <div className="mt-6 flex flex-col gap-6 p-4 bg-white/5 rounded-xl border border-white/10">
                {/* Box Diagrams manually recreated to look like the uploaded image */}
-               <div className="flex flex-col md:flex-row items-center gap-4 min-w-[600px] justify-center text-sm md:text-base">
+               <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x = 5</div>
                  <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
@@ -1141,7 +1141,7 @@ export const higherMathsData: Section[] = [
                  </div>
                </div>
                
-               <div className="flex flex-col md:flex-row items-center gap-4 min-w-[600px] justify-center text-sm md:text-base">
+               <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x</div>
                  <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>

@@ -190,7 +190,11 @@ export default function FilterSidebar({
             value={topicSearch}
             onChange={(e) => setTopicSearch(e.target.value)}
             placeholder="Search topics..."
-            className="w-full pl-8 pr-8 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-sm text-slate-300 placeholder:text-muted-dim focus:outline-none focus:border-white/40"
+            // 16px below md, 14px from md up. iOS Safari zooms the whole page
+            // when a form control smaller than 16px takes focus, and does not
+            // zoom back out afterwards — so tapping this left the Explorer
+            // magnified. Scoped to mobile so the desktop sidebar is unchanged.
+            className="w-full pl-8 pr-8 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-base md:text-sm text-slate-300 placeholder:text-muted-dim focus:outline-none focus:border-white/40"
           />
           {topicSearch && (
             <button onClick={() => setTopicSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2">
