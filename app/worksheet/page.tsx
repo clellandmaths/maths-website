@@ -245,7 +245,7 @@ function SharedWorksheet() {
                 )}
               </div>
 
-              <MathRenderer html={q.question} className="question-content text-foreground/90" />
+              <MathRenderer html={q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
 
               {/* Staged help, only where the maker granted it. */}
               {options.hints && (
@@ -325,7 +325,7 @@ function SharedWorksheet() {
               {options.answers && isOpen && (
                 <div className="answer-section mt-4 pt-4 border-t border-border">
                   <p className={`answer-label font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Answer</p>
-                  <MathRenderer html={q.answer} className="answer-content text-foreground/80" />
+                  <MathRenderer html={q.answer} className="answer-content text-xl leading-relaxed text-foreground/80" />
                 </div>
               )}
             </li>

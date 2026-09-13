@@ -129,7 +129,7 @@ export default function Navbar() {
               );
             })}
 
-            <p className="px-4 pt-3 pb-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            <p className="px-4 pt-3 pb-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
               Courses
             </p>
             {courses.map(course => (

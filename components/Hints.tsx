@@ -133,7 +133,7 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
             <div key={i} className="flex items-start gap-2 border-t border-slate-800 pt-2">
               <MathRenderer html={step} className="answer-content flex-1 text-sm text-slate-300" />
               {staged.stepMarks[i] !== undefined && (
-                <span className="shrink-0 rounded bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-400">
+                <span className="shrink-0 rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-slate-400">
                   {staged.stepMarks[i]} mark{staged.stepMarks[i] === 1 ? '' : 's'}
                 </span>
               )}
