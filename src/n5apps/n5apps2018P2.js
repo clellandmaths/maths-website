@@ -279,7 +279,7 @@ export const n5AppsMaths2018P2 = {
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 P2 Q8(c)(d)</span></strong></small>
 <p>Scott trains at the velodrome on his new bike.<br>He records his top speed, in kilometres per hour, for each lap.<br>Six of these speeds are shown below.</p>
-<p>\\(61\\mathord{\\cdot}2 \\quad 58\\mathord{\\cdot}3 \\quad 59\\mathord{\\cdot}1 \\quad 58\\mathord{\\cdot}8 \\quad 60\\mathord{\\cdot}4 \\quad 59\\mathord{\\cdot}8\\)</p>
+<p style="display:flex;flex-wrap:wrap;gap:0.35rem 1.5rem">\\(61\\mathord{\\cdot}2\\)\\(58\\mathord{\\cdot}3\\)\\(59\\mathord{\\cdot}1\\)\\(58\\mathord{\\cdot}8\\)\\(60\\mathord{\\cdot}4\\)\\(59\\mathord{\\cdot}8\\)</p>
 <p>(c) For these speeds, calculate:<br>(i) the mean;<br>(ii) the standard deviation.</p>
 <p>Scott had a mean top speed on his old bike of \\(57\\mathord{\\cdot}3\\text{ km/h}\\) and a standard deviation of \\(1\\mathord{\\cdot}21\\text{ km/h}.\\)</p>
 <p>(d) Make two valid comments comparing his top speed on the two different bikes.</p>`,
