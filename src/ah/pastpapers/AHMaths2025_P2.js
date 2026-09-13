@@ -149,7 +149,7 @@ export const advHigherMaths2025P2 = {
           marks: [5]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q17</span></strong></small><p>The volume, \\(V\\) cm\\(^3\\), of water in a tank is given by</p><p>\\(V = \\frac{1}{5}h^3\\), where \\(h\\) cm is the depth of water in the tank.</p><p>Water is being piped into the tank at a rate of 6 cm\\(^3\\)/second.<br>Water is leaking from the bottom of the tank at a rate of \\(\\frac{1}{10}\\sqrt{h}\\) cm\\(^3\\)/second.</p><p>Calculate the rate of change of the depth of water when \\(h = 400.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q17</span></strong></small><p>The volume, \\(V\\) cm\\(^3\\), of water in a tank is given by</p><p>\\(V = \\frac{1}{5}h^3\\), where \\(h\\) cm is the depth of water in the tank.</p><p>Water is being piped into the tank at a rate of <span style="white-space: nowrap;">6 cm\\(^3\\)/second</span>.<br>Water is leaking from the bottom of the tank at a rate of \\(\\frac{1}{10}\\sqrt{h}\\) <span style="white-space: nowrap;">cm\\(^3\\)/second</span>.</p><p>Calculate the rate of change of the depth of water when \\(h = 400.\\)</p>`,
           answer: `\\(\\frac{1}{24000}\\) cm/sec`,
           videoId: "SoqgtES7sRA",
           timestamp: "56m16s",

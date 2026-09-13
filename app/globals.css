@@ -486,6 +486,36 @@ body {
     padding: 0.2rem 0.75rem;
   }
 
+  /* Keep a formulae table whole.
+
+     The AH list printed from an iPhone split "2. Standard integrals" across
+     pages 1 and 2 — the heading and the column headers at the foot of one
+     page, the formulae on the next. A pupil reading it has to hold the
+     column meanings in their head across a page turn.
+
+     Could NOT be reproduced in headless Chrome: the same worksheet printed to
+     an identical PDF with and without these rules, byte for byte, because
+     Chrome had already fitted the tables. iOS Safari paginates differently.
+     So this is applied as correctness rather than as a verified repair — and
+     that identical PDF is also the evidence it costs nothing when the table
+     already fits.
+
+     A table taller than a page cannot be kept whole, and the spec makes avoid
+     a request rather than a guarantee; the row rule is what matters then, so
+     a break at least lands between two formulae instead of through one. */
+  .print-formula-sheet table,
+  .print-formula-sheet tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* A heading never sits alone at the foot of a page, away from its table. */
+  .print-formula-sheet h2,
+  .print-formula-sheet h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
   .print-formula-sheet thead th {
     background: #f1f5f9 !important;
     font-weight: 600;
