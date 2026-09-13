@@ -31,7 +31,7 @@
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { readFile, writeFile, stat, readdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join, extname, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -98,10 +98,49 @@ if (!VIEWPORTS.length) {
   process.exit(1);
 }
 
+const RELOAD_EACH = process.argv.includes('--reload-each');
+
 if (!existsSync(OUT)) {
   console.error('\n  no out/ — run `npm run build` first. Nothing was checked.\n');
   process.exit(1);
 }
+
+/**
+ * What the built site looked like when we started reading it.
+ *
+ * This check reads `out/`, and a full run takes minutes. A rebuild part-way
+ * through means the first half measured one version of the site and the second
+ * half another — and the result looks perfectly normal. That happened three
+ * times while recording the first baseline, and each time the only clue was
+ * remembering having run `npm run build`.
+ *
+ * So: fingerprint before and after. If the build moved, refuse to write a
+ * baseline and say so. A wrong baseline is worse than no baseline, because
+ * every later run is measured against it.
+ *
+ * Stat only — no file contents — so it costs well under a second on 6,700
+ * files.
+ */
+function fingerprint(dir) {
+  let files = 0;
+  let newest = 0;
+  let bytes = 0;
+  const walk = (d) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      if (e.isDirectory()) { walk(p); continue; }
+      const s = statSync(p);
+      files++;
+      bytes += s.size;
+      if (s.mtimeMs > newest) newest = s.mtimeMs;
+    }
+  };
+  walk(dir);
+  return { files, bytes, newest };
+}
+const sameBuild = (a, b) => a.files === b.files && a.bytes === b.bytes && a.newest === b.newest;
+
+const buildAtStart = fingerprint(OUT);
 
 // ── which pages ────────────────────────────────────────────────────────────
 async function htmlPages(dir) {
@@ -397,21 +436,53 @@ try {
   await send('Page.enable');
   await send('Runtime.enable');
 
-  for (const [vpName, w, h, mobile] of VIEWPORTS) {
-    await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile });
-    for (const page of PAGES) {
+  // One navigation per page, measured at every viewport — not one full pass per
+  // viewport. `--reload-each` restores the old order.
+  //
+  // This is four times fewer page loads: 518 navigations instead of 2,072. It
+  // matters because the run reads the BUILT site, and a long run over a
+  // directory that someone may rebuild is a run that quietly mixes two
+  // versions of the site. Shortening it shrinks that window; the fingerprint
+  // check below closes what is left.
+  //
+  // Verified against --reload-each on a sample before being made the default:
+  // resizing after load has to produce what a fresh load at that width would,
+  // and a component that reads its width once at mount would break that.
+  if (RELOAD_EACH) {
+    for (const [vpName, w, h, mobile] of VIEWPORTS) {
+      await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile });
+      for (const page of PAGES) {
+        await send('Page.navigate', { url: `http://localhost:${PORT}${page}` });
+        await sleep(2200);
+        let rows;
+        try { rows = await ev(AUDIT); } catch { continue; }
+        audited++;
+        if (!rows) { emptyPages++; continue; }
+        for (const r of rows) {
+          if (excused(page, r.rule)) continue;
+          found.set(`${r.rule}|${page}|${vpName}|${r.detail}`, { ...r, page, viewport: vpName });
+        }
+      }
+      process.stderr.write(`  ${vpName} done (${found.size} so far)\n`);
+    }
+  } else {
+    for (const [n, page] of PAGES.entries()) {
       await send('Page.navigate', { url: `http://localhost:${PORT}${page}` });
       await sleep(2200);
-      let rows;
-      try { rows = await ev(AUDIT); } catch { continue; }
-      audited++;
-      if (!rows) { emptyPages++; continue; }
-      for (const r of rows) {
-        if (excused(page, r.rule)) continue;
-        found.set(`${r.rule}|${page}|${vpName}|${r.detail}`, { ...r, page, viewport: vpName });
+      for (const [vpName, w, h, mobile] of VIEWPORTS) {
+        await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile });
+        await sleep(350);                   // let the resize settle
+        let rows;
+        try { rows = await ev(AUDIT); } catch { continue; }
+        audited++;
+        if (!rows) { emptyPages++; continue; }
+        for (const r of rows) {
+          if (excused(page, r.rule)) continue;
+          found.set(`${r.rule}|${page}|${vpName}|${r.detail}`, { ...r, page, viewport: vpName });
+        }
       }
+      if ((n + 1) % 50 === 0) process.stderr.write(`  ${n + 1}/${PAGES.length} pages (${found.size} so far)\n`);
     }
-    process.stderr.write(`  ${vpName} done (${found.size} so far)\n`);
   }
 } catch (e) {
   console.error(`\n  FAILED to run: ${e.message}\n  Nothing was checked.\n`);
@@ -428,6 +499,20 @@ try {
 // ── compare with the baseline ──────────────────────────────────────────────
 const keys = [...found.keys()].sort();
 const old = existsSync(BASELINE) ? JSON.parse(await readFile(BASELINE, 'utf8')) : null;
+
+const buildAtEnd = fingerprint(OUT);
+if (!sameBuild(buildAtStart, buildAtEnd)) {
+  console.error('\n  out/ CHANGED WHILE THIS WAS RUNNING.');
+  console.error(`    started: ${buildAtStart.files} files, ${buildAtStart.bytes} bytes`);
+  console.error(`    ended:   ${buildAtEnd.files} files, ${buildAtEnd.bytes} bytes`);
+  console.error('  Part of this run measured one build and part another, so the');
+  console.error('  result is a mixture of two versions of the site.');
+  if (WRITE_BASELINE) {
+    console.error('  REFUSING to record a baseline from it. Re-run without building.\n');
+    process.exit(1);
+  }
+  console.error('  Treat the numbers below as unreliable.\n');
+}
 
 if (WRITE_BASELINE) {
   if (old && keys.length > old.keys.length) {

@@ -14,8 +14,16 @@ node scripts/check-responsive.mjs --all --baseline
 
 **The baseline has never been recorded.** It was started three times and
 abandoned three times, because `out/` was rebuilt underneath it each time — the
-check reads the built site, so a rebuild mid-run mixes two versions. Record it
-first, before touching anything, and **do not build while it runs** (~90 min).
+check reads the built site, so a rebuild mid-run mixes two versions.
+
+**That can no longer happen silently.** The check fingerprints `out/` before and
+after, and refuses to record a baseline if the build moved under it. Proved by
+touching a file mid-run: file count and byte count were identical and only the
+mtime differed, and it still refused — a size-only check would have missed it.
+
+It is also a third quicker: one page load measured at all four viewports rather
+than four full passes. Verified identical to the old order on a sample (795
+violations both ways, no differences); `--reload-each` restores it.
 
 Until it exists, `npm run check:responsive` reports violations but cannot fail
 on new ones, which is the whole point of it.
