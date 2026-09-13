@@ -77,7 +77,7 @@ export default function PracticeQuestion({
           {(paper || marks) && (
             <div className="flex items-center gap-2 flex-wrap mb-2">
               {paper && (
-                <span className="inline-block font-mono text-[11px] text-muted-foreground border border-border rounded px-1.5 py-0.5">
+                <span className="inline-block font-mono text-xs text-muted-foreground border border-border rounded px-1.5 py-0.5">
                   {paper}
                 </span>
               )}
@@ -141,7 +141,7 @@ export default function PracticeQuestion({
         className="mt-3 rounded-lg bg-slate-800/60 border border-border p-4 space-y-3"
       >
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Answer</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">Answer</p>
           <div
             className="prose-practice text-foreground"
             dangerouslySetInnerHTML={{ __html: answerHtml }}

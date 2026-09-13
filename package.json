@@ -21,7 +21,9 @@
     "check:latexdelims": "node scripts/check-latex-delimiters.mjs",
     "check:qbreaks": "node scripts/check-question-breaks.mjs",
     "check:qimages": "node scripts/check-question-images.mjs",
-    "check:gensync": "node scripts/check-generator-sync.mjs"
+    "check:gensync": "node scripts/check-generator-sync.mjs",
+    "check:responsive": "node scripts/check-responsive.mjs",
+    "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {
     "fflate": "^0.8.3",

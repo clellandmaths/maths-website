@@ -1129,7 +1129,7 @@ export const higherMathsData: Section[] = [
             </div>
             <div className="mt-6 flex flex-col gap-6 p-4 bg-white/5 rounded-xl border border-white/10">
                {/* Box Diagrams manually recreated to look like the uploaded image */}
-               <div className="flex flex-col md:flex-row items-center gap-4 min-w-[600px] justify-center text-sm md:text-base">
+               <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x = 5</div>
                  <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
@@ -1141,7 +1141,7 @@ export const higherMathsData: Section[] = [
                  </div>
                </div>
                
-               <div className="flex flex-col md:flex-row items-center gap-4 min-w-[600px] justify-center text-sm md:text-base">
+               <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x</div>
                  <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
@@ -4266,15 +4266,15 @@ export const higherMathsData: Section[] = [
           <div className="space-y-4 text-slate-300">
             <p>When differentiating composite functions involving linear expressions raised to a power, we can use the chain rule.</p>
             <p>If the functions <InlineMath math="f" /> and <InlineMath math="g" /> are defined on suitable domains, then:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)" />
             </div>
             <p>For brackets raised to a power:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^n] = n(ax+b)^{n-1} \times a = an(ax+b)^{n-1}" />
             </div>
             <p>Alternatively, using Leibniz notation, if <InlineMath math="y = f(u)" /> and <InlineMath math="u = g(x)" />:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}" />
             </div>
           <div className="bg-slate-800 p-4 rounded-lg mt-4">
@@ -4347,7 +4347,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The chain rule is also required when differentiating composite trigonometric functions.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[\sin(f(x))] = \cos(f(x)) \times f'(x)" />
               <BlockMath math="\frac{d}{dx}[\cos(f(x))] = -\sin(f(x)) \times f'(x)" />
             </div>
@@ -4447,7 +4447,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>When integrating a term of the form <InlineMath math="ax^n" />, we increase the power by 1 and divide by the new power:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\int ax^n \,dx = \frac{ax^{n+1}}{n+1} + C \quad (n \neq -1)" />
             </div>
             <p>Where <InlineMath math="C" /> is the constant of integration.</p>
@@ -4844,11 +4844,11 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>We have previously learned how to differentiate functions of the form <InlineMath math="f(ax+b)" />:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^{n+1}] = (n+1)(ax+b)^n \times a = a(n+1)(ax+b)^n" />
             </div>
             <p>For integrating linear brackets raised to a power, we use:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\int (ax+b)^n \,dx = \frac{(ax+b)^{n+1}}{a(n+1)} + C \quad (n \neq -1)" />
             </div>
           <div className="bg-slate-800 p-4 rounded-lg mt-4">
@@ -4895,7 +4895,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>We have previously learned how to differentiate trigonometric functions of the form <InlineMath math="\sin(ax+b)" /> and <InlineMath math="\cos(ax+b)" />.</p>
             <p>When integrating these, we must divide by the derivative of the angle (which is <InlineMath math="a" />):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\int \cos(ax+b) \, dx = \frac{1}{a} \sin(ax+b) + C" />
               <BlockMath math="\int \sin(ax+b) \, dx = -\frac{1}{a} \cos(ax+b) + C" />
             </div>
@@ -5941,7 +5941,7 @@ id: "integration-of-brackets",
               <li><InlineMath math="f(x)=k \cos(x+\alpha)" /></li>
             </ul>
             <p>We are required to solve simultaneous equations of the form:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\begin{aligned} k \sin\alpha &= a \\ k \cos\alpha &= b \end{aligned}" />
             </div>
             <p>Solving for <InlineMath math="k" />:</p>
@@ -6331,7 +6331,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>A logarithmic function is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a>0" /> and <InlineMath math="x>0" />.</p>
             <p>The relationship between exponential functions and logarithmic functions can be expressed as:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="y = \log_a x \iff a^y = x" />
             </div>
             <p>If we sum logarithmic functions with the same base numbers then the terms can be combined by multiplying the arguments:</p>
@@ -6825,7 +6825,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>The vector from origin <InlineMath math="O" /> to point <InlineMath math="A" /> is called the position vector of point A: <InlineMath math="\vec{OA}" /> or <InlineMath math="\vec{a}" />.</p>
             <p>The vector <InlineMath math="\vec{AB}" /> is the vector which originates at A and ends at B. <InlineMath math="\vec{AB}" /> is the position vector of B relative to A.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{AB} = \vec{b} - \vec{a}" />
             </div>
           <div className="bg-slate-800 p-4 rounded-lg mt-4">
@@ -7060,7 +7060,7 @@ id: "integration-of-brackets",
               <li><strong>Negative</strong> – negative/reverse growth in the original direction</li>
             </ul>
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Rectangular perspective):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = a_1b_1 + a_2b_2 + a_3b_3" />
             </div>
             <p className="text-center">where <InlineMath math="\vec{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}" /> and <InlineMath math="\vec{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}" /></p>
@@ -7103,7 +7103,7 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Polar perspective):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />
             </div>
             <p className="text-center">where <InlineMath math="\theta" /> is the angle between the vectors <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" />. The vectors must both be pointing away from the vertex.</p>
@@ -7138,7 +7138,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-slate-300">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
             <p>Since <InlineMath math="\cos 90^\circ = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos 90^\circ = 0" />.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col text-emerald-300">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-300">
               <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then <InlineMath math="\vec{a} \cdot \vec{b} = 0" />.</p>
               <p>Conversely, if <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> then <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular.</p>
             </div>
@@ -7183,7 +7183,7 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-slate-300">
             <p>From the dot product formula <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />, we can rearrange this to find the angle between two vectors:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}" />
             </div>
             <p className="text-center">Remember to calculate <InlineMath math="\vec{a} \cdot \vec{b}" /> using <InlineMath math="a_1b_1 + a_2b_2 + a_3b_3" />.</p>

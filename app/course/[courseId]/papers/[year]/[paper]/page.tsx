@@ -209,7 +209,7 @@ export default async function PaperPage(
               </div>
               <MathHtml
                 html={q.question}
-                className="question-content text-foreground/90 leading-relaxed"
+                className="question-content text-xl text-foreground/90 leading-relaxed"
               />
               {/* Higher Apps data files */}
               {q.attachments && q.attachments.length > 0 && (
@@ -245,7 +245,7 @@ export default async function PaperPage(
               <div className="px-5 sm:px-6 pb-5">
                 <MathHtml
                   html={q.answer}
-                  className="answer-content text-foreground/85 leading-relaxed"
+                  className="answer-content text-xl text-foreground/85 leading-relaxed"
                 />
               </div>
             </details>

@@ -100,7 +100,7 @@ export default async function NotesHubPage(
                     <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground leading-snug mb-3">
                       {topic.title}
                     </span>
-                    <span className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
+                    <span className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
                       {hasVideo && (
                         <span className="inline-flex items-center gap-1">
                           <Play className="h-3 w-3" /> Video

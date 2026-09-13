@@ -15,7 +15,7 @@ export default function ExamCover({ course }: { course: CourseCover }) {
       <div className="graph-paper relative flex flex-col h-full bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 group-hover:border-white/25 group-hover:-translate-y-1">
         {/* Qualification band */}
         <div className={`bg-gradient-to-r ${course.gradient} px-4 py-2`}>
-          <span className="font-mono text-[11px] uppercase tracking-widest text-white/90">
+          <span className="font-mono text-xs uppercase tracking-widest text-white/90">
             {course.band}
           </span>
         </div>

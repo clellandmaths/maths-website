@@ -124,12 +124,12 @@ export default function NotesTopicShell({
       {/* Progress header */}
       <div className="px-4 pt-4 pb-3 border-b border-border">
         <div className="flex items-baseline justify-between mb-2">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
             Course notes
           </p>
           <Link
             href={`/course/${courseId}/notes`}
-            className={`font-mono text-[11px] ${theme.text} hover:opacity-80 transition-opacity`}
+            className={`font-mono text-xs ${theme.text} hover:opacity-80 transition-opacity`}
           >
             All topics
           </Link>
@@ -143,7 +143,7 @@ export default function NotesTopicShell({
           </div>
           <span className="font-mono text-xs text-muted-foreground tabular-nums">{pct}%</span>
         </div>
-        <p className="font-mono text-[11px] text-muted-foreground mt-1.5">
+        <p className="font-mono text-xs text-muted-foreground mt-1.5">
           {completedCount} of {flatTopics.length} topics complete
         </p>
       </div>
@@ -161,13 +161,13 @@ export default function NotesTopicShell({
                 onClick={() => toggleSection(sIdx)}
                 className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left hover:bg-white/5 transition-colors group"
               >
-                <span className={`font-mono text-[11px] font-semibold ${theme.text}`}>
+                <span className={`font-mono text-xs font-semibold ${theme.text}`}>
                   {String(sIdx + 1).padStart(2, '0')}
                 </span>
                 <span className="flex-1 text-sm font-semibold text-foreground/80 group-hover:text-foreground leading-snug">
                   {section.title}
                 </span>
-                <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+                <span className="font-mono text-xs text-muted-foreground tabular-nums">
                   {sectionDone}/{section.topics.length}
                 </span>
                 {isExpanded
