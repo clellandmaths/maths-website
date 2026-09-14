@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap } from 'lucide-react';
+import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap, Dices } from 'lucide-react';
 import CourseTabs from '@/components/CourseTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import VideoModal from '@/components/VideoModal';
@@ -261,6 +261,27 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                 <List className="h-4 w-4" />
                                 Focus Mode
                               </button>
+                              {/* **On the archive, not only on the paper page.**
+                                  It went on `/papers/[year]/[paper]` first and
+                                  nobody found it — that page is reached only by
+                                  clicking the small paper title above it, which
+                                  `docs/navigation.md` already records as barely
+                                  linked. A feature behind a link nobody presses
+                                  is a feature nobody has.
+
+                                  A link, not a button, so the row gains no
+                                  handler; the destination does the work.
+                                  National 5 only — the one course with audited
+                                  variations. */}
+                              {courseId === 'n5' && (
+                                <Link
+                                  href={`/course/${courseId}/generate/paper/${paper.year}/paper-${paper.paperNumber}`}
+                                  className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium rounded-lg transition-colors"
+                                >
+                                  <Dices className="h-4 w-4" />
+                                  Practice Paper
+                                </Link>
+                              )}
                               <button
                                 onClick={() => handleExpandPaper(paper.year, paper.paperNumber)}
                                 className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium rounded-lg transition-colors ml-auto"

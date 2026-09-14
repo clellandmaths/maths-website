@@ -53,6 +53,43 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
     t.check(!(await sectionShowing()), `${course} · ${slug} offers nothing`);
   }
 
+  /* ── the per-question controls ──────────────────────────────────────────
+     Hints and "another like this" on each question, not only the section at
+     the foot of the page. Both need the label passed explicitly: this surface
+     strips the printed badge out of the HTML, so anything that scrapes finds
+     nothing and offers nothing — silently, on exactly the questions that have
+     a marking instruction behind them. */
+  await go('/course/n5/practice/surds');
+
+  const perQuestion = await evaluate(`(() => {
+    const t = document.body.innerText;
+    return {
+      hint: [...document.querySelectorAll('button')].filter(b => b.textContent.trim() === 'Hint').length,
+      another: [...document.querySelectorAll('button')]
+        .filter(b => /another like this one|more on /i.test(b.textContent || '')).length,
+      badges: (t.match(/\\d{4} P\\d Q\\d+/g) || []).length,
+    };
+  })()`);
+  t.check(perQuestion?.badges > 0, `${perQuestion?.badges} past-paper-backed questions on the page`);
+  t.check(perQuestion?.hint > 0, `${perQuestion?.hint} of them offer a hint`);
+  t.check(perQuestion?.another > 0, `${perQuestion?.another} offer another like it`);
+
+  // The ladder opens, and opens on what the question asks rather than on working.
+  await click(`[...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Hint')`);
+  await sleep(2500);
+  t.check(await evaluate(`/what it asks/i.test(document.body.innerText)`),
+    'the first hint says what the question asks');
+  await click(buttonNamed('Another hint'));
+  await sleep(1200);
+  t.check(await evaluate(`/how the marks go/i.test(document.body.innerText)`),
+    'the second says how the marks go');
+
+  // Neither control on a course with nothing behind it.
+  await go('/course/higher/practice/circle', 2500);
+  const higher = await evaluate(`[...document.querySelectorAll('button')]
+    .filter(b => /^Hint$|another like this one|more on /i.test(b.textContent || '')).length`);
+  t.check(higher === 0, 'Higher practice questions offer neither');
+
   // ── 4. it draws, and it draws something different the second time ───────
   await go('/course/n5/practice/surds');
 

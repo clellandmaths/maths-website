@@ -33,6 +33,28 @@ export function variationLabel(questionHtml: string | undefined): string | null 
 }
 
 /**
+ * The label for a question, preferring one the surface already holds.
+ *
+ * **An explicit label beats a scraped one, and both beat nothing.** Guided
+ * practice renders past paper questions with the badge stripped out —
+ * `resolveQuestions` moves it to `ResolvedQuestion.paper` — so anything that
+ * only scrapes finds nothing there, and silently offers nothing on the very
+ * questions that have a marking instruction behind them.
+ *
+ * What it will *not* do is accept a label built from `year`/`paperNumber`/
+ * `questionNumber`: at least one surface synthesises those and would produce a
+ * plausible label for the wrong question. Callers pass the printed badge or
+ * nothing.
+ */
+export function paperLabelOf(
+  explicit: string | null | undefined,
+  questionHtml?: string,
+): string | null {
+  if (explicit && N5_PAPER_LABEL.test(explicit)) return explicit;
+  return variationLabel(questionHtml);
+}
+
+/**
  * Should this question offer "add a variation"?
  *
  * National 5 only: the other four courses have no audited variations and no
@@ -120,11 +142,8 @@ export function moreLikeThis(
   // Tier 1. An explicit label beats a scraped one, and a generated question
   // falls back to the paper it was modelled on — so "another like this one"
   // works on a generated question too, meaning the same thing both times.
-  const explicit = source.label && N5_PAPER_LABEL.test(source.label) ? source.label : null;
-  const scraped = variationLabel(source.questionHtml);
   const parent = source.basedOn?.[source.parentIndex ?? 0];
-  const inherited = parent && N5_PAPER_LABEL.test(parent) ? parent : null;
-  const label = explicit ?? scraped ?? inherited;
+  const label = paperLabelOf(source.label, source.questionHtml) ?? paperLabelOf(parent);
   if (label) return { tier: 'question', label, heading: 'Another like this one' };
 
   // Tier 2. **One subtopic, named.** A question can carry three tags, and

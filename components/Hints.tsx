@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Lightbulb } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
-import { variationLabel, courseHasHints } from '@/lib/similar-questions';
+import { paperLabelOf, courseHasHints } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -33,6 +33,16 @@ interface Props {
   theme: CourseTheme;
   /** National 5 is the only course with hints behind it. */
   courseId?: string;
+  /**
+   * The printed badge, when the surface holds it rather than the HTML.
+   *
+   * Guided practice renders past paper questions with the badge stripped out —
+   * `resolveQuestions` moves it to `ResolvedQuestion.paper` — so scraping finds
+   * nothing and hints were silently unavailable on the very questions that have
+   * a marking instruction behind them. An explicit label beats the scrape;
+   * everywhere else keeps passing nothing and is unchanged.
+   */
+  label?: string | null;
   className?: string;
 }
 
@@ -45,12 +55,12 @@ interface Staged {
   heldBack: boolean;
 }
 
-export default function Hints({ question, theme, courseId, className = '' }: Props) {
+export default function Hints({ question, theme, courseId, label: given, className = '' }: Props) {
   const [shown, setShown] = useState(0);
   const [staged, setStaged] = useState<Staged | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const label = variationLabel(question.question);
+  const label = paperLabelOf(given, question.question);
   // A generated question brings its own; a paper one needs the table.
   const own = question.skill && question.method;
   const possible = courseHasHints(courseId) && (own || label !== null);

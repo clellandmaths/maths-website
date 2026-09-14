@@ -34,6 +34,28 @@ import type { QuestionWithMetadata } from '@/lib/data-loader';
  */
 export type DrawState = 'idle' | 'drawing' | 'exhausted' | 'failed';
 
+/**
+ * The past paper index, built at most once per page and shared by every control
+ * on it.
+ *
+ * A generated question has no filmed solution of its own; the paper question it
+ * was modelled on does, and watching that worked is the tutorial. **Attaching
+ * it is done here rather than left to callers**, because three call sites
+ * forgot: the Explorer's re-roll dropped it and took the QR code and both
+ * full-screen modes' video links with it, and the practice control forgot it
+ * too. A caller that has to remember is a caller that will not.
+ */
+let paperIndex: Map<string, QuestionWithMetadata> | null = null;
+
+async function withVideo(q: QuestionWithMetadata): Promise<QuestionWithMetadata> {
+  const { byPaperLabel, withParentVideo } = await import('@/lib/similar-questions');
+  if (!paperIndex) {
+    const { getAllN5Questions } = await import('@/lib/data-loader');
+    paperIndex = byPaperLabel(await getAllN5Questions());
+  }
+  return withParentVideo(q, paperIndex);
+}
+
 export interface GeneratedDraw {
   state: DrawState;
   /** How many this control has drawn, whether or not they were kept. */
@@ -74,8 +96,9 @@ export function useGeneratedDraw(
     setState('drawing');
     try {
       const engine = await import('@/lib/generated-question');
-      const made = await drawOne(engine, exclude());
-      if (!made) { setState('exhausted'); return null; }
+      const raw = await drawOne(engine, exclude());
+      if (!raw) { setState('exhausted'); return null; }
+      const made = await withVideo(raw);
       drawn.current = [...drawn.current, made];
       setSeen(n => n + 1);
       setState('idle');
@@ -96,7 +119,7 @@ export function useGeneratedDraw(
       for (let i = 0; i < want; i++) {
         const q = await drawOne(engine, [...exclude(), ...made]);
         if (!q) break;
-        made.push(q);
+        made.push(await withVideo(q));
       }
       drawn.current = [...drawn.current, ...made];
       setSeen(n => n + made.length);

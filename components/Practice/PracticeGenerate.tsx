@@ -41,29 +41,11 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
   const [showAnswer, setShowAnswer] = useState(false);
   const [added, setAdded] = useState(0);
 
-  /**
-   * The past paper index, built once and only if a question is actually drawn.
-   *
-   * A generated question has no video of its own; the paper question behind it
-   * does, and watching that worked is the tutorial. Without this the question
-   * arrives with no `videoId` and the "the video for … shows this method" line
-   * below can never render — which is what it did until the same omission was
-   * found in the Explorer's re-roll.
-   */
-  const paperIndex = useRef<Map<string, QuestionWithMetadata> | null>(null);
-
+  // The hook attaches the video of the paper question behind whatever it draws,
+  // so this only has to say what to draw.
   const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
     const [made] = await engine.generateForSubtopics(subtopics, 1, engine.worksheetKeys(exclude));
-    if (!made) return null;
-    if (!paperIndex.current) {
-      const [{ getAllN5Questions }, { byPaperLabel }] = await Promise.all([
-        import('@/lib/data-loader'),
-        import('@/lib/similar-questions'),
-      ]);
-      paperIndex.current = byPaperLabel(await getAllN5Questions());
-    }
-    const { withParentVideo } = await import('@/lib/similar-questions');
-    return withParentVideo(made, paperIndex.current);
+    return made ?? null;
   });
 
   // Nothing to offer: say nothing. See the note above.

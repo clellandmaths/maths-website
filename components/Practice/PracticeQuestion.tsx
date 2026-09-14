@@ -1,8 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Eye, Play, ExternalLink, BookOpen } from 'lucide-react';
 import Marks from '@/components/Marks';
+import Hints from '@/components/Hints';
+import MoreLikeThis from '@/components/MoreLikeThis';
+import type { QuestionWithMetadata } from '@/lib/data-loader';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FormulaeButton from '@/components/FormulaeButton';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -20,6 +23,8 @@ import type { CourseTheme } from '@/lib/course-theme';
 
 interface Props {
   index: number;
+  /** The website subtopics this topic covers, for "more like this". */
+  subtopics?: string[];
   questionHtml: string;
   answerHtml: string;
   videoId?: string;
@@ -37,12 +42,36 @@ interface Props {
 }
 
 export default function PracticeQuestion({
-  index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks,
+  index, subtopics, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks,
   hasDataBooklet = false, courseId, theme,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [booklet, setBooklet] = useState(false);
+
+  /**
+   * Enough of a question for `Hints` to work with.
+   *
+   * This component takes rendered strings rather than the practice data module
+   * on purpose — importing that here would pull 157 KB of questions into the
+   * client bundle — so there is no real question object to hand.
+   *
+   * The positional fields are placeholders and **nothing reads them for a
+   * label**: `paper` is passed separately for that, precisely because a label
+   * rebuilt from year/paper/number is plausible and wrong.
+   */
+  const asQuestion = useMemo((): QuestionWithMetadata => ({
+    question: questionHtml,
+    answer: answerHtml,
+    videoId: videoId ?? '',
+    timestamp: timestamp ? `${timestamp}s` : '',
+    topics: [],
+    marks,
+    year: '',
+    paperNumber: 0,
+    questionIndex: index - 1,
+    questionNumber: String(index),
+  }), [questionHtml, answerHtml, videoId, timestamp, marks, index]);
   const answerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
 
@@ -132,7 +161,38 @@ export default function PracticeQuestion({
             Video solution coming soon
           </span>
         )}
+
+        {/* **Hints belong here more than anywhere else on the site.** Guided
+            practice is where a pupil works alone on a question they may be
+            stuck on, and the ladder existed on the paper pages and in the
+            Explorer but not on the page built for practising.
+
+            `paper` is passed explicitly because this surface strips the printed
+            badge out of the HTML — `resolveQuestions` moves it to
+            `ResolvedQuestion.paper` — so scraping finds nothing and hints were
+            silently unavailable on every past-paper-backed question here. */}
+        <Hints
+          question={asQuestion}
+          label={paper}
+          theme={theme}
+          courseId={courseId}
+          className="w-full"
+        />
       </div>
+
+      {/* Another question like this one, before the answer rather than after
+          it: a pupil who has given up and read the answer is past wanting one.
+          It opens below rather than replacing what is on screen — they are
+          usually stuck on the question in front of them, and taking it away
+          loses the thing they were working on. */}
+      <MoreLikeThis
+        courseId={courseId}
+        theme={theme}
+        label={paper}
+        questionHtml={questionHtml}
+        subtopics={subtopics}
+        className="mt-3"
+      />
 
       {/* Always rendered so it is indexable; hidden until asked for. */}
       <div
