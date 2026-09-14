@@ -575,7 +575,13 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        {/* **`min-w-0`, or a flex item cannot shrink below its content.**
+            The default is `min-width: auto`, so one unwrappable child pushes
+            `main` — and the document — past the viewport, and a phone browser
+            answers that by scaling the entire page down. That is a whole class
+            of fault rather than one control's mistake, so it is fixed here as
+            well as in the control that triggered it. */}
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
           {/* Header */}
           <div className="mb-6 no-print">
             <div className="flex items-center gap-3 mb-2">
@@ -718,9 +724,16 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                 </div>
               )}
 
-              {/* Add All / Remove All */}
+              {/* Add All / Remove All, and the generate controls.
+
+                  **flex-wrap, because this row grew.** Four controls and a
+                  count do not fit on a 390px phone, and without wrapping the
+                  row demands its full width — which `main` could not refuse,
+                  so the document went 473px wide on a 390px screen and the
+                  browser shrank the whole page to fit. Measured: adding two
+                  controls here took the Explorer from 390 to 473. */}
               {hasFilters && filteredQuestions.length > 0 && (
-                <div className="mb-4 flex items-center gap-3">
+                <div className="mb-4 flex flex-wrap items-center gap-3">
                   <button
                     onClick={() => {
                       const allIn = filteredQuestions.every(q => isInWorksheet(q));
