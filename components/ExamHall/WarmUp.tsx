@@ -9,6 +9,7 @@ import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
+import { courseHasHints } from '@/lib/similar-questions';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 const DAILY_COUNT = 5;
@@ -83,6 +84,17 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
   const [showVideo, setShowVideo] = useState(false);
   const [showBooklet, setShowBooklet] = useState(false);
   const [finished, setFinished] = useState(false);
+  /**
+   * Another five, offered only once today's five are done.
+   *
+   * **Not on the questions themselves**, which is the obvious place and the
+   * wrong one. The warm up is five questions, seeded by the date, the same for
+   * everybody and finishable — a pupil who can reroll question 3 is no longer
+   * doing a fixed set, and the thing that makes it a warm up is gone. The
+   * completion screen is the only place the offer costs nothing, and the pupil
+   * who reaches it is by definition the one who wants more.
+   */
+  const [more, setMore] = useState<'idle' | 'drawing' | 'failed' | 'none'>('idle');
 
   const dateString = getUKDateString();
 
@@ -164,6 +176,48 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
     );
   }
 
+  /**
+   * Five new questions, one modelled on each of the five just done.
+   *
+   * Sequential, never `Promise.all` — the generator's random stream is
+   * module-level and concurrent draws steal each other's numbers. The engine
+   * and the paper index are both imported here, at the click: the Exam Hall
+   * loads on its own for every course and must not carry either.
+   *
+   * The result becomes a locked worksheet link rather than anything held in
+   * this component. That gives a genuinely new session with its own presenter,
+   * and it survives being sent to a friend.
+   */
+  const drawMore = async () => {
+    if (!questions || more === 'drawing') return;
+    setMore('drawing');
+    try {
+      const [{ similarTo, worksheetKeys }, { byPaperLabel, variationLabel, withParentVideo },
+             { shareLinks }] = await Promise.all([
+        import('@/lib/generated-question'),
+        import('@/lib/similar-questions'),
+        import('@/lib/worksheet-share'),
+      ]);
+      const byLabel = byPaperLabel(await loaders[course]());
+
+      const made: QuestionWithMetadata[] = [];
+      for (const q of questions) {
+        const label = variationLabel(q.question);
+        if (!label) continue;
+        const [raw] = await similarTo(label, 1, worksheetKeys(made));
+        if (raw) made.push(withParentVideo(raw, byLabel));
+      }
+
+      if (!made.length) { setMore('none'); return; }
+      const { locked } = shareLinks(
+        window.location.origin, course, made, `More like the warm up · ${dateString}`,
+      );
+      window.location.href = locked;
+    } catch {
+      setMore('failed');
+    }
+  };
+
   // --- Completion screen ---
   if (finished) {
     return (
@@ -184,9 +238,42 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             You completed today&apos;s {DAILY_COUNT} questions
           </p>
           <p className="text-muted-dim text-sm mb-8">{dateString}</p>
+
+          {/* National 5 only — the other four courses have no audited
+              variations, so there is nothing to offer and nothing is shown. */}
+          {courseHasHints(course) && (
+            <div className="mb-6 flex flex-col items-center gap-2">
+              <button
+                onClick={drawMore}
+                disabled={more === 'drawing'}
+                className={`px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all disabled:opacity-60`}
+              >
+                {more === 'drawing' ? 'Building them…' : `${DAILY_COUNT} new questions like today's`}
+              </button>
+              <p className="text-muted-dim text-xs max-w-sm">
+                One modelled on each of the five you just did — same methods,
+                different numbers. Tomorrow&apos;s warm up is still waiting.
+              </p>
+              {more === 'none' && (
+                <p className="text-slate-400 text-sm">
+                  No new questions could be made from today&apos;s five.
+                </p>
+              )}
+              {more === 'failed' && (
+                <p className="text-amber-300/90 text-sm">
+                  Could not build them just now. Try again in a moment.
+                </p>
+              )}
+            </div>
+          )}
+
           <button
             onClick={onBack}
-            className={`px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`}
+            className={
+              courseHasHints(course)
+                ? 'px-8 py-3 border border-slate-700 text-slate-300 font-semibold rounded-lg hover:bg-slate-800 transition-colors'
+                : `px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`
+            }
           >
             Back to Dashboard
           </button>
