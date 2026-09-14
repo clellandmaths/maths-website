@@ -126,9 +126,22 @@ export async function withPage(opts, fn) {
     return true;
   };
 
-  /** The first button whose trimmed text is exactly `text`. */
+  /**
+   * The first button whose trimmed text is **exactly** `text`.
+   *
+   * Exact on purpose — "Add" must not match "Add 5 like it". But a button that
+   * carries a count or an icon's text alongside its label will not match, and
+   * that has cost time here more than once: the Explorer's tab reads
+   * `My Worksheet` until something is on the sheet and `My Worksheet 1`
+   * afterwards, so an exact match silently stopped working at the point the
+   * test became worth running. Reach for `buttonMatching` when a label can grow.
+   */
   const buttonNamed = text =>
     `[...document.querySelectorAll('button')].find(b => b.textContent.trim() === ${JSON.stringify(text)})`;
+
+  /** The first button whose text matches `re` — for labels that carry a count. */
+  const buttonMatching = re =>
+    `[...document.querySelectorAll('button')].find(b => ${re}.test(b.textContent || ''))`;
 
   const go = async (path, settle = 3500) => {
     await send('Page.navigate', { url: `http://127.0.0.1:${port}${path}` });
@@ -141,7 +154,7 @@ export async function withPage(opts, fn) {
     { width, height, deviceScaleFactor: 1, mobile: false });
 
   try {
-    await fn({ send, evaluate, click, buttonNamed, go, sleep, port });
+    await fn({ send, evaluate, click, buttonNamed, buttonMatching, go, sleep, port });
   } finally {
     ws.close();
     chrome.kill();

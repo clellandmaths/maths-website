@@ -34,6 +34,7 @@
     "check:practicepaper": "node scripts/check-practice-paper.mjs",
     "check:notespractice": "node scripts/check-notes-to-practice.mjs",
     "check:warmup": "node scripts/check-warmup-more.mjs",
+    "check:genvideo": "node scripts/check-generated-video.mjs",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {

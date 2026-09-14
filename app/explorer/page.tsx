@@ -275,7 +275,22 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     setRerolling(q.uid ?? null);
     try {
       const { questionFromCode, newSeed } = await import('@/lib/generated-question');
-      const fresh = await questionFromCode(gen.code, newSeed(), q.questionIndex);
+      /**
+       * **`gen.parentIndex`, and then the video.** Both were missing, and each
+       * broke something a teacher could see.
+       *
+       * Without the parent index the new question falls back to `basedOn[0]`,
+       * so re-rolling could quietly move the worked example to a different
+       * year's paper from the one it pointed at a moment earlier.
+       *
+       * Without `withParentVideo` it carries no `videoId` at all: the QR code
+       * vanished off the printed sheet, and the presenter and focus mode both
+       * fell back to "Video solution coming soon" on a question whose tutorial
+       * exists. `resolveWorksheet` does both, which is exactly why a shared
+       * sheet was right and the sheet it was shared from was not.
+       */
+      const raw = await questionFromCode(gen.code, newSeed(), q.questionIndex, gen.parentIndex);
+      const fresh = raw ? withParentVideo(raw, paperIndex) : null;
       // In place: a teacher re-rolling question 3 expects a new question 3, not
       // the sheet reordered.
       if (fresh) replaceItem(q, fresh);
