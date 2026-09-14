@@ -153,7 +153,11 @@ export default function Hints({ question, theme, courseId, label: given, classNa
   const more = shown < total;
 
   return (
-    <div className={`no-print ${className}`}>
+    /* **Full width only once it is open.** Closed, this is a single button and
+       belongs in the row of buttons beside Formulae and Show answer; open, the
+       panel needs the whole line. Sizing it by its own state lets one component
+       do both, instead of every caller guessing which it will be. */
+    <div className={`no-print ${shown > 0 ? 'w-full' : ''} ${className}`}>
       {shown > 0 && staged && (
         <div className="mb-2 space-y-2 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
           {/*

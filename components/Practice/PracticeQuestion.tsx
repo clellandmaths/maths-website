@@ -174,7 +174,6 @@ export default function PracticeQuestion({
           label={paper}
           theme={theme}
           courseId={courseId}
-          className="w-full"
         />
       </div>
 

@@ -219,8 +219,16 @@ function SharedWorksheet() {
                 {/* Beside the number rather than under the question, matching
                     the Explorer's sheet — it keeps the QR out of the reading
                     flow, on screen and on paper alike. */}
+                {/* **Not on a phone.** A QR code exists so somebody can scan a
+                    printed sheet, and it is the first thing on this card at
+                    64px plus its caption — above a question that is often two
+                    lines. You cannot scan the screen you are holding, and a
+                    "Watch a worked example" button is right there. So: off
+                    below 640px, on from a tablet up where scanning with a
+                    second device makes sense, and always on paper, which is
+                    what it is for. */}
                 {options.qrCodes && q.videoId && (
-                  <div className="shrink-0 flex items-center gap-1.5">
+                  <div className="shrink-0 hidden sm:flex print:flex items-center gap-1.5">
                     {/* Beside the code, not beneath it. Beneath, this caption
                         added 36px to every generated question's header and
                         pushed its text down by the same — measured, and over a
@@ -247,11 +255,6 @@ function SharedWorksheet() {
 
               <MathRenderer html={q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
 
-              {/* Staged help, only where the maker granted it. */}
-              {options.hints && (
-                <Hints question={q} theme={theme} courseId={courseId ?? undefined} className="mt-3" />
-              )}
-
               {/* Whatever the maker granted, offered here on the card as well as
                   in full screen — a pupil reading down the page should not have
                   to go full screen to get at an answer they were given.
@@ -259,7 +262,15 @@ function SharedWorksheet() {
                   Formulae, the data booklet and the data files are not options:
                   they are what the question cannot be attempted without, so
                   they are always here regardless of what the maker chose. */}
-              <div className="no-print flex flex-wrap gap-2 mt-4">
+              {/* **One row, hints included.** They used to sit in their own block
+                  above this, so a closed hint was a lone button on its own line
+                  and the rest wrapped around it — three ragged rows of controls
+                  above a two-line question. In the row they pack. */}
+              <div className="no-print flex flex-wrap items-center gap-2 mt-4">
+                  {/* First, because a hint is what you want before an answer. */}
+                  {options.hints && (
+                    <Hints question={q} theme={theme} courseId={courseId ?? undefined} />
+                  )}
                   {courseId && (
                     <FormulaeButton courseId={courseId} theme={theme} />
                   )}
@@ -299,7 +310,19 @@ function SharedWorksheet() {
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 text-sm font-medium rounded-lg transition-colors`}
                     >
                       <Play className="h-4 w-4" />
-                      {q.videoOf ? 'Watch a worked example' : 'Watch solution'}
+                      {/* **Short on a phone, full from a tablet up.** "Watch a
+                          worked example" is 250px of a 390px screen and pushed
+                          the controls onto a third line on its own. This is
+                          `sm:` used the right way round — adding words as there
+                          is room for them, rather than the trap in
+                          `docs/responsive.md` of hiding them below a
+                          breakpoint no phone ever reaches. */}
+                      <span className="sm:hidden">
+                        {q.videoOf ? 'Worked example' : 'Solution'}
+                      </span>
+                      <span className="hidden sm:inline">
+                        {q.videoOf ? 'Watch a worked example' : 'Watch solution'}
+                      </span>
                     </button>
                   )}
               </div>
