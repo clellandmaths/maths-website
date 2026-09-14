@@ -192,11 +192,20 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     setGenerating(true);
     setGenNote(null);
     try {
-      const { generateForSubtopics } = await import('@/lib/generated-question');
-      const made = await generateForSubtopics(selectedSubtopics, genCount);
+      const { generateForSubtopics, worksheetKeys } = await import('@/lib/generated-question');
+      // Excluding what the sheet already holds. The engine dedupes within one
+      // call and remembers nothing between them, so without this a second
+      // click repeats the first — measured even on a wide filter, where three
+      // clicks of five on surds returned one question twice.
+      const made = await generateForSubtopics(
+        selectedSubtopics, genCount, worksheetKeys(worksheetItems));
       made.map(q => withParentVideo(q, paperIndex)).forEach(addItem);
       if (!made.length) {
-        setGenNote('No new questions could be made for this filter.');
+        // With the sheet excluded, nothing back usually means the teacher
+        // already has them all rather than that the filter is barren.
+        setGenNote(worksheetItems.length
+          ? 'Your worksheet already has every question these topics can make.'
+          : 'No new questions could be made for this filter.');
       } else if (made.length < genCount) {
         // Short is legitimate — a thin variation cannot make more DIFFERENT
         // questions — but it must be said, or the sheet is quietly short and

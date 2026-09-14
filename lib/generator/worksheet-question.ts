@@ -354,6 +354,7 @@ export async function similarTo(
   paperLabel: string,
   count: number,
   makeSeed: () => string,
+  exclude: readonly string[] = [],
 ): Promise<WorksheetQuestion[]> {
   // Exam tier only. `variationsBasedOn` does not filter, and a warm-up would be
   // refused by `toWorksheetQuestion` anyway - better not to draw it at all.
@@ -365,7 +366,8 @@ export async function similarTo(
     // Measured before adding it: without this, 138 of 335 question/variation
     // pairs offered a sibling paper's video instead. Not wrong, since a sibling
     // is the same question shape, but surprising on a sheet built from 2014.
-    (id) => parentIndexOf(id, paperLabel));
+    (id) => parentIndexOf(id, paperLabel),
+    exclude);
 }
 
 /** Where `paperLabel` sits in a variation's papers, best-first. 0 if unknown. */
@@ -395,6 +397,7 @@ export async function generateForSubtopics(
   subtopics: readonly string[],
   count: number,
   makeSeed: () => string,
+  exclude: readonly string[] = [],
 ): Promise<WorksheetQuestion[]> {
   // Interleaved, not concatenated. `drawFrom` walks its candidates in order, so
   // a flat list of "everything under the first subtopic, then everything under
@@ -415,7 +418,22 @@ export async function generateForSubtopics(
     }
     if (!anyLeft) break;
   }
-  return drawFrom(ids, count, makeSeed);
+  return drawFrom(ids, count, makeSeed, undefined, exclude);
+}
+
+/**
+ * The identity `drawFrom` dedupes on, for questions the caller already holds.
+ *
+ * The exclusion list is *keys*, not questions, and the key is the engine's
+ * business - `questionKey` merges `x^2+5x+6` with `y^2+5y+6` and drops a
+ * figure's coordinates, neither of which a caller could be expected to know.
+ * So the website builds its exclusion list through this rather than reaching
+ * for `questionKey` itself and getting a subtly different answer.
+ *
+ * Safe to hand a past paper question: its key simply matches nothing.
+ */
+export function keyOfQuestion(q: { question: string; answer?: string | null }): string {
+  return questionKey({ questionLines: [q.question], finalAnswer: q.answer ?? '' });
 }
 
 /**
@@ -433,14 +451,28 @@ async function drawFrom(
   count: number,
   makeSeed: () => string,
   parentFor: (variationId: string) => number = () => 0,
+  exclude: readonly string[] = [],
 ): Promise<WorksheetQuestion[]> {
   if (!ids.length) return [];
 
-  const seen = new Set<string>();
+  // Seeded with what the caller already holds, so a second call carries on
+  // where the first stopped. Without this the dedupe is per-call, and the
+  // controls that use it are clicked repeatedly: measured on `2018 P1 Q18`,
+  // whose pool is six, ten separate clicks returned **four** different
+  // questions and six byte-identical repeats.
+  const seen = new Set<string>(exclude);
   const out: WorksheetQuestion[] = [];
   // Bounded the way `questionsLike` is: a thin variation returns short rather
   // than spinning after a question that does not exist.
-  for (let draw = 0; draw < count * 8 && out.length < count; draw++) {
+  //
+  // The bound is per *candidate*, not per question wanted, because `exclude`
+  // changes the arithmetic: with most of a pool already spoken for, the last
+  // unseen question comes up rarely. A variation holding four questions with
+  // three of them held is found with p = 1/4 a draw, so 40 tries miss it once
+  // in 100,000 - and at **0.4ms a draw, measured**, even a 20-variation filter
+  // spends 340ms to conclude it is spent. Cheap enough to buy the certainty.
+  const budget = Math.max(ids.length, 1) * 40 + count * 8;
+  for (let draw = 0; draw < budget && out.length < count; draw++) {
     // Round-robin rather than random, so asking for three across two variations
     // gives both rather than the same one three times by chance.
     const id = ids[draw % ids.length];

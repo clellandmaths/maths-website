@@ -60,7 +60,10 @@ export default function QuestionCard({
   const [drawing, setDrawing] = useState(false);
   const [added, setAdded] = useState(0);
   const [failed, setFailed] = useState(false);
-  const { addItem, removeItem, isInWorksheet } = useWorksheet();
+  // Distinct from `failed`: the pool is spent, which is settled and worth
+  // saying plainly, where a failure is a thing that might work next time.
+  const [exhausted, setExhausted] = useState(false);
+  const { items: worksheetItems, addItem, removeItem, isInWorksheet } = useWorksheet();
 
   const fullQuestion: QuestionWithMetadata = {
     ...question,
@@ -89,9 +92,16 @@ export default function QuestionCard({
     if (!label || drawing) return;
     setDrawing(true);
     setFailed(false);
+    setExhausted(false);
     try {
-      const { similarTo } = await import('@/lib/generated-question');
-      const [raw] = await similarTo(label, 1);
+      const { similarTo, worksheetKeys } = await import('@/lib/generated-question');
+      // Everything already on the sheet is off the table. The engine dedupes
+      // inside one call and remembers nothing between calls, so without this
+      // each click draws from the whole pool again: measured on a question
+      // whose pool is six, ten clicks gave four different questions and six
+      // byte-identical repeats, and the basket's own guard does not catch them
+      // because it keys on the uid, which carries the seed.
+      const [raw] = await similarTo(label, 1, worksheetKeys(worksheetItems));
       // The paper behind it brings the video that teaches the method.
       const made = raw && paperIndex ? withParentVideo(raw, paperIndex) : raw;
       // Nothing back is possible — a thin variation, or one withdrawn — and it
@@ -101,7 +111,7 @@ export default function QuestionCard({
         addItem(made);
         setAdded((n) => n + 1);
       } else {
-        setFailed(true);
+        setExhausted(true);
       }
     } catch {
       setFailed(true);
@@ -192,6 +202,19 @@ export default function QuestionCard({
         {failed && (
           <p className="text-xs text-amber-300/90 mb-2">
             Could not make a new question like this one just now.
+          </p>
+        )}
+
+        {/* Not amber, and not phrased as a failure. Running out is a fact about
+            how many different questions this one can make, and a teacher who
+            has taken all of them has been served, not refused. The button stays
+            live: the count comes from the worksheet, so removing one from the
+            sheet makes it available again. */}
+        {exhausted && (
+          <p className="text-xs text-slate-400 mb-2">
+            {added > 0
+              ? `That is all ${added} variation${added === 1 ? '' : 's'} of this question.`
+              : 'Every variation of this question is already on your worksheet.'}
           </p>
         )}
 

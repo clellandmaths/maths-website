@@ -5,6 +5,7 @@ import {
   questionFromCode as fromCode,
   similarTo as fromLabel,
   generateForSubtopics as fromSubtopics,
+  keyOfQuestion,
   type ToWorksheetOptions,
 } from './generator/worksheet-question';
 import { SEED_LENGTH } from './worksheet-refs.mjs';
@@ -67,12 +68,18 @@ export async function questionFromCode(
  *
  * Every question that comes back carries a `uid` that regenerates it, so it can
  * go in a sheet and survive being shared.
+ *
+ * **Pass `exclude`**, or repeated clicks repeat themselves. The engine dedupes
+ * within one call and has no memory between calls, so ten clicks on a pool of
+ * six returned four different questions and six identical ones. Build the list
+ * with `worksheetKeys()`.
  */
 export async function similarTo(
   paperLabel: string,
   count: number,
+  exclude: readonly string[] = [],
 ): Promise<QuestionWithMetadata[]> {
-  return fromLabel(paperLabel, count, newSeed);
+  return fromLabel(paperLabel, count, newSeed, exclude);
 }
 
 /**
@@ -81,12 +88,31 @@ export async function similarTo(
  * What the Explorer's filter produces. Returns fewer than asked, or none, when
  * those subtopics cannot make that many different questions — the caller must
  * say so rather than let the sheet come up quietly short.
+ *
+ * Takes `exclude` for the same reason `similarTo` does, and it matters on a
+ * wide filter too: three clicks of five on surds repeated one question.
  */
 export async function generateForSubtopics(
   subtopics: readonly string[],
   count: number,
+  exclude: readonly string[] = [],
 ): Promise<QuestionWithMetadata[]> {
-  return fromSubtopics(subtopics, count, newSeed);
+  return fromSubtopics(subtopics, count, newSeed, exclude);
+}
+
+/**
+ * What a worksheet already holds, in the form the engine excludes on.
+ *
+ * The keying is the engine's — it merges questions that differ only in their
+ * variable letters, and ignores where a figure's lines happen to fall — so it
+ * is asked for rather than reimplemented here, where it would drift.
+ *
+ * Past paper questions go through it harmlessly: nothing generated matches one.
+ */
+export function worksheetKeys(
+  questions: readonly { question: string; answer?: string | null }[],
+): string[] {
+  return questions.map(keyOfQuestion);
 }
 
 const BASE36 = '0123456789abcdefghijklmnopqrstuvwxyz';
