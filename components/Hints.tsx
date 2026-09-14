@@ -87,12 +87,34 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
           heldBack: all.length > 0,
         };
       } else if (label) {
-        const { PAPER_HINTS } = await import('@/lib/generator/generators/paper-hints');
+        const [{ PAPER_HINTS }, { PAPER_STEPS }] = await Promise.all([
+          import('@/lib/generator/generators/paper-hints'),
+          import('@/lib/generator/generators/paper-steps'),
+        ]);
         const hit = PAPER_HINTS[label];
-        // A paper question has no worked solution on this site, so its help
-        // stops at the method. The video is what comes after.
         if (hit) {
-          next = { skill: hit.skill, method: hit.method, steps: [], stepMarks: [], heldBack: false };
+          // The marking instructions describe what each mark is for, and that
+          // is the rest of the ladder. A paper question used to stop here and
+          // send a pupil to the video, which meant the *real* exam question —
+          // the one in their homework — offered less help than a made-up one.
+          //
+          // **Every step is shown, where a generated question withholds its
+          // last.** They are different material. A generated step is the
+          // worked solution and its final line states the answer; this is the
+          // examiner's description of a mark and never gives a value — "round
+          // to 2 significant figures", not "140 cm³". Checked rather than
+          // assumed: `paper-steps.ts` compares all 194 questions that have an
+          // answer recorded against every one of their steps, and none of them
+          // states it.
+          const steps = PAPER_STEPS[label] ?? [];
+          next = {
+            skill: hit.skill,
+            method: hit.method,
+            steps,
+            // One row, one mark — that is what makes the corpus a table.
+            stepMarks: steps.map(() => 1),
+            heldBack: false,
+          };
         }
       }
       if (next) {
@@ -143,7 +165,9 @@ export default function Hints({ question, theme, courseId, className = '' }: Pro
             <p className="border-t border-slate-800 pt-2 text-xs text-muted-foreground">
               {staged.heldBack
                 ? 'That is as far as a hint goes — the last step is the answer itself.'
-                : 'That is as far as a hint goes for a past paper question — the full working is in the video solution.'}
+                : staged.steps.length
+                  ? 'That is every mark the marking instructions award — the working itself is in the video solution.'
+                  : 'That is as far as a hint goes for a past paper question — the full working is in the video solution.'}
             </p>
           )}
         </div>
