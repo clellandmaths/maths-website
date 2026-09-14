@@ -5,16 +5,17 @@ wrong. Written 2026-09-13, after a day of measuring.
 
 ---
 
-## Start here, next session
+## The baseline exists and has never been read back
 
 ```
 npm run build
-node scripts/check-responsive.mjs --all --baseline
+node scripts/check-responsive.mjs --all        # ~90 min, expect 0 new
 ```
 
-**The baseline has never been recorded.** It was started three times and
-abandoned three times, because `out/` was rebuilt underneath it each time — the
-check reads the built site, so a rebuild mid-run mixes two versions.
+**It was recorded on 2026-09-14** — `49,112` violations across 513 pages, in
+`scripts/responsive-baseline.json`, `mode: all`. Before that it was started
+three times and abandoned three times, because `out/` was rebuilt underneath it
+each time and the check reads the built site.
 
 **That can no longer happen silently.** The check fingerprints `out/` before and
 after, and refuses to record a baseline if the build moved under it. Proved by
@@ -25,8 +26,19 @@ It is also a third quicker: one page load measured at all four viewports rather
 than four full passes. Verified identical to the old order on a sample (795
 violations both ways, no differences); `--reload-each` restores it.
 
-Until it exists, `npm run check:responsive` reports violations but cannot fail
-on new ones, which is the whole point of it.
+**But it is still a file rather than a ratchet, because nothing has read it
+back.** A baseline proves nothing until a full run compares against it on a
+build known not to have moved, and both earlier attempts at this reported
+phantom "new" violations on an unchanged build — which is the whole reason the
+read-back matters rather than a formality.
+
+**Spend the 90 minutes immediately before a merge to `master`**, not on a quiet
+day. There it is the safety net that proves 518 pages did not move; run idly it
+is 90 minutes that tells you what you already assumed. `dev` is 35 commits ahead
+and none of it is live, so that merge is where this earns its keep.
+
+Until it is read back, `npm run check:responsive` reports violations against a
+number nobody has confirmed reproduces.
 
 ## The sizes
 
@@ -150,6 +162,28 @@ wrong expression and reported three units in a two-unit question; and a PDF A/B
 that reported "different" when the only differing bytes were the timestamp.
 A check that has never failed has proved nothing — point it at something known
 to be broken before believing a green.
+
+## Two documents from one page
+
+The worksheet and its markscheme print separately — two buttons, two dialogs,
+two files — so a paper can be handed to a class without the answers stapled
+behind it. A browser makes one PDF per dialog, so one button producing both
+would have meant either two dialogs or one file to split.
+
+**The mechanism is `data-print="markscheme"` on the body**, and one CSS rule:
+
+```css
+body[data-print="markscheme"] > *:not(.markscheme-doc) { display: none !important; }
+```
+
+That works because `MarkschemeSheet` portals itself to `document.body`. The
+alternative was a rule naming every part of the worksheet to hide, which
+rearranging the sheet would quietly break. Measured across the three states:
+`<main>` goes **block → none → block**.
+
+**The flag is cleared in a `finally`.** Leaving it set would mean the next
+*Print / Save PDF* silently produced the markscheme — the one failure here that
+hands a class the answers.
 
 ## Formula sheets
 
