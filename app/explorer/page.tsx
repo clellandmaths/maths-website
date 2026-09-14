@@ -33,6 +33,8 @@ import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, hig
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
+import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
+import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
 import { byPaperLabel, withParentVideo, courseHasHints } from '@/lib/similar-questions';
@@ -119,6 +121,10 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
   const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
   const [showShare, setShowShare] = useState(false);
+  // The markscheme table is fetched on demand; holding it here keeps the
+  // portal mounted for the print and lets a second press reuse it.
+  const [markschemeBusy, setMarkschemeBusy] = useState(false);
+  const [schemes, setSchemes] = useState<Record<string, PaperScheme> | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, replaceItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
 
@@ -219,6 +225,46 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       setGenNote('Something went wrong generating those.');
     } finally {
       setGenerating(false);
+    }
+  };
+
+  /**
+   * Print the marking instructions for this sheet, as their own document.
+   *
+   * The table is 189 KB and is fetched here rather than imported, so it
+   * arrives when a teacher asks for it and never on the way to anything else.
+   * Nothing a pupil can reach imports it at all — that is the whole of how
+   * "never on a shared sheet" is enforced, and `paper-markscheme.ts` in the
+   * generator's checks fails if a pupil-facing file ever learns to.
+   *
+   * `data-print` on the body is what makes this a second document rather than
+   * more pages on the first: one CSS rule hides everything that is not the
+   * markscheme, and the sheet is portaled to the body so that rule cannot be
+   * broken by rearranging the worksheet.
+   *
+   * The attribute is cleared in `finally`. Leaving it set would mean the next
+   * Print / Save PDF silently produced the markscheme instead of the paper,
+   * which is the one failure here that hands a class the answers.
+   */
+  const handlePrintMarkscheme = async () => {
+    if (markschemeBusy || !worksheetItems.length) return;
+    setMarkschemeBusy(true);
+    try {
+      const { PAPER_MARKSCHEME } = await import('@/lib/generator/generators/paper-markscheme');
+      setSchemes(PAPER_MARKSCHEME);
+      document.body.dataset.print = 'markscheme';
+      // One frame for the portal to mount before the print dialog reads the
+      // page. Raced, never awaited alone: a backgrounded tab fires no frame,
+      // and the same unguarded wait once turned a Print button into a button
+      // that did nothing at all.
+      await Promise.race([
+        new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))),
+        new Promise<void>(r => setTimeout(r, 300)),
+      ]);
+      await printWorksheet();
+    } finally {
+      delete document.body.dataset.print;
+      setMarkschemeBusy(false);
     }
   };
 
@@ -707,6 +753,20 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           questions={worksheetItems}
                           className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
                         />
+                        {/* A teacher's own checkout, so the markscheme lives
+                            here and only here. It is a separate button and a
+                            separate document on purpose: one click, one
+                            dialog, one file, so the paper can be handed to a
+                            class without the answers stapled behind it. */}
+                        <button
+                          onClick={handlePrintMarkscheme}
+                          disabled={markschemeBusy}
+                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                          title="Print the marking instructions for this worksheet"
+                        >
+                          <ClipboardCheck className="h-4 w-4" />
+                          {markschemeBusy ? 'Preparing…' : 'Markscheme'}
+                        </button>
                         <button
                           onClick={() => printWorksheet()}
                           className={`flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
@@ -745,6 +805,20 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       Hidden on screen; the Formulae button covers that. */}
                   <div className="print-only">
                     <FormulaeSheet courseId={course} />
+
+                    {/* The markscheme, once a teacher has asked for it. It
+                        portals itself to the body and shows only while the
+                        markscheme is printing, so it is never on screen and
+                        never in the paper's print job. */}
+                    {schemes && (
+                      <MarkschemeSheet
+                        courseId={course}
+                        courseLabel={config.label}
+                        questions={worksheetItems}
+                        schemes={schemes}
+                        totalMarks={totalMarks}
+                      />
+                    )}
                     {course === 'higher-apps' && (
                       <DataBookletSheet years={worksheetItems.map(q => q.year)} />
                     )}

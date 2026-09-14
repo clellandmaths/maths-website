@@ -41,6 +41,19 @@ export interface SchemeQuestion {
   rows: MarkRow[];
   /** Marks per lettered part, where the question has them. */
   parts: Map<string, number>;
+  /**
+   * The scheme's notes, one entry per numbered point.
+   *
+   * These are the most useful thing on the page for anyone marking a class
+   * set - "Accept 15 728 or 15 728.10. However, do not accept 15 728.1" - and
+   * they are the one part a generated solution can never supply. Kept out of
+   * the hint table on purpose and carried into the printed markscheme, which
+   * is the document they were written for.
+   *
+   * A note may be headed for a single part, "**Notes — (b)**"; the heading is
+   * kept in front of the note so a marker knows which part it governs.
+   */
+  notes: string[];
 }
 
 /**
@@ -99,11 +112,12 @@ export function readSchemes(dir?: string): Map<string, SchemeQuestion> | null {
     const named = file.match(/Paper-(\d)/)?.[1] ?? file.match(/_P(\d)_/)?.[1];
     let paper = named ?? '';
     let current: SchemeQuestion | null = null;
+    let section: string | null = null;
 
     for (const line of readFileSync(join(DIR, file), 'utf8').split('\n')) {
       // A year file carries both papers, under "## Paper 1".
-      const section = /^##\s+Paper\s+(\d)/.exec(line);
-      if (section) { paper = section[1]; current = null; continue; }
+      const paperHead = /^##\s+Paper\s+(\d)/.exec(line);
+      if (paperHead) { paper = paperHead[1]; current = null; section = null; continue; }
 
       // "## Q7 — 2 marks ✓", "### Q19 — 7 marks ✓ (2 + 1 + 4)". Singular too:
       // requiring the plural made every one-mark question invisible.
@@ -115,11 +129,44 @@ export function readSchemes(dir?: string): Map<string, SchemeQuestion> | null {
           subject: '',
           rows: [],
           parts: new Map(),
+          notes: [],
         };
         out.set(current.label, current);
+        section = null;
         continue;
       }
       if (!current) continue;
+
+      // "**Notes**", "**Notes — (b)**", "**Commonly Observed Responses**".
+      // Both are marker's guidance and both belong on a printed markscheme;
+      // the part heading travels with the note so it is clear what it governs.
+      const marker = /^\*\*(Notes|Commonly Observed Responses)\s*(—\s*\(([a-z])\))?\*\*/.exec(line);
+      if (marker) {
+        section = marker[3] ? `(${marker[3]}) ` : '';
+        if (marker[1] !== 'Notes') section = `${section}Commonly observed: `;
+        continue;
+      }
+      // A numbered point under one of those markers. Anything else ends it —
+      // the next table, heading or rule is a new part of the question.
+      if (section !== null) {
+        if (/^\s*\d+\.\s/.test(line)) {
+          current.notes.push(section + line.trim());
+          continue;
+        }
+        // A continuation line, indented under the point it belongs to.
+        if (/^\s{3,}\S/.test(line) && current.notes.length) {
+          current.notes[current.notes.length - 1] += ' ' + line.trim();
+          continue;
+        }
+        if (line.startsWith('|') || line.startsWith('#') || line.startsWith('---')
+            || line.startsWith('**')) {
+          section = null;
+        } else if (line.trim() && !current.notes.length) {
+          // A note with no number, "Ordered list for reference: 2 2 4 …".
+          current.notes.push(section + line.trim());
+          continue;
+        }
+      }
 
       // "**(a) — 4 marks.**", "**(a)(i) — 1 mark.**". Roman sub-parts fold
       // into their letter, so (a)(i) 1 and (a)(ii) 3 make "a" worth 4.

@@ -573,3 +573,165 @@ body {
 summary::-webkit-details-marker {
   display: none;
 }
+
+/* ── the printed markscheme ──────────────────────────────────────────────
+   A teacher's document, printed on its own. It is never on screen and never
+   in the same print job as the paper: two documents, two buttons, two files,
+   so the paper can be handed to a class without the answers behind it.
+
+   The sheet is portaled to `document.body`, which is what lets this be one
+   rule rather than a list naming every part of the worksheet to hide. Move
+   the worksheet's markup around all you like; this does not care. */
+.markscheme-doc {
+  display: none;
+}
+
+@media print {
+  body[data-print="markscheme"] > *:not(.markscheme-doc) {
+    display: none !important;
+  }
+
+  body[data-print="markscheme"] .markscheme-doc {
+    display: block !important;
+    color: #111;
+  }
+
+  .markscheme-head h1 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .markscheme-head h1 span {
+    font-weight: 400;
+    color: #555;
+  }
+  .markscheme-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid #111;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .markscheme-meta {
+    text-align: right;
+    font-size: 11px;
+    color: #555;
+  }
+  .markscheme-source {
+    font-size: 10px;
+    color: #555;
+    margin: 0 0 14px;
+    line-height: 1.4;
+  }
+
+  /* A question and its marks stay together where they fit on one page. This
+     is a request, not a promise — the same rule the formula sections rely on
+     — so a long question is allowed to break rather than push a blank page. */
+  .markscheme-question {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .markscheme-question h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .markscheme-number { min-width: 1.4em; }
+  .markscheme-origin { font-weight: 400; color: #555; }
+  .markscheme-marks {
+    margin-left: auto;
+    font-weight: 400;
+    font-size: 11px;
+    color: #555;
+  }
+  .markscheme-subject {
+    font-size: 11px;
+    color: #555;
+    margin: 0 0 6px;
+  }
+
+  .markscheme-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  .markscheme-table th {
+    text-align: left;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #666;
+    border-bottom: 1px solid #bbb;
+    padding: 2px 6px 2px 0;
+  }
+  .markscheme-table td {
+    vertical-align: top;
+    padding: 3px 6px 3px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .markscheme-table th:first-child,
+  .markscheme-bullet {
+    width: 4.5em;
+    white-space: nowrap;
+    color: #444;
+  }
+  .markscheme-step-mark {
+    margin-left: 8px;
+    font-size: 10px;
+    color: #666;
+    white-space: nowrap;
+  }
+
+  .markscheme-answer {
+    font-size: 11px;
+    margin: 4px 0 0;
+  }
+  .markscheme-none {
+    font-size: 11px;
+    font-style: italic;
+    color: #666;
+    margin: 4px 0;
+  }
+
+  /* The notes are the reason a real markscheme beats a worked solution —
+     "Accept 15 728 or 15 728.10. However, do not accept 15 728.1" — so they
+     print, small but legible, rather than being summarised away. */
+  .markscheme-notes {
+    font-size: 10px;
+    color: #444;
+    margin-top: 6px;
+  }
+  .markscheme-notes strong {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #666;
+    margin-bottom: 2px;
+  }
+  .markscheme-notes ul {
+    margin: 0;
+    padding-left: 16px;
+  }
+  .markscheme-notes li {
+    margin-bottom: 1px;
+  }
+
+  /* Wide maths inside a cell wraps rather than pushing the table off the
+     page — the same fault the formula boxes had, and the same remedy. */
+  .markscheme-table td .katex-html {
+    white-space: normal;
+  }
+  .markscheme-table td > * {
+    max-width: 100%;
+  }
+}

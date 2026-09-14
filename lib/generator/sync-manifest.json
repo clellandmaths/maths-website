@@ -1,8 +1,8 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "e16daf5e52eb6328f965f596ee1e8358f6d8e495",
+  "sourceCommit": "b547d4114f6025fb84a338a0ea9b520faf3e65c0",
   "sourceDirty": false,
-  "count": 93,
+  "count": 94,
   "files": {
     "diagrams/render.ts": "9db428c2903cfefd",
     "diagrams/scene.ts": "29a4e3a4ef04069e",
@@ -45,7 +45,7 @@
     "generators/functions.ts": "8b005bbd41c981b7",
     "generators/integration.ts": "7f9ca1a247d7da5f",
     "generators/logs.ts": "5a3f8dd2ac80876d",
-    "generators/markscheme-source.ts": "700789c45a097867",
+    "generators/markscheme-source.ts": "5c045e1f45cfdcef",
     "generators/n5-alg-fractions.ts": "d007382a6b4d9c15",
     "generators/n5-angles.ts": "0de5cbfa992d2736",
     "generators/n5-bearings.ts": "bd3f3a269578d98b",
@@ -85,6 +85,7 @@
     "generators/n5-volume.ts": "018e8125d95accc1",
     "generators/n5.ts": "4d2c0cd694c9d400",
     "generators/paper-hints.ts": "e1888fd737b3d1bb",
+    "generators/paper-markscheme.ts": "bc45858defc787d8",
     "generators/paper-steps.ts": "b8ab0a61e2d27f77",
     "generators/quadratics.ts": "892aff1b7bb0d069",
     "generators/sequences.ts": "da6e13b9f7f65e2b",
