@@ -118,7 +118,48 @@ export function methodOf(route: string | undefined): string {
   // they have had a go.
   first = first.replace(/^\s*\d+(\s*\+\s*\d+)*\s*[-\u2013]\s*/, '').trim();
 
+  // The same note arrives trailing, and in the middle, and for a long time only
+  // the leading form was cut:
+  //
+  //   "state a, then state b - a mark each"
+  //   "undo the operations in turn, one mark each, with the square ..."
+  //   "square and add, take the root, simplify the surd - one mark per skill"
+  //
+  // 19 of the 197 reached a pupil carrying one.
+  //
+  // **Each pattern requires a mark WORD right after the separator**, and that
+  // is the whole of what keeps this safe. Splitting on separators and dropping
+  // short clauses that mention a mark looked equivalent and was not: it turned
+  // `y - b = m(x - a)` into `y, b = m(x, a)`, because a minus sign between
+  // spaces is a separator too. It also left "calculate with units, not five"
+  // behind after eating "three marks" out of the middle of its own clause.
+  const MARK_WORD = '(?:an?|one|two|three|four|five|six|seven|eight|nine|\\d+)';
+
+  first = first
+    // trailing: "... - a mark each", "... - three marks, not five"
+    .replace(new RegExp(`\\s[-\u2013\u2014]\\s*${MARK_WORD}\\s+marks?\\b.*$`, 'i'), '')
+    // embedded: "..., one mark each, ..."
+    .replace(new RegExp(`,\\s*${MARK_WORD}\\s+marks?\\s+each\\s*,`, 'i'), ',')
+    // leading: "One mark, one step: ..."
+    .replace(new RegExp(`^${MARK_WORD}\\s+marks?,\\s*`, 'i'), '')
+    .trim();
+
   return first ? first.charAt(0).toUpperCase() + first.slice(1) : '';
+}
+
+/**
+ * The method hint for one variation: its own plan if it has one, otherwise the
+ * markscheme route's first sentence.
+ *
+ * Every caller goes through this rather than reaching for `route` directly, so
+ * a variation that needed its own wording gets it everywhere at once - the
+ * card, the app, the printed sheet, and the baked `paper-hints.ts` table. That
+ * matters more than it looks: the table is generated from the registry, so a
+ * caller that skipped this would put a different second hint on a past paper
+ * question than on the generated question modelled on it.
+ */
+export function methodFor(meta: { method?: string; route?: string } | undefined): string {
+  return (meta?.method ?? '').trim() || methodOf(meta?.route);
 }
 
 /**
@@ -314,8 +355,8 @@ export function toWorksheetQuestion(
     // name the thing they are about — "Write $x^2+bx+c$ in the form
     // $(x+p)^2+q$" — and a hint is the one place a pupil reads them.
     ...(meta?.skill ? { skill: toSiteMaths(meta.skill) } : {}),
-    ...(methodOf(meta?.route)
-      ? { method: toSiteMaths(methodOf(meta?.route)) }
+    ...(methodFor(meta)
+      ? { method: toSiteMaths(methodFor(meta)) }
       : {}),
 
     uid: generatedUid(q.code, seed, parentIndex),
@@ -493,7 +534,7 @@ export function stageHints(q: {
 }): StagedHints {
   const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
   const skill = q.skill || meta?.skill || null;
-  const method = q.method || (meta ? methodOf(meta.route) : '') || null;
+  const method = q.method || (meta ? methodFor(meta) : '') || null;
 
   // `solutionSteps` on the generator's shape, `steps` on the website's.
   const all = q.solutionSteps ?? q.steps ?? [];

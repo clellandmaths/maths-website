@@ -179,6 +179,38 @@ export interface VariationMeta {
    * make and we close with the quadrilateral at the centre.
    */
   route?: string;
+  /**
+   * The pupil's plan, where the marker's route does not make one.
+   *
+   * The second hint has always been the first sentence of `route`, and mostly
+   * that is right - how a marker describes the marks and how a pupil should
+   * plan the question are usually the same sentence. Where they are not, the
+   * pupil was getting the marker's words out of their context, and that goes
+   * wrong in three ways, all found by reading the entries where the method
+   * introduces no word the skill had not already used:
+   *
+   *   **wrong out of context** - `data.quartiles` routes "find the quartiles,
+   *   then calculate the range". Right in front of a marking instruction about
+   *   quartiles; a wrong instruction to a pupil, who needs the *interquartile*
+   *   range.
+   *
+   *   **marker commentary** - "- a mark each", "3 for the volume in scientific
+   *   notation, 2 for the division". A pupil should not be handed the mark
+   *   split before they have tried the question: that is the shape of the
+   *   answer, and `hints.ts` already forbids it at the start of a line.
+   *
+   *   **vaguer than the skill** - `volume.sphere` routes "substitute,
+   *   evaluate, round", which is the scheme exactly and tells a pupil less
+   *   than the line they have just read.
+   *
+   * So `route` stays what it is - a verification artefact, quoted as the
+   * scheme words it, which is what makes a variation spot-checkable - and this
+   * is the pupil-facing line for the few where those two jobs come apart.
+   *
+   * Set it only where the route genuinely fails a pupil. A second copy of a
+   * sentence is a second thing to keep true, and most routes do not need one.
+   */
+  method?: string;
 }
 
 export const N5_VARIATIONS: Record<string, VariationMeta> = {
@@ -1000,6 +1032,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2025 P1 Q9'],
     marks: 2,
     route: 'state a, then state b - a mark each, and the scheme gives nothing for a with the wrong sign even where b is right',
+    method: 'Read a off the turning point and settle its sign before going on, then read b',
     answerShape: 'integer',
     webTopics: ['Parabola Equation from Graph'],
     skill: 'Read a and b off a turning point, watching the sign of a',
@@ -1235,6 +1268,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 2,
     marksInferred: true,
     route: 'square, then add — one mark per operation, which is what every published change-of-subject scheme in the set does',
+    method: 'Square both sides to clear the root, then add the remaining term to the other side',
     answerShape: 'expression',
     webTopics: ['Changing the subject of a formula'],
     skill: 'Square both sides, then move the one remaining term',
@@ -1860,6 +1894,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     skill: 'Give a sphere\'s volume in scientific notation, then divide two such volumes',
     marks: 5,
     route: '3 for the volume in scientific notation, 2 for the division',
+    method: 'Substitute into the volume of a sphere and evaluate, write that in scientific notation, then set up the division and evaluate it',
   },
   'volume.cone-approx-pi': {
     topic: 'Volume of a Cone',
@@ -1897,6 +1932,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 5,
     marksInferred: true,
     route: '2 for the sphere, 3 for the cone — read off the pattern the other years set',
+    method: 'Work out the sphere\'s volume first, then substitute it into the volume of a cone and solve for the height',
   },
   'volume.cone-minus-hemisphere': {
     topic: 'A Cone with a Hemisphere Removed',
@@ -2024,6 +2060,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2015 P2 Q14'],
     marks: 7,
     route: '1 for the expression, 2 for the area and the rearrangement, 4 for the formula: substitute, discriminant, solve, select and round',
+    method: 'Write the expression for the border, form the area equation and rearrange it, then substitute into the quadratic formula, evaluate the discriminant, solve, and select and round the root that is a length',
     answerShape: 'rounded',
     webTopics: ['Create equation in geometric context', 'Quadratic formula'],
     skill: 'Turn a border of width x into a quadratic, then solve it',
@@ -2049,6 +2086,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // height is always odd; and the final division must not be by a single
     // digit, so the collected coefficient is always at least ten.
     route: '1 for the triangle area, then 4: equate, start to solve, rearrange, solve',
+    method: 'Write the triangle\'s area, equate it to the rectangle\'s, start to solve, rearrange, then solve',
     answerShape: 'integer',
     webTopics: ['Linear equations and inequations', 'Create equation in geometric context'],
     skill: 'Equate a triangle and a rectangle, clear the fraction, solve',
@@ -2059,6 +2097,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2025 P1 Q15'],
     marks: 6,
     route: '1 for the area, 2 for the expansion and rearrangement, 3 for factorising, solving and rejecting the negative root',
+    method: 'Write the area, expand and rearrange it, then factorise, solve, and reject the negative root',
     answerShape: 'integer',
     webTopics: ['Create equation in geometric context', 'Quadratic equation by factorising'],
     skill: 'Equate two areas, factorise, and reject the root that is not a length',
@@ -2079,6 +2118,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2023 P2 Q14'],
     marks: 6,
     route: '2 for the volume expression and the rearrangement, 4 for the formula',
+    method: 'Write the volume expression and rearrange it into a quadratic, then substitute into the quadratic formula and solve',
     answerShape: 'rounded',
     webTopics: ['Create equation in geometric context', 'Quadratic formula'],
     skill: 'Turn a cuboid volume into a quadratic, then solve it',
@@ -2125,6 +2165,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2019 P1 Q10'],
     marks: 3,
     route: '1 for the direct pathway, then 2: a valid pathway through the midpoint, then consistent components',
+    method: 'State the direct pathway first, then build a valid pathway through the midpoint and give its components consistently',
     answerShape: 'expression',
     webTopics: ['Vector pathways', 'Adding and Subtracting vector components'],
     skill: 'Follow a pathway through a midpoint, in component form',
@@ -2153,6 +2194,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2017 P2 Q8'],
     marks: 3,
     route: '1 for the direct route, then 2: the pathway through the extension and the midpoint, then collecting it',
+    method: 'State the direct route, then take the pathway through the extension and the midpoint, and collect it',
     answerShape: 'expression',
     webTopics: ['Vector pathways'],
     skill: 'Use an extended side and a midpoint to reach a fourth point',
@@ -2179,6 +2221,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2024 P2 Q14'],
     marks: 3,
     route: '1 for the side from the diagonal, then 2: the pathway through the midpoint, then collecting it',
+    method: 'Get the side from the diagonal first, then take the pathway through the midpoint and collect it',
     answerShape: 'expression',
     webTopics: ['Vector pathways'],
     skill: 'Use a diagonal and a midpoint to cross a rhombus',
@@ -2262,6 +2305,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2014 P1 Q11'],
     marks: 4,
     route: '2 for starting the rearrangement and stating the gradient, 2 for knowing to set y = 0 and stating the coordinates - the scheme requires the brackets',
+    method: 'Start the rearrangement and state the gradient, then set y = 0 and state the intercept as coordinates',
     answerShape: 'expression',
     webTopics: ['Coordinate Geometry with straight line equation', 'Straight Line Equation'],
     skill: 'Rearrange for the gradient, then find where the line meets the x-axis',
@@ -2275,6 +2319,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2018 P1 Q12', '2023 P1 Q11'],
     marks: 1,
     route: 'state the value - one mark, and the scheme asks for nothing else',
+    method: 'Find the related acute angle, recall its exact value, then give it the sign that quadrant requires',
     answerShape: 'rounded',
     webTopics: ['sin/cos/tan of related angles'],
     skill: 'Use the quadrant to put the right sign on a known trigonometric value',
