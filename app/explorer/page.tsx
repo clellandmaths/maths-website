@@ -1372,6 +1372,24 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           />
                           <span className="text-sm text-slate-400">QR</span>
                         </label>
+                        {/* **Hints belong here too.** The toolbar that carries
+                            this toggle is `hidden lg:block`, so below 1024px —
+                            every phone, and most tablets — there was no way to
+                            turn hints on in the worksheet at all. Full screen
+                            and focus mode both offer them at any width, and a
+                            sheet someone is sitting and working through is
+                            exactly where they would want them. */}
+                        {courseHasHints(course) && (
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={showHints}
+                              onChange={(e) => setShowHints(e.target.checked)}
+                              className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                            />
+                            <span className="text-sm text-slate-400">Hints</span>
+                          </label>
+                        )}
                       </div>
                       <button
                         onClick={handleClearAll}

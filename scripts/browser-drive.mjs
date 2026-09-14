@@ -127,21 +127,42 @@ export async function withPage(opts, fn) {
   };
 
   /**
-   * The first button whose trimmed text is **exactly** `text`.
+   * **Laid out, not merely present.**
+   *
+   * This site renders some controls twice — the Explorer has a desktop
+   * `FilterSidebar` and a mobile one, and the hidden copy comes first in the
+   * DOM. A plain `querySelectorAll(...).find(...)` therefore returns the
+   * zero-sized one at a phone width, the click silently does nothing, and every
+   * assertion after it fails against a page that never changed. Picking the
+   * laid-out one is the difference between a check that works at two widths and
+   * one that only works at the width it was written at.
+   */
+  const VISIBLE = `(el => { const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; })`;
+
+  /**
+   * The first **visible** button whose trimmed text is exactly `text`.
    *
    * Exact on purpose — "Add" must not match "Add 5 like it". But a button that
-   * carries a count or an icon's text alongside its label will not match, and
-   * that has cost time here more than once: the Explorer's tab reads
-   * `My Worksheet` until something is on the sheet and `My Worksheet 1`
-   * afterwards, so an exact match silently stopped working at the point the
-   * test became worth running. Reach for `buttonMatching` when a label can grow.
+   * carries a count alongside its label will not match, and that has cost time
+   * here: the Explorer's tab reads `My Worksheet` until something is on the
+   * sheet and `My Worksheet 1` afterwards, so an exact match stopped working at
+   * the point the test became worth running. Use `buttonMatching` when a label
+   * can grow.
    */
   const buttonNamed = text =>
-    `[...document.querySelectorAll('button')].find(b => b.textContent.trim() === ${JSON.stringify(text)})`;
+    `[...document.querySelectorAll('button')]
+       .filter(${VISIBLE}).find(b => b.textContent.trim() === ${JSON.stringify(text)})`;
 
-  /** The first button whose text matches `re` — for labels that carry a count. */
+  /** The first visible button whose text matches `re` — for labels that grow. */
   const buttonMatching = re =>
-    `[...document.querySelectorAll('button')].find(b => ${re}.test(b.textContent || ''))`;
+    `[...document.querySelectorAll('button')]
+       .filter(${VISIBLE}).find(b => ${re}.test(b.textContent || ''))`;
+
+  /** The first visible `<label>` whose trimmed text is exactly `text`. */
+  const labelNamed = text =>
+    `[...document.querySelectorAll('label')]
+       .filter(${VISIBLE}).find(l => l.textContent.trim() === ${JSON.stringify(text)})`;
 
   const go = async (path, settle = 3500) => {
     await send('Page.navigate', { url: `http://127.0.0.1:${port}${path}` });
@@ -154,7 +175,7 @@ export async function withPage(opts, fn) {
     { width, height, deviceScaleFactor: 1, mobile: false });
 
   try {
-    await fn({ send, evaluate, click, buttonNamed, buttonMatching, go, sleep, port });
+    await fn({ send, evaluate, click, buttonNamed, buttonMatching, labelNamed, go, sleep, port });
   } finally {
     ws.close();
     chrome.kill();
