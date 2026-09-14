@@ -4,11 +4,14 @@ What the site has, how someone finds it, and where they do not. Written
 2026-09-14, alongside the generator work, because that work kept running into
 things nobody could reach.
 
-**This is a report, not a work queue.** Nothing here was changed. It is written
-down so the decision to act or not act is made deliberately, once, by someone
-looking at the whole list — which is the same rule `responsive.md` follows, and
-the same reason: a finding acted on the moment it is found is a change nobody
-asked for.
+**This is a report, not a work queue.** It is written down so the decision to
+act or not act is made deliberately, once, by someone looking at the whole list
+— the same rule `responsive.md` follows, and the same reason: a finding acted on
+the moment it is found is a change nobody asked for.
+
+Nothing here was changed when it was written. **Two findings have since been
+acted on** — both because they blocked work that was asked for, and both marked
+where they appear. Everything else stands as reported.
 
 Every claim below was verified against the source or the built output on
 2026-09-14, not remembered.
@@ -59,15 +62,18 @@ Worth saying first, because the rest of this document is faults.
 
 ### `/course/n5/generate` has one inbound link on the whole site
 
-`app/explorer/page.tsx:611`. It is an `<a>` reading **`by skill…`**, styled
-`text-xs text-muted-foreground underline`, and it renders only when the course
-is National 5 **and** at least one subtopic filter is already set.
+**Partly acted on, 2026-09-14** — it was reported here as a `text-xs`
+underlined `by skill…` that appeared only once a subtopic filter was already
+set, so filtering by year alone hid the only route to it. It is a styled
+**Build by skill** control now, gated on the course rather than the filter, with
+a title saying what is behind it. The rest of this finding stands.
 
-It is not in the navbar, not in the footer, not on the course page, not in
-`CourseTabs`, and not in `app/sitemap.ts`. It is a complete page with its own
-explanatory copy — *"Every question is modelled on a past paper question and
-checked against its marking instructions — so they are new questions, not
-reprints"* — that almost nobody will see.
+It is still not in the navbar, not in the footer, not on the course page, not in
+`CourseTabs`, and not in `app/sitemap.ts` — **one link, from one page**. It is a
+complete page with its own explanatory copy — *"Every question is modelled on a
+past paper question and checked against its marking instructions — so they are
+new questions, not reprints"* — that someone who never opens the Explorer will
+not meet.
 
 **This is the largest single gap on the site**, and it is not a small fix
 dressed up: it is a finished feature with no front door.
@@ -93,9 +99,13 @@ used to get there.
 
 ### The static paper pages are barely linked
 
+*Unchanged, and worth re-reading now that the archive row has a fifth control:
+**New Paper Like This** goes to the generated practice paper, not to the paper
+page. The paper page itself is still reached only by the heading.*
+
 22 crawlable pages carrying every question, answer and markscheme — and the only
 route to them from the UI is clicking the small **`2025 Paper 1`** heading on a
-course row, which sits directly above four large coloured buttons that all do
+course row, which sits directly above five large coloured buttons that all do
 something else. Most people will never discover the heading is a link.
 
 ### The Marathon is advertised where it cannot be reached
@@ -140,8 +150,10 @@ the way back **inside** the mode as well as on the page behind it.
 Two findings belong to `responsive.md` and are repeated here because they are
 navigation faults as much as sizing ones:
 
-- **The four per-paper buttons are 36–38px** against a 44px minimum, and there
-  are 88 of them on the National 5 course page.
+- **The per-paper buttons are 36–38px** against a 44px minimum. There were 88 of
+  them on the National 5 course page when this was measured, and the
+  *New Paper Like This* link added a fifth to every National 5 row — so the
+  count is worse now, not better. Nothing else about the finding changed.
 - **`Browse Questions` / `Hide Questions` are `hidden sm:inline`**
   (`CoursePageClient.tsx:271,276`). `sm:` is 640px, so **no phone in portrait
   ever shows the label** — the control is a bare chevron. This is the same

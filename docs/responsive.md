@@ -26,6 +26,11 @@ It is also a third quicker: one page load measured at all four viewports rather
 than four full passes. Verified identical to the old order on a sample (795
 violations both ways, no differences); `--reload-each` restores it.
 
+**And the site has grown since.** It was 513 pages when the baseline was taken
+and is **542** now — the 22 generated practice papers and the rest of the
+National 5 work. A read-back will report those as new, which is correct and
+expected; what matters is that nothing *else* is.
+
 **But it is still a file rather than a ratchet, because nothing has read it
 back.** A baseline proves nothing until a full run compares against it on a
 build known not to have moved, and both earlier attempts at this reported
@@ -33,7 +38,7 @@ phantom "new" violations on an unchanged build — which is the whole reason the
 read-back matters rather than a formality.
 
 **Spend the 90 minutes immediately before a merge to `master`**, not on a quiet
-day. There it is the safety net that proves 518 pages did not move; run idly it
+day. There it is the safety net that proves the pages did not move; run idly it
 is 90 minutes that tells you what you already assumed. **Nothing on `dev` is
 live** — `git rev-list --count master..dev` says how far ahead it is, and that is
 the number to trust, because writing it down here increments it. That merge is
