@@ -37,6 +37,7 @@
     "check:genvideo": "node scripts/check-generated-video.mjs",
     "check:explorergen": "node scripts/check-explorer-generate.mjs",
     "check:toggles": "node scripts/check-worksheet-toggles.mjs",
+    "check:wslayout": "node scripts/check-worksheet-layout.mjs",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {
