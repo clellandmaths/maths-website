@@ -37,14 +37,28 @@ const PAPERS = ALL
   ? [2026, 2025, 2024, 2023, 2022, 2019, 2018, 2017, 2016, 2015, 2014].flatMap(y => [[y, 1], [y, 2]])
   : [[2024, 1], [2019, 2]];
 
-await withPage({ port: 8133, cdp: 9233 }, async ({ evaluate, go, sleep }) => {
-  // ── 5. the way in ───────────────────────────────────────────────────────
+await withPage({ port: 8133, cdp: 9233 }, async ({ evaluate, click, send, go, sleep }) => {
+  // ── 5. the two ways in ──────────────────────────────────────────────────
   await go('/course/n5/papers/2024/paper-1', 2500);
   t.check(await evaluate(`/generate a practice paper/i.test(document.body.innerText)`),
     'the National 5 paper page offers one');
   await go('/course/higher/papers/2024/paper-1', 2000);
   t.check(!(await evaluate(`/generate a practice paper/i.test(document.body.innerText)`)),
     'the Higher paper page does not — no audited variations there');
+
+  /* The archive is where people actually are, and "Practice Paper" beside
+     "Start Paper" and "Focus Mode" read as a third way to sit the same one. */
+  await go('/course/n5', 3500);
+  const onArchive = await evaluate(`(() => {
+    const a = [...document.querySelectorAll('a')]
+      .find(x => /new paper like this/i.test(x.textContent || ''));
+    return a ? { href: a.getAttribute('href'), title: a.getAttribute('title') || '' } : null;
+  })()`);
+  t.check(!!onArchive, 'the archive says "New Paper Like This", not just "Practice Paper"');
+  t.check(/generate\/paper\//.test(onArchive?.href ?? ''),
+    `pointing at the builder: ${JSON.stringify(onArchive?.href)}`);
+  t.check(/modelled question by question/i.test(onArchive?.title ?? ''),
+    'and explains itself on hover');
 
   for (const [year, paper] of PAPERS) {
     await go(`/course/n5/generate/paper/${year}/paper-${paper}`, 2000);
@@ -68,7 +82,7 @@ await withPage({ port: 8133, cdp: 9233 }, async ({ evaluate, go, sleep }) => {
           distinct: new Set(bodies).size,
           missing: /could not be generated/.test(t),
           counted: m ? { n: +m[1], marks: +m[2], original: +m[3] } : null,
-          exits: ['Print / Save PDF', 'Open as a worksheet', 'Add all to my sheet']
+          exits: ['Print / Save PDF', 'Open as a worksheet', 'Another practice paper']
             .every(s => t.includes(s)),
         };
       })()`);
@@ -88,7 +102,71 @@ await withPage({ port: 8133, cdp: 9233 }, async ({ evaluate, go, sleep }) => {
       `${where}: all ${state.distinct} questions are different`);
     t.check(state.counted.original > 0 && state.counted.marks > 0,
       `${where}: ${state.counted.marks} marks against the original's ${state.counted.original}`);
-    t.check(state.exits, `${where}: print, share and add-to-sheet all offered`);
+    t.check(state.exits, `${where}: print, share and another-paper all offered`);
+  }
+
+  /* ── what would actually print ─────────────────────────────────────────
+     `window.print()` fires; the question is what the page hands the printer.
+     This one had no `no-print` on its header, so the title and all four
+     buttons printed, and its question blocks were not `.worksheet-question`,
+     so they missed the white-card-and-black-text rules entirely and came out
+     in the page's own dark styling. */
+  await go('/course/n5/generate/paper/2024/paper-1', 2000);
+  for (let i = 0; i < 40; i++) {
+    if (!(await evaluate(`/Drawing question/.test(document.body.innerText)`))) break;
+    await sleep(1000);
+  }
+  await send('Emulation.setEmulatedMedia', { media: 'print' });
+  await sleep(600);
+  const printed = await evaluate(`(() => {
+    /* Rendered, not merely styled. getComputedStyle(el).display returns the
+       element's OWN display, so a button inside a hidden header still reports
+       inline-flex and looks visible. A zero-sized box is the fact: an element
+       inside a display-none ancestor has no layout at all.
+       (No backticks in here - this whole expression is a template literal.) */
+    const vis = el => {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    };
+    const shown = t => [...document.querySelectorAll('button, a')]
+      .filter(el => new RegExp(t, 'i').test(el.textContent || '') && vis(el)).length;
+    return {
+      questions: document.querySelectorAll('.worksheet-question').length,
+      printButton: shown('Print'),
+      shareButton: shown('Open as a worksheet'),
+      anotherButton: shown('Another practice paper'),
+      nav: vis(document.querySelector('nav')),
+    };
+  })()`);
+  await send('Emulation.setEmulatedMedia', { media: '' });
+
+  t.check(printed?.questions > 0, `print: ${printed?.questions} question blocks carry the print class`);
+  t.check(printed?.printButton === 0, 'print: the Print button is not on the paper');
+  t.check(printed?.shareButton === 0, 'print: nor the share button');
+  t.check(printed?.anotherButton === 0, 'print: nor the another-paper button');
+  t.check(!printed?.nav, 'print: nor the site navigation');
+
+  /* ── the shared link hands over everything ─────────────────────────────
+     A locked handout withholds answers, hints and video, which is right when a
+     teacher chose that. Nobody chose it here. */
+  const link = await evaluate(`(() => {
+    const b = [...document.querySelectorAll('button')]
+      .find(x => /open as a worksheet/i.test(x.textContent || ''));
+    return !!b;
+  })()`);
+  t.check(link, 'the page offers "Open as a worksheet"');
+  await click(`[...document.querySelectorAll('button')]
+    .find(x => /open as a worksheet/i.test(x.textContent || ''))`);
+  await sleep(6000);
+  const opened = await evaluate(`({
+    path: location.pathname,
+    flags: new URLSearchParams(location.search).get('o') || '',
+  })`);
+  t.check(opened?.path === '/worksheet', `it opens a worksheet (${opened?.path})`);
+  for (const [flag, name] of [['a', 'answers'], ['h', 'hints'], ['v', 'video'], ['q', 'QR codes']]) {
+    t.check((opened?.flags ?? '').includes(flag),
+      `and hands over ${name} (o=${opened?.flags})`);
   }
 });
 

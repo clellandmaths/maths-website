@@ -276,10 +276,18 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                               {courseId === 'n5' && (
                                 <Link
                                   href={`/course/${courseId}/generate/paper/${paper.year}/paper-${paper.paperNumber}`}
+                                  title={`Build a new practice paper modelled question by question on the ${paper.year} Paper ${paper.paperNumber} — same topics, same marks, numbers you have not seen`}
                                   className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium rounded-lg transition-colors"
                                 >
                                   <Dices className="h-4 w-4" />
-                                  Practice Paper
+                                  {/* **"Practice Paper" did not say what it
+                                      does.** Beside Start Paper and Focus
+                                      Mode, which both open *this* paper, it
+                                      read as a third way to sit the same one.
+                                      It builds a new paper modelled on it, so
+                                      the label says new, and the title says
+                                      the rest. */}
+                                  New Paper Like This
                                 </Link>
                               )}
                               <button

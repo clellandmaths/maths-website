@@ -2,9 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Loader2, Printer, Share2, ArrowRight } from 'lucide-react';
+import { Loader2, Printer, Share2, Dices } from 'lucide-react';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
-import { appendToSession } from '@/lib/worksheet-context';
 import { printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
@@ -47,8 +46,10 @@ export default function PracticePaperClient({
   const [made, setMade] = useState<(QuestionWithMetadata | null)[]>([]);
   const [done, setDone] = useState(0);
   const [failed, setFailed] = useState(false);
-  const [added, setAdded] = useState(0);
   const sheetRef = useRef<HTMLDivElement>(null);
+  /** Bumped to draw the whole paper again, with new numbers throughout. */
+  const [round, setRound] = useState(0);
+  const again = () => { setMade([]); setDone(0); setFailed(false); setRound(n => n + 1); };
 
   const total = plan.length;
   const originalMarks = plan.reduce((a, r) => a + r.marks, 0);
@@ -87,20 +88,32 @@ export default function PracticePaperClient({
     })();
 
     return () => { cancelled = true; };
-    // `plan` is a build-time constant for this route; drawing once is correct.
+    // `plan` is a build-time constant for this route, so the only thing that
+    // should start a fresh draw is someone asking for another paper.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [round]);
 
   const drawn = made.filter(Boolean) as QuestionWithMetadata[];
   const missing = made.filter(q => !q).length;
   const newMarks = drawn.reduce((a, q) => a + (q.marks ?? []).reduce((x, y) => x + y, 0), 0);
 
+  /**
+   * Open it as a worksheet, with everything switched on.
+   *
+   * **Not the default locked handout.** A locked sheet withholds the answers,
+   * the hints and the video, which is right when a teacher is setting homework
+   * and chooses what to give. Nobody chose anything here: a pupil pressed
+   * "generate a practice paper" for themselves, and handing them a paper with
+   * the help stripped out is the one outcome that helps nobody. So all four
+   * flags go on — answers, hints, the worked-example video and its QR code.
+   */
   const share = () => {
     const origin = window.location.origin;
     import('@/lib/worksheet-share').then(({ shareLinks }) => {
       const { locked } = shareLinks(
         origin, courseId, drawn,
         `Practice paper — modelled on ${courseName} ${year} Paper ${paperNumber}`,
+        { answers: true, hints: true, video: true, qrCodes: true },
       );
       window.location.href = locked;
     });
@@ -108,7 +121,7 @@ export default function PracticePaperClient({
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-8 no-print">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           {courseName} · practice paper
         </p>
@@ -156,21 +169,17 @@ export default function PracticePaperClient({
               <Share2 className="h-3.5 w-3.5" />
               Open as a worksheet
             </button>
+            {/* **A whole new set, rather than "add all to my sheet".** The
+                sheet is a teacher's staging area; someone who came here wanted
+                a paper to sit and do, and when they have done it the useful
+                offer is another one — same shapes, same marks, new numbers. */}
             <button
-              onClick={() => setAdded(appendToSession(courseId, drawn))}
+              onClick={again}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
             >
-              Add all to my sheet
+              <Dices className="h-3.5 w-3.5" />
+              Another practice paper
             </button>
-            {added > 0 && (
-              <Link
-                href={`/explorer?c=${courseId}`}
-                className={`inline-flex items-center gap-1.5 text-sm font-medium ${theme.text} hover:opacity-80`}
-              >
-                {added} added
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            )}
           </div>
         )}
 
@@ -184,7 +193,11 @@ export default function PracticePaperClient({
 
       <div ref={sheetRef} className="worksheet-container space-y-6">
         {made.map((q, i) => (
-          <article key={i} className="border border-border rounded-xl p-5 bg-card/40">
+          /* `worksheet-question` is what the print stylesheet keys on for a
+             white card with black text and a sensible page break. Without it
+             this printed the page's own dark styling, and with the header and
+             its four buttons still on it. */
+          <article key={i} className="worksheet-question border border-border rounded-xl p-5 bg-card/40">
             <div className="flex items-center gap-2 flex-wrap mb-2">
               <span className={`font-mono text-sm font-semibold ${theme.text}`}>{plan[i].number}.</span>
               {q ? (
@@ -219,7 +232,7 @@ export default function PracticePaperClient({
         ))}
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 no-print">
         <Link
           href={`/course/${courseId}/papers/${year}/paper-${paperNumber}`}
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
