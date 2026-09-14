@@ -437,6 +437,79 @@ export function keyOfQuestion(q: { question: string; answer?: string | null }): 
 }
 
 /**
+ * Staged help for one question, in the order a teacher gives it at a desk.
+ *
+ * **Why the first two stages exist at all.** A pupil who is stuck has two
+ * different problems - not knowing what is being asked, and not knowing how to
+ * start - and handing over the first line of the working answers only the
+ * second. "What is it asking you to do?" is the first thing any teacher says,
+ * and it costs nothing to a pupil who had already understood the question.
+ *
+ * So the ladder is always:
+ *
+ *   1.  what the question asks     `skill`
+ *   2.  where the marks go         `method`
+ *   3+  one step at a time         `solutionSteps`, with `stepMarks` beside
+ *
+ * **The last step is never a hint.** It states the answer, so it is the mark
+ * the pupil is left to earn. `heldBack` distinguishes "that is all the help
+ * there is" from "there was never any".
+ *
+ * **Two callers, two shapes.** The website's adapter has already resolved
+ * `skill` and `method` onto the question; the generator's own app holds a raw
+ * `GeneratedQuestion` and has only `variationId`. Both are accepted and the
+ * resolved fields win, so neither caller has to know which case it is in.
+ *
+ * Courses other than National 5 have no registry, so `skill` and `method` come
+ * back null and the ladder is the steps alone - which is exactly what those
+ * questions have always shown.
+ *
+ * `Hints.tsx` on the website stages the same ladder without importing this,
+ * deliberately: it is drawn on every card in the archive, and importing from
+ * here would pull the 33,000-line engine onto the browse page. The rule lives
+ * here so it can be checked by running it; that component is the one place it
+ * is spelled twice, and `hint-ladder.ts` fails if the two disagree.
+ */
+export interface StagedHints {
+  skill: string | null;
+  method: string | null;
+  /** Every step but the last. */
+  steps: string[];
+  /** Aligned with `steps`; empty where a variation has not been backfilled. */
+  stepMarks: number[];
+  /** True when a final step was withheld because it lands the answer. */
+  heldBack: boolean;
+  /** How many presses the ladder is worth, prose lines included. */
+  presses: number;
+}
+
+export function stageHints(q: {
+  solutionSteps?: readonly string[];
+  steps?: readonly string[];
+  stepMarks?: readonly number[];
+  variationId?: string;
+  skill?: string;
+  method?: string;
+}): StagedHints {
+  const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
+  const skill = q.skill || meta?.skill || null;
+  const method = q.method || (meta ? methodOf(meta.route) : '') || null;
+
+  // `solutionSteps` on the generator's shape, `steps` on the website's.
+  const all = q.solutionSteps ?? q.steps ?? [];
+  const steps = all.slice(0, -1);
+
+  return {
+    skill,
+    method,
+    steps: [...steps],
+    stepMarks: [...(q.stepMarks ?? [])].slice(0, steps.length),
+    heldBack: all.length > 0,
+    presses: (skill ? 1 : 0) + (method ? 1 : 0) + steps.length,
+  };
+}
+
+/**
  * Draw `count` different questions from a set of variations.
  *
  * Shared by both of the above, because they differ only in which variations are
