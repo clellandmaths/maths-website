@@ -35,6 +35,7 @@
     "check:notespractice": "node scripts/check-notes-to-practice.mjs",
     "check:warmup": "node scripts/check-warmup-more.mjs",
     "check:genvideo": "node scripts/check-generated-video.mjs",
+    "check:explorergen": "node scripts/check-explorer-generate.mjs",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {

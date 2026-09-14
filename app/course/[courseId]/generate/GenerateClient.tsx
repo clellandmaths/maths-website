@@ -131,10 +131,15 @@ function Builder({ courseId, courseName, groups }: Props) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
+      {/* **The Explorer is in the trail because that is where this is reached
+          from**, and because without it this page is a dead end: the only other
+          way out was "Go to your sheet", which does not appear until you have
+          generated something. Someone who opened this to look at it was stuck. */}
       <Breadcrumbs
         items={[
           { label: courseName, href: `/course/${courseId}` },
-          { label: 'Worksheet generator' },
+          { label: 'Topic Explorer', href: `/explorer?c=${courseId}` },
+          { label: 'By skill' },
         ]}
       />
 

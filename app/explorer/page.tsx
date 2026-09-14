@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2 } from 'lucide-react';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2, SlidersHorizontal } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -37,7 +37,7 @@ import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
 import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
-import { byPaperLabel, withParentVideo, courseHasHints } from '@/lib/similar-questions';
+import { byPaperLabel, withParentVideo, courseHasHints, variationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
@@ -102,6 +102,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
   // Generating against the current filter. National 5 only — see canGenerate.
   const [genCount, setGenCount] = useState(5);
+  /** Per-topic counts, and the panel that sets them. Only used past one topic. */
+  const [perTopic, setPerTopic] = useState<Record<string, number>>({});
+  const [showGenPlan, setShowGenPlan] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [genNote, setGenNote] = useState<string | null>(null);
   const [rerolling, setRerolling] = useState<string | null>(null);
@@ -192,6 +195,60 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
    * static import would put it on the browse page for every course.
    */
   const canGenerate = course === 'n5' && selectedSubtopics.length > 0;
+
+  /**
+   * How many to draw on each topic, when more than one is picked.
+   *
+   * A single number spread across several topics is a guess at something the
+   * teacher already knows: five questions over four topics is neither one each
+   * nor five each, and nothing on screen said which it would be.
+   */
+  const stepTopic = (topic: string, by: number) => {
+    setPerTopic(prev => {
+      const next = Math.max(0, Math.min(20, (prev[topic] ?? 0) + by));
+      const out = { ...prev };
+      if (next === 0) delete out[topic];
+      else out[topic] = next;
+      return out;
+    });
+  };
+  const plannedTotal = Object.values(perTopic).reduce((n, c) => n + c, 0);
+
+  /** Draw the plan, topic by topic. */
+  const handleGeneratePlan = async () => {
+    if (generating || plannedTotal === 0) return;
+    setGenerating(true);
+    setGenNote(null);
+    try {
+      const { generateForSubtopics, worksheetKeys } = await import('@/lib/generated-question');
+      const made: QuestionWithMetadata[] = [];
+      const short: string[] = [];
+      // One topic at a time — never Promise.all, and the exclude set carries
+      // across topics so a variation tagged under two of them cannot be drawn
+      // twice as the same question.
+      for (const topic of selectedSubtopics) {
+        const want = perTopic[topic] ?? 0;
+        if (!want) continue;
+        const got = await generateForSubtopics(
+          [topic], want, worksheetKeys([...worksheetItems, ...made]));
+        made.push(...got.map(q => withParentVideo(q, paperIndex)));
+        if (got.length < want) short.push(`${topic} (${got.length} of ${want})`);
+      }
+      made.forEach(addItem);
+      // Naming the topics that came up short, not just counting them: a sheet
+      // quietly missing three questions with nothing saying which topic is the
+      // failure worth avoiding.
+      setGenNote(
+        !made.length ? 'No new questions could be made for those topics.'
+          : short.length ? `Added ${made.length}. Short on ${short.join(', ')}.`
+            : `Added ${made.length} to your worksheet.`);
+      setShowGenPlan(false);
+    } catch {
+      setGenNote('Something went wrong generating those.');
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const handleGenerate = async () => {
     if (!canGenerate || generating) return;
@@ -329,6 +386,50 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     () => filterQuestions(allQuestions, selectedSubtopics, selectedYears, selectedPapers),
     [allQuestions, selectedSubtopics, selectedYears, selectedPapers]
   );
+
+  /**
+   * How many of the filtered questions can be cloned.
+   *
+   * Only a National 5 question with a printed paper badge has variations
+   * modelled on it. The count goes in the button so it promises what it can
+   * deliver rather than "a variation of each" and then quietly fewer.
+   */
+  const variableCount = useMemo(
+    () => courseHasHints(course)
+      ? filteredQuestions.filter(q => variationLabel(q.question)).length
+      : 0,
+    [course, filteredQuestions],
+  );
+  const canVaryEach = variableCount > 0;
+
+  /** One new question for each filtered question, in the order they are shown. */
+  const handleVaryEach = async () => {
+    if (!canVaryEach || generating) return;
+    setGenerating(true);
+    setGenNote(null);
+    try {
+      const { similarTo, worksheetKeys } = await import('@/lib/generated-question');
+      const made: QuestionWithMetadata[] = [];
+      // Sequentially, and the exclude set grows as it goes: two questions
+      // backed by the same variation must not come back as the same question.
+      for (const q of filteredQuestions) {
+        const label = variationLabel(q.question);
+        if (!label) continue;
+        const [raw] = await similarTo(label, 1, worksheetKeys([...worksheetItems, ...made]));
+        if (raw) made.push(withParentVideo(raw, paperIndex));
+      }
+      made.forEach(addItem);
+      setGenNote(made.length === variableCount
+        ? `Added ${made.length} new questions, one like each.`
+        : made.length
+          ? `Added ${made.length} of ${variableCount}. The rest had nothing new left to give.`
+          : 'Your worksheet already has a variation of each of these.');
+    } catch {
+      setGenNote('Something went wrong generating those.');
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   // Are filters active?
   const hasFilters = selectedSubtopics.length > 0 || selectedYears.length > 0 || selectedPapers.length > 0;
@@ -596,40 +697,136 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     }
                   </button>
 
+                  {/* One new question modelled on each question in the filter.
+                      Distinct from "Add all": that gives a teacher the real
+                      paper questions, this gives a parallel set nobody has seen.
+                      Only the ones with a paper label can be cloned, so the
+                      count says how many that is rather than promising all. */}
+                  {canVaryEach && (
+                    <button
+                      onClick={handleVaryEach}
+                      disabled={generating}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                    >
+                      {generating
+                        ? <Loader2 className="h-4 w-4 animate-spin" />
+                        : <Dices className="h-4 w-4" />}
+                      {generating ? 'Generating…' : `Add a variation of each (${variableCount})`}
+                    </button>
+                  )}
+
                   {/* Generate on the filter already set. National 5 only —
                       absent elsewhere rather than disabled. */}
                   {canGenerate && (
                     <div className="flex items-center gap-2">
                       <span className="text-slate-600">|</span>
                       <button
-                        onClick={handleGenerate}
+                        onClick={() => selectedSubtopics.length > 1
+                          ? setShowGenPlan(v => !v)
+                          : handleGenerate()}
                         disabled={generating}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
                       >
                         {generating
                           ? <Loader2 className="h-4 w-4 animate-spin" />
                           : <Dices className="h-4 w-4" />}
-                        {generating ? 'Generating…' : `Generate ${genCount} new on these topics`}
+                        {generating
+                          ? 'Generating…'
+                          : selectedSubtopics.length > 1
+                            /* **With several topics picked, ask before drawing.**
+                               A flat count spread across them is a guess at
+                               something the teacher already knows — five
+                               questions over four topics is not one each and
+                               not five each, and nothing says which. */
+                            ? `Generate new on ${selectedSubtopics.length} topics…`
+                            : `Generate ${genCount} new on this topic`}
                       </button>
-                      <label className="sr-only" htmlFor="gen-count">How many to generate</label>
-                      <select
-                        id="gen-count"
-                        value={genCount}
-                        onChange={e => setGenCount(Number(e.target.value))}
-                        className="bg-slate-800 text-slate-300 text-sm rounded px-2 py-1.5 border border-slate-700"
-                      >
-                        {[3, 5, 10, 15, 20].map(n => (
-                          <option key={n} value={n}>{n}</option>
-                        ))}
-                      </select>
-                      <a
-                        href={`/course/${course}/generate`}
-                        className="text-xs text-muted-foreground underline hover:text-slate-300"
-                      >
-                        by skill…
-                      </a>
+                      {selectedSubtopics.length <= 1 && (
+                        <>
+                          <label className="sr-only" htmlFor="gen-count">How many to generate</label>
+                          <select
+                            id="gen-count"
+                            value={genCount}
+                            onChange={e => setGenCount(Number(e.target.value))}
+                            className="bg-slate-800 text-slate-300 text-sm rounded px-2 py-1.5 border border-slate-700"
+                          >
+                            {[3, 5, 10, 15, 20].map(n => (
+                              <option key={n} value={n}>{n}</option>
+                            ))}
+                          </select>
+                        </>
+                      )}
                     </div>
                   )}
+
+                  {/* **Not inside `canGenerate`.** This went where the topic
+                      controls are and inherited their gate, so filtering by
+                      year alone hid the one link on the site to the by-skill
+                      builder — a page that does not care what the filter is.
+                      It is also no longer a `text-xs` underline: it was the
+                      quietest thing in a toolbar of buttons, and it is the door
+                      to the more capable of the two ways to build a sheet. */}
+                  {courseHasHints(course) && (
+                    <a
+                      href={`/course/${course}/generate`}
+                      title="Choose exact skills — Adding Mixed Numbers rather than Fractions — and how many of each"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                    >
+                      <SlidersHorizontal className="h-4 w-4" />
+                      Build by skill
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {/* How many of each, when more than one topic is picked. */}
+              {showGenPlan && canGenerate && selectedSubtopics.length > 1 && (
+                <div className="mt-3 rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+                  <p className="text-sm text-slate-300 mb-3">
+                    How many new questions on each?
+                  </p>
+                  <div className="space-y-1.5 max-h-64 overflow-y-auto">
+                    {selectedSubtopics.map(topic => (
+                      <div key={topic} className="flex items-center gap-3">
+                        <span className="text-sm text-slate-400 flex-1 min-w-0 truncate">{topic}</span>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={() => stepTopic(topic, -1)}
+                            aria-label={`One fewer ${topic}`}
+                            className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                          >
+                            −
+                          </button>
+                          <span className="w-7 text-center text-sm tabular-nums text-slate-200">
+                            {perTopic[topic] ?? 0}
+                          </span>
+                          <button
+                            onClick={() => stepTopic(topic, 1)}
+                            aria-label={`One more ${topic}`}
+                            className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2 mt-4">
+                    <button
+                      onClick={handleGeneratePlan}
+                      disabled={generating || plannedTotal === 0}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                    >
+                      {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Dices className="h-4 w-4" />}
+                      {plannedTotal > 0 ? `Generate ${plannedTotal}` : 'Pick some'}
+                    </button>
+                    <button
+                      onClick={() => setShowGenPlan(false)}
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               )}
 
