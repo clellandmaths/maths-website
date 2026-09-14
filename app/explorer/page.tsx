@@ -21,7 +21,7 @@ import VideoModal from '@/components/VideoModal';
 import QRCodeImage from '@/components/QRCodeImage';
 import { WorksheetProvider, useWorksheet } from '@/lib/worksheet-context';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, filterQuestions, QuestionWithMetadata } from '@/lib/data-loader';
-import { n5TopicCategories, n5Topics } from '@/lib/n5-topics';
+import { n5TopicCategories, n5Topics, getMainTopic } from '@/lib/n5-topics';
 import { higherTopicCategories, higherTopics } from '@/lib/higher-topics';
 import { ahTopicCategories, ahTopics } from '@/lib/ah-topics';
 import { higherAppsTopicCategories, higherAppsTopics } from '@/lib/higher-apps-topics';
@@ -203,6 +203,51 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
    * teacher already knows: five questions over four topics is neither one each
    * nor five each, and nothing on screen said which it would be.
    */
+  /**
+   * The picked subtopics, under the topic a teacher clicked to get them.
+   *
+   * Ticking "Surds" in the filter selects two subtopics, so a panel listing
+   * bare subtopics does not obviously correspond to what was clicked. Grouping
+   * makes that relationship visible rather than something to work out.
+   */
+  const genGroups = useMemo(() => {
+    const out = new Map<string, string[]>();
+    for (const s of selectedSubtopics) {
+      const main = getMainTopic(s) ?? s;
+      out.set(main, [...(out.get(main) ?? []), s]);
+    }
+    return [...out.entries()];
+  }, [selectedSubtopics]);
+
+  const groupTotal = (subs: readonly string[]) =>
+    subs.reduce((n, s) => n + (perTopic[s] ?? 0), 0);
+
+  /**
+   * "Three Surds" — without having to say which kind of surds.
+   *
+   * Spreads across the topic's subtopics, always adding to the thinnest and
+   * taking from the fattest, so three over two subtopics is 2 and 1 rather
+   * than 3 and 0. The per-subtopic steppers stay for a teacher who does care
+   * which kind, and the split stays visible underneath either way.
+   */
+  const stepGroup = (subs: readonly string[], by: number) => {
+    setPerTopic(prev => {
+      const out = { ...prev };
+      if (by > 0) {
+        const target = [...subs].sort((a, b) => (out[a] ?? 0) - (out[b] ?? 0))[0];
+        if (target && (out[target] ?? 0) < 20) out[target] = (out[target] ?? 0) + 1;
+      } else {
+        const target = [...subs].sort((a, b) => (out[b] ?? 0) - (out[a] ?? 0))[0];
+        if (target && (out[target] ?? 0) > 0) {
+          const next = out[target] - 1;
+          if (next === 0) delete out[target];
+          else out[target] = next;
+        }
+      }
+      return out;
+    });
+  };
+
   const stepTopic = (topic: string, by: number) => {
     setPerTopic(prev => {
       const next = Math.max(0, Math.min(20, (prev[topic] ?? 0) + by));
@@ -738,7 +783,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                something the teacher already knows — five
                                questions over four topics is not one each and
                                not five each, and nothing says which. */
-                            ? `Generate new on ${selectedSubtopics.length} topics…`
+                            ? `Generate new on ${genGroups.length} ${genGroups.length === 1 ? 'topic' : 'topics'}…`
                             : `Generate ${genCount} new on this topic`}
                       </button>
                       {selectedSubtopics.length <= 1 && (
@@ -782,32 +827,84 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               {/* How many of each, when more than one topic is picked. */}
               {showGenPlan && canGenerate && selectedSubtopics.length > 1 && (
                 <div className="mt-3 rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-                  <p className="text-sm text-slate-300 mb-3">
+                  <p className="text-sm text-slate-300">
                     How many new questions on each?
                   </p>
-                  <div className="space-y-1.5 max-h-64 overflow-y-auto">
-                    {selectedSubtopics.map(topic => (
-                      <div key={topic} className="flex items-center gap-3">
-                        <span className="text-sm text-slate-400 flex-1 min-w-0 truncate">{topic}</span>
-                        <div className="flex items-center gap-1 shrink-0">
-                          <button
-                            onClick={() => stepTopic(topic, -1)}
-                            aria-label={`One fewer ${topic}`}
-                            className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
-                          >
-                            −
-                          </button>
-                          <span className="w-7 text-center text-sm tabular-nums text-slate-200">
-                            {perTopic[topic] ?? 0}
+                  {/* Say what the numbers count. A teacher who ticked "Surds"
+                      got two rows out of it, and the panel should explain that
+                      rather than leave it to be inferred. */}
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Set a whole topic, or the kinds under it.
+                  </p>
+
+                  <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
+                    {genGroups.map(([main, subs]) => (
+                      <div key={main}>
+                        {/* The topic a teacher actually clicked. Its stepper
+                            spreads across the kinds beneath it. */}
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-medium text-slate-200 flex-1 min-w-0 truncate">
+                            {main}
+                            {subs.length > 1 && (
+                              <span className="text-muted-dim font-normal"> · {subs.length} kinds</span>
+                            )}
                           </span>
-                          <button
-                            onClick={() => stepTopic(topic, 1)}
-                            aria-label={`One more ${topic}`}
-                            className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
-                          >
-                            +
-                          </button>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <button
+                              onClick={() => stepGroup(subs, -1)}
+                              aria-label={`One fewer ${main}`}
+                              className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                            >
+                              −
+                            </button>
+                            <span className={`w-7 text-center text-sm tabular-nums font-medium ${
+                              groupTotal(subs) > 0 ? theme.text : 'text-slate-500'
+                            }`}>
+                              {groupTotal(subs)}
+                            </span>
+                            <button
+                              onClick={() => stepGroup(subs, 1)}
+                              aria-label={`One more ${main}`}
+                              className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
+
+                        {/* The kinds, only where there is more than one — a
+                            topic with a single subtopic would show the same
+                            number twice for no reason. */}
+                        {subs.length > 1 && (
+                          <div className="mt-1 space-y-1 pl-4 border-l border-slate-800">
+                            {subs.map(topic => (
+                              <div key={topic} className="flex items-center gap-3">
+                                <span className="text-xs text-slate-400 flex-1 min-w-0 truncate">
+                                  {topic}
+                                </span>
+                                <div className="flex items-center gap-1 shrink-0">
+                                  <button
+                                    onClick={() => stepTopic(topic, -1)}
+                                    aria-label={`One fewer ${topic}`}
+                                    className="w-6 h-6 rounded bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors text-xs"
+                                  >
+                                    −
+                                  </button>
+                                  <span className="w-6 text-center text-xs tabular-nums text-slate-300">
+                                    {perTopic[topic] ?? 0}
+                                  </span>
+                                  <button
+                                    onClick={() => stepTopic(topic, 1)}
+                                    aria-label={`One more ${topic}`}
+                                    className="w-6 h-6 rounded bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors text-xs"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

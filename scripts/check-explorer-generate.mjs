@@ -92,8 +92,12 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
     await sleep(1500);
   }
   const many = await toolbar();
-  t.check(many?.generate?.includes('topics'),
-    `two topics ask rather than guess: ${JSON.stringify(many?.generate)}`);
+  /* **The button counts the topics that were clicked, not the subtopics.**
+     Ticking "Surds" selects two subtopics, so a count of subtopics read
+     "3 topics" for two clicks and looked wrong. The panel below is where the
+     subtopics appear, under the topic they came from. */
+  t.check(many?.generate === 'Generate new on 2 topics',
+    `it counts the topics that were clicked: ${JSON.stringify(many?.generate)}`);
 
   await click(buttonMatching(/Generate new on \d+ topics/));
   await sleep(1200);
@@ -101,21 +105,41 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
     const t = document.body.innerText;
     return {
       asks: /how many new questions on each/i.test(t),
-      steppers: document.querySelectorAll('[aria-label^="One more "]').length,
+      explains: /set a whole topic, or the kinds under it/i.test(t),
+      kinds: /Surds\\s*·\\s*2 kinds/i.test(t),
+      topicSteppers: document.querySelectorAll('[aria-label="One more Surds"]').length,
+      kindSteppers: document.querySelectorAll('[aria-label="One more Simplifying surds"]').length,
       confirm: /Pick some|Generate \\d+/.test(t),
     };
   })()`);
   t.check(panel?.asks, 'the panel asks how many of each');
-  t.check(panel?.steppers >= 2, `one stepper per topic (${panel?.steppers})`);
-  t.check(panel?.confirm, 'and will not draw until something is picked');
+  t.check(panel?.explains, 'and says you can set a topic or the kinds under it');
+  t.check(panel?.kinds, 'Surds is labelled as 2 kinds');
+  t.check(panel?.topicSteppers === 1, 'the topic itself has a stepper');
+  t.check(panel?.kindSteppers === 1, 'and so does each kind under it');
+  t.check(panel?.confirm, 'and it will not draw until something is picked');
 
-  // Two on the first topic, one on the second.
-  await click(`document.querySelectorAll('[aria-label^="One more "]')[0]`);
-  await sleep(300);
-  await click(`document.querySelectorAll('[aria-label^="One more "]')[0]`);
-  await sleep(300);
-  await click(`document.querySelectorAll('[aria-label^="One more "]')[1]`);
-  await sleep(500);
+  /* "Three surds" without saying which kind: press the topic three times and
+     the split lands 2 and 1, not 3 and 0. */
+  for (let i = 0; i < 3; i++) {
+    await click(`document.querySelector('[aria-label="One more Surds"]')`);
+    await sleep(300);
+  }
+  const spread = await evaluate(`(() => {
+    const v = name => {
+      const b = document.querySelector('[aria-label="One more ' + name + '"]');
+      return b ? Number(b.previousElementSibling.textContent.trim()) : null;
+    };
+    return {
+      simplifying: v('Simplifying surds'),
+      rationalising: v('Rationalising the denominator'),
+      total: v('Surds'),
+    };
+  })()`);
+  t.check(spread?.total === 3, `three on the topic (${spread?.total})`);
+  t.check(spread?.simplifying === 2 && spread?.rationalising === 1,
+    `spread across its kinds rather than piled on one (${spread?.simplifying} and ${spread?.rationalising})`);
+
   t.check(await evaluate(`/Generate 3\\b/.test(document.body.innerText)`),
     'the confirm button counts what was asked for');
 
