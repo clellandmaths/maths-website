@@ -66,13 +66,20 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
     return {
       hint: [...document.querySelectorAll('button')].filter(b => b.textContent.trim() === 'Hint').length,
       another: [...document.querySelectorAll('button')]
-        .filter(b => /another like this one|more on /i.test(b.textContent || '')).length,
+        .filter(b => /another like this one/i.test(b.textContent || '')).length,
+      fallback: [...document.querySelectorAll('button')]
+        .filter(b => /^more on /i.test(b.textContent || '')).length,
       badges: (t.match(/\\d{4} P\\d Q\\d+/g) || []).length,
     };
   })()`);
   t.check(perQuestion?.badges > 0, `${perQuestion?.badges} past-paper-backed questions on the page`);
   t.check(perQuestion?.hint > 0, `${perQuestion?.hint} of them offer a hint`);
-  t.check(perQuestion?.another > 0, `${perQuestion?.another} offer another like it`);
+  /* **Only the past-paper-backed ones.** It used to fall back to the question's
+     subtopic, which made it near-universal and wrong: `Fractions and mixed
+     numbers` is one subtopic covering add, subtract, multiply and divide, so a
+     pupil working through adding pressed it and got a multiplication. */
+  t.check(perQuestion?.another === perQuestion?.badges,
+    `and exactly those ${perQuestion?.badges} offer another like it (${perQuestion?.another})`);
 
   // The ladder opens, and opens on what the question asks rather than on working.
   await click(`[...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Hint')`);
@@ -83,6 +90,87 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
   await sleep(1200);
   t.check(await evaluate(`/how the marks go/i.test(document.body.innerText)`),
     'the second says how the marks go');
+
+  t.check(perQuestion?.fallback === 0, 'and nothing offers a whole-subtopic fallback');
+
+  /* ── what a pupil gets when they take one ──────────────────────────────
+     A new question and no more help than before is no help. It has to arrive
+     with the method behind it and its own hints. */
+  await click(`[...document.querySelectorAll('button')]
+    .find(b => /another like this one/i.test(b.textContent || ''))`);
+  await sleep(4500);
+  /* **No backslashes in these patterns.** This expression is a template
+     literal, and a `\d` or `\b` inside one loses its backslash before it ever
+     reaches the browser — the regex arrives as `/based on d{4}/` and never
+     matches. Character classes say the same thing and survive. The first
+     version failed exactly the two assertions that used backslashes and passed
+     the two that did not, which is the tell. */
+  const offered = await evaluate(`(() => {
+    // The innermost match: an outer wrapper contains the whole page, so it
+    // would pass on the practice questions' own controls.
+    const all = [...document.querySelectorAll('div')]
+      .filter(d => /New question/.test(d.innerText) && d.querySelector('.question-content'));
+    const panel = all[all.length - 1];
+    const t = panel?.innerText ?? '';
+    return {
+      drew: !!panel,
+      basedOn: /based on [0-9]{4} P[0-9] Q[0-9]/i.test(t),
+      method: /watch the method/i.test(t),
+      hint: [...(panel?.querySelectorAll('button') ?? [])]
+        .some(b => b.textContent.trim() === 'Hint'),
+      answer: /show answer/i.test(t),
+    };
+  })()`);
+  t.check(offered?.drew, 'pressing it draws a question');
+  t.check(offered?.basedOn, 'which names the paper it is modelled on');
+  t.check(offered?.method, 'and offers the video of that method');
+  t.check(offered?.hint, 'and its own hints');
+  t.check(offered?.answer, 'and an answer to reveal');
+
+  /* ── hints in the two full-screen modes ────────────────────────────────
+     Both render <Hints> with no label prop, and a question reaching them from
+     guided practice has had its printed badge stripped out of the HTML — so
+     the ladder silently did not appear on the very questions that have a
+     marking instruction behind them. */
+  await go('/course/n5/practice/surds', 3000);
+  for (const [mode, open] of [['full screen', 'Full screen'], ['focus', 'Focus']]) {
+    await click(buttonNamed(open));
+    await sleep(3000);
+
+    /* **Full screen shows one question at a time, and opens on the first.**
+       A guided practice topic mixes authored questions with past paper ones,
+       and question 1 on Surds is authored — so it has no paper reference and
+       correctly offers no hints. Step along until a past paper question is on
+       screen, which is what the claim is actually about. Focus mode needs none
+       of this: it shows every question at once. */
+    for (let i = 0; i < 12; i++) {
+      const on = await evaluate(
+        `/[0-9]{4} P[0-9] Q[0-9]/.test(document.querySelector('.fixed.inset-0')?.innerText ?? '')`);
+      if (on) break;
+      if (!(await click(buttonNamed('Next')))) break;
+      await sleep(900);
+    }
+
+    /* **Inside the overlay only.** `document.body.innerText` includes the page
+       behind it, whose own questions each carry a Hint button — so a
+       whole-body scan reports hints the mode itself is not showing. */
+    const hinted = await evaluate(`(() => {
+      const overlay = document.querySelector('.fixed.inset-0');
+      if (!overlay) return { open: false };
+      return {
+        open: true,
+        labelled: /[0-9]{4} P[0-9] Q[0-9]/.test(overlay.innerText),
+        hint: [...overlay.querySelectorAll('button')]
+          .some(b => b.textContent.trim() === 'Hint'),
+      };
+    })()`);
+    t.check(hinted?.open, `${mode} opened from a practice topic`);
+    t.check(hinted?.labelled, `${mode} is showing a past paper question`);
+    t.check(hinted?.hint, `${mode} offers hints on it`);
+    await click(`[...document.querySelectorAll('.fixed.inset-0 button')]
+      .find(b => /close/i.test(b.textContent || ''))`);
+    await sleep(1500);
+  }
 
   // Neither control on a course with nothing behind it.
   await go('/course/higher/practice/circle', 2500);

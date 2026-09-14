@@ -145,7 +145,6 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           <PracticeQuestion
             key={i}
             index={i + 1}
-            subtopics={subtopicsForPractice(courseId, topicId)}
             questionHtml={q.questionHtml}
             answerHtml={q.answerHtml}
             videoId={q.videoId}

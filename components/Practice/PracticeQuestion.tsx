@@ -23,8 +23,6 @@ import type { CourseTheme } from '@/lib/course-theme';
 
 interface Props {
   index: number;
-  /** The website subtopics this topic covers, for "more like this". */
-  subtopics?: string[];
   questionHtml: string;
   answerHtml: string;
   videoId?: string;
@@ -42,7 +40,7 @@ interface Props {
 }
 
 export default function PracticeQuestion({
-  index, subtopics, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks,
+  index, questionHtml, answerHtml, videoId, timestamp, paper, solutionUrl, marks,
   hasDataBooklet = false, courseId, theme,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -190,7 +188,6 @@ export default function PracticeQuestion({
         theme={theme}
         label={paper}
         questionHtml={questionHtml}
-        subtopics={subtopics}
         className="mt-3"
       />
 

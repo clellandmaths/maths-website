@@ -60,7 +60,20 @@ export default function Hints({ question, theme, courseId, label: given, classNa
   const [staged, setStaged] = useState<Staged | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const label = paperLabelOf(given, question.question);
+  /**
+   * An explicit label, then the question's own, then the printed badge.
+   *
+   * **`question.label` is why hints work in full screen and focus mode.** Those
+   * two render `<Hints>` with no label prop, and a question reaching them from
+   * guided practice has had its badge stripped out of the HTML — so scraping
+   * found nothing and the ladder silently did not appear on exactly the
+   * questions that have a marking instruction behind them.
+   *
+   * A generated question's `label` is the skill it tests rather than a paper
+   * reference, and `paperLabelOf` rejects anything that is not `YYYY P# Q#`, so
+   * this cannot mistake one for the other.
+   */
+  const label = paperLabelOf(given ?? question.label, question.question);
   // A generated question brings its own; a paper one needs the table.
   const own = question.skill && question.method;
   const possible = courseHasHints(courseId) && (own || label !== null);

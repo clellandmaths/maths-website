@@ -88,36 +88,28 @@ export function canAddVariation(
 }
 
 /**
- * What "more like this" can offer for one question, and what to call it.
+ * Can this question offer another like it, and what is it modelled on?
  *
- * Two tiers, and **the wording says which one fired**:
+ * **Past paper questions only.** An earlier version fell back to the topic a
+ * question files under when nothing was modelled on the question itself, which
+ * made the control near-universal and was wrong: `Fractions and mixed numbers`
+ * is one subtopic covering adding, subtracting, multiplying and dividing, plain
+ * and mixed. A pupil working through adding fractions pressed "another like
+ * this one" and got a multiplication. The subtopic is where a question *files*,
+ * not what it *is*, and only the paper reference carries that.
  *
- *   `question`  there is a variation modelled on this exact past paper
- *               question — "Another like this one"
- *   `subtopic`  there is not, so it falls back to the topic the question
- *               files under — "More on Simplifying surds"
+ * Generating across a topic is still offered — on the practice page's "Keep
+ * practising" section, which says that is what it does.
  *
- * Tier 2 is what makes the control near-universal: every one of the website's
- * 57 subtopics has at least one exam-tier variation. But it can hand a pupil
- * something they would not call "like this" — `Sector area` spans plain
- * sectors, segments and a polygon in a circle — so the heading must not be
- * softened into pretending it is tier 1.
- *
- * **Both tiers rest on invariants `check-variation-reach.mjs` enforces**: every
- * paper question is cited, and every subtopic is covered. Without that check
- * these headings would be true only by luck.
+ * Null where there is nothing behind the question, and the control then renders
+ * nothing: absent rather than disabled, like everything else the generator
+ * backs.
  */
-export type MoreLikeThis =
-  | { tier: 'question'; label: string; heading: string }
-  | { tier: 'subtopic'; subtopic: string; heading: string }
-  | null;
-
-/** Whatever the surface happens to hold. All optional. */
 export interface MoreLikeThisSource {
   /**
    * The printed badge, e.g. `2018 P1 Q1`, when the surface already has it.
    *
-   * **Practice pages must use this.** `resolveQuestions` strips the badge out
+   * **Practice pages must pass this.** `resolveQuestions` strips the badge out
    * of the HTML before rendering and puts it on `ResolvedQuestion.paper`, so
    * scraping finds nothing there.
    */
@@ -127,34 +119,19 @@ export interface MoreLikeThisSource {
   /** A generated question's own parentage, so it can offer more of its kind. */
   basedOn?: readonly string[];
   parentIndex?: number;
-  /** The question's topic tags, in the website's vocabulary. */
-  subtopics?: readonly string[];
 }
 
 export function moreLikeThis(
   courseId: string | undefined,
   source: MoreLikeThisSource,
-  /** The website's subtopic names — passed in so this file stays taxonomy-free. */
-  knownSubtopics: readonly string[],
-): MoreLikeThis {
+): { label: string } | null {
   if (!courseHasHints(courseId)) return null;
-
-  // Tier 1. An explicit label beats a scraped one, and a generated question
-  // falls back to the paper it was modelled on — so "another like this one"
-  // works on a generated question too, meaning the same thing both times.
+  // An explicit label beats a scraped one, and a generated question falls back
+  // to the paper it was modelled on — so "another like this one" works on a
+  // generated question too, meaning the same thing both times.
   const parent = source.basedOn?.[source.parentIndex ?? 0];
   const label = paperLabelOf(source.label, source.questionHtml) ?? paperLabelOf(parent);
-  if (label) return { tier: 'question', label, heading: 'Another like this one' };
-
-  // Tier 2. **One subtopic, named.** A question can carry three tags, and
-  // drawing across all of them while the heading names one would be the exact
-  // dishonesty this type exists to prevent. The call and the wording use the
-  // same single value.
-  const known = new Set(knownSubtopics);
-  const subtopic = source.subtopics?.find(t => known.has(t));
-  if (subtopic) return { tier: 'subtopic', subtopic, heading: `More on ${subtopic}` };
-
-  return null;
+  return label ? { label } : null;
 }
 
 /** Past paper questions by their printed label, for finding a parent video. */
