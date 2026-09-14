@@ -735,3 +735,24 @@ summary::-webkit-details-marker {
     max-width: 100%;
   }
 }
+
+/* ── the question card's two faces ─────────────────────────────────────────
+   A card can show the past paper question or a freshly generated one modelled
+   on it. The swap is a cross-fade of the card's content, not a 3D flip:
+   nothing in the browse grid has a fixed height — a card is as tall as its
+   question, which runs from one line to a paragraph plus a diagram — and a
+   flip needs both faces absolutely positioned inside a known height. Fading
+   the content keeps the shell, the border and the card's place in the grid
+   exactly where they were. */
+@keyframes card-face-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.card-face {
+  animation: card-face-in 180ms ease-out;
+}
+/* Someone who has asked for less motion still needs to see the swap happen,
+   so the content changes instantly rather than not at all. */
+@media (prefers-reduced-motion: reduce) {
+  .card-face { animation: none; }
+}

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { QuestionWithMetadata } from './data-loader';
 
-interface WorksheetContextType {
+export interface WorksheetContextType {
   items: QuestionWithMetadata[];
   addItem: (question: QuestionWithMetadata) => void;
   removeItem: (question: QuestionWithMetadata) => void;
@@ -136,4 +136,55 @@ export function useWorksheet() {
     throw new Error('useWorksheet must be used within a WorksheetProvider');
   }
   return context;
+}
+
+/**
+ * The basket if there is one, and null if not — for controls that render on
+ * pages outside the Explorer.
+ *
+ * Practice, notes and paper pages have no `WorksheetProvider`, so `useWorksheet`
+ * throws there. A control that must work on all of them needs to ask rather
+ * than assume.
+ */
+export function useWorksheetOptional(): WorksheetContextType | null {
+  return useContext(WorksheetContext);
+}
+
+/**
+ * Add questions to a course's basket without a provider, and say how many were
+ * new.
+ *
+ * **Why not just mount a second provider around the control.** That is the
+ * obvious move and it is wrong: two providers each hold their own `items` and
+ * each write `worksheet_<course>` on every change, so whichever renders last
+ * overwrites the other and questions disappear. There is one basket per course
+ * because there is one storage key per course.
+ *
+ * Dedupes on the same `identity()` the provider uses, so a question added from
+ * a practice page and the same question added in the Explorer are one entry.
+ */
+export function appendToSession(
+  course: string,
+  questions: readonly QuestionWithMetadata[],
+): number {
+  const existing = loadFromSession(course);
+  const seen = new Set(existing.map(identity));
+  const fresh = questions.filter((q) => {
+    const id = identity(q);
+    if (seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+  if (fresh.length) saveToSession(course, [...existing, ...fresh]);
+  return fresh.length;
+}
+
+/**
+ * What is already in a course's basket, for use as a generator exclude set.
+ *
+ * Without an exclude set the engine has no memory between calls: ten clicks on
+ * a six-deep pool gave six byte-identical repeats.
+ */
+export function sessionItems(course: string): QuestionWithMetadata[] {
+  return loadFromSession(course);
 }

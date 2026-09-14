@@ -27,6 +27,7 @@
     "check:budget": "node scripts/check-js-budget.mjs",
     "check:reach": "node scripts/check-variation-reach.mjs",
     "check:responsive": "node scripts/check-responsive.mjs",
+    "check:card": "node scripts/check-card-variation.mjs",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {
