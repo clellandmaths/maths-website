@@ -24,22 +24,22 @@
       "pages": 1
     },
     "course/*.html": {
-      "bytes": 900012,
+      "bytes": 899944,
       "worst": "course\\ah.html",
       "pages": 5
     },
     "course/*/*.html": {
-      "bytes": 845349,
+      "bytes": 845673,
       "worst": "course\\n5\\generate.html",
       "pages": 11
     },
     "course/ah/*/*.html": {
-      "bytes": 886777,
+      "bytes": 893503,
       "worst": "course\\ah\\practice\\binomial-theorem.html",
       "pages": 14
     },
     "course/ah/notes/*/*.html": {
-      "bytes": 849124,
+      "bytes": 849200,
       "worst": "course\\ah\\notes\\binomial-theorem\\binomial-approximation.html",
       "pages": 59
     },
@@ -49,12 +49,12 @@
       "pages": 16
     },
     "course/higher-apps/*/*.html": {
-      "bytes": 886777,
+      "bytes": 893503,
       "worst": "course\\higher-apps\\practice\\accumulation-with-irregular-payments.html",
       "pages": 52
     },
     "course/higher-apps/notes/*/*.html": {
-      "bytes": 849124,
+      "bytes": 849200,
       "worst": "course\\higher-apps\\notes\\finance\\accumulation-calculations.html",
       "pages": 54
     },
@@ -64,12 +64,12 @@
       "pages": 6
     },
     "course/higher/*/*.html": {
-      "bytes": 886777,
+      "bytes": 893503,
       "worst": "course\\higher\\practice\\circle.html",
       "pages": 10
     },
     "course/higher/notes/*/*.html": {
-      "bytes": 849124,
+      "bytes": 849200,
       "worst": "course\\higher\\notes\\circles\\circles-eq.html",
       "pages": 101
     },
@@ -79,12 +79,12 @@
       "pages": 20
     },
     "course/n5-apps/*/*.html": {
-      "bytes": 886777,
+      "bytes": 893503,
       "worst": "course\\n5-apps\\practice\\3d-container-packing.html",
       "pages": 28
     },
     "course/n5-apps/notes/*/*.html": {
-      "bytes": 849124,
+      "bytes": 849200,
       "worst": "course\\n5-apps\\notes\\finance\\budgeting-best-deals.html",
       "pages": 28
     },
@@ -94,12 +94,17 @@
       "pages": 16
     },
     "course/n5/*/*.html": {
-      "bytes": 886777,
+      "bytes": 893503,
       "worst": "course\\n5\\practice\\3d-coordinates.html",
       "pages": 34
     },
+    "course/n5/generate/paper/*/*.html": {
+      "bytes": 846092,
+      "worst": "course\\n5\\generate\\paper\\2014\\paper-1.html",
+      "pages": 22
+    },
     "course/n5/notes/*/*.html": {
-      "bytes": 849124,
+      "bytes": 849200,
       "worst": "course\\n5\\notes\\algebra\\algebraic-fractions.html",
       "pages": 35
     },
@@ -109,12 +114,12 @@
       "pages": 22
     },
     "exam-hall.html": {
-      "bytes": 918212,
+      "bytes": 918144,
       "worst": "exam-hall.html",
       "pages": 1
     },
     "explorer.html": {
-      "bytes": 1018231,
+      "bytes": 1020622,
       "worst": "explorer.html",
       "pages": 1
     },
@@ -129,7 +134,7 @@
       "pages": 1
     },
     "worksheet.html": {
-      "bytes": 943837,
+      "bytes": 943813,
       "worst": "worksheet.html",
       "pages": 1
     }

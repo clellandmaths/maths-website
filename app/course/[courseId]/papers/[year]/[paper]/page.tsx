@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { examBoardFor, examBoardWithAlias } from '@/lib/exam-board';
 import Marks from '@/components/Marks';
 import { notFound } from 'next/navigation';
@@ -181,6 +182,21 @@ export default async function PaperPage(
           {/* Renders nothing for Higher Apps, which gets the booklet instead */}
           <FormulaeButton courseId={courseId} theme={theme} />
         </div>
+
+        {/* A plain link, and deliberately not a button. These are 110 pure
+            server pages sharing one measured 826 KB baseline; a control here
+            would make every one of them a client surface and put the archive
+            one refactor away from importing the engine. National 5 only — it
+            is the only course with audited variations. */}
+        {courseId === 'n5' && (
+          <Link
+            href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}`}
+            className={`inline-flex items-center gap-1.5 mt-4 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}
+          >
+            Generate a practice paper like this one
+            <span aria-hidden="true">→</span>
+          </Link>
+        )}
       </div>
 
       {/* Questions — content, answers and markschemes server-rendered */}
