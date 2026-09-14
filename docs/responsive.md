@@ -34,8 +34,10 @@ read-back matters rather than a formality.
 
 **Spend the 90 minutes immediately before a merge to `master`**, not on a quiet
 day. There it is the safety net that proves 518 pages did not move; run idly it
-is 90 minutes that tells you what you already assumed. `dev` is 35 commits ahead
-and none of it is live, so that merge is where this earns its keep.
+is 90 minutes that tells you what you already assumed. **Nothing on `dev` is
+live** — `git rev-list --count master..dev` says how far ahead it is, and that is
+the number to trust, because writing it down here increments it. That merge is
+where this earns its keep.
 
 Until it is read back, `npm run check:responsive` reports violations against a
 number nobody has confirmed reproduces.
