@@ -7,6 +7,8 @@ import { renderMathHtml } from '@/components/MathHtml';
 import { getCourseTheme } from '@/lib/course-theme';
 import PracticeQuestion from '@/components/Practice/PracticeQuestion';
 import PracticeModes from '@/components/Practice/PracticeModes';
+import PracticeGenerate from '@/components/Practice/PracticeGenerate';
+import { subtopicsForPractice } from '@/lib/generatable-topics';
 import CourseTabs from '@/components/CourseTabs';
 import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -156,6 +158,17 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
           />
         ))}
       </div>
+
+      {/* Where the topic runs out. National 5 only, and nothing at all where the
+          topic has no exam-tier variations behind it — the map in
+          `lib/generatable-topics.ts` and `scripts/check-topic-maps.mjs` settle
+          which, rather than a guess made here. */}
+      <PracticeGenerate
+        courseId={courseId}
+        subtopics={subtopicsForPractice(courseId, topicId)}
+        topicName={topic.name}
+        theme={theme}
+      />
 
       {attributed && (
         <p className="mt-10 pt-6 border-t border-border text-sm text-muted-foreground">
