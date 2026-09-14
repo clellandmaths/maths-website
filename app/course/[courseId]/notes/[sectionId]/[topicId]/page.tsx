@@ -129,11 +129,17 @@ export default async function NotesTopicPage(
       />
 
       {/* Notes teach, practice drills. Send them straight from one to the
-          other rather than making them find it. */}
+          other rather than making them find it.
+
+          `full=1` opens the questions full screen on arrival, so this is one
+          click from reading to working rather than a landing page in between.
+          `from` carries the topic they were reading, and every surface of that
+          practice set then offers the way back — inside full screen and on the
+          page behind it, because closing the mode must not strand them. */}
       {practice && (
         <div className="mt-10 pt-6 border-t border-border">
           <Link
-            href={`/course/${courseId}/practice/${practice.slug}`}
+            href={`/course/${courseId}/practice/${practice.slug}?full=1&from=${sectionId}/${topicId}`}
             className="group flex items-center justify-between gap-4 rounded-xl border border-border p-5 hover:border-white/25 hover:bg-white/5 transition-colors"
           >
             <div>

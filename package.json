@@ -31,6 +31,7 @@
     "check:card": "node scripts/check-card-variation.mjs",
     "check:practicegen": "node scripts/check-practice-generate.mjs",
     "check:practicepaper": "node scripts/check-practice-paper.mjs",
+    "check:notespractice": "node scripts/check-notes-to-practice.mjs",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {

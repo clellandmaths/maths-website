@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ArrowLeft, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
+import Link from 'next/link';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -24,6 +25,14 @@ interface QuestionPresenterProps {
   startIndex?: number;
   onClose: () => void;
   /**
+   * Where this was opened from, when that is somewhere worth returning to.
+   *
+   * A pupil sent straight here from a notes topic should be able to get back to
+   * it without closing the mode and hunting for the link again. Optional, so
+   * every other use — papers, worksheets, the marathon — is unchanged.
+   */
+  backTo?: { href: string; label: string };
+  /**
    * A shared handout can withhold the answers or the video. Default true so
    * every existing use — papers, worksheets, marathons — is unaffected; a
    * locked worksheet passes false and full screen then shows exactly what the
@@ -45,7 +54,7 @@ function extractImageSrcs(html: string): string[] {
   return srcs;
 }
 
-export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, allowAnswers = true, allowVideo = true, allowHints = true }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, backTo, allowAnswers = true, allowVideo = true, allowHints = true }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -129,13 +138,28 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
       <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-slate-800">
-          <button
-            onClick={onClose}
-            className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors"
-          >
-            <X className="h-5 w-5" />
-            <span className="hidden sm:inline text-sm">Close</span>
-          </button>
+          <div className="flex items-center gap-1 min-w-0">
+            <button
+              onClick={onClose}
+              className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors"
+            >
+              <X className="h-5 w-5" />
+              <span className="hidden sm:inline text-sm">Close</span>
+            </button>
+            {/* The way back to wherever this was opened from — a notes topic,
+                today. Its label is always visible: `sm:` is 640px, so a phone
+                in portrait never reaches it, and a lone icon here would be
+                indistinguishable from the close button beside it. */}
+            {backTo && (
+              <Link
+                href={backTo.href}
+                className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors min-w-0"
+              >
+                <ArrowLeft className="h-4 w-4 shrink-0" />
+                <span className="text-sm truncate">{backTo.label}</span>
+              </Link>
+            )}
+          </div>
           <div className="text-right">
             <p className="text-slate-400 text-sm">
               Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
