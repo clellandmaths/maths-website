@@ -148,6 +148,7 @@ none. Run them after a build when the work touches what they cover.
 | `check-hint-ladder` | the ladder says something on every press, on both kinds of question |
 | `check:another` | *another like this one* is on every surface a pupil gets stuck on, and absent on the three that decided against it |
 | `check:explorerdesk` | browsing on a desktop screen: a wider window is never a worse one, and a diagram is readable |
+| `check:explorerfilters` | changing a filter puts you back at the top of the list, not at the end of a shorter one |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on

@@ -157,6 +157,24 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [viewMode]);
 
+  /**
+   * Changing the filters changes the question, so the answer starts at the top.
+   *
+   * The same fault as the one above, with a different trigger. Unticking a
+   * topic left you wherever the browser could still scroll to, which is the end
+   * of the shorter list: measured on four years of National 5, scrolled to the
+   * bottom, unticking one year clamped `scrollY` from 25,136 to 19,561 — the
+   * last row of a list nobody asked to be at the end of, with the questions
+   * they had been reading gone from under them. Ticking one is the same problem
+   * the other way round: the new questions arrive above you and are never seen.
+   *
+   * **`auto`, not `smooth`.** This is a twenty-thousand-pixel jump. Animating
+   * it is a long ride past questions the teacher has just filtered out.
+   */
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [selectedSubtopics, selectedYears, selectedPapers]);
+
   // A shared link arrives as ?c=<course>&q=<refs>. Wait for the course data,
   // then add exactly those questions, in the order they were shared. Done once:
   // the query is cleared afterwards so a refresh does not re-add them on top of
