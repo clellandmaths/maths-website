@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Minus, Plus, RefreshCw, Check } from 'lucide-react';
+import { Minus, Plus, RefreshCw, Check, ArrowLeft, ChevronDown, ChevronRight } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { WorksheetProvider, useWorksheet } from '@/lib/worksheet-context';
@@ -77,6 +77,43 @@ function Builder({ courseId, courseName, groups }: Props) {
     });
   };
 
+  /**
+   * A count on the whole topic, spread across the skills inside it.
+   *
+   * **There is no second piece of state.** A topic's number *is* the sum of its
+   * skills' numbers, so opening it always explains exactly what this did, and
+   * `generate()` below needs no changes — it still reads `counts` by skill.
+   *
+   * This exists because the skills are the generator's taxonomy, not a
+   * teacher's. Quadratics has sixteen of them and nine are ways of sketching a
+   * parabola; somebody who wants "five quadratics" should not have to invent a
+   * split across nine near-identical things. They still can: the skills are one
+   * click away and every stepper down there still works.
+   *
+   * Adding goes to the skill with the fewest so far, ties broken at random, so
+   * five on Quadratics is five different kinds of quadratic rather than five of
+   * whichever happened to be listed first. Removing takes from the fullest,
+   * which unwinds a run of adds in roughly the order they happened.
+   */
+  const stepGroup = (topics: string[], by: number) => {
+    setCounts(prev => {
+      const pool = by > 0
+        ? topics.filter(t => (prev[t] ?? 0) < 20)
+        : topics.filter(t => (prev[t] ?? 0) > 0);
+      if (!pool.length) return prev;
+      const target = by > 0
+        ? Math.min(...pool.map(t => prev[t] ?? 0))
+        : Math.max(...pool.map(t => prev[t] ?? 0));
+      const tied = pool.filter(t => (prev[t] ?? 0) === target);
+      const topic = tied[Math.floor(Math.random() * tied.length)];
+      const next = Math.max(0, Math.min(20, (prev[topic] ?? 0) + by));
+      const out = { ...prev };
+      if (next === 0) delete out[topic];
+      else out[topic] = next;
+      return out;
+    });
+  };
+
   const clear = () => {
     setCounts({});
     setQuestions(null);
@@ -143,6 +180,20 @@ function Builder({ courseId, courseName, groups }: Props) {
         ]}
       />
 
+      {/* **A way out that reads as one.** The breadcrumb above has linked back
+          to the Explorer since this page stopped being a dead end, but it is
+          `font-mono text-xs` in muted grey — the faintest text on the page —
+          and it was reported as "there is no way back". It answers "where am
+          I", which is a different job from "get me out", so it keeps its job
+          and this does the other one. */}
+      <Link
+        href={`/explorer?c=${courseId}`}
+        className="mb-6 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to the Explorer
+      </Link>
+
       <header className="mb-8">
         <h1 className="font-display text-3xl font-bold mb-2">{courseName} worksheet generator</h1>
         <p className="text-muted-foreground max-w-2xl">
@@ -176,17 +227,47 @@ function Builder({ courseId, courseName, groups }: Props) {
                 const open = openGroup === group;
                 return (
                   <div key={group} className="border-b border-slate-800 last:border-0">
-                    <button
-                      onClick={() => setOpenGroup(open ? null : group)}
-                      className="flex w-full items-center justify-between px-4 py-2.5 text-left text-sm hover:bg-white/5"
-                    >
-                      <span className={picked ? theme.text : ''}>
-                        {group.replace(/^N5 /, '')}
+                    {/* The topic row carries its own stepper, so a sheet can be
+                        built without ever opening one. The chevron is the only
+                        thing that expands it — the steppers are siblings of the
+                        toggle rather than children, because a button inside a
+                        button is invalid and the inner one stops working. */}
+                    <div className="flex w-full items-center gap-1 px-4 py-2.5 text-sm hover:bg-white/5">
+                      <button
+                        onClick={() => setOpenGroup(open ? null : group)}
+                        aria-expanded={open}
+                        className="flex min-w-0 flex-1 items-center gap-2 text-left"
+                      >
+                        {open
+                          ? <ChevronDown className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                          : <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
+                        <span className={`truncate ${picked ? theme.text : ''}`}>
+                          {group.replace(/^N5 /, '')}
+                        </span>
+                        <span className="shrink-0 text-xs text-muted-foreground">
+                          {topics.length} skill{topics.length === 1 ? '' : 's'}
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => stepGroup(topics, -1)}
+                        disabled={picked === 0}
+                        aria-label={`One fewer from ${group.replace(/^N5 /, '')}`}
+                        className="rounded border border-slate-700 p-1 disabled:opacity-30 hover:bg-white/10"
+                      >
+                        <Minus className="h-3 w-3" />
+                      </button>
+                      <span className="w-5 text-center font-mono text-xs tabular-nums">
+                        {picked}
                       </span>
-                      <span className="text-xs text-muted-foreground">
-                        {picked > 0 ? `${picked} picked` : `${topics.length}`}
-                      </span>
-                    </button>
+                      <button
+                        onClick={() => stepGroup(topics, 1)}
+                        aria-label={`One more from ${group.replace(/^N5 /, '')}`}
+                        className="rounded border border-slate-700 p-1 hover:bg-white/10"
+                      >
+                        <Plus className="h-3 w-3" />
+                      </button>
+                    </div>
 
                     {open && (
                       <ul className="pb-2">

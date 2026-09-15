@@ -30,7 +30,7 @@ Seven surfaces, all National 5 only.
 |---|---|
 | **Explorer card** | *Variation* — swaps the card to a new question modelled on that one. Shown before it is added |
 | **Explorer toolbar** | *Add a variation of each*, and *Generate new on N topics* with a count per topic |
-| **`/course/n5/generate`** | the by-skill builder — 30 groups, 174 skills, a count each |
+| **`/course/n5/generate`** | the by-skill builder — a count per topic, spread across that topic's skills; 30 topics, 174 skills one click down |
 | **`/course/n5/generate/paper/…`** | a whole paper, one question modelled on each of a real one's |
 | **Practice topic page** | *Keep practising* at the foot, and *Another like this one* on each question |
 | **Exam Hall Warm Up** | five more, on the completion screen only |
@@ -149,6 +149,7 @@ none. Run them after a build when the work touches what they cover.
 | `check:another` | *another like this one* is on every surface a pupil gets stuck on, and absent on the three that decided against it |
 | `check:explorerdesk` | browsing on a desktop screen: a wider window is never a worse one, and a diagram is readable |
 | `check:explorerfilters` | changing a filter puts you back at the top of the list, not at the end of a shorter one |
+| `check:byskill` | a sheet can be built by topic without meeting 174 skills, and the skills still work underneath |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on
