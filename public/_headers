@@ -57,3 +57,18 @@
 # hard. Everything else stays on Cloudflare's default so a deploy is visible.
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Images were on Cloudflare's default, measured live as
+# `max-age=14400, must-revalidate` — four hours, and then a round trip per file
+# to be told nothing had changed. There are 443 of them weighing 5.9 MB, most of
+# it past paper diagrams that cannot change because the exams already happened.
+# A pupil working a paper with five diagrams paid five of those round trips on
+# every visit past the fourth hour.
+#
+# Thirty days, deliberately not a year: these filenames are not content-hashed
+# the way `/_next/static` is, so the price of caching hard is that replacing a
+# diagram under its own name leaves people on the old one until it expires. A
+# month is long enough to be worth having and short enough to wait out. If a
+# correction ever has to be immediate, rename the file or purge the cache.
+/img/*
+  Cache-Control: public, max-age=2592000

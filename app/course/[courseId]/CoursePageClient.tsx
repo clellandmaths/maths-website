@@ -179,11 +179,17 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
               </div>
             )}
 
-            {papersByYear.map(({ year, papers }) => (
+            {papersByYear.map(({ year, papers }, yearRow) => (
               <div key={year}>
                 <h3 className="text-xl font-bold mb-4">{year}</h3>
                 <div className="space-y-4">
-                  {papers.map((paper) => {
+                  {papers.map((paper, paperRow) => {
+                    /* The one thumbnail above the fold — first paper of the
+                       first year, not the first of every year. Both indexes are
+                       needed: this list is grouped, so `paperRow === 0` alone
+                       made 11 of 22 images eager, which is the opposite of the
+                       point. Checked in the built HTML, not assumed. */
+                    const firstOnPage = yearRow === 0 && paperRow === 0;
                     const paperKey = `${paper.year}-${paper.paperNumber}`;
                     const isExpanded = expandedPaper === paperKey;
                     const paperQuestions = allQuestions
@@ -201,11 +207,20 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                           <div className="sm:w-64 shrink-0">
                             <div className="relative aspect-video sm:h-full bg-slate-800">
                               {paper.videoId ? (
+                                /* The first row only is fetched eagerly and at
+                                   high priority. It is the one thumbnail that
+                                   is above the fold, and on a course page it
+                                   can be the largest thing on screen — so
+                                   `lazy` was deferring the request for the very
+                                   image the page is measured by. Cloudflare
+                                   recorded one at 10,952 ms. Every row below it
+                                   stays lazy, which is what `lazy` is for. */
                                 <img
                                   src={`https://img.youtube.com/vi/${paper.videoId}/mqdefault.jpg`}
                                   alt={`${courseName} ${paper.year} Paper ${paper.paperNumber}`}
                                   className="w-full h-full object-cover"
-                                  loading="lazy"
+                                  loading={firstOnPage ? 'eager' : 'lazy'}
+                                  fetchPriority={firstOnPage ? 'high' : 'auto'}
                                 />
                               ) : (
                                 <div className="w-full h-full flex flex-col items-center justify-center gap-1">

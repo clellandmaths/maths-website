@@ -63,6 +63,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen`}>
+        {/* The video thumbnails on every course page come from YouTube, which
+            is a third origin: without a hint, the first one pays a full DNS +
+            TCP + TLS handshake before a byte arrives, and on a course page that
+            image can be the largest thing on screen. Cloudflare recorded one at
+            10,952 ms. `preconnect` opens the socket while the HTML is still
+            parsing; the `dns-prefetch` beside it is the fallback for browsers
+            that ignore the first.
+
+            Both hosts, because the markup uses `img.youtube.com` and YouTube
+            serves some thumbnails from `i.ytimg.com`. The site's CSP already
+            allows exactly these two under `img-src`.
+
+            Next hoists `<link>` out of the tree into `<head>` — they are here
+            rather than in a hand-written `<head>`, which App Router does not
+            want you to author. */}
+        <link rel="preconnect" href="https://img.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://img.youtube.com" />
+        <link rel="dns-prefetch" href="https://i.ytimg.com" />
         {/* Structured data. Tells Google this is one organisation running an
             education site, which is what earns the sitelinks and the logo in
             search results — neither of which it will infer from prose. */}
