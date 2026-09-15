@@ -32,6 +32,7 @@
     "check:card": "node scripts/check-card-variation.mjs",
     "check:practicegen": "node scripts/check-practice-generate.mjs",
     "check:another": "node scripts/check-another-like-this.mjs",
+    "check:explorerdesk": "node scripts/check-explorer-desktop.mjs",
     "check:practicepaper": "node scripts/check-practice-paper.mjs",
     "check:sharedsheet": "node scripts/check-shared-sheet.mjs",
     "check:notespractice": "node scripts/check-notes-to-practice.mjs",

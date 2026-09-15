@@ -173,6 +173,54 @@ body {
   border-radius: 0.375rem;
 }
 
+/* A diagram on a browse card, once there is room for one.
+ *
+ * The thumbnail above is 80px by 160px and it was **absolute**: the same
+ * 123x80 picture on a 2560px monitor as on a phone, which is 31% of a source
+ * image that is typically 402x261. At that size a construction is a smudge
+ * where the question should be, and choosing questions is exactly when you
+ * need to see it. From 1280px the card is at least 440px wide, so the picture
+ * takes the width it has up to 13.75rem tall — about 84% of full size for a
+ * typical diagram. Below 1280px nothing changes: a phone and a tablet have no
+ * room to give it and both already read correctly. */
+@media (min-width: 1280px) {
+  .question-card img {
+    max-height: 13.75rem;
+    max-width: 100%;
+  }
+}
+
+/* The Explorer's browse grid.
+ *
+ * **A minimum card width, not a column count.** Fixed breakpoints made
+ * widening the window *shrink* the cards: the third column arrived at 1536px,
+ * so a 1600px monitor drew 405px cards where a 1440px laptop drew 536px ones,
+ * and it only recovered past about 1900px. `auto-fill` with a floor lets the
+ * browser fit as many columns as it can and never draws a card narrower than
+ * 27.5rem, so more width is always more card or more columns — never less of
+ * both. It also stops a very wide screen stretching three cards to 725px, with
+ * lines of question text to match.
+ *
+ * **Below 1280px this is the old layout exactly.** One column on a phone, two
+ * from 1024px, which is what a tablet in landscape already shows. */
+.browse-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .browse-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .browse-grid {
+    grid-template-columns: repeat(auto-fill, minmax(27.5rem, 1fr));
+  }
+}
+
 /* Geometric construction motif — hero signature element.
    Strokes animate in once, like a compass-and-straightedge construction. */
 .geo-line {

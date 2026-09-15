@@ -944,9 +944,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                 <p className="mb-4 text-sm text-slate-400">{genNote}</p>
               )}
 
-              {/* Questions Grid - Only Show When Filters Active */}
+              {/* Questions Grid - Only Show When Filters Active.
+                  Column count follows a minimum card width rather than a set of
+                  breakpoints — `.browse-grid` in globals.css says why, and what
+                  it deliberately leaves alone below 1280px. */}
               {hasFilters && filteredQuestions.length > 0 && (
-                <div className="grid sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
+                <div className="browse-grid">
                   {filteredQuestions.map((q) => (
                     <QuestionCard
                       key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}

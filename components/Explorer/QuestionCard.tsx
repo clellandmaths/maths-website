@@ -327,11 +327,22 @@ export default function QuestionCard({
         )}
 
         {/* Question. The key remounts on a swap so the fade replays; the card
-            shell, its border and its position in the grid do not move. */}
+            shell, its border and its position in the grid do not move.
+
+            14px, 16px from 1280px, 18px from 1536px — the steps follow the
+            card, not the screen. `.browse-grid` guarantees at least 440px from
+            1280px and draws 512-616px cards above 1536px, and at 14px that is a
+            line of about 85 characters, which is well past comfortable. 18px
+            brings it back to roughly 65. It stops there rather than reaching
+            full screen's 20px: this is a card you are choosing from, not a
+            question you are working.
+
+            Below 1280px it is untouched. 14px is right for a card two-up on a
+            tablet, and the tablet was not what was wrong. */}
         <MathRenderer
           key={variant?.uid ?? 'exam'}
           html={shown.question}
-          className="card-face text-slate-300 mb-4 question-content question-card text-sm leading-relaxed"
+          className="card-face text-slate-300 mb-4 question-content question-card text-sm xl:text-base 2xl:text-lg leading-relaxed"
         />
 
         {/* Attachments — Higher Apps data files (CSV/XLSX/DOCX). Never on a
