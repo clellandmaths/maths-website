@@ -35,6 +35,7 @@ Seven surfaces, all National 5 only.
 | **Practice topic page** | *Keep practising* at the foot, and *Another like this one* on each question |
 | **Exam Hall Warm Up** | five more, on the completion screen only |
 | **`/worksheet`** | rebuilds a shared sheet from its codes and seeds |
+| **Full screen and Focus** | *Another like this one* on the question a pupil is stuck on — the past paper archive, a practice topic, the revision marathon, and a shared sheet whose maker granted hints |
 
 **Two things deliberately do not generate.** Notes pages send a pupil to
 practice instead — that link is the best signpost on the site and a generated
@@ -115,6 +116,19 @@ In `postbuild`, reading `out/`:
 | `check:engine` | 6 engine chunks, 891 KB, on **0 of 542** pages |
 | `check:budget` | per-template JS against a baseline, 10 KB headroom |
 
+**The budget ratchet only ever moves down**, and that is worth knowing before
+you plan a feature. `--baseline` refuses to record anything more than the
+headroom above the current file, so growth inside 10 KB is tolerated but never
+banked. By 2026-09-15 the Explorer had spent all but **12 bytes** of its
+headroom on work already shipped, which meant the next control added to any
+shared component would fail — and one did. What paid for it was the check's
+other use: it found the 53 KB `qrcode` library sitting **eagerly** on the
+Explorer and on `/worksheet`, two pages where the codes only ever appear on the
+printed sheet. Fetching it inside the effect that already generated the image
+asynchronously — the library, not the component, so no render path changed —
+left both pages *smaller* than their 2026-09-14 baseline. `check:genvideo`
+drives the printed QR codes and is what says it still works.
+
 **Not in `build`** — these need headless Chrome, and the Cloudflare image has
 none. Run them after a build when the work touches what they cover.
 
@@ -132,6 +146,7 @@ none. Run them after a build when the work touches what they cover.
 | `check:wslayout` | the worksheet header holds its shape at every width |
 | `check:nozoom` | nothing on the Explorer makes a phone shrink the page |
 | `check-hint-ladder` | the ladder says something on every press, on both kinds of question |
+| `check:another` | *another like this one* is on every surface a pupil gets stuck on, and absent on the three that decided against it |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on
@@ -236,6 +251,57 @@ the concrete half comes from the scheme's illustrative column at emit time.
 *`paper-steps.ts` is still here and no pupil reads it.* Its 1030 rows are the
 control set every detector in `__checks__/plans.ts` is proved against. Deleting
 it would make all of them unproven.
+
+---
+
+## Another like this one
+
+Added 2026-09-15. It was on one surface — the guided practice page — so opening
+the same topic in Focus or full screen lost it, and so did the past paper
+archive, the revision marathon and a shared worksheet. The generator was
+*already* on all of those: `Hints` renders there, and the bottom of that ladder
+draws a generated twin and shows it worked right through. What was missing was
+the version a pupil can **attempt**.
+
+```
+below           a practice page, Focus mode — they have a below, and the pupil
+                is usually stuck on the question in front of them
+in place        full screen — one card, no below, so it owes them
+                [ Back to the question ]. Next and Previous clear it too
+```
+
+**The button moved to the foot of what it drew.** It used to stay above, so
+asking for a second one meant scrolling back past the question and its answer to
+a control you had already used. Moving it unmounts `AnotherLikeThis`, and a
+button in a new place is a new component with an empty memory — so the list of
+what has been drawn lives on the surface and goes back in as `alsoExclude`.
+
+**Three deliberate absences.** Each is checked as hard as the presences, because
+an absence with no check is indistinguishable from a bug.
+
+*The Explorer's own worksheet.* It already offers *Variation* on every card,
+*Add a variation of each* and *Generate on N topics* — all of which put the
+question **on** the sheet. A twin drawn in a full-screen mode would be the only
+one of the four that vanishes, on the one page built for assembling a sheet.
+
+*A shared worksheet with hints off.* `worksheet-share.ts` sets the test: does it
+change what the pupil is **given**, or only how they read it? Full screen is
+always allowed because it is the latter; another question is the former, so it
+belongs to the maker. It rides on the existing `hints` flag rather than a fifth
+option letter, because granting hints already grants a generated twin worked end
+to end — this hands over nothing new.
+
+*The Exam Hall Warm Up*, which does not use the presenter at all and already
+offers five more on the completion screen. During an exam simulation, no; after
+it, yes.
+
+**What the checks do not cover, said out loud.** That the exclude set survives
+the button's move is held by construction, not by a check. Pointed at a build
+with `alsoExclude` dropped, the browser check still passed: a surds variation
+can make far more than two questions and the engine picked a different one by
+chance. Repeats only become likely on a shallow variation — the measurement
+behind the exclude set was six identical draws from a six-deep pool — and no
+question reachable from that check is reliably that shallow.
 
 ---
 

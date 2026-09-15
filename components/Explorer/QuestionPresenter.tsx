@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight, ArrowLeft, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -15,6 +16,18 @@ import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+
+/**
+ * Lazily, exactly as `Hints` loads its worked example.
+ *
+ * This component renders on the paper templates, the course pages and the
+ * Explorer, all of which sit inside 10 KB of JS budget headroom — and the
+ * Explorer had one kilobyte of it left. The draw pulls the past paper index in
+ * behind it and nobody presses it on most pages, so none of it is worth eager
+ * bytes. `check:budget` is what says so, and it refused this change twice
+ * before the boundary was in the right place.
+ */
+const TwinControls = dynamic(() => import('@/components/Explorer/TwinControls'), { ssr: false });
 
 interface QuestionPresenterProps {
   /** Course this question set belongs to — enables the Formulae button. */
@@ -42,6 +55,26 @@ interface QuestionPresenterProps {
   /** A handout can grant hints without granting answers. They are not the same. */
   allowHints?: boolean;
   allowVideo?: boolean;
+  /**
+   * May a pupil draw another question like the one on screen?
+   *
+   * Default true: a past paper, a marathon and a practice topic all want it,
+   * and where nothing is modelled on the question the control is absent anyway.
+   *
+   * **A shared worksheet passes `options.hints`.** `worksheet-share.ts` sets the
+   * test for what belongs to the maker: does it change what the pupil is
+   * *given*, or only how they read it? Full screen is always allowed because it
+   * is the latter; another question is plainly the former. It rides on the
+   * hints flag rather than a fifth one because a teacher who granted hints has
+   * already granted a generated twin worked end to end — that is what the
+   * bottom of the ladder is — so this hands over nothing new.
+   *
+   * **The Explorer's own worksheet passes false.** It has *Variation* on every
+   * card, *Add a variation of each* and *Generate on N topics*, and a twin drawn
+   * in full screen would be the only one of the four that does not end up on
+   * the sheet.
+   */
+  allowAnother?: boolean;
 }
 
 function extractImageSrcs(html: string): string[] {
@@ -54,12 +87,27 @@ function extractImageSrcs(html: string): string[] {
   return srcs;
 }
 
-export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, backTo, allowAnswers = true, allowVideo = true, allowHints = true }: QuestionPresenterProps) {
+export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, backTo, allowAnswers = true, allowVideo = true, allowHints = true, allowAnother = true }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [showBooklet, setShowBooklet] = useState(false);
   const [showMarkscheme, setShowMarkscheme] = useState(false);
+
+  /**
+   * A drawn question standing in for the one at `currentIndex`.
+   *
+   * **It swaps in rather than opening below**, because there is one card here
+   * and no below. That makes getting back an act a pupil has to be offered
+   * rather than one they scroll to, so it is a button — and *Next* and
+   * *Previous* clear it too, which is how "or just move on" works.
+   *
+   * `drawn` is every twin this session has produced. It goes back into the
+   * draw as `alsoExclude`, so a pupil who takes three does not get the first
+   * one again.
+   */
+  const [twin, setTwin] = useState<QuestionWithMetadata | null>(null);
+  const [drawn, setDrawn] = useState<QuestionWithMetadata[]>([]);
 
   // The question card and the answer below it share one scroller. On a long
   // question the answer opens below the fold, so "Show Answer" looked like it
@@ -69,6 +117,15 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
   const answerRef = useRef<HTMLDivElement>(null);
 
   const question = questions[currentIndex];
+  /**
+   * What is on the card: the twin when one is showing, otherwise the question.
+   *
+   * Everything the card is made of reads this — the html, the images, the
+   * marks, the hints, the answer, the video. **The position counter does not**:
+   * it says where you are in the *set*, and taking a detour does not move you
+   * along it.
+   */
+  const shown = twin ?? question;
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === questions.length - 1;
 
@@ -82,10 +139,13 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
     ? { current: question.questionNumber, total: lastQuestionNumber(questions, questions.length) }
     : { current: String(currentIndex + 1), total: String(questions.length) };
 
+  // Moving along the set puts the twin away. A pupil who has taken a detour and
+  // pressed Next means the next question in the paper, not the next twin.
   const goNext = useCallback(() => {
     if (!isLast) {
       setCurrentIndex((i) => i + 1);
       setShowAnswer(false);
+      setTwin(null);
     }
   }, [isLast]);
 
@@ -93,13 +153,16 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
     if (!isFirst) {
       setCurrentIndex((i) => i - 1);
       setShowAnswer(false);
+      setTwin(null);
     }
   }, [isFirst]);
 
-  // Every move starts at the top of the new question
+  // Every move starts at the top of the new question — swapping a twin in is a
+  // move, and a twin drawn while scrolled down the answer of the last one would
+  // otherwise arrive halfway through itself.
   useEffect(() => {
     scrollerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentIndex]);
+  }, [currentIndex, twin]);
 
   // Bring the answer into view when it is revealed, but only if it is not
   // already on screen — scrolling when nothing needed to move is disorienting.
@@ -165,10 +228,16 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
               <span className="text-slate-300">{position.total}</span>
             </p>
+            {/* A twin says what it is and where it came from. Leaving the paper
+                question's own label up there would credit this question to a
+                paper it is not in. */}
             <p className="text-muted-dim text-xs mt-0.5">
-              {questionLabel(question)}
+              {twin
+                ? `New question${twin.basedOn?.[twin.parentIndex ?? 0]
+                    ? ` · based on ${twin.basedOn[twin.parentIndex ?? 0]}` : ''}`
+                : questionLabel(question)}
             </p>
-            <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
+            <Marks marks={shown.marks} theme={theme} className="justify-end mt-1" />
           </div>
         </div>
 
@@ -177,7 +246,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
           <div className="min-h-full flex flex-col max-w-4xl lg:max-w-none mx-auto p-4 sm:p-6 md:p-8 lg:px-12 xl:px-16">
             {/* Topic Tags */}
             <div className="shrink-0 flex flex-wrap gap-2 mb-4">
-              {question.topics?.slice(0, 3).map((topic) => (
+              {shown.topics?.slice(0, 3).map((topic) => (
                 <span
                   key={topic}
                   className="px-2 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded"
@@ -189,7 +258,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
 
             {/* Question Card — fixed height container between header & footer */}
             {(() => {
-              const imageSrcs = extractImageSrcs(question.question);
+              const imageSrcs = extractImageSrcs(shown.question);
               const hasImages = imageSrcs.length > 0;
 
               return (
@@ -197,7 +266,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   {/* Text column — scrollable if question is long */}
                   <div className={hasImages ? 'lg:[&_img]:!hidden' : ''}>
                     <MathRenderer
-                      html={question.question}
+                      html={shown.question}
                       // 20px from the smallest phone, not 18px.
                       //
                       // `sm:` is 640px, so no phone in portrait ever reached
@@ -228,9 +297,9 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             })()}
 
             {/* Higher Apps data files */}
-            {question.attachments && question.attachments.length > 0 && (
+            {shown.attachments && shown.attachments.length > 0 && (
               <div className="shrink-0 flex flex-wrap justify-center gap-2 mt-4">
-                {question.attachments.map((file) => (
+                {shown.attachments.map((file) => (
                   <a
                     key={file.url}
                     href={file.url}
@@ -265,7 +334,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {/* Before the answer button, deliberately: a pupil who is stuck
                   should meet help before they meet the answer. */}
               {allowHints && (
-                <Hints question={question} theme={theme} courseId={courseId} className="w-full" />
+                <Hints question={shown} theme={theme} courseId={courseId} className="w-full" />
               )}
               {allowAnswers && (
               <button
@@ -289,7 +358,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 )}
               </button>
               )}
-              {allowVideo && question.videoId ? (
+              {allowVideo && shown.videoId ? (
                 <button
                   onClick={() => setShowVideo(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -298,9 +367,9 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   {/* A generated question's video solves the paper question it
                       was modelled on, not itself. Calling that "Watch Solution"
                       sends a pupil to check an answer that is not theirs. */}
-                  {question.videoOf ? 'Watch a worked example' : 'Watch Solution'}
+                  {shown.videoOf ? 'Watch a worked example' : 'Watch Solution'}
                 </button>
-              ) : allowVideo && hasMarkscheme(question.year, question.paperNumber) ? (
+              ) : allowVideo && hasMarkscheme(shown.year, shown.paperNumber) ? (
                 <button
                   onClick={() => setShowMarkscheme(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -316,6 +385,29 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   Video solution coming soon
                 </span>
               )}
+
+              {/* Last in the row, and deliberately after the answer: this is a
+                  what-next control rather than a help-me-now one, and a pupil
+                  should meet the hints and the video before they are offered a
+                  different question.
+
+                  Modelled on the paper question, never on the twin — pressing
+                  it three times stays anchored to what the pupil is stuck on
+                  rather than wandering off down a chain. */}
+              {allowAnother && (
+                <TwinControls
+                  courseId={courseId}
+                  question={question}
+                  showing={!!twin}
+                  alsoExclude={drawn}
+                  onDrawn={(made) => {
+                    setTwin(made);
+                    setDrawn(d => [...d, made]);
+                    setShowAnswer(false);
+                  }}
+                  onBack={() => { setTwin(null); setShowAnswer(false); }}
+                />
+              )}
             </div>
 
             {/* Answer Section */}
@@ -323,15 +415,15 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               <div ref={answerRef} className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
-                  html={question.answer}
+                  html={shown.answer}
                   className="text-slate-200 answer-content text-xl leading-relaxed"
                 />
-                {question.solutionUrl && (
+                {shown.solutionUrl && (
                   // Guided practice questions from maths.scot: linking to his
                   // written solution is a condition of using them.
                   // See docs/guided-practice-attribution.md
                   <a
-                    href={question.solutionUrl}
+                    href={shown.solutionUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 mt-4 text-sm text-slate-400 hover:text-slate-200 underline transition-colors"
@@ -371,18 +463,22 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
       </div>
 
       {/* Video Modal */}
+      {/* A twin has no film of its own: `useGeneratedDraw` gives it the video of
+          the paper question behind it, and `videoOf` is what that video
+          actually shows. Titling it with the question on screen would promise a
+          pupil their own numbers worked. */}
       <VideoModal
         isOpen={showVideo}
         onClose={() => setShowVideo(false)}
-        videoId={question.videoId}
-        timestamp={timestampToSeconds(question.timestamp)}
-        title={questionLabel(question)}
+        videoId={shown.videoId}
+        timestamp={timestampToSeconds(shown.timestamp)}
+        title={shown.videoOf ? `Worked example — ${shown.videoOf}` : questionLabel(shown)}
       />
 
       {/* Data Booklet (Higher Apps) */}
       {showBooklet && (
         <DataBookletModal
-          year={question.year}
+          year={shown.year}
           theme={theme}
           onClose={() => setShowBooklet(false)}
         />
@@ -392,10 +488,10 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
       {showMarkscheme && (
         <MarkschemeModal
           theme={theme}
-          year={question.year}
-          paperNumber={question.paperNumber}
-          questionHtml={question.question}
-          title={questionLabel(question)}
+          year={shown.year}
+          paperNumber={shown.paperNumber}
+          questionHtml={shown.question}
+          title={questionLabel(shown)}
           onClose={() => setShowMarkscheme(false)}
         />
       )}

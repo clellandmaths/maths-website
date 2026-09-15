@@ -407,6 +407,13 @@ function SharedWorksheet() {
           allowAnswers={options.answers}
           allowHints={options.hints}
           allowVideo={options.video}
+          /* Another question changes what the pupil is GIVEN, not how they read
+             it, so by this file's own test it belongs to whoever made the
+             handout. It rides on the hints flag rather than a fifth toggle
+             because granting hints already grants a generated twin worked end
+             to end — that is the bottom of the ladder — so this adds nothing a
+             teacher who ticked hints has not already agreed to. */
+          allowAnother={options.hints}
           onClose={() => setFullScreenFrom(null)}
         />
       )}

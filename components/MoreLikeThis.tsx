@@ -1,19 +1,24 @@
 'use client';
 
-import { useState } from 'react';
-import { Dices, Eye, Loader2, Play, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { moreLikeThis } from '@/lib/similar-questions';
-import { useGeneratedDraw } from '@/lib/use-generated-draw';
-import { timestampToSeconds } from '@/lib/timestamp.mjs';
-import MathRenderer from '@/components/MathRenderer';
-import Marks from '@/components/Marks';
-import Hints from '@/components/Hints';
-import VideoModal from '@/components/VideoModal';
+import AnotherLikeThis from '@/components/AnotherLikeThis';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
 /**
- * "Another like this one" — on any surface showing a single question.
+ * The card is lazy; the button is not.
+ *
+ * Nothing is drawn until somebody presses, so the card and everything it
+ * renders is dead weight on every page carrying this control until then. The
+ * button has to be there on arrival, so it stays eager. Measured: moving the
+ * card out took the practice templates back under their budget.
+ */
+const DrawnQuestion = dynamic(() => import('@/components/DrawnQuestion'), { ssr: false });
+
+/**
+ * "Another like this one", opening below the question rather than replacing it.
  *
  * **Past paper questions only.** It draws from the variations modelled on the
  * exact question in front of the pupil, so what comes back tests the same
@@ -24,16 +29,22 @@ import type { CourseTheme } from '@/lib/course-theme';
  * multiply and divide. Generating across a topic is still offered, on the
  * section at the foot of a practice page that says that is what it does.
  *
- * **It opens below the question rather than replacing it.** A pupil pressing
- * this is usually stuck on the one in front of them, and taking it away loses
- * the thing they were working on. The Explorer's card swaps in place instead,
- * because there a question is something you are choosing rather than doing.
+ * **Below, not instead.** A pupil pressing this is usually stuck on the one in
+ * front of them, and taking it away loses the thing they were working on. Full
+ * screen swaps in place instead, because there is one card there and no below —
+ * so it offers its own way back rather than this one.
  *
- * The new question arrives with **the video of the paper question behind it**
- * and **its own hints** — a generated question carries its own skill, method
- * and worked steps, so the ladder needs nothing looked up. Without both, a
- * pupil who is stuck on the first question is handed a second one and no more
- * help than they had.
+ * **Two surfaces, one component.** A guided practice page renders it directly;
+ * Focus mode renders it per row through `next/dynamic` and pays nothing for it
+ * until a pupil asks. They differ by two class names, which is not enough to
+ * justify a second copy of the behaviour.
+ *
+ * **The button follows the reading.** Once a question is drawn the button moves
+ * to the foot of it. It used to stay above the card, so asking for a second one
+ * meant scrolling back past the question and its answer to reach a control you
+ * had already used. Moving it costs `AnotherLikeThis` its memory of what it has
+ * drawn — a button in a new place is a new component — so the list lives here
+ * and goes back in as `alsoExclude`.
  */
 interface Props {
   courseId?: string;
@@ -49,135 +60,99 @@ interface Props {
   /** The question HTML, scraped only when no label is given. */
   questionHtml?: string;
   className?: string;
+  /**
+   * Which surface this is on, and so how it is painted.
+   *
+   * **A name rather than three class strings**, which is not the usual way round
+   * here — a caller's CSS normally belongs to the caller. It is a name because
+   * the strings would then be *eager*: `FocusMode` reaches this component
+   * through `next/dynamic`, so anything passed in as a prop sits in the
+   * course-page bundle whether or not a pupil ever presses the button, and
+   * `check:budget` measured it as the last kilobyte over the line.
+   */
+  tone?: 'page' | 'overlay';
+  /**
+   * Twins drawn by the *other* copies of this control on the same page.
+   *
+   * Focus mode is a whole paper at once, each question carrying its own. With
+   * no list between them, working down the page hands the same twin out twice
+   * on two different questions.
+   */
+  alsoExclude?: readonly QuestionWithMetadata[];
+  onDrawn?: (q: QuestionWithMetadata) => void;
 }
+
+const TONES = {
+  page: {
+    shell: 'border-border bg-card/40',
+    button: 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors disabled:opacity-60',
+    notice: 'mt-2 text-sm text-muted-foreground',
+  },
+  overlay: {
+    shell: 'border-slate-800 bg-slate-900/60',
+    button: 'inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm font-medium transition-colors disabled:opacity-60',
+    notice: 'mt-2 text-sm text-slate-400',
+  },
+} as const;
 
 export default function MoreLikeThis({
   courseId, theme, label, questionHtml, className = '',
+  tone = 'page', alsoExclude, onDrawn,
 }: Props) {
+  const paint = TONES[tone];
   const [question, setQuestion] = useState<QuestionWithMetadata | null>(null);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [drawn, setDrawn] = useState<QuestionWithMetadata[]>([]);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const offer = moreLikeThis(courseId, { label, questionHtml });
+  // Bring what was just drawn into view. Pressing the button at the foot of a
+  // card replaces the card ABOVE it, so without this a pupil is left looking at
+  // the button they pressed with the new question off the top of the screen.
+  // `nearest` scrolls the least that makes it visible, and does nothing at all
+  // when it already is.
+  useEffect(() => {
+    if (!question) return;
+    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [question]);
 
-  const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
-    if (!offer) return null;
-    const [made] = await engine.similarTo(offer.label, 1, engine.worksheetKeys(exclude));
-    return made ?? null;
-  });
+  // Nothing modelled on this question: render nothing, not an empty box with a
+  // margin on it. Absent, not disabled.
+  if (!moreLikeThis(courseId, { label, questionHtml })) return null;
 
-  // Nothing modelled on this question: render nothing. Absent, not disabled.
-  if (!offer) return null;
+  /** Enough of the question on screen for the draw to model a twin on. */
+  const source = { question: questionHtml ?? '' } as QuestionWithMetadata;
 
-  const busy = draw.state === 'drawing';
-
-  const next = async () => {
-    const made = await draw.one();
-    if (made) { setQuestion(made); setShowAnswer(false); setPlaying(false); }
-  };
+  const button = (
+    <AnotherLikeThis
+      courseId={courseId}
+      question={source}
+      label={label}
+      showing={!!question}
+      alsoExclude={alsoExclude ? [...drawn, ...alsoExclude] : drawn}
+      onDrawn={(made) => { setQuestion(made); setDrawn(d => [...d, made]); onDrawn?.(made); }}
+      className={paint.button}
+      noticeClassName={paint.notice}
+    />
+  );
 
   return (
     <div className={className}>
-      <button
-        onClick={next}
-        disabled={busy}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors disabled:opacity-60"
-      >
-        {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Dices className="h-3.5 w-3.5" />}
-        {question ? 'Another one' : 'Another like this one'}
-      </button>
-
-      {/* Running out is a fact about how many different questions this one can
-          make, not a fault. */}
-      {draw.state === 'exhausted' && (
-        <p className="mt-2 text-sm text-muted-foreground">
-          {draw.seen > 0
-            ? `That is all ${draw.seen} different questions this one can make.`
-            : 'No new question could be made just now.'}
-        </p>
-      )}
-      {draw.state === 'failed' && (
-        <p className="mt-2 text-sm text-amber-300/90">
-          Could not make one just now. Try again in a moment.
-        </p>
-      )}
+      {!question && button}
 
       {question && (
-        <div key={question.uid} className="card-face mt-4 border border-border rounded-xl p-4 bg-card/40">
-          <div className="flex items-center gap-2 flex-wrap mb-2">
-            <span className={`font-mono text-xs px-1.5 py-0.5 rounded ${theme.tint} ${theme.text}`}>
-              New question
-            </span>
-            {/* The paper behind it, not its own label — a generated question's
-                label is the skill it tests, which tells a pupil nothing about
-                where it came from. */}
-            {question.basedOn?.[question.parentIndex ?? 0] && (
-              <span className="font-mono text-xs text-muted-foreground">
-                based on {question.basedOn[question.parentIndex ?? 0]}
-              </span>
-            )}
-            <Marks marks={question.marks} theme={theme} />
-            <button
-              onClick={() => { setQuestion(null); setShowAnswer(false); draw.reset(); }}
-              className="ml-auto p-1 text-muted-dim hover:text-foreground rounded transition-colors"
-              title="Put this away"
-              aria-label="Put this away"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          </div>
-
-          <MathRenderer html={question.question} className="question-content text-foreground" />
-
-          <div className="flex flex-wrap items-center gap-2 mt-3">
-            {!showAnswer && (
-              <button
-                onClick={() => setShowAnswer(true)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
-              >
-                <Eye className="h-3.5 w-3.5" />
-                Show answer
-              </button>
-            )}
-
-            {/* **The method, as a button rather than a sentence.** A generated
-                question has no filmed solution of its own; the paper question
-                behind it does, and watching that worked is the tutorial — same
-                method, different numbers. The wording says so, because a pupil
-                checking their own answer against a video of other numbers
-                concludes they are wrong. */}
-            {question.videoId && (
-              <button
-                onClick={() => setPlaying(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
-              >
-                <Play className="h-3.5 w-3.5" />
-                Watch the method
-              </button>
-            )}
-
-            {/* A generated question carries its own skill, method and worked
-                steps, so the ladder needs nothing looked up. */}
-            <Hints question={question} theme={theme} courseId={courseId} className="w-full" />
-          </div>
-
-          {showAnswer && (
-            <MathRenderer
-              html={question.answer}
-              className="mt-3 rounded-lg p-3 bg-white/5 answer-content text-foreground"
-            />
-          )}
+        <div ref={cardRef}>
+          {/* Remounted per question, which is what resets its answer and its
+              video without this component tracking either. */}
+          <DrawnQuestion
+            key={question.uid}
+            question={question}
+            theme={theme}
+            courseId={courseId}
+            onClose={() => setQuestion(null)}
+            shell={paint.shell}
+          >
+            {button}
+          </DrawnQuestion>
         </div>
-      )}
-
-      {playing && question?.videoId && (
-        <VideoModal
-          isOpen
-          videoId={question.videoId}
-          timestamp={timestampToSeconds(question.timestamp)}
-          title={question.videoOf ? `Worked example — ${question.videoOf}` : 'Worked example'}
-          onClose={() => setPlaying(false)}
-        />
       )}
     </div>
   );

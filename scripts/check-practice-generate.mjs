@@ -127,6 +127,59 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
   t.check(offered?.hint, 'and its own hints');
   t.check(offered?.answer, 'and an answer to reveal');
 
+  /* ── and the way to the next one is where you finish reading ────────────
+     The button used to stay ABOVE the drawn question, so a pupil who had
+     worked one through and revealed its answer had to scroll back past both to
+     reach a control they had already used. It now sits at the foot of the
+     card.
+
+     **What the third assertion does and does not prove.** It proves the moved
+     button still draws. It does NOT prove that the exclude set survived the
+     move, which is the other half of why `MoreLikeThis` holds the list itself:
+     pointed at a build with `alsoExclude` deliberately dropped, it still
+     passed, because a surds variation can make far more than two questions and
+     the engine picked a different one by chance. A repeat only becomes likely
+     on a shallow variation — the measurement behind the exclude set was six
+     identical draws from a six-deep pool — and no question reachable from here
+     is reliably that shallow. So the exclude set is held by construction and by
+     the comment that explains it, and this check is not evidence for it. Said
+     out loud because a check that looks like it covers something it does not is
+     worse than no check. */
+  const panelBtn = `(() => {
+    const panels = [...document.querySelectorAll('div')]
+      .filter(d => /New question/.test(d.innerText) && d.querySelector('.question-content'));
+    const panel = panels[panels.length - 1];
+    return panel && [...panel.querySelectorAll('button')]
+      .find(b => /another (like this one|one)$/i.test((b.textContent || '').trim()));
+  })()`;
+  const panelText = `(() => {
+    const panels = [...document.querySelectorAll('div')]
+      .filter(d => /New question/.test(d.innerText) && d.querySelector('.question-content'));
+    const q = panels[panels.length - 1]?.querySelector('.question-content');
+    return (q?.innerText || '').replace(/[^a-zA-Z0-9]+/g, ' ').trim().slice(0, 60);
+  })()`;
+
+  const foot = await evaluate(`(() => {
+    const btn = ${panelBtn};
+    if (!btn) return { inFoot: false };
+    const panels = [...document.querySelectorAll('div')]
+      .filter(d => /New question/.test(d.innerText) && d.querySelector('.question-content'));
+    const q = panels[panels.length - 1].querySelector('.question-content');
+    return {
+      inFoot: true,
+      below: btn.getBoundingClientRect().top > q.getBoundingClientRect().top,
+    };
+  })()`);
+  const drewFirst = await evaluate(panelText);
+  t.check(foot?.inFoot, 'the control to draw another is inside the drawn card');
+  t.check(foot?.below, 'below the question it just handed over, not back up the page');
+
+  await click(panelBtn);
+  await sleep(5000);
+  const drewAgain = await evaluate(panelText);
+  t.check(drewFirst.length > 5 && drewAgain.length > 5 && drewAgain !== drewFirst,
+    `and the moved button still draws: ${JSON.stringify(drewAgain.slice(0, 40))}`);
+
   /* ── hints in the two full-screen modes ────────────────────────────────
      Both render <Hints> with no label prop, and a question reaching them from
      guided practice has had its printed badge stripped out of the HTML — so

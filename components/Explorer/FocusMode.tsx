@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X, Eye, EyeOff, Play, Check, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -13,6 +14,18 @@ import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+
+/**
+ * Lazily, the way `Hints` loads its worked example.
+ *
+ * The same control a guided practice page renders directly — a twin opening
+ * below the question, never replacing it — and the same reasoning: this
+ * component is on the course templates, which sit inside 10 KB of JS budget
+ * headroom, and nothing here is on screen until a pupil asks for it.
+ * `check:budget` is what says so, and it refused this change until the card
+ * came out of the eager bundle.
+ */
+const MoreLikeThis = dynamic(() => import('@/components/MoreLikeThis'), { ssr: false });
 
 // localStorage helpers for done tracking
 function getDoneKey(questions: QuestionWithMetadata[]): string {
@@ -47,14 +60,34 @@ interface FocusModeProps {
   hasDataBooklet?: boolean;
   questions: QuestionWithMetadata[];
   onClose: () => void;
+  /**
+   * May a pupil draw another question like one of these?
+   *
+   * Default true — a past paper and a practice topic both want it. **The
+   * Explorer's own worksheet passes false**: it already offers *Variation* on
+   * every card, *Add a variation of each* and *Generate on N topics*, and a
+   * twin drawn here would be the only one of the four that does not end up on
+   * the sheet. See `QuestionPresenter`, which carries the same prop and the
+   * shared-worksheet rule that goes with it.
+   */
+  allowAnother?: boolean;
 }
 
-export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose }: FocusModeProps) {
+export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose, allowAnother = true }: FocusModeProps) {
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
   const [markschemeQ, setMarkschemeQ] = useState<QuestionWithMetadata | null>(null);
   const [doneSet, setDoneSet] = useState<Set<number>>(() => loadDoneSet(questions));
+
+  /**
+   * Every twin drawn anywhere on this page.
+   *
+   * Each row owns the one it is showing; this list is what they share. Focus
+   * mode is a whole paper at once, so without it, working down the page hands
+   * the same twin out twice on two different questions.
+   */
+  const [drawn, setDrawn] = useState<QuestionWithMetadata[]>([]);
   const toggleAnswer = (index: number) => {
     setRevealedAnswers((prev) => {
       const next = new Set(prev);
@@ -276,6 +309,25 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     </a>
                   )}
                 </div>
+              )}
+
+              {/* Another like this one, under the question it is like — never
+                  replacing it. A pupil here is working down a whole paper and
+                  taking the question away loses their place in it.
+
+                  Painted in this overlay's slate rather than the page's card
+                  colour, which is a shade adrift of everything around it here. */}
+              {allowAnother && (
+                <MoreLikeThis
+                  courseId={courseId}
+                  theme={theme}
+                  label={q.label}
+                  questionHtml={q.question}
+                  className="mt-4"
+                  tone="overlay"
+                  alsoExclude={drawn}
+                  onDrawn={(made) => setDrawn(d => [...d, made])}
+                />
               )}
             </div>
           ))}

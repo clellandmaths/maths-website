@@ -1523,6 +1523,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           startIndex={presentStartIndex}
+          /* Not here. This page already offers "another like this one" three
+             ways — Variation on every card, Add a variation of each, and
+             Generate new on N topics — and all three put the question ON the
+             sheet. A twin drawn inside a full-screen mode would be the only one
+             that vanishes when the mode closes, which on the one surface built
+             for assembling a worksheet reads as a bug rather than a feature.
+             Every other caller takes the default. */
+          allowAnother={false}
           onClose={() => setPresentStartIndex(null)}
         />
       )}
@@ -1534,6 +1542,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           courseId={course}
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
+          /* See the presenter above: this page's own controls do it better. */
+          allowAnother={false}
           onClose={() => setShowFocusMode(false)}
         />
       )}
