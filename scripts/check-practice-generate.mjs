@@ -93,6 +93,57 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
 
   t.check(perQuestion?.fallback === 0, 'and nothing offers a whole-subtopic fallback');
 
+  /* ── every question says which kind it is ───────────────────────────────
+     A National 5 practice topic mixes past paper questions with questions
+     written for the site, and only the first kind can carry a hint ladder —
+     205 of the 458 cannot. Unexplained, that reads as a broken button rather
+     than a property of the question, so the ones without a ladder carry a line
+     saying where their help is instead.
+
+     The invariant is the point: hints + notes === questions. Either half alone
+     would pass while the other silently covered nothing.
+
+     **Reloaded first.** The ladder opened a few lines above is still open, and
+     an open ladder's button reads "Another hint" rather than "Hint" — so the
+     count came back one short and the invariant failed against a page this
+     check had itself changed. */
+  await go('/course/n5/practice/surds', 3000);
+  const covered = await evaluate(`(() => {
+    const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const notes = [...document.querySelectorAll('p')].filter(laid)
+      .filter(p => /no hints on this one/i.test(p.textContent || '')).length;
+    const hints = [...document.querySelectorAll('button')].filter(laid)
+      .filter(b => b.textContent.trim() === 'Hint').length;
+    const questions = [...document.querySelectorAll('button')].filter(laid)
+      .filter(b => /^show answer$/i.test(b.textContent.trim())).length;
+    return { notes, hints, questions };
+  })()`);
+  t.check(covered?.notes > 0,
+    `${covered?.notes} questions explain why they have no hint`);
+  t.check(covered?.hints + covered?.notes === covered?.questions,
+    `and every question on the page is one or the other (${covered?.hints} + ${covered?.notes} = ${covered?.questions})`);
+
+  /* Rounding is the one topic where NO question can have a ladder — the exam
+     never sets it on its own, so its three variations are warm-up tier. It is
+     the page where an unexplained absence would look most like a fault. */
+  await go('/course/n5/practice/rounding', 3000);
+  const rounding = await evaluate(`(() => {
+    const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    return {
+      notes: [...document.querySelectorAll('p')].filter(laid)
+        .filter(p => /no hints on this one/i.test(p.textContent || '')).length,
+      questions: [...document.querySelectorAll('button')].filter(laid)
+        .filter(b => /^show answer$/i.test(b.textContent.trim())).length,
+    };
+  })()`);
+  t.check(rounding?.questions > 0 && rounding.notes === rounding.questions,
+    `Rounding has no ladder anywhere, and says so on all ${rounding?.questions} of them`);
+
+  /* Back to Surds. Everything below expects a topic that HAS variations, and
+     Rounding is the one that does not — leaving the walk there made eight
+     later assertions fail against a page with nothing to draw from. */
+  await go('/course/n5/practice/surds', 3000);
+
   /* ── what a pupil gets when they take one ──────────────────────────────
      A new question and no more help than before is no help. It has to arrive
      with the method behind it and its own hints. */
@@ -230,6 +281,11 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
   const higher = await evaluate(`[...document.querySelectorAll('button')]
     .filter(b => /^Hint$|another like this one|more on /i.test(b.textContent || '')).length`);
   t.check(higher === 0, 'Higher practice questions offer neither');
+  /* And no explanation either. On the other four courses nothing has a ladder,
+     so the absence is the norm and a note on every question would be noise. */
+  t.check(await evaluate(`![...document.querySelectorAll('p')]
+    .some(p => /no hints on this one/i.test(p.textContent || ''))`),
+    'and do not explain an absence that is the norm there');
 
   // ── 4. it draws, and it draws something different the second time ───────
   await go('/course/n5/practice/surds');

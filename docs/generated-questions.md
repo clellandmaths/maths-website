@@ -309,6 +309,36 @@ question reachable from that check is reliably that shallow.
 
 ---
 
+## Where a hint cannot exist, the page says so
+
+Added 2026-09-16. A National 5 practice topic mixes past paper questions with
+questions written for the site, and **205 of the 458 are the second kind**.
+Only the first can carry a ladder: presses 1 and 2 come from the variation
+modelled on that exam question, and press 3 carries the working out of its
+marking instructions. A written question has no marking instructions, so there
+is nothing to build a ladder from — and the full written solution stays on
+maths.scot by agreement, so it cannot be lifted either.
+
+Unexplained, that reads as a broken button rather than a property of the
+question. Those questions now carry one line saying where their help is
+instead. All 205 were checked to carry a written solution, so the sentence is
+true of every question it appears under.
+
+**Rounding is the extreme case**: 22 questions, none with a ladder, because the
+exam never sets rounding on its own and its three variations are warm-up tier.
+It is also the one topic `check:topicmaps` records as unable to generate.
+
+`check:practicegen` holds the invariant — **hints + notes = questions** on a
+National 5 practice page, and neither on the other four courses, where no
+question has a ladder and the absence is the norm.
+
+**This is a signpost, not a fix.** The 205 still have no hints. What would close
+that is mapping each one to the variation it matches — which buys presses 1 and
+2 from `skill` and `method` strings that are already written, with no new prose
+— and it is 205 judgements nobody has made yet.
+
+---
+
 ## What is still open
 
 - **`dev` is a long way ahead of `master` and none of it is live.**

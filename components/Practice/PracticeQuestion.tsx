@@ -5,6 +5,7 @@ import { Eye, Play, ExternalLink, BookOpen } from 'lucide-react';
 import Marks from '@/components/Marks';
 import Hints from '@/components/Hints';
 import MoreLikeThis from '@/components/MoreLikeThis';
+import { courseHasHints, paperLabelOf } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FormulaeButton from '@/components/FormulaeButton';
@@ -175,6 +176,29 @@ export default function PracticeQuestion({
           theme={theme}
           courseId={courseId}
         />
+
+        {/* **Why this one has no Hint button.**
+            A National 5 practice topic mixes past paper questions with
+            questions written for the site, and only the first kind can have a
+            hint ladder: presses 1 and 2 come from the variation modelled on
+            that exam question, and press 3 carries the working out of its
+            marking instructions. A written question has no marking
+            instructions, so there is nothing to build a ladder from — 205 of
+            the 458 National 5 practice questions are in that position.
+
+            Without this line the difference is invisible and a pupil cannot
+            tell a gap in the site from a mistake they have made. It says where
+            the help actually is instead: all 205 carry a full written solution,
+            checked, so the sentence is true of every question it appears under.
+
+            Only where hints exist at all. On the other four courses no practice
+            question has them and the absence is the norm, so a note on every
+            question would be noise rather than an explanation. */}
+        {courseHasHints(courseId) && !paperLabelOf(paper, questionHtml) && solutionUrl && (
+          <p className="text-xs text-muted-foreground">
+            No hints on this one — its full written solution is with the answer.
+          </p>
+        )}
       </div>
 
       {/* Another question like this one, before the answer rather than after
