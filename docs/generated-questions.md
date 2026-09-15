@@ -16,7 +16,7 @@ node scripts/check-card-variation.mjs      # and nine more that need Chrome
 ```
 
 **The engine is on 0 of 542 pages, and that is the number to watch.** It is
-about 33,000 lines in 645 KB of lazy chunks, reached only through
+about 33,000 lines in 891 KB of lazy chunks, reached only through
 `await import()`. `check-engine-isolation.mjs` fails the build if any page ever
 references one of those chunks.
 
@@ -103,7 +103,7 @@ In `build`, reading source:
 
 | | |
 |---|---|
-| `check:gensync` | `lib/generator/` is an unedited copy — 94 files, 0 stale |
+| `check:gensync` | `lib/generator/` is an unedited copy — 95 files, 0 stale |
 | `check:reach` | 328/328 questions cited, 57/57 subtopics covered |
 | `check:topicmaps` | every practice topic mapped; **33 of 34 can generate** (not Rounding) |
 | `check:callsites` | one door, no engine on a client component, no concurrent draws |
@@ -112,7 +112,7 @@ In `postbuild`, reading `out/`:
 
 | | |
 |---|---|
-| `check:engine` | 5 engine chunks, 645 KB, on **0 of 542** pages |
+| `check:engine` | 6 engine chunks, 891 KB, on **0 of 542** pages |
 | `check:budget` | per-template JS against a baseline, 10 KB headroom |
 
 **Not in `build`** — these need headless Chrome, and the Cloudflare image has
@@ -131,6 +131,7 @@ none. Run them after a build when the work touches what they cover.
 | `check:toggles` | the worksheet offers its toggles at any width |
 | `check:wslayout` | the worksheet header holds its shape at every width |
 | `check:nozoom` | nothing on the Explorer makes a phone shrink the page |
+| `check-hint-ladder` | the ladder says something on every press, on both kinds of question |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on
@@ -161,7 +162,30 @@ the ones without pass.
 
 **`innerText` is rendered text.** An `uppercase` class means a heading reads
 `KEEP PRACTISING`, and matching the source spelling reports a section missing on
-a page whose own button then works.
+a page whose own button then works. It caught the hint ladder check twice —
+`THE SAME METHOD, DIFFERENT NUMBERS` read as a worked example that never
+arrived, when it had arrived in under two seconds.
+
+**`innerText` on a detached clone is `textContent`.** KaTeX renders its maths
+twice, a hidden-but-rendered MathML copy beside the visible HTML, so live
+`innerText` returns every symbol doubled. The obvious fix is to clone and strip
+the MathML — and a clone has no layout, so `innerText` silently degrades to
+`textContent` and **every line break disappears**. The panel then comes back as
+one run-on string, and a detector reading it line by line sees nothing: a
+deliberately broken rung passed while the panel visibly shrank by 98 characters.
+Strip the MathML from the live node instead.
+
+**Pin what you are pressing before you press it.** A practice page has five hint
+ladders. "The first Hint button" works until that ladder is exhausted — its
+button then disappears and the next question's becomes the first, so a walk
+marches across questions and reports ten presses for a four-press ladder. Tag
+the container once and select inside it.
+
+**`includes('')` is true for every string.** A selector that finds nothing
+returns `''`, and a check asking "is the twin's question different from the one
+on screen" then answers no, every time. Guard the length of what you compare
+against — guided practice renders `.prose-practice`, not the `.question-content`
+the worksheet and paper pages use, and one selector does not fit every surface.
 
 **Scope to the thing being tested.** A practice page has thirteen *Show answer*
 buttons; a full-screen overlay sits on top of a page whose questions each have
@@ -175,6 +199,46 @@ Every check here has been run against the bug it exists to catch.
 
 ---
 
+## The hint ladder
+
+Rebuilt 2026-09-15. It used to be the marking instructions replayed one row per
+mark, and it **ran downhill**: press 2 is our own prose, presses 3+ were the
+examiner's, and they carried less. `2015 P2 Q4` went *"start process"*, then
+*"solution"*.
+
+```
+Hint             What it asks      the variation's `skill`
+Another hint     How the marks go  its `method`
+More help (n)    2–4 authored moves, each with THIS question's own working
+                 beside it and what it is worth
+                 → past paper: one worked right through, answer included
+                 → generated:  nothing; its video is already on the card
+```
+
+| | |
+|---|---|
+| `paper-plan.ts` | 190 plans serving 328 questions, 966 moves, **571 carrying working** |
+| authored | **197 of 197** exam variations, ratcheted in `__checks__/plans.ts` |
+| never shown | the last row of a question, and **52 mid-rows that are answers too** |
+
+**Three things that are not obvious.**
+
+*Moves, not marks.* Ladder length was the mark count, so a 7-mark question took
+eight presses and a 2-mark one spent a press on "consistent answer in simplest
+form". A move carries what it is worth instead — and **a move worth 0 shows no
+chip at all**, which two 1-mark variations need, because moves are pedagogy and
+marks are accounting.
+
+*The instruction is authored per variation, the working is per question.* One
+plan serves up to nine papers, so it never names a value only one of them has;
+the concrete half comes from the scheme's illustrative column at emit time.
+
+*`paper-steps.ts` is still here and no pupil reads it.* Its 1030 rows are the
+control set every detector in `__checks__/plans.ts` is proved against. Deleting
+it would make all of them unproven.
+
+---
+
 ## What is still open
 
 - **`dev` is a long way ahead of `master` and none of it is live.**
@@ -184,3 +248,13 @@ Every check here has been run against the bug it exists to catch.
   [responsive.md](responsive.md). That is the ~90 minutes to spend immediately
   before a merge.
 - Print is verified as *what the page hands the printer*. Nobody has driven iOS.
+- ~~The hint ladder runs downhill on a past paper question.~~ **Fixed
+  2026-09-15** — see *The hint ladder* below.
+- ~~Verbatim marking-instruction text is committed and served.~~ **Not an open
+  item — the marking instructions are used with permission.** Recorded here
+  because it was written up as a problem on 2026-09-15 and is not one:
+  `paper-markscheme.ts` (~189 KB, every illustrative and note) and
+  `paper-steps.ts` (~42 KB) ship deliberately, and the scheme's working reaching
+  a pupil through the hint ladder is a design decision rather than a risk.
+  `reference/` stays gitignored for its size — 25 MB of transcriptions and
+  PDFs — not for its licence.

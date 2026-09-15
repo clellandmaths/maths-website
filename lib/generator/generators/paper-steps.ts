@@ -5,6 +5,13 @@
  * \`__checks__/paper-steps.ts\` fails if this file and the marking instructions
  * disagree.
  *
+ * **No pupil reads this.** It was the hint ladder until 2026-09-15 and
+ * \`paper-plan.ts\` is that now — these rows say what a mark rewards, which is a
+ * different question from what to do next. It stays because it is the control
+ * set every detector in \`__checks__/plans.ts\` is proved against: 125 rows that
+ * name no mathematical object, 13 carrying marker notation, 45 using the
+ * scheme's either-or slash. Delete it and those detectors prove nothing.
+ *
  * Transcribed from the published marking instructions, one entry per mark, in
  * the scheme's own order. This is the **generic scheme** column: what the mark
  * is for, never the answer it wants. The illustrative column — the answer for
