@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
 import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2, SlidersHorizontal } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
@@ -602,12 +603,32 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
         <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
           {/* Header */}
           <div className="mb-6 no-print">
-            <div className="flex items-center gap-3 mb-2">
+            {/* **The way back to the course.** This page had none: no
+                breadcrumb, no CourseTabs, and the only course affordance was a
+                chip and "Change Course" — which changes the course rather than
+                leaving it. `docs/navigation.md` records the same thing as
+                "/explorer has no breadcrumb and no course identity".
+
+                `flex-wrap`, because this row now holds three things and a phone
+                is 320px. A row here that cannot wrap pushes `main` past the
+                viewport, which is the fault the comment above this block is
+                about.
+
+                The arrow belongs to the back link. "Change Course" had it and
+                does not go back anywhere, so two controls were sharing one
+                meaning. */}
+            <div className="flex flex-wrap items-center gap-3 mb-2">
+              <Link
+                href={`/course/${course}`}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4 shrink-0" />
+                Back to {config.label}
+              </Link>
               <button
                 onClick={onChangeCourse}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-400 hover:text-slate-200 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors"
               >
-                <ArrowLeft className="h-4 w-4" />
                 Change Course
               </button>
               <span className={`px-2.5 py-1 ${theme.tint} ${theme.text} text-xs font-semibold rounded-full uppercase tracking-wide`}>

@@ -123,6 +123,16 @@ Exam Hall, behind a door labelled something else.
 `components/Navbar.tsx` does not call `usePathname` — verified, zero
 occurrences. No nav item is ever marked active, on any page.
 
+### ~~`/explorer` has no breadcrumb and no course identity~~ — half fixed 2026-09-15
+
+`/explorer` now carries "Back to <course>" beside its course chip, and the
+course page carries "Open the Topic Explorer" above the paper archive rather
+than in a card beneath it. The name is settled at **Topic Explorer** everywhere
+— the navbar said "Explorer" and the course page said "Practise by topic",
+which was priority 3 on the list below. `check:roundtrip` holds all of it.
+
+**`/exam-hall` is unchanged** and still has neither.
+
 ### `/explorer` and `/exam-hall` have no breadcrumb and no course identity
 
 Both are client routes with no `Breadcrumbs` and no `CourseTabs`. The course

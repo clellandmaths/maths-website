@@ -168,6 +168,27 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
         {/* Tabs — shared course-context navigation */}
         <CourseTabs courseId={courseId} active="papers" notesHref={notesHref} />
 
+        {/* **A way into the Explorer that is not at the bottom of the page.**
+            The cross-link card below says the same thing, but it sits beneath
+            the whole paper archive — twenty-odd cards of scrolling — so nobody
+            arriving here finds it. This is deliberately NOT a fourth CourseTabs
+            tab: measured, that row has 32px of slack at 320px and the word
+            "Explorer" cannot wrap, so a fourth tab re-creates the horizontal
+            scroll the comment in CourseTabs.tsx was written about.
+
+            The course rides in the query string rather than relying on
+            `localStorage.preferredCourse`, so the link means the same thing on
+            a device that has never been here. */}
+        {config && (
+          <Link
+            href={`/explorer?c=${courseId}`}
+            className="mb-8 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+          >
+            <Compass className="h-4 w-4 shrink-0" />
+            Open the Topic Explorer
+          </Link>
+        )}
+
         {/* Content */}
         {config ? (
           <div className="space-y-6">
@@ -404,14 +425,14 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
         {config && (
           <div className="grid sm:grid-cols-2 gap-4 mt-12">
             <Link
-              href="/explorer"
+              href={`/explorer?c=${courseId}`}
               className="group flex items-center gap-4 bg-slate-900 border border-slate-800 hover:border-white/25 rounded-xl p-5 transition-colors"
             >
               <div className={`p-3 ${theme.tint} rounded-lg shrink-0`}>
                 <Compass className={`h-6 w-6 ${theme.text}`} />
               </div>
               <div className="min-w-0">
-                <h3 className="font-semibold text-slate-100">Practise by topic</h3>
+                <h3 className="font-semibold text-slate-100">Topic Explorer</h3>
                 <p className="text-sm text-slate-400">
                   Filter these questions by topic and build a custom worksheet in the Explorer.
                 </p>

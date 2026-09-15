@@ -6,7 +6,11 @@ import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles, Mail } fr
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
-  { href: '/explorer', label: 'Explorer', icon: Compass },
+  // One name everywhere. The footer, the home hero and the page's own <h1>
+  // already said "Topic Explorer"; this said "Explorer" and the course page
+  // said "Practise by topic", which is three names for one tool and is why
+  // docs/navigation.md lists it as a thing nobody builds a model of.
+  { href: '/explorer', label: 'Topic Explorer', icon: Compass },
   { href: '/exam-hall', label: 'Exam Hall', icon: GraduationCap },
   // Carries the accent colour: it is the one paid thing on the site, and four
   // identically-styled items would bury it among the free ones.

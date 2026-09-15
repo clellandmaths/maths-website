@@ -150,6 +150,7 @@ none. Run them after a build when the work touches what they cover.
 | `check:explorerdesk` | browsing on a desktop screen: a wider window is never a worse one, and a diagram is readable |
 | `check:explorerfilters` | changing a filter puts you back at the top of the list, not at the end of a shorter one |
 | `check:byskill` | a sheet can be built by topic without meeting 174 skills, and the skills still work underneath |
+| `check:roundtrip` | a course and the Topic Explorer link both ways, under one name, without overflowing a phone |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on

@@ -35,6 +35,7 @@
     "check:explorerdesk": "node scripts/check-explorer-desktop.mjs",
     "check:explorerfilters": "node scripts/check-explorer-filters.mjs",
     "check:byskill": "node scripts/check-generate-by-skill.mjs",
+    "check:roundtrip": "node scripts/check-course-explorer.mjs",
     "check:practicepaper": "node scripts/check-practice-paper.mjs",
     "check:sharedsheet": "node scripts/check-shared-sheet.mjs",
     "check:notespractice": "node scripts/check-notes-to-practice.mjs",
