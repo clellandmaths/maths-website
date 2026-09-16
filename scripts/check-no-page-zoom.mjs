@@ -67,7 +67,25 @@ for (const [where, width, height] of WIDTHS) {
     await sleep(1500);
     await fits('filter overlay open');
 
-    // The interaction that was reported. One topic, then a second.
+    /* **The topic matters, not just the interaction.** This walk ticked
+       Percentages and Surds and passed for two sessions while the page still
+       zoomed out — because neither of those questions contains anything that
+       cannot wrap. A statistics question does: its data is written as
+       `16&nbsp;&nbsp;27&nbsp;&nbsp;12…`, and a non-breaking space exists
+       precisely to forbid a line break, so the whole list is one unbreakable
+       word 444px wide. Measured at 390px, ticking Comparing Data took the
+       document to 634px and the live site to 650px.
+
+       So the widest content on the site is ticked first, and the harmless
+       topics after it. A check that drives the right interaction on the wrong
+       data is a check that passes while the bug is on screen. */
+    await click(labelNamed('Comparing Data'));
+    await sleep(2500);
+    await fits('a topic whose questions hold an unbreakable data run');
+
+    await click(labelNamed('Comparing Data'));
+    await sleep(1500);
+
     await click(labelNamed('Percentages'));
     await sleep(2500);
     await fits('one topic ticked');
