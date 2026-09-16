@@ -696,6 +696,38 @@ already said it: when a check picks a fixture, pick the worst one on purpose.
 
 ---
 
+## Where it finished, 2026-09-16
+
+**Both themes, all 287 pages, 164,810 text nodes: every measured node clears
+AA**, with every text node accounted for (181,190 of 181,190). Source suite and
+all 18 browser checks green. `dev` at `8723157`; `master` untouched.
+
+The last failure standing was the check being wrong, not the site: 36 nodes on
+`notes/discriminant` at exactly 1:1 in **both** themes — text colour identical to
+the card colour, which is the signature of transparent text. KaTeX renders
+`\phantom` that way to reserve width so working lines stay aligned. Transparent
+text now has its own bucket.
+
+And the comment explaining that fix ended the probe's own template literal with
+its backticks, so both sweeps died on a syntax error and printed "0 pages
+failing" — which is what a run that never started looks like. What caught it was
+the output being far too short for 287 pages, not the exit code, which was 0.
+
+## What is still NOT proven
+
+The sweep measures **text contrast**. It does not measure:
+
+- **non-text contrast** — borders, icons, focus rings, checkbox outlines, table
+  gridlines, at the 3:1 guide. Never measured in either theme; the largest
+  remaining hole.
+- **`lib/generator`'s 136 colour literals** — light-styled tables in *generated*
+  Apps questions. Unverified in light, and a generator-repo change if wrong.
+- **print** — the `.print-formula-sheet` rules were re-keyed from `bg-gray-*` to
+  the tokens, verified by reading CSS rather than by printing.
+- **a real device** — all of this was headless Chrome at fixed widths.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.
