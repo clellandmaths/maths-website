@@ -69,6 +69,30 @@ interface Props {
    */
   label?: string | null;
   className?: string;
+  /**
+   * The button's own styling, so it matches the row it sits in.
+   *
+   * Measured on a 390px phone before this existed: in full screen the Hint
+   * button was 32px tall and 73px wide beside four 48px full-width blocks, and
+   * in Focus it was 32px beside four 36px ones. It was the smallest, narrowest
+   * control in both rows — and it is the one a stuck pupil is looking for. The
+   * cause was mechanical: surfaces passed `className="w-full"`, which lands on
+   * the wrapper below, while the button itself is `inline-flex` and never
+   * stretched.
+   *
+   * A caller's CSS rather than a `variant` union here, because three surfaces
+   * have three different button geometries and none of them belongs in this
+   * file.
+   */
+  buttonClassName?: string;
+  /**
+   * How far away the reader is.
+   *
+   * `page` is a question you are leaning over; `stage` is full screen, where
+   * the question is set at 24px for reading at arm's length. The ladder was
+   * 14px on both — the smallest text on screen, explaining the largest.
+   */
+  size?: 'page' | 'stage';
 }
 
 /** One press of the ladder, once the two prose lines are past. */
@@ -89,7 +113,16 @@ interface Staged {
   heldBack: boolean;
 }
 
-export default function Hints({ question, theme, courseId, label: given, className = '' }: Props) {
+export default function Hints({
+  question, theme, courseId, label: given, className = '',
+  buttonClassName, size = 'page',
+}: Props) {
+  /* 16px on a page, 18px in full screen. It was 14px on both, against a 16px
+     question on a practice page and a 24px one in full screen — the help was
+     the smallest thing on screen. A hint should never be harder to read than
+     the question it explains. */
+  const body = size === 'stage' ? 'text-lg' : 'text-base';
+  const aside = size === 'stage' ? 'text-base' : 'text-sm';
   const [shown, setShown] = useState(0);
   const [staged, setStaged] = useState<Staged | null>(null);
   const [loading, setLoading] = useState(false);
@@ -207,12 +240,12 @@ export default function Hints({ question, theme, courseId, label: given, classNa
             all. A div rather than a p: MathRenderer renders an element, and an
             element inside a p is invalid nesting.
           */}
-          <div className="text-sm">
+          <div className={body}>
             <span className={`font-semibold ${theme.text}`}>What it asks: </span>
             <MathRenderer html={staged.skill} className="inline text-slate-300" />
           </div>
           {shown > 1 && (
-            <div className="text-sm">
+            <div className={body}>
               <span className={`font-semibold ${theme.text}`}>How the marks go: </span>
               <MathRenderer html={staged.method} className="inline text-slate-300" />
             </div>
@@ -222,7 +255,7 @@ export default function Hints({ question, theme, courseId, label: given, classNa
               <div className="flex items-start gap-2">
                 <MathRenderer
                   html={rung.move}
-                  className="answer-content flex-1 text-sm text-slate-300"
+                  className={`answer-content flex-1 ${body} text-slate-300`}
                 />
                 {/* **A move worth 0 shows nothing at all.** Two variations are
                     worth a single mark and still take two moves to explain —
@@ -240,7 +273,7 @@ export default function Hints({ question, theme, courseId, label: given, classNa
               {rung.shows && (
                 <MathRenderer
                   html={rung.shows}
-                  className="answer-content mt-1 text-sm text-slate-400"
+                  className={`answer-content mt-1 ${aside} text-slate-400`}
                 />
               )}
             </div>
@@ -290,7 +323,8 @@ export default function Hints({ question, theme, courseId, label: given, classNa
         <button
           onClick={reveal}
           disabled={loading}
-          className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+          className={buttonClassName
+            ?? `inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
         >
           <Lightbulb className="h-4 w-4" />
           {/* **"Next step (k of N)" would lie now.** N used to be the mark

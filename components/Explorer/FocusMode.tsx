@@ -221,7 +221,16 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     <><Eye className="h-4 w-4" /> Show Answer</>
                   )}
                 </button>
-                <Hints question={q} theme={theme} courseId={courseId} />
+                {/* Focus's own row is px-4 py-2 — 36px — so the Hint button
+                    matches that rather than the presenter's 48px blocks. Same
+                    fault in both places, different right answer. */}
+                <Hints
+                  question={q}
+                  theme={theme}
+                  courseId={courseId}
+                  size="stage"
+                  buttonClassName={`inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                />
                 {hasDataBooklet && (
                   <button
                     onClick={() => setBookletYear(q.year)}

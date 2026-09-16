@@ -243,4 +243,42 @@ await withPage({ port: 8191, cdp: 9291, width: 1280, height: 1000 }, async (page
     'it closes by saying the last step is the answer itself');
 });
 
+/* ── the help is not the smallest thing on screen ────────────────────────
+   Measured before this was asserted: the ladder was 14px on every surface,
+   against a 16px question on a practice page and a 24px one in full screen,
+   and the Hint button was 32px tall and 73px wide beside four 48px full-width
+   blocks. The help was the least prominent control in the row and the smallest
+   text on the page — on the one surface built for a pupil who is stuck. */
+await withPage({ port: 8158, cdp: 9258, width: 1280, height: 900 }, async ({ evaluate, click, go, sleep }) => {
+  const LAID = `(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; })`;
+  await go('/course/n5', 4000);
+  await click(`[...document.querySelectorAll('button')].filter(${LAID}).find(b=>/^Start Paper$/.test(b.textContent.trim()))`);
+  await sleep(4000);
+
+  const row = await evaluate(`(() => {
+    const s = [...document.querySelectorAll('.fixed.inset-0 div')]
+      .find(d => d.className.includes('justify-center') && d.querySelectorAll('button').length > 1);
+    if (!s) return null;
+    const b = [...s.querySelectorAll('button,a')].filter(${LAID})
+      .map(x => ({ t: x.textContent.trim(), h: Math.round(x.getBoundingClientRect().height) }));
+    const hint = b.find(x => /hint/i.test(x.t));
+    return { heights: [...new Set(b.map(x => x.h))], hint: hint ? hint.h : 0, n: b.length };
+  })()`);
+  t.check(row && row.n >= 4, `full screen offers ${row?.n} controls in one row`);
+  t.check(row && row.heights.length === 1,
+    `all the same height (${row?.heights.join(', ')}px) — not a 32px control beside a 96px one`);
+  t.check(row && row.hint >= 44,
+    `and the Hint button clears the 44px tap target (${row?.hint}px)`);
+
+  await click(`[...document.querySelectorAll('.fixed.inset-0 button')].filter(${LAID}).find(b=>/hint/i.test(b.textContent||''))`);
+  await sleep(2500);
+  const px = await evaluate(`(() => {
+    const span = [...document.querySelectorAll('.fixed.inset-0 span')].filter(${LAID})
+      .find(e => /^What it asks:/.test(e.textContent || ''));
+    return span ? Math.round(parseFloat(getComputedStyle(span).fontSize)) : 0;
+  })()`);
+  t.check(px >= 18,
+    `and the ladder is set at ${px}px against a 24px question — help no smaller than what it explains`);
+});
+
 t.done('the ladder says something on every press, on both kinds of question');

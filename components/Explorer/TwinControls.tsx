@@ -33,7 +33,7 @@ interface Props {
 }
 
 const BUTTON =
-  'w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors disabled:opacity-60';
+  'w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors disabled:opacity-60';
 
 export default function TwinControls({
   courseId, question, showing, alsoExclude, onDrawn, onBack,

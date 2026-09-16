@@ -318,7 +318,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {hasDataBooklet && (
                 <button
                   onClick={() => setShowBooklet(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
                 >
                   <BookOpen className="h-5 w-5" />
                   Data Booklet
@@ -328,18 +328,29 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 <FormulaeButton
                   courseId={courseId}
                   theme={theme}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
                 />
               )}
               {/* Before the answer button, deliberately: a pupil who is stuck
                   should meet help before they meet the answer. */}
               {allowHints && (
-                <Hints question={shown} theme={theme} courseId={courseId} className="w-full" />
+                <Hints
+                  question={shown}
+                  theme={theme}
+                  courseId={courseId}
+                  className="w-full"
+                  size="stage"
+                  /* The same geometry as the four blocks around it. It used to
+                     be 32px tall and 73px wide next to four 48px full-width
+                     ones — the smallest control in the row, and the one a stuck
+                     pupil is looking for. */
+                  buttonClassName={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap rounded-lg px-6 py-3 font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                />
               )}
               {allowAnswers && (
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
-                className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium transition-colors ${
                   showAnswer
                     ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                     : `${theme.bg} ${theme.bgHover} text-white`
@@ -361,7 +372,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {allowVideo && shown.videoId ? (
                 <button
                   onClick={() => setShowVideo(true)}
-                  className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
+                  className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
                 >
                   <Play className="h-5 w-5" />
                   {/* A generated question's video solves the paper question it
@@ -372,7 +383,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               ) : allowVideo && hasMarkscheme(shown.year, shown.paperNumber) ? (
                 <button
                   onClick={() => setShowMarkscheme(true)}
-                  className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
+                  className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
                 >
                   <ClipboardCheck className="h-5 w-5" />
                   Markscheme
