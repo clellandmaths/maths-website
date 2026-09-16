@@ -127,7 +127,23 @@ export default function TopicView({
           </div>
         )}
 
-        {/* Theory — open typography, no box */}
+        {/* **Theory sits on paper now, where it used to sit on the page.**
+
+            This was "open typography, no box", and on a near-black page that
+            reads exactly as intended — unboxed prose on a dark ground looks
+            deliberate. On a light ground it does not: the reading column was
+            grey while the sidebar beside it and every worked example below it
+            were white cards, so the one part of the page a pupil actually reads
+            was the only part with no paper under it.
+
+            The same card as the examples, for the same reason they have one. The
+            section label and its rule stay outside it, which is the pattern the
+            examples already use.
+
+            `text-foreground-2` rather than `text-foreground/85`: the ad-hoc
+            alpha predates the secondary tier existing, and the two land within a
+            few points of each other in both themes — #d1d4da against #cad5e2 in
+            dark — so this is the same colour said properly. */}
         {topic.theory && (
           <section>
             <div className="flex items-center gap-3 mb-5">
@@ -136,8 +152,10 @@ export default function TopicView({
               </h3>
               <div className="flex-1 h-px bg-border" />
             </div>
-            <div className="notes-body text-foreground/85 leading-relaxed space-y-3 text-base">
-              {topic.theory}
+            <div className="bg-card border border-border rounded-xl p-5 sm:p-6">
+              <div className="notes-body text-foreground-2 leading-relaxed space-y-3 text-base">
+                {topic.theory}
+              </div>
             </div>
           </section>
         )}
@@ -168,7 +186,7 @@ export default function TopicView({
                       onClick={() => toggleExample(idx)}
                       className={`w-full flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium border-t border-border transition-colors ${
                         isOpen
-                          ? 'text-muted-foreground hover:text-foreground bg-white/[0.02]'
+                          ? 'text-muted-foreground hover:text-foreground bg-foreground/[0.02]'
                           : `${theme.text} hover:bg-foreground/5`
                       }`}
                     >

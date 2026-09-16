@@ -1342,7 +1342,7 @@ export const PolyIntersectionDiagrams = () => (
 );
 
 export const SyntheticDivision = ({ root, coeffs, midRow, bottomRow }: { root: string | React.ReactNode, coeffs: string[], midRow: string[], bottomRow: string[] }) => (
-  <div className="overflow-x-auto my-6 flex justify-center bg-black/20 p-4 rounded-xl border border-foreground/10">
+  <div className="overflow-x-auto my-6 flex justify-center bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10">
     <table className="font-mono text-center text-sm sm:text-base border-collapse">
       <tbody>
         <tr>

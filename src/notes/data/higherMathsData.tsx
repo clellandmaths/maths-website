@@ -523,7 +523,7 @@ export const higherMathsData: Section[] = [
               </ul>
               <p>Use whichever method is most efficient for the problem you are tackling.</p>
               
-              <div className="mt-6 border border-foreground/10 rounded-xl overflow-hidden bg-black/20">
+              <div className="mt-6 border border-foreground/10 rounded-xl overflow-hidden bg-foreground/5 dark:bg-black/20">
                 <table className="min-w-full divide-y divide-foreground/10">
                   <thead className="bg-foreground/5">
                     <tr>
@@ -1131,25 +1131,25 @@ export const higherMathsData: Section[] = [
                {/* Box Diagrams manually recreated to look like the uploaded image */}
                <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x = 5</div>
-                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
-                 <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
-                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(5) = 14" /></span></div>
-                 <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
+                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div>
+                 <div className="px-6 py-4 border-2 border-foreground text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
+                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(5) = 14" /></span></div>
+                 <div className="px-6 py-4 border-2 border-foreground text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
                  <div className="flex flex-col text-xs font-mono items-start">
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(14) = 5" /></div>
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(5)) = 5" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div><InlineMath math="g(14) = 5" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div><InlineMath math="g(f(5)) = 5" /></div>
                  </div>
                </div>
                
                <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x</div>
-                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
-                 <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
-                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(x) = 3x - 1" /></span></div>
-                 <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
+                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div>
+                 <div className="px-6 py-4 border-2 border-foreground text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
+                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(x) = 3x - 1" /></span></div>
+                 <div className="px-6 py-4 border-2 border-foreground text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
                  <div className="flex flex-col text-xs font-mono items-start">
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(3x-1) = x" /></div>
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(x)) = x" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div><InlineMath math="g(3x-1) = x" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-foreground/40"></div></div><InlineMath math="g(f(x)) = x" /></div>
                  </div>
                </div>
             </div>
@@ -1783,7 +1783,7 @@ export const higherMathsData: Section[] = [
             </div>
             
             <p className="mt-8 font-bold text-foreground">Task: Complete the table</p>
-            <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <div className="border border-foreground/10 rounded-xl bg-foreground/5 dark:bg-black/20 p-2 sm:p-4 mt-6">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-foreground/5 border-b border-foreground/10">
@@ -1835,7 +1835,7 @@ export const higherMathsData: Section[] = [
             <p>where <InlineMath math="q(x)" /> is a quadratic in this case.</p>
             
             <p className="mt-8 font-bold text-foreground">Task: Complete the table</p>
-            <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <div className="border border-foreground/10 rounded-xl bg-foreground/5 dark:bg-black/20 p-2 sm:p-4 mt-6">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-foreground/5 border-b border-foreground/10">
@@ -2137,7 +2137,7 @@ export const higherMathsData: Section[] = [
             question: (
               <div className="space-y-4">
                 <p>Find the equation of the cubic shown in the diagram:</p>
-                <div className="bg-black/20 p-6 rounded-xl flex items-center justify-center">
+                <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl flex items-center justify-center">
                   <PolyCubicGraph1 />
                 </div>
               </div>
@@ -2162,7 +2162,7 @@ export const higherMathsData: Section[] = [
             question: (
               <div className="space-y-4">
                 <p>Repeated Roots. Find the equation of the cubic shown in the diagram:</p>
-                <div className="bg-black/20 p-6 rounded-xl flex items-center justify-center">
+                <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl flex items-center justify-center">
                   <PolyCubicGraph2 />
                 </div>
               </div>
@@ -2194,7 +2194,7 @@ export const higherMathsData: Section[] = [
             <p>Given two equations of graphs, we can find their points of intersection. We already have experience of this with straight lines (National 5) and quadratics/lines.</p>
             <p>To find the intersection, equate the two expressions <InlineMath math="f(x) = g(x)" /> and solve for <InlineMath math="x" />.</p>
             <p>Two graphs could have several points of intersection, one point of intersection, or none:</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
+            <div className="my-8 p-6 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
               <PolyIntersectionDiagrams />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -2250,7 +2250,7 @@ export const higherMathsData: Section[] = [
             <p>It is worth seeing where it comes from. Any quadratic equation can be solved with the <strong>quadratic formula</strong>:</p>
             <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />
             <p>The discriminant is exactly the expression <em>under the square root</em>. That is why it controls the roots: you cannot take the square root of a negative number, and a square root of zero adds nothing, so the sign of <InlineMath math="b^2-4ac" /> decides how many roots there are before you calculate anything.</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
+            <div className="my-8 p-6 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
               <DiscriminantDiagram />
             </div>
             <p>This gives three cases, which you should be able to state and recognise:</p>
@@ -2337,7 +2337,7 @@ export const higherMathsData: Section[] = [
             <BlockMath math="px^2+qx-mx+r-k=0" />
             <BlockMath math="px^2+(q-m)x+(r-k)=0" />
             <p>This gives us a quadratic equation; hence, we can conclude:</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
+            <div className="my-8 p-6 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
               <IntersectionDiagram />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -2405,7 +2405,7 @@ export const higherMathsData: Section[] = [
             <BlockMath math="ax^2 + bx + c \gt 0 \qquad ax^2 + bx + c \geq 0" />
             <BlockMath math="ax^2 + bx + c \lt 0 \qquad ax^2 + bx + c \leq 0" />
             <p>To solve a quadratic inequality we must determine which part of the graph lies above or below the x-axis. We can determine this via a sketch of the parabola.</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
+            <div className="my-8 p-6 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
               <InequalitiesDiagram />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -2520,7 +2520,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>The equation of a circle with centre <InlineMath math="(0,0)" /> is <InlineMath math="x^2+y^2=r^2" /></p>
-            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
+            <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
               <svg viewBox="-60 -60 120 120" className="w-[15rem] h-auto vector-graphic text-foreground max-w-full">
                 <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="0.5" />
                 <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="0.5" />
@@ -2607,7 +2607,7 @@ export const higherMathsData: Section[] = [
           <div className="space-y-4 text-foreground-2">
             <p>The equation of a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units is:</p>
             <BlockMath math="(x-a)^2+(y-b)^2=r^2" />
-            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
+            <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
               <svg viewBox="-40 -40 100 100" className="w-[15rem] h-auto vector-graphic text-foreground max-w-full">
                 <line x1="-30" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="0.5" />
                 <line x1="0" y1="-30" x2="0" y2="50" stroke="currentColor" strokeWidth="0.5" />
@@ -2637,7 +2637,7 @@ export const higherMathsData: Section[] = [
             </div>
             
             <p className="mt-8 font-bold text-foreground">Task: Complete the tables</p>
-            <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <div className="border border-foreground/10 rounded-xl bg-foreground/5 dark:bg-black/20 p-2 sm:p-4 mt-6">
               <div className="overflow-x-auto mb-6">
                 <table className="w-full text-left border-collapse text-sm sm:text-base">
                   <thead>
@@ -2710,7 +2710,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>Given a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units, we can determine whether a point <InlineMath math="(p,q)" /> lies within the circle, on the circumference of the circle or out with the circle.</p>
-            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-foreground/10 rounded-xl">
+            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-foreground/5 dark:bg-black/20 border border-foreground/10 rounded-xl">
               <div className="flex flex-col items-center">
                 <svg viewBox="0 0 111 100" className="w-24 h-24">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
@@ -2812,7 +2812,7 @@ export const higherMathsData: Section[] = [
               <BlockMath math="(x+g)^2+(y+f)^2=g^2+f^2-c" />
             </div>
             <p>This is now in the form <InlineMath math="(x-a)^2+(y-b)^2=r^2" />, giving:</p>
-            <ul className="list-disc list-inside bg-black/20 p-4 rounded-xl space-y-2 mt-4 inline-block mx-auto text-foreground">
+            <ul className="list-disc list-inside bg-foreground/5 dark:bg-black/20 p-4 rounded-xl space-y-2 mt-4 inline-block mx-auto text-foreground">
               <li>Centre: <strong><InlineMath math="(-g, -f)" /></strong></li>
               <li>Radius: <strong><InlineMath math="r = \sqrt{g^2+f^2-c}" /></strong></li>
               <li>Valid if: <strong><InlineMath math="g^2+f^2-c > 0" /></strong></li>
@@ -2873,7 +2873,7 @@ export const higherMathsData: Section[] = [
           <div className="space-y-4 text-foreground-2">
             <p>Consider two circles with radii <InlineMath math="r_1" /> and <InlineMath math="r_2" /> with <InlineMath math="r_1 > r_2" />.</p>
             <p>Let <InlineMath math="d" /> be the distance between the centres of the two circles.</p>
-            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6 mb-6">
+            <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6 mb-6">
               <svg viewBox="0 -40 180 80" className="w-[20rem] h-auto vector-graphic">
                 <circle cx="40" cy="0" r="35" fill="none" stroke="#A855F7" strokeWidth="2" />
                 <circle cx="40" cy="0" r="2" fill="#A855F7" />
@@ -2890,7 +2890,7 @@ export const higherMathsData: Section[] = [
               </svg>
             </div>
             
-            <div className="overflow-x-auto bg-black/20 rounded-xl border border-foreground/10 p-2">
+            <div className="overflow-x-auto bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10 p-2">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-foreground/20">
@@ -3056,7 +3056,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>We know from National 5 that if we have a circle and a tangent to that circle, the tangent meets the radius at right angles.</p>
-            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
+            <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
               <svg viewBox="-40 -10 80 80" className="w-[12rem] h-auto vector-graphic">
                 <circle cx="0" cy="30" r="30" fill="none" stroke="#22C55E" strokeWidth="2" />
                 <circle cx="0" cy="30" r="2" fill="#22C55E" />
@@ -3116,7 +3116,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>We have previously studied the intersection of lines and curves. Similarly, lines and circles can intersect at two points, one point (tangent), or no points.</p>
-            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-foreground/10 rounded-xl">
+            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-foreground/5 dark:bg-black/20 border border-foreground/10 rounded-xl">
               <div className="flex flex-col items-center">
                 <svg viewBox="-50 -50 126 100" className="w-24 h-24">
                   <circle cx="0" cy="0" r="35" fill="none" stroke="#22C55E" strokeWidth="3" />
@@ -3820,7 +3820,7 @@ export const higherMathsData: Section[] = [
                  </ul>
                  
                  <p>Step 3: Nature table.</p>
-                 <div className="bg-black/20 p-4 rounded-lg">
+                 <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-lg">
                     <table className="w-full text-center border-collapse text-sm">
                       <thead>
                         <tr>
@@ -3874,7 +3874,7 @@ export const higherMathsData: Section[] = [
                  </ul>
                  
                  <p>Step 3: Nature table.</p>
-                 <div className="bg-black/20 p-4 rounded-lg">
+                 <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-lg">
                     <table className="w-full text-center border-collapse text-sm">
                       <thead>
                         <tr>
@@ -3938,7 +3938,7 @@ export const higherMathsData: Section[] = [
                    <li>At <InlineMath math="x = 2" />, <InlineMath math="y = 2^3 - 3(2)^2 = 8 - 12 = -4" />. Point: (2, -4).</li>
                  </ul>
                  
-                 <div className="bg-black/20 p-4 rounded-lg my-4">
+                 <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-lg my-4">
                    <table className="w-full text-center border-collapse text-sm">
                      <thead>
                        <tr>
@@ -4214,7 +4214,7 @@ export const higherMathsData: Section[] = [
                    <li>When <InlineMath math="x > -1" />, the function is increasing, so the gradient is positive (<InlineMath math="f'(x) > 0" />).</li>
                  </ul>
                  <p>The derivative of a quadratic is a linear function (straight line), crossing the x-axis at <InlineMath math="-1" />.</p>
-                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-foreground/10">
+                 <div className="my-6 p-4 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
                    <DerivedEx1 />
                  </div>
                </div>
@@ -4232,7 +4232,7 @@ export const higherMathsData: Section[] = [
                    <li>Outside of this interval (<InlineMath math="x < 0" /> and <InlineMath math="x > 3" />), the function is increasing, so <InlineMath math="f'(x)" /> is positive (above the x-axis).</li>
                  </ul>
                  <p>The derivative of a cubic is an upward-opening parabola crossing at <InlineMath math="0" /> and <InlineMath math="3" />.</p>
-                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-foreground/10">
+                 <div className="my-6 p-4 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
                    <DerivedEx2 />
                  </div>
                </div>
@@ -4250,7 +4250,7 @@ export const higherMathsData: Section[] = [
                    <li>After the maximum at <InlineMath math="x = 1.5" />, the graph decreases, so the gradient becomes negative.</li>
                  </ul>
                  <p>The derived graph touches the x-axis at <InlineMath math="0" /> and crosses it at <InlineMath math="1.5" />.</p>
-                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-foreground/10">
+                 <div className="my-6 p-4 bg-foreground/5 dark:bg-black/20 rounded-xl border border-foreground/10">
                    <DerivedEx3 />
                  </div>
                </div>
@@ -4266,15 +4266,15 @@ export const higherMathsData: Section[] = [
           <div className="space-y-4 text-foreground-2">
             <p>When differentiating composite functions involving linear expressions raised to a power, we can use the chain rule.</p>
             <p>If the functions <InlineMath math="f" /> and <InlineMath math="g" /> are defined on suitable domains, then:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)" />
             </div>
             <p>For brackets raised to a power:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^n] = n(ax+b)^{n-1} \times a = an(ax+b)^{n-1}" />
             </div>
             <p>Alternatively, using Leibniz notation, if <InlineMath math="y = f(u)" /> and <InlineMath math="u = g(x)" />:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}" />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -4347,7 +4347,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>The chain rule is also required when differentiating composite trigonometric functions.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[\sin(f(x))] = \cos(f(x)) \times f'(x)" />
               <BlockMath math="\frac{d}{dx}[\cos(f(x))] = -\sin(f(x)) \times f'(x)" />
             </div>
@@ -4447,7 +4447,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>When integrating a term of the form <InlineMath math="ax^n" />, we increase the power by 1 and divide by the new power:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\int ax^n \,dx = \frac{ax^{n+1}}{n+1} + C \quad (n \neq -1)" />
             </div>
             <p>Where <InlineMath math="C" /> is the constant of integration.</p>
@@ -4844,11 +4844,11 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>We have previously learned how to differentiate functions of the form <InlineMath math="f(ax+b)" />:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^{n+1}] = (n+1)(ax+b)^n \times a = a(n+1)(ax+b)^n" />
             </div>
             <p>For integrating linear brackets raised to a power, we use:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\int (ax+b)^n \,dx = \frac{(ax+b)^{n+1}}{a(n+1)} + C \quad (n \neq -1)" />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -4895,7 +4895,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-foreground-2">
             <p>We have previously learned how to differentiate trigonometric functions of the form <InlineMath math="\sin(ax+b)" /> and <InlineMath math="\cos(ax+b)" />.</p>
             <p>When integrating these, we must divide by the derivative of the angle (which is <InlineMath math="a" />):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\int \cos(ax+b) \, dx = \frac{1}{a} \sin(ax+b) + C" />
               <BlockMath math="\int \sin(ax+b) \, dx = -\frac{1}{a} \cos(ax+b) + C" />
             </div>
@@ -4974,7 +4974,7 @@ id: "integration-of-brackets",
                 <li>To convert <strong>Radians to Degrees</strong>: Multiply by <InlineMath math="\frac{180}{\pi}" /></li>
               </ul>
               
-              <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+              <div className="border border-foreground/10 rounded-xl bg-foreground/5 dark:bg-black/20 p-2 sm:p-4 mt-6">
                 <table className="w-full text-left border-collapse mt-6">
                   <thead>
                     <tr>
@@ -5055,7 +5055,7 @@ id: "integration-of-brackets",
             
             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8 text-base">
               <h4 className="font-bold text-foreground text-xl mb-4">Values at <InlineMath math="0^\circ, 90^\circ, 180^\circ, 270^\circ, 360^\circ" /></h4>
-              <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+              <div className="border border-foreground/10 rounded-xl bg-foreground/5 dark:bg-black/20 p-2 sm:p-4 mt-6">
                 <table className="w-full text-left border-collapse mb-6">
                   <thead>
                     <tr>
@@ -5107,7 +5107,7 @@ id: "integration-of-brackets",
                 </div>
               </div>
 
-              <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+              <div className="border border-foreground/10 rounded-xl bg-foreground/5 dark:bg-black/20 p-2 sm:p-4 mt-6">
                 <table className="w-full text-center border-collapse">
                   <thead>
                     <tr>
@@ -5167,22 +5167,22 @@ id: "integration-of-brackets",
                 <div className="absolute w-full h-0.5 bg-foreground/20"></div>
                 <div className="absolute h-full w-0.5 bg-foreground/20"></div>
                 
-                <div className="absolute top-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
+                <div className="absolute top-8 right-8 text-center bg-card/85 dark:bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-emerald-800 dark:text-emerald-400 text-3xl">A</div>
                   <div className="text-sm text-foreground-2">All +ve</div>
                 </div>
                 
-                <div className="absolute top-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
+                <div className="absolute top-8 left-8 text-center bg-card/85 dark:bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-blue-700 dark:text-blue-400 text-3xl">S</div>
                   <div className="text-sm text-foreground-2">Sine +ve</div>
                 </div>
                 
-                <div className="absolute bottom-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
+                <div className="absolute bottom-8 left-8 text-center bg-card/85 dark:bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-indigo-600 dark:text-indigo-400 text-3xl">T</div>
                   <div className="text-sm text-foreground-2">Tan +ve</div>
                 </div>
                 
-                <div className="absolute bottom-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
+                <div className="absolute bottom-8 right-8 text-center bg-card/85 dark:bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-rose-700 dark:text-rose-400 text-3xl">C</div>
                   <div className="text-sm text-foreground-2">Cos +ve</div>
                 </div>
@@ -5941,7 +5941,7 @@ id: "integration-of-brackets",
               <li><InlineMath math="f(x)=k \cos(x+\alpha)" /></li>
             </ul>
             <p>We are required to solve simultaneous equations of the form:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\begin{aligned} k \sin\alpha &= a \\ k \cos\alpha &= b \end{aligned}" />
             </div>
             <p>Solving for <InlineMath math="k" />:</p>
@@ -6331,7 +6331,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-foreground-2">
             <p>A logarithmic function is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a>0" /> and <InlineMath math="x>0" />.</p>
             <p>The relationship between exponential functions and logarithmic functions can be expressed as:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="y = \log_a x \iff a^y = x" />
             </div>
             <p>If we sum logarithmic functions with the same base numbers then the terms can be combined by multiplying the arguments:</p>
@@ -6825,7 +6825,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-foreground-2">
             <p>The vector from origin <InlineMath math="O" /> to point <InlineMath math="A" /> is called the position vector of point A: <InlineMath math="\vec{OA}" /> or <InlineMath math="\vec{a}" />.</p>
             <p>The vector <InlineMath math="\vec{AB}" /> is the vector which originates at A and ends at B. <InlineMath math="\vec{AB}" /> is the position vector of B relative to A.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{AB} = \vec{b} - \vec{a}" />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -7060,7 +7060,7 @@ id: "integration-of-brackets",
               <li><strong>Negative</strong> – negative/reverse growth in the original direction</li>
             </ul>
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Rectangular perspective):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = a_1b_1 + a_2b_2 + a_3b_3" />
             </div>
             <p className="text-center">where <InlineMath math="\vec{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}" /> and <InlineMath math="\vec{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}" /></p>
@@ -7103,7 +7103,7 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Polar perspective):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />
             </div>
             <p className="text-center">where <InlineMath math="\theta" /> is the angle between the vectors <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" />. The vectors must both be pointing away from the vertex.</p>
@@ -7138,7 +7138,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-foreground-2">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
             <p>Since <InlineMath math="\cos 90^\circ = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos 90^\circ = 0" />.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-800 dark:text-emerald-300">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-800 dark:text-emerald-300">
               <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then <InlineMath math="\vec{a} \cdot \vec{b} = 0" />.</p>
               <p>Conversely, if <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> then <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular.</p>
             </div>
@@ -7183,7 +7183,7 @@ id: "integration-of-brackets",
         theory: (
           <div className="space-y-4 text-foreground-2">
             <p>From the dot product formula <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />, we can rearrange this to find the angle between two vectors:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-foreground/5 dark:bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}" />
             </div>
             <p className="text-center">Remember to calculate <InlineMath math="\vec{a} \cdot \vec{b}" /> using <InlineMath math="a_1b_1 + a_2b_2 + a_3b_3" />.</p>

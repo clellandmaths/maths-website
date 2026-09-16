@@ -128,7 +128,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
             onClick={() => setStartIndex(run.startIndex)}
             className="flex items-center justify-between gap-3 text-left px-4 py-3 bg-card border border-border rounded-lg hover:border-foreground/25 transition-colors group"
           >
-            <span className="text-sm text-foreground group-hover:text-white transition-colors">
+            <span className="text-sm text-foreground group-hover:text-accent transition-colors">
               {run.topic}
             </span>
             <span className="shrink-0 font-mono text-xs text-muted-foreground">

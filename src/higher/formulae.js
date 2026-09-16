@@ -35,14 +35,14 @@ export const higherMathsFormulaeList = {
                 <div class="overflow-x-auto mb-6">
                     <table class="w-full text-sm border-collapse max-w-lg">
                         <thead>
-                            <tr class="bg-gray-700 text-white">
-                                <th class="border border-gray-500 p-2 text-center">$f(x)$</th>
-                                <th class="border border-gray-500 p-2 text-center">$f'(x)$</th>
+                            <tr class="bg-muted text-foreground">
+                                <th class="border border-muted-hover p-2 text-center">$f(x)$</th>
+                                <th class="border border-muted-hover p-2 text-center">$f'(x)$</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\sin ax$</td><td class="border border-gray-500 p-2 text-center">$a \\cos ax$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\cos ax$</td><td class="border border-gray-500 p-2 text-center">$-a \\sin ax$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\sin ax$</td><td class="border border-muted-hover p-2 text-center">$a \\cos ax$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\cos ax$</td><td class="border border-muted-hover p-2 text-center">$-a \\sin ax$</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -54,14 +54,14 @@ export const higherMathsFormulaeList = {
                 <div class="overflow-x-auto mb-6">
                     <table class="w-full text-sm border-collapse max-w-lg">
                         <thead>
-                            <tr class="bg-gray-700 text-white">
-                                <th class="border border-gray-500 p-2 text-center">$f(x)$</th>
-                                <th class="border border-gray-500 p-2 text-center">$\\int f(x) dx$</th>
+                            <tr class="bg-muted text-foreground">
+                                <th class="border border-muted-hover p-2 text-center">$f(x)$</th>
+                                <th class="border border-muted-hover p-2 text-center">$\\int f(x) dx$</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\sin ax$</td><td class="border border-gray-500 p-2 text-center">$-\\frac{1}{a} \\cos ax + C$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\cos ax$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{a} \\sin ax + C$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\sin ax$</td><td class="border border-muted-hover p-2 text-center">$-\\frac{1}{a} \\cos ax + C$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\cos ax$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{a} \\sin ax + C$</td></tr>
                         </tbody>
                     </table>
                 </div>

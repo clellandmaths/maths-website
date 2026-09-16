@@ -855,12 +855,20 @@ body {
   }
 
   /* Same problem again, outside tables. The Higher Applications data booklets
-     tint the R commands and their panels with dark fills for screen —
-     bg-gray-800 and friends. Tailwind's greys are blue-tinted, so on paper
-     those came out as blue boxes with the near-black text the rule above
-     paints onto them: unreadable, and the one thing on the page a pupil has
-     to copy character for character.
-     Repainted as a light tint, which keeps them reading as code. */
+     tint the R commands and their panels for screen, and on paper those came
+     out as boxes with the near-black text the rule above paints onto them:
+     unreadable, and the one thing on the page a pupil has to copy character
+     for character. Repainted as a light tint, which keeps them reading as code.
+
+     **These selectors used to name `bg-gray-*` and friends, and that stopped
+     matching.** The booklets were written with hard-coded dark fills — fine
+     when there was one theme — and the light mode moved them onto `bg-card`
+     and `bg-muted` so they follow the reader. A print rule keyed to the old
+     literals then silently matched nothing, which would have put the screen
+     colours back on paper. Keyed to the tokens now, plus the old names so a
+     booklet that has not been converted is still covered. */
+  .print-formula-sheet [class*="bg-card"],
+  .print-formula-sheet [class*="bg-muted"],
   .print-formula-sheet [class*="bg-gray-"],
   .print-formula-sheet [class*="bg-slate-"],
   .print-formula-sheet [class*="bg-zinc-"],

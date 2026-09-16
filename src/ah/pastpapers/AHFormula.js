@@ -7,21 +7,21 @@ export const advancedHigherMathsFormulaeList = {
                 <div class="overflow-x-auto mb-6">
                     <table class="w-full text-sm border-collapse max-w-lg">
                         <thead>
-                            <tr class="bg-gray-700 text-white">
-                                <th class="border border-gray-500 p-2 text-center">$f(x)$</th>
-                                <th class="border border-gray-500 p-2 text-center">$f'(x)$</th>
+                            <tr class="bg-muted text-foreground">
+                                <th class="border border-muted-hover p-2 text-center">$f(x)$</th>
+                                <th class="border border-muted-hover p-2 text-center">$f'(x)$</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\sin^{-1} x$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{\\sqrt{1-x^2}}$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\cos^{-1} x$</td><td class="border border-gray-500 p-2 text-center">$-\\frac{1}{\\sqrt{1-x^2}}$</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\tan^{-1} x$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{1+x^2}$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\tan x$</td><td class="border border-gray-500 p-2 text-center">$\\sec^2 x$</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\cot x$</td><td class="border border-gray-500 p-2 text-center">$-\\text{cosec}^2 x$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\sec x$</td><td class="border border-gray-500 p-2 text-center">$\\sec x \\tan x$</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\text{cosec } x$</td><td class="border border-gray-500 p-2 text-center">$-\\text{cosec } x \\cot x$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\ln x$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{x}$</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$e^x$</td><td class="border border-gray-500 p-2 text-center">$e^x$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\sin^{-1} x$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{\\sqrt{1-x^2}}$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\cos^{-1} x$</td><td class="border border-muted-hover p-2 text-center">$-\\frac{1}{\\sqrt{1-x^2}}$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\tan^{-1} x$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{1+x^2}$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\tan x$</td><td class="border border-muted-hover p-2 text-center">$\\sec^2 x$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\cot x$</td><td class="border border-muted-hover p-2 text-center">$-\\text{cosec}^2 x$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\sec x$</td><td class="border border-muted-hover p-2 text-center">$\\sec x \\tan x$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\text{cosec } x$</td><td class="border border-muted-hover p-2 text-center">$-\\text{cosec } x \\cot x$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\ln x$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{x}$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$e^x$</td><td class="border border-muted-hover p-2 text-center">$e^x$</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -33,17 +33,17 @@ export const advancedHigherMathsFormulaeList = {
                 <div class="overflow-x-auto mb-6">
                     <table class="w-full text-sm border-collapse max-w-lg">
                         <thead>
-                            <tr class="bg-gray-700 text-white">
-                                <th class="border border-gray-500 p-2 text-center">$f(x)$</th>
-                                <th class="border border-gray-500 p-2 text-center">$\\int f(x) dx$</th>
+                            <tr class="bg-muted text-foreground">
+                                <th class="border border-muted-hover p-2 text-center">$f(x)$</th>
+                                <th class="border border-muted-hover p-2 text-center">$\\int f(x) dx$</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\sec^2(ax)$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{a}\\tan(ax) + c$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\frac{1}{\\sqrt{a^2-x^2}}$</td><td class="border border-gray-500 p-2 text-center">$\\sin^{-1}\\left(\\frac{x}{a}\\right) + c$</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$\\frac{1}{a^2+x^2}$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{a}\\tan^{-1}\\left(\\frac{x}{a}\\right) + c$</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2 text-center">$\\frac{1}{x}$</td><td class="border border-gray-500 p-2 text-center">$\\ln|x|+c$</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2 text-center">$e^{ax}$</td><td class="border border-gray-500 p-2 text-center">$\\frac{1}{a}e^{ax} + c$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\sec^2(ax)$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{a}\\tan(ax) + c$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\frac{1}{\\sqrt{a^2-x^2}}$</td><td class="border border-muted-hover p-2 text-center">$\\sin^{-1}\\left(\\frac{x}{a}\\right) + c$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\frac{1}{a^2+x^2}$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{a}\\tan^{-1}\\left(\\frac{x}{a}\\right) + c$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$\\frac{1}{x}$</td><td class="border border-muted-hover p-2 text-center">$\\ln|x|+c$</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2 text-center">$e^{ax}$</td><td class="border border-muted-hover p-2 text-center">$\\frac{1}{a}e^{ax} + c$</td></tr>
                         </tbody>
                     </table>
                 </div>

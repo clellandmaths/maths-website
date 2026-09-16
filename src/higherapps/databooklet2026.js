@@ -8,20 +8,20 @@ export const higherAppsDataBooklet2026 = {
                 <div class="overflow-x-auto mb-6">
                     <table class="w-full text-sm border-collapse">
                         <thead>
-                            <tr class="bg-gray-700 text-white">
-                                <th class="border border-gray-500 p-2 text-left">Band</th>
-                                <th class="border border-gray-500 p-2 text-left">Taxable income</th>
-                                <th class="border border-gray-500 p-2 text-left">Scottish tax rate</th>
+                            <tr class="bg-muted text-foreground">
+                                <th class="border border-muted-hover p-2 text-left">Band</th>
+                                <th class="border border-muted-hover p-2 text-left">Taxable income</th>
+                                <th class="border border-muted-hover p-2 text-left">Scottish tax rate</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2">Personal Allowance</td><td class="border border-gray-500 p-2">Up to £12,570</td><td class="border border-gray-500 p-2">0%</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2">Starter rate</td><td class="border border-gray-500 p-2">£12,570-£15,397</td><td class="border border-gray-500 p-2">19%</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2">Basic rate</td><td class="border border-gray-500 p-2">£15,397-£27,491</td><td class="border border-gray-500 p-2">20%</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2">Intermediate rate</td><td class="border border-gray-500 p-2">£27,491-£43,662</td><td class="border border-gray-500 p-2">21%</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2">Higher rate</td><td class="border border-gray-500 p-2">£43,662-£75,000</td><td class="border border-gray-500 p-2">42%</td></tr>
-                            <tr class="bg-gray-900"><td class="border border-gray-500 p-2">Advanced rate</td><td class="border border-gray-500 p-2">£75,000-£125,140</td><td class="border border-gray-500 p-2">45%</td></tr>
-                            <tr class="bg-gray-800"><td class="border border-gray-500 p-2">Top rate</td><td class="border border-gray-500 p-2">Over £125,140</td><td class="border border-gray-500 p-2">48%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Personal Allowance</td><td class="border border-muted-hover p-2">Up to £12,570</td><td class="border border-muted-hover p-2">0%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Starter rate</td><td class="border border-muted-hover p-2">£12,570-£15,397</td><td class="border border-muted-hover p-2">19%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Basic rate</td><td class="border border-muted-hover p-2">£15,397-£27,491</td><td class="border border-muted-hover p-2">20%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Intermediate rate</td><td class="border border-muted-hover p-2">£27,491-£43,662</td><td class="border border-muted-hover p-2">21%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Higher rate</td><td class="border border-muted-hover p-2">£43,662-£75,000</td><td class="border border-muted-hover p-2">42%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Advanced rate</td><td class="border border-muted-hover p-2">£75,000-£125,140</td><td class="border border-muted-hover p-2">45%</td></tr>
+                            <tr class="bg-card"><td class="border border-muted-hover p-2">Top rate</td><td class="border border-muted-hover p-2">Over £125,140</td><td class="border border-muted-hover p-2">48%</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -61,55 +61,55 @@ export const higherAppsDataBooklet2026 = {
             content: `
                 <h3 class="font-bold text-lg mb-2 text-blue-300">Entering data to R Studio</h3>
                 <p class="mb-3">To read in data from an Excel csv file called excel_data.csv to R Studio and name it mydata, first use the drop down menus in R Studio Session > Set Working Directory > Choose Directory to indicate the location of excel_data.csv on your computer. The following code will then read the data into R Studio:</p>
-                <ul class="list-none pl-0 mb-6 space-y-2 font-mono text-sm bg-gray-800 p-4 rounded">
+                <ul class="list-none pl-0 mb-6 space-y-2 font-mono text-sm bg-card p-4 rounded">
                     <li><span class="text-green-400">mydata&lt;-read.csv("excel data.csv")</span></li>
-                    <li><span class="text-green-400">attach (mydata)</span> <span class="text-gray-400">- this adds the variable names</span></li>
-                    <li><span class="text-gray-400">At the end of the analysis remember to use</span> <span class="text-green-400">detach (mydata)</span> <span class="text-gray-400">to disassociate the variable names.</span></li>
+                    <li><span class="text-green-400">attach (mydata)</span> <span class="text-muted-foreground">- this adds the variable names</span></li>
+                    <li><span class="text-muted-foreground">At the end of the analysis remember to use</span> <span class="text-green-400">detach (mydata)</span> <span class="text-muted-foreground">to disassociate the variable names.</span></li>
                 </ul>
 
                 <h3 class="font-bold text-lg mb-2 text-blue-300">(a) Graphics</h3>
                 <p class="font-semibold mb-2">If you have the numeric variables X and Y:</p>
                 <ul class="list-disc pl-5 mb-4 space-y-2">
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">hist (X, main= "Title", xlab="x-axis label", ylab="Frequency")</code> - this produces a histogram of the variable named X, it adds a title and axis labels</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">boxplot (Y, main="Title", ylab="y-axis label")</code> - produces a boxplot of the numerical variable Y</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">boxplot (X, Y, main="Title", xlab="x-axis label", ylab="y-axis label", names=c("X", "Y"))</code> - produces a comparative boxplot of the numerical variables X and Y</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">plot(X, Y, main="Scatterplot of Y on X", xlab="x-axis label", ylab="y-axis label")</code> - produces a scatterplot of Y on X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">hist (X, main= "Title", xlab="x-axis label", ylab="Frequency")</code> - this produces a histogram of the variable named X, it adds a title and axis labels</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">boxplot (Y, main="Title", ylab="y-axis label")</code> - produces a boxplot of the numerical variable Y</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">boxplot (X, Y, main="Title", xlab="x-axis label", ylab="y-axis label", names=c("X", "Y"))</code> - produces a comparative boxplot of the numerical variables X and Y</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">plot(X, Y, main="Scatterplot of Y on X", xlab="x-axis label", ylab="y-axis label")</code> - produces a scatterplot of Y on X</li>
                 </ul>
                 <p class="font-semibold mb-2 mt-4">If you have the categorical variable X:</p>
                 <ul class="list-disc pl-5 mb-6 space-y-2">
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">table (X)</code> - computes the number of observations in each level of the categorical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">pie (table (X), main="Title")</code> - this gives a simple pie chart of the categories in variable X with the specified title</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">barplot (table (X), main="Title", xlab="x-axis label", ylab="Frequency")</code> - this gives a bar chart of the categorical variable X with the required title and axis labels</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">table (X)</code> - computes the number of observations in each level of the categorical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">pie (table (X), main="Title")</code> - this gives a simple pie chart of the categories in variable X with the specified title</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">barplot (table (X), main="Title", xlab="x-axis label", ylab="Frequency")</code> - this gives a bar chart of the categorical variable X with the required title and axis labels</li>
                 </ul>
 
                 <h3 class="font-bold text-lg mb-2 text-blue-300">(b) Descriptive Statistics</h3>
                 <ul class="list-disc pl-5 mb-6 space-y-2">
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">mean (X)</code> - computes the mean of the numerical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">sd (X)</code> - computes the standard deviation of the numerical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">summary(X)</code> - computes the mean, median, minimum, maximum and upper and lower quartiles of the numerical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">IQR (X)</code> - computes the interquartile range of the numerical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">prop.table (table (X))</code> - returns the proportion of observations in each level of the categorical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">prop.table (table (X))*100</code> - returns the percentage of observations in each level of the categorical variable X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">table (X, Y)</code> - produces a cross-tabulation between the two categorical variables X and Y</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">mean (X)</code> - computes the mean of the numerical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">sd (X)</code> - computes the standard deviation of the numerical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">summary(X)</code> - computes the mean, median, minimum, maximum and upper and lower quartiles of the numerical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">IQR (X)</code> - computes the interquartile range of the numerical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">prop.table (table (X))</code> - returns the proportion of observations in each level of the categorical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">prop.table (table (X))*100</code> - returns the percentage of observations in each level of the categorical variable X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">table (X, Y)</code> - produces a cross-tabulation between the two categorical variables X and Y</li>
                 </ul>
 
                 <h3 class="font-bold text-lg mb-2 text-blue-300">(c) Correlation and Regression</h3>
                 <ul class="list-disc pl-5 mb-4 space-y-2">
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">cor.test(X, Y)</code> - computes the correlation between X and Y and performs a test of the null hypothesis of zero correlation</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">lm (Y~X)</code> - fits a linear regression line to the data (lm command stands for linear model)</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">abline (lm (Y~X))</code> - adds the least squares linear regression line to an existing scatterplot of Y on X</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">summary(lm(Y~X))</code> - displays the coefficient of determination (R-squared)</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">cor.test(X, Y)</code> - computes the correlation between X and Y and performs a test of the null hypothesis of zero correlation</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">lm (Y~X)</code> - fits a linear regression line to the data (lm command stands for linear model)</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">abline (lm (Y~X))</code> - adds the least squares linear regression line to an existing scatterplot of Y on X</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">summary(lm(Y~X))</code> - displays the coefficient of determination (R-squared)</li>
                 </ul>
                 <p class="font-semibold mb-2 mt-4">To predict with your Linear Model:</p>
                 <ul class="list-disc pl-5 mb-6 space-y-2">
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">predict(lm(Y~X), newdata=data.frame(X=C), interval = "pred")</code> - computes the predicted value of Y when X=C along with a 95% prediction interval</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">predict(lm(Y~X), newdata=data.frame(X=C), interval = "pred")</code> - computes the predicted value of Y when X=C along with a 95% prediction interval</li>
                 </ul>
 
                 <h3 class="font-bold text-lg mb-2 text-blue-300">(d) Hypothesis Testing</h3>
                 <ul class="list-disc pl-5 mb-4 space-y-2">
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">t.test(X, Y)</code> - performs a two-sample t-test between X and Y</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">t.test(X, Y, paired=TRUE)</code> - performs a paired t-test between X and Y</li>
-                    <li><code class="text-green-400 bg-gray-800 px-1 rounded">prop.test(x=c(a,b), n=c(n1,n2))</code> - performs a two-sample test for equality of proportions</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">t.test(X, Y)</code> - performs a two-sample t-test between X and Y</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">t.test(X, Y, paired=TRUE)</code> - performs a paired t-test between X and Y</li>
+                    <li><code class="text-green-800 dark:text-green-400 bg-muted px-1 rounded">prop.test(x=c(a,b), n=c(n1,n2))</code> - performs a two-sample test for equality of proportions</li>
                 </ul>
             `
         }

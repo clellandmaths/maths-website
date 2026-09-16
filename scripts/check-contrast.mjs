@@ -52,7 +52,7 @@
  * Every text node lands in exactly one bucket and the buckets are asserted to
  * sum, so a node cannot go missing the way 137 of them did.
  */
-import { writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { withPage, tally } from './browser-drive.mjs';
 
@@ -90,10 +90,19 @@ const BASELINE = join(import.meta.dirname,
  * throughout, because the single notes topic it opened, `algebraic-fractions`,
  * happens to have no callouts in it.
  *
- * So the notes fixtures below are the **densest pages in the build**, found by
- * counting coloured classes in `out/` rather than by picking a topic that
- * looked representative. This repo's own lessons already say it: when a check
- * picks a fixture, pick the worst one on purpose.
+ * The notes fixtures below were picked by counting coloured classes in the
+ * built HTML — **and that metric was wrong.** The built page inlines the RSC
+ * payload, so every class is counted roughly twice, and what looked like "68
+ * coloured classes" on the PERT page is 22 visible items on screen. Counted
+ * properly, in the browser, the colour is spread thinly and evenly: 14 to 33
+ * items per page, with no dense page to pick. Even `algebraic-fractions` — the
+ * topic this check used to open, described here as having no callouts — has 20.
+ *
+ * So these four are a sample, not a worst case, and a sample of four out of 282
+ * notes pages is not much. **`--all` is the answer to that**: it walks every
+ * notes page in `out/`, and is the mode to run before a merge. Measure a class
+ * once and it is fixed everywhere it appears; measure four pages and you have
+ * learned about four pages.
  */
 const PAGES = [
   ['/', 'home'],
@@ -107,11 +116,44 @@ const PAGES = [
   ['/course/n5/papers/2024/paper-1', 'paper'],
   ['/course/n5/notes/algebra/algebraic-fractions', 'notes'],
   ['/course/n5/generate', 'generate'],
-  // The three notes pages carrying the most coloured text in the whole build.
+  // Three more notes topics, one per remaining course. A sample — see above for
+  // why it is not the worst case it was once described as.
   ['/course/higher-apps/notes/planning-decision-making/constructing-pert-charts', 'notes: pert'],
   ['/course/higher/notes/functions-and-graphs/graph-transformations', 'notes: transforms'],
   ['/course/ah/notes/systems-of-equations/gaussian-elimination', 'notes: gaussian'],
 ];
+
+/**
+ * `--all` — every notes page in the build, not a sample of four.
+ *
+ * Course notes are the one part of this site where the colour lives in the
+ * *content* rather than the template: 282 pages of hand-written JSX, each with
+ * its own callouts. A per-template sweep is the right shape for chrome and the
+ * wrong shape for these, which is how 349 failing classes went unseen.
+ *
+ * Roughly ten minutes. The same bargain `docs/responsive.md` describes: spend it
+ * immediately before a merge, not on a quiet day.
+ */
+if (args.includes('--all')) {
+  const notes = [];
+  const walk = d => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      if (e.isDirectory()) { walk(p); continue; }
+      if (!e.name.endsWith('.html') || e.name.startsWith('__next')) continue;
+      notes.push(p.slice(join(import.meta.dirname, '..', 'out').length).replace(/\\/g, '/').replace(/\.html$/, ''));
+    }
+  };
+  const root = join(import.meta.dirname, '..', 'out', 'course');
+  for (const c of readdirSync(root, { withFileTypes: true })) {
+    if (!c.isDirectory()) continue;
+    const n = join(root, c.name, 'notes');
+    if (existsSync(n)) walk(n);
+  }
+  const already = new Set(PAGES.map(p => p[0]));
+  for (const p of notes) if (!already.has(p)) PAGES.push([p, 'notes' + p.slice(p.lastIndexOf('/'))]);
+  console.log(`  --all: ${notes.length} notes pages added, ${PAGES.length} in total\n`);
+}
 
 const PROBE = `(() => {
   const cv = document.createElement('canvas');

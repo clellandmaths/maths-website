@@ -1213,7 +1213,7 @@ export const advancedHigherMathsData: Section[] = [
             <h4 className="text-foreground font-semibold">Plotting on an Argand Diagram</h4>
             <p>Complex numbers are represented geometrically on an <strong>Argand diagram</strong>. It looks like ordinary <InlineMath math="x" />–<InlineMath math="y" /> axes, but the horizontal axis is the <strong>real</strong> axis and the vertical axis is the <strong>imaginary</strong> axis. The number <InlineMath math="z = a + bi" /> is plotted at the point <InlineMath math="(a,\,b)" />.</p>
             <p>So <InlineMath math="3 + 2i" /> sits 3 right and 2 up; <InlineMath math="-1 - 4i" /> sits 1 left and 4 down. A <em>real</em> number such as <InlineMath math="5" /> lies on the horizontal axis, and a purely <em>imaginary</em> number such as <InlineMath math="3i" /> lies on the vertical axis.</p>
-            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
+            <div className="bg-foreground/5 dark:bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
               <ArgandDiagramPlotting />
             </div>
             <p>Two geometric facts follow immediately and are worth knowing, because questions lean on them:</p>

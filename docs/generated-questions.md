@@ -154,7 +154,8 @@ none. Run them after a build when the work touches what they cover.
 | `check:byskill` | a sheet can be built by topic without meeting 174 skills, and the skills still work underneath |
 | `check:roundtrip` | a course and the Topic Explorer link both ways, under one name, without overflowing a phone |
 | `check:nomarkscheme` | a question we hold no marking instructions for offers no Hint button, and says where the help is instead — on the card, in Focus and in full screen |
-| `check:contrast` | every text node clears WCAG AA against its composited background, gradients included — **4,886 of 6,236 measured, and every one of the rest accounted for** |
+| `check:contrast` | every text node clears WCAG AA against its composited background, gradients included — **8,678 of 10,319 measured, and every one of the rest accounted for** |
+| `audit:contrast` | the same, `--all`: every one of the 282 notes pages as well, ~15 minutes. Notes are the one place the colour lives in the content rather than the template, so a per-template sweep is the wrong shape for them |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on

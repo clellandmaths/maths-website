@@ -4077,7 +4077,7 @@ export const higherAppsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p>A gym records the time, in minutes, that the same 60 members spend training in January and again in June. A paired t-test gives the following output:</p>
-                <pre className="bg-black/40 border border-foreground/10 rounded-lg p-3 text-xs text-foreground overflow-x-auto font-mono">{`	Paired t-test
+                <pre className="bg-card/80 dark:bg-black/40 border border-foreground/10 rounded-lg p-3 text-xs text-foreground overflow-x-auto font-mono">{`	Paired t-test
 
 data:  Train.Jan and Train.Jun
 t = 2.9143, df = 59, p-value = 0.005022

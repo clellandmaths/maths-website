@@ -49,6 +49,7 @@
     "check:nozoom": "node scripts/check-no-page-zoom.mjs",
     "check:nomarkscheme": "node scripts/check-no-markscheme.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
+    "audit:contrast": "node scripts/check-contrast.mjs --all",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {
