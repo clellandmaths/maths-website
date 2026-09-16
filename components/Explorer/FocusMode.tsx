@@ -136,22 +136,22 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
 
   return (
     <>
-    <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-background flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-slate-800 no-print">
+      <div className="flex items-center justify-between p-4 border-b border-border no-print">
         <button
           onClick={onClose}
-          className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
         >
           <X className="h-5 w-5" />
           <span className="hidden sm:inline text-sm">Close</span>
         </button>
-        <p className="text-slate-400 text-sm">
+        <p className="text-muted-foreground text-sm">
           Focus Mode &middot;{' '}
           {doneCount > 0 ? (
             <span className={theme.text}>{doneCount}/{questions.length} done</span>
           ) : (
-            <span className="text-slate-300">{questions.length} question{questions.length === 1 ? '' : 's'}</span>
+            <span className="text-foreground">{questions.length} question{questions.length === 1 ? '' : 's'}</span>
           )}
         </p>
       </div>
@@ -162,7 +162,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
           {questions.map((q, index) => (
             <div
               key={`focus-${q.year}-${q.paperNumber}-${q.questionIndex}`}
-              className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 sm:p-6"
+              className="bg-card/50 border border-border rounded-xl p-5 sm:p-6"
             >
               {/* Question header */}
               <div className="flex items-center gap-3 mb-4 flex-wrap">
@@ -175,7 +175,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                 {q.topics?.slice(0, 2).map((topic) => (
                   <span
                     key={topic}
-                    className="px-2 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded shrink-0"
+                    className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded shrink-0"
                   >
                     {topic}
                   </span>
@@ -186,7 +186,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
               {/* Question content */}
               <MathRenderer
                 html={q.question}
-                className="text-slate-200 question-content text-xl leading-relaxed"
+                className="text-foreground question-content text-xl leading-relaxed"
               />
 
               {/* Higher Apps data files */}
@@ -197,7 +197,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                       key={file.url}
                       href={file.url}
                       download
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
                     >
                       <Paperclip className="h-3 w-3" />
                       {file.name}
@@ -212,8 +212,8 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   onClick={() => toggleAnswer(index)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     revealedAnswers.has(index)
-                      ? 'bg-slate-800 hover:bg-slate-700 text-slate-400'
-                      : `${theme.tint} ${theme.text} hover:bg-white/10`
+                      ? 'bg-muted hover:bg-muted-hover text-muted-foreground'
+                      : `${theme.tint} ${theme.text} hover:bg-foreground/10`
                   }`}
                 >
                   {revealedAnswers.has(index) ? (
@@ -230,12 +230,12 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   theme={theme}
                   courseId={courseId}
                   size="stage"
-                  buttonClassName={`inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                  buttonClassName={`inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                 />
                 {hasDataBooklet && (
                   <button
                     onClick={() => setBookletYear(q.year)}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted-hover text-muted-foreground rounded-lg text-sm font-medium transition-colors"
                   >
                     <BookOpen className="h-4 w-4" />
                     Data Booklet
@@ -245,7 +245,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   <FormulaeButton
                     courseId={courseId}
                     theme={theme}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted-hover text-muted-foreground rounded-lg text-sm font-medium transition-colors"
                   />
                 )}
                 {q.videoId ? (
@@ -255,7 +255,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                       timestamp: timestampToSeconds(q.timestamp),
                       title: questionLabel(q)
                     })}
-                    className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                    className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                   >
                     <Play className="h-4 w-4" />
                     {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
@@ -263,7 +263,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                 ) : hasMarkscheme(q.year, q.paperNumber) ? (
                   <button
                     onClick={() => setMarkschemeQ(q)}
-                    className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                    className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                   >
                     <ClipboardCheck className="h-4 w-4" />
                     Markscheme
@@ -271,7 +271,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                 ) : (
                   // Neither a video nor marking instructions: say so, rather
                   // than leaving a gap that reads as a missing button
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-slate-700 text-muted-dim text-sm">
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-muted text-muted-dim text-sm">
                     <Play className="h-4 w-4" />
                     Video solution coming soon
                   </span>
@@ -281,14 +281,14 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     doneSet.has(index)
                       ? `${theme.tint} ${theme.text}`
-                      : 'bg-slate-800 hover:bg-slate-700 text-slate-400'
+                      : 'bg-muted hover:bg-muted-hover text-muted-foreground'
                   }`}
                 >
                   <div
                     className={`flex items-center justify-center h-5 w-5 rounded-full border-2 shrink-0 transition-colors ${
                       doneSet.has(index)
                         ? `${theme.bg} ${theme.border}`
-                        : 'border-slate-500'
+                        : 'border-muted-foreground'
                     }`}
                   >
                     {doneSet.has(index) && <Check className="h-3 w-3 text-white" />}
@@ -309,11 +309,11 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
 
               {/* Answer section */}
               {revealedAnswers.has(index) && (
-                <div className="mt-4 bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
+                <div className="mt-4 bg-card border border-border rounded-xl p-4 sm:p-6">
                   <p className={`text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                   <MathRenderer
                     html={q.answer}
-                    className="text-slate-300 answer-content text-xl leading-relaxed"
+                    className="text-foreground answer-content text-xl leading-relaxed"
                   />
                   {q.solutionUrl && (
                     // Guided practice questions from maths.scot: linking to his
@@ -323,7 +323,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                       href={q.solutionUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 mt-4 text-sm text-slate-400 hover:text-slate-200 underline transition-colors"
+                      className="inline-flex items-center gap-1.5 mt-4 text-sm text-muted-foreground hover:text-foreground underline transition-colors"
                     >
                       Full written solution at Maths.scot
                     </a>

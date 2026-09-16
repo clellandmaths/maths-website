@@ -140,7 +140,7 @@ export default async function NotesTopicPage(
         <div className="mt-10 pt-6 border-t border-border">
           <Link
             href={`/course/${courseId}/practice/${practice.slug}?full=1&from=${sectionId}/${topicId}`}
-            className="group flex items-center justify-between gap-4 rounded-xl border border-border p-5 hover:border-white/25 hover:bg-white/5 transition-colors"
+            className="group flex items-center justify-between gap-4 rounded-xl border border-border p-5 hover:border-foreground/25 hover:bg-foreground/5 transition-colors"
           >
             <div>
               <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">

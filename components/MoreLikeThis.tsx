@@ -85,13 +85,13 @@ interface Props {
 const TONES = {
   page: {
     shell: 'border-border bg-card/40',
-    button: 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors disabled:opacity-60',
+    button: 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors disabled:opacity-60',
     notice: 'mt-2 text-sm text-muted-foreground',
   },
   overlay: {
-    shell: 'border-slate-800 bg-slate-900/60',
-    button: 'inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm font-medium transition-colors disabled:opacity-60',
-    notice: 'mt-2 text-sm text-slate-400',
+    shell: 'border-border bg-card/60',
+    button: 'inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted-hover text-muted-foreground rounded-lg text-sm font-medium transition-colors disabled:opacity-60',
+    notice: 'mt-2 text-sm text-muted-foreground',
   },
 } as const;
 

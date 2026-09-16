@@ -20,7 +20,7 @@ interface Props {
 export default function CourseTabs({ courseId, active, notesHref }: Props) {
   const theme = getCourseTheme(courseId);
   const activeClasses = `${theme.text} ${theme.border}`;
-  const inactiveClasses = 'text-slate-400 border-transparent hover:text-slate-200';
+  const inactiveClasses = 'text-muted-foreground border-transparent hover:text-foreground';
   // The labels stay full at every width — "Past Paper Archive" says what it is
   // and "Papers" does not. On a narrow phone the longest one wraps onto two or
   // three lines, which is fine and is how it has always read.
@@ -40,7 +40,7 @@ export default function CourseTabs({ courseId, active, notesHref }: Props) {
     'flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-3 font-medium transition-colors border-b-2 -mb-px';
 
   return (
-    <div className="flex gap-1 sm:gap-2 mb-8 border-b border-slate-800">
+    <div className="flex gap-1 sm:gap-2 mb-8 border-b border-border">
       <Link
         // Always the first topic. Landing on the all-topics grid means asking
         // a pupil to choose again when they have already said what they want.

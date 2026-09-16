@@ -86,7 +86,7 @@ export default function Home() {
       <section className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-20 lg:pb-16 overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_420px] gap-12 items-center">
           <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-signal-mint/80 mb-4">
+          <p className="font-mono text-xs uppercase tracking-widest text-mint-ink mb-4">
             Scottish curriculum · N5 to Advanced Higher
           </p>
           <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight max-w-3xl mb-6">
@@ -110,7 +110,7 @@ export default function Home() {
             </a>
             <Link
               href="/explorer"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-white/25 text-foreground font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-foreground/25 text-foreground font-semibold rounded-lg transition-colors"
             >
               <Compass className="h-4 w-4" />
               Topic Explorer

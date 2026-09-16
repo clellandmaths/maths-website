@@ -15,7 +15,7 @@ export default function CountdownTile() {
 
   return (
     <Link href="/exam-hall" className="group block h-full">
-      <div className="h-full bg-card border border-border rounded-xl p-6 flex flex-col justify-between transition-colors group-hover:border-white/25">
+      <div className="h-full bg-card border border-border rounded-xl p-6 flex flex-col justify-between transition-colors group-hover:border-foreground/25">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Clock className="h-4 w-4" />
           <span className="font-mono text-xs uppercase tracking-widest">

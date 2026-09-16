@@ -6,17 +6,17 @@ export const TreeDiagramExample1 = () => {
     const midY = (y1 + y2) / 2;
     return (
       <g>
-        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" className="text-slate-400" />
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
         <text x={midX} y={midY - 10} textAnchor="middle" fill="currentColor" fontSize="12" className="text-emerald-400">{prob}</text>
-        <text x={x2 + (x2 > x1 ? 10 : -10)} y={y2 + 4} textAnchor={x2 > x1 ? "start" : "end"} fill="currentColor" fontSize="14" className="text-slate-200">{label}</text>
+        <text x={x2 + (x2 > x1 ? 10 : -10)} y={y2 + 4} textAnchor={x2 > x1 ? "start" : "end"} fill="currentColor" fontSize="14" className="text-foreground">{label}</text>
       </g>
     );
   };
 
   return (
     <svg viewBox="0 0 500 240" className="w-full max-w-lg mx-auto my-6 font-sans">
-      <text x="150" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-white">Monday</text>
-      <text x="350" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-white">Tuesday</text>
+      <text x="150" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-foreground">Monday</text>
+      <text x="350" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-foreground">Tuesday</text>
       
       {/* First Event */}
       <Branch x1={50} y1={120} x2={150} y2={60} label="Late" prob="0.15" />
@@ -31,11 +31,11 @@ export const TreeDiagramExample1 = () => {
       <Branch x1={220} y1={180} x2={300} y2={210} label="On Time" prob="0.85" />
       
       {/* Outcomes */}
-      <text x="450" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-slate-400">Outcome</text>
-      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">L, L</text>
-      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">L, O</text>
-      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">O, L</text>
-      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">O, O</text>
+      <text x="450" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-muted-foreground">Outcome</text>
+      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">L, L</text>
+      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">L, O</text>
+      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">O, L</text>
+      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">O, O</text>
     </svg>
   );
 };
@@ -46,17 +46,17 @@ export const TreeDiagramExample2 = () => {
     const midY = (y1 + y2) / 2;
     return (
       <g>
-        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" className="text-slate-400" />
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
         <text x={midX} y={midY - 10} textAnchor="middle" fill="currentColor" fontSize="12" className="text-emerald-400">{prob}</text>
-        <text x={x2 + (x2 > x1 ? 10 : -10)} y={y2 + 4} textAnchor={x2 > x1 ? "start" : "end"} fill="currentColor" fontSize="14" className="text-slate-200">{label}</text>
+        <text x={x2 + (x2 > x1 ? 10 : -10)} y={y2 + 4} textAnchor={x2 > x1 ? "start" : "end"} fill="currentColor" fontSize="14" className="text-foreground">{label}</text>
       </g>
     );
   };
 
   return (
     <svg viewBox="0 0 500 240" className="w-full max-w-lg mx-auto my-6 font-sans">
-      <text x="150" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-white">1st Draw</text>
-      <text x="350" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-white">2nd Draw</text>
+      <text x="150" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-foreground">1st Draw</text>
+      <text x="350" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-foreground">2nd Draw</text>
       
       {/* First Event */}
       <Branch x1={50} y1={120} x2={150} y2={60} label="Black" prob="7/12" />
@@ -71,78 +71,78 @@ export const TreeDiagramExample2 = () => {
       <Branch x1={200} y1={180} x2={300} y2={210} label="White" prob="4/11" />
       
       {/* Outcomes */}
-      <text x="450" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-slate-400">Outcome</text>
-      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">B, B</text>
-      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">B, W</text>
-      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">W, B</text>
-      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">W, W</text>
+      <text x="450" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-muted-foreground">Outcome</text>
+      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">B, B</text>
+      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">B, W</text>
+      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">W, B</text>
+      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">W, W</text>
     </svg>
   );
 };
 
 export const VennDiagramExample1 = () => (
   <svg viewBox="0 0 300 200" className="w-full max-w-sm mx-auto my-6 font-sans">
-    <rect x="10" y="10" width="280" height="180" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400" />
-    <text x="20" y="30" fill="currentColor" fontSize="14" className="text-slate-400">&xi;</text>
-    <text x="270" y="180" fill="currentColor" fontSize="14" className="text-slate-400">20</text>
+    <rect x="10" y="10" width="280" height="180" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
+    <text x="20" y="30" fill="currentColor" fontSize="14" className="text-muted-foreground">&xi;</text>
+    <text x="270" y="180" fill="currentColor" fontSize="14" className="text-muted-foreground">20</text>
     
     <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
     <text x="60" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-emerald-400">S</text>
-    <text x="75" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-white">25</text>
+    <text x="75" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">25</text>
     
     <circle cx="180" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400" />
     <text x="220" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-blue-400">Y</text>
-    <text x="205" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-white">20</text>
+    <text x="205" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">20</text>
     
-    <text x="140" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-white">15</text>
+    <text x="140" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">15</text>
   </svg>
 );
 
 export const VennDiagramExample2 = () => (
   <svg viewBox="0 0 300 200" className="w-full max-w-sm mx-auto my-6 font-sans">
-    <rect x="10" y="10" width="280" height="180" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400" />
-    <text x="20" y="30" fill="currentColor" fontSize="14" className="text-slate-400">&xi;</text>
-    <text x="270" y="180" fill="currentColor" fontSize="14" className="text-slate-400">20</text>
+    <rect x="10" y="10" width="280" height="180" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
+    <text x="20" y="30" fill="currentColor" fontSize="14" className="text-muted-foreground">&xi;</text>
+    <text x="270" y="180" fill="currentColor" fontSize="14" className="text-muted-foreground">20</text>
     
     <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-rose-400" />
     <text x="60" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-rose-400">V</text>
-    <text x="75" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-white">45</text>
+    <text x="75" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">45</text>
     
     <circle cx="180" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-400" />
     <text x="220" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-indigo-400">M</text>
-    <text x="205" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-white">30</text>
+    <text x="205" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">30</text>
     
-    <text x="140" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-white">25</text>
+    <text x="140" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">25</text>
   </svg>
 );
 
 export const VennDiagramExample3 = () => (
   <svg viewBox="0 0 300 260" className="w-full max-w-sm mx-auto my-6 font-sans">
-    <rect x="10" y="10" width="280" height="240" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400" />
-    <text x="20" y="30" fill="currentColor" fontSize="14" className="text-slate-400">&xi;</text>
-    <text x="270" y="240" fill="currentColor" fontSize="14" className="text-slate-400">15</text>
+    <rect x="10" y="10" width="280" height="240" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
+    <text x="20" y="30" fill="currentColor" fontSize="14" className="text-muted-foreground">&xi;</text>
+    <text x="270" y="240" fill="currentColor" fontSize="14" className="text-muted-foreground">15</text>
     
     {/* N circle */}
     <circle cx="110" cy="90" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-400" />
     <text x="60" y="45" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-red-400">N</text>
-    <text x="95" y="85" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">20</text>
+    <text x="95" y="85" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">20</text>
     
     {/* A circle */}
     <circle cx="190" cy="90" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400" />
     <text x="240" y="45" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-blue-400">A</text>
-    <text x="205" y="85" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">10</text>
+    <text x="205" y="85" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">10</text>
     
     {/* D circle */}
     <circle cx="150" cy="160" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
     <text x="150" y="240" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-emerald-400">D</text>
-    <text x="150" y="185" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">15</text>
+    <text x="150" y="185" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">15</text>
     
     {/* Intersections */}
-    <text x="150" y="75" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">15</text> {/* N & A only */}
-    <text x="120" y="130" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">5</text> {/* N & D only */}
-    <text x="180" y="130" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">10</text> {/* A & D only */}
+    <text x="150" y="75" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">15</text> {/* N & A only */}
+    <text x="120" y="130" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">5</text> {/* N & D only */}
+    <text x="180" y="130" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">10</text> {/* A & D only */}
     
-    <text x="150" y="115" textAnchor="middle" fill="currentColor" fontSize="14" className="text-white">10</text> {/* All three */}
+    <text x="150" y="115" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">10</text> {/* All three */}
   </svg>
 );
 
@@ -150,19 +150,19 @@ export const PrecedenceNetworkExample2 = () => {
   const Node = ({ x, y, id, time }: { x: number, y: number, id: string, time: string }) => (
     <g transform={`translate(${x},${y})`}>
       <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" rx="4" />
-      <text x="0" y="5" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-white">{id}: {time}</text>
+      <text x="0" y="5" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-foreground">{id}: {time}</text>
     </g>
   );
 
   const Arrow = ({ x1, y1, x2, y2 }: { x1: number, y1: number, x2: number, y2: number }) => (
-    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" markerEnd="url(#arrowhead)" className="text-slate-400" />
+    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" markerEnd="url(#arrowhead)" className="text-muted-foreground" />
   );
 
   return (
     <svg viewBox="0 0 400 200" className="w-full max-w-lg mx-auto my-6">
       <defs>
         <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" className="text-slate-400" />
+          <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" className="text-muted-foreground" />
         </marker>
       </defs>
       
@@ -195,22 +195,22 @@ export const ConstructingPertExample3 = () => {
       <line x1="0" y1="20" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
       <line x1="20" y1="20" x2="20" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
       <line x1="40" y1="20" x2="40" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-      <text x="30" y="14" textAnchor="middle" fill="currentColor" fontSize="13" fontWeight="bold" className="text-white">{id}</text>
-      <text x="10" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">{est}</text>
-      <text x="30" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">{dur}</text>
-      <text x="50" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-slate-300">{letVal}</text>
+      <text x="30" y="14" textAnchor="middle" fill="currentColor" fontSize="13" fontWeight="bold" className="text-foreground">{id}</text>
+      <text x="10" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">{est}</text>
+      <text x="30" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">{dur}</text>
+      <text x="50" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">{letVal}</text>
     </g>
   );
 
   const Arrow = ({ x1, y1, x2, y2 }: { x1: number, y1: number, x2: number, y2: number }) => (
-    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" markerEnd="url(#pertArrow)" className="text-slate-400" />
+    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" markerEnd="url(#pertArrow)" className="text-muted-foreground" />
   );
 
   return (
     <svg viewBox="-20 0 600 200" className="w-full max-w-2xl mx-auto my-6">
       <defs>
         <marker id="pertArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" className="text-slate-400" />
+          <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" className="text-muted-foreground" />
         </marker>
       </defs>
       
@@ -268,7 +268,7 @@ export const CollinearityDiagrams = () => (
         <text x="55" y="60" fill="currentColor" fontSize="12">B</text>
         <text x="95" y="40" fill="currentColor" fontSize="12">C</text>
       </svg>
-      <div className="text-xs text-center mt-2 text-slate-400">
+      <div className="text-xs text-center mt-2 text-muted-foreground">
         <div>m_AB ≠ m_BC</div>
         <div>B is common</div>
       </div>
@@ -286,7 +286,7 @@ export const CollinearityDiagrams = () => (
         <text x="55" y="60" fill="currentColor" fontSize="12">C</text>
         <text x="85" y="20" fill="currentColor" fontSize="12">D</text>
       </svg>
-      <div className="text-xs text-center mt-2 text-slate-400">
+      <div className="text-xs text-center mt-2 text-muted-foreground">
         <div>m_AB = m_CD</div>
         <div>No common point</div>
       </div>
@@ -301,7 +301,7 @@ export const CollinearityDiagrams = () => (
         <text x="55" y="60" fill="currentColor" fontSize="12">B</text>
         <text x="85" y="20" fill="currentColor" fontSize="12">C</text>
       </svg>
-      <div className="text-xs text-center mt-2 text-slate-400">
+      <div className="text-xs text-center mt-2 text-muted-foreground">
         <div>m_AB = m_BC</div>
         <div>B is common</div>
       </div>
@@ -431,14 +431,14 @@ export const Ex4Gradient = () => (
 );
 
 export const ParallelLines = () => (
-  <svg viewBox="0 0 100 100" className="w-24 h-24 text-white">
+  <svg viewBox="0 0 100 100" className="w-24 h-24 text-foreground">
     <line x1="30" y1="90" x2="80" y2="10" stroke="currentColor" strokeWidth="2.5" />
     <line x1="50" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2.5" />
   </svg>
 );
 
 export const PerpendicularLines = () => (
-  <svg viewBox="0 0 120 120" className="w-40 h-40 text-white">
+  <svg viewBox="0 0 120 120" className="w-40 h-40 text-foreground">
     <line x1="20" y1="20" x2="100" y2="100" stroke="currentColor" strokeWidth="2" />
     <line x1="20" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2" />
     <polyline points="63,57 66,60 63,63" fill="none" stroke="currentColor" strokeWidth="1.5" />
@@ -472,7 +472,7 @@ export const HorizontalVerticalLines = () => (
 );
 
 export const PerpendicularBisectorCross = () => (
-  <svg viewBox="0 0 120 120" className="w-40 h-40 text-white">
+  <svg viewBox="0 0 120 120" className="w-40 h-40 text-foreground">
     <line x1="20" y1="20" x2="100" y2="100" stroke="currentColor" strokeWidth="2" />
     <line x1="20" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2" />
     
@@ -489,7 +489,7 @@ export const PerpendicularBisectorCross = () => (
 );
 
 export const PerpendicularBisectorTriangle = () => (
-  <svg viewBox="0 -10 200 135" className="w-64 h-auto text-white">
+  <svg viewBox="0 -10 200 135" className="w-64 h-auto text-foreground">
     <line x1="20" y1="90" x2="160" y2="90" stroke="currentColor" strokeWidth="2" />
     <line x1="20" y1="90" x2="110" y2="20" stroke="currentColor" strokeWidth="2" />
     <line x1="160" y1="90" x2="110" y2="20" stroke="currentColor" strokeWidth="2" />
@@ -510,7 +510,7 @@ export const PerpendicularBisectorTriangle = () => (
 );
 
 export const Circumcentre = () => (
-  <svg viewBox="0 0 300 300" className="w-80 h-80 mx-auto my-6 text-slate-400">
+  <svg viewBox="0 0 300 300" className="w-80 h-80 mx-auto my-6 text-muted-foreground">
     {/* Circumcircle */}
     <circle cx="150" cy="150" r="100" fill="none" stroke="currentColor" strokeWidth="1.5" />
     
@@ -562,7 +562,7 @@ export const Orthocentre = () => {
   const mY = (y: number) => oy - y * scale;
 
   return (
-    <svg viewBox="0 0 560 430" className="w-[36rem] max-w-full h-auto mx-auto my-6 text-slate-400">
+    <svg viewBox="0 0 560 430" className="w-[36rem] max-w-full h-auto mx-auto my-6 text-muted-foreground">
       {/* Axes */}
       <line x1={mX(-7.6)} y1={mY(0)} x2={mX(4.6)} y2={mY(0)} stroke="currentColor" strokeWidth="1.5" />
       <line x1={mX(0)} y1={mY(-5.5)} x2={mX(0)} y2={mY(3.5)} stroke="currentColor" strokeWidth="1.5" />
@@ -624,7 +624,7 @@ export const Orthocentre = () => {
 };
 
 export const Medians = () => (
-  <svg viewBox="0 0 200 120" className="w-56 h-auto text-white">
+  <svg viewBox="0 0 200 120" className="w-56 h-auto text-foreground">
     <polygon points="20,100 180,100 140,20" fill="none" stroke="currentColor" strokeWidth="2" />
     <line x1="140" y1="20" x2="100" y2="100" stroke="#ef4444" strokeWidth="2" />
     <circle cx="100" cy="100" r="3" fill="#ef4444" />
@@ -639,7 +639,7 @@ export const Medians = () => (
 );
 
 export const Centroid = () => (
-  <svg viewBox="0 0 320 480" className="w-[20rem] max-w-full h-auto mx-auto my-6 text-slate-400">
+  <svg viewBox="0 0 320 480" className="w-[20rem] max-w-full h-auto mx-auto my-6 text-muted-foreground">
     {/* Triangle fill */}
     <polygon 
       points="280,20 40,260 40,440" 
@@ -697,7 +697,7 @@ export const IntersectionExample = () => (
 );
 
 export const InverseGraphReflection = () => (
-  <svg viewBox="-4 -4 8 8" className="w-[20rem] max-w-full h-auto mx-auto my-6 text-slate-400">
+  <svg viewBox="-4 -4 8 8" className="w-[20rem] max-w-full h-auto mx-auto my-6 text-muted-foreground">
     <line x1="-4" y1="0" x2="4" y2="0" stroke="currentColor" strokeWidth="0.05" />
     <line x1="0" y1="-4" x2="0" y2="4" stroke="currentColor" strokeWidth="0.05" />
     
@@ -723,7 +723,7 @@ export const InverseGraphReflection = () => (
 );
 
 export const InverseGraphExample = () => (
-  <svg viewBox="-3 -3 6 6" className="w-[16rem] max-w-full h-auto mx-auto my-6 text-slate-400">
+  <svg viewBox="-3 -3 6 6" className="w-[16rem] max-w-full h-auto mx-auto my-6 text-muted-foreground">
     <line x1="-3" y1="0" x2="3" y2="0" stroke="currentColor" strokeWidth="0.05" />
     <line x1="0" y1="-3" x2="0" y2="3" stroke="currentColor" strokeWidth="0.05" />
     
@@ -759,7 +759,7 @@ export const InverseGraphExample = () => (
  * lands at about 10px.
  */
 export const TransformationGraph1 = () => (
-  <svg viewBox="0 0 320 240" className="w-[16rem] max-w-full h-auto mx-auto my-6 text-slate-400">
+  <svg viewBox="0 0 320 240" className="w-[16rem] max-w-full h-auto mx-auto my-6 text-muted-foreground">
     <line x1="0" y1="103" x2="320" y2="103" stroke="currentColor" strokeWidth="1.5" />
     <line x1="213" y1="0" x2="213" y2="240" stroke="currentColor" strokeWidth="1.5" />
 
@@ -793,7 +793,7 @@ export const TransformationGraph1 = () => (
  * at y=148 and the y-axis at x=107.
  */
 export const TransformationGraph2 = () => (
-  <svg viewBox="0 0 320 240" className="w-[16rem] max-w-full h-auto mx-auto my-6 text-slate-400">
+  <svg viewBox="0 0 320 240" className="w-[16rem] max-w-full h-auto mx-auto my-6 text-muted-foreground">
     <line x1="0" y1="148" x2="320" y2="148" stroke="currentColor" strokeWidth="1.5" />
     <line x1="107" y1="0" x2="107" y2="240" stroke="currentColor" strokeWidth="1.5" />
 
@@ -854,7 +854,7 @@ export const ExactValueTriangle3060 = () => (
 );
 
 export const CurveSketchExample = () => (
-  <svg viewBox="-50 -60 150 120" className="w-[16rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="-50 -60 150 120" className="w-[16rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     {/* Axes */}
     <line x1="-50" y1="0" x2="100" y2="0" stroke="currentColor" strokeWidth="1.5" />
     <line x1="0" y1="-60" x2="0" y2="60" stroke="currentColor" strokeWidth="1.5" />
@@ -896,7 +896,7 @@ export const TangentDiagram = () => (
 );
 
 export const MaxTurningPoint = () => (
-  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <path d="M 20 100 Q 60 -40 100 100" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round" />
     <line x1="30" y1="30" x2="90" y2="30" stroke="#94A3B8" strokeWidth="1.5" />
     <circle cx="60" cy="30" r="3" fill="#60A5FA" />
@@ -904,7 +904,7 @@ export const MaxTurningPoint = () => (
 );
 
 export const MinTurningPoint = () => (
-  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <path d="M 20 20 Q 60 160 100 20" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round" />
     <line x1="30" y1="90" x2="90" y2="90" stroke="#94A3B8" strokeWidth="1.5" />
     <circle cx="60" cy="90" r="3" fill="#60A5FA" />
@@ -912,7 +912,7 @@ export const MinTurningPoint = () => (
 );
 
 export const RisingInflection = () => (
-  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <path d="M 20 100 C 60 20, 60 100, 100 20" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round" />
     <line x1="30" y1="60" x2="90" y2="60" stroke="#94A3B8" strokeWidth="1.5" />
     <circle cx="60" cy="60" r="3" fill="#60A5FA" />
@@ -920,7 +920,7 @@ export const RisingInflection = () => (
 );
 
 export const FallingInflection = () => (
-  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 120 120" className="w-[8rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <path d="M 20 20 C 60 100, 60 20, 100 100" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round" />
     <line x1="30" y1="60" x2="90" y2="60" stroke="#94A3B8" strokeWidth="1.5" />
     <circle cx="60" cy="60" r="3" fill="#60A5FA" />
@@ -928,7 +928,7 @@ export const FallingInflection = () => (
 );
 
 export const IncreasingFunctionGraph = () => (
-  <svg viewBox="0 0 400 120" className="w-[24rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 400 120" className="w-[24rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <path d="M 30 90 Q 70 30 150 10" fill="none" stroke="#F87171" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M 20 80 L 140 0" fill="none" stroke="#94A3B8" strokeWidth="1.5" />
     <circle cx="80" cy="40" r="2.5" fill="#60A5FA" />
@@ -946,7 +946,7 @@ export const IncreasingFunctionGraph = () => (
 );
 
 export const DecreasingFunctionGraph = () => (
-  <svg viewBox="0 0 400 120" className="w-[24rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 400 120" className="w-[24rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <path d="M 30 30 Q 70 90 150 110" fill="none" stroke="#F87171" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M 20 40 L 140 120" fill="none" stroke="#94A3B8" strokeWidth="1.5" />
     <circle cx="80" cy="80" r="2.5" fill="#60A5FA" />
@@ -964,7 +964,7 @@ export const DecreasingFunctionGraph = () => (
 );
 
 export const IncDecCombinedGraph = () => (
-  <svg viewBox="0 0 400 400" className="w-[30rem] max-w-full h-auto mx-auto vector-graphic text-slate-800 dark:text-slate-200" aria-hidden="true">
+  <svg viewBox="0 0 400 400" className="w-[30rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <defs>
       <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#34D399" />
@@ -1035,7 +1035,7 @@ export const TrigRatiosRightAngle = () => (
 );
 
 export const Example1Diagram = () => (
-  <svg viewBox="0 0 200 200" className="w-[12rem] max-w-full h-auto mx-auto vector-graphic text-slate-100" aria-hidden="true">
+  <svg viewBox="0 0 200 200" className="w-[12rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     <rect x="20" y="20" width="160" height="160" fill="none" stroke="currentColor" strokeWidth="3" />
     <path d="M 20 60 L 60 60 L 60 20 M 140 20 L 140 60 L 180 60 M 180 140 L 140 140 L 140 180 M 60 180 L 60 140 L 20 140" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5 5" className="opacity-60" />
     
@@ -1054,7 +1054,7 @@ export const Example1Diagram = () => (
 );
 
 export const Example2Diagram = () => (
-  <svg viewBox="0 0 280 140" className="w-[16rem] max-w-full h-auto mx-auto vector-graphic text-slate-100" aria-hidden="true">
+  <svg viewBox="0 0 280 140" className="w-[16rem] max-w-full h-auto mx-auto vector-graphic text-foreground" aria-hidden="true">
     {/* Dashed hidden edges (inside/back) */}
     <path d="M 140 20 L 140 60 M 40 90 L 140 60 L 240 90" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" className="opacity-50" />
     
@@ -1071,7 +1071,7 @@ export const Example2Diagram = () => (
 
 export const DerivedEx1 = () => (
   <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
-    <svg viewBox="-50 -66 100 116" className="w-[12rem] h-auto vector-graphic text-slate-100">
+    <svg viewBox="-50 -66 100 116" className="w-[12rem] h-auto vector-graphic text-foreground">
       <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       {/* Parabola min at x=-10 (representing -1), y=25 (representing -11 below axis) */}
@@ -1080,8 +1080,8 @@ export const DerivedEx1 = () => (
       <text x="-10" y="35" fill="currentColor" fontSize="8" textAnchor="middle">(-1, -11)</text>
       <text x="-40" y="-30" fill="currentColor" fontSize="10" textAnchor="middle">f(x)</text>
     </svg>
-    <div className="text-2xl text-slate-400">→</div>
-    <svg viewBox="-50 -66 100 116" className="w-[12rem] h-auto vector-graphic text-slate-100">
+    <div className="text-2xl text-muted-foreground">→</div>
+    <svg viewBox="-50 -66 100 116" className="w-[12rem] h-auto vector-graphic text-foreground">
       <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       {/* Straight line crossing through x=-10 */}
@@ -1095,7 +1095,7 @@ export const DerivedEx1 = () => (
 
 export const DerivedEx2 = () => (
   <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
-    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-slate-100">
+    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-foreground">
       <line x1="-30" y1="0" x2="40" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       {/* Cubic with max at 0, min at x=20 (representing 3) */}
@@ -1106,8 +1106,8 @@ export const DerivedEx2 = () => (
       <text x="24" y="32" fill="currentColor" fontSize="8" textAnchor="start">(3, -18)</text>
       <text x="-20" y="-30" fill="currentColor" fontSize="10">f(x)</text>
     </svg>
-    <div className="text-2xl text-slate-400">→</div>
-    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-slate-100">
+    <div className="text-2xl text-muted-foreground">→</div>
+    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-foreground">
       <line x1="-30" y1="0" x2="40" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       {/* upward Parabola roots at 0 and 20 */}
@@ -1123,7 +1123,7 @@ export const DerivedEx2 = () => (
 
 export const DerivedEx3 = () => (
   <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
-    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-slate-100">
+    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-foreground">
       <line x1="-30" y1="0" x2="40" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       {/* Cubic with inflection at 0, max at x=20 (representing 1.5) */}
@@ -1134,8 +1134,8 @@ export const DerivedEx3 = () => (
       <text x="20" y="-36" fill="#34D399" fontSize="8" textAnchor="middle" className="opacity-90">(1.5, 8.375)</text>
       <text x="-25" y="-40" fill="currentColor" fontSize="10">f(x)</text>
     </svg>
-    <div className="text-2xl text-slate-400">→</div>
-    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-slate-100">
+    <div className="text-2xl text-muted-foreground">→</div>
+    <svg viewBox="-30 -50 87 100" className="w-[12rem] h-auto vector-graphic text-foreground">
       <line x1="-30" y1="0" x2="40" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       {/* touch at 0, stay positive, then cross at 20 */}
@@ -1152,7 +1152,7 @@ export const DerivedEx3 = () => (
 export const DiscriminantDiagram = () => (
   <div className="flex flex-row flex-wrap gap-6 items-center justify-center pt-8">
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -66 100 116" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -66 100 116" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -35 -40 Q 0 80 35 -40" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1161,11 +1161,11 @@ export const DiscriminantDiagram = () => (
       </svg>
       <div className="mt-4 text-center">
         <p className="font-semibold text-sm"><span className="italic">b</span>² − 4<span className="italic">ac</span> &gt; 0</p>
-        <p className="text-xs text-slate-400">2 real and distinct roots</p>
+        <p className="text-xs text-muted-foreground">2 real and distinct roots</p>
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -66 100 116" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -66 100 116" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 -50 Q 0 50 30 -50" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1173,18 +1173,18 @@ export const DiscriminantDiagram = () => (
       </svg>
       <div className="mt-4 text-center">
         <p className="font-semibold text-sm"><span className="italic">b</span>² − 4<span className="italic">ac</span> = 0</p>
-        <p className="text-xs text-slate-400">1 real and equal root<br/>i.e. repeated root</p>
+        <p className="text-xs text-muted-foreground">1 real and equal root<br/>i.e. repeated root</p>
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -66 100 116" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -66 100 116" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 -60 Q 0 40 30 -60" fill="none" stroke="#F87171" strokeWidth="2" />
       </svg>
       <div className="mt-4 text-center">
         <p className="font-semibold text-sm"><span className="italic">b</span>² − 4<span className="italic">ac</span> &lt; 0</p>
-        <p className="text-xs text-slate-400">No real roots</p>
+        <p className="text-xs text-muted-foreground">No real roots</p>
       </div>
     </div>
   </div>
@@ -1193,7 +1193,7 @@ export const DiscriminantDiagram = () => (
 export const IntersectionDiagram = () => (
   <div className="flex flex-row flex-wrap gap-6 items-center justify-center pt-8">
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -66 126 132" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -66 126 132" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 -40 Q 0 80 30 -40" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1203,11 +1203,11 @@ export const IntersectionDiagram = () => (
       </svg>
       <div className="mt-4 text-center">
         <p className="font-semibold text-sm"><span className="italic">b</span>² − 4<span className="italic">ac</span> &gt; 0</p>
-        <p className="text-xs text-slate-400">The line meets the<br/>parabola at two<br/>distinct points</p>
+        <p className="text-xs text-muted-foreground">The line meets the<br/>parabola at two<br/>distinct points</p>
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -66 126 132" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -66 126 132" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 -30 Q 0 50 30 -30" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1216,11 +1216,11 @@ export const IntersectionDiagram = () => (
       </svg>
       <div className="mt-4 text-center">
         <p className="font-semibold text-sm"><span className="italic">b</span>² − 4<span className="italic">ac</span> = 0</p>
-        <p className="text-xs text-slate-400">The line meets the<br/>parabola once<br/>i.e. the line is a tangent<br/>to the parabola</p>
+        <p className="text-xs text-muted-foreground">The line meets the<br/>parabola once<br/>i.e. the line is a tangent<br/>to the parabola</p>
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -66 126 132" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -66 126 132" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 -30 Q 0 50 30 -30" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1228,7 +1228,7 @@ export const IntersectionDiagram = () => (
       </svg>
       <div className="mt-4 text-center">
         <p className="font-semibold text-sm"><span className="italic">b</span>² − 4<span className="italic">ac</span> &lt; 0</p>
-        <p className="text-xs text-slate-400">The line does not<br/>meet the parabola</p>
+        <p className="text-xs text-muted-foreground">The line does not<br/>meet the parabola</p>
       </div>
     </div>
   </div>
@@ -1237,7 +1237,7 @@ export const IntersectionDiagram = () => (
 export const InequalitiesDiagram = () => (
   <div className="flex flex-row flex-wrap gap-6 items-center justify-center pt-8">
     <div className="flex flex-col items-center">
-      <svg viewBox="-60 -60 120 120" className="w-[14rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-60 -60 120 120" className="w-[14rem] h-auto vector-graphic text-foreground">
         <path d="M -40 0 L -40 -40 L -23 -40 Q 0 50 23 -40 L 40 -40 L 40 0 Z" fill="#86efac" fillOpacity="0.3" />
         <path d="M -23 0 Q 0 80 23 0 Z" fill="#fca5a5" fillOpacity="0.3" />
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
@@ -1256,7 +1256,7 @@ export const InequalitiesDiagram = () => (
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-60 -60 120 120" className="w-[14rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-60 -60 120 120" className="w-[14rem] h-auto vector-graphic text-foreground">
         <path d="M -40 0 L -40 40 L -23 40 Q 0 -50 23 40 L 40 40 L 40 0 Z" fill="#fca5a5" fillOpacity="0.3" />
         <path d="M -23 0 Q 0 -80 23 0 Z" fill="#86efac" fillOpacity="0.3" />
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
@@ -1274,7 +1274,7 @@ export const InequalitiesDiagram = () => (
 );
 
 export const PolyCubicGraph1 = () => (
-  <svg viewBox="-80 -50 55 110" className="w-[20rem] h-auto vector-graphic text-slate-100 max-w-full">
+  <svg viewBox="-80 -50 55 110" className="w-[20rem] h-auto vector-graphic text-foreground max-w-full">
     <line x1="-80" y1="0" x2="-35" y2="0" stroke="currentColor" strokeWidth="0.5" />
     <line x1="-50" y1="-50" x2="-50" y2="30" stroke="currentColor" strokeWidth="0.5" />
     
@@ -1286,7 +1286,7 @@ export const PolyCubicGraph1 = () => (
     <circle cx="-60" cy="0" r="1" fill="#A78BFA" />
     <text x="-61" y="-2" fill="currentColor" fontSize="4" textAnchor="end">-3</text>
     
-    <circle cx="-48" cy="0" r="1" fill="#1E293B" className="text-white" />
+    <circle cx="-48" cy="0" r="1" fill="#1E293B" className="text-foreground" />
     <text x="-47" y="-2" fill="currentColor" fontSize="4" textAnchor="start">1</text>
     
     <circle cx="-50" cy="20" r="1" fill="#60A5FA" />
@@ -1295,7 +1295,7 @@ export const PolyCubicGraph1 = () => (
 );
 
 export const PolyCubicGraph2 = () => (
-  <svg viewBox="-6 -9 12 29" className="w-[20rem] h-auto vector-graphic text-slate-100 max-w-full">
+  <svg viewBox="-6 -9 12 29" className="w-[20rem] h-auto vector-graphic text-foreground max-w-full">
     <line x1="-6" y1="10" x2="6" y2="10" stroke="currentColor" strokeWidth="0.1" />
     <line x1="0" y1="-2" x2="0" y2="12" stroke="currentColor" strokeWidth="0.1" />
     
@@ -1315,7 +1315,7 @@ export const PolyCubicGraph2 = () => (
 export const PolyIntersectionDiagrams = () => (
   <div className="flex flex-row flex-wrap gap-6 items-center justify-center pt-8">
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -50 100 116" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -50 100 116" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 -30 Q -15 80, 0 0 Q 15 80, 30 -30" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1323,7 +1323,7 @@ export const PolyIntersectionDiagrams = () => (
       </svg>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -50 100 116" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -50 100 116" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -30 50 Q 0 -60 30 50" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1331,7 +1331,7 @@ export const PolyIntersectionDiagrams = () => (
       </svg>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="-50 -50 100 116" className="w-[10rem] h-auto vector-graphic text-slate-100">
+      <svg viewBox="-50 -50 100 116" className="w-[10rem] h-auto vector-graphic text-foreground">
         <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="1" />
         <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
         <path d="M -40 -40 Q 0 40 40 -40" fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1342,11 +1342,11 @@ export const PolyIntersectionDiagrams = () => (
 );
 
 export const SyntheticDivision = ({ root, coeffs, midRow, bottomRow }: { root: string | React.ReactNode, coeffs: string[], midRow: string[], bottomRow: string[] }) => (
-  <div className="overflow-x-auto my-6 flex justify-center bg-black/20 p-4 rounded-xl border border-white/10">
+  <div className="overflow-x-auto my-6 flex justify-center bg-black/20 p-4 rounded-xl border border-foreground/10">
     <table className="font-mono text-center text-sm sm:text-base border-collapse">
       <tbody>
         <tr>
-          <td className="pr-3 pb-2 border-r-2 border-slate-500 text-right align-bottom">
+          <td className="pr-3 pb-2 border-r-2 border-muted-foreground text-right align-bottom">
             {root}
           </td>
           {coeffs.map((c, i) => (
@@ -1354,17 +1354,17 @@ export const SyntheticDivision = ({ root, coeffs, midRow, bottomRow }: { root: s
           ))}
         </tr>
         <tr>
-          <td className="pr-3 border-r-2 border-slate-500"></td>
+          <td className="pr-3 border-r-2 border-muted-foreground"></td>
           {midRow.map((m, i) => (
             <td key={`m-${i}`} className="px-3 md:px-4 py-1">{m}</td>
           ))}
         </tr>
         <tr>
-          <td className="pr-3 border-r-2 border-slate-500"></td>
+          <td className="pr-3 border-r-2 border-muted-foreground"></td>
           {bottomRow.map((b, i) => (
             <td 
               key={`b-${i}`} 
-              className={`px-3 md:px-4 pt-2 border-t-2 border-slate-500 ${i === bottomRow.length - 1 ? 'border-l-2 text-green-400 font-bold' : ''}`}
+              className={`px-3 md:px-4 pt-2 border-t-2 border-muted-foreground ${i === bottomRow.length - 1 ? 'border-l-2 text-green-400 font-bold' : ''}`}
             >
               {b}
             </td>
@@ -1381,7 +1381,7 @@ export const SineWaveGraph = () => {
   }).join(' ');
 
   return (
-    <svg viewBox="-30 -60 415 120" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+    <svg viewBox="-30 -60 415 120" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
       <line x1="0" y1="0" x2="360" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       <polyline points={points} fill="none" stroke="#F87171" strokeWidth="3" />
@@ -1400,7 +1400,7 @@ export const CosineWaveGraph = () => {
   }).join(' ');
 
   return (
-    <svg viewBox="-30 -60 415 120" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+    <svg viewBox="-30 -60 415 120" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
       <line x1="0" y1="0" x2="360" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       <polyline points={points} fill="none" stroke="#60A5FA" strokeWidth="3" />
@@ -1419,7 +1419,7 @@ export const SineAddCosineWaveGraph = () => {
   }).join(' ');
 
   return (
-    <svg viewBox="-30 -90 415 180" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+    <svg viewBox="-30 -90 415 180" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
       <line x1="0" y1="0" x2="360" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-80" x2="0" y2="80" stroke="currentColor" strokeWidth="1" />
       <polyline points={points} fill="none" stroke="#4ADE80" strokeWidth="3" />
@@ -1438,7 +1438,7 @@ export const MinMaxSineGraph = ({ radians = false }: { radians?: boolean }) => {
   }).join(' ');
 
   return (
-    <svg viewBox="-52 -70 472 140" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full bg-slate-900/50 p-4 rounded-xl border border-white/5">
+    <svg viewBox="-52 -70 472 140" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full bg-card/50 p-4 rounded-xl border border-foreground/5">
       <line x1="0" y1="0" x2="360" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       <polyline points={points} fill="none" stroke="#60A5FA" strokeWidth="2" />
@@ -1475,7 +1475,7 @@ export const MinMaxCosineGraph = ({ radians = false }: { radians?: boolean }) =>
   }).join(' ');
 
   return (
-    <svg viewBox="-52 -70 472 140" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full bg-slate-900/50 p-4 rounded-xl border border-white/5">
+    <svg viewBox="-52 -70 472 140" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full bg-card/50 p-4 rounded-xl border border-foreground/5">
       <line x1="0" y1="0" x2="360" y2="0" stroke="currentColor" strokeWidth="1" />
       <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="1" />
       <polyline points={points} fill="none" stroke="#F87171" strokeWidth="2" />
@@ -1514,7 +1514,7 @@ export const MinMaxCosineGraph = ({ radians = false }: { radians?: boolean }) =>
 
 export const AreaUnderCurveIntroGraph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="200" x2="200" y2="200" stroke="currentColor" strokeWidth="1" />
             <line x1="10" y1="210" x2="10" y2="10" stroke="currentColor" strokeWidth="1" />
             
@@ -1533,7 +1533,7 @@ export const AreaUnderCurveIntroGraph = () => {
 
 export const AreaUnderCurveEx1Graph = () => {
     return (
-        <svg viewBox="-20 -62 220 262" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -62 220 262" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="130" x2="200" y2="130" stroke="currentColor" strokeWidth="1" />
             <line x1="50" y1="200" x2="50" y2="-20" stroke="currentColor" strokeWidth="1" />
             
@@ -1550,7 +1550,7 @@ export const AreaUnderCurveEx1Graph = () => {
 
 export const AreaUnderCurveEx2Graph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="100" x2="200" y2="100" stroke="currentColor" strokeWidth="1" />
             <line x1="50" y1="200" x2="50" y2="20" stroke="currentColor" strokeWidth="1" />
             
@@ -1566,7 +1566,7 @@ export const AreaUnderCurveEx2Graph = () => {
 
 export const AreaBetweenCurvesIntroGraph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="150" x2="200" y2="150" stroke="currentColor" strokeWidth="1" />
             <line x1="100" y1="200" x2="100" y2="10" stroke="currentColor" strokeWidth="1" />
             
@@ -1591,7 +1591,7 @@ export const AreaBetweenCurvesIntroGraph = () => {
 
 export const AreaBetweenCurvesEx1Graph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="180" x2="200" y2="180" stroke="currentColor" strokeWidth="1" />
             <line x1="100" y1="200" x2="100" y2="10" stroke="currentColor" strokeWidth="1" />
             <path d="M 80 150 L 160 50 Q 120 160 80 150" fill="rgba(59, 130, 246, 0.2)" stroke="none" />
@@ -1612,7 +1612,7 @@ export const AreaBetweenCurvesEx1Graph = () => {
 
 export const AreaBetweenCurvesEx2Graph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="80" x2="200" y2="80" stroke="currentColor" strokeWidth="1" />
             <line x1="100" y1="200" x2="100" y2="10" stroke="currentColor" strokeWidth="1" />
             
@@ -1632,7 +1632,7 @@ export const AreaBetweenCurvesEx2Graph = () => {
 
 export const AreaBetweenCurvesEx3Graph = () => {
     return (
-        <svg viewBox="-20 -62 225 285" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -62 225 285" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="180" x2="200" y2="180" stroke="currentColor" strokeWidth="1" />
             <line x1="60" y1="220" x2="60" y2="-20" stroke="currentColor" strokeWidth="1" />
             
@@ -1657,7 +1657,7 @@ export const AreaBetweenCurvesEx3Graph = () => {
 
 export const AreaUnderXAxisIntroGraph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="100" x2="200" y2="100" stroke="currentColor" strokeWidth="1" />
             <line x1="100" y1="200" x2="100" y2="10" stroke="currentColor" strokeWidth="1" />
             
@@ -1676,7 +1676,7 @@ export const AreaUnderXAxisIntroGraph = () => {
 
 export const AreaUnderXAxisEx1Graph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="100" x2="200" y2="100" stroke="currentColor" strokeWidth="1" />
             <line x1="50" y1="200" x2="50" y2="10" stroke="currentColor" strokeWidth="1" />
             
@@ -1695,7 +1695,7 @@ export const AreaUnderXAxisEx1Graph = () => {
 
 export const AreaUnderXAxisEx2Graph = () => {
     return (
-        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-slate-100 max-w-full">
+        <svg viewBox="-20 -20 285 260" className="w-[18rem] h-auto vector-graphic text-foreground max-w-full">
             <line x1="0" y1="100" x2="200" y2="100" stroke="currentColor" strokeWidth="1" />
             <line x1="120" y1="200" x2="120" y2="10" stroke="currentColor" strokeWidth="1" />
             
@@ -1732,39 +1732,39 @@ export const ArgandDiagramPlotting = () => {
 
             {/* Title — states what the diagram is showing */}
             <text x="200" y="20" textAnchor="middle" fill="currentColor" fontSize="15" fontWeight="bold"
-                className="text-white">Plotting z = &#8722;3 + 4i on an Argand diagram</text>
+                className="text-foreground">Plotting z = &#8722;3 + 4i on an Argand diagram</text>
 
             {/* Grid, every 2 units, inside the axis extents */}
             {ticks.map(n => (
-                <g key={n} className="text-slate-700">
+                <g key={n} className="text-muted-faint">
                     <line x1={px(n)} y1="52" x2={px(n)} y2="360" stroke="currentColor" strokeWidth="0.5" />
                     <line x1="30" y1={py(n)} x2="345" y2={py(n)} stroke="currentColor" strokeWidth="0.5" />
                 </g>
             ))}
 
             {/* Axes */}
-            <g className="text-slate-400">
+            <g className="text-muted-foreground">
                 <line x1="30" y1={OY} x2="345" y2={OY} stroke="currentColor" strokeWidth="2" />
                 <line x1={OX} y1="360" x2={OX} y2="52" stroke="currentColor" strokeWidth="2" />
             </g>
             {/* Axis names: Re ends at x=372 (inside the 400 viewBox); Im sits above the axis top */}
             <text x="350" y={OY - 8} fill="currentColor" fontSize="14" fontStyle="italic"
-                className="text-slate-300">Re</text>
+                className="text-foreground">Re</text>
             <text x={OX + 9} y="48" fill="currentColor" fontSize="14" fontStyle="italic"
-                className="text-slate-300">Im</text>
+                className="text-foreground">Im</text>
 
             {/* Axis numbers — every tick on both axes, including 2.
                 Uses a true minus sign (U+2212) to match the labels. */}
             {ticks.map(n => (
                 <text key={`x${n}`} x={px(n)} y={OY + 17} textAnchor="middle" fill="currentColor"
-                    fontSize="11" className="text-slate-500">{num(n)}</text>
+                    fontSize="11" className="text-muted-dim">{num(n)}</text>
             ))}
             {ticks.map(n => (
                 <text key={`y${n}`} x={OX - 9} y={py(n) + 4} textAnchor="end" fill="currentColor"
-                    fontSize="11" className="text-slate-500">{num(n)}</text>
+                    fontSize="11" className="text-muted-dim">{num(n)}</text>
             ))}
             <text x={OX - 8} y={OY + 17} textAnchor="end" fill="currentColor" fontSize="11"
-                className="text-slate-500">O</text>
+                className="text-muted-dim">O</text>
 
             {/* Guide lines showing how (-3, 4) is reached from the origin.
                 "3 left" sits ABOVE the real axis (y = 195) so it cannot collide

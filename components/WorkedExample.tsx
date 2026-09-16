@@ -67,7 +67,7 @@ export default function WorkedExample({ question, theme, courseId, label: given 
             if (made) setShown(made);
           }}
           disabled={draw.state === 'drawing'}
-          className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+          className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
         >
           {draw.state === 'drawing'
             ? <Loader2 className="h-4 w-4 animate-spin" />
@@ -90,7 +90,7 @@ export default function WorkedExample({ question, theme, courseId, label: given 
   }
 
   return (
-    <div className="no-print mt-2 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
+    <div className="no-print mt-2 rounded-lg border border-border bg-card/60 p-3">
       <div className="mb-2 flex items-start justify-between gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           The same method, different numbers
@@ -106,26 +106,26 @@ export default function WorkedExample({ question, theme, courseId, label: given 
 
       <MathRenderer
         html={shown.question}
-        className="question-content text-sm text-slate-200"
+        className="question-content text-sm text-foreground"
       />
 
       {/* Every step, the last one included. This is not the pupil's question,
           so finishing it takes nothing away from them. */}
       <ol className="mt-3 space-y-2">
         {(shown.steps ?? []).map((step, i) => (
-          <li key={i} className="border-t border-slate-800 pt-2">
+          <li key={i} className="border-t border-border pt-2">
             <MathRenderer
               html={step}
-              className="answer-content text-sm text-slate-300"
+              className="answer-content text-sm text-foreground"
             />
           </li>
         ))}
       </ol>
 
       {shown.answer && (
-        <div className="mt-3 border-t border-slate-800 pt-2">
+        <div className="mt-3 border-t border-border pt-2">
           <span className={`text-sm font-semibold ${theme.text}`}>Answer: </span>
-          <MathRenderer html={shown.answer} className="inline answer-content text-sm text-slate-200" />
+          <MathRenderer html={shown.answer} className="inline answer-content text-sm text-foreground" />
         </div>
       )}
 

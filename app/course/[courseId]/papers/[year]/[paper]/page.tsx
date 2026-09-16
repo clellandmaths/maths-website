@@ -231,7 +231,7 @@ export default async function PaperPage(
                   Question {questionNumber(q.question) ?? idx + 1}
                 </h2>
                 {q.topics?.slice(0, 2).map(topic => (
-                  <span key={topic} className="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded">
+                  <span key={topic} className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded">
                     {topic}
                   </span>
                 ))}
@@ -249,7 +249,7 @@ export default async function PaperPage(
                       key={file.url}
                       href={file.url}
                       download
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
                     >
                       <Paperclip className="h-3 w-3" />
                       {file.name}
@@ -290,7 +290,7 @@ export default async function PaperPage(
             </div>
 
             <details className="group border-t border-border">
-              <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-white/5 transition-colors flex items-center gap-2`}>
+              <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-foreground/5 transition-colors flex items-center gap-2`}>
                 <span className="group-open:hidden">Show answer</span>
                 <span className="hidden group-open:inline">Hide answer</span>
               </summary>
@@ -305,7 +305,7 @@ export default async function PaperPage(
             {/* AH no-video years: full marking instructions, crawlable */}
             {markschemes[idx].length > 0 && (
               <details className="group border-t border-border">
-                <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-white/5 transition-colors flex items-center gap-2`}>
+                <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-foreground/5 transition-colors flex items-center gap-2`}>
                   <span className="group-open:hidden">Show marking instructions</span>
                   <span className="hidden group-open:inline">Hide marking instructions</span>
                 </summary>

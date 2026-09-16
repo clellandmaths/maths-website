@@ -45,7 +45,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
     setOptions(o => ({ ...o, [key]: !o[key] }));
 
   const check = (key: keyof WorksheetOptions, label: string, hint: string, disabled = false) => (
-    <label className={`flex items-start gap-3 p-3 rounded-lg border border-border ${disabled ? 'opacity-50' : 'cursor-pointer hover:bg-white/5'} transition-colors`}>
+    <label className={`flex items-start gap-3 p-3 rounded-lg border border-border ${disabled ? 'opacity-50' : 'cursor-pointer hover:bg-foreground/5'} transition-colors`}>
       <input
         type="checkbox"
         checked={options[key]}
@@ -84,7 +84,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
           readOnly
           value={links[which]}
           onFocus={e => e.currentTarget.select()}
-          className="flex-1 min-w-0 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg font-mono text-xs text-slate-300"
+          className="flex-1 min-w-0 px-3 py-2 bg-card border border-muted rounded-lg font-mono text-xs text-foreground"
         />
         <button
           onClick={() => copy(which)}
@@ -132,7 +132,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
               onChange={e => setTitle(e.target.value)}
               placeholder="Mr Cloud's Higher Maths Homework"
               maxLength={80}
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-white/40"
+              className="w-full px-3 py-2 bg-card border border-muted rounded-lg text-sm focus:outline-none focus:border-foreground/40"
             />
           </div>
 

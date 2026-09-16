@@ -157,14 +157,14 @@ export default function PracticePaperClient({
           <div className="flex flex-wrap items-center gap-2 mt-5">
             <button
               onClick={() => printWorksheet(sheetRef.current ?? document)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium hover:bg-white/10 transition-colors`}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium hover:bg-foreground/10 transition-colors`}
             >
               <Printer className="h-3.5 w-3.5" />
               Print / Save PDF
             </button>
             <button
               onClick={share}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
             >
               <Share2 className="h-3.5 w-3.5" />
               Open as a worksheet
@@ -175,7 +175,7 @@ export default function PracticePaperClient({
                 offer is another one — same shapes, same marks, new numbers. */}
             <button
               onClick={again}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
             >
               <Dices className="h-3.5 w-3.5" />
               Another practice paper

@@ -22,7 +22,7 @@ export default function ExamCover({ course }: { course: CourseCover }) {
   const theme = getCourseTheme(course.id);
   return (
     <Link href={`/course/${course.id}`} className="group block h-full">
-      <div className="graph-paper relative flex flex-col h-full bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 group-hover:border-white/25 group-hover:-translate-y-1">
+      <div className="graph-paper relative flex flex-col h-full bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 group-hover:border-foreground/25 group-hover:-translate-y-1">
         {/* Qualification band */}
         <div className={`bg-gradient-to-r ${theme.gradient} px-4 py-2`}>
           {/* Full white, not `text-white/90`. Faded white on a coloured band is
@@ -46,7 +46,7 @@ export default function ExamCover({ course }: { course: CourseCover }) {
         <ul className="px-4 space-y-1.5 flex-1">
           {course.contents.map((row) => (
             <li key={row} className="font-mono text-xs text-muted-foreground flex items-baseline gap-2">
-              <span className="text-signal-mint/60">—</span>
+              <span className="text-muted-dim">—</span>
               {row}
             </li>
           ))}

@@ -326,16 +326,107 @@ seams first, which is what the browser does with them.
 
 ---
 
+## The literals (step 4, done) — and both themes reach zero
+
+**Light: 263 nodes below AA -> 0. Dark: still 0.** Both baselines are now
+recorded at zero pairings, so neither theme can regress without failing.
+
+### The mapping
+
+499 slate literals in `components/` and `app/`, onto tokens that already
+existed. The semantic ladder was unambiguous once counted — 64 plain
+`bg-slate-800` against 40 `hover:bg-slate-700` is a control and its hover:
+
+```
+bg-slate-950 -> bg-background     text-slate-50/100/200/300 -> text-foreground
+bg-slate-900 -> bg-card           text-slate-400            -> text-muted-foreground
+bg-slate-800 -> bg-muted          text-slate-500            -> text-muted-dim
+bg-slate-700 -> bg-muted-hover    border-slate-800          -> border-border
+```
+
+`--card` and slate-900 turned out to sit at almost the same lightness (0.0082
+against 0.0089), so the surface structure survived intact; what went was the
+blue tint, which is what `globals.css` always said the brand was.
+
+### `white` -> `foreground` is the whole alpha tail
+
+The 166 white-alpha utilities looked like the tedious part of this job. They are
+not, because **`--foreground` is near-white in dark and dark ink in light** — so
+`border-white/10` becomes `border-foreground/10` and means *the same thing* in
+both themes: a 10% hairline in the ink of whatever theme is showing. Dark is
+unchanged by construction. 482 of them across the site, entirely mechanical.
+
+Plain `text-white` is the exception and stays: it sits on brand gradient
+buttons, which are the same colour in both themes.
+
+### The notes content was 1,900 more, and nobody had counted it
+
+`src/notes/data/*.tsx` carry the course notes as JSX — and 711 `text-white`,
+376 white-alpha, 288 `bg-slate-800`, 271 `text-slate-300` with them. The same
+mapping applied, plus `text-white -> text-foreground`, because every coloured
+box in notes is a 5-10% wash rather than a solid, so its white text was really
+text on the page ground all along.
+
+**A latent bug fell out of this.** Some notes SVGs already carried
+`text-slate-800 dark:text-foreground` — a light/dark pair written before there
+was a light mode. `dark:` used to mean `prefers-color-scheme`, so a reader on a
+**light OS** got dark ink on the dark page: an invisible diagram. Binding
+`dark:` to `[data-theme]` in step 2 fixed it before anyone noticed it.
+
+### Four things the mapping could not answer
+
+- **`.glass`** hard-coded `rgba(2, 6, 23, 0.8)`, so in light the navigation bar
+  stayed dark while its text turned to light ink — 84 nodes, every page, the
+  single largest failure. Now `var(--glass)`, with the dark value exactly what
+  was inlined before.
+- **`text-signal-magenta` used as text** is 3.03:1 on white. It is now
+  `text-accent`, which is **free in dark** — `--accent` and `--signal-magenta`
+  are both `#ff00ed` there — and correct in light.
+- **`text-signal-mint` used as text** at 1.05:1. No colour in that hue clears AA
+  at the 60-80% alpha those call sites used, so the alpha went, and `--mint-ink`
+  carries the text role while `--signal-mint` goes back to being what its own
+  comment says it is: the logo motif, now its only remaining use.
+- **`text-white` on `bg-muted`** — fine in dark, invisible in light. Those
+  became `text-foreground`.
+
+### The accent moved again, and a check caught me being wrong
+
+`--accent` went `#b800ab` -> `#a3009a`. The Academy pill is `bg-accent/10
+text-accent` — the accent on **its own tint** — and at `#b800ab` that sat at
+4.41:1. A token has to clear AA in the worst place it is used, not the
+commonest.
+
+And I put the ExamCover list marker `—` into `--muted-faint`, the decorative
+tier. It is a text node, so it is held to 4.5 and it came back at 2.64 — a
+**dark-theme regression I introduced**, caught by the zero baseline recorded an
+hour earlier. That is the ratchet doing exactly what it is for.
+
+### Verified by eye as well as by number
+
+Dark and light screenshots of the home, course and notes pages, side by side:
+structurally identical, no layout movement, accents intact. The one visible gap
+is the **logo**, which is invisible on a light navigation bar — the asset item
+below, and now the most obvious thing left.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.
 2. ~~Light palette and theme plumbing~~ — done, `check:theme` guards it.
 3. ~~`lib/course-theme.ts` and the 48 dark failures~~ — done. Dark is at zero;
    light went 505 -> 263.
-4. **The six mechanical slate mappings** across 45 files.
-5. **The ~160 alpha washes** and the judgement tail.
-6. **Full sweep at both themes** with `check:contrast`, plus a second baseline
-   for light.
+4. ~~The slate literals, the alpha tail and the notes content~~ — done.
+   **Both themes now measure zero nodes below AA.**
+5. ~~The alpha washes~~ — done as part of step 4; `white` -> `foreground` was
+   mechanical rather than the judgement call it looked like.
+6. ~~Full sweep at both themes~~ — done. `contrast-baseline.json` and
+   `contrast-baseline-light.json` both record **zero pairings**.
+7. **Turn it on.** Mount `ThemeToggle` and drop the script's `'dark'` fallback,
+   in one change — `check:theme` enforces that pairing. **Blocked**: the toggle
+   costs 1.0 KB and `course/*` has 0.6 KB of budget headroom left. See below.
+8. **The logo.** A light navigation bar shows it as a smudge. Needs the source
+   artwork; it is the last visible gap.
 
 ## Open questions for the owner
 

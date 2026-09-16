@@ -95,7 +95,7 @@ export default function TopicView({
             className={`sm:ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border font-mono text-xs transition-colors ${
               isCompleted
                 ? `${theme.border} ${theme.tint} ${theme.text}`
-                : 'border-border text-muted-foreground hover:text-foreground hover:border-white/25'
+                : 'border-border text-muted-foreground hover:text-foreground hover:border-foreground/25'
             }`}
           >
             <Check className="h-3.5 w-3.5" strokeWidth={3} />
@@ -169,7 +169,7 @@ export default function TopicView({
                       className={`w-full flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium border-t border-border transition-colors ${
                         isOpen
                           ? 'text-muted-foreground hover:text-foreground bg-white/[0.02]'
-                          : `${theme.text} hover:bg-white/5`
+                          : `${theme.text} hover:bg-foreground/5`
                       }`}
                     >
                       {isOpen ? 'Hide solution' : 'Show solution'}
@@ -199,7 +199,7 @@ export default function TopicView({
                 // to shrink below its content and the truncate below never gets
                 // to fire. On a 320px screen that pushed the card 18px past its
                 // column and the page into horizontal scroll.
-                className="group flex min-w-0 items-center gap-3 px-4 py-3 bg-card border border-border hover:border-white/20 rounded-xl text-left transition-colors"
+                className="group flex min-w-0 items-center gap-3 px-4 py-3 bg-card border border-border hover:border-foreground/20 rounded-xl text-left transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 text-muted-foreground group-hover:text-foreground shrink-0" />
                 <span className="min-w-0">
@@ -211,7 +211,7 @@ export default function TopicView({
             {nextHref && (
               <Link
                 href={nextHref}
-                className="group flex min-w-0 items-center justify-end gap-3 px-4 py-3 bg-card border border-border hover:border-white/25 rounded-xl text-right transition-colors"
+                className="group flex min-w-0 items-center justify-end gap-3 px-4 py-3 bg-card border border-border hover:border-foreground/25 rounded-xl text-right transition-colors"
               >
                 <span className="min-w-0">
                   <span className={`block font-mono text-xs uppercase tracking-widest ${theme.text}`}>Next</span>

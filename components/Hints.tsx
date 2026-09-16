@@ -257,7 +257,7 @@ export default function Hints({
           onClick={openLadder}
           disabled={loading}
           className={buttonClassName
-            ?? `inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+            ?? `inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
         >
           <Lightbulb className="h-4 w-4" />
           {loading ? 'Loading…' : 'Hint'}

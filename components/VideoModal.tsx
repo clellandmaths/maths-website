@@ -45,7 +45,7 @@ export default function VideoModal({ isOpen, onClose, videoId, timestamp, title 
           )}
           <button
             onClick={onClose}
-            className="ml-auto p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+            className="ml-auto p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
           >
             <X className="h-6 w-6" />
           </button>

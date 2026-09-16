@@ -75,7 +75,7 @@ export default function TryQuestion() {
         </span>
         {question && (
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs text-signal-mint/80">
+            <span className="font-mono text-xs text-mint-ink">
               {question.course} · {question.year} · P{question.paperNumber} · Q{question.questionNumber}
             </span>
             <Marks marks={question.marks} />

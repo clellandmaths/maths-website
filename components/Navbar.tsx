@@ -56,7 +56,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setCoursesOpen(o => !o)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-slate-300 hover:text-signal-magenta hover:bg-slate-800/50 transition-all duration-200"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-foreground hover:text-accent hover:bg-muted/50 transition-all duration-200"
                 aria-expanded={coursesOpen}
               >
                 <span>Courses</span>
@@ -71,7 +71,7 @@ export default function Navbar() {
                         key={course.id}
                         href={`/course/${course.id}`}
                         onClick={() => setCoursesOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:text-foreground hover:bg-white/5 transition-colors"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:text-foreground hover:bg-foreground/5 transition-colors"
                       >
                         <span className={`h-2 w-2 rounded-full ${course.dot} shrink-0`} />
                         {course.name}
@@ -88,10 +88,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-800/50 transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
                     link.highlight
-                      ? 'text-signal-magenta font-semibold hover:brightness-110'
-                      : 'text-slate-300 hover:text-signal-magenta'
+                      ? 'text-accent font-semibold hover:brightness-110'
+                      : 'text-foreground hover:text-accent'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -119,7 +119,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-300 hover:text-signal-magenta hover:bg-slate-800/50 transition-colors"
+            className="md:hidden p-2 rounded-lg text-foreground hover:text-accent hover:bg-muted/50 transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -129,7 +129,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden glass border-t border-slate-800/50 max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="md:hidden glass border-t border-border/50 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -138,8 +138,8 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800/50 transition-all duration-200 ${
-                    link.highlight ? 'text-signal-magenta' : 'text-slate-300 hover:text-signal-magenta'
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
+                    link.highlight ? 'text-accent' : 'text-foreground hover:text-accent'
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -156,7 +156,7 @@ export default function Navbar() {
                 key={course.id}
                 href={`/course/${course.id}`}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:text-foreground hover:bg-slate-800/50 transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
               >
                 <span className={`h-2 w-2 rounded-full ${course.dot} shrink-0`} />
                 <span className="font-medium">{course.name}</span>

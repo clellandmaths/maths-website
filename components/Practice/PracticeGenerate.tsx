@@ -80,7 +80,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
         <button
           onClick={next}
           disabled={busy}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10 disabled:opacity-60`}
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-foreground/10 disabled:opacity-60`}
         >
           {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Dices className="h-3.5 w-3.5" />}
           {question ? 'Another question' : 'Give me a question'}
@@ -88,7 +88,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
         <button
           onClick={() => addSome(10)}
           disabled={busy}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors disabled:opacity-60"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors disabled:opacity-60"
         >
           Add 10 to a worksheet
         </button>
@@ -141,7 +141,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
             {!showAnswer && (
               <button
                 onClick={() => setShowAnswer(true)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-foreground/10`}
               >
                 <Eye className="h-3.5 w-3.5" />
                 Show answer
@@ -159,7 +159,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
           {showAnswer && (
             <MathRenderer
               html={question.answer}
-              className="mt-3 rounded-lg p-3 bg-white/5 answer-content text-foreground"
+              className="mt-3 rounded-lg p-3 bg-foreground/5 answer-content text-foreground"
             />
           )}
         </div>

@@ -163,14 +163,14 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
       <div>
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-colors mb-6"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
         >
           <ArrowLeft className="h-5 w-5" />
           <span className="text-sm font-medium">Back to Dashboard</span>
         </button>
         <div className="flex flex-col items-center justify-center py-20">
           <div className={`h-10 w-10 border-4 ${theme.border} border-t-transparent rounded-full animate-spin mb-4`} />
-          <p className="text-slate-400">Loading today&apos;s questions...</p>
+          <p className="text-muted-foreground">Loading today&apos;s questions...</p>
         </div>
       </div>
     );
@@ -224,7 +224,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
       <div>
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-colors mb-6"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
         >
           <ArrowLeft className="h-5 w-5" />
           <span className="text-sm font-medium">Back to Dashboard</span>
@@ -234,7 +234,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             <Flame className="h-12 w-12 text-orange-500" />
           </div>
           <h2 className="text-3xl font-bold mb-3">Session Complete</h2>
-          <p className="text-slate-400 text-lg mb-2">
+          <p className="text-muted-foreground text-lg mb-2">
             You completed today&apos;s {DAILY_COUNT} questions
           </p>
           <p className="text-muted-dim text-sm mb-8">{dateString}</p>
@@ -255,7 +255,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                 different numbers. Tomorrow&apos;s warm up is still waiting.
               </p>
               {more === 'none' && (
-                <p className="text-slate-400 text-sm">
+                <p className="text-muted-foreground text-sm">
                   No new questions could be made from today&apos;s five.
                 </p>
               )}
@@ -271,7 +271,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             onClick={onBack}
             className={
               courseHasHints(course)
-                ? 'px-8 py-3 border border-slate-700 text-slate-300 font-semibold rounded-lg hover:bg-slate-800 transition-colors'
+                ? 'px-8 py-3 border border-muted text-foreground font-semibold rounded-lg hover:bg-muted transition-colors'
                 : `px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`
             }
           >
@@ -290,12 +290,12 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col">
+      <div className="fixed inset-0 z-50 bg-background flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-800">
+        <div className="flex items-center justify-between p-4 border-b border-border">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
           >
             <X className="h-5 w-5" />
             <span className="hidden sm:inline text-sm">Close</span>
@@ -307,9 +307,9 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             </div>
           </div>
           <div className="text-right">
-            <p className="text-slate-400 text-sm">
+            <p className="text-muted-foreground text-sm">
               Question <span className={`${theme.text} font-medium`}>{currentIndex + 1}</span> of{' '}
-              <span className="text-slate-300">{questions!.length}</span>
+              <span className="text-foreground">{questions!.length}</span>
             </p>
             <p className="text-muted-dim text-xs mt-0.5">
               {question.year} Paper {question.paperNumber} Q{question.questionNumber}
@@ -326,7 +326,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               {question.topics?.slice(0, 3).map((topic) => (
                 <span
                   key={topic}
-                  className="px-2 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded"
+                  className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
                 >
                   {topic}
                 </span>
@@ -334,11 +334,11 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             </div>
 
             {/* Question Card */}
-            <div className={`flex-1 min-h-0 overflow-hidden bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8 ${hasImages ? 'lg:grid lg:grid-cols-[3fr_2fr] lg:gap-6' : 'lg:flex lg:flex-col lg:items-center lg:text-center'}`}>
+            <div className={`flex-1 min-h-0 overflow-hidden bg-card border border-border rounded-xl p-6 md:p-8 ${hasImages ? 'lg:grid lg:grid-cols-[3fr_2fr] lg:gap-6' : 'lg:flex lg:flex-col lg:items-center lg:text-center'}`}>
               <div className={hasImages ? 'lg:[&_img]:!hidden' : ''}>
                 <MathRenderer
                   html={question.question}
-                  className="text-slate-200 question-content text-xl md:text-2xl leading-relaxed"
+                  className="text-foreground question-content text-xl md:text-2xl leading-relaxed"
                 />
               </div>
               {hasImages && (
@@ -364,7 +364,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               {course === 'higher-apps' ? (
                 <button
                   onClick={() => setShowBooklet(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
                 >
                   <BookOpen className="h-5 w-5" />
                   Data Booklet
@@ -373,14 +373,14 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                 <FormulaeButton
                   courseId={course}
                   theme={theme}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
                 />
               )}
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                   showAnswer
-                    ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground'
                     : 'bg-cyan-600 hover:bg-cyan-500 text-white'
                 }`}
               >
@@ -409,11 +409,11 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
 
             {/* Answer Section */}
             {showAnswer && (
-              <div className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
+              <div className="shrink-0 mt-4 bg-card border border-border rounded-xl p-6 md:p-8">
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={question.answer}
-                  className="text-slate-200 answer-content text-xl leading-relaxed"
+                  className="text-foreground answer-content text-xl leading-relaxed"
                 />
               </div>
             )}
@@ -421,12 +421,12 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
         </div>
 
         {/* Navigation Footer */}
-        <div className="border-t border-slate-800 p-4">
+        <div className="border-t border-border p-4">
           <div className="max-w-4xl lg:max-w-none mx-auto lg:px-12 xl:px-16 flex justify-between gap-4">
             <button
               onClick={goPrev}
               disabled={isFirst}
-              className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-6 py-3 bg-muted hover:bg-muted-hover text-foreground font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="h-5 w-5" />
               Previous
@@ -436,7 +436,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               className={`flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-colors ${
                 isLast
                   ? 'bg-teal-600 hover:bg-teal-500 text-white'
-                  : 'bg-slate-800 hover:bg-slate-700 text-white'
+                  : 'bg-muted hover:bg-muted-hover text-foreground'
               }`}
             >
               {isLast ? 'Finish' : 'Next'}

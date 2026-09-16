@@ -21,7 +21,7 @@ export default function Marks({
   if (!marks || marks.length === 0) return null;
 
   const total = marks.reduce((a, b) => a + b, 0);
-  const badge = theme ? `${theme.tint} ${theme.text}` : 'bg-white/5 text-muted-foreground';
+  const badge = theme ? `${theme.tint} ${theme.text}` : 'bg-foreground/5 text-muted-foreground';
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>

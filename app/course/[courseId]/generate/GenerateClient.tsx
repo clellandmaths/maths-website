@@ -188,7 +188,7 @@ function Builder({ courseId, courseName, groups }: Props) {
           and this does the other one. */}
       <Link
         href={`/explorer?c=${courseId}`}
-        className="mb-6 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+        className="mb-6 inline-flex items-center gap-2 rounded-lg border border-muted px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to the Explorer
@@ -206,8 +206,8 @@ function Builder({ courseId, courseName, groups }: Props) {
       <div className="grid gap-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
         {/* ── the picker ─────────────────────────────────────────────── */}
         <div className="lg:sticky lg:top-4 lg:self-start">
-          <div className="rounded-lg border border-slate-800 bg-slate-900/50">
-            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+          <div className="rounded-lg border border-border bg-card/50">
+            <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <span className="text-sm font-semibold">
                 {total} question{total === 1 ? '' : 's'}
               </span>
@@ -226,13 +226,13 @@ function Builder({ courseId, courseName, groups }: Props) {
                 const picked = topics.reduce((n, t) => n + (counts[t] ?? 0), 0);
                 const open = openGroup === group;
                 return (
-                  <div key={group} className="border-b border-slate-800 last:border-0">
+                  <div key={group} className="border-b border-border last:border-0">
                     {/* The topic row carries its own stepper, so a sheet can be
                         built without ever opening one. The chevron is the only
                         thing that expands it — the steppers are siblings of the
                         toggle rather than children, because a button inside a
                         button is invalid and the inner one stops working. */}
-                    <div className="flex w-full items-center gap-1 px-4 py-2.5 text-sm hover:bg-white/5">
+                    <div className="flex w-full items-center gap-1 px-4 py-2.5 text-sm hover:bg-foreground/5">
                       <button
                         onClick={() => setOpenGroup(open ? null : group)}
                         aria-expanded={open}
@@ -253,7 +253,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                         onClick={() => stepGroup(topics, -1)}
                         disabled={picked === 0}
                         aria-label={`One fewer from ${group.replace(/^N5 /, '')}`}
-                        className="rounded border border-slate-700 p-1 disabled:opacity-30 hover:bg-white/10"
+                        className="rounded border border-muted p-1 disabled:opacity-30 hover:bg-foreground/10"
                       >
                         <Minus className="h-3 w-3" />
                       </button>
@@ -263,7 +263,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                       <button
                         onClick={() => stepGroup(topics, 1)}
                         aria-label={`One more from ${group.replace(/^N5 /, '')}`}
-                        className="rounded border border-slate-700 p-1 hover:bg-white/10"
+                        className="rounded border border-muted p-1 hover:bg-foreground/10"
                       >
                         <Plus className="h-3 w-3" />
                       </button>
@@ -285,7 +285,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                                 onClick={() => step(topic, -1)}
                                 disabled={n === 0}
                                 aria-label={`One fewer ${topic}`}
-                                className="rounded border border-slate-700 p-1 disabled:opacity-30 hover:bg-white/10"
+                                className="rounded border border-muted p-1 disabled:opacity-30 hover:bg-foreground/10"
                               >
                                 <Minus className="h-3 w-3" />
                               </button>
@@ -295,7 +295,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                               <button
                                 onClick={() => step(topic, 1)}
                                 aria-label={`One more ${topic}`}
-                                className="rounded border border-slate-700 p-1 hover:bg-white/10"
+                                className="rounded border border-muted p-1 hover:bg-foreground/10"
                               >
                                 <Plus className="h-3 w-3" />
                               </button>
@@ -317,7 +317,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                 key={o}
                 onClick={() => setOrder(o)}
                 className={`rounded px-2.5 py-1 text-xs capitalize ${
-                  order === o ? `${theme.bg} text-white` : 'border border-slate-700 hover:bg-white/10'
+                  order === o ? `${theme.bg} text-white` : 'border border-muted hover:bg-foreground/10'
                 }`}
               >
                 {o}
@@ -338,7 +338,7 @@ function Builder({ courseId, courseName, groups }: Props) {
         {/* ── the sheet ──────────────────────────────────────────────── */}
         <div>
           {questions === null && !busy && (
-            <p className="rounded-lg border border-dashed border-slate-800 px-4 py-16 text-center text-muted-foreground">
+            <p className="rounded-lg border border-dashed border-border px-4 py-16 text-center text-muted-foreground">
               Pick some topics and press Generate.
             </p>
           )}
@@ -383,7 +383,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                 {questions.map((q, i) => (
                   <li
                     key={q.uid ?? i}
-                    className="rounded-lg border border-slate-800 bg-slate-900/40 p-5"
+                    className="rounded-lg border border-border bg-card/40 p-5"
                   >
                     <div className="mb-2 flex items-baseline justify-between gap-3">
                       <span className={`font-semibold ${theme.text}`}>{i + 1}.</span>

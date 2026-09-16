@@ -13,7 +13,7 @@ export const higherAppsData: Section[] = [
         title: "Finance Revision & Gross Income",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A person's <strong>gross income</strong> is the total amount of money they earn from all sources <em>before</em> any deductions (like tax or pension contributions) are taken away.
             </p>
@@ -144,14 +144,14 @@ export const higherAppsData: Section[] = [
         title: "National Insurance",
         videoUrl: "https://www.youtube.com/embed/NbXeQFcU9MQ",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               National Insurance (NI) is a tax paid by employees and employers to fund state benefits, such as the State Pension. In the Higher Applications of Mathematics exam, you will be expected to calculate a worker's NI contributions using the specific figures provided in your data booklet for that year.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The "Before Deductions" Rule (The Ultimate Exam Trap)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The "Before Deductions" Rule (The Ultimate Exam Trap)</h4>
                 <p>
                   The most important rule to remember for National Insurance is that it is calculated on a person's salary <strong>before</strong> any other deductions (such as pension contributions) are taken away.
                 </p>
@@ -164,7 +164,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The 2025/26 Tax Year Bands</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The 2025/26 Tax Year Bands</h4>
                 <p>
                   For the 2026 exam, you will be using the 2025/26 tax year rates. You do not pay a flat percentage on your whole salary; instead, your earnings are split into "chunks" or bands:
                 </p>
@@ -275,18 +275,18 @@ export const higherAppsData: Section[] = [
         title: "Income Tax",
         videoUrl: "https://www.youtube.com/embed/v6UA3kNY2sY",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Income tax is paid to the government to help fund public services. For most employees, this is automatically deducted from their wages throughout the year through a system called PAYE (Pay As You Earn).
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Pension Trap (The Ultimate Exam Trick)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Pension Trap (The Ultimate Exam Trick)</h4>
                 <p>
                   Unlike National Insurance, which is calculated before pension deductions, Income Tax is strictly calculated on a person's <strong>Taxable Income</strong>.
                 </p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <BlockMath math="\text{Taxable Income} = \text{Gross Pay} - \text{Pension Contributions}" />
                 </div>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
@@ -298,7 +298,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The 2025/26 Scottish Tax Bands</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The 2025/26 Scottish Tax Bands</h4>
                 <p>
                   In the Higher Applications 2026 exam, you will be expected to use the 2025/26 tax year bands provided in your data booklet. Like National Insurance, income tax uses a progressive "chunking" system:
                 </p>
@@ -433,7 +433,7 @@ export const higherAppsData: Section[] = [
         title: "Deductions",
         videoUrl: "https://www.youtube.com/embed/Z_UsKwnFgDI",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A person's <strong>net pay</strong> (often called "take-home pay") is the final amount of money they receive in their bank account after all deductions have been subtracted from their gross pay.
             </p>
@@ -443,7 +443,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Common Deductions</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Common Deductions</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>National Insurance (NI):</strong> Calculated on the gross salary <em>before</em> any other deductions are taken away.</li>
                   <li><strong>Pension Contributions:</strong> Usually calculated as a straight percentage of the gross salary. Often, an employer will also pay into the pension, but the <em>employer's</em> contribution does not come out of the employee's pay.</li>
@@ -453,17 +453,17 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The Order of Operations (The 'Net Pay' Checklist)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The Order of Operations (The 'Net Pay' Checklist)</h4>
                 <p>To avoid losing cascading marks in a large exam question, always follow this strict order:</p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4">
-                  <ol className="list-decimal list-inside space-y-2 font-medium text-slate-200">
+                <div className="bg-muted p-4 rounded-lg my-4">
+                  <ol className="list-decimal list-inside space-y-2 font-medium text-foreground">
                     <li>State the Gross Pay.</li>
                     <li>Calculate National Insurance.</li>
                     <li>Calculate the Pension Contribution.</li>
                     <li>Calculate the Taxable Income (Gross Pay - Pension).</li>
                     <li>Calculate Income Tax using the tax bands.</li>
                     <li>Calculate any Student Loan or other fixed deductions.</li>
-                    <li className="text-emerald-400 mt-4 pt-2 border-t border-slate-700">Net Pay = Gross Pay - (NI + Pension + Tax + Student Loan).</li>
+                    <li className="text-emerald-400 mt-4 pt-2 border-t border-muted">Net Pay = Gross Pay - (NI + Pension + Tax + Student Loan).</li>
                   </ol>
                 </div>
               </div>
@@ -509,7 +509,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>Total monthly addition:</strong> &pound;220 + &pound;180 = &pound;400.</li>
                   <li><strong>Total over 6 months:</strong> &pound;400 &times; 6 = &pound;2,400.</li>
                 </ul>
-                <p className="mt-2 text-sm text-slate-400 italic">Note: Only Gemma's &pound;220 would be deducted from her own net pay.</p>
+                <p className="mt-2 text-sm text-muted-foreground italic">Note: Only Gemma's &pound;220 would be deducted from her own net pay.</p>
               </div>
             )
           },
@@ -526,13 +526,13 @@ export const higherAppsData: Section[] = [
                 <p>Follow the strict checklist carefully:</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-semibold text-white">1. Gross Monthly Pay:</p>
+                    <p className="font-semibold text-foreground">1. Gross Monthly Pay:</p>
                     <p className="ml-4">&pound;45,000 &divide; 12 = &pound;3,750.</p>
                   </div>
                   
                   <div>
-                    <p className="font-semibold text-white">2. National Insurance (Monthly):</p>
-                    <p className="ml-4 text-sm text-slate-400">Nadir earns &pound;3,750, which falls into the 8% band (&pound;1,048 to &pound;4,189).</p>
+                    <p className="font-semibold text-foreground">2. National Insurance (Monthly):</p>
+                    <p className="ml-4 text-sm text-muted-foreground">Nadir earns &pound;3,750, which falls into the 8% band (&pound;1,048 to &pound;4,189).</p>
                     <ul className="list-disc list-inside ml-8 space-y-1">
                       <li>Amount in band: &pound;3,750 - &pound;1,048 = &pound;2,702.</li>
                       <li>NI Contribution: 0.08 &times; &pound;2,702 = &pound;216.16.</li>
@@ -540,12 +540,12 @@ export const higherAppsData: Section[] = [
                   </div>
 
                   <div>
-                    <p className="font-semibold text-white">3. Pension Contribution (Monthly):</p>
+                    <p className="font-semibold text-foreground">3. Pension Contribution (Monthly):</p>
                     <p className="ml-4">0.06 &times; &pound;3,750 = &pound;225.00.</p>
                   </div>
 
                   <div>
-                    <p className="font-semibold text-white">4. Taxable Income (Annual):</p>
+                    <p className="font-semibold text-foreground">4. Taxable Income (Annual):</p>
                     <ul className="list-disc list-inside ml-8 space-y-1">
                       <li>Annual Pension: 0.06 &times; &pound;45,000 = &pound;2,700.</li>
                       <li>Taxable Income: &pound;45,000 - &pound;2,700 = &pound;42,300.</li>
@@ -553,8 +553,8 @@ export const higherAppsData: Section[] = [
                   </div>
 
                   <div>
-                    <p className="font-semibold text-white">5. Income Tax (Annual -&gt; Monthly):</p>
-                    <p className="ml-4 text-sm text-slate-400">Use the 2025/26 Scottish Tax Bands on the &pound;42,300 taxable income.</p>
+                    <p className="font-semibold text-foreground">5. Income Tax (Annual -&gt; Monthly):</p>
+                    <p className="ml-4 text-sm text-muted-foreground">Use the 2025/26 Scottish Tax Bands on the &pound;42,300 taxable income.</p>
                     <ul className="list-none space-y-1 ml-8">
                       <li>Starter Rate (19%): &pound;15,397 - &pound;12,570 = &pound;2,827. Tax: 0.19 &times; &pound;2,827 = &pound;537.13.</li>
                       <li>Basic Rate (20%): &pound;27,491 - &pound;15,397 = &pound;12,094. Tax: 0.20 &times; &pound;12,094 = &pound;2,418.80.</li>
@@ -567,7 +567,7 @@ export const higherAppsData: Section[] = [
                   </div>
 
                   <div>
-                    <p className="font-semibold text-white">6. Final Net Monthly Pay:</p>
+                    <p className="font-semibold text-foreground">6. Final Net Monthly Pay:</p>
                     <p className="ml-4"><InlineMath math="\text{Net Pay} = \text{Gross Monthly} - (\text{NI} + \text{Pension} + \text{Tax})" /></p>
                     <p className="ml-4"><InlineMath math="\text{Net Pay} = \text{\pounds}3,750 - (\text{\pounds}216.16 + \text{\pounds}225.00 + \text{\pounds}505.49)" /></p>
                     <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Net Pay} = \text{\pounds}3,750 - \text{\pounds}946.65 = \text{\pounds}2,803.35" />.</p>
@@ -583,14 +583,14 @@ export const higherAppsData: Section[] = [
         title: "Other Taxes",
         videoUrl: "https://www.youtube.com/embed/gkpnyMhmPV0",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               While Income Tax and National Insurance are deducted automatically from a person's payslip, there are several other taxes that individuals must manage and pay themselves, either regularly or on an occasional basis.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Value Added Tax (VAT)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Value Added Tax (VAT)</h4>
                 <p>VAT is a tax applied to the purchase of most goods and services.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>The standard rate of VAT in the UK is 20%. Some essential or child-related items have a reduced rate (e.g., 5%), while others have no VAT at all.</li>
@@ -604,7 +604,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Property Sales Taxes</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Property Sales Taxes</h4>
                 <p>When purchasing a property, the buyer must pay a tax to the government. It can amount to many thousands of pounds.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>In Scotland, this is called <strong>LBTT</strong> (Land and Buildings Transaction Tax).</li>
@@ -614,7 +614,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Council Tax</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Council Tax</h4>
                 <p>
                   This is a tax paid by residents to their local council to fund services like rubbish collection, street lighting, schools, and libraries.
                 </p>
@@ -628,7 +628,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Vehicle Tax</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Vehicle Tax</h4>
                 <p>This is an annual tax paid to keep a vehicle on the road.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>When a car is first registered, the tax can be anywhere from &pound;10 to nearly &pound;6,000 depending entirely on the vehicle's CO<sub>2</sub> emissions.</li>
@@ -670,7 +670,7 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p className="mb-1"><strong>Calculate the discounted annual bill:</strong></p>
                   <p className="ml-4">If he gets a 25% discount, he pays 75% of the bill. &pound;1,340 &times; 0.75 = &pound;1,005.</p>
-                  <p className="ml-4 text-sm text-slate-400 italic">(Alternatively: 1340 &times; 0.25 = 335. Then 1340 - 335 = 1005).</p>
+                  <p className="ml-4 text-sm text-muted-foreground italic">(Alternatively: 1340 &times; 0.25 = 335. Then 1340 - 335 = 1005).</p>
                 </div>
                 <div>
                   <p className="mb-1"><strong>Calculate the 10-month instalment:</strong></p>
@@ -704,14 +704,14 @@ export const higherAppsData: Section[] = [
         title: "Multipliers & Interest",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Before you can tackle complex financial questions, you must be completely comfortable converting percentages into decimals and using multipliers. A multiplier allows you to calculate a percentage increase or decrease in a single step on your calculator.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Constructing a Multiplier</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Constructing a Multiplier</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>For an increase:</strong> Add the percentage to 100%, then divide by 100 to make it a decimal. (Example: A 4.5% increase means you now have 104.5%. The multiplier is 1.045).</li>
                   <li><strong>For a decrease:</strong> Subtract the percentage from 100%, then divide by 100. (Example: A 12% decrease means you retain 88%. The multiplier is 0.88).</li>
@@ -719,7 +719,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Core Financial Terminology</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Core Financial Terminology</h4>
                 <p>You must be familiar with the specific language used in Higher Applications exam questions:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Capital:</strong> The initial, original amount of money that is either invested into savings or borrowed as a loan.</li>
@@ -729,7 +729,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Successive Percentage Changes</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Successive Percentage Changes</h4>
                 <p>
                   If an amount of money experiences multiple different percentage changes over time, you do not need to calculate them one by one.
                 </p>
@@ -822,18 +822,18 @@ export const higherAppsData: Section[] = [
         title: "Interest - Varying Time Units",
         videoUrl: "https://www.youtube.com/embed/8-mHZxNeDJU",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Now that we are comfortable using multipliers for a single percentage change, we can upgrade our approach to handle multiple time periods (compound interest) using a simple formula.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Compound Interest Formula</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Compound Interest Formula</h4>
                 <p>
                   To calculate the final balance of an investment or a loan over multiple time periods, we use the formula:
                 </p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <BlockMath math="\text{New Balance} = \text{Original} \times (\text{multiplier})^n" />
                 </div>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
@@ -843,7 +843,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The Golden Rule of Time Units</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The Golden Rule of Time Units</h4>
                 <p>In exam questions, the interest rate will be given for a specific time period (e.g., per month, per year, per quarter).</p>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
                   <p className="font-semibold text-amber-300 mb-1">Crucial Rule:</p>
@@ -857,7 +857,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Common Time Periods</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Common Time Periods</h4>
                 <p>You must be confident converting between the following periods:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Per annum (p.a.) / Per year:</strong> 1 time period per year.</li>
@@ -951,27 +951,27 @@ export const higherAppsData: Section[] = [
         title: "Combining Interest Rates",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               In the real world, interest rates rarely stay exactly the same for years at a time. The Bank of England regularly changes the central interest rate, meaning the effective rates of interest on savings accounts and loans will fluctuate over long periods.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The "Chain" Calculation</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The "Chain" Calculation</h4>
                 <p>
                   To calculate the final balance of an account when the interest rate changes, you do not need to calculate each time period separately.
                 </p>
                 <p className="mt-2">
                   Instead, you can find the accumulated value by multiplying the original principal by a continuous chain of multipliers, each raised to the power of its own specific time period.
                 </p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center overflow-x-auto">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center overflow-x-auto">
                   <BlockMath math="\text{Final Balance} = \text{Capital} \times (m_1)^{n_1} \times (m_2)^{n_2} \times \dots" />
                 </div>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The "Counting Time" Trap</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The "Counting Time" Trap</h4>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
                   <p className="font-semibold text-amber-300 mb-1">The Classic Exam Trap:</p>
                   <p className="text-amber-100/80">
@@ -1102,7 +1102,7 @@ export const higherAppsData: Section[] = [
         title: "Accumulation Calculations (Regular Payments)",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               When a person makes regular payments into a savings account (e.g., depositing &pound;100 on the 1st of every month), you cannot simply add the payments together and calculate the interest at the end. Because the deposits are made at different times, each deposit sits in the account earning interest for a different length of time.
             </p>
@@ -1112,7 +1112,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">Method 1: The Chronological Method (Payment Tracking)</h4>
+                <h4 className="text-lg font-semibold text-foreground">Method 1: The Chronological Method (Payment Tracking)</h4>
                 <p>This is often the safest method to avoid getting confused by dates. You track the balance of the account sequentially from one payment to the next.</p>
                 <ol className="list-decimal list-inside ml-4 mt-2 space-y-1">
                   <li>Take the first deposit.</li>
@@ -1123,7 +1123,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">Method 2: The Individual Accumulation Method</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">Method 2: The Individual Accumulation Method</h4>
                 <p>This method treats every single deposit as its own separate "mini-investment".</p>
                 <ol className="list-decimal list-inside ml-4 mt-2 space-y-1">
                   <li>Calculate exactly how much time Deposit 1 spends in the account, and calculate its final value.</li>
@@ -1243,14 +1243,14 @@ export const higherAppsData: Section[] = [
         title: "Accumulation - Irregular Payments and Withdrawals",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Real-world finances are rarely as perfectly structured as a regular monthly deposit. People receive unexpected bonuses, make emergency withdrawals, and borrow additional funds.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Chronological Method (Payment Tracking)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Chronological Method (Payment Tracking)</h4>
                 <p>
                   When dealing with irregular payments and withdrawals, the "Individual Accumulation Method" from the previous section becomes highly complicated and prone to error.
                 </p>
@@ -1263,7 +1263,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Handling Withdrawals and Repayments</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Handling Withdrawals and Repayments</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li><strong>Savings:</strong> A deposit is <em>added</em> to the balance. A withdrawal is <em>subtracted</em> from the balance.</li>
                   <li><strong>Loans:</strong> Borrowing more money is <em>added</em> to the total debt. A repayment is <em>subtracted</em> from the total debt.</li>
@@ -1277,7 +1277,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The Rate Change Trap</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. The Rate Change Trap</h4>
                 <p>
                   Sometimes, an interest rate will change on a date when no transaction takes place.
                 </p>
@@ -1400,7 +1400,7 @@ export const higherAppsData: Section[] = [
         title: "Converting Between Time Frequencies",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Often in finance, you will be given an interest rate for one time period (e.g., an annual rate) but you will need to apply it to a completely different time period (e.g., monthly payments). You must convert the interest rate to match the payment frequency.
             </p>
@@ -1417,7 +1417,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Scaling Up (Smaller to Larger Time Periods)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Scaling Up (Smaller to Larger Time Periods)</h4>
                 <p>If you have a monthly rate and need an annual rate, you use the standard compounding formula: <InlineMath math="(\text{Multiplier})^n" />.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li><strong>Example:</strong> To convert a monthly rate to an annual rate, you raise the monthly multiplier to the power of 12.</li>
@@ -1425,7 +1425,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Scaling Down (Larger to Smaller Time Periods)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Scaling Down (Larger to Smaller Time Periods)</h4>
                 <p>If you have an annual rate and need a monthly rate, you must do the mathematical reverse, using a fractional power: <InlineMath math="(\text{Multiplier})^{\frac{1}{n}}" />.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li><strong>Example:</strong> To convert an annual rate to a monthly rate, you raise the annual multiplier to the power of <InlineMath math="\frac{1}{12}" />.</li>
@@ -1512,7 +1512,7 @@ export const higherAppsData: Section[] = [
                   <ul className="list-disc list-inside ml-4 space-y-1">
                     <li>Daily Multiplier: <InlineMath math="100\% + 0.9\% = 100.9\% \rightarrow 1.009" />.</li>
                     <li>Scale up to a year (365 days): <InlineMath math="1.009^{365} = 26.402..." /></li>
-                    <li>Convert to percentage: <InlineMath math="(26.402... - 1) \times 100 = 2540.24\%" /> <br/><span className="text-sm text-slate-400 italic">(Payday loans scale up to thousands of percent!)</span></li>
+                    <li>Convert to percentage: <InlineMath math="(26.402... - 1) \times 100 = 2540.24\%" /> <br/><span className="text-sm text-muted-foreground italic">(Payday loans scale up to thousands of percent!)</span></li>
                   </ul>
                 </div>
                 <div>
@@ -1554,7 +1554,7 @@ export const higherAppsData: Section[] = [
         title: "Working with Start and End Values",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Sometimes in finance, you will know exactly how much money you started with (the Capital) and exactly how much you ended up with (the Final Balance), but you will <strong>not know the interest rate</strong> that was applied.
             </p>
@@ -1564,7 +1564,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Rearranging the Formula</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Rearranging the Formula</h4>
                 <p>We start with our standard compound interest formula: <InlineMath math="\text{Final Balance} = \text{Start Value} \times (\text{Multiplier})^n" /></p>
                 <p className="mt-2">To find the multiplier, we reverse the process in two steps:</p>
                 <ul className="list-none space-y-2 ml-4 mt-2">
@@ -1584,7 +1584,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Matching the Time Period (<InlineMath math="n" />)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Matching the Time Period (<InlineMath math="n" />)</h4>
                 <p>The power you use for <InlineMath math="n" /> dictates the specific time period of the interest rate you will find.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li>If you want to find an <strong>annual</strong> interest rate, <InlineMath math="n" /> must be the number of years. If the duration is 18 months, you must use <InlineMath math="n = 1.5" /> years.</li>
@@ -1681,17 +1681,17 @@ export const higherAppsData: Section[] = [
         title: "Present Value (Fixed Interest Rates)",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Often in financial planning, a person will have a specific future savings goal in mind (e.g., saving a deposit for a house or paying for university fees). When we need to find out exactly how much money must be invested <em>today</em> to reach that future target, we are calculating the <strong>Present Value</strong>.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Reversing the Formula</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Reversing the Formula</h4>
                 <p>Because we are working backwards from the end of the timeline to the start, we must perform the exact opposite mathematical operation to our standard accumulation formula.</p>
                 <p className="mt-2">Instead of multiplying the capital, we take the final future balance and divide it by the compound multiplier.</p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <BlockMath math="\text{Present Value} = \frac{\text{Future Balance}}{(\text{Multiplier})^n}" />
                 </div>
               </div>
@@ -1784,16 +1784,16 @@ export const higherAppsData: Section[] = [
         title: "Present Value (Variable Interest Rates)",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Calculating the Present Value of an investment becomes slightly more complex when the interest rate changes over the term of the investment. Just as we used a chain of multipliers to accumulate money forward, we can use a chain of division to work backwards.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Reverse Chain Calculation</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Reverse Chain Calculation</h4>
                 <p>To find the original deposit when there are multiple interest rates, you take the final balance and divide it by the product of all the multipliers.</p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center overflow-x-auto">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center overflow-x-auto">
                   <BlockMath math="\text{Present Value} = \frac{\text{Future Balance}}{(m_1)^{n_1} \times (m_2)^{n_2} \times \dots}" />
                 </div>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg my-4">
@@ -1805,7 +1805,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Present Value with Intermediate Transactions</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Present Value with Intermediate Transactions</h4>
                 <p>This is one of the most challenging question types in the Higher Applications course. If an account has a variable interest rate and the person makes deposits or withdrawals halfway through, you cannot use a single formula.</p>
                 <p className="mt-2"><strong>The "Reverse Chronological" Method:</strong> You must work backwards step-by-step from the end date to the start date.</p>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
@@ -1917,14 +1917,14 @@ export const higherAppsData: Section[] = [
         title: "Accumulation: Investment Schedules",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               When saving for a long-term goal (like retirement or a deposit for a house), making regular monthly payments over many years requires hundreds of repetitive calculations. Instead of doing this manually using the Chronological Method, we use spreadsheet software (like Microsoft Excel) to automate the process by creating an Investment Schedule.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Setting up an Investment Schedule</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Setting up an Investment Schedule</h4>
                 <p>A standard investment schedule tracks the balance of an account period by period. It typically features the following columns:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li><strong>Time (Months/Years):</strong> The specific time period.</li>
@@ -1936,21 +1936,21 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The Interest Rate Conversion Formula</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The Interest Rate Conversion Formula</h4>
                 <p>In spreadsheet tasks, you will frequently be given an annual effective rate of interest, but you will need to calculate a monthly schedule.</p>
                 <p className="mt-2">You must instruct the spreadsheet to calculate the monthly rate using a fractional power.</p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center font-mono text-sm text-emerald-300">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center font-mono text-sm text-emerald-300">
                   =(1 + Annual_Rate_Cell)^(1/12) - 1
                 </div>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Essential Spreadsheet Functions and Syntax</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Essential Spreadsheet Functions and Syntax</h4>
                 <p>To gain full marks in the exam for spreadsheet formulas, you must use the correct syntax:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Absolute Cell References ($):</strong> When you drag a formula down a column, spreadsheet software automatically changes the cell references. To "lock" a reference to a specific cell (like a fixed monthly interest rate or a fixed regular deposit), you must use dollar signs (e.g., <code>$B$2</code>).</li>
                   <li><strong>The ROUND Function:</strong> In finance, money must always be rounded to two decimal places (the nearest penny). When calculating interest, you must use the <code>ROUND</code> function, or your schedule will accumulate hidden fractions of a penny and become inaccurate over time.<br/>
-                  <span className="inline-block mt-1 font-mono text-sm text-emerald-300 bg-slate-800 px-2 py-1 rounded">=ROUND(Opening_Balance * $Interest_Rate$, 2)</span>
+                  <span className="inline-block mt-1 font-mono text-sm text-emerald-300 bg-muted px-2 py-1 rounded">=ROUND(Opening_Balance * $Interest_Rate$, 2)</span>
                   </li>
                 </ul>
               </div>
@@ -1970,7 +1970,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <p>Cal must add 1 to the annual rate, raise it to the power of 1/12, and then subtract 1.</p>
-                <div className="bg-slate-800 p-4 rounded-lg font-mono text-emerald-300">
+                <div className="bg-muted p-4 rounded-lg font-mono text-emerald-300">
                   =(1+B1)^(1/12)-1
                 </div>
               </div>
@@ -1997,19 +1997,19 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p className="font-semibold text-white">Solution (a):</p>
+                  <p className="font-semibold text-foreground">Solution (a):</p>
                   <p>We must multiply the opening balance by the interest rate, use absolute references to lock the interest rate cell, and round to 2 decimal places.</p>
-                  <div className="bg-slate-800 p-3 rounded-lg font-mono text-emerald-300 mt-2">
+                  <div className="bg-muted p-3 rounded-lg font-mono text-emerald-300 mt-2">
                     =ROUND(C7*$B$2, 2)
                   </div>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-white">Solution (b):</p>
+                  <p className="font-semibold text-foreground">Solution (b):</p>
                   <p>The closing balance is the sum of the opening balance, the interest earned, and the fixed regular deposit (locked using absolute references).</p>
-                  <div className="bg-slate-800 p-3 rounded-lg font-mono text-emerald-300 mt-2">
+                  <div className="bg-muted p-3 rounded-lg font-mono text-emerald-300 mt-2">
                     =C7+D7+$B$3
                   </div>
-                  <p className="text-sm text-slate-400 mt-1 italic">(Alternatively, =SUM(C7:D7)+$B$3)</p>
+                  <p className="text-sm text-muted-foreground mt-1 italic">(Alternatively, =SUM(C7:D7)+$B$3)</p>
                 </div>
               </div>
             )
@@ -2022,30 +2022,30 @@ export const higherAppsData: Section[] = [
                 <p>Anika opens a new savings account to save for a deposit on a flat. The account offers an effective rate of interest of 0.35% per month. Anika deposits &pound;400 on the 1st of every month. Interest is calculated and added at the end of the month.</p>
                 <p className="mt-2">Complete the investment schedule below to calculate the Closing Balance at the end of Month 2.</p>
                 <div className="overflow-x-auto mt-4">
-                  <table className="min-w-full bg-slate-800 border border-slate-700 text-sm">
+                  <table className="min-w-full bg-muted border border-muted text-sm">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Month</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Opening Balance (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Interest Earned (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Deposit (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Closing Balance (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Month</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Opening Balance (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Interest Earned (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Deposit (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Closing Balance (&pound;)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">1</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">0.00</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">0.00</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">400.00</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">400.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">1</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">0.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">0.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">400.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">400.00</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2 text-slate-300">2</td>
-                        <td className="px-4 py-2 text-slate-300">400.00</td>
-                        <td className="px-4 py-2 text-slate-300"></td>
-                        <td className="px-4 py-2 text-slate-300"></td>
-                        <td className="px-4 py-2 text-slate-300"></td>
+                        <td className="px-4 py-2 text-foreground">2</td>
+                        <td className="px-4 py-2 text-foreground">400.00</td>
+                        <td className="px-4 py-2 text-foreground"></td>
+                        <td className="px-4 py-2 text-foreground"></td>
+                        <td className="px-4 py-2 text-foreground"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -2068,7 +2068,7 @@ export const higherAppsData: Section[] = [
                   <span className="font-mono text-emerald-300">Closing Balance = &pound;801.40</span>
                   </li>
                 </ul>
-                <p className="mt-2 text-slate-400 italic">(The completed row should read: Opening: &pound;400.00 | Interest: &pound;1.40 | Deposit: &pound;400.00 | Closing: &pound;801.40).</p>
+                <p className="mt-2 text-muted-foreground italic">(The completed row should read: Opening: &pound;400.00 | Interest: &pound;1.40 | Deposit: &pound;400.00 | Closing: &pound;801.40).</p>
               </div>
             )
           }
@@ -2079,7 +2079,7 @@ export const higherAppsData: Section[] = [
         title: "Loans & Loan Schedules",
         videoUrl: "https://www.youtube.com/embed/XoA_f73A_Ec",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               When an individual or business borrows money, they must repay the original amount (the capital) plus an additional fee for borrowing the money (the interest). There are several ways to structure this repayment, such as repaying nothing until the end of the term, repaying only the interest during the term and the capital at the very end, or making regular level repayments of both capital and interest.
             </p>
@@ -2089,7 +2089,7 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Structure of a Loan Schedule</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Structure of a Loan Schedule</h4>
                 <p>A loan schedule is a table that tracks the outstanding debt period by period. It contains the following core elements:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Repayment:</strong> The fixed, level amount of money the borrower pays each month.</li>
@@ -2108,7 +2108,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Spreadsheets and the Goal Seek Function</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Spreadsheets and the Goal Seek Function</h4>
                 <p>To find the exact level repayment required to clear a loan in a spreadsheet, you must use a specific sequence of steps:</p>
                 <ul className="list-decimal list-inside ml-4 mt-2 space-y-1">
                   <li>Enter a "guess" for the repayment amount and complete the schedule down to the final month.</li>
@@ -2136,30 +2136,30 @@ export const higherAppsData: Section[] = [
                 <p>Finn takes out a personal loan of &pound;8,000. He makes level monthly repayments of &pound;260 at the end of each month. The effective rate of interest on the loan is 0.6% per month.</p>
                 <p className="mt-2">Complete the loan schedule for Month 1.</p>
                 <div className="overflow-x-auto mt-4">
-                  <table className="min-w-full bg-slate-800 border border-slate-700 text-sm">
+                  <table className="min-w-full bg-muted border border-muted text-sm">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Time (months)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Repayment (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Interest content (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Capital content (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Loan outstanding (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Time (months)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Repayment (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Interest content (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Capital content (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Loan outstanding (&pound;)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">0</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300"></td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300"></td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300"></td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">8000.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">0</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground"></td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground"></td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground"></td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">8000.00</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2 text-slate-300">1</td>
-                        <td className="px-4 py-2 text-slate-300">260.00</td>
-                        <td className="px-4 py-2 text-slate-300"></td>
-                        <td className="px-4 py-2 text-slate-300"></td>
-                        <td className="px-4 py-2 text-slate-300"></td>
+                        <td className="px-4 py-2 text-foreground">1</td>
+                        <td className="px-4 py-2 text-foreground">260.00</td>
+                        <td className="px-4 py-2 text-foreground"></td>
+                        <td className="px-4 py-2 text-foreground"></td>
+                        <td className="px-4 py-2 text-foreground"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -2179,7 +2179,7 @@ export const higherAppsData: Section[] = [
                   <InlineMath math="\text{\pounds}8000.00 - \text{\pounds}212.00 = \text{\pounds}7,788.00" />
                   </li>
                 </ul>
-                <p className="mt-2 text-slate-400 italic">(The completed row for Month 1 should read: 260.00 | 48.00 | 212.00 | 7788.00).</p>
+                <p className="mt-2 text-muted-foreground italic">(The completed row for Month 1 should read: 260.00 | 48.00 | 212.00 | 7788.00).</p>
               </div>
             )
           },
@@ -2200,7 +2200,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <p>You must multiply the outstanding balance (E10) by the locked interest rate (B3), and remember to use the <code>ROUND</code> function to 2 decimal places.</p>
-                <div className="bg-slate-800 p-4 rounded-lg font-mono text-emerald-300">
+                <div className="bg-muted p-4 rounded-lg font-mono text-emerald-300">
                   =ROUND(E10*$B$3, 2)
                 </div>
               </div>
@@ -2234,20 +2234,20 @@ export const higherAppsData: Section[] = [
         title: "Inflation",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Inflation is a general rise in prices over time, which is measured as a percentage. Here in the UK, the Bank of England is responsible for keeping inflation low and stable, with a government target of 2%.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Purchasing Power of Money</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Purchasing Power of Money</h4>
                 <p>Inflation results in a decrease in the "purchasing power" of money over time.</p>
                 <p className="mt-2">This means that as prices rise, fewer goods or services can be bought for the exact same amount of money than in previous years.</p>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Measuring Inflation (The CPI & RPI)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Measuring Inflation (The CPI & RPI)</h4>
                 <p>Inflation is measured based on the change in value of an inflation index, most commonly the Consumer Price Index (CPI) or the Retail Price Index (RPI).</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li>To calculate this index, the government tracks the prices of a "basket" containing around 300 commonly purchased goods and services.</li>
@@ -2256,7 +2256,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Base Years and Calculating Rates</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Base Years and Calculating Rates</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>To track the index over time, a specific year is chosen as the "base year" and its index value is set to exactly 100. For example, the current base year for the CPI is 2005.</li>
                   <li>The rate of inflation is simply the percentage change in the price index from one year to another.</li>
@@ -2335,7 +2335,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p className="font-semibold text-white">Solution (a):</p>
+                  <p className="font-semibold text-foreground">Solution (a):</p>
                   <p className="mb-2">Overall Percentage Change:</p>
                   <ul className="list-disc list-inside ml-4 space-y-2">
                     <li><strong>Find the multipliers:</strong> 1.054, 1.121, and 0.965.</li>
@@ -2348,7 +2348,7 @@ export const higherAppsData: Section[] = [
                   </ul>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-white">Solution (b):</p>
+                  <p className="font-semibold text-foreground">Solution (b):</p>
                   <p className="mb-2"><strong>Working Backwards:</strong> Because we know the 2024 price and the overall multiplier connecting the two years, we can divide to find the 2021 price.</p>
                   <div className="ml-4">
                     <InlineMath math="2021 \text{ Bill} = \text{\pounds}1350 \div 1.14018... = \text{\pounds}1,184.02" />.
@@ -2364,14 +2364,14 @@ export const higherAppsData: Section[] = [
         title: "Pension Savings",
         videoUrl: "https://www.youtube.com/embed/KD4jJ8ACp28",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A pension is a long-term savings plan designed to provide a person with a regular income during their retirement, when they are no longer working.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Types of Pensions</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Types of Pensions</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>State Pension:</strong> A regular payment from the government. To receive this, an individual must have paid sufficient National Insurance contributions over their working life.</li>
                   <li><strong>Workplace / Private Pensions:</strong> These act very much like standard savings accounts. A person pays a percentage of their salary into the fund each month, and often, their employer will also pay an additional percentage into the same fund. The total fund earns compound interest over time until retirement.</li>
@@ -2392,7 +2392,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Retirement Drawdown (Living Costs)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Retirement Drawdown (Living Costs)</h4>
                 <p>Financial planners use spreadsheets to estimate if a person's pension pot will be large enough to last their entire retirement.</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                   <li>This involves a "drawdown" calculation: tracking a large starting balance that earns interest, whilst simultaneously subtracting regular withdrawals to cover monthly living costs.</li>
@@ -2415,7 +2415,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p className="font-semibold text-white">Calculate the total monthly deposit:</p>
+                  <p className="font-semibold text-foreground">Calculate the total monthly deposit:</p>
                   <ul className="list-disc list-inside ml-4 space-y-1 mt-1">
                     <li>Gross monthly pay: &pound;36,000 &divide; 12 = &pound;3,000.</li>
                     <li>Greg's contribution: 0.05 &times; &pound;3,000 = &pound;150.</li>
@@ -2424,7 +2424,7 @@ export const higherAppsData: Section[] = [
                   </ul>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-white">Track the balance chronologically (Method 1):</p>
+                  <p className="font-semibold text-foreground">Track the balance chronologically (Method 1):</p>
                   <ul className="list-none space-y-2 ml-4 mt-1">
                     <li><strong>Month 1 Deposit:</strong> &pound;360.</li>
                     <li><strong>Month 1 Interest:</strong> <InlineMath math="\text{\pounds}360 \times 1.004 = \text{\pounds}361.44" />.</li>
@@ -2451,19 +2451,19 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p className="font-semibold text-white">Solution (a):</p>
+                  <p className="font-semibold text-foreground">Solution (a):</p>
                   <ul className="list-disc list-inside ml-4 space-y-2 mt-1">
                     <li><strong>Add the bonus:</strong> <InlineMath math="\text{\pounds}300 + (0.25 \times \text{\pounds}300) = \text{\pounds}300 + \text{\pounds}75 = \text{\pounds}375" />.</li>
                     <li><strong>Add the interest:</strong> <InlineMath math="\text{\pounds}375 \times 1.005 = \text{\pounds}376.88" /> (rounded from &pound;376.875).</li>
                   </ul>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-white">Solution (b):</p>
+                  <p className="font-semibold text-foreground">Solution (b):</p>
                   <ul className="list-disc list-inside ml-4 space-y-2 mt-1">
                     <li><strong>Calculate the 25% penalty on the total balance:</strong> <InlineMath math="0.25 \times \text{\pounds}376.88 = \text{\pounds}94.22" />.</li>
                     <li><strong>Subtract the penalty:</strong> <InlineMath math="\text{\pounds}376.88 - \text{\pounds}94.22 = \text{\pounds}282.66" />.</li>
                   </ul>
-                  <p className="mt-2 text-slate-400 italic">(Notice that because the 25% penalty is taken from the larger, post-bonus balance, Nina gets back less than her original &pound;300 deposit!)</p>
+                  <p className="mt-2 text-muted-foreground italic">(Notice that because the 25% penalty is taken from the larger, post-bonus balance, Nina gets back less than her original &pound;300 deposit!)</p>
                 </div>
               </div>
             )
@@ -2483,7 +2483,7 @@ export const higherAppsData: Section[] = [
                 <p>We must carefully step through the timeline, subtracting the living costs <em>before</em> calculating the interest. The multiplier is 1.002.</p>
                 <div className="space-y-3 ml-4">
                   <div>
-                    <p className="font-semibold text-white">Month 1:</p>
+                    <p className="font-semibold text-foreground">Month 1:</p>
                     <ul className="list-none space-y-1 ml-4 mt-1">
                       <li>Start balance: &pound;240,000.</li>
                       <li>Subtract living costs: <InlineMath math="\text{\pounds}240,000 - \text{\pounds}1,450 = \text{\pounds}238,550" />.</li>
@@ -2491,7 +2491,7 @@ export const higherAppsData: Section[] = [
                     </ul>
                   </div>
                   <div className="mt-3">
-                    <p className="font-semibold text-white">Month 2:</p>
+                    <p className="font-semibold text-foreground">Month 2:</p>
                     <ul className="list-none space-y-1 ml-4 mt-1">
                       <li>Subtract living costs: <InlineMath math="\text{\pounds}239,027.10 - \text{\pounds}1,450 = \text{\pounds}237,577.10" />.</li>
                       <li>Add interest: <InlineMath math="\text{\pounds}237,577.10 \times 1.002 = \text{\pounds}238,052.25" />.</li>
@@ -2508,14 +2508,14 @@ export const higherAppsData: Section[] = [
         title: "Insurance",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Insurance products provide a form of financial protection against unexpected costs. By paying a fee called a premium, you transfer the financial risk of a specific event (like a car crash or a broken phone) to an insurance company, who will cover the loss if it occurs.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Core Terminology</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Core Terminology</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Premium:</strong> The money you pay to the insurer, either as a one-off purchase or in regular monthly instalments.</li>
                   <li><strong>Claim:</strong> A formal request to the insurance company asking them to pay for a loss.</li>
@@ -2538,7 +2538,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The Impact of Making a Claim</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. The Impact of Making a Claim</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>If you make a claim, the insurance company will view you as a higher risk individual. As a result, they will usually increase your future premiums for subsequent years.</li>
                   <li>You may also lose any accumulated no-claims bonuses (a reward discount given for every year you do not make a claim).</li>
@@ -2567,7 +2567,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-4">
                 <p>If Liam claims, he must pay the &pound;150 excess, and the insurance will pay the remaining &pound;35.</p>
                 <p>If he doesn't claim, he pays the full &pound;185. However, claiming will likely increase his future premiums and cost him his no-claims bonus.</p>
-                <div className="bg-slate-800 p-4 rounded-lg">
+                <div className="bg-muted p-4 rounded-lg">
                   <p className="font-semibold text-emerald-300">Conclusion:</p>
                   <p className="mt-1">Because the financial benefit of the claim is so small (<InlineMath math="\text{\pounds}185 - \text{\pounds}150 = \text{\pounds}35" />), Liam should pay the repair shop directly. The &pound;35 saved by claiming is likely to be wiped out by the increase in his future insurance premiums.</p>
                 </div>
@@ -2581,24 +2581,24 @@ export const higherAppsData: Section[] = [
                 <p><strong>Example 2: Comparing Policies (Exam Style)</strong></p>
                 <p>Esme needs new building insurance. She is choosing between the following two options:</p>
                 <div className="overflow-x-auto mt-4 mb-4">
-                  <table className="min-w-full bg-slate-800 border border-slate-700 text-sm">
+                  <table className="min-w-full bg-muted border border-muted text-sm">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300"></th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Cost per year (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-slate-700 text-left text-slate-300">Total excess (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground"></th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Cost per year (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Total excess (&pound;)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300 font-semibold">Option A</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">216.94</td>
-                        <td className="px-4 py-2 border-b border-slate-700 text-slate-300">350</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground font-semibold">Option A</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">216.94</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground">350</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2 text-slate-300 font-semibold">Option B</td>
-                        <td className="px-4 py-2 text-slate-300">281.95</td>
-                        <td className="px-4 py-2 text-slate-300">100</td>
+                        <td className="px-4 py-2 text-foreground font-semibold">Option B</td>
+                        <td className="px-4 py-2 text-foreground">281.95</td>
+                        <td className="px-4 py-2 text-foreground">100</td>
                       </tr>
                     </tbody>
                   </table>
@@ -2624,7 +2624,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <p>Deirdre might choose not to claim because making a claim would likely increase her future premiums or cause her to lose her no-claims bonus.</p>
-                <p className="text-slate-400 italic">(Note: Stating "she only saves &pound;15 after paying the excess" would also be a valid mathematical reason!)</p>
+                <p className="text-muted-foreground italic">(Note: Stating "she only saves &pound;15 after paying the excess" would also be a valid mathematical reason!)</p>
               </div>
             )
           }
@@ -2641,7 +2641,7 @@ export const higherAppsData: Section[] = [
         title: "Classifying Data",
         videoUrl: "", // Replace when available
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Before analysing any data, it is crucial to understand exactly what type of data you are working with, as this determines which statistical tests and diagrams are appropriate to use.
             </p>
@@ -2651,7 +2651,7 @@ export const higherAppsData: Section[] = [
             
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Numerical Data (Quantitative)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Numerical Data (Quantitative)</h4>
                 <p className="mb-2">Data that represents quantities or measurements.</p>
                 <ul className="list-disc list-inside ml-4 space-y-2">
                   <li>
@@ -2664,7 +2664,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Categorical Data (Qualitative)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Categorical Data (Qualitative)</h4>
                 <p className="mb-2">Data that is grouped into descriptive categories.</p>
                 <ul className="list-disc list-inside ml-4 space-y-2">
                   <li>
@@ -2761,13 +2761,13 @@ export const higherAppsData: Section[] = [
         title: "Samples, Populations & Outliers",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               When gathering and analysing data, it is important to understand where the data comes from and whether it paints an accurate picture of what you are trying to study.
             </p>
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Populations vs Samples</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Populations vs Samples</h4>
                 <p className="mb-2">
                   <strong>Population:</strong> The entire, complete group of people or items that you want to draw conclusions about (e.g., Every eligible voter in the UK).
                 </p>
@@ -2777,7 +2777,7 @@ export const higherAppsData: Section[] = [
               </div>
               
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Bias and Representative Samples</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Bias and Representative Samples</h4>
                 <p className="mb-2">
                   A sample must be <strong>representative</strong>, meaning it accurately reflects the diverse characteristics of the whole population. If a data collection method unfairly favours a certain group, it introduces <strong>bias</strong>.
                 </p>
@@ -2790,7 +2790,7 @@ export const higherAppsData: Section[] = [
               </div>
               
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Outliers</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Outliers</h4>
                 <p className="mb-2">
                   <strong>Outliers</strong> are extreme values that sit far outside the general pattern of the rest of the data.
                 </p>
@@ -2867,13 +2867,13 @@ export const higherAppsData: Section[] = [
         title: "Statistical Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Once data has been classified and gathered, we use statistical diagrams to visualise it. The type of diagram you choose depends entirely on the type of data (categorical or numerical) you are analysing.
             </p>
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Diagrams for Categorical Data</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Diagrams for Categorical Data</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     <strong className="text-blue-300">Tables (Frequency &amp; Contingency):</strong> Frequency tables show the totals for a single category. Contingency (two-way) tables show how two categorical variables interact. Tables can display raw counts or proportions/percentages.
@@ -2888,14 +2888,14 @@ export const higherAppsData: Section[] = [
               </div>
               
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Diagrams for Numerical Data</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Diagrams for Numerical Data</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     <strong className="text-emerald-300">Histograms:</strong> Used to visualise the shape and distribution of a single continuous numerical variable (e.g., to see if data is normally distributed or skewed).
                   </li>
                   <li>
                     <strong className="text-emerald-300">Boxplots:</strong> Provide a visual representation of the five-figure summary.
-                    <ul className="list-[circle] list-inside ml-8 mt-1 text-slate-400">
+                    <ul className="list-[circle] list-inside ml-8 mt-1 text-muted-foreground">
                       <li>The line in the middle of the box is the median.</li>
                       <li>The width of the box is the interquartile range (IQR).</li>
                       <li>Circles or asterisks outside the whiskers represent outliers.</li>
@@ -2904,7 +2904,7 @@ export const higherAppsData: Section[] = [
                   </li>
                   <li>
                     <strong className="text-emerald-300">Scatterplots:</strong> Used to present bivariate data (data with two related numerical variables) to visualise relationships and correlations.
-                    <ul className="list-[circle] list-inside ml-8 mt-1 text-slate-400">
+                    <ul className="list-[circle] list-inside ml-8 mt-1 text-muted-foreground">
                       <li>When plotting "Y on X", the independent variable goes on the x-axis, and the dependent variable goes on the y-axis.</li>
                     </ul>
                   </li>
@@ -2932,7 +2932,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p>A <strong>pie chart</strong>.</p>
-                <p className="text-slate-400">(Pie charts are the best diagram for displaying proportions of categorical data).</p>
+                <p className="text-muted-foreground">(Pie charts are the best diagram for displaying proportions of categorical data).</p>
               </div>
             )
           },
@@ -2942,7 +2942,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 2: Comparing Boxplots (Numerical)</strong></p>
                 <p>A manager at a call centre compares the time taken (in seconds) for employees to answer the phone at two different offices, Office A and Office B.</p>
-                <ul className="list-none space-y-1 ml-4 border-l-2 border-slate-700 pl-4 my-2">
+                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2">
                   <li>Office A has a median answer time of 45 seconds and an interquartile range (IQR) of 12 seconds.</li>
                   <li>Office B has a median answer time of 38 seconds and an interquartile range (IQR) of 20 seconds.</li>
                 </ul>
@@ -3003,7 +3003,7 @@ export const higherAppsData: Section[] = [
         title: "Distributions",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               When working with continuous numerical data, plotting a histogram allows you to see the <strong>distribution</strong> (the overall shape and spread) of the data. Identifying the correct distribution is vital because it dictates which descriptive statistics you are allowed to use.
             </p>
@@ -3013,7 +3013,7 @@ export const higherAppsData: Section[] = [
             
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Normal Distribution (Symmetrical)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Normal Distribution (Symmetrical)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The histogram has a classic, symmetrical "bell shape".</li>
                   <li>Most of the data clusters in the middle, with fewer values at the extreme high and low ends.</li>
@@ -3022,7 +3022,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Positively Skewed (Skewed to the Right)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Positively Skewed (Skewed to the Right)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The bulk of the data is bunched up on the left side of the histogram, with a long "tail" stretching out to the right.</li>
                   <li>This happens when there are a few unusually high outliers pulling the data upwards.</li>
@@ -3031,7 +3031,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Negatively Skewed (Skewed to the Left)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Negatively Skewed (Skewed to the Left)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The bulk of the data is bunched up on the right side of the histogram, with a long "tail" stretching out to the left.</li>
                   <li>This happens when there are a few unusually low outliers pulling the data downwards.</li>
@@ -3040,7 +3040,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Uniform Distribution</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Uniform Distribution</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The data is spread evenly across the entire range.</li>
                   <li>A histogram of a uniform distribution looks relatively flat, with all the bars being roughly the exact same height.</li>
@@ -3114,7 +3114,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p>A <strong>uniform distribution</strong>.</p>
-                <p className="text-slate-400">(Since every number from 1 to 6 has an equal chance of landing, the bars for each number will be roughly the same height).</p>
+                <p className="text-muted-foreground">(Since every number from 1 to 6 has an equal chance of landing, the bars for each number will be roughly the same height).</p>
               </div>
             )
           }
@@ -3125,14 +3125,14 @@ export const higherAppsData: Section[] = [
         title: "Descriptive Statistics",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Descriptive statistics are used to summarise and describe the main features of a dataset. The statistics you use depend on whether your data is categorical or numerical.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Categorical Data (Sample Size &amp; Proportions)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Categorical Data (Sample Size &amp; Proportions)</h4>
                 <p className="mb-2">
                   When analysing categorical data, we look at the <strong>sample size</strong> (the total number of observations) and <strong>proportions</strong> (the number of specific responses divided by the sample size).
                 </p>
@@ -3142,7 +3142,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Numerical Data (Location &amp; Spread)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Numerical Data (Location &amp; Spread)</h4>
                 <p className="mb-2">
                   To summarise numerical data, you must calculate one measure of location (an average) and one measure of dispersion (how spread out or consistent the data is). These measures must <strong>always</strong> be paired correctly based on the distribution of the data:
                 </p>
@@ -3157,29 +3157,29 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Making Valid Comparisons</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Making Valid Comparisons</h4>
                 <p className="mb-2">
                   A massive part of the Higher Applications course is comparing two datasets. To gain full marks, you must always write two separate sentences in the context of the question:
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     <strong className="text-purple-300">Sentence 1 (Location):</strong> Compare the averages using the word "average", state which is higher/lower, and explicitly state the numbers. <br/>
-                    <em className="text-slate-400 text-sm ml-4">(e.g., "On average, Group A was faster because its median (12s) is lower than Group B's (15s).")</em>
+                    <em className="text-muted-foreground text-sm ml-4">(e.g., "On average, Group A was faster because its median (12s) is lower than Group B's (15s).")</em>
                   </li>
                   <li>
                     <strong className="text-purple-300">Sentence 2 (Spread):</strong> Compare the spread using the word "consistent" or "varied", and explicitly state the numbers. <br/>
-                    <em className="text-slate-400 text-sm ml-4">(e.g., "Group A's times were more consistent because its IQR (2s) is smaller than Group B's (5s).")</em>
+                    <em className="text-muted-foreground text-sm ml-4">(e.g., "Group A's times were more consistent because its IQR (2s) is smaller than Group B's (5s).")</em>
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. R Studio Commands</h4>
-                <ul className="space-y-2 mt-2 font-mono text-sm ml-4 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50">
-                  <li><span className="text-blue-400">mean(X)</span> / <span className="text-blue-400">sd(X)</span> <span className="text-slate-400">- calculates the mean and standard deviation.</span></li>
-                  <li><span className="text-blue-400">median(X)</span> / <span className="text-blue-400">IQR(X)</span> <span className="text-slate-400">- calculates the median and interquartile range.</span></li>
-                  <li><span className="text-blue-400">summary(X)</span> <span className="text-slate-400">- provides the 5-figure summary (min, Q1, median, mean, Q3, max).</span></li>
-                  <li><span className="text-blue-400">prop.table(table(X))</span> <span className="text-slate-400">- calculates the proportions of a categorical variable.</span></li>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. R Studio Commands</h4>
+                <ul className="space-y-2 mt-2 font-mono text-sm ml-4 bg-card/50 p-4 rounded-lg border border-muted/50">
+                  <li><span className="text-blue-400">mean(X)</span> / <span className="text-blue-400">sd(X)</span> <span className="text-muted-foreground">- calculates the mean and standard deviation.</span></li>
+                  <li><span className="text-blue-400">median(X)</span> / <span className="text-blue-400">IQR(X)</span> <span className="text-muted-foreground">- calculates the median and interquartile range.</span></li>
+                  <li><span className="text-blue-400">summary(X)</span> <span className="text-muted-foreground">- provides the 5-figure summary (min, Q1, median, mean, Q3, max).</span></li>
+                  <li><span className="text-blue-400">prop.table(table(X))</span> <span className="text-muted-foreground">- calculates the proportions of a categorical variable.</span></li>
                 </ul>
               </div>
             </div>
@@ -3192,7 +3192,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 1: Categorical Proportions</strong></p>
                 <p>A cinema surveys its customers to find out their favourite movie genre.</p>
-                <ul className="list-disc list-inside ml-4 space-y-1 text-slate-300">
+                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
                   <li>Out of 400 teenagers surveyed, 120 chose 'Horror'.</li>
                   <li>Out of 650 adults surveyed, 143 chose 'Horror'.</li>
                 </ul>
@@ -3204,8 +3204,8 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p><strong>Proportions:</strong></p>
                   <ul className="list-none space-y-1 mt-2">
-                    <li><span className="text-slate-400">Proportion of teenagers:</span> 120 ÷ 400 = <strong>0.30</strong> (or 30%)</li>
-                    <li><span className="text-slate-400">Proportion of adults:</span> 143 ÷ 650 = <strong>0.22</strong> (or 22%)</li>
+                    <li><span className="text-muted-foreground">Proportion of teenagers:</span> 120 ÷ 400 = <strong>0.30</strong> (or 30%)</li>
+                    <li><span className="text-muted-foreground">Proportion of adults:</span> 143 ÷ 650 = <strong>0.22</strong> (or 22%)</li>
                   </ul>
                 </div>
                 <div>
@@ -3221,7 +3221,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 2: Selecting the Correct Measures</strong></p>
                 <p>A researcher is analysing two datasets using statistical software.</p>
-                <ul className="list-none space-y-1 ml-4 border-l-2 border-slate-700 pl-4 my-2 text-slate-300">
+                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2 text-foreground">
                   <li>Dataset A (Reaction Times) produces a perfectly symmetrical histogram.</li>
                   <li>Dataset B (Annual Incomes) produces a histogram that is heavily skewed to the right.</li>
                 </ul>
@@ -3241,7 +3241,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 3: Making Valid Comparisons (Contextual)</strong></p>
                 <p>A logistics company wants to compare the delivery times (in minutes) of two of its drivers, David and Sarah.</p>
-                <ul className="list-none space-y-1 ml-4 border-l-2 border-slate-700 pl-4 my-2 text-slate-300">
+                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2 text-foreground">
                   <li>David has a mean delivery time of 42 minutes and a standard deviation of 8.5 minutes.</li>
                   <li>Sarah has a mean delivery time of 38 minutes and a standard deviation of 3.2 minutes.</li>
                 </ul>
@@ -3283,14 +3283,14 @@ export const higherAppsData: Section[] = [
         title: "Correlation",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               <strong>Correlation</strong> is used when we want to explore the relationship between two numerical variables (bivariate data). At this stage, no variables are being manipulated; we are simply observing how they interact.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Visualising the Relationship (Scatterplots)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Visualising the Relationship (Scatterplots)</h4>
                 <p className="mb-2">
                   A scatterplot is the most useful graphical display for determining if a relationship exists between two numerical variables.
                 </p>
@@ -3302,7 +3302,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Pearson's Correlation Coefficient (r)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Pearson's Correlation Coefficient (r)</h4>
                 <p className="mb-2">
                   We use the statistical software code <code className="text-blue-300 font-mono">cor.test(X,Y)</code> to calculate the correlation coefficient, often denoted as <strong>r</strong>. This calculation gives us a number exactly between -1 and 1, which tells us the strength and direction of the linear relationship.
                 </p>
@@ -3320,7 +3320,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Correlation vs. Causation (The Exam Trap)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Correlation vs. Causation (The Exam Trap)</h4>
                 <p className="mb-2">
                   This is one of the most frequently tested concepts in the Higher Applications course.
                 </p>
@@ -3349,7 +3349,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-2">
                 <p>There is a <strong>strong negative correlation</strong> between the number of hours spent training and the time taken to run a 100-metre sprint.</p>
-                <p className="text-slate-400">(As training hours increase, sprint times decrease).</p>
+                <p className="text-muted-foreground">(As training hours increase, sprint times decrease).</p>
               </div>
             )
           },
@@ -3375,7 +3375,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 3: Extracting r from Statistical Software</strong></p>
                 <p>A researcher is investigating the relationship between the number of hours a student spends playing video games per week and their score on a concentration test. They use statistical software and generate the following output:</p>
-                <div className="bg-slate-900/80 p-4 rounded-md font-mono text-sm overflow-x-auto border border-slate-700/50 my-3">
+                <div className="bg-card/80 p-4 rounded-md font-mono text-sm overflow-x-auto border border-muted/50 my-3">
                   <p>Pearson's product-moment correlation</p>
                   <p className="mt-2">data: Gaming.Hours and Test.Score</p>
                   <p>t = -4.102, df = 48, p-value = 0.000155</p>
@@ -3395,8 +3395,8 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p><strong>(a)</strong> <strong className="text-white">-0.5082</strong></p>
-                  <p className="text-slate-400 text-sm mt-1">(This must be stated explicitly as a number, pulled from the 'cor' value at the bottom of the software output).</p>
+                  <p><strong>(a)</strong> <strong className="text-foreground">-0.5082</strong></p>
+                  <p className="text-muted-foreground text-sm mt-1">(This must be stated explicitly as a number, pulled from the 'cor' value at the bottom of the software output).</p>
                 </div>
                 <div>
                   <p><strong>(b)</strong> There is a <strong>moderate negative correlation</strong> between the number of hours spent gaming and the concentration test score.</p>
@@ -3411,14 +3411,14 @@ export const higherAppsData: Section[] = [
         title: "Linear Regression",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Linear regression is a statistical method used to model the relationship between two numerical variables. We use it to draw a "line of best fit" through a scatterplot, which allows us to make predictions.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Equation of the Regression Line</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Equation of the Regression Line</h4>
                 <p className="mb-2">
                   The equation of a straight line is typically written as <code className="text-blue-300 font-mono">y = mx + c</code> or <code className="text-blue-300 font-mono">y = c + mx</code>, where <code className="text-blue-300 font-mono">m</code> is the slope (gradient) and <code className="text-blue-300 font-mono">c</code> is the y-intercept.
                 </p>
@@ -3433,18 +3433,18 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Interpreting the Slope and Intercept (The Exam Rules)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Interpreting the Slope and Intercept (The Exam Rules)</h4>
                 <p className="mb-2">
                   When asked to interpret these parameters, you must relate them directly to the context of the data:
                 </p>
                 <div className="space-y-3 mt-2">
-                  <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-700/50">
+                  <div className="bg-card/50 p-4 rounded-lg border border-muted/50">
                     <p><strong className="text-purple-300">Slope:</strong></p>
-                    <p className="font-mono text-sm mt-1 text-slate-300">"For every additional 1 [unit] of [Independent Variable], the [Dependent Variable] increases/decreases by [Slope value]"</p>
+                    <p className="font-mono text-sm mt-1 text-foreground">"For every additional 1 [unit] of [Independent Variable], the [Dependent Variable] increases/decreases by [Slope value]"</p>
                   </div>
-                  <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-700/50">
+                  <div className="bg-card/50 p-4 rounded-lg border border-muted/50">
                     <p><strong className="text-purple-300">Intercept:</strong></p>
-                    <p className="font-mono text-sm mt-1 text-slate-300">"If the [Independent Variable] is 0, the estimated [Dependent Variable] would be [Intercept value]"</p>
+                    <p className="font-mono text-sm mt-1 text-foreground">"If the [Independent Variable] is 0, the estimated [Dependent Variable] would be [Intercept value]"</p>
                   </div>
                 </div>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
@@ -3456,7 +3456,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Making Predictions &amp; Assessing Reliability</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Making Predictions &amp; Assessing Reliability</h4>
                 <p className="mb-2">
                   You can make predictions either by substituting an x-value into your equation, or by using the R Studio predict command: <code className="text-blue-300 font-mono">predict(lm(Y~X), newdata=data.frame(X=C), interval="pred")</code>.
                 </p>
@@ -3480,7 +3480,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 1: Extracting the Equation and Interpreting</strong></p>
                 <p>A researcher is investigating the relationship between the number of hours of sunshine in a day and the number of ice creams sold at a local kiosk. They use statistical software and generate the following output:</p>
-                <div className="bg-slate-900/80 p-4 rounded-md font-mono text-sm overflow-x-auto border border-slate-700/50 my-3">
+                <div className="bg-card/80 p-4 rounded-md font-mono text-sm overflow-x-auto border border-muted/50 my-3">
                   <p>Call:</p>
                   <p>lm(formula = Sales ~ Sunshine)</p>
                   <p className="mt-2">Coefficients:</p>
@@ -3515,7 +3515,7 @@ export const higherAppsData: Section[] = [
                 <p><strong>Example 2: R Studio Predictions and Interpolation</strong></p>
                 <p>A car manufacturer models the relationship between the weight of a car (in kg) and its fuel efficiency (in miles per gallon, mpg). The data used to build the model ranges from car weights of 900 kg to 1800 kg. There is a strong negative correlation between the variables.</p>
                 <p>The manufacturer uses R Studio to predict the fuel efficiency of a car that weighs 1400 kg:</p>
-                <div className="bg-slate-900/80 p-4 rounded-md font-mono text-sm overflow-x-auto border border-slate-700/50 my-3">
+                <div className="bg-card/80 p-4 rounded-md font-mono text-sm overflow-x-auto border border-muted/50 my-3">
                   <p>{`> predict(lm(Efficiency~Weight),newdata=data.frame(Weight=1400),interval="pred")`}</p>
                   <p>       fit      lwr      upr</p>
                   <p>1 45.32104 38.11542 52.52666</p>
@@ -3530,7 +3530,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-4">
                 <div>
                   <p><strong>(a)</strong> <strong>45.3 mpg</strong></p>
-                  <p className="text-slate-400 text-sm mt-1">(The value is taken directly from the 'fit' column).</p>
+                  <p className="text-muted-foreground text-sm mt-1">(The value is taken directly from the 'fit' column).</p>
                 </div>
                 <div>
                   <p><strong>(b)</strong> The prediction is <strong>reliable</strong> because 1400 kg is within the range of the data used to make the model (900 kg to 1800 kg). It is an <strong>interpolation</strong> based on a strong linear model.</p>
@@ -3544,7 +3544,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 3: Extrapolation and Impossible Intercepts</strong></p>
                 <p>A fitness instructor tracks the distance their clients run on a treadmill (in km) against the number of calories burned. The running distances recorded range from 2 km to 10 km. The equation of the regression line is found to be:</p>
-                <div className="bg-slate-900/80 p-4 rounded-md font-mono text-sm border border-slate-700/50 my-3 text-center">
+                <div className="bg-card/80 p-4 rounded-md font-mono text-sm border border-muted/50 my-3 text-center">
                   <p>Calories = -35.2 + 65.5 &times; Distance</p>
                 </div>
                 <ul className="list-none space-y-1 mt-2">
@@ -3573,14 +3573,14 @@ export const higherAppsData: Section[] = [
         title: "Hypothesis Testing & Errors",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Hypothesis testing is a statistical method used to draw conclusions about a whole population based on a smaller sample of data. It removes subjective guesswork and allows us to make decisions free from bias.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Formulating Hypotheses</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Formulating Hypotheses</h4>
                 <p className="mb-2">Every statistical test starts with two opposing statements:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -3593,7 +3593,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The p-value and Making a Decision</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The p-value and Making a Decision</h4>
                 <p className="mb-2">
                   When you run a test in statistical software, it generates a <strong>p-value</strong>. This is the probability of getting data as extreme as the data you actually observed, if the null hypothesis is true. We test this against a standard 5% significance level (a 0.05 threshold):
                 </p>
@@ -3614,22 +3614,22 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Statistical Errors</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Statistical Errors</h4>
                 <p className="mb-2">
                   Because hypothesis testing is based on probabilities, we will sometimes reach the wrong conclusion. At the 5% significance level, <strong>if the null hypothesis is actually true</strong>, we will wrongly reject it about 1 time in 20. There are two ways a test can be wrong:
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-purple-300">Type I Error (False Positive):</strong> Rejecting the null hypothesis when it is actually true. <span className="text-slate-400">(e.g., Concluding a drug works when it actually does nothing).</span>
+                    <strong className="text-purple-300">Type I Error (False Positive):</strong> Rejecting the null hypothesis when it is actually true. <span className="text-muted-foreground">(e.g., Concluding a drug works when it actually does nothing).</span>
                   </li>
                   <li>
-                    <strong className="text-purple-300">Type II Error (False Negative):</strong> Failing to reject the null hypothesis when it is actually false. <span className="text-slate-400">(e.g., Concluding a drug does nothing, when in reality it does work).</span>
+                    <strong className="text-purple-300">Type II Error (False Negative):</strong> Failing to reject the null hypothesis when it is actually false. <span className="text-muted-foreground">(e.g., Concluding a drug does nothing, when in reality it does work).</span>
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Confounding Variables</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Confounding Variables</h4>
                 <p className="mb-2">
                   Sometimes a test shows a significant result, but the two variables are not actually causing the change in each other. A <strong>confounding variable</strong> is an outside, hidden influence that is changing both variables simultaneously, potentially leading to incorrect conclusions.
                 </p>
@@ -3650,7 +3650,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>H<sub>0</sub>:</strong> There is no difference in the mean sprint times of athletes wearing the new shoes compared to their normal shoes.</p>
                 <p><strong>H<sub>1</sub>:</strong> There is a difference in the mean sprint times of athletes wearing the new shoes compared to their normal shoes.</p>
-                <p className="text-slate-400 text-sm mt-1">(Note: Always include the context and specify the measure, such as 'mean', to get the mark).</p>
+                <p className="text-muted-foreground text-sm mt-1">(Note: Always include the context and specify the measure, such as 'mean', to get the mark).</p>
               </div>
             )
           },
@@ -3716,14 +3716,14 @@ export const higherAppsData: Section[] = [
         title: "Confidence Intervals & P Values",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               When we take a sample, the mean or proportion we calculate is only an estimate of the true population. Statistical software provides specific values to help us understand how reliable this estimate is, and whether we can make firm conclusions.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Understanding the p-value</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Understanding the p-value</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     A <strong>p-value</strong> is the probability of getting data as extreme as the data you actually observed, assuming that the null hypothesis is true.
@@ -3738,7 +3738,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Confidence Intervals (CIs)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Confidence Intervals (CIs)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     Because it is usually impossible to test an entire population, we cannot know the exact population mean or proportion. Instead, software generates a confidence interval—a range of plausible values for the true population parameter. If the study were repeated 100 times, about 95 of the intervals produced this way would contain the true value. That is what the "95%" refers to: how reliable the method is, not the probability that this particular interval is right.
@@ -3747,13 +3747,13 @@ export const higherAppsData: Section[] = [
                     Wider confidence intervals indicate more uncertainty in the data, whereas narrower confidence intervals indicate less uncertainty.
                   </li>
                 </ul>
-                <p className="text-slate-400 text-sm mt-3">
+                <p className="text-muted-foreground text-sm mt-3">
                   You may see some books say there is a 95% <em>probability</em> that the true value lies in the interval. That is a common shorthand, but strictly the true value is fixed—it is the interval that changes from sample to sample. Either phrasing has been accepted in the exam.
                 </p>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The "100 Times" Rule (Crucial Exam Definition)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. The "100 Times" Rule (Crucial Exam Definition)</h4>
                 <p className="mb-2">
                   If an exam question asks you to interpret what a 95% confidence interval <em>literally</em> means, you must memorise and use this exact phrasing:
                 </p>
@@ -3765,7 +3765,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Confidence Intervals Containing Zero</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Confidence Intervals Containing Zero</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     When testing the difference between two groups (like in a t-test or z-test), the null hypothesis usually assumes the difference between them is exactly zero.
@@ -3849,14 +3849,14 @@ export const higherAppsData: Section[] = [
         title: "Correlation Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A correlation test is used to explore whether a statistically significant linear relationship exists between two numerical variables. Remember, even if a strong relationship is found, no variables are being directly manipulated, so we cannot establish cause and effect (correlation does not imply causation).
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Formulating Hypotheses for Correlation</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Formulating Hypotheses for Correlation</h4>
                 <p className="mb-2">For a correlation test, the hypotheses are always written in terms of a <strong>linear</strong> relationship. Pearson's coefficient only measures how close the points lie to a straight line, so the word "linear" matters:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -3869,7 +3869,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Performing the Test in R Studio</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Performing the Test in R Studio</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The code used to run this test is <code>cor.test(X, Y)</code>.</li>
                   <li>This command outputs three vital pieces of information that you must be able to extract and interpret: the <strong>p-value</strong>, the <strong>correlation coefficient (cor)</strong>, and the <strong>95 percent confidence interval</strong>.</li>
@@ -3877,7 +3877,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Interpreting the Output (The Exam Rules)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Interpreting the Output (The Exam Rules)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     <strong className="text-emerald-300">The p-value:</strong> Look at the p-value. If p &lt; 0.05, you <strong>reject</strong> the null hypothesis and conclude there is evidence of a linear relationship. If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis.
@@ -3887,7 +3887,7 @@ export const higherAppsData: Section[] = [
                   </li>
                   <li>
                     <strong className="text-emerald-300">The Confidence Interval:</strong> We can be 95% confident that the true population correlation lies between the two numbers given in the interval.
-                    <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-slate-400">
+                    <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-muted-foreground">
                       <li>If the interval <strong>contains zero</strong> (i.e., it goes from a negative number to a positive number), zero is a plausible value for the true correlation, so there is not enough evidence of a linear relationship. This is consistent with a decision to <strong>fail to reject</strong> the null hypothesis.</li>
                       <li>If the interval <strong>does not contain zero</strong>, it provides further statistical evidence that a relationship truly exists.</li>
                     </ul>
@@ -3904,7 +3904,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 1: Significant Relationship & Output Interpretation</strong></p>
                 <p>A researcher is investigating whether there is a relationship between the number of hours athletes spend practising a specific drill per week and their success rate (%) in matches. They run a correlation test in R Studio and get the following output:</p>
-                <div className="bg-slate-900 border border-slate-700 p-4 rounded-md font-mono text-xs text-slate-300 my-4">
+                <div className="bg-card border border-muted p-4 rounded-md font-mono text-xs text-foreground my-4">
                   <p>Pearson's product-moment correlation</p>
                   <p>data:  Practice.Hours and Success.Rate</p>
                   <p>t = 5.342, df = 45, p-value = 0.00000281</p>
@@ -3986,14 +3986,14 @@ export const higherAppsData: Section[] = [
         title: "T Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A <strong>t-test</strong> compares the <strong>means</strong> of numerical data from two groups, and asks whether the difference between them is big enough to be a real effect rather than chance. It is the test to reach for whenever the research question is about an <em>average</em>.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Paired or Independent?</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Paired or Independent?</h4>
                 <p className="mb-2">This is the only decision you have to make, and everything else follows from it. Ask: <em>did the same subjects produce both sets of numbers?</em></p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -4007,7 +4007,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Performing the Test in R Studio</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Performing the Test in R Studio</h4>
                 <p className="mb-2">Independent groups:</p>
                 <p><code className="text-blue-300 font-mono">t.test(X, Y)</code></p>
                 <p className="mb-2 mt-3">The same subjects measured twice:</p>
@@ -4018,7 +4018,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Check the Data First</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Check the Data First</h4>
                 <p>
                   A t-test assumes the data is roughly <strong>normally distributed</strong>. Before running one, look at a histogram or boxplot of each group and comment on the shape. With small samples this is often not clear-cut, and saying so is a perfectly good answer — what loses marks is not looking at all.
                 </p>
@@ -4028,7 +4028,7 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Writing the Hypotheses</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Writing the Hypotheses</h4>
                 <div className="mt-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg mb-4">
                   <p className="text-rose-200 font-semibold mb-1">Common Trap:</p>
                   <p className="text-rose-100/80">
@@ -4068,7 +4068,7 @@ export const higherAppsData: Section[] = [
                 <p><strong>(b) Independent.</strong> Two separate sets of phones, with nothing linking a particular Brand A phone to a particular Brand B phone. The unequal sample sizes, 25 and 31, are not a problem.</p>
                 <p><strong>(c) Paired.</strong> The same learners under two conditions.</p>
                 <p><strong>(d) Independent.</strong> Two separate firms, with no link between an individual delivery by one and an individual delivery by the other.</p>
-                <p className="text-slate-400 text-sm mt-2">The quick test: in (a) and (c) the two lists must be the same length, because every value has a partner. In (b) and (d) they need not be.</p>
+                <p className="text-muted-foreground text-sm mt-2">The quick test: in (a) and (c) the two lists must be the same length, because every value has a partner. In (b) and (d) they need not be.</p>
               </div>
             )
           },
@@ -4077,7 +4077,7 @@ export const higherAppsData: Section[] = [
             question: (
               <div className="space-y-2">
                 <p>A gym records the time, in minutes, that the same 60 members spend training in January and again in June. A paired t-test gives the following output:</p>
-                <pre className="bg-black/40 border border-white/10 rounded-lg p-3 text-xs text-slate-200 overflow-x-auto font-mono">{`	Paired t-test
+                <pre className="bg-black/40 border border-foreground/10 rounded-lg p-3 text-xs text-foreground overflow-x-auto font-mono">{`	Paired t-test
 
 data:  Train.Jan and Train.Jun
 t = 2.9143, df = 59, p-value = 0.005022
@@ -4119,7 +4119,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p><strong>(b)</strong> The two samples are separate groups of plants, so this is an independent t-test:</p>
                 <p><code className="text-blue-300 font-mono">t.test(Height.A, Height.B)</code></p>
                 <p><strong>(c)</strong> p = 0.214, which is greater than 0.05, so we <strong>fail to reject the null hypothesis</strong>. There is insufficient evidence of a difference in the mean height of tomato plants between the two greenhouses.</p>
-                <p className="text-slate-400 text-sm mt-2">Note the wording: we have <em>not</em> proved the heights are the same. Failing to find evidence of a difference is not the same as showing there is none.</p>
+                <p className="text-muted-foreground text-sm mt-2">Note the wording: we have <em>not</em> proved the heights are the same. Failing to find evidence of a difference is not the same as showing there is none.</p>
               </div>
             )
           }
@@ -4130,22 +4130,22 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Z Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               While t-tests are used to compare the means of numerical data, a z-test (specifically a 2-sample test for equality of proportions) is used to analyse categorical data to compare the proportions of two different groups.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Performing the Test in R Studio</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Performing the Test in R Studio</h4>
                 <p className="mb-2">In R Studio, the command used to perform this test is <code className="text-blue-300 font-mono">prop.test(x = c(a, b), n = c(n1, n2))</code>.</p>
                 <p>
-                  In this formula, <code className="text-slate-400 font-mono">x</code> represents the number of "successes" (the specific event of interest) for group A and group B, and <code className="text-slate-400 font-mono">n</code> represents the total number of observations (the sample size) for group A and group B.
+                  In this formula, <code className="text-muted-foreground font-mono">x</code> represents the number of "successes" (the specific event of interest) for group A and group B, and <code className="text-muted-foreground font-mono">n</code> represents the total number of observations (the sample size) for group A and group B.
                 </p>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Formulating Hypotheses for Z-Tests (The "Proportion" Trap)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Formulating Hypotheses for Z-Tests (The "Proportion" Trap)</h4>
                 <div className="mt-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg mb-4">
                   <p className="text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
                   <p className="text-rose-100/80">
@@ -4163,14 +4163,14 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Interpreting the Output</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Interpreting the Output</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
                     <strong className="text-emerald-300">The p-value:</strong> If p &lt; 0.05, you <strong>reject</strong> the null hypothesis (there is a statistically significant difference in the proportions). If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis (there is not enough evidence to suggest a difference).
                   </li>
                   <li>
                     <strong className="text-emerald-300">The Confidence Interval:</strong> This gives the 95% confidence interval for the true difference between the two proportions.
-                    <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-slate-400">
+                    <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-muted-foreground">
                       <li>If the interval <strong>contains zero</strong> (goes from a negative number to a positive number), zero is a plausible value for the difference, so there is not enough evidence of a difference between the proportions.</li>
                       <li>If the interval <strong>does not contain zero</strong>, it provides further evidence that a statistical difference between the proportions truly exists.</li>
                     </ul>
@@ -4187,7 +4187,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Example 1: Generating the R Studio Code</strong></p>
                 <p>A driving instructor wants to compare the first-time pass rates of pupils learning in a manual car versus an automatic car.</p>
-                <ul className="list-disc list-inside ml-4 space-y-1 text-slate-300">
+                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
                   <li>Out of 150 pupils who learned in a manual car, 82 passed first time.</li>
                   <li>Out of 120 pupils who learned in an automatic car, 78 passed first time.</li>
                 </ul>
@@ -4196,7 +4196,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             ),
             solution: (
               <div className="space-y-2">
-                <p><code className="bg-slate-900 border border-slate-700 px-2 py-1 rounded text-blue-300 font-mono">prop.test(x = c(82, 78), n = c(150, 120))</code></p>
+                <p><code className="bg-card border border-muted px-2 py-1 rounded text-blue-300 font-mono">prop.test(x = c(82, 78), n = c(150, 120))</code></p>
               </div>
             )
           },
@@ -4244,7 +4244,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Example 4: Interpreting a Z-Test (Rejecting H<sub>0</sub>)</strong></p>
                 <p>A local council wants to know if there is a difference in the adoption of smart energy meters between City X and City Y.</p>
-                <ul className="list-disc list-inside ml-4 space-y-1 text-slate-300">
+                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
                   <li>In City X, 312 out of 500 surveyed households have a smart meter.</li>
                   <li>In City Y, 245 out of 550 surveyed households have a smart meter.</li>
                 </ul>
@@ -4273,46 +4273,46 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Mixed Hypothesis Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               In the real world, and specifically in your final Qualifications Scotland exam and project, you will not always be told which statistical test to run. You must be able to analyse the research question and the type of data provided to choose the correct test yourself.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Decision Tree for Choosing a Test</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Decision Tree for Choosing a Test</h4>
                 <p className="mb-2">To select the correct test, ask yourself what type of data you are analysing and what you are trying to find out:</p>
                 <div className="space-y-4 mt-4">
-                  <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
-                    <p className="font-medium text-white">Are you comparing two proportions or percentages?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-slate-300">
+                  <div className="p-4 bg-muted rounded-lg border border-muted">
+                    <p className="font-medium text-foreground">Are you comparing two proportions or percentages?</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
                       <li><strong>Data Type:</strong> Categorical (e.g., Pass/Fail, Yes/No).</li>
-                      <li><strong>Test to use:</strong> Z-test <span className="text-slate-400">(2-sample test for equality of proportions)</span>.</li>
+                      <li><strong>Test to use:</strong> Z-test <span className="text-muted-foreground">(2-sample test for equality of proportions)</span>.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Proportion".</li>
                     </ul>
                   </div>
 
-                  <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
-                    <p className="font-medium text-white">Are you looking for a relationship between two numerical variables?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-slate-300">
+                  <div className="p-4 bg-muted rounded-lg border border-muted">
+                    <p className="font-medium text-foreground">Are you looking for a relationship between two numerical variables?</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
                       <li><strong>Data Type:</strong> Two numerical variables measured on the same subjects (e.g., Height and Weight).</li>
                       <li><strong>Test to use:</strong> Correlation Test.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Relationship".</li>
                     </ul>
                   </div>
 
-                  <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
-                    <p className="font-medium text-white">Are you comparing the averages of two completely separate groups?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-slate-300">
+                  <div className="p-4 bg-muted rounded-lg border border-muted">
+                    <p className="font-medium text-foreground">Are you comparing the averages of two completely separate groups?</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
                       <li><strong>Data Type:</strong> Numerical data, normally distributed, from two independent groups (e.g., Group A vs Group B).</li>
                       <li><strong>Test to use:</strong> Independent t-test.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Mean".</li>
                     </ul>
                   </div>
 
-                  <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
-                    <p className="font-medium text-white">Are you comparing the averages of the exact same group measured twice?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-slate-300">
+                  <div className="p-4 bg-muted rounded-lg border border-muted">
+                    <p className="font-medium text-foreground">Are you comparing the averages of the exact same group measured twice?</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
                       <li><strong>Data Type:</strong> Numerical data, normally distributed, from the same subjects (e.g., Before and After).</li>
                       <li><strong>Test to use:</strong> Paired t-test.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Mean".</li>
@@ -4322,7 +4322,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Forming Conclusions (A Quick Recap)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Forming Conclusions (A Quick Recap)</h4>
                 <p className="mb-2">Regardless of which test you choose, the rules for interpreting the R Studio output remain exactly the same:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
@@ -4357,16 +4357,16 @@ t = 2.9143, df = 59, p-value = 0.005022
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p><strong>(a) Independent t-test</strong> <span className="text-slate-400">(Comparing the means of two completely separate groups)</span>.</p>
+                  <p><strong>(a) Independent t-test</strong> <span className="text-muted-foreground">(Comparing the means of two completely separate groups)</span>.</p>
                 </div>
                 <div>
-                  <p><strong>(b) Correlation test</strong> <span className="text-slate-400">(Looking for a relationship between two numerical variables)</span>.</p>
+                  <p><strong>(b) Correlation test</strong> <span className="text-muted-foreground">(Looking for a relationship between two numerical variables)</span>.</p>
                 </div>
                 <div>
-                  <p><strong>(c) Z-test / 2-sample test for equality of proportions</strong> <span className="text-slate-400">(Comparing proportions from categorical data)</span>.</p>
+                  <p><strong>(c) Z-test / 2-sample test for equality of proportions</strong> <span className="text-muted-foreground">(Comparing proportions from categorical data)</span>.</p>
                 </div>
                 <div>
-                  <p><strong>(d) Paired t-test</strong> <span className="text-slate-400">(Comparing the means of the exact same group measured twice)</span>.</p>
+                  <p><strong>(d) Paired t-test</strong> <span className="text-muted-foreground">(Comparing the means of the exact same group measured twice)</span>.</p>
                 </div>
               </div>
             )
@@ -4413,7 +4413,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             solution: (
               <div className="space-y-4">
                 <div>
-                  <p><strong>(a)</strong> A <strong>paired t-test</strong> <span className="text-slate-400">(Because the numerical data is normally distributed and comes from the same group tested twice)</span>.</p>
+                  <p><strong>(a)</strong> A <strong>paired t-test</strong> <span className="text-muted-foreground">(Because the numerical data is normally distributed and comes from the same group tested twice)</span>.</p>
                 </div>
                 <div>
                   <p><strong>(b)</strong> Since the p-value (0.003) is less than 0.05, we <strong>reject the null hypothesis</strong>. There is statistically significant evidence to suggest that there is a difference in the mean memory test scores of students when listening to classical music compared to silence.</p>
@@ -4437,23 +4437,23 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Introduction to Modelling",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>In the real world, we are often faced with problems involving variables that are difficult or entirely impossible to measure with absolute precision. To tackle this, we use mathematical modelling.</p>
 
-            <h4 className="text-white font-semibold">1. What is a Mathematical Model?</h4>
+            <h4 className="text-foreground font-semibold">1. What is a Mathematical Model?</h4>
             <p>A mathematical model is a way to produce a reasonable, "ballpark" approximation to a complex problem.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The primary goal is not to find one single "correct" or exact answer, but rather to calculate a highly educated and reasonable estimate.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. The Role of Assumptions</h4>
+            <h4 className="text-foreground font-semibold">2. The Role of Assumptions</h4>
             <p>To build a model, we must make certain assumptions about the variables involved.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>These assumptions are based on information that we already know, or can sensibly guess, about the world around us.</li>
               <li>When creating a simple mathematical model, it is standard practice to intentionally ignore minor details and special cases to keep the calculations manageable.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
+            <div className="bg-muted p-4 rounded-lg mt-4">
               <p className="text-sm italic">Note: As this introductory section focuses on the concept of modelling itself, the examples focus on identifying the sensible assumptions required before a calculation can take place.</p>
             </div>
           </div>
@@ -4523,21 +4523,21 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Fermi Estimations",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>A <strong>Fermi Estimation</strong> is a specific type of mathematical model used to produce a fast, "ballpark" approximation for a quantity that is incredibly difficult—or completely impossible—to measure directly.</p>
 
-            <h4 className="text-white font-semibold">1. Where does the name come from?</h4>
+            <h4 className="text-foreground font-semibold">1. Where does the name come from?</h4>
             <p>They are named after the Italian physicist Enrico Fermi, who was famous for his ability to make surprisingly accurate estimates using very little actual data. (He used these skills while working on the Manhattan Project during World War II).</p>
 
-            <h4 className="text-white font-semibold">2. The Core Concept</h4>
+            <h4 className="text-foreground font-semibold">2. The Core Concept</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The primary goal of a Fermi estimation is not to find the exact, correct answer. The goal is to reach a logically sound and reasonable estimate.</li>
               <li>To do this, we must make sensible, educated assumptions based on our general knowledge of the world (e.g., assuming a typical human lifespan is 80 years, or a school year has 190 days).</li>
               <li>When calculating a Fermi estimation, it is standard practice to ignore minor details and special cases that would overcomplicate the maths.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Exam Rule 🚨</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">🚨 Exam Rule 🚨</h4>
               <p>In an exam, you will rarely be penalised for the specific numbers you choose for your assumptions (as long as they are physically realistic). However, you must explicitly state your assumptions in writing before you do the calculation to be awarded the marks.</p>
             </div>
           </div>
@@ -4626,7 +4626,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Modelling Situations With Graphs",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Graphs are an incredibly useful way to model mathematical situations because they allow us to instantly visualise how changing an input affects the final output.</p>
             <p>When analysing or sketching a graphical model, you must pay close attention to three main features:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -4635,7 +4635,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <li><strong>Changes in Behaviour:</strong> Look for points where the graph suddenly changes direction, curves, or flattens out, as these represent significant events in the real-life situation.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">Independent and Dependent Variables</h4>
+            <h4 className="text-foreground font-semibold">Independent and Dependent Variables</h4>
             <p>In any 2D mathematical model, you must identify which variable is which based on the context:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Independent Variable (x-axis):</strong> The variable that is changed or controlled (the cause). It does not depend on the other variable. Time is almost always an independent variable.</li>
@@ -4713,27 +4713,27 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Units Of Measure",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>In mathematical modelling, paying close attention to units of measure is essential. You must ensure that your units make logical sense and remain consistent throughout your calculations.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">🚨 Important Exam Note 🚨</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">🚨 Important Exam Note 🚨</h4>
               <p>Because this is Applications of Mathematics (not Physics or Chemistry), you are never expected to have prior scientific knowledge of complex units. You simply need to be able to substitute given units into a formula and simplify them.</p>
             </div>
 
-            <h4 className="text-white font-semibold">1. Deriving Suitable Units of Measure</h4>
+            <h4 className="text-foreground font-semibold">1. Deriving Suitable Units of Measure</h4>
             <p>The units of an output variable are determined completely by the units of the input variables.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>To find the final unit, simply replace the variables in the formula with their units and simplify (e.g., if measuring Speed = Distance / Time, and distance is in miles and time is in hours, the unit is miles/hours or mph).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Consistency in Comparisons</h4>
+            <h4 className="text-foreground font-semibold">2. Consistency in Comparisons</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>When making a direct comparison between two quantities, the units must be consistent for the comparison to be valid.</li>
               <li>Even if two quantities seem related, there are often hidden variables or factors that must be assumed to be constant to make it a completely fair comparison. If these hidden variables change, the comparison becomes invalid.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Consistency in Formulae</h4>
+            <h4 className="text-foreground font-semibold">3. Consistency in Formulae</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>When using a formula, the units of the variables must be consistent in how they are defined and how they relate to each other.</li>
               <li>For example, scaling up a measurement linearly (like doubling a length) does not mean the time taken or the volume will also double exactly. You must look out for these logical traps in exam questions.</li>
@@ -4808,10 +4808,10 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Errors And Tolerance",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>In mathematical modelling, measurements are rarely perfect. We must account for the fact that data often has a built-in level of uncertainty, which we call an error or tolerance.</p>
 
-            <h4 className="text-white font-semibold">1. Absolute and Relative Errors</h4>
+            <h4 className="text-foreground font-semibold">1. Absolute and Relative Errors</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Intended Value:</strong> The exact target value you are aiming for.</li>
               <li><strong>Absolute Error:</strong> The physical amount by which a measurement is allowed to vary above or below the intended value. For example, if a bottle contains 500ml <InlineMath math="\pm" /> 10ml, the absolute error is 10ml.</li>
@@ -4819,17 +4819,17 @@ t = 2.9143, df = 59, p-value = 0.005022
               <li><strong>Relative Error:</strong> Because a 10ml error is huge for a small medicine bottle but tiny for a swimming pool, we use relative error to make fair comparisons. It is usually expressed as a percentage: Relative Error = (Absolute Error <InlineMath math="\div" /> Intended Value) <InlineMath math="\times" /> 100.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Errors in Compound Measures (Min/Max Values)</h4>
+            <h4 className="text-foreground font-semibold">2. Errors in Compound Measures (Min/Max Values)</h4>
             <p>When calculating a compound measure (like Speed = Distance <InlineMath math="\div" /> Time), the errors of the input variables dictate the limits of the output variable.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>To find the <strong>Maximum</strong> possible value, you must use the largest possible numerator and the smallest possible denominator. (e.g., Max Speed = Max Distance <InlineMath math="\div" /> Min Time).</li>
               <li>To find the <strong>Minimum</strong> possible value, you use the smallest possible numerator and the largest possible denominator.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Estimating Errors by Adding</h4>
+            <h4 className="text-foreground font-semibold">3. Estimating Errors by Adding</h4>
             <p>When a mathematical model involves multiplying or dividing two or more independent variables, you can estimate the total relative error of the final answer by simply adding the relative errors of the individual variables together.</p>
 
-            <h4 className="text-white font-semibold">4. Accuracy vs. Precision</h4>
+            <h4 className="text-foreground font-semibold">4. Accuracy vs. Precision</h4>
             <p>You must be able to clearly distinguish between these two terms:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Accuracy:</strong> How close a measured or estimated value is to the true, real-life value.</li>
@@ -4923,29 +4923,29 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Recurrence Relations",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Recurrence relations describe how each term in a sequence relates to the ones that come before it. They are incredibly valuable for modelling and analysing processes that evolve over time, such as population growth or financial forecasting.</p>
 
-            <h4 className="text-white font-semibold">1. The Structure of the Model</h4>
+            <h4 className="text-foreground font-semibold">1. The Structure of the Model</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>A recurrence relation is a formula which generates a sequence of numbers, where each value is worked out from the one before it.</li>
               <li>Write it in the words of the question, so that it says exactly what you do to one value to get the next:</li>
             </ul>
-            <p className="ml-4 text-white"><strong>Pests next week = Pests this week &times; 0.45 + 400</strong></p>
+            <p className="ml-4 text-foreground"><strong>Pests next week = Pests this week &times; 0.45 + 400</strong></p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Always state your starting value &mdash; the amount at the very beginning, before any change has happened.</li>
               <li>In class, and in some textbooks, you will sometimes see this written with symbols instead: <InlineMath math="u_{n+1} = 0.45u_n + 400" />, with a starting value <InlineMath math="u_0 = 1500" />. That means exactly the same thing. In Higher Applications the question is always set in a context and answered in a spreadsheet, so you will not be asked to write it in that form.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Recurrence Relations in Spreadsheets (Excel)</h4>
+            <h4 className="text-foreground font-semibold">2. Recurrence Relations in Spreadsheets (Excel)</h4>
             <p>At this level, we use spreadsheet software to do the hard work of calculating recurrence relations:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Setup:</strong> First, set up two columns &mdash; one for the time period (year, week or day) and one for the quantity you are modelling.</li>
-              <li><strong>Entering the Formula:</strong> Put your starting value in the first cell of the quantity column. In the cell below it, type a formula starting with an <code className="bg-slate-700 px-1 rounded">=</code> sign, clicking on the cell directly above so that the formula references it.</li>
+              <li><strong>Entering the Formula:</strong> Put your starting value in the first cell of the quantity column. In the cell below it, type a formula starting with an <code className="bg-muted-hover px-1 rounded">=</code> sign, clicking on the cell directly above so that the formula references it.</li>
               <li><strong>Generate the Sequence:</strong> Click and drag the formula down to automatically fill the column and generate your sequence of numbers.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Long-Term Effects and Graphs</h4>
+            <h4 className="text-foreground font-semibold">3. Long-Term Effects and Graphs</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>If you drag the spreadsheet formula down through many rows, you can see the long-term effect of the model. Sometimes, the numbers will eventually reach a limit and stabilise at a certain amount.</li>
               <li>You can easily visualise this long-term trend by highlighting your data in Excel, clicking 'Insert', and selecting an appropriate chart (like a scatter or line graph).</li>
@@ -4967,7 +4967,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Solutions:</strong></p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li><strong>(a)</strong> Growing by 3% multiplies the population by 1.03, then 150 leave:<br /><strong>Population next year = Population this year &times; 1.03 &minus; 150</strong><br />In the spreadsheet: <code className="bg-slate-700 px-1 rounded">=B2*1.03-150</code></li>
+                  <li><strong>(a)</strong> Growing by 3% multiplies the population by 1.03, then 150 leave:<br /><strong>Population next year = Population this year &times; 1.03 &minus; 150</strong><br />In the spreadsheet: <code className="bg-muted-hover px-1 rounded">=B2*1.03-150</code></li>
                   <li><strong>(b)</strong> First, set up two columns, one for the year and one for the population. In the year column, fill in the numbers 0 to 5. In the population column, enter the starting value of 8500 next to year 0. In the cell below it, type a formula to multiply the cell above by 1.03 and subtract 150. Finally, drag the formula down to fill the rows up to year 5.</li>
                 </ul>
               </div>
@@ -4985,8 +4985,8 @@ t = 2.9143, df = 59, p-value = 0.005022
             solution: (
               <div className="space-y-2">
                 <p><strong>Solution:</strong> If 18% is lost, then 82% remains. Therefore, the multiplier is 0.82.</p>
-                <p className="text-white"><strong>Compost next month = Compost this month &times; 0.82 + 25</strong></p>
-                <p>In the spreadsheet: <code className="bg-slate-700 px-1 rounded">=B2*0.82+25</code>, with the starting value of 0 kg in cell B2.</p>
+                <p className="text-foreground"><strong>Compost next month = Compost this month &times; 0.82 + 25</strong></p>
+                <p>In the spreadsheet: <code className="bg-muted-hover px-1 rounded">=B2*0.82+25</code>, with the starting value of 0 kg in cell B2.</p>
               </div>
             )
           },
@@ -5004,7 +5004,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Solutions:</strong></p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li><strong>(a)</strong> If 55% are destroyed, 45% survive:<br /><strong>Pests next week = Pests this week &times; 0.45 + 400</strong><br />In the spreadsheet: <code className="bg-slate-700 px-1 rounded">=B2*0.45+400</code></li>
+                  <li><strong>(a)</strong> If 55% are destroyed, 45% survive:<br /><strong>Pests next week = Pests this week &times; 0.45 + 400</strong><br />In the spreadsheet: <code className="bg-muted-hover px-1 rounded">=B2*0.45+400</code></li>
                   <li><strong>(b)</strong> Enter the starting value of 1500 in the spreadsheet and create a formula in the cell below to multiply the previous cell by 0.45 and add 400. Drag the formula down to generate a sequence of numbers. By looking at the extended list of numbers, we can see the long-term effect: the population stabilises and levels out at approximately 727 pests.</li>
                 </ul>
               </div>
@@ -5017,17 +5017,17 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Linear Relationships",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Linear models are used to describe situations that involve a constant rate of change. This means that every time the input variable increases by one unit, the output variable changes by the exact same, fixed amount.</p>
 
-            <h4 className="text-white font-semibold">1. The Structure of a Linear Model</h4>
+            <h4 className="text-foreground font-semibold">1. The Structure of a Linear Model</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The formula for a linear model usually takes the form: <InlineMath math="y = a + bx" /> (or <InlineMath math="y = mx + c" />).</li>
               <li><InlineMath math="x" /> is the independent variable (the input, often time).</li>
               <li><InlineMath math="y" /> is the dependent variable (the output).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. The Intercept and the Gradient</h4>
+            <h4 className="text-foreground font-semibold">2. The Intercept and the Gradient</h4>
             <p>To fully understand and interpret a linear model, you must be able to explain the two key parameters in the context of the real-life situation:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>The y-intercept (<InlineMath math="a" /> or <InlineMath math="c" />):</strong> This is the starting value. It represents the exact value of the dependent variable (<InlineMath math="y" />) when the independent variable (<InlineMath math="x" />) is exactly 0.</li>
@@ -5039,7 +5039,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Using the Model</h4>
+            <h4 className="text-foreground font-semibold">3. Using the Model</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Evaluating:</strong> This simply means "plugging in the numbers" to predict a future value. You substitute a given value for <InlineMath math="x" /> into your formula to calculate <InlineMath math="y" />.</li>
               <li><strong>Comparing:</strong> You will often be asked to create two linear models and compare them to see which is more cost-effective or efficient for a specific value.</li>
@@ -5127,33 +5127,33 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Quadratic Relationships",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Unlike linear models, which have a constant rate of change, quadratic models are used when the dependent variable increases and then decreases, or decreases and then increases.</p>
 
-            <h4 className="text-white font-semibold">1. The Structure of a Quadratic Model</h4>
+            <h4 className="text-foreground font-semibold">1. The Structure of a Quadratic Model</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The formula for a quadratic relationship is written in the form <InlineMath math="y = ax^2 + bx + c" />, where the most defining feature is the presence of a squared term (<InlineMath math="x^2" />).</li>
               <li>The graph of a quadratic model is a symmetrical curve called a <strong>parabola</strong>.</li>
               <li>A quadratic graph features a single turning point (either a maximum or minimum), a y-intercept, and sometimes x-intercepts (where the curve crosses the horizontal axis).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. The Shape of the Parabola</h4>
+            <h4 className="text-foreground font-semibold">2. The Shape of the Parabola</h4>
             <p>The overall shape of the graph is dictated entirely by the coefficient of the <InlineMath math="x^2" /> term:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Positive <InlineMath math="x^2" />:</strong> If the squared term is positive (e.g., <InlineMath math="2x^2" />), the graph forms a 'u' shape with a minimum turning point at the bottom.</li>
               <li><strong>Negative <InlineMath math="x^2" />:</strong> If the squared term is negative (e.g., <InlineMath math="-2x^2" />), the graph forms an 'n' shape with a maximum turning point at the top.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Evaluating and Real-World Validity</h4>
+            <h4 className="text-foreground font-semibold">3. Evaluating and Real-World Validity</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Evaluating</strong> simply means substituting a given input value into your formula to calculate the output.</li>
               <li>When evaluating real-world models, you must always consider the <strong>validity</strong> of your answers. Mathematical formulas will happily generate negative numbers indefinitely, but in the real world, things like physical height, time, or the number of objects cannot drop below zero.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Quadratic Models in Spreadsheets</h4>
+            <h4 className="text-foreground font-semibold">4. Quadratic Models in Spreadsheets</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>To explore a quadratic model in Excel, you should generate a sequence of <InlineMath math="x" /> values that includes both negative and positive numbers to reveal the true shape of the curve.</li>
-              <li>When typing your formula into the spreadsheet, you must use the <code className="bg-slate-700 px-1 rounded">^</code> symbol to indicate a power (e.g., <code className="bg-slate-700 px-1 rounded">^2</code> for squared) and the <code className="bg-slate-700 px-1 rounded">*</code> symbol for multiplication.</li>
+              <li>When typing your formula into the spreadsheet, you must use the <code className="bg-muted-hover px-1 rounded">^</code> symbol to indicate a power (e.g., <code className="bg-muted-hover px-1 rounded">^2</code> for squared) and the <code className="bg-muted-hover px-1 rounded">*</code> symbol for multiplication.</li>
             </ul>
           </div>
         ),
@@ -5208,7 +5208,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Set up two columns, one titled <InlineMath math="x" /> and one titled <InlineMath math="y" />.</li>
                   <li>In the <InlineMath math="x" /> column, type the numbers -5, -4, and drag down to fill the column up to the number 5.</li>
-                  <li>In the first cell of the <InlineMath math="y" /> column, type the formula <code className="bg-slate-700 px-1 rounded">= 15 + 4*A2 - 2*(A2^2)</code> (assuming the first <InlineMath math="x" /> value is located in cell A2).</li>
+                  <li>In the first cell of the <InlineMath math="y" /> column, type the formula <code className="bg-muted-hover px-1 rounded">= 15 + 4*A2 - 2*(A2^2)</code> (assuming the first <InlineMath math="x" /> value is located in cell A2).</li>
                   <li>Click and drag this formula down to automatically calculate the rest of the sequence before inserting a chart.</li>
                 </ul>
               </div>
@@ -5221,14 +5221,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Exponential Relationships",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>While linear models have a constant rate of change, exponential models describe situations where a quantity changes at a rate proportional to its current size.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Exponential Growth:</strong> As the input increases steadily, the output increases by progressively larger amounts (e.g., the spread of a virus, or population growth).</li>
               <li><strong>Exponential Decay:</strong> As the input increases steadily, the output decreases by progressively smaller amounts (e.g., the value of a car depreciating, or a hot drink cooling down).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">1. The Structure of an Exponential Model</h4>
+            <h4 className="text-foreground font-semibold">1. The Structure of an Exponential Model</h4>
             <p>The defining feature of an exponential model is that the independent variable (usually time, <InlineMath math="t" />, or <InlineMath math="x" />) is the power (the exponent). Models typically take one of two forms:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Without 'e':</strong> Written as <InlineMath math="y = a(b)^x" />.
@@ -5246,12 +5246,12 @@ t = 2.9143, df = 59, p-value = 0.005022
               </li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Evaluating an Exponential Formula</h4>
+            <h4 className="text-foreground font-semibold">2. Evaluating an Exponential Formula</h4>
             <p>"Evaluating" simply means substituting a given value for the independent variable into the formula to predict an outcome. Because the power involves an unknown, the numbers in exponential growth models get very large, very quickly.</p>
 
-            <h4 className="text-white font-semibold">3. Exponential Models in Spreadsheets (Excel)</h4>
+            <h4 className="text-foreground font-semibold">3. Exponential Models in Spreadsheets (Excel)</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
-              <li>When entering a formula into Excel that contains '<InlineMath math="e" />', you must use the <code className="bg-slate-700 px-1 rounded">EXP</code> command, and the power must be placed inside brackets. For example, the formula <InlineMath math="y = 400e^{0.5x}" /> would be typed into Excel as <code className="bg-slate-700 px-1 rounded">= 400 * EXP(0.5*A2)</code>.</li>
+              <li>When entering a formula into Excel that contains '<InlineMath math="e" />', you must use the <code className="bg-muted-hover px-1 rounded">EXP</code> command, and the power must be placed inside brackets. For example, the formula <InlineMath math="y = 400e^{0.5x}" /> would be typed into Excel as <code className="bg-muted-hover px-1 rounded">= 400 * EXP(0.5*A2)</code>.</li>
               <li><strong>Crucial Excel Rule:</strong> Excel cannot produce an exponential trendline on a graph if your dataset includes the exact coordinate (0,0). The exponential trendline option will be completely greyed out. You must delete the (0,0) value from your columns to get the option back.</li>
             </ul>
           </div>
@@ -5329,7 +5329,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Introduction to Planning & Decision Making",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>This section explores techniques such as project planning, critical path analysis, and other decision-making models to optimize outcomes.</p>
             <p>Key concepts include:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
@@ -5346,13 +5346,13 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Precedence Tables",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Any project, whether it is baking a cake, building a house, or developing software, can be broken down into a set of separate, manageable activities. However, you cannot always do everything at once.
             </p>
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Dependencies and Constraints</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Dependencies and Constraints</h4>
                 <p>
                   Some activities cannot be started until others have been completely finished. For example, when building a house, you cannot put the roof on before you have built the walls.
                 </p>
@@ -5362,7 +5362,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
               
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. What is a Precedence Table?</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. What is a Precedence Table?</h4>
                 <p>
                   A precedence table helps you organise all the activities within a project. It clearly lists each task, its duration, and its constraints (which specific tasks must be completed before it can begin).
                 </p>
@@ -5372,7 +5372,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Drawing Basic Activity Networks</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Drawing Basic Activity Networks</h4>
                 <p>
                   You can turn a precedence table into a visual diagram (an activity network).
                 </p>
@@ -5391,16 +5391,16 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p><strong>Example 1: Interpreting a Precedence Table</strong></p>
                 <p>A local cafe is preparing a large batch of homemade soup. The tasks involved are listed below.</p>
                 <div className="overflow-x-auto my-4">
-                  <table className="min-w-full divide-y divide-slate-700">
-                    <thead className="bg-slate-800">
+                  <table className="min-w-full divide-y divide-border">
+                    <thead className="bg-muted">
                       <tr>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Description</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Preceding Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Time (mins)</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Description</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Preceding Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Time (mins)</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700 bg-slate-800/50">
+                    <tbody className="divide-y divide-border bg-muted/50">
                       <tr><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">Chop vegetables</td><td className="px-3 py-2 text-sm">None</td><td className="px-3 py-2 text-sm">10</td></tr>
                       <tr><td className="px-3 py-2 text-sm">B</td><td className="px-3 py-2 text-sm">Prepare meat</td><td className="px-3 py-2 text-sm">None</td><td className="px-3 py-2 text-sm">8</td></tr>
                       <tr><td className="px-3 py-2 text-sm">C</td><td className="px-3 py-2 text-sm">Boil stock</td><td className="px-3 py-2 text-sm">None</td><td className="px-3 py-2 text-sm">5</td></tr>
@@ -5428,16 +5428,16 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p><strong>Example 2: Drawing a Network Diagram</strong></p>
                 <p>A student is setting up a new desktop computer. The table below lists the tasks and their dependencies.</p>
                 <div className="overflow-x-auto my-4">
-                  <table className="min-w-full divide-y divide-slate-700">
-                    <thead className="bg-slate-800">
+                  <table className="min-w-full divide-y divide-border">
+                    <thead className="bg-muted">
                       <tr>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Description</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Preceding Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Time (mins)</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Description</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Preceding Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Time (mins)</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700 bg-slate-800/50">
+                    <tbody className="divide-y divide-border bg-muted/50">
                       <tr><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">Unbox computer and monitor</td><td className="px-3 py-2 text-sm">None</td><td className="px-3 py-2 text-sm">5</td></tr>
                       <tr><td className="px-3 py-2 text-sm">B</td><td className="px-3 py-2 text-sm">Connect monitor to power</td><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">2</td></tr>
                       <tr><td className="px-3 py-2 text-sm">C</td><td className="px-3 py-2 text-sm">Connect computer to power</td><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">2</td></tr>
@@ -5453,7 +5453,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             solution: (
               <div className="space-y-4">
                 <p>Start with a single box for A. Since B, C, and E all depend on A, draw three arrows coming out of A leading to three separate boxes. D needs both B and C, so arrows from B and C will merge into D. Finally, F needs D and E, so arrows from D and E will merge into F.</p>
-                <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center">
+                <div className="bg-muted p-4 rounded-lg flex justify-center items-center">
                   <PrecedenceNetworkExample2 />
                 </div>
               </div>
@@ -5486,13 +5486,13 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Constructing PERT Charts",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A PERT Chart (Programme Evaluation and Review Technique) is a visual activity network that is highly useful in project planning. Instead of just showing the order of tasks, it calculates the exact timeline of the project.
             </p>
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Node Structure</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Node Structure</h4>
                 <p>
                   In a PERT chart, every activity is represented by a box (a node) that usually contains three vital pieces of numerical information:
                 </p>
@@ -5504,7 +5504,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. The Forward Scan (Finding the EST)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. The Forward Scan (Finding the EST)</h4>
                 <p>
                   To find the Earliest Start Times, we perform a forward scan, working from left to right across the diagram:
                 </p>
@@ -5516,7 +5516,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The Backward Scan (Finding the LET)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. The Backward Scan (Finding the LET)</h4>
                 <p>
                   To find the Latest End Times, we perform a backward scan, working backwards from right to left:
                 </p>
@@ -5528,7 +5528,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Start and End Boxes</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Start and End Boxes</h4>
                 <p>
                   It is highly recommended to add a "START" box at the beginning of your diagram and an "END" box at the finish. These are not real activities, so they have a duration of 0. Using an END box guarantees you use the correct final LET for your backward scan and avoids costly exam mistakes.
                 </p>
@@ -5592,16 +5592,16 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p><strong>Example 3: Constructing a Full PERT Chart</strong></p>
                 <p>A small business is launching a new product. The table below lists the tasks, their dependencies, and durations in weeks.</p>
                 <div className="overflow-x-auto my-4">
-                  <table className="min-w-full divide-y divide-slate-700">
-                    <thead className="bg-slate-800">
+                  <table className="min-w-full divide-y divide-border">
+                    <thead className="bg-muted">
                       <tr>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Description</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Preceding Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Duration (weeks)</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Description</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Preceding Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Duration (weeks)</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700 bg-slate-800/50">
+                    <tbody className="divide-y divide-border bg-muted/50">
                       <tr><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">Market Research</td><td className="px-3 py-2 text-sm">None</td><td className="px-3 py-2 text-sm">3</td></tr>
                       <tr><td className="px-3 py-2 text-sm">B</td><td className="px-3 py-2 text-sm">Design Product</td><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">4</td></tr>
                       <tr><td className="px-3 py-2 text-sm">C</td><td className="px-3 py-2 text-sm">Order Materials</td><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">2</td></tr>
@@ -5617,7 +5617,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             solution: (
               <div className="space-y-4">
                 <p>To construct this, draw a START node leading to A. From A, arrows split to B and C. Both B and C merge into D. However, an arrow also goes from B to E. Finally, both D and E merge into F, which leads to an END node.</p>
-                <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center">
+                <div className="bg-muted p-4 rounded-lg flex justify-center items-center">
                   <ConstructingPertExample3 />
                 </div>
                 
@@ -5653,17 +5653,17 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Interpreting PERT Charts",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Once a PERT chart has been constructed and the forward and backward scans are complete, we can analyse the data to find out where a project has flexibility and where it does not.
             </p>
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Float Time (Slack Time)</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Float Time (Slack Time)</h4>
                 <p>
                   Some activities have more time available to be completed than they actually require, while others only have exactly enough time. This extra, flexible time is called the <strong>Float Time</strong> (or Slack Time).
                 </p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <InlineMath math="\text{Float} = \text{Latest End Time} - \text{Earliest Start Time} - \text{Duration}" />
                 </div>
                 <p>
@@ -5672,7 +5672,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Essential vs. Critical Activities</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Essential vs. Critical Activities</h4>
                 <p>You must be able to clearly explain the difference between these two types of activities to a non-mathematician:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>
@@ -5685,7 +5685,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The Critical Path</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. The Critical Path</h4>
                 <p>
                   The <strong>Critical Path</strong> is the sequence of connected critical activities that runs from the start of the project right through to the end.
                 </p>
@@ -5736,16 +5736,16 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p><strong>Example 2: Interpreting the Critical Path</strong></p>
                 <p>A software development team generates a PERT chart for a new app update. The table below shows the final node values calculated for each task.</p>
                 <div className="overflow-x-auto my-4">
-                  <table className="min-w-full divide-y divide-slate-700">
-                    <thead className="bg-slate-800">
+                  <table className="min-w-full divide-y divide-border">
+                    <thead className="bg-muted">
                       <tr>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Task</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Duration (weeks)</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Earliest Start Time</th>
-                        <th className="px-3 py-2 text-left text-sm font-semibold text-white">Latest End Time</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Task</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Duration (weeks)</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Earliest Start Time</th>
+                        <th className="px-3 py-2 text-left text-sm font-semibold text-foreground">Latest End Time</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700 bg-slate-800/50">
+                    <tbody className="divide-y divide-border bg-muted/50">
                       <tr><td className="px-3 py-2 text-sm">A</td><td className="px-3 py-2 text-sm">2</td><td className="px-3 py-2 text-sm">0</td><td className="px-3 py-2 text-sm">2</td></tr>
                       <tr><td className="px-3 py-2 text-sm">B</td><td className="px-3 py-2 text-sm">4</td><td className="px-3 py-2 text-sm">2</td><td className="px-3 py-2 text-sm">6</td></tr>
                       <tr><td className="px-3 py-2 text-sm">C</td><td className="px-3 py-2 text-sm">3</td><td className="px-3 py-2 text-sm">2</td><td className="px-3 py-2 text-sm">7</td></tr>
@@ -5772,7 +5772,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <p className="mt-2 ml-4">
                     Because B precedes D (end of week 6), and C precedes E (end of week 7), the continuous path is <strong>A &rarr; B &rarr; D</strong>. 
                   </p>
-                  <p className="text-sm text-slate-400 italic ml-4 mt-1">
+                  <p className="text-sm text-muted-foreground italic ml-4 mt-1">
                     (Note: Even though E has 0 float within its own branch boundaries based on these specific numbers, a true critical path must connect end-to-end governing the maximum duration).
                   </p>
                 </div>
@@ -5817,14 +5817,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Gantt Charts",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               While a PERT chart is excellent for calculating the maths behind a project, a <strong>Gantt Chart</strong> is a much better visual communication tool. It looks like a bar chart and makes it very easy to track day-to-day progress and schedule staff or resources.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Layout of a Gantt Chart</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Layout of a Gantt Chart</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Y-axis:</strong> The tasks are listed vertically down the side (usually from A to Z).</li>
                   <li><strong>X-axis:</strong> The time scale (hours, days, weeks) runs along the bottom.</li>
@@ -5833,7 +5833,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Representing Float Time</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Representing Float Time</h4>
                 <p>
                   If an activity is essential (not critical), it will have float time. This means there is a gap between when the activity finishes and its Latest End Time (LET).
                 </p>
@@ -5849,7 +5849,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Gantt vs PERT</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Gantt vs PERT</h4>
                 <p>You must be able to state the advantages and disadvantages of both charts:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Gantt Advantages:</strong> Highly visual, task durations can be easily compared at a glance, and it is very easy to see how many tasks are happening at the exact same time (great for scheduling workers).</li>
@@ -5939,14 +5939,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Calculating Basic Probabilities",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Probability measures the likelihood or chance of a specific outcome happening. We can describe probability using words like 'certain', 'likely', or 'impossible', but in mathematics, we measure it precisely as a fraction, decimal, or percentage.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Definitions and Terminology</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Definitions and Terminology</h4>
                 <p>To discuss probability accurately, you must understand the correct terminology:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Trial:</strong> The probability experiment you are looking at (e.g., rolling a dice, or selecting a person at random).</li>
@@ -5957,9 +5957,9 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Calculating Single Events</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Calculating Single Events</h4>
                 <p>To calculate the basic probability of an event occurring, we use the following formula:</p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <BlockMath math="P(\text{event}) = \frac{\text{number of times the event occurs}}{\text{total number of outcomes}}" />
                 </div>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
@@ -5973,7 +5973,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Types of Events</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Types of Events</h4>
                 <p>You must be able to classify how different events relate to each other:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Independent Events:</strong> Two events are independent if they do not affect each other. For example, rolling a dice twice; getting a 6 on the first roll does not lessen the chance of getting a 6 on the next roll.</li>
@@ -5983,7 +5983,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. The Gambler's Fallacy (Monte Carlo Fallacy)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. The Gambler's Fallacy (Monte Carlo Fallacy)</h4>
                 <p>
                   This is the incorrect belief that if a particular independent event occurs more frequently than normal in the past, it is "due" to happen less frequently in the future (or vice versa).
                 </p>
@@ -6016,7 +6016,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <p className="mb-1">(b)</p>
                   <p className="ml-4">First, find the probability of picking an apple: <InlineMath math="P(\text{apple}) = \frac{5}{12}" />.</p>
                   <p className="ml-4 mt-1">Then use the NOT rule: <InlineMath math="P(\text{Not Apple}) = 1 - \frac{5}{12} = \frac{7}{12}" />.</p>
-                  <p className="text-sm text-slate-400 italic ml-4 mt-2">
+                  <p className="text-sm text-muted-foreground italic ml-4 mt-2">
                     (Alternatively, simply add the bananas and oranges together: <InlineMath math="\frac{4+3}{12} = \frac{7}{12}" />).
                   </p>
                 </div>
@@ -6074,16 +6074,16 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Expected Probabilities",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Probability doesn't just tell us the chance of a single event happening; it allows us to predict the future on a larger scale. Expected probabilities (also known as expected values or expected success) are used to predict how many times we expect a specific outcome to happen over a large number of trials.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Expected Success Formula</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Expected Success Formula</h4>
                 <p>To calculate an expected value, you simply multiply the probability of the outcome by the total number of trials (the sample size).</p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <InlineMath math="\text{Expected Success} = \text{Probability} \times \text{Sample Size}" />
                 </div>
                 <div className="mt-4 bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
@@ -6095,7 +6095,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Expected Probabilities and the 'NOT' Rule</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Expected Probabilities and the 'NOT' Rule</h4>
                 <p>
                   When calculating expected costs, profits, or successful days, you will often be given the probability of a failure (e.g., a bus being late, or a machine breaking).
                 </p>
@@ -6137,7 +6137,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p className="ml-4"><InlineMath math="P(\text{Open}) = 1 - 0.15 = 0.85" /></p>
                 <p>Next, calculate the expected number of open days:</p>
                 <p className="ml-4"><InlineMath math="\text{Expected Days Open} = 0.85 \times 62 = 52.7" /> days.</p>
-                <p className="text-sm text-slate-400 italic">(The cinema can expect to be open for approximately 53 days).</p>
+                <p className="text-sm text-muted-foreground italic">(The cinema can expect to be open for approximately 53 days).</p>
               </div>
             )
           },
@@ -6166,14 +6166,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Tree Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Probability trees are visual diagrams used to calculate the probabilities of different outcomes in sequential events (events that happen one after the other). They help visualise and compute probabilities in a clear, organised manner.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Structure of a Tree Diagram</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Structure of a Tree Diagram</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li>Each branch on the tree represents a possible outcome, with its associated probability written directly on the line.</li>
                   <li>The branches originating from a single, shared point represent <strong>mutually exclusive events</strong>, meaning only one of them can possibly occur at that time.</li>
@@ -6182,7 +6182,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Calculating Probabilities (The Two Rules)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Calculating Probabilities (The Two Rules)</h4>
                 <p>Once your tree diagram is drawn, you use two simple rules to find your answers:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>The "AND" Rule (Multiply):</strong> To calculate the final 'end' probability of a specific sequence of events happening (e.g., getting a Head and <em>then</em> a Tail), you must <strong>multiply</strong> the probabilities along that specific path of branches.</li>
@@ -6191,7 +6191,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. The "At Least One" Shortcut</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. The "At Least One" Shortcut</h4>
                 <p>
                   In exams, you will frequently be asked to find the probability that an event happens "at least once" over multiple trials.
                 </p>
@@ -6218,7 +6218,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-4">
                 <div>
                   <p className="mb-2">(a) To draw this, start with two branches: 'Late' (0.15) and 'On Time' (0.85). From the end of each of those branches, draw another set of identical 'Late' (0.15) and 'On Time' (0.85) branches for Tuesday.</p>
-                  <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center">
+                  <div className="bg-muted p-4 rounded-lg flex justify-center items-center">
                     <TreeDiagramExample1 />
                   </div>
                 </div>
@@ -6254,12 +6254,12 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <ul className="list-disc list-inside ml-4 space-y-1">
                     <li><strong>First Draw:</strong> The probability of Black is <InlineMath math="\frac{7}{12}" />. The probability of White is <InlineMath math="\frac{5}{12}" />.</li>
                     <li><strong>Second Draw (Dependent):</strong> Because a sock has been removed, there are only 11 socks left.</li>
-                    <ul className="list-circle list-inside ml-8 space-y-1 text-slate-400">
+                    <ul className="list-circle list-inside ml-8 space-y-1 text-muted-foreground">
                       <li>If Black was drawn first, the second branches are Black (<InlineMath math="\frac{6}{11}" />) and White (<InlineMath math="\frac{5}{11}" />).</li>
                       <li>If White was drawn first, the second branches are Black (<InlineMath math="\frac{7}{11}" />) and White (<InlineMath math="\frac{4}{11}" />).</li>
                     </ul>
                   </ul>
-                  <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center mt-4">
+                  <div className="bg-muted p-4 rounded-lg flex justify-center items-center mt-4">
                     <TreeDiagramExample2 />
                   </div>
                 </div>
@@ -6300,14 +6300,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Venn Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               A Venn diagram is a powerful visual tool used to organise data and show how different items fit into specific categories (or sets). They make calculating complex probabilities much easier.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. The Structure of a Venn Diagram</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. The Structure of a Venn Diagram</h4>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>The Sample Space:</strong> The large outer rectangle represents the entire sample space (every single person or item surveyed).</li>
                   <li><strong>The Sets:</strong> The circles inside represent the specific categories.</li>
@@ -6316,7 +6316,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Key Terminology and Notation</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Key Terminology and Notation</h4>
                 <p>You must be familiar with the formal set notation used to describe different parts of the diagram:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Intersection (<InlineMath math="A \cap B" />):</strong> The overlapping section in the middle. This represents items that are in Both A AND B.</li>
@@ -6326,7 +6326,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Constructing Venn Diagrams (The Subtraction Trap)</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Constructing Venn Diagrams (The Subtraction Trap)</h4>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
                   <p className="font-semibold text-amber-300 mb-1">Massive Exam Trap:</p>
                   <p className="text-amber-100/80">
@@ -6348,7 +6348,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p><strong>Example 1: Interpreting a Venn Diagram &amp; Notation</strong></p>
                 <p>A gym surveyed 80 of its members to see if they regularly attend the Spin class (S) or the Yoga class (Y). The results are shown in the Venn diagram below:</p>
                 
-                <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center my-4">
+                <div className="bg-muted p-4 rounded-lg flex justify-center items-center my-4">
                   <VennDiagramExample1 />
                 </div>
                 
@@ -6405,7 +6405,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                     <li><strong>Find the "only" sections:</strong> Vaccinated ONLY = <InlineMath math="70 - 25 = 45" />. Microchipped ONLY = <InlineMath math="55 - 25 = 30" />.</li>
                     <li><strong>Draw the diagram:</strong> Draw a rectangle containing two overlapping circles (V and M). Put 25 in the middle, 45 in the V-only section, 30 in the M-only section, and 20 outside the circles.</li>
                   </ul>
-                  <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center mt-4">
+                  <div className="bg-muted p-4 rounded-lg flex justify-center items-center mt-4">
                     <VennDiagramExample2 />
                   </div>
                 </div>
@@ -6444,8 +6444,8 @@ t = 2.9143, df = 59, p-value = 0.005022
                     <li><strong>Intersections of two:</strong> N &amp; A only: <InlineMath math="25 - 10 = 15" />. A &amp; D only: <InlineMath math="20 - 10 = 10" />. N &amp; D only: <InlineMath math="15 - 10 = 5" />.</li>
                     <li><strong>Individual circles (subtracting everything already in that circle):</strong> N only: <InlineMath math="50 - (15 + 10 + 5) = 20" />. A only: <InlineMath math="45 - (15 + 10 + 10) = 10" />. D only: <InlineMath math="40 - (10 + 10 + 5) = 15" />.</li>
                   </ul>
-                  <p className="mt-2 text-sm text-slate-400 italic">(Your diagram should have three overlapping circles with these bold numbers placed in the respective sections).</p>
-                  <div className="bg-slate-800 p-4 rounded-lg flex justify-center items-center mt-4">
+                  <p className="mt-2 text-sm text-muted-foreground italic">(Your diagram should have three overlapping circles with these bold numbers placed in the respective sections).</p>
+                  <div className="bg-muted p-4 rounded-lg flex justify-center items-center mt-4">
                     <VennDiagramExample3 />
                   </div>
                 </div>
@@ -6465,14 +6465,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Risk & Control Measures",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               Every action we take in our daily lives involves an inherent element of risk. Whether it is in business or daily life, we constantly assess potential risks and take actions to minimise or prevent them.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Control Measures</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Control Measures</h4>
                 <p>These preventative actions are called <strong>control measures</strong>.</p>
                 <p className="mt-2">
                   Control measures are actions taken in an attempt to reduce the risk of a financial loss, and can include buying insurance policies or paying for additional resources such as extra staff or equipment.
@@ -6480,7 +6480,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Cost-Benefit Analysis</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Cost-Benefit Analysis</h4>
                 <p>
                   To evaluate whether a risk is worth taking, or a control measure is worth paying for, companies use a process called a <strong>cost-benefit analysis</strong>.
                 </p>
@@ -6490,7 +6490,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">3. Direct vs. Indirect Costs</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">3. Direct vs. Indirect Costs</h4>
                 <p>When a project fails or is delayed, a business must consider two types of costs:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Direct Costs:</strong> Immediate, measurable financial losses, such as having to repay a fee, refund a customer, or pay a contractual fine.</li>
@@ -6499,7 +6499,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">4. Calculating Expected Costs</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">4. Calculating Expected Costs</h4>
                 <p>To compare options fairly, we calculate the "expected cost" of each choice:</p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Expected Penalty (Doing Nothing)</strong> = Probability of the event &times; Financial Penalty.</li>
@@ -6585,14 +6585,14 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Multiple Control Measures",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               In reality, very few projects are delayed by just one single issue. There are usually multiple different risk factors impacting a project, and consequently, a business will have multiple different control measures available to choose from.
             </p>
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-lg font-semibold text-white">1. Dealing with Multiple Probabilities</h4>
+                <h4 className="text-lg font-semibold text-foreground">1. Dealing with Multiple Probabilities</h4>
                 <p>
                   When a project can be delayed by Event A or Event B or both, you must find the combined probability of a delay occurring before you can calculate the expected penalty.
                 </p>
@@ -6608,14 +6608,14 @@ t = 2.9143, df = 59, p-value = 0.005022
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mt-6">2. Evaluating Multiple Control Measures</h4>
+                <h4 className="text-lg font-semibold text-foreground mt-6">2. Evaluating Multiple Control Measures</h4>
                 <p>
                   When a company is choosing between several different control measures (e.g., Option 1, Option 2, or doing both), you must conduct a separate cost-benefit analysis for every single option.
                 </p>
                 <p className="mt-2 text-indigo-300 font-semibold">
                   The Golden Rule: When you pay for a specific control measure, it usually only eliminates that specific risk. The other risks will still exist, and you must factor their remaining expected penalty into your calculation.
                 </p>
-                <div className="bg-slate-800 p-4 rounded-lg my-4 text-center">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center">
                   <BlockMath math="\text{Expected Cost of Option 1} = \text{Upfront Cost of Option 1} + (\text{Remaining Probability of Delay} \times \text{Financial Penalty})" />
                 </div>
                 <p>
@@ -6697,7 +6697,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <li>The lead developer falls ill (Probability = 0.15).</li>
                   <li>The server crashes during the upload (Probability = 0.08).</li>
                 </ul>
-                <p className="text-sm text-slate-400 italic mt-1">(The probability of one or both of these delays happening is calculated to be 0.218).</p>
+                <p className="text-sm text-muted-foreground italic mt-1">(The probability of one or both of these delays happening is calculated to be 0.218).</p>
                 <p className="mt-4">The manager has three options:</p>
                 <ul className="list-disc list-inside ml-4 space-y-1 mt-2">
                   <li>Option 1: Hire a temporary assistant developer for &pound;1,000 to eliminate the illness risk.</li>
@@ -6733,13 +6733,13 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "RStudio Workbook",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
-              The question paper and the project both require you to use statistical software, and RStudio is what this course uses. It is free, and you can install it on your own computer from <span className="font-mono text-slate-400">posit.co</span> in a few minutes.
+              The question paper and the project both require you to use statistical software, and RStudio is what this course uses. It is free, and you can install it on your own computer from <span className="font-mono text-muted-foreground">posit.co</span> in a few minutes.
             </p>
 
             <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-              <h4 className="text-lg font-semibold text-white mb-2">📘 The RStudio Workbook</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-2">📘 The RStudio Workbook</h4>
               <p className="mb-3">
                 There is a full interactive workbook covering everything you need: loading a dataset, descriptive statistics, boxplots, tables, histograms, scattergraphs, correlation and regression, t-tests and z-tests — with practice datasets to download and past paper questions worked through.
               </p>
@@ -6749,17 +6749,17 @@ t = 2.9143, df = 59, p-value = 0.005022
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold text-white mt-6">Data Booklet Commands</h4>
+              <h4 className="text-lg font-semibold text-foreground mt-6">Data Booklet Commands</h4>
               <p className="mb-3">These are the commands given to you in the exam data booklet. You are not expected to memorise them, but you must be able to choose the right one and read its output.</p>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="pb-2 font-bold text-white">Command</th>
-                      <th className="pb-2 font-bold text-white">What it does</th>
+                    <tr className="border-b border-foreground/20">
+                      <th className="pb-2 font-bold text-foreground">Command</th>
+                      <th className="pb-2 font-bold text-foreground">What it does</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/10">
+                  <tbody className="divide-y divide-foreground/10">
                     <tr><td className="py-2 font-mono text-blue-300">read.csv(&quot;file.csv&quot;)</td><td className="py-2">Loads a dataset into RStudio</td></tr>
                     <tr><td className="py-2 font-mono text-blue-300">attach(file)</td><td className="py-2">Makes the column headings usable as variable names</td></tr>
                     <tr><td className="py-2 font-mono text-blue-300">head(file)</td><td className="py-2">Shows the first few rows — useful for checking exact heading names</td></tr>
@@ -6781,7 +6781,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   </tbody>
                 </table>
               </div>
-              <p className="mt-4 text-slate-400 text-sm">Remember to run your code — <span className="font-mono">Ctrl + Enter</span>, or click Run.</p>
+              <p className="mt-4 text-muted-foreground text-sm">Remember to run your code — <span className="font-mono">Ctrl + Enter</span>, or click Run.</p>
             </div>
           </div>
         ),
@@ -6792,30 +6792,30 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Excel Skills",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>
               The question paper requires you to use spreadsheet software as well as statistical software. Spreadsheets are used most heavily in the <strong>Finance</strong> section — pay and deductions, interest, accumulation, loan schedules and present value — and for straightforward counting and averaging elsewhere.
             </p>
 
             <div className="p-5 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-              <h4 className="text-lg font-semibold text-white mb-2">📗 Excel Workbook — coming soon</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-2">📗 Excel Workbook — coming soon</h4>
               <p>
                 A full interactive workbook with practice files is on its way, in the same format as the RStudio one. In the meantime, the spreadsheet work is taught within the Finance and Statistics topics themselves.
               </p>
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold text-white mt-6">Functions You Need</h4>
+              <h4 className="text-lg font-semibold text-foreground mt-6">Functions You Need</h4>
               <p className="mb-3">These are the spreadsheet functions named in the course specification. You should be able to use each one and explain what your formula is doing.</p>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="pb-2 font-bold text-white">Function</th>
-                      <th className="pb-2 font-bold text-white">Typical use in this course</th>
+                    <tr className="border-b border-foreground/20">
+                      <th className="pb-2 font-bold text-foreground">Function</th>
+                      <th className="pb-2 font-bold text-foreground">Typical use in this course</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/10">
+                  <tbody className="divide-y divide-foreground/10">
                     <tr><td className="py-2 font-mono text-emerald-300">SUM</td><td className="py-2">Totalling a column of payments or hours</td></tr>
                     <tr><td className="py-2 font-mono text-emerald-300">PRODUCT</td><td className="py-2">Multiplying values, such as rate × hours</td></tr>
                     <tr><td className="py-2 font-mono text-emerald-300">IF</td><td className="py-2">Applying a rule only when a condition is met — tax bands, overtime thresholds</td></tr>
@@ -6836,7 +6836,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold text-white mt-6">Presentation Matters</h4>
+              <h4 className="text-lg font-semibold text-foreground mt-6">Presentation Matters</h4>
               <p className="mb-2">Marks are available for a spreadsheet another person can follow. You should be able to:</p>
               <ul className="list-disc list-inside ml-4 space-y-1">
                 <li>set up key variables in their own cells <em>before</em> using them in calculations, rather than typing numbers into formulas;</li>

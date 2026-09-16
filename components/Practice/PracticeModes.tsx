@@ -75,7 +75,7 @@ export default function PracticeModes({ courseId, questions, theme, hasDataBookl
 
   if (!questions.length) return null;
 
-  const btn = `inline-flex items-center gap-2 px-4 py-2 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} font-medium hover:bg-white/10 transition-colors`;
+  const btn = `inline-flex items-center gap-2 px-4 py-2 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} font-medium hover:bg-foreground/10 transition-colors`;
 
   return (
     <>
@@ -104,7 +104,7 @@ export default function PracticeModes({ courseId, questions, theme, hasDataBookl
         {backTo && (
           <Link
             href={backTo.href}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-muted-foreground font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-muted-foreground font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             {backTo.label}

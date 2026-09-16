@@ -160,7 +160,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
             {courseName} <span className={theme.text}>Maths</span>
           </h1>
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             Video lessons, practice questions, and past paper archive
           </p>
         </div>
@@ -182,7 +182,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
         {config && (
           <Link
             href={`/explorer?c=${courseId}`}
-            className="mb-8 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 rounded-lg border border-muted px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5 hover:text-white"
           >
             <Compass className="h-4 w-4 shrink-0" />
             Open the Topic Explorer
@@ -196,7 +196,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
             {loadingQuestions && (
               <div className="flex items-center justify-center py-8">
                 <div className={`h-8 w-8 border-4 ${theme.border} border-t-transparent rounded-full animate-spin mr-3`} />
-                <p className="text-slate-400">Loading questions...</p>
+                <p className="text-muted-foreground">Loading questions...</p>
               </div>
             )}
 
@@ -220,13 +220,13 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                     return (
                       <div
                         key={paperKey}
-                        className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden"
+                        className="bg-card border border-border rounded-xl overflow-hidden"
                       >
                         {/* Paper card */}
                         <div className="flex flex-col sm:flex-row">
                           {/* Thumbnail */}
                           <div className="sm:w-64 shrink-0">
-                            <div className="relative aspect-video sm:h-full bg-slate-800">
+                            <div className="relative aspect-video sm:h-full bg-muted">
                               {paper.videoId ? (
                                 /* The first row only is fetched eagerly and at
                                    high priority. It is the one thumbnail that
@@ -255,7 +255,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                           {/* Info + actions */}
                           <div className="flex-1 p-4 sm:p-5 flex flex-col">
                             <div className="mb-3">
-                              <h4 className="text-lg font-semibold text-slate-200">
+                              <h4 className="text-lg font-semibold text-foreground">
                                 <Link
                                   href={`/course/${courseId}/papers/${paper.year}/paper-${paper.paperNumber}`}
                                   className="hover:text-white transition-colors"
@@ -285,14 +285,14 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                               )}
                               <button
                                 onClick={() => handleStartPaper(paper.year, paper.paperNumber)}
-                                className={`flex items-center gap-1.5 px-3 py-2 bg-card border ${theme.border} ${theme.text} hover:bg-white/5 text-sm font-medium rounded-lg transition-colors`}
+                                className={`flex items-center gap-1.5 px-3 py-2 bg-card border ${theme.border} ${theme.text} hover:bg-foreground/5 text-sm font-medium rounded-lg transition-colors`}
                               >
                                 <BookOpen className="h-4 w-4" />
                                 Start Paper
                               </button>
                               <button
                                 onClick={() => handleFocusMode(paper.year, paper.paperNumber)}
-                                className="flex items-center gap-1.5 px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
+                                className="flex items-center gap-1.5 px-3 py-2 bg-muted-hover hover:bg-muted-hover text-foreground text-sm font-medium rounded-lg transition-colors"
                               >
                                 <List className="h-4 w-4" />
                                 Focus Mode
@@ -313,7 +313,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                 <Link
                                   href={`/course/${courseId}/generate/paper/${paper.year}/paper-${paper.paperNumber}`}
                                   title={`Build a new practice paper modelled question by question on the ${paper.year} Paper ${paper.paperNumber} — same topics, same marks, numbers you have not seen`}
-                                  className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium rounded-lg transition-colors"
+                                  className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground text-sm font-medium rounded-lg transition-colors"
                                 >
                                   <Dices className="h-4 w-4" />
                                   {/* **"Practice Paper" did not say what it
@@ -328,7 +328,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                               )}
                               <button
                                 onClick={() => handleExpandPaper(paper.year, paper.paperNumber)}
-                                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium rounded-lg transition-colors ml-auto"
+                                className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground text-sm font-medium rounded-lg transition-colors ml-auto"
                               >
                                 {isExpanded ? (
                                   <>
@@ -348,16 +348,16 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
 
                         {/* Expanded question list */}
                         {isExpanded && paperQuestions.length > 0 && (
-                          <div className="border-t border-slate-800">
+                          <div className="border-t border-border">
                             {paperQuestions.map((q, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-3 px-4 sm:px-5 py-3 hover:bg-slate-800/50 transition-colors border-b border-slate-800/50 last:border-b-0"
+                                className="flex items-center gap-3 px-4 sm:px-5 py-3 hover:bg-muted/50 transition-colors border-b border-border/50 last:border-b-0"
                               >
                                 {/* Question number */}
                                 <button
                                   onClick={() => handleStartPaper(paper.year, paper.paperNumber, idx)}
-                                  className={`shrink-0 h-8 w-8 flex items-center justify-center ${theme.tint} ${theme.text} text-sm font-bold rounded-lg hover:bg-white/10 transition-colors`}
+                                  className={`shrink-0 h-8 w-8 flex items-center justify-center ${theme.tint} ${theme.text} text-sm font-bold rounded-lg hover:bg-foreground/10 transition-colors`}
                                 >
                                   {q.questionNumber}
                                 </button>
@@ -367,13 +367,13 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                   {q.topics?.slice(0, 2).map((topic) => (
                                     <span
                                       key={topic}
-                                      className="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded truncate max-w-[200px]"
+                                      className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded truncate max-w-[200px]"
                                     >
                                       {topic}
                                     </span>
                                   ))}
                                   {(!q.topics || q.topics.length === 0) && (
-                                    <span className="text-slate-600 text-xs">No topics tagged</span>
+                                    <span className="text-muted-dim text-xs">No topics tagged</span>
                                   )}
                                 </div>
 
@@ -398,7 +398,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
 
                         {/* Loading state for expanded */}
                         {isExpanded && paperQuestions.length === 0 && loadingQuestions && (
-                          <div className="border-t border-slate-800 p-4 text-center">
+                          <div className="border-t border-border p-4 text-center">
                             <div className={`h-6 w-6 border-3 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto`} />
                           </div>
                         )}
@@ -410,11 +410,11 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
             ))}
           </div>
         ) : (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
+          <div className="bg-card border border-border rounded-xl p-8">
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-slate-600 mx-auto mb-4" />
+              <FileText className="h-12 w-12 text-muted-faint mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Past Paper Archive</h3>
-              <p className="text-slate-400">
+              <p className="text-muted-foreground">
                 Past paper walkthroughs coming soon.
               </p>
             </div>
@@ -426,28 +426,28 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
           <div className="grid sm:grid-cols-2 gap-4 mt-12">
             <Link
               href={`/explorer?c=${courseId}`}
-              className="group flex items-center gap-4 bg-slate-900 border border-slate-800 hover:border-white/25 rounded-xl p-5 transition-colors"
+              className="group flex items-center gap-4 bg-card border border-border hover:border-foreground/25 rounded-xl p-5 transition-colors"
             >
               <div className={`p-3 ${theme.tint} rounded-lg shrink-0`}>
                 <Compass className={`h-6 w-6 ${theme.text}`} />
               </div>
               <div className="min-w-0">
-                <h3 className="font-semibold text-slate-100">Topic Explorer</h3>
-                <p className="text-sm text-slate-400">
+                <h3 className="font-semibold text-foreground">Topic Explorer</h3>
+                <p className="text-sm text-muted-foreground">
                   Filter these questions by topic and build a custom worksheet in the Explorer.
                 </p>
               </div>
             </Link>
             <Link
               href="/exam-hall"
-              className="group flex items-center gap-4 bg-slate-900 border border-slate-800 hover:border-white/25 rounded-xl p-5 transition-colors"
+              className="group flex items-center gap-4 bg-card border border-border hover:border-foreground/25 rounded-xl p-5 transition-colors"
             >
               <div className={`p-3 ${theme.tint} rounded-lg shrink-0`}>
                 <GraduationCap className={`h-6 w-6 ${theme.text}`} />
               </div>
               <div className="min-w-0">
-                <h3 className="font-semibold text-slate-100">Exam Hall</h3>
-                <p className="text-sm text-slate-400">
+                <h3 className="font-semibold text-foreground">Exam Hall</h3>
+                <p className="text-sm text-muted-foreground">
                   Exam countdown, topic checklists and daily warm-up questions.
                 </p>
               </div>
