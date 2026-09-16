@@ -277,7 +277,7 @@ const PROBE = `(() => {
 
   const out = {
     total: 0, measured: 0, blank: 0, script: 0, hidden: 0, zeroBox: 0,
-    faded: 0, onBitmap: 0, unreadableColour: 0, fails: [],
+    faded: 0, onBitmap: 0, unreadableColour: 0, transparentText: 0, fails: [],
   };
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const seen = new Set();
@@ -302,6 +302,16 @@ const PROBE = `(() => {
     }
     if (fade) { out.faded++; continue; }
     if (!valid(cs.color)) { out.unreadableColour++; continue; }
+    /* Transparent text is meant to be invisible, and KaTeX relies on it.
+       A phantom reserves the width of an expression without drawing it, so
+       working lines stay aligned under one another, and KaTeX renders that as
+       color: transparent. Composited, transparent text IS its own background,
+       so this reported 36 characters at exactly 1:1 on notes/discriminant, in
+       BOTH themes, and called the site broken. The one page failing out of 287
+       was the check being wrong.
+       No backticks in this comment: it lives inside the probe's own template
+       literal, and the first version of it ended the string. */
+    if (alphaOf(cs.color) === 0) { out.transparentText++; continue; }
     const bgs = backdrops(el);
     if (!bgs) { out.onBitmap++; continue; }
     out.measured++;
@@ -335,7 +345,7 @@ const PROBE = `(() => {
 const all = [];
 const totals = {
   total: 0, measured: 0, script: 0, hidden: 0, zeroBox: 0,
-  faded: 0, onBitmap: 0, unreadableColour: 0,
+  faded: 0, onBitmap: 0, unreadableColour: 0, transparentText: 0,
 };
 const add = r => { for (const k of Object.keys(totals)) totals[k] += r[k] || 0; };
 
@@ -500,9 +510,11 @@ await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
 console.log(`\n  [${THEME}] ${totals.measured} of ${totals.total} text nodes measured`);
 console.log(`  not measured: ${totals.script} script/style, ${totals.hidden} hidden, `
           + `${totals.zeroBox} zero-box, ${totals.faded} under an opacity, `
-          + `${totals.onBitmap} on a bitmap, ${totals.unreadableColour} unreadable colour`);
+          + `${totals.onBitmap} on a bitmap, ${totals.transparentText} transparent `
+          + `(KaTeX \phantom), ${totals.unreadableColour} unreadable colour`);
 const accounted = totals.measured + totals.script + totals.hidden + totals.zeroBox
-                + totals.faded + totals.onBitmap + totals.unreadableColour;
+                + totals.faded + totals.onBitmap + totals.transparentText
+                + totals.unreadableColour;
 t.check(accounted === totals.total,
   `every text node is accounted for (${accounted} of ${totals.total})`);
 t.check(totals.unreadableColour === 0,
