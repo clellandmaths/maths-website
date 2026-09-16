@@ -482,6 +482,95 @@ by more than 10 KB.
 
 ---
 
+## Second pass — dark chrome, and dark back to blue-grey
+
+The first pass shipped and **did not look good**. Two separate problems, and only
+one of them was about light mode.
+
+### Dark mode had changed, and that was a side effect rather than a decision
+
+Replacing 499 slate literals with tokens moved every surface from blue-grey to
+neutral grey, because the tokens were neutral and slate is blue. Nothing about
+light mode required it. The dark palette is now slate again, at the same
+lightness ladder:
+
+```
+--card   #16161a -> #0f172b      --muted-foreground #9a9aa2 -> #90a1b9
+--muted  #333338 -> #1d293d      --muted-faint      #616169 -> #566b85
+--border #232328 -> #1d293d      --foreground       #f5f5f7 -> #f1f5f9
+--muted-hover #43434a -> #314158
+```
+
+`--background` and `--muted-dim` are unchanged: neither was ever a slate
+literal. `--muted-faint` went to `#566b85` rather than slate-600 `#45556c`
+because slate-600 is 2.35:1 on a card and this tier's own comment promises the
+3:1 non-text guide.
+
+**One thing could not be restored.** `text-slate-300` (`#cad5e2`) was the
+secondary body tier and was merged into `--foreground` with slate-100/200.
+Splitting it again means re-deciding 84 call sites by hand. Body text is
+therefore brighter than it was; if that ever reads wrong, the fix is a
+`--foreground-2` token and a pass over those sites.
+
+### The chrome is dark in both themes
+
+The navigation bar, the footer and the home hero use **only tokens** — so
+re-declaring the palette on those elements turns each subtree dark with no
+component changes. `.on-dark` and `body > footer` join the existing
+`:root[data-theme="dark"]` selector rather than getting a third copy of the
+palette, which would be a third thing to keep in step.
+
+`components/Footer.tsx` was never edited. It is not this branch's to touch, and
+a selector reaches it perfectly well.
+
+**Two things the scope alone did not fix**, both found by `check:contrast`:
+
+- **Scoping tokens is not scoping colour.** The home `<h1>` has no colour class,
+  so it inherited the *computed* colour from `body` — resolved against the light
+  palette long before it reached the dark hero. "Pass your" came back at 1.1:1,
+  dark ink on black. `.on-dark` sets `color` as well as the tokens.
+- **The glass was dark-coloured but not dark enough.** `rgba(2, 6, 23, 0.8)` over
+  a light page composites to `#333644`, and the magenta *Academy* link sat at
+  3.7:1 on it. At `0.92` it is `#151929` and the link is 5.38:1.
+
+### The home hero is a black band
+
+`LogoAnimation`'s geometry was pixel-measured against the logo asset and its own
+comments describe the motif as *mint-on-black*; on a white page it is 1.05:1 and
+simply is not there. The hero is `on-dark`, so the bar and the hero read as one
+black block and the page turns light at *Choose your course*.
+
+### The light logo variant is gone
+
+With both chrome regions dark, the original mark is correct everywhere it
+appears. The `content` swap and `clelland-maths-logo-light.png` are deleted. The
+measurements behind `#0b5d57` are kept above, in case a light-background use of
+the mark ever appears.
+
+### Flatness was an edge problem, not a fill problem
+
+`--border` in light went `#e2e2e8` -> `#d7d7e0`. A light interface separates with
+**edges** where a dark one separates with **lightness**: `bg-card/40` over the
+page is `#f8f8fa`, and although the alpha maths is symmetric with dark, small
+luminance differences near white are far less visible than the same differences
+near black. The page and card tones are unchanged.
+
+### The expensive lesson: a mass rename breaks checks that select on class names
+
+`check:nomarkscheme`, `check:another` and `check:card` select overlays and cards
+by utility class — `div.fixed.inset-0.z-50.bg-slate-950`, `div.bg-slate-900`.
+Step 4 renamed those classes across 51 files and **the browser suite was not
+re-run**, so all three had been red on `dev` since `4c6ab02` while the source
+checks, the build and both contrast sweeps stayed green.
+
+They failed loudly when finally run — `undefined rows in Focus` — so nothing was
+hidden. Nobody had looked.
+
+**After a mass rename, run the browser checks.** The source checks and the build
+cannot see a selector that has stopped matching, because it is a string.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.

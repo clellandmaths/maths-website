@@ -43,7 +43,12 @@
   --foreground: #16161a;    /* ink. 16.86:1 on the page, 18.04:1 on a card */
   --card: #ffffff;
   --card-foreground: #16161a;
-  --border: #e2e2e8;
+  /* Darker than it looks like it should be. A light interface separates with
+     EDGES where a dark one separates with lightness: `bg-card/40` over the page
+     is #f8f8fa, a lift of nothing, and small luminance differences near white
+     are far less visible than the same differences near black. At #e2e2e8 the
+     cards had borders that measured fine and read as nothing. */
+  --border: #d7d7e0;
   --muted: #ececf1;
   /**
    * The control surface's hover, one step up from `--muted`.
@@ -108,22 +113,23 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --background: #0a0a0c;    /* ink — near-true-black, softened for full-page use */
-    --foreground: #f5f5f7;    /* paper */
-    --card: #16161a;          /* surface */
+    --foreground: #f1f5f9;    /* paper. 18.06:1 on the page, 16.28:1 on a card */
+    --card: #0f172b;          /* surface. 1.11:1 off the page, the lift a card has */
     --card-foreground: #f5f5f7;
-    --border: #232328;
-    --muted: #333338;
-    --muted-hover: #43434a;
-    --muted-faint: #616169;
-    --glass: rgba(2, 6, 23, 0.8);
+    --border: #1d293d;
+    --muted: #1d293d;
+    --muted-hover: #314158;
+    --muted-faint: #566b85;
+    --glass: rgba(2, 6, 23, 0.92);
     --glass-line: rgba(30, 41, 59, 0.5);
     --mint-ink: #ccffed;
-    --muted-foreground: #9a9aa2;
+    --muted-foreground: #90a1b9;
     /* The quietest tier of text — paper counts, worksheet captions, filter
-       headings, "no video yet" markers. Tailwind's slate-500 used to do this job
-       and sits at 3.75:1 on a card, under the 4.5:1 AA asks for text this size.
-       slate-400 passes at 6.96:1 but is too loud for a tier meant to recede.
-       This is between them: 5.20:1 on a card, 5.77:1 on the page background. */
+       headings, "no video yet" markers. It sits between slate-400 and slate-500
+       on purpose: slate-500 is 3.75:1 on a card, under the 4.5:1 AA asks for
+       text this size, and slate-400 passes but is too loud for a tier meant to
+       recede. 5.20:1 on a card, 5.77:1 on the page. Not part of the slate
+       migration — this token was always its own value. */
     --muted-dim: #7b8ca3;
     /* Site-level action colour = the brand magenta from the wordmark.
        Pair with DARK text (text-background) — white on this magenta fails
@@ -134,27 +140,43 @@
   }
 }
 
-/* Dark, chosen. Identical to the block above, declaration for declaration —
-   `check:theme` fails if it is not. */
-:root[data-theme="dark"] {
+/* Dark, chosen — and the regions that stay dark whatever the theme.
+ *
+ * Identical to the block above, declaration for declaration; `check:theme`
+ * fails if it is not.
+ *
+ * **`.on-dark` and the footer join the selector rather than getting a third
+ * copy of the palette.** The navigation bar, the footer and the home hero are
+ * dark in both themes, and every one of them is built entirely out of these
+ * tokens — so re-declaring the tokens on those elements turns the whole subtree
+ * dark with no component changes at all. `body > footer` is a selector rather
+ * than a class because `components/Footer.tsx` is not this branch's to edit.
+ *
+ * A third copy would be a third thing to keep in step, and the two that already
+ * exist are only safe because a check compares them.
+ */
+:root[data-theme="dark"],
+.on-dark,
+body > footer {
   color-scheme: dark;
   --background: #0a0a0c;    /* ink — near-true-black, softened for full-page use */
-  --foreground: #f5f5f7;    /* paper */
-  --card: #16161a;          /* surface */
+  --foreground: #f1f5f9;    /* paper. 18.06:1 on the page, 16.28:1 on a card */
+  --card: #0f172b;          /* surface. 1.11:1 off the page, the lift a card has */
   --card-foreground: #f5f5f7;
-  --border: #232328;
-  --muted: #333338;
-  --muted-hover: #43434a;
-  --muted-faint: #616169;
-  --glass: rgba(2, 6, 23, 0.8);
+  --border: #1d293d;
+  --muted: #1d293d;
+  --muted-hover: #314158;
+  --muted-faint: #566b85;
+  --glass: rgba(2, 6, 23, 0.92);
   --glass-line: rgba(30, 41, 59, 0.5);
   --mint-ink: #ccffed;
-  --muted-foreground: #9a9aa2;
+  --muted-foreground: #90a1b9;
   /* The quietest tier of text — paper counts, worksheet captions, filter
-     headings, "no video yet" markers. Tailwind's slate-500 used to do this job
-     and sits at 3.75:1 on a card, under the 4.5:1 AA asks for text this size.
-     slate-400 passes at 6.96:1 but is too loud for a tier meant to recede.
-     This is between them: 5.20:1 on a card, 5.77:1 on the page background. */
+     headings, "no video yet" markers. It sits between slate-400 and slate-500
+     on purpose: slate-500 is 3.75:1 on a card, under the 4.5:1 AA asks for text
+     this size, and slate-400 passes but is too loud for a tier meant to recede.
+     5.20:1 on a card, 5.77:1 on the page. Not part of the slate migration —
+     this token was always its own value. */
   --muted-dim: #7b8ca3;
   /* Site-level action colour = the brand magenta from the wordmark.
      Pair with DARK text (text-background) — white on this magenta fails
@@ -162,6 +184,23 @@
      logo's own pattern. Course-scoped UI uses lib/course-theme.ts instead. */
   --accent: #ff00ed;
   --accent-hover: #d600c8;
+}
+
+/* A dark region needs a ground of its own, or it is dark tokens over a light
+   page — which is how the footer looked before this: correct colours, no
+   surface, reading as the page running out rather than as a footer.
+   The navigation bar is the exception and needs no rule here: `.glass` gives it
+   one, and being later in the file it wins. */
+.on-dark,
+body > footer {
+  background-color: var(--background);
+  /* **And the ink, not only the tokens.** Scoping the custom properties is not
+     enough on its own: an element with no colour class of its own — the home
+     `<h1>`, for one — inherits the COMPUTED colour from `body`, which was
+     resolved against the light palette long before it reached here. Redeclaring
+     `color` gives the subtree something dark to inherit. `check:contrast` found
+     this as "Pass your" at 1.1:1, dark ink on the dark hero. */
+  color: var(--foreground);
 }
 
 @theme inline {
@@ -221,36 +260,6 @@ body {
   border-bottom: 1px solid var(--glass-line);
 }
 
-/* The logo, swapped rather than filtered.
- *
- * **The motif is the brand mint `#ccffed`, which is 1.05:1 on a light page.**
- * On white the geometric shape behind the wordmark simply vanishes and the mark
- * loses half of itself. No filter recolours one ink and leaves the others, so
- * this swaps the whole asset for a variant whose motif is a deep teal —
- * `#0b5d57`, chosen to hold the relationships the original has in dark: bold
- * against the page (7.04:1 where the mint is 17.99:1) and clearly separated
- * from the magenta wordmark (2.38:1 where the mint is 2.95:1). Every other ink
- * in the file is untouched, and the letters' "white outline" is transparency,
- * so it needs nothing.
- *
- * `content` on an `<img>` rather than two elements toggled by CSS, because the
- * footer also renders this logo and the footer is not this branch's to edit.
- * One rule covers every use of the mark, present and future, and costs no JS.
- *
- * Three blocks, mirroring the palette: light is the default, and the two dark
- * cases put the element's own `src` back.
- */
-img[src$="/clelland-maths-logo.png"] {
-  content: url("/img/logo/clelland-maths-logo-light.png");
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) img[src$="/clelland-maths-logo.png"] {
-    content: normal;
-  }
-}
-:root[data-theme="dark"] img[src$="/clelland-maths-logo.png"] {
-  content: normal;
-}
 
 /* The theme button's glyph, drawn in CSS rather than shipped as markup.
  *

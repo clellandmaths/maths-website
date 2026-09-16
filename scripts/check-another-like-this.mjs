@@ -142,7 +142,7 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
      has a twin — and then the assertions are about a question nobody asked
      about. Tag one row and stay inside it. */
   const rows = await evaluate(`(() => {
-    const cards = [...(${OVERLAY}?.querySelectorAll('div.bg-slate-900\\\\/50') ?? [])]
+    const cards = [...(${OVERLAY}?.querySelectorAll('div.bg-card\\\\/50') ?? [])]
       .filter(d => d.querySelector('.question-content'));
     const i = cards.findIndex(c => ${drawButton('c')});
     if (i < 0) return { n: cards.length, found: -1 };

@@ -83,7 +83,16 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero — editorial, left-aligned, animated logo on the right */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-20 lg:pb-16 overflow-hidden">
+      {/* **The hero is dark in both themes, and that is the design.**
+
+          `LogoAnimation` draws the brand mint on a black ground — its geometry
+          was pixel-measured against the logo asset and its own comments describe
+          the motif as "mint-on-black". On a white page it is 1.05:1 and simply
+          is not there. `on-dark` scopes the dark palette over this section, so
+          the navigation bar and the hero read as one black block and the page
+          turns light at "Choose your course" below. Everything inside is built
+          from tokens, so nothing else in here needed touching. */}
+      <section className="on-dark relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-20 lg:pb-16 overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_420px] gap-12 items-center">
           <div>
           <p className="font-mono text-xs uppercase tracking-widest text-mint-ink mb-4">

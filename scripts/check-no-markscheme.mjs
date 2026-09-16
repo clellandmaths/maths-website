@@ -136,7 +136,7 @@ await withPage({ port: 8171, cdp: 9271, width: 1400, height: 1000 }, async ({
    * is this repo's most expensive recurring mistake and it happened again here.
    */
   const focus = await evaluate(`(() => {
-    const overlay = document.querySelector('div.fixed.inset-0.z-50.bg-slate-950');
+    const overlay = document.querySelector('div.fixed.inset-0.z-50.bg-background');
     if (!overlay) return null;
     const rows = [...overlay.querySelectorAll('div.rounded-xl')]
       .filter(d => d.parentElement && d.parentElement.classList.contains('space-y-4'));
@@ -180,7 +180,7 @@ await withPage({ port: 8171, cdp: 9271, width: 1400, height: 1000 }, async ({
        Hint button and a note on all 19 questions at once. An absent overlay is
        a failure, not something to substitute for. */
     const s = await evaluate(`(() => {
-      const root = document.querySelector('div.fixed.inset-0.z-50.bg-slate-950');
+      const root = document.querySelector('div.fixed.inset-0.z-50.bg-background');
       if (!root) return null;
       const txt = root.textContent || '';
       return {

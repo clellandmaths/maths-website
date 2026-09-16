@@ -33,7 +33,10 @@ export default function Navbar() {
   const [coursesOpen, setCoursesOpen] = useState(false);
 
   return (
-    <nav className="glass fixed top-0 left-0 right-0 z-50">
+    /* `on-dark` keeps the bar dark in both themes — see the palette block in
+       globals.css. The bar is built entirely from tokens, so re-declaring them
+       on this element is all it takes; nothing inside here needed changing. */
+    <nav className="glass on-dark fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

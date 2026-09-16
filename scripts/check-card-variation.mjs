@@ -48,7 +48,7 @@ await withPage({ port: 8132, cdp: 9232 }, async ({ evaluate, click, buttonNamed,
   t.check(Number(showing) > 0, `sidebar reports "Showing ${showing} questions"`);
 
   const card = () => evaluate(`(() => {
-    const c = document.querySelector('.question-card')?.closest('div.bg-slate-900');
+    const c = document.querySelector('.question-card')?.closest('div.bg-card');
     if (!c) return null;
     const t = c.innerText;
     return {
@@ -111,7 +111,7 @@ await withPage({ port: 8132, cdp: 9232 }, async ({ evaluate, click, buttonNamed,
       uids: new Set(items.map(q => q.uid).filter(Boolean)).size,
       distinct: new Set(bodies).size,
       face: (document.querySelector('.question-card')
-        ?.closest('div.bg-slate-900')?.innerText ?? '').split('\\n')[0],
+        ?.closest('div.bg-card')?.innerText ?? '').split('\\n')[0],
     };
   })()`);
 
