@@ -113,7 +113,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
         </p>
       )}
       {draw.state === 'failed' && (
-        <p className="mt-3 text-sm text-amber-300/90">
+        <p className="mt-3 text-sm text-amber-800 dark:text-amber-300/90">
           Could not make a question just now. Try again in a moment.
         </p>
       )}

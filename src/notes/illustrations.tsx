@@ -7,7 +7,7 @@ export const TreeDiagramExample1 = () => {
     return (
       <g>
         <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
-        <text x={midX} y={midY - 10} textAnchor="middle" fill="currentColor" fontSize="12" className="text-emerald-400">{prob}</text>
+        <text x={midX} y={midY - 10} textAnchor="middle" fill="currentColor" fontSize="12" className="text-emerald-800 dark:text-emerald-400">{prob}</text>
         <text x={x2 + (x2 > x1 ? 10 : -10)} y={y2 + 4} textAnchor={x2 > x1 ? "start" : "end"} fill="currentColor" fontSize="14" className="text-foreground">{label}</text>
       </g>
     );
@@ -47,7 +47,7 @@ export const TreeDiagramExample2 = () => {
     return (
       <g>
         <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" className="text-muted-foreground" />
-        <text x={midX} y={midY - 10} textAnchor="middle" fill="currentColor" fontSize="12" className="text-emerald-400">{prob}</text>
+        <text x={midX} y={midY - 10} textAnchor="middle" fill="currentColor" fontSize="12" className="text-emerald-800 dark:text-emerald-400">{prob}</text>
         <text x={x2 + (x2 > x1 ? 10 : -10)} y={y2 + 4} textAnchor={x2 > x1 ? "start" : "end"} fill="currentColor" fontSize="14" className="text-foreground">{label}</text>
       </g>
     );
@@ -86,12 +86,12 @@ export const VennDiagramExample1 = () => (
     <text x="20" y="30" fill="currentColor" fontSize="14" className="text-muted-foreground">&xi;</text>
     <text x="270" y="180" fill="currentColor" fontSize="14" className="text-muted-foreground">20</text>
     
-    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-    <text x="60" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-emerald-400">S</text>
+    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" />
+    <text x="60" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-emerald-800 dark:text-emerald-400">S</text>
     <text x="75" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">25</text>
     
-    <circle cx="180" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400" />
-    <text x="220" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-blue-400">Y</text>
+    <circle cx="180" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-700 dark:text-blue-400" />
+    <text x="220" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-blue-700 dark:text-blue-400">Y</text>
     <text x="205" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">20</text>
     
     <text x="140" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">15</text>
@@ -104,12 +104,12 @@ export const VennDiagramExample2 = () => (
     <text x="20" y="30" fill="currentColor" fontSize="14" className="text-muted-foreground">&xi;</text>
     <text x="270" y="180" fill="currentColor" fontSize="14" className="text-muted-foreground">20</text>
     
-    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-rose-400" />
-    <text x="60" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-rose-400">V</text>
+    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-rose-700 dark:text-rose-400" />
+    <text x="60" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-rose-700 dark:text-rose-400">V</text>
     <text x="75" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">45</text>
     
-    <circle cx="180" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-400" />
-    <text x="220" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-indigo-400">M</text>
+    <circle cx="180" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-600 dark:text-indigo-400" />
+    <text x="220" y="50" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-indigo-600 dark:text-indigo-400">M</text>
     <text x="205" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">30</text>
     
     <text x="140" y="105" textAnchor="middle" fill="currentColor" fontSize="16" className="text-foreground">25</text>
@@ -123,18 +123,18 @@ export const VennDiagramExample3 = () => (
     <text x="270" y="240" fill="currentColor" fontSize="14" className="text-muted-foreground">15</text>
     
     {/* N circle */}
-    <circle cx="110" cy="90" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-400" />
-    <text x="60" y="45" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-red-400">N</text>
+    <circle cx="110" cy="90" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-700 dark:text-red-400" />
+    <text x="60" y="45" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-red-700 dark:text-red-400">N</text>
     <text x="95" y="85" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">20</text>
     
     {/* A circle */}
-    <circle cx="190" cy="90" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400" />
-    <text x="240" y="45" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-blue-400">A</text>
+    <circle cx="190" cy="90" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-700 dark:text-blue-400" />
+    <text x="240" y="45" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-blue-700 dark:text-blue-400">A</text>
     <text x="205" y="85" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">10</text>
     
     {/* D circle */}
-    <circle cx="150" cy="160" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-    <text x="150" y="240" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-emerald-400">D</text>
+    <circle cx="150" cy="160" r="60" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" />
+    <text x="150" y="240" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="bold" className="text-emerald-800 dark:text-emerald-400">D</text>
     <text x="150" y="185" textAnchor="middle" fill="currentColor" fontSize="14" className="text-foreground">15</text>
     
     {/* Intersections */}
@@ -149,7 +149,7 @@ export const VennDiagramExample3 = () => (
 export const PrecedenceNetworkExample2 = () => {
   const Node = ({ x, y, id, time }: { x: number, y: number, id: string, time: string }) => (
     <g transform={`translate(${x},${y})`}>
-      <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" rx="4" />
+      <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" rx="4" />
       <text x="0" y="5" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-foreground">{id}: {time}</text>
     </g>
   );
@@ -191,10 +191,10 @@ export const PrecedenceNetworkExample2 = () => {
 export const ConstructingPertExample3 = () => {
   const Node = ({ x, y, id, dur, est, letVal }: { x: number, y: number, id: string, dur: string, est: string, letVal: string }) => (
     <g transform={`translate(${x},${y})`}>
-      <rect x="0" y="0" width="60" height="40" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-      <line x1="0" y1="20" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-      <line x1="20" y1="20" x2="20" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-      <line x1="40" y1="20" x2="40" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
+      <rect x="0" y="0" width="60" height="40" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" />
+      <line x1="0" y1="20" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" />
+      <line x1="20" y1="20" x2="20" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" />
+      <line x1="40" y1="20" x2="40" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-800 dark:text-emerald-400" />
       <text x="30" y="14" textAnchor="middle" fill="currentColor" fontSize="13" fontWeight="bold" className="text-foreground">{id}</text>
       <text x="10" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">{est}</text>
       <text x="30" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">{dur}</text>
@@ -243,7 +243,7 @@ export const ConstructingPertExample3 = () => {
 };
 
 export const CircleMidpoint = () => (
-  <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto my-4 text-indigo-300">
+  <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto my-4 text-indigo-600 dark:text-indigo-300">
     <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="2" />
     <line x1="43" y1="157" x2="157" y2="43" stroke="currentColor" strokeWidth="2" />
     <circle cx="43" cy="157" r="4" fill="currentColor" />
@@ -258,7 +258,7 @@ export const CircleMidpoint = () => (
 export const CollinearityDiagrams = () => (
   <div className="flex justify-around items-center my-6 gap-4">
     <div className="flex flex-col items-center">
-      <svg viewBox="0 0 111 109" className="w-24 h-24 text-indigo-300">
+      <svg viewBox="0 0 111 109" className="w-24 h-24 text-indigo-600 dark:text-indigo-300">
         <line x1="20" y1="80" x2="50" y2="50" stroke="currentColor" strokeWidth="2" />
         <line x1="50" y1="50" x2="90" y2="40" stroke="currentColor" strokeWidth="2" />
         <circle cx="20" cy="80" r="3" fill="currentColor" />
@@ -274,7 +274,7 @@ export const CollinearityDiagrams = () => (
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="0 0 111 109" className="w-24 h-24 text-indigo-300">
+      <svg viewBox="0 0 111 109" className="w-24 h-24 text-indigo-600 dark:text-indigo-300">
         <line x1="10" y1="90" x2="40" y2="60" stroke="currentColor" strokeWidth="2" />
         <line x1="50" y1="50" x2="80" y2="20" stroke="currentColor" strokeWidth="2" />
         <circle cx="10" cy="90" r="3" fill="currentColor" />
@@ -292,7 +292,7 @@ export const CollinearityDiagrams = () => (
       </div>
     </div>
     <div className="flex flex-col items-center">
-      <svg viewBox="0 0 111 109" className="w-24 h-24 text-indigo-300">
+      <svg viewBox="0 0 111 109" className="w-24 h-24 text-indigo-600 dark:text-indigo-300">
         <line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" strokeWidth="2" />
         <circle cx="20" cy="80" r="3" fill="currentColor" />
         <circle cx="50" cy="50" r="3" fill="currentColor" />
@@ -310,7 +310,7 @@ export const CollinearityDiagrams = () => (
 );
 
 export const GradientTriangle = () => (
-  <svg viewBox="0 0 250 160" className="w-80 h-auto mx-auto my-6 text-indigo-300">
+  <svg viewBox="0 0 250 160" className="w-80 h-auto mx-auto my-6 text-indigo-600 dark:text-indigo-300">
     <polygon points="40,120 160,120 160,20" fill="none" stroke="currentColor" strokeWidth="2" />
     <line x1="40" y1="120" x2="160" y2="20" stroke="currentColor" strokeWidth="2" />
     
@@ -340,7 +340,7 @@ export const GradientTriangle = () => (
 );
 
 export const GradientTypes = () => (
-  <div className="flex justify-between items-center my-6 gap-2 text-indigo-300">
+  <div className="flex justify-between items-center my-6 gap-2 text-indigo-600 dark:text-indigo-300">
     <div className="flex flex-col items-center">
       <svg viewBox="0 0 100 100" className="w-16 h-16">
         <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="1" />
@@ -377,7 +377,7 @@ export const GradientTypes = () => (
 );
 
 export const Ex1Gradient = () => (
-  <svg viewBox="0 0 150 100" className="w-32 h-auto text-indigo-300">
+  <svg viewBox="0 0 150 100" className="w-32 h-auto text-indigo-600 dark:text-indigo-300">
     <line x1="20" y1="10" x2="20" y2="80" stroke="currentColor" strokeWidth="1" />
     <line x1="10" y1="70" x2="140" y2="70" stroke="currentColor" strokeWidth="1" />
     <polygon points="140,67 145,70 140,73" fill="currentColor" />
@@ -392,7 +392,7 @@ export const Ex1Gradient = () => (
 );
 
 export const Ex3Gradient = () => (
-  <svg viewBox="0 0 150 100" className="w-32 h-auto text-indigo-300">
+  <svg viewBox="0 0 150 100" className="w-32 h-auto text-indigo-600 dark:text-indigo-300">
     <line x1="50" y1="15" x2="50" y2="90" stroke="currentColor" strokeWidth="1" />
     <polygon points="47,15 50,10 53,15" fill="currentColor" />
     <text x="35" y="20" fill="currentColor" fontSize="12">y</text>
@@ -411,7 +411,7 @@ export const Ex3Gradient = () => (
 );
 
 export const Ex4Gradient = () => (
-  <svg viewBox="0 0 150 120" className="w-32 h-auto text-indigo-300">
+  <svg viewBox="0 0 150 120" className="w-32 h-auto text-indigo-600 dark:text-indigo-300">
     <line x1="60" y1="15" x2="60" y2="110" stroke="currentColor" strokeWidth="1" />
     <polygon points="57,15 60,10 63,15" fill="currentColor" />
     <text x="45" y="20" fill="currentColor" fontSize="12">y</text>
@@ -536,7 +536,7 @@ export const Circumcentre = () => (
 );
 
 export const Altitudes = () => (
-  <svg viewBox="0 0 200 100" className="w-48 h-auto mx-auto my-4 text-indigo-300">
+  <svg viewBox="0 0 200 100" className="w-48 h-auto mx-auto my-4 text-indigo-600 dark:text-indigo-300">
     <polygon points="20,80 180,80 120,20" fill="none" stroke="currentColor" strokeWidth="2" />
     <line x1="120" y1="20" x2="120" y2="80" stroke="#f87171" strokeWidth="2" />
     <rect x="116" y="76" width="4" height="4" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -677,7 +677,7 @@ export const Centroid = () => (
 );
 
 export const IntersectionExample = () => (
-  <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto my-4 text-indigo-300">
+  <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto my-4 text-indigo-600 dark:text-indigo-300">
     <polygon points="40,40 180,80 80,160" fill="none" stroke="currentColor" strokeWidth="2" />
     <line x1="40" y1="40" x2="130" y2="120" stroke="#f87171" strokeWidth="2" />  {/* Median RT */}
     <line x1="180" y1="80" x2="60" y2="100" stroke="#3b82f6" strokeWidth="2" />  {/* Altitude QS */}
@@ -1364,7 +1364,7 @@ export const SyntheticDivision = ({ root, coeffs, midRow, bottomRow }: { root: s
           {bottomRow.map((b, i) => (
             <td 
               key={`b-${i}`} 
-              className={`px-3 md:px-4 pt-2 border-t-2 border-muted-foreground ${i === bottomRow.length - 1 ? 'border-l-2 text-green-400 font-bold' : ''}`}
+              className={`px-3 md:px-4 pt-2 border-t-2 border-muted-foreground ${i === bottomRow.length - 1 ? 'border-l-2 text-green-800 dark:text-green-400 font-bold' : ''}`}
             >
               {b}
             </td>

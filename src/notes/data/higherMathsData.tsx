@@ -665,7 +665,7 @@ export const higherMathsData: Section[] = [
               <p className="font-bold my-4">or</p>
               <BlockMath math="U_n = aU_{n-1} + b" />
               <p className="text-foreground-2 mt-2">where <InlineMath math="U_1" /> is the initial value</p>
-              <p className="mt-4 text-indigo-300"><InlineMath math="a \neq 0 \text{ and } b \in \mathbb{R}" /></p>
+              <p className="mt-4 text-indigo-600 dark:text-indigo-300"><InlineMath math="a \neq 0 \text{ and } b \in \mathbb{R}" /></p>
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -698,7 +698,7 @@ export const higherMathsData: Section[] = [
                  <p><strong>b)</strong> Continue calculating terms:</p>
                  <BlockMath math="U_4 = 0.6(9.352) + 4 = 9.6112" />
                  <BlockMath math="U_5 = 0.6(9.6112) + 4 = 9.76672" />
-                 <p className="mt-2 text-indigo-300">We see that <InlineMath math="U_5 > 9.7" />. The smallest value of <InlineMath math="n" /> is <InlineMath math="5" />.</p>
+                 <p className="mt-2 text-indigo-600 dark:text-indigo-300">We see that <InlineMath math="U_5 > 9.7" />. The smallest value of <InlineMath math="n" /> is <InlineMath math="5" />.</p>
               </div>
             )
           },
@@ -722,7 +722,7 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="U_1 = 0.78(156) + 25 = 146.68" />
                  <BlockMath math="U_2 = 0.78(146.68) + 25 = 139.4104" />
                  <BlockMath math="U_3 = 0.78(139.4104) + 25 = 133.740112" />
-                 <p className="mt-2 text-indigo-300">Amount of drug remaining after 24 hours is approximately <strong className="text-foreground">133.74 ml</strong>.</p>
+                 <p className="mt-2 text-indigo-600 dark:text-indigo-300">Amount of drug remaining after 24 hours is approximately <strong className="text-foreground">133.74 ml</strong>.</p>
               </div>
             )
           }
@@ -769,7 +769,7 @@ export const higherMathsData: Section[] = [
                  <p>Substitute <InlineMath math="a=3.9" /> into (1):</p>
                  <BlockMath math="3.6 = 4(3.9) + b" />
                  <BlockMath math="3.6 = 15.6 + b \implies b = -12" />
-                 <p className="mt-4 text-indigo-300">So <InlineMath math="a = 3.9" /> and <InlineMath math="b = -12" />.</p>
+                 <p className="mt-4 text-indigo-600 dark:text-indigo-300">So <InlineMath math="a = 3.9" /> and <InlineMath math="b = -12" />.</p>
                </div>
              )
            }
@@ -782,17 +782,17 @@ export const higherMathsData: Section[] = [
          theory: (
            <div className="space-y-8">
              <div className="bg-red-500/10 p-6 rounded-xl border border-red-500/20">
-               <h4 className="font-bold text-red-400 text-2xl mb-4">Divergence</h4>
+               <h4 className="font-bold text-red-700 dark:text-red-400 text-2xl mb-4">Divergence</h4>
                <p>If we have a recurrence relation of the form <InlineMath math="U_{n+1} = aU_n + b" /></p>
-               <p className="mt-2">where <InlineMath math="a < -1 \text{ or } a > 1" /> then the sequence will <strong className="text-red-400">diverge</strong>.</p>
-               <p className="text-red-300/80 italic mt-2">i.e. it will keep increasing, decreasing or oscillating.</p>
+               <p className="mt-2">where <InlineMath math="a < -1 \text{ or } a > 1" /> then the sequence will <strong className="text-red-700 dark:text-red-400">diverge</strong>.</p>
+               <p className="text-red-700 dark:text-red-300/80 italic mt-2">i.e. it will keep increasing, decreasing or oscillating.</p>
              </div>
              
              <div className="bg-emerald-500/10 p-6 rounded-xl border border-emerald-500/20">
-               <h4 className="font-bold text-emerald-400 text-2xl mb-4">Convergence</h4>
+               <h4 className="font-bold text-emerald-800 dark:text-emerald-400 text-2xl mb-4">Convergence</h4>
                <p>If we have a recurrence relation of the form <InlineMath math="U_{n+1} = aU_n + b" /></p>
-               <p className="mt-2">where <InlineMath math="-1 < a < 1" /> then the sequence will <strong className="text-emerald-400">converge</strong> to a limit.</p>
-               <p className="text-emerald-300/80 italic mt-2">i.e. it will settle at approximately the same value.</p>
+               <p className="mt-2">where <InlineMath math="-1 < a < 1" /> then the sequence will <strong className="text-emerald-800 dark:text-emerald-400">converge</strong> to a limit.</p>
+               <p className="text-emerald-800 dark:text-emerald-300/80 italic mt-2">i.e. it will settle at approximately the same value.</p>
              </div>
              
              <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10">
@@ -834,14 +834,14 @@ export const higherMathsData: Section[] = [
                  <div className="h-px w-full bg-foreground/10 my-4"></div>
                  <p><strong>b)</strong> Using the formula <InlineMath math="L = \frac{b}{1 - a}" />:</p>
                  <BlockMath math="\begin{aligned} L &= \frac{5}{1 - 0.6} \\ &= \frac{5}{0.4} \\ &= 12.5 \end{aligned}" />
-                 <p className="text-indigo-300 mt-2">The limit is <strong className="text-foreground">12.5</strong>.</p>
+                 <p className="text-indigo-600 dark:text-indigo-300 mt-2">The limit is <strong className="text-foreground">12.5</strong>.</p>
                </div>
              )
            },
            {
              id: "lim-ex2",
              question: (
-                 <div className="space-y-4 text-emerald-100">
+                 <div className="space-y-4 text-emerald-800 dark:text-emerald-100">
                    <p>The deer population in a forest is estimated to drop by 7.3% each year.</p>
                    <p>Each year, 20 deer are introduced to the forest. The initial deer population is 200.</p>
                    <p className="text-foreground">a) How many deer will there be in the forest after 3 years?</p>
@@ -855,14 +855,14 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="U_1 = 0.927(200) + 20 = 205.4" />
                  <BlockMath math="U_2 = 0.927(205.4) + 20 = 210.4058" />
                  <BlockMath math="U_3 = 0.927(210.4058) + 20 \approx 215.046" />
-                 <p className="text-emerald-300 mt-2">There will be approximately <strong className="text-foreground">215</strong> deer after 3 years.</p>
+                 <p className="text-emerald-800 dark:text-emerald-300 mt-2">There will be approximately <strong className="text-foreground">215</strong> deer after 3 years.</p>
                  
                  <div className="h-px w-full bg-foreground/10 my-4"></div>
                  
                  <p><strong>b)</strong> To find the long-term effect, calculate the limit:</p>
                  <p>Limit exists since <InlineMath math="-1 < 0.927 < 1" />.</p>
                  <BlockMath math="\begin{aligned} L &= \frac{b}{1 - a} \\ &= \frac{20}{1 - 0.927} \\ &= \frac{20}{0.073} \\ &\approx 273.97 \end{aligned}" />
-                 <p className="text-emerald-300 mt-2">The population will settle at around <strong className="text-foreground">274</strong> deer.</p>
+                 <p className="text-emerald-800 dark:text-emerald-300 mt-2">The population will settle at around <strong className="text-foreground">274</strong> deer.</p>
                </div>
              )
            }
@@ -914,19 +914,19 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="U_1 = 0.983(500{,}000) + 8000 = 499{,}500" />
                  <BlockMath math="\vdots" />
                  <BlockMath math="U_8 \approx 496{,}252.17" />
-                 <p className="text-indigo-300 mt-2">The bank will have approximately <strong className="text-foreground">496,252</strong> customers.</p>
+                 <p className="text-indigo-600 dark:text-indigo-300 mt-2">The bank will have approximately <strong className="text-foreground">496,252</strong> customers.</p>
 
                  <div className="h-px w-full bg-foreground/10 my-6"></div>
 
                  <p><strong>b)</strong> Long term limit:</p>
                  <BlockMath math="\begin{aligned} L &= \frac{8000}{1 - 0.983} \\ &= \frac{8000}{0.017} \\ &\approx 470{,}588 \end{aligned}" />
-                 <p className="text-indigo-300 mt-2">The number of customers will fall and settle at approximately <strong className="text-foreground">470,588</strong>.</p>
+                 <p className="text-indigo-600 dark:text-indigo-300 mt-2">The number of customers will fall and settle at approximately <strong className="text-foreground">470,588</strong>.</p>
 
                  <div className="h-px w-full bg-foreground/10 my-6"></div>
 
                  <p><strong>c)</strong> To maintain 0.5 million customers, the limit must be 500,000.</p>
                  <BlockMath math="\begin{aligned} 500{,}000 &= \frac{b}{1 - 0.983} \\ 500{,}000 &= \frac{b}{0.017} \\ b &= 500{,}000 \times 0.017 \\ &= 8500 \end{aligned}" />
-                 <p className="text-indigo-300 mt-2">The bank would need to attract <strong className="text-foreground">8500</strong> new customers each 6 month period.</p>
+                 <p className="text-indigo-600 dark:text-indigo-300 mt-2">The bank would need to attract <strong className="text-foreground">8500</strong> new customers each 6 month period.</p>
                </div>
              )
            }
@@ -969,7 +969,7 @@ export const higherMathsData: Section[] = [
             
             <div className="flex flex-col gap-6 mt-4">
               <div className="bg-red-500/10 p-5 rounded-xl border border-red-500/20">
-                <h4 className="font-bold text-red-400 text-lg mb-2">Division by Zero</h4>
+                <h4 className="font-bold text-red-700 dark:text-red-400 text-lg mb-2">Division by Zero</h4>
                 <p className="text-base text-foreground-2">Since we cannot divide any number by zero, the domains of functions involving fractions must exclude numbers which would result in a denominator of zero.</p>
                 <div className="mt-4 space-y-2">
                   <p><InlineMath math="f(x) = \frac{3}{x} \implies x \neq 0" /></p>
@@ -978,7 +978,7 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
               <div className="bg-emerald-500/10 p-5 rounded-xl border border-emerald-500/20">
-                <h4 className="font-bold text-emerald-400 text-lg mb-2">Even Roots</h4>
+                <h4 className="font-bold text-emerald-800 dark:text-emerald-400 text-lg mb-2">Even Roots</h4>
                 <p className="text-base text-foreground-2">We cannot evaluate an even root of a negative number. The domain must exclude numbers which would result in negative numbers under the root.</p>
                 <div className="mt-4 space-y-2">
                   <p><InlineMath math="f(x) = \sqrt{x} \implies x \geq 0" /></p>
@@ -1125,7 +1125,7 @@ export const higherMathsData: Section[] = [
             <p>If a function is defined on a suitable domain, then it will have an inverse function.</p>
             <div className="bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/20 mt-4 text-center">
               <p>The domain of an inverse function is the range of the original function and vice versa.</p>
-              <p className="mt-2 text-indigo-300"><InlineMath math="f^{-1}(f(x)) = x" /></p>
+              <p className="mt-2 text-indigo-600 dark:text-indigo-300"><InlineMath math="f^{-1}(f(x)) = x" /></p>
             </div>
             <div className="mt-6 flex flex-col gap-6 p-4 bg-foreground/5 rounded-xl border border-foreground/10">
                {/* Box Diagrams manually recreated to look like the uploaded image */}
@@ -1277,44 +1277,44 @@ export const higherMathsData: Section[] = [
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="f(x) + a" /></td>
                       <td className="py-3 px-2">Graph moves up by <InlineMath math="a" /> units</td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, y + a)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, y + a)" /></span></td>
                     </tr>
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="f(x) - a" /></td>
                       <td className="py-3 px-2">Graph moves down by <InlineMath math="a" /> units</td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, y - a)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, y - a)" /></span></td>
                     </tr>
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="af(x)" /></td>
                       <td className="py-3 px-2">Vertical stretch by <InlineMath math="a" /></td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, ay)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, ay)" /></span></td>
                     </tr>
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="-f(x)" /></td>
                       <td className="py-3 px-2">Reflect over x-axis</td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, -y)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x, -y)" /></span></td>
                     </tr>
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="f(x + a)" /></td>
                       <td className="py-3 px-2">Graph moves left by <InlineMath math="a" /> units</td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x - a, y)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x - a, y)" /></span></td>
                     </tr>
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="f(x - a)" /></td>
                       <td className="py-3 px-2">Graph moves right by <InlineMath math="a" /> units</td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x + a, y)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (x + a, y)" /></span></td>
                     </tr>
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="f(-x)" /></td>
                       <td className="py-3 px-2">Reflect over y-axis</td>
-                      <td className="py-3 px-2"><span className="text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (-x, y)" /></span></td>
+                      <td className="py-3 px-2"><span className="text-indigo-600 dark:text-indigo-300 font-mono text-xs whitespace-nowrap"><InlineMath math="\to (-x, y)" /></span></td>
                     </tr>
                   </tbody>
                 </table>
             </div>
             
             <div className="bg-amber-500/10 p-5 rounded-xl border border-amber-500/20 mt-4">
-              <h4 className="font-bold text-amber-400 mb-2">Remember:</h4>
+              <h4 className="font-bold text-amber-800 dark:text-amber-400 mb-2">Remember:</h4>
               <p className="text-sm">Changes <strong>inside</strong> the bracket affect the <strong>x-coordinates</strong> (horizontally) and do the <em>opposite</em> of what you might expect.</p>
               <p className="text-sm mt-2">Changes <strong>outside</strong> the bracket affect the <strong>y-coordinates</strong> (vertically) and do exactly what they say.</p>
             </div>
@@ -1358,19 +1358,19 @@ export const higherMathsData: Section[] = [
                     </thead>
                     <tbody className="divide-y divide-foreground/10 font-mono text-sm">
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-emerald-400">(-3, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-emerald-800 dark:text-emerald-400">(-3, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(-1, 0)</td>
-                        <td className="p-2 text-indigo-400">(-1, 0)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(-1, 0)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-red-400">(-2, 10)</td>
+                        <td className="p-2 border-r border-foreground/10 text-red-700 dark:text-red-400">(-2, 10)</td>
                         <td className="p-2 border-r border-foreground/10">(0, 10)</td>
-                        <td className="p-2 text-indigo-400">(0, -10)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(0, -10)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-blue-400">(1, -17)</td>
+                        <td className="p-2 border-r border-foreground/10 text-blue-700 dark:text-blue-400">(1, -17)</td>
                         <td className="p-2 border-r border-foreground/10">(3, -17)</td>
-                        <td className="p-2 text-indigo-400">(3, 17)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(3, 17)</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1408,28 +1408,28 @@ export const higherMathsData: Section[] = [
                     </thead>
                     <tbody className="divide-y divide-foreground/10 font-mono text-sm text-center">
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-purple-400">(-1, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-purple-700 dark:text-purple-400">(-1, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(-0.5, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(-0.5, 0)</td>
-                        <td className="p-2 text-indigo-400">(-0.5, 1)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(-0.5, 1)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-emerald-400">(0, 2)</td>
+                        <td className="p-2 border-r border-foreground/10 text-emerald-800 dark:text-emerald-400">(0, 2)</td>
                         <td className="p-2 border-r border-foreground/10">(0, 2)</td>
                         <td className="p-2 border-r border-foreground/10">(0, 6)</td>
-                        <td className="p-2 text-indigo-400">(0, 7)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(0, 7)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-blue-400">(1, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-blue-700 dark:text-blue-400">(1, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(0.5, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(0.5, 0)</td>
-                        <td className="p-2 text-indigo-400">(0.5, 1)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(0.5, 1)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-foreground/10 text-red-400">(3, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-red-700 dark:text-red-400">(3, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(1.5, 0)</td>
                         <td className="p-2 border-r border-foreground/10">(1.5, 0)</td>
-                        <td className="p-2 text-indigo-400">(1.5, 1)</td>
+                        <td className="p-2 text-indigo-600 dark:text-indigo-400">(1.5, 1)</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1461,7 +1461,7 @@ export const higherMathsData: Section[] = [
             </div>
 
             <div className="bg-indigo-500/10 p-5 rounded-xl border border-indigo-500/20 mt-4">
-              <h4 className="font-bold text-indigo-300 mb-2">The Turning Point:</h4>
+              <h4 className="font-bold text-indigo-600 dark:text-indigo-300 mb-2">The Turning Point:</h4>
               <p>For a quadratic in the form <InlineMath math="y = a(x + p)^2 + q" />:</p>
               <ul className="list-disc list-inside ml-4 mt-2">
                 <li>The turning point is at <InlineMath math="(-p, q)" />.</li>
@@ -1627,7 +1627,7 @@ export const higherMathsData: Section[] = [
           <div className="space-y-6">
             <p>A <strong>logarithmic function</strong> is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a > 0" /> and <InlineMath math="x > 0" />.</p>
             <p>The relationship between exponential functions and logarithmic functions can be expressed as:</p>
-            <div className="bg-indigo-500/10 p-5 rounded-xl border border-indigo-500/20 text-center font-mono text-xl text-indigo-300">
+            <div className="bg-indigo-500/10 p-5 rounded-xl border border-indigo-500/20 text-center font-mono text-xl text-indigo-600 dark:text-indigo-300">
                <BlockMath math="y = a^x \iff \log_a y = x" />
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -3700,7 +3700,7 @@ export const higherMathsData: Section[] = [
          theory: (
            <div className="space-y-8 text-lg">
              <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-6">
-                <h4 className="font-bold text-foreground text-xl mb-4 text-emerald-400">Increasing Functions</h4>
+                <h4 className="font-bold text-foreground text-xl mb-4 text-emerald-800 dark:text-emerald-400">Increasing Functions</h4>
                 <div className="mb-4 bg-foreground/5 rounded-lg py-4">
                    <IncreasingFunctionGraph />
                 </div>
@@ -3709,7 +3709,7 @@ export const higherMathsData: Section[] = [
              </div>
              
              <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-6">
-                <h4 className="font-bold text-foreground text-xl mb-4 text-rose-400">Decreasing Functions</h4>
+                <h4 className="font-bold text-foreground text-xl mb-4 text-rose-700 dark:text-rose-400">Decreasing Functions</h4>
                 <div className="mb-4 bg-foreground/5 rounded-lg py-4">
                    <DecreasingFunctionGraph />
                 </div>
@@ -3740,7 +3740,7 @@ export const higherMathsData: Section[] = [
                  <p>To show it is never decreasing, we must show <InlineMath math="f'(x) \geq 0" /> for all <InlineMath math="x" />.</p>
                  <BlockMath math="\begin{aligned} f'(x) &= 3x^2 - 6x + 3 \\ &= 3(x^2 - 2x + 1) \\ &= 3(x - 1)^2 \end{aligned}" />
                  <p>Since <InlineMath math="(x - 1)^2 \geq 0" /> for all real <InlineMath math="x" />, then <InlineMath math="3(x-1)^2 \geq 0" />.</p>
-                 <p className="text-emerald-300">Therefore, <InlineMath math="f'(x) \geq 0" />, meaning the curve is never decreasing.</p>
+                 <p className="text-emerald-800 dark:text-emerald-300">Therefore, <InlineMath math="f'(x) \geq 0" />, meaning the curve is never decreasing.</p>
                </div>
              )
            },
@@ -3753,7 +3753,7 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="\begin{aligned} \frac{dy}{dx} &= -4 - 3x^2 \\ &= - (4 + 3x^2) \end{aligned}" />
                  <p>Since <InlineMath math="3x^2 \geq 0" /> for all real <InlineMath math="x" />, then <InlineMath math="4 + 3x^2 > 0" />.</p>
                  <p>So <InlineMath math="-(4 + 3x^2) < 0" />.</p>
-                 <p className="text-rose-300">Therefore, <InlineMath math="\frac{dy}{dx} < 0" />, meaning the curve is always decreasing.</p>
+                 <p className="text-rose-700 dark:text-rose-300">Therefore, <InlineMath math="\frac{dy}{dx} < 0" />, meaning the curve is always decreasing.</p>
                </div>
              )
            }
@@ -3835,11 +3835,11 @@ export const higherMathsData: Section[] = [
                       <tbody>
                         <tr>
                           <td className="border border-foreground/20 p-2"><InlineMath math="dy/dx" /></td>
-                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2 text-emerald-800 dark:text-emerald-400">+</td>
                           <td className="border border-foreground/20 p-2">0</td>
-                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2 text-emerald-800 dark:text-emerald-400">+</td>
                           <td className="border border-foreground/20 p-2">0</td>
-                          <td className="border border-foreground/20 p-2 text-rose-400">-</td>
+                          <td className="border border-foreground/20 p-2 text-rose-700 dark:text-rose-400">-</td>
                         </tr>
                         <tr>
                           <td className="border border-foreground/20 p-2">Shape</td>
@@ -3889,11 +3889,11 @@ export const higherMathsData: Section[] = [
                       <tbody>
                         <tr>
                           <td className="border border-foreground/20 p-2"><InlineMath math="dy/dx" /></td>
-                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2 text-emerald-800 dark:text-emerald-400">+</td>
                           <td className="border border-foreground/20 p-2">0</td>
-                          <td className="border border-foreground/20 p-2 text-rose-400">-</td>
+                          <td className="border border-foreground/20 p-2 text-rose-700 dark:text-rose-400">-</td>
                           <td className="border border-foreground/20 p-2">0</td>
-                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2 text-emerald-800 dark:text-emerald-400">+</td>
                         </tr>
                         <tr>
                           <td className="border border-foreground/20 p-2">Shape</td>
@@ -3953,11 +3953,11 @@ export const higherMathsData: Section[] = [
                      <tbody>
                        <tr>
                          <td className="border border-foreground/20 p-2"><InlineMath math="dy/dx" /></td>
-                         <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                         <td className="border border-foreground/20 p-2 text-emerald-800 dark:text-emerald-400">+</td>
                          <td className="border border-foreground/20 p-2">0</td>
-                         <td className="border border-foreground/20 p-2 text-rose-400">-</td>
+                         <td className="border border-foreground/20 p-2 text-rose-700 dark:text-rose-400">-</td>
                          <td className="border border-foreground/20 p-2">0</td>
-                         <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                         <td className="border border-foreground/20 p-2 text-emerald-800 dark:text-emerald-400">+</td>
                        </tr>
                        <tr>
                          <td className="border border-foreground/20 p-2">Shape</td>
@@ -4022,7 +4022,7 @@ export const higherMathsData: Section[] = [
                    <li><InlineMath math="y(2) = 4(8) - 4 - 4(2) + 1 = 32 - 4 - 8 + 1 = 21" /></li>
                  </ul>
                  
-                 <p className="mt-4 text-emerald-300">Compare all values: <InlineMath math="-\frac{23}{27}" />, <InlineMath math="2.25" />, <InlineMath math="-27" />, <InlineMath math="21" />.</p>
+                 <p className="mt-4 text-emerald-800 dark:text-emerald-300">Compare all values: <InlineMath math="-\frac{23}{27}" />, <InlineMath math="2.25" />, <InlineMath math="-27" />, <InlineMath math="21" />.</p>
                  <p><strong className="text-foreground">Maximum value is 21</strong> (at <InlineMath math="x=2" />).</p>
                  <p><strong className="text-foreground">Minimum value is -27</strong> (at <InlineMath math="x=-2" />).</p>
                </div>
@@ -4090,7 +4090,7 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="\begin{aligned} x^2 - 20x + 75 &= 0 \\ (x - 5)(x - 15) &= 0 \end{aligned}" />
                  <p>So <InlineMath math="x = 5" /> or <InlineMath math="x = 15" />.</p>
                  
-                 <p className="mt-4 text-emerald-300">If <InlineMath math="x = 15" />, the length of the base would be <InlineMath math="30 - 2(15) = 0" />, which is impossible. So <strong className="text-foreground">x = 5</strong>.</p>
+                 <p className="mt-4 text-emerald-800 dark:text-emerald-300">If <InlineMath math="x = 15" />, the length of the base would be <InlineMath math="30 - 2(15) = 0" />, which is impossible. So <strong className="text-foreground">x = 5</strong>.</p>
                  
                  <p className="mt-4">Verify it's a maximum using the second derivative factor:</p>
                  <BlockMath math="V''(x) = -240 + 24x" />
@@ -4164,8 +4164,8 @@ export const higherMathsData: Section[] = [
                 <table className="w-full text-center border-collapse">
                   <thead>
                      <tr>
-                        <th className="border-b border-foreground/20 pb-2 text-rose-300">Original Graph: <InlineMath math="f(x)" /></th>
-                        <th className="border-b border-foreground/20 pb-2 text-emerald-300">Derived Graph: <InlineMath math="f'(x)" /></th>
+                        <th className="border-b border-foreground/20 pb-2 text-rose-700 dark:text-rose-300">Original Graph: <InlineMath math="f(x)" /></th>
+                        <th className="border-b border-foreground/20 pb-2 text-emerald-800 dark:text-emerald-300">Derived Graph: <InlineMath math="f'(x)" /></th>
                      </tr>
                   </thead>
                   <tbody>
@@ -4563,7 +4563,7 @@ export const higherMathsData: Section[] = [
                 <BlockMath math="\begin{aligned} y &= \int (x^2 - 5) \,dx \\ &= \frac{x^3}{3} - 5x + C \end{aligned}" />
                 <p>Substitute <InlineMath math="x=3, y=-4" />:</p>
                 <BlockMath math="\begin{aligned} -4 &= \frac{3^3}{3} - 5(3) + C \\ -4 &= 9 - 15 + C \\ -4 &= -6 + C \\ 2 &= C \end{aligned}" />
-                <p className="text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="y = \frac{x^3}{3} - 5x + 2" /></strong></p>
+                <p className="text-emerald-800 dark:text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="y = \frac{x^3}{3} - 5x + 2" /></strong></p>
               </div>
             )
           },
@@ -4575,7 +4575,7 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="\begin{aligned} f(x) &= \int (x^2 + x^{-2} + \frac{2}{3}) \,dx \\ &= \frac{x^3}{3} - x^{-1} + \frac{2}{3}x + C \\ &= \frac{x^3}{3} - \frac{1}{x} + \frac{2}{3}x + C \end{aligned}" />
                  <p>Substitute <InlineMath math="x=1, f(1)=4" />:</p>
                  <BlockMath math="\begin{aligned} 4 &= \frac{1^3}{3} - \frac{1}{1} + \frac{2}{3}(1) + C \\ 4 &= \frac{1}{3} - 1 + \frac{2}{3} + C \\ 4 &= C \end{aligned}" />
-                 <p className="text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="f(x) = \frac{x^3}{3} - \frac{1}{x} + \frac{2}{3}x + 4" /></strong></p>
+                 <p className="text-emerald-800 dark:text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="f(x) = \frac{x^3}{3} - \frac{1}{x} + \frac{2}{3}x + 4" /></strong></p>
                </div>
              )
           }
@@ -4591,7 +4591,7 @@ export const higherMathsData: Section[] = [
             <p>We define <InlineMath math="\int_a^b f(x) \,dx = F(b) - F(a)" /> where <InlineMath math="a" /> and <InlineMath math="b" /> are the limits of the integral and <InlineMath math="b > a" />.</p>
             <p>Example:</p>
             <BlockMath math="\begin{aligned} \int_a^b x \,dx &= \left[\frac{x^2}{2} + C\right]_a^b \\ &= \left(\frac{b^2}{2} + C\right) - \left(\frac{a^2}{2} + C\right) \\ &= \frac{b^2}{2} - \frac{a^2}{2} \end{aligned}" />
-            <p className="text-emerald-300">Note: The constant of integration simplifies to 0 so is not required for definite integrals.</p>
+            <p className="text-emerald-800 dark:text-emerald-300">Note: The constant of integration simplifies to 0 so is not required for definite integrals.</p>
             <div className="bg-muted p-4 rounded-lg mt-4">
               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
@@ -4628,7 +4628,7 @@ export const higherMathsData: Section[] = [
              question: <p>Find <InlineMath math="\int_{-1}^4 \frac{4}{x^3} \,dx" /></p>,
              solution: (
                <div className="space-y-4">
-                 <p className="text-red-400">Wait, this function is undefined at <InlineMath math="x=0" />, which is within the limits <InlineMath math="[-1, 4]" />. This improper integral diverges. However, if we treat it purely mechanically (ignoring the discontinuity):</p>
+                 <p className="text-red-700 dark:text-red-400">Wait, this function is undefined at <InlineMath math="x=0" />, which is within the limits <InlineMath math="[-1, 4]" />. This improper integral diverges. However, if we treat it purely mechanically (ignoring the discontinuity):</p>
                  <BlockMath math="\begin{aligned} \int_{-1}^4 4x^{-3} \,dx &= \left[ \frac{4x^{-2}}{-2} \right]_{-1}^4 \\ &= \left[ -\frac{2}{x^2} \right]_{-1}^4 \\ &= \left(-\frac{2}{4^2}\right) - \left(-\frac{2}{(-1)^2}\right) \\ &= -\frac{2}{16} - (-2) \\ &= -\frac{1}{8} + 2 = \frac{15}{8} \end{aligned}" />
                </div>
              )
@@ -5168,22 +5168,22 @@ id: "integration-of-brackets",
                 <div className="absolute h-full w-0.5 bg-foreground/20"></div>
                 
                 <div className="absolute top-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
-                  <div className="font-bold text-emerald-400 text-3xl">A</div>
+                  <div className="font-bold text-emerald-800 dark:text-emerald-400 text-3xl">A</div>
                   <div className="text-sm text-foreground-2">All +ve</div>
                 </div>
                 
                 <div className="absolute top-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
-                  <div className="font-bold text-blue-400 text-3xl">S</div>
+                  <div className="font-bold text-blue-700 dark:text-blue-400 text-3xl">S</div>
                   <div className="text-sm text-foreground-2">Sine +ve</div>
                 </div>
                 
                 <div className="absolute bottom-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
-                  <div className="font-bold text-indigo-400 text-3xl">T</div>
+                  <div className="font-bold text-indigo-600 dark:text-indigo-400 text-3xl">T</div>
                   <div className="text-sm text-foreground-2">Tan +ve</div>
                 </div>
                 
                 <div className="absolute bottom-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
-                  <div className="font-bold text-rose-400 text-3xl">C</div>
+                  <div className="font-bold text-rose-700 dark:text-rose-400 text-3xl">C</div>
                   <div className="text-sm text-foreground-2">Cos +ve</div>
                 </div>
                 
@@ -5309,7 +5309,7 @@ id: "integration-of-brackets",
                 <p>Base angle: <InlineMath math="\sin^{-1}\left(\frac{1}{2}\right) = 30^\circ" /></p>
                 <p>Since Sine is positive, solutions are in quadrants 1 and 2.</p>
                 <BlockMath math="\begin{aligned} x &= 30 \quad \text{(Q1)} \\ x &= 180 - 30 \\ &= 150 \quad \text{(Q2)} \end{aligned}" />
-                <p className="text-emerald-300">Solutions: <strong className="text-foreground">30°, 150°</strong></p>
+                <p className="text-emerald-800 dark:text-emerald-300">Solutions: <strong className="text-foreground">30°, 150°</strong></p>
               </div>
             )
           },
@@ -5321,7 +5321,7 @@ id: "integration-of-brackets",
                 <p>Base angle: <InlineMath math="\cos^{-1}\left(\frac{1}{\sqrt{5}}\right) \approx  1.107 \text{ rad}" /></p>
                 <p>Since Cosine is negative, solutions are in quadrants 2 and 3.</p>
                 <BlockMath math="\begin{aligned} x &= \pi - 1.107 \\ &\approx 2.034 \quad \text{(Q2)} \\ x &= \pi + 1.107 \\ &\approx 4.249 \quad \text{(Q3)} \end{aligned}" />
-                <p className="text-emerald-300">Solutions: <strong className="text-foreground">2.034, 4.249</strong></p>
+                <p className="text-emerald-800 dark:text-emerald-300">Solutions: <strong className="text-foreground">2.034, 4.249</strong></p>
               </div>
             )
           },
@@ -5331,7 +5331,7 @@ id: "integration-of-brackets",
             solution: (
               <div className="space-y-4">
                 <p>The maximum value of the sine function is 1 and the minimum is -1.</p>
-                <p>Therefore, there are <strong className="text-rose-400">no solutions</strong> because <InlineMath math="-1 \leq \sin x \leq 1" />.</p>
+                <p>Therefore, there are <strong className="text-rose-700 dark:text-rose-400">no solutions</strong> because <InlineMath math="-1 \leq \sin x \leq 1" />.</p>
               </div>
             )
           },
@@ -5492,7 +5492,7 @@ id: "integration-of-brackets",
                 </div>
                 
                 <div className="border-t border-foreground/10 pt-6 mt-6">
-                  <p className="text-emerald-300">Final Solutions: <strong className="text-foreground">19.5°, 90°, 160.5°</strong></p>
+                  <p className="text-emerald-800 dark:text-emerald-300">Final Solutions: <strong className="text-foreground">19.5°, 90°, 160.5°</strong></p>
                 </div>
               </div>
             )
@@ -5522,7 +5522,7 @@ id: "integration-of-brackets",
                 </div>
                 
                 <div className="border-t border-foreground/10 pt-6 mt-6">
-                  <p className="text-emerald-300">Final Solutions: <strong className="text-foreground">41.4°, 120°, 240°, 318.6°</strong></p>
+                  <p className="text-emerald-800 dark:text-emerald-300">Final Solutions: <strong className="text-foreground">41.4°, 120°, 240°, 318.6°</strong></p>
                 </div>
               </div>
             )
@@ -5576,7 +5576,7 @@ id: "integration-of-brackets",
                 <BlockMath math="\begin{aligned} \sin\left(\frac{\pi}{6} + \frac{\pi}{3}\right) &= \sin\left(\frac{\pi}{6} + \frac{2\pi}{6}\right) \\ &= \sin\left(\frac{3\pi}{6}\right) \\ &= \sin\left(\frac{\pi}{2}\right) \\ &= 1 \end{aligned}" />
                 <p>RHS (Right Hand Side):</p>
                 <BlockMath math="\begin{aligned} &\quad \sin\left(\frac{\pi}{6}\right) \cos\left(\frac{\pi}{3}\right) + \cos\left(\frac{\pi}{6}\right) \sin\left(\frac{\pi}{3}\right) \\ &= \left(\frac{1}{2}\right)\left(\frac{1}{2}\right) + \left(\frac{\sqrt{3}}{2}\right)\left(\frac{\sqrt{3}}{2}\right) \\ &= \frac{1}{4} + \frac{3}{4} \\ &= \frac{4}{4} \\ &= 1 \end{aligned}" />
-                <p className="text-emerald-300">LHS = RHS. As required.</p>
+                <p className="text-emerald-800 dark:text-emerald-300">LHS = RHS. As required.</p>
               </div>
             )
           },
@@ -5794,7 +5794,7 @@ id: "integration-of-brackets",
                 <BlockMath math="LHS = \frac{\sin s}{\cos s} + \frac{\sin t}{\cos t}" />
                 <p>Since <InlineMath math="\tan x = \frac{\sin x}{\cos x}" />:</p>
                 <BlockMath math="LHS = \tan s + \tan t = RHS" />
-                <p className="text-emerald-300">As completely shown.</p>
+                <p className="text-emerald-800 dark:text-emerald-300">As completely shown.</p>
               </div>
             )
           }
@@ -5846,7 +5846,7 @@ id: "integration-of-brackets",
                   </div>
                 </div>
                 
-                <p className="text-emerald-300">Solutions: <strong className="text-foreground">0°, 120°, 180°, 240°</strong></p>
+                <p className="text-emerald-800 dark:text-emerald-300">Solutions: <strong className="text-foreground">0°, 120°, 180°, 240°</strong></p>
               </div>
             )
           },
@@ -5874,7 +5874,7 @@ id: "integration-of-brackets",
                    </div>
                  </div>
                  
-                 <p className="text-emerald-300">Solutions: <strong className="text-foreground"><InlineMath math="0" />, <InlineMath math="\frac{2\pi}{3}" />, <InlineMath math="\frac{4\pi}{3}" />, <InlineMath math="2\pi" /></strong></p>
+                 <p className="text-emerald-800 dark:text-emerald-300">Solutions: <strong className="text-foreground"><InlineMath math="0" />, <InlineMath math="\frac{2\pi}{3}" />, <InlineMath math="\frac{4\pi}{3}" />, <InlineMath math="2\pi" /></strong></p>
                </div>
              )
           },
@@ -5905,7 +5905,7 @@ id: "integration-of-brackets",
                   </div>
                   
                   <p>Usually, "points of intersection" requires coordinates. Substitute these x-values back into either original equation (e.g., <InlineMath math="y = 2\sin x + 1" />) to find y-coordinates.</p>
-                  <ul className="list-disc list-inside ml-4 mt-2 mb-4 text-emerald-300">
+                  <ul className="list-disc list-inside ml-4 mt-2 mb-4 text-emerald-800 dark:text-emerald-300">
                      <li>When <InlineMath math="x = 0" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-foreground"><InlineMath math="(0, 1)" /></strong></li>
                      <li>When <InlineMath math="x = \pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-foreground"><InlineMath math="(\pi, 1)" /></strong></li>
                      <li>When <InlineMath math="x = 2\pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-foreground"><InlineMath math="(2\pi, 1)" /></strong></li>
@@ -5976,7 +5976,7 @@ id: "integration-of-brackets",
                 <BlockMath math="\begin{aligned} \frac{k\sin\alpha}{k\cos\alpha} &= \frac{\sqrt{3}}{1} \\ \tan\alpha &= \sqrt{3} \end{aligned}" />
                 <p>Base angle <InlineMath math="\alpha = \tan^{-1}(\sqrt{3}) = 60^\circ" />.</p>
                 <p>Check quadrants: <InlineMath math="\sin\alpha" /> is positive (+), <InlineMath math="\cos\alpha" /> is positive (+). They are both positive in Quadrant 1, so <InlineMath math="\alpha = 60^\circ" />.</p>
-                <p className="text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="k = 2, \alpha = 60^\circ" /></strong></p>
+                <p className="text-emerald-800 dark:text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="k = 2, \alpha = 60^\circ" /></strong></p>
               </div>
             )
           }
@@ -6709,7 +6709,7 @@ id: "integration-of-brackets",
                  <BlockMath math="\begin{aligned} c &= 1.33 - (0.591)(1.70) \\ c &\approx 1.33 - 1.0047 = 0.325 \end{aligned}" />
                  <p>Since <InlineMath math="c = \log_{10} a" />:</p>
                  <BlockMath math="a = 10^{0.325} \approx 2.11" />
-                 <p className="text-emerald-300">Formula: <strong className="text-foreground"><InlineMath math="y = 2.11 x^{0.591}" /></strong></p>
+                 <p className="text-emerald-800 dark:text-emerald-300">Formula: <strong className="text-foreground"><InlineMath math="y = 2.11 x^{0.591}" /></strong></p>
                </div>
              )
           },
@@ -6753,7 +6753,7 @@ id: "integration-of-brackets",
                  <BlockMath math="\begin{aligned} c &= Y - mX \\ c &= 0.886 - (0.323)(1.30) \\ c &\approx 0.886 - 0.420 = 0.466 \end{aligned}" />
                  <p>Since <InlineMath math="c = \log_{10} a" />:</p>
                  <BlockMath math="a = 10^{0.466} \approx 2.92" />
-                 <p className="text-emerald-300">Formula: <strong className="text-foreground"><InlineMath math="y = 2.92 (2.10)^x" /></strong></p>
+                 <p className="text-emerald-800 dark:text-emerald-300">Formula: <strong className="text-foreground"><InlineMath math="y = 2.92 (2.10)^x" /></strong></p>
                </div>
              )
           }
@@ -7138,7 +7138,7 @@ id: "integration-of-brackets",
           <div className="space-y-4 text-foreground-2">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
             <p>Since <InlineMath math="\cos 90^\circ = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos 90^\circ = 0" />.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-300">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-800 dark:text-emerald-300">
               <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then <InlineMath math="\vec{a} \cdot \vec{b} = 0" />.</p>
               <p>Conversely, if <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> then <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular.</p>
             </div>

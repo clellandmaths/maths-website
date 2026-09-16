@@ -162,7 +162,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                       {/* Remove button */}
                       <button
                         onClick={() => removeItem(item)}
-                        className="p-1.5 text-muted-dim hover:text-red-400 hover:bg-red-400/10 rounded"
+                        className="p-1.5 text-muted-dim hover:text-red-700 dark:text-red-400 hover:bg-red-400/10 rounded"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -192,7 +192,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                 className={`flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   showClearConfirm
                     ? 'bg-red-600 hover:bg-red-500 text-white'
-                    : 'bg-red-600/10 text-red-400 hover:bg-red-600/20'
+                    : 'bg-red-600/10 text-red-700 dark:text-red-400 hover:bg-red-600/20'
                 }`}
               >
                 <Trash2 className="h-4 w-4" />

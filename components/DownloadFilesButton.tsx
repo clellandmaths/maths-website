@@ -59,7 +59,7 @@ export default function DownloadFilesButton({
         {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileArchive className="h-4 w-4" />}
         {busy ? 'Preparing…' : `Data files (${files.length})`}
       </button>
-      {error && <p className="mt-2 text-xs text-amber-400">{error}</p>}
+      {error && <p className="mt-2 text-xs text-amber-800 dark:text-amber-400">{error}</p>}
     </div>
   );
 }

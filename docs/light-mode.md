@@ -646,6 +646,56 @@ that sets its own shadow — the navigation dropdown's `shadow-xl` — still win
 
 ---
 
+## Fourth pass — the coloured text nobody had measured
+
+Reported as "coloured text in notes not showing up well" and the same for the
+Explorer's year and topic chips. Both were true, and **`check:contrast` had been
+reporting every measured node clears AA the whole time.**
+
+### 349 coloured text classes, every one of them failing
+
+Course notes carry their own palette inside callout boxes — `text-emerald-300`,
+`text-blue-300`, `text-indigo-300`, `text-amber-100/80` — 27 distinct classes,
+~340 uses, and every one chosen for a dark ground. On the light page they
+measured **1.01:1 to 2.85:1**. Not marginal: `text-amber-100` on white is 1.01,
+which is invisible.
+
+Each now carries a light counterpart with the dark value untouched:
+`text-emerald-800 dark:text-emerald-300`. The light level per hue is the lowest
+that clears AA **both** on the page and on that hue's own 10% tint, since these
+sit inside tinted callouts:
+
+```
+amber 800   emerald 800   green 800   cyan 800   orange 800   teal 800
+purple 700  rose 700      blue 700    red 700
+indigo 600  violet 600
+```
+
+Alphas are dropped in the light half on purpose — an alpha only ever lowers
+contrast, and these were failing before it was applied.
+
+### Why the check did not see any of it
+
+**It opened one notes topic, and that topic has no callouts.** `check:budget`
+groups 542 pages into 27 templates and this file borrowed that logic — one page
+per template, on the reasoning that text colour is a property of the template.
+For chrome that is true. For *content* it is not: course notes are 35+ pages of
+hand-written JSX and the colour lives in the content, not the template.
+
+The Explorer had the same shape of gap: the year and topic chips only exist once
+the filter sidebar is open, and the sweep measured the page as it loads.
+
+Fixed by measuring the **worst** pages rather than a representative one — the
+three notes pages carrying the most coloured classes in the whole build, found
+by counting `out/` rather than by picking one that looked typical — plus the
+Explorer with its sidebar open and a year ticked, which fails loudly if the
+click did not land.
+
+Coverage went from **4,886 measured nodes to 8,678**. The repo's own lesson
+already said it: when a check picks a fixture, pick the worst one on purpose.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.

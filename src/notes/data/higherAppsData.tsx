@@ -33,11 +33,11 @@ export const higherAppsData: Section[] = [
 
               <div>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">A Crucial Trap to Avoid:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">A Crucial Trap to Avoid:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     Most commonly, people are paid weekly, monthly, or every four weeks. However, you must remember that there are <strong>NOT</strong> exactly 4 weeks in a month.
                   </p>
-                  <ul className="list-disc list-inside mt-2 text-amber-100/80">
+                  <ul className="list-disc list-inside mt-2 text-amber-800 dark:text-amber-100/80">
                     <li>There are <strong>52 weeks</strong> in a year, and <strong>12 months</strong> in a year.</li>
                     <li>If you need to convert a weekly wage into a monthly wage, you must multiply by 52 (to find the annual total) and then divide by 12.</li>
                   </ul>
@@ -131,7 +131,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>Contract A (Annual):</strong> &pound;420 &times; 52 weeks = &pound;21,840.</li>
                   <li><strong>Contract B (Annual):</strong> &pound;1,750 &times; 12 months = &pound;21,000.</li>
                 </ul>
-                <p className="mt-4 text-emerald-300">
+                <p className="mt-4 text-emerald-800 dark:text-emerald-300">
                   Contract A offers a higher annual gross income, despite &pound;1,750 appearing larger than exactly 4 weeks of Contract A's pay, highlighting why we cannot simply assume 4 weeks in a month!
                 </p>
               </div>
@@ -156,8 +156,8 @@ export const higherAppsData: Section[] = [
                   The most important rule to remember for National Insurance is that it is calculated on a person's salary <strong>before</strong> any other deductions (such as pension contributions) are taken away.
                 </p>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Crucial Note:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Crucial Note:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     If an exam question tells you someone pays 5% into their pension, you must <strong>completely ignore that 5%</strong> when calculating their National Insurance.
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>Between &pound;1,048 and &pound;4,189 a month:</strong> You pay 8% on this specific chunk of your earnings.</li>
                   <li><strong>Above &pound;4,189 a month:</strong> You pay 2% on anything you earn above this threshold.</li>
                 </ul>
-                <p className="mt-4 text-indigo-300 font-semibold">
+                <p className="mt-4 text-indigo-600 dark:text-indigo-300 font-semibold">
                   Strategy: Always calculate the physical amount of money that sits inside each bracket before you calculate the percentage.
                 </p>
               </div>
@@ -196,7 +196,7 @@ export const higherAppsData: Section[] = [
                   <li>Find the amount sitting in the 8% band: &pound;3,400 - &pound;1,048 = &pound;2,352.</li>
                   <li>Calculate 8% of this amount: 0.08 &times; &pound;2,352 = &pound;188.16.</li>
                 </ul>
-                <p className="mt-2 text-emerald-300 font-semibold">Fiona's monthly National Insurance contribution is &pound;188.16.</p>
+                <p className="mt-2 text-emerald-800 dark:text-emerald-300 font-semibold">Fiona's monthly National Insurance contribution is &pound;188.16.</p>
               </div>
             )
           },
@@ -290,8 +290,8 @@ export const higherAppsData: Section[] = [
                   <BlockMath math="\text{Taxable Income} = \text{Gross Pay} - \text{Pension Contributions}" />
                 </div>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Crucial Exam Rule:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Crucial Exam Rule:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     If a question states that an employee pays a percentage into a pension, you must <strong>subtract that pension amount from their gross salary</strong> before you even look at the tax bands. Failing to do this will result in losing several marks!
                   </p>
                 </div>
@@ -311,7 +311,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>Advanced rate (45%):</strong> &pound;75,000 &ndash; &pound;125,140.</li>
                   <li><strong>Top rate (48%):</strong> Over &pound;125,140.</li>
                 </ul>
-                <p className="mt-4 text-indigo-300 font-semibold">
+                <p className="mt-4 text-indigo-600 dark:text-indigo-300 font-semibold">
                   Strategy: Calculate the maximum physical amount of money that can fit inside each individual band, and then multiply it by the percentage for that band.
                 </p>
               </div>
@@ -437,7 +437,7 @@ export const higherAppsData: Section[] = [
             <p>
               A person's <strong>net pay</strong> (often called "take-home pay") is the final amount of money they receive in their bank account after all deductions have been subtracted from their gross pay.
             </p>
-            <p className="font-semibold text-emerald-300">
+            <p className="font-semibold text-emerald-800 dark:text-emerald-300">
               When faced with a full net pay exam question, you must calculate multiple different deductions. The order in which you calculate them is critical.
             </p>
 
@@ -463,7 +463,7 @@ export const higherAppsData: Section[] = [
                     <li>Calculate the Taxable Income (Gross Pay - Pension).</li>
                     <li>Calculate Income Tax using the tax bands.</li>
                     <li>Calculate any Student Loan or other fixed deductions.</li>
-                    <li className="text-emerald-400 mt-4 pt-2 border-t border-muted">Net Pay = Gross Pay - (NI + Pension + Tax + Student Loan).</li>
+                    <li className="text-emerald-800 dark:text-emerald-400 mt-4 pt-2 border-t border-muted">Net Pay = Gross Pay - (NI + Pension + Tax + Student Loan).</li>
                   </ol>
                 </div>
               </div>
@@ -487,7 +487,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>Find the amount earned above the threshold:</strong> &pound;2,800 - &pound;2,038 = &pound;762.</li>
                   <li><strong>Calculate 9% of this amount:</strong> 0.09 &times; &pound;762 = &pound;68.58.</li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Fraser's monthly student loan deduction is &pound;68.58.</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Fraser's monthly student loan deduction is &pound;68.58.</p>
               </div>
             )
           },
@@ -570,7 +570,7 @@ export const higherAppsData: Section[] = [
                     <p className="font-semibold text-foreground">6. Final Net Monthly Pay:</p>
                     <p className="ml-4"><InlineMath math="\text{Net Pay} = \text{Gross Monthly} - (\text{NI} + \text{Pension} + \text{Tax})" /></p>
                     <p className="ml-4"><InlineMath math="\text{Net Pay} = \text{\pounds}3,750 - (\text{\pounds}216.16 + \text{\pounds}225.00 + \text{\pounds}505.49)" /></p>
-                    <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Net Pay} = \text{\pounds}3,750 - \text{\pounds}946.65 = \text{\pounds}2,803.35" />.</p>
+                    <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{Net Pay} = \text{\pounds}3,750 - \text{\pounds}946.65 = \text{\pounds}2,803.35" />.</p>
                   </div>
                 </div>
               </div>
@@ -596,8 +596,8 @@ export const higherAppsData: Section[] = [
                   <li>The standard rate of VAT in the UK is 20%. Some essential or child-related items have a reduced rate (e.g., 5%), while others have no VAT at all.</li>
                 </ul>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">The Classic Exam Trap:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">The Classic Exam Trap:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     To find a price before 20% VAT was added, you <strong>cannot</strong> simply subtract 20% from the final price. The final price represents 120%. You must divide by 1.20 to work backwards.
                   </p>
                 </div>
@@ -652,7 +652,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-4">
                 <p>Because VAT has already been added, the &pound;432 represents 120% of the original price.</p>
                 <p>To find the original price (100%), we divide by the multiplier:</p>
-                <p className="ml-4 font-semibold text-emerald-300">&pound;432 &divide; 1.20 = &pound;360.</p>
+                <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300">&pound;432 &divide; 1.20 = &pound;360.</p>
               </div>
             )
           },
@@ -733,7 +733,7 @@ export const higherAppsData: Section[] = [
                 <p>
                   If an amount of money experiences multiple different percentage changes over time, you do not need to calculate them one by one.
                 </p>
-                <p className="mt-2 text-indigo-300 font-semibold">
+                <p className="mt-2 text-indigo-600 dark:text-indigo-300 font-semibold">
                   You can find the final balance by taking the starting capital and simply multiplying it by a continuous chain of multipliers in one single calculation.
                 </p>
               </div>
@@ -810,7 +810,7 @@ export const higherAppsData: Section[] = [
                 </ul>
                 <div className="mt-4">
                   <p className="ml-4"><InlineMath math="\text{Final Balance} = \text{\pounds}8500 \times 1.031 \times 1.042 \times 1.015" /></p>
-                  <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Final Balance} = \text{\pounds}8500 \times 1.089423... = \text{\pounds}9,260.10" /> (rounded to the nearest penny).</p>
+                  <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{Final Balance} = \text{\pounds}8500 \times 1.089423... = \text{\pounds}9,260.10" /> (rounded to the nearest penny).</p>
                 </div>
               </div>
             )
@@ -846,11 +846,11 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. The Golden Rule of Time Units</h4>
                 <p>In exam questions, the interest rate will be given for a specific time period (e.g., per month, per year, per quarter).</p>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Crucial Rule:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Crucial Rule:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     You must <strong>always change your time period (<InlineMath math="n" />) to perfectly match the time period of the interest rate</strong>. You <em>cannot</em> change the multiplier to match the time!
                   </p>
-                  <p className="text-amber-100/80 mt-2">
+                  <p className="text-amber-800 dark:text-amber-100/80 mt-2">
                     If the interest rate is <em>per month</em>, but the question asks about 2 years, you must use <InlineMath math="n = 24" />.
                   </p>
                 </div>
@@ -888,7 +888,7 @@ export const higherAppsData: Section[] = [
                 </ul>
                 <div className="ml-8 mt-2">
                   <p><InlineMath math="\text{New Balance} = \text{\pounds}4500 \times 1.0035^{24}" /></p>
-                  <p className="font-semibold text-emerald-300"><InlineMath math="\text{New Balance} = \text{\pounds}4500 \times 1.08745... = \text{\pounds}4,893.53" />.</p>
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{New Balance} = \text{\pounds}4500 \times 1.08745... = \text{\pounds}4,893.53" />.</p>
                 </div>
               </div>
             )
@@ -916,7 +916,7 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p className="mb-1"><strong>Calculate the interest only:</strong></p>
                   <p className="ml-4"><InlineMath math="\text{Interest} = \text{Final Balance} - \text{Original Amount}" /></p>
-                  <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Interest} = \text{\pounds}23,926.11 - \text{\pounds}18,000 = \text{\pounds}5,926.11" />.</p>
+                  <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{Interest} = \text{\pounds}23,926.11 - \text{\pounds}18,000 = \text{\pounds}5,926.11" />.</p>
                 </div>
               </div>
             )
@@ -939,7 +939,7 @@ export const higherAppsData: Section[] = [
                 </ul>
                 <div className="ml-8 mt-2">
                   <p><InlineMath math="\text{New Balance} = \text{\pounds}6250 \times 1.0185^9" /></p>
-                  <p className="font-semibold text-emerald-300"><InlineMath math="\text{New Balance} = \text{\pounds}6250 \times 1.17935... = \text{\pounds}7,370.97" />.</p>
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{New Balance} = \text{\pounds}6250 \times 1.17935... = \text{\pounds}7,370.97" />.</p>
                 </div>
               </div>
             )
@@ -973,11 +973,11 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. The "Counting Time" Trap</h4>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">The Classic Exam Trap:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">The Classic Exam Trap:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     According to your course notes, miscounting the number of months between two dates is one of the most common errors made in these types of questions.
                   </p>
-                  <ul className="list-disc list-inside mt-2 text-amber-100/80 space-y-1">
+                  <ul className="list-disc list-inside mt-2 text-amber-800 dark:text-amber-100/80 space-y-1">
                     <li>You must take your time to physically count the months or years to ensure your powers (<InlineMath math="n" />) are absolutely correct. For example, the time between 1 March and 1 September is exactly 6 months.</li>
                     <li>Just like in the previous section, the time period you use for your power (<InlineMath math="n" />) must <strong>always perfectly match the time units of the specific interest rate</strong>.</li>
                   </ul>
@@ -1019,7 +1019,7 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p className="mb-1"><strong>Chain Calculation:</strong></p>
                   <p className="ml-4"><InlineMath math="\text{Final Balance} = \text{\pounds}2500 \times 1.034^2 \times 1.016^3" /></p>
-                  <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Final Balance} = \text{\pounds}2500 \times 1.069156 \times 1.04877... = \text{\pounds}2,802.73" /> (rounded to the nearest penny).</p>
+                  <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{Final Balance} = \text{\pounds}2500 \times 1.069156 \times 1.04877... = \text{\pounds}2,802.73" /> (rounded to the nearest penny).</p>
                 </div>
               </div>
             )
@@ -1056,7 +1056,7 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p className="mb-1"><strong>Chain Calculation:</strong></p>
                   <p className="ml-4"><InlineMath math="\text{Amount Owed} = \text{\pounds}4200 \times 1.008^6 \times 1.025^3" /></p>
-                  <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Amount Owed} = \text{\pounds}4200 \times 1.04897... \times 1.07689... = \text{\pounds}4,744.40" />.</p>
+                  <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{Amount Owed} = \text{\pounds}4200 \times 1.04897... \times 1.07689... = \text{\pounds}4,744.40" />.</p>
                 </div>
               </div>
             )
@@ -1090,7 +1090,7 @@ export const higherAppsData: Section[] = [
                   <p className="mb-1"><strong>Convert Back to Percentage:</strong></p>
                   <p className="ml-4"><InlineMath math="1.11023... - 1 = 0.11023..." /></p>
                   <p className="ml-4"><InlineMath math="0.11023... \times 100 = 11.02\%" />.</p>
-                  <p className="mt-2 font-semibold text-emerald-300">The overall effective rate of interest for the two years is 11.02%.</p>
+                  <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">The overall effective rate of interest for the two years is 11.02%.</p>
                 </div>
               </div>
             )
@@ -1133,8 +1133,8 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <p className="font-semibold text-amber-300 mb-1">Crucial Exam Trap:</p>
-                <p className="text-amber-100/80">
+                <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Crucial Exam Trap:</p>
+                <p className="text-amber-800 dark:text-amber-100/80">
                   Always read the final sentence of the question carefully! You must check whether you are calculating the balance <strong>immediately after</strong> the final payment is made (meaning the final payment earns zero interest), or <strong>some time after</strong> the final payment (meaning the final payment also earns interest).
                 </p>
               </div>
@@ -1161,7 +1161,7 @@ export const higherAppsData: Section[] = [
                   <li><strong>1 Jan 2026 (Before deposit):</strong> The &pound;814 earns one year of interest. <InlineMath math="\text{\pounds}814 \times 1.035 = \text{\pounds}842.49" />.</li>
                   <li><strong>1 Jan 2026 (After deposit):</strong> Liam makes his final &pound;400 deposit. <InlineMath math="\text{\pounds}842.49 + \text{\pounds}400 = \text{\pounds}1,242.49" />.</li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Final Balance = &pound;1,242.49</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Final Balance = &pound;1,242.49</p>
               </div>
             )
           },
@@ -1232,7 +1232,7 @@ export const higherAppsData: Section[] = [
                     <strong>1 Jan 2026 (After 4 quarters at 1.1%):</strong> (<InlineMath math="\text{\pounds}3133.3503... \times 1.011^4" />) = &pound;3,273.50.
                   </li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Final Balance = &pound;3,273.50</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Final Balance = &pound;3,273.50</p>
               </div>
             )
           }
@@ -1254,7 +1254,7 @@ export const higherAppsData: Section[] = [
                 <p>
                   When dealing with irregular payments and withdrawals, the "Individual Accumulation Method" from the previous section becomes highly complicated and prone to error.
                 </p>
-                <p className="mt-2 font-semibold text-emerald-300">
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">
                   Instead, you should always use the Chronological Method (Payment Tracking).
                 </p>
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
@@ -1269,8 +1269,8 @@ export const higherAppsData: Section[] = [
                   <li><strong>Loans:</strong> Borrowing more money is <em>added</em> to the total debt. A repayment is <em>subtracted</em> from the total debt.</li>
                 </ul>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Crucial Rule:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Crucial Rule:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     Never add or subtract a transaction amount until you have <strong>completely finished calculating the interest up to that specific date</strong>!
                   </p>
                 </div>
@@ -1319,7 +1319,7 @@ export const higherAppsData: Section[] = [
                     <strong>1 Sept to 1 Nov (2 months):</strong> <InlineMath math="\text{\pounds}876.28... \times 1.004^2 = \text{\pounds}883.31" /> (rounded to nearest penny).
                   </li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Final Balance = &pound;883.31</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Final Balance = &pound;883.31</p>
               </div>
             )
           },
@@ -1355,7 +1355,7 @@ export const higherAppsData: Section[] = [
                     <InlineMath math="\text{\pounds}5752.54... \times 1.012^2 = \text{\pounds}5,891.41" />.
                   </li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Amount Owed = &pound;5,891.41</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Amount Owed = &pound;5,891.41</p>
               </div>
             )
           },
@@ -1389,7 +1389,7 @@ export const higherAppsData: Section[] = [
                     Final Balance: <InlineMath math="\text{\pounds}2554.469... \times 1.015^1 = \text{\pounds}2,592.79" />.
                   </li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Final Balance = &pound;2,592.79</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Final Balance = &pound;2,592.79</p>
               </div>
             )
           }
@@ -1407,11 +1407,11 @@ export const higherAppsData: Section[] = [
 
             <div className="space-y-4">
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">1. The Division Trap (A Major Exam Warning)</h4>
-                <p className="text-amber-100/80">
+                <h4 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">1. The Division Trap (A Major Exam Warning)</h4>
+                <p className="text-amber-800 dark:text-amber-100/80">
                   You <strong>cannot simply divide</strong> an annual interest rate by 12 to find the monthly rate.
                 </p>
-                <p className="text-amber-100/80 mt-2">
+                <p className="text-amber-800 dark:text-amber-100/80 mt-2">
                   Because of the effects of compound interest, dividing by 12 will give you an incorrect, slightly larger number. The SQA examiners reported this as a highly common mistake.
                 </p>
               </div>
@@ -1433,11 +1433,11 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">4. The Calculator Syntax Trap</h4>
-                <p className="text-amber-100/80">
+                <h4 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">4. The Calculator Syntax Trap</h4>
+                <p className="text-amber-800 dark:text-amber-100/80">
                   When scaling down using a fractional power on your calculator, you <strong>must put brackets around the fraction</strong> (e.g., <code>^(1/12)</code>).
                 </p>
-                <p className="text-amber-100/80 mt-2">
+                <p className="text-amber-800 dark:text-amber-100/80 mt-2">
                   If you type <code>^1/12</code> without brackets, your calculator will raise the number to the power of 1, and then divide the whole answer by 12, resulting in zero marks.
                 </p>
               </div>
@@ -1518,7 +1518,7 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p className="mb-1"><strong>(b)</strong></p>
                   <p className="ml-4"><InlineMath math="\text{Final Balance} = \text{Capital} \times \text{Annual Multiplier}" /></p>
-                  <p className="ml-4 font-semibold text-emerald-300"><InlineMath math="\text{Final Balance} = \text{\pounds}400 \times 26.402... = \text{\pounds}10,560.91" />.</p>
+                  <p className="ml-4 font-semibold text-emerald-800 dark:text-emerald-300"><InlineMath math="\text{Final Balance} = \text{\pounds}400 \times 26.402... = \text{\pounds}10,560.91" />.</p>
                 </div>
               </div>
             )
@@ -1574,11 +1574,11 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">2. The Calculator Syntax Trap (Again!)</h4>
-                <p className="text-amber-100/80">
+                <h4 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">2. The Calculator Syntax Trap (Again!)</h4>
+                <p className="text-amber-800 dark:text-amber-100/80">
                   Just like in Section 11, when you calculate the fractional power on your calculator, you <strong>must put brackets around the fraction</strong> (e.g., <code>^(1/n)</code>).
                 </p>
-                <p className="text-amber-100/80 mt-2">
+                <p className="text-amber-800 dark:text-amber-100/80 mt-2">
                   Once you have the decimal multiplier, do not forget the final step: <strong>subtract 1 and multiply by 100</strong> to convert it back into a percentage interest rate.
                 </p>
               </div>
@@ -1697,11 +1697,11 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">2. The Golden Rule Still Applies</h4>
-                <p className="text-amber-100/80">
+                <h4 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">2. The Golden Rule Still Applies</h4>
+                <p className="text-amber-800 dark:text-amber-100/80">
                   Even though we are working backwards, the "Golden Rule of Time Units" still applies.
                 </p>
-                <ul className="list-disc list-inside mt-2 text-amber-100/80 space-y-1">
+                <ul className="list-disc list-inside mt-2 text-amber-800 dark:text-amber-100/80 space-y-1">
                   <li>The power you use for your time period (<InlineMath math="n" />) must <strong>always perfectly match the time units of the interest rate</strong> you are given.</li>
                   <li>If the rate is per month, <InlineMath math="n" /> must be the total number of months.</li>
                 </ul>
@@ -1729,7 +1729,7 @@ export const higherAppsData: Section[] = [
                   <InlineMath math="\text{Present Value} = \frac{\text{\pounds}8000}{1.141166...} = \text{\pounds}7,010.37" />.
                   </li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Alistair needs to deposit &pound;7,010.37 today.</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Alistair needs to deposit &pound;7,010.37 today.</p>
               </div>
             )
           },
@@ -1797,8 +1797,8 @@ export const higherAppsData: Section[] = [
                   <BlockMath math="\text{Present Value} = \frac{\text{Future Balance}}{(m_1)^{n_1} \times (m_2)^{n_2} \times \dots}" />
                 </div>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-emerald-300 mb-1">Exam Tip:</p>
-                  <p className="text-emerald-100/80">
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300 mb-1">Exam Tip:</p>
+                  <p className="text-emerald-800 dark:text-emerald-100/80">
                     It is often safer to calculate the bottom line (the chain of multipliers) first, keep the long decimal on your calculator screen, and then perform the final division to avoid rounding errors.
                   </p>
                 </div>
@@ -1809,11 +1809,11 @@ export const higherAppsData: Section[] = [
                 <p>This is one of the most challenging question types in the Higher Applications course. If an account has a variable interest rate and the person makes deposits or withdrawals halfway through, you cannot use a single formula.</p>
                 <p className="mt-2"><strong>The "Reverse Chronological" Method:</strong> You must work backwards step-by-step from the end date to the start date.</p>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">The Ultimate Trap:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">The Ultimate Trap:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     Because you are travelling backwards in time, the effect of transactions is reversed.
                   </p>
-                  <ul className="list-disc list-inside mt-2 text-amber-100/80 space-y-1">
+                  <ul className="list-disc list-inside mt-2 text-amber-800 dark:text-amber-100/80 space-y-1">
                     <li>If someone withdrew money in the past, you must <strong>add it back</strong> onto your running total.</li>
                     <li>If someone deposited money, you must <strong>subtract it</strong> to find the balance before the deposit occurred!</li>
                   </ul>
@@ -1906,7 +1906,7 @@ export const higherAppsData: Section[] = [
                   Initial Deposit (PV) = <InlineMath math="\frac{\text{\pounds}8047.169...}{1.04} = \text{\pounds}7,737.66" />.
                   </li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Initial Deposit = &pound;7,737.66</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Initial Deposit = &pound;7,737.66</p>
               </div>
             )
           }
@@ -1939,7 +1939,7 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. The Interest Rate Conversion Formula</h4>
                 <p>In spreadsheet tasks, you will frequently be given an annual effective rate of interest, but you will need to calculate a monthly schedule.</p>
                 <p className="mt-2">You must instruct the spreadsheet to calculate the monthly rate using a fractional power.</p>
-                <div className="bg-muted p-4 rounded-lg my-4 text-center font-mono text-sm text-emerald-300">
+                <div className="bg-muted p-4 rounded-lg my-4 text-center font-mono text-sm text-emerald-800 dark:text-emerald-300">
                   =(1 + Annual_Rate_Cell)^(1/12) - 1
                 </div>
               </div>
@@ -1950,7 +1950,7 @@ export const higherAppsData: Section[] = [
                 <ul className="list-disc list-inside ml-4 mt-2 space-y-2">
                   <li><strong>Absolute Cell References ($):</strong> When you drag a formula down a column, spreadsheet software automatically changes the cell references. To "lock" a reference to a specific cell (like a fixed monthly interest rate or a fixed regular deposit), you must use dollar signs (e.g., <code>$B$2</code>).</li>
                   <li><strong>The ROUND Function:</strong> In finance, money must always be rounded to two decimal places (the nearest penny). When calculating interest, you must use the <code>ROUND</code> function, or your schedule will accumulate hidden fractions of a penny and become inaccurate over time.<br/>
-                  <span className="inline-block mt-1 font-mono text-sm text-emerald-300 bg-muted px-2 py-1 rounded">=ROUND(Opening_Balance * $Interest_Rate$, 2)</span>
+                  <span className="inline-block mt-1 font-mono text-sm text-emerald-800 dark:text-emerald-300 bg-muted px-2 py-1 rounded">=ROUND(Opening_Balance * $Interest_Rate$, 2)</span>
                   </li>
                 </ul>
               </div>
@@ -1970,7 +1970,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <p>Cal must add 1 to the annual rate, raise it to the power of 1/12, and then subtract 1.</p>
-                <div className="bg-muted p-4 rounded-lg font-mono text-emerald-300">
+                <div className="bg-muted p-4 rounded-lg font-mono text-emerald-800 dark:text-emerald-300">
                   =(1+B1)^(1/12)-1
                 </div>
               </div>
@@ -1999,14 +1999,14 @@ export const higherAppsData: Section[] = [
                 <div>
                   <p className="font-semibold text-foreground">Solution (a):</p>
                   <p>We must multiply the opening balance by the interest rate, use absolute references to lock the interest rate cell, and round to 2 decimal places.</p>
-                  <div className="bg-muted p-3 rounded-lg font-mono text-emerald-300 mt-2">
+                  <div className="bg-muted p-3 rounded-lg font-mono text-emerald-800 dark:text-emerald-300 mt-2">
                     =ROUND(C7*$B$2, 2)
                   </div>
                 </div>
                 <div className="mt-4">
                   <p className="font-semibold text-foreground">Solution (b):</p>
                   <p>The closing balance is the sum of the opening balance, the interest earned, and the fixed regular deposit (locked using absolute references).</p>
-                  <div className="bg-muted p-3 rounded-lg font-mono text-emerald-300 mt-2">
+                  <div className="bg-muted p-3 rounded-lg font-mono text-emerald-800 dark:text-emerald-300 mt-2">
                     =C7+D7+$B$3
                   </div>
                   <p className="text-sm text-muted-foreground mt-1 italic">(Alternatively, =SUM(C7:D7)+$B$3)</p>
@@ -2057,15 +2057,15 @@ export const higherAppsData: Section[] = [
                 <p>You must calculate this exactly as a spreadsheet would, row by row.</p>
                 <ul className="list-none space-y-3 ml-4">
                   <li><strong>Opening Balance (Month 2):</strong> This is simply the closing balance from Month 1.<br/>
-                  <span className="font-mono text-emerald-300">Opening Balance = &pound;400.00</span>
+                  <span className="font-mono text-emerald-800 dark:text-emerald-300">Opening Balance = &pound;400.00</span>
                   </li>
                   <li><strong>Interest Earned (Month 2):</strong> Multiply the Opening Balance by the monthly rate (0.35% &rarr; 0.0035).<br/>
                   <InlineMath math="\text{\pounds}400.00 \times 0.0035 = \text{\pounds}1.40" /><br/>
-                  <span className="font-mono text-emerald-300">Interest Earned = &pound;1.40</span>
+                  <span className="font-mono text-emerald-800 dark:text-emerald-300">Interest Earned = &pound;1.40</span>
                   </li>
                   <li><strong>Closing Balance (Month 2):</strong> Add the Opening Balance, Interest Earned, and the new Deposit together.<br/>
                   <InlineMath math="\text{\pounds}400.00 + \text{\pounds}1.40 + \text{\pounds}400.00 = \text{\pounds}801.40" /><br/>
-                  <span className="font-mono text-emerald-300">Closing Balance = &pound;801.40</span>
+                  <span className="font-mono text-emerald-800 dark:text-emerald-300">Closing Balance = &pound;801.40</span>
                   </li>
                 </ul>
                 <p className="mt-2 text-muted-foreground italic">(The completed row should read: Opening: &pound;400.00 | Interest: &pound;1.40 | Deposit: &pound;400.00 | Closing: &pound;801.40).</p>
@@ -2100,8 +2100,8 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">2. The Changing Balance (Exam Concept)</h4>
-                <ul className="list-disc list-inside mt-2 text-amber-100/80 space-y-1">
+                <h4 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">2. The Changing Balance (Exam Concept)</h4>
+                <ul className="list-disc list-inside mt-2 text-amber-800 dark:text-amber-100/80 space-y-1">
                   <li>Because the outstanding loan balance gets smaller with every payment, the <strong>interest content</strong> of the monthly payment naturally <strong>decreases</strong> over time.</li>
                   <li>Because the total monthly repayment remains level, the <strong>capital content</strong> naturally <strong>increases</strong> over time.</li>
                 </ul>
@@ -2115,11 +2115,11 @@ export const higherAppsData: Section[] = [
                   <li>Use the Goal Seek function to set the final Loan Outstanding cell to exactly &pound;0 by changing your guessed repayment cell.</li>
                 </ul>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg mt-4">
-                  <p className="font-semibold text-emerald-300 mb-1">The Crucial Final Step:</p>
-                  <p className="text-emerald-100/80">
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300 mb-1">The Crucial Final Step:</p>
+                  <p className="text-emerald-800 dark:text-emerald-100/80">
                     Goal Seek will produce an unrounded decimal. You must manually round this repayment figure to 2 decimal places (to represent real pennies).
                   </p>
-                  <p className="text-emerald-100/80 mt-2">
+                  <p className="text-emerald-800 dark:text-emerald-100/80 mt-2">
                     Because of this rounding, your final balance will no longer be exactly zero. You must manually adjust the final monthly repayment (by adding or subtracting the small remaining balance) to ensure the loan clears to exactly &pound;0.
                   </p>
                 </div>
@@ -2200,7 +2200,7 @@ export const higherAppsData: Section[] = [
             solution: (
               <div className="space-y-4">
                 <p>You must multiply the outstanding balance (E10) by the locked interest rate (B3), and remember to use the <code>ROUND</code> function to 2 decimal places.</p>
-                <div className="bg-muted p-4 rounded-lg font-mono text-emerald-300">
+                <div className="bg-muted p-4 rounded-lg font-mono text-emerald-800 dark:text-emerald-300">
                   =ROUND(E10*$B$3, 2)
                 </div>
               </div>
@@ -2223,7 +2223,7 @@ export const higherAppsData: Section[] = [
                 <ul className="list-none space-y-2 ml-4">
                   <li><InlineMath math="\text{Adjusted Final Repayment} = \text{\pounds}145.29 - \text{\pounds}0.09 = \text{\pounds}145.20" />.</li>
                 </ul>
-                <p className="mt-2 font-semibold text-emerald-300">Adjusted Final Repayment = &pound;145.20</p>
+                <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">Adjusted Final Repayment = &pound;145.20</p>
               </div>
             )
           }
@@ -2262,8 +2262,8 @@ export const higherAppsData: Section[] = [
                   <li>The rate of inflation is simply the percentage change in the price index from one year to another.</li>
                 </ul>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg mt-4">
-                  <p className="font-semibold text-emerald-300 mb-1">Exam Strategy:</p>
-                  <p className="text-emerald-100/80">
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300 mb-1">Exam Strategy:</p>
+                  <p className="text-emerald-800 dark:text-emerald-100/80">
                     You can treat annual inflation rates exactly like successive interest rates. If you have different inflation rates over several years, you can use a chain of multipliers to find the overall percentage change.
                   </p>
                 </div>
@@ -2379,11 +2379,11 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-amber-300 mb-1">2. The Lifetime ISA (LISA)</h4>
-                <p className="text-amber-100/80">
+                <h4 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">2. The Lifetime ISA (LISA)</h4>
+                <p className="text-amber-800 dark:text-amber-100/80">
                   Qualifications Scotland frequently uses the government's Lifetime ISA scheme as an exam context for retirement or first-time buyer savings. You must be familiar with its specific rules:
                 </p>
-                <ul className="list-disc list-inside mt-2 text-amber-100/80 space-y-1">
+                <ul className="list-disc list-inside mt-2 text-amber-800 dark:text-amber-100/80 space-y-1">
                   <li>You can save up to &pound;4,000 a year, and the government will add a <strong>25% bonus</strong> to your new deposits every month.</li>
                   <li>Once added, this bonus becomes part of your overall savings and begins to earn interest.</li>
                   <li><strong>The Penalty Trap:</strong> If you withdraw money for an unauthorised reason (i.e., anything other than buying a first home, turning 60, or terminal illness), you face a <strong>25% withdrawal charge</strong> on the total amount withdrawn. <br/>
@@ -2430,7 +2430,7 @@ export const higherAppsData: Section[] = [
                     <li><strong>Month 1 Interest:</strong> <InlineMath math="\text{\pounds}360 \times 1.004 = \text{\pounds}361.44" />.</li>
                     <li><strong>Month 2 Deposit:</strong> <InlineMath math="\text{\pounds}361.44 + \text{\pounds}360 = \text{\pounds}721.44" />.</li>
                   </ul>
-                  <p className="mt-2 font-semibold text-emerald-300">The value of the fund after the second contribution is &pound;721.44.</p>
+                  <p className="mt-2 font-semibold text-emerald-800 dark:text-emerald-300">The value of the fund after the second contribution is &pound;721.44.</p>
                 </div>
               </div>
             )
@@ -2524,15 +2524,15 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg my-4">
-                <h4 className="text-lg font-semibold text-rose-300 mb-1">2. The Excess (A Major Exam Warning)</h4>
-                <p className="text-rose-100/80 mb-2">
+                <h4 className="text-lg font-semibold text-rose-700 dark:text-rose-300 mb-1">2. The Excess (A Major Exam Warning)</h4>
+                <p className="text-rose-700 dark:text-rose-100/80 mb-2">
                   An excess is a mandatory minimum amount that the customer must pay towards the cost of a claim before the insurance company pays the remainder.
                 </p>
-                <p className="text-rose-100/80 font-semibold mb-2">Common Examiner Trap:</p>
-                <p className="text-rose-100/80 mb-2">
+                <p className="text-rose-700 dark:text-rose-100/80 font-semibold mb-2">Common Examiner Trap:</p>
+                <p className="text-rose-700 dark:text-rose-100/80 mb-2">
                   A very common error is to describe an excess as a &ldquo;pot of money&rdquo; that can be used to repair an item. You must <strong>never</strong> describe it this way; it is <em>your own money</em> that you must hand over when you make a claim!
                 </p>
-                <p className="text-rose-100/80">
+                <p className="text-rose-700 dark:text-rose-100/80">
                   <strong>Balancing Risk:</strong> Choosing a policy with a higher excess reduces the financial risk for the insurance company. Therefore, a higher excess will generally result in a lower premium for the customer.
                 </p>
               </div>
@@ -2544,8 +2544,8 @@ export const higherAppsData: Section[] = [
                   <li>You may also lose any accumulated no-claims bonuses (a reward discount given for every year you do not make a claim).</li>
                 </ul>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg mt-4">
-                  <p className="font-semibold text-emerald-300 mb-1">Exam Wording:</p>
-                  <p className="text-emerald-100/80">
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300 mb-1">Exam Wording:</p>
+                  <p className="text-emerald-800 dark:text-emerald-100/80">
                     When answering written questions about why someone might not make a claim, you must specifically state that it would increase their <strong>future premiums</strong>; do not just say it will increase their "monthly premium".
                   </p>
                 </div>
@@ -2568,7 +2568,7 @@ export const higherAppsData: Section[] = [
                 <p>If Liam claims, he must pay the &pound;150 excess, and the insurance will pay the remaining &pound;35.</p>
                 <p>If he doesn't claim, he pays the full &pound;185. However, claiming will likely increase his future premiums and cost him his no-claims bonus.</p>
                 <div className="bg-muted p-4 rounded-lg">
-                  <p className="font-semibold text-emerald-300">Conclusion:</p>
+                  <p className="font-semibold text-emerald-800 dark:text-emerald-300">Conclusion:</p>
                   <p className="mt-1">Because the financial benefit of the claim is so small (<InlineMath math="\text{\pounds}185 - \text{\pounds}150 = \text{\pounds}35" />), Liam should pay the repair shop directly. The &pound;35 saved by claiming is likely to be wiped out by the increase in his future insurance premiums.</p>
                 </div>
               </div>
@@ -2655,10 +2655,10 @@ export const higherAppsData: Section[] = [
                 <p className="mb-2">Data that represents quantities or measurements.</p>
                 <ul className="list-disc list-inside ml-4 space-y-2">
                   <li>
-                    <span className="text-blue-300 font-medium">Numerical Discrete:</span> Data that can only take specific, exact values. This is usually data that is counted (e.g., number of siblings, number of cars).
+                    <span className="text-blue-700 dark:text-blue-300 font-medium">Numerical Discrete:</span> Data that can only take specific, exact values. This is usually data that is counted (e.g., number of siblings, number of cars).
                   </li>
                   <li>
-                    <span className="text-blue-300 font-medium">Numerical Continuous:</span> Data that can take any value within a specific range. This is usually data that is measured (e.g., height, weight, time).
+                    <span className="text-blue-700 dark:text-blue-300 font-medium">Numerical Continuous:</span> Data that can take any value within a specific range. This is usually data that is measured (e.g., height, weight, time).
                   </li>
                 </ul>
               </div>
@@ -2668,10 +2668,10 @@ export const higherAppsData: Section[] = [
                 <p className="mb-2">Data that is grouped into descriptive categories.</p>
                 <ul className="list-disc list-inside ml-4 space-y-2">
                   <li>
-                    <span className="text-emerald-300 font-medium">Categorical Nominal:</span> Data divided into descriptive categories that have no natural order or ranking (e.g., eye colour, car brand, favourite fruit).
+                    <span className="text-emerald-800 dark:text-emerald-300 font-medium">Categorical Nominal:</span> Data divided into descriptive categories that have no natural order or ranking (e.g., eye colour, car brand, favourite fruit).
                   </li>
                   <li>
-                    <span className="text-emerald-300 font-medium">Categorical Ordinal:</span> Data divided into categories that have a logical, natural order or ranking (e.g., clothing sizes [Small, Medium, Large], or satisfaction ratings [Poor, Good, Excellent]).
+                    <span className="text-emerald-800 dark:text-emerald-300 font-medium">Categorical Ordinal:</span> Data divided into categories that have a logical, natural order or ranking (e.g., clothing sizes [Small, Medium, Large], or satisfaction ratings [Poor, Good, Excellent]).
                   </li>
                 </ul>
               </div>
@@ -2782,8 +2782,8 @@ export const higherAppsData: Section[] = [
                   A sample must be <strong>representative</strong>, meaning it accurately reflects the diverse characteristics of the whole population. If a data collection method unfairly favours a certain group, it introduces <strong>bias</strong>.
                 </p>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <p className="text-amber-200 font-semibold mb-1">Common Exam Trap:</p>
-                  <p className="text-amber-100/80">
+                  <p className="text-amber-800 dark:text-amber-200 font-semibold mb-1">Common Exam Trap:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     You must be able to identify why a survey might be biased. For example, an online survey on social media is biased because it excludes people without internet access and relies on "self-selection" (only people with strong opinions usually bother to reply).
                   </p>
                 </div>
@@ -2876,13 +2876,13 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-foreground">1. Diagrams for Categorical Data</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Tables (Frequency &amp; Contingency):</strong> Frequency tables show the totals for a single category. Contingency (two-way) tables show how two categorical variables interact. Tables can display raw counts or proportions/percentages.
+                    <strong className="text-blue-700 dark:text-blue-300">Tables (Frequency &amp; Contingency):</strong> Frequency tables show the totals for a single category. Contingency (two-way) tables show how two categorical variables interact. Tables can display raw counts or proportions/percentages.
                   </li>
                   <li>
-                    <strong className="text-blue-300">Bar Charts:</strong> Generated from frequency tables. They use rectangular bars to make clear comparisons between the totals of different categories.
+                    <strong className="text-blue-700 dark:text-blue-300">Bar Charts:</strong> Generated from frequency tables. They use rectangular bars to make clear comparisons between the totals of different categories.
                   </li>
                   <li>
-                    <strong className="text-blue-300">Pie Charts:</strong> A circular chart divided into slices. These are best used when you want to compare the proportions (or percentages) of different categories relative to the whole.
+                    <strong className="text-blue-700 dark:text-blue-300">Pie Charts:</strong> A circular chart divided into slices. These are best used when you want to compare the proportions (or percentages) of different categories relative to the whole.
                   </li>
                 </ul>
               </div>
@@ -2891,10 +2891,10 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. Diagrams for Numerical Data</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">Histograms:</strong> Used to visualise the shape and distribution of a single continuous numerical variable (e.g., to see if data is normally distributed or skewed).
+                    <strong className="text-emerald-800 dark:text-emerald-300">Histograms:</strong> Used to visualise the shape and distribution of a single continuous numerical variable (e.g., to see if data is normally distributed or skewed).
                   </li>
                   <li>
-                    <strong className="text-emerald-300">Boxplots:</strong> Provide a visual representation of the five-figure summary.
+                    <strong className="text-emerald-800 dark:text-emerald-300">Boxplots:</strong> Provide a visual representation of the five-figure summary.
                     <ul className="list-[circle] list-inside ml-8 mt-1 text-muted-foreground">
                       <li>The line in the middle of the box is the median.</li>
                       <li>The width of the box is the interquartile range (IQR).</li>
@@ -2903,7 +2903,7 @@ export const higherAppsData: Section[] = [
                     </ul>
                   </li>
                   <li>
-                    <strong className="text-emerald-300">Scatterplots:</strong> Used to present bivariate data (data with two related numerical variables) to visualise relationships and correlations.
+                    <strong className="text-emerald-800 dark:text-emerald-300">Scatterplots:</strong> Used to present bivariate data (data with two related numerical variables) to visualise relationships and correlations.
                     <ul className="list-[circle] list-inside ml-8 mt-1 text-muted-foreground">
                       <li>When plotting "Y on X", the independent variable goes on the x-axis, and the dependent variable goes on the y-axis.</li>
                     </ul>
@@ -2912,8 +2912,8 @@ export const higherAppsData: Section[] = [
               </div>
 
               <div className="mt-6 p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                <p className="text-purple-300 font-semibold mb-1">Important Exam/Project Rule:</p>
-                <p className="text-purple-100/80">
+                <p className="text-purple-700 dark:text-purple-300 font-semibold mb-1">Important Exam/Project Rule:</p>
+                <p className="text-purple-700 dark:text-purple-100/80">
                   All statistical diagrams must include a <strong>clear, descriptive main title</strong> and <strong>appropriate axis labels</strong> to be awarded marks.
                 </p>
               </div>
@@ -3017,7 +3017,7 @@ export const higherAppsData: Section[] = [
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The histogram has a classic, symmetrical "bell shape".</li>
                   <li>Most of the data clusters in the middle, with fewer values at the extreme high and low ends.</li>
-                  <li><strong className="text-blue-300">Appropriate Measures:</strong> Because the data is symmetrical, you must use the <strong>mean</strong> for the measure of location and the <strong>standard deviation</strong> for the measure of spread.</li>
+                  <li><strong className="text-blue-700 dark:text-blue-300">Appropriate Measures:</strong> Because the data is symmetrical, you must use the <strong>mean</strong> for the measure of location and the <strong>standard deviation</strong> for the measure of spread.</li>
                 </ul>
               </div>
 
@@ -3026,7 +3026,7 @@ export const higherAppsData: Section[] = [
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The bulk of the data is bunched up on the left side of the histogram, with a long "tail" stretching out to the right.</li>
                   <li>This happens when there are a few unusually high outliers pulling the data upwards.</li>
-                  <li><strong className="text-blue-300">Appropriate Measures:</strong> Because the extreme high values would artificially inflate the mean, you must use the <strong>median</strong> (location) and the <strong>interquartile range / IQR</strong> (spread).</li>
+                  <li><strong className="text-blue-700 dark:text-blue-300">Appropriate Measures:</strong> Because the extreme high values would artificially inflate the mean, you must use the <strong>median</strong> (location) and the <strong>interquartile range / IQR</strong> (spread).</li>
                 </ul>
               </div>
 
@@ -3035,7 +3035,7 @@ export const higherAppsData: Section[] = [
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>The bulk of the data is bunched up on the right side of the histogram, with a long "tail" stretching out to the left.</li>
                   <li>This happens when there are a few unusually low outliers pulling the data downwards.</li>
-                  <li><strong className="text-blue-300">Appropriate Measures:</strong> Just like positive skew, you must use the <strong>median</strong> and the <strong>interquartile range</strong>.</li>
+                  <li><strong className="text-blue-700 dark:text-blue-300">Appropriate Measures:</strong> Just like positive skew, you must use the <strong>median</strong> and the <strong>interquartile range</strong>.</li>
                 </ul>
               </div>
 
@@ -3148,10 +3148,10 @@ export const higherAppsData: Section[] = [
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">Normally Distributed Data:</strong> Use the <strong>mean</strong> (location) and the <strong>standard deviation</strong> (spread).
+                    <strong className="text-emerald-800 dark:text-emerald-300">Normally Distributed Data:</strong> Use the <strong>mean</strong> (location) and the <strong>standard deviation</strong> (spread).
                   </li>
                   <li>
-                    <strong className="text-emerald-300">Skewed Data (Positive or Negative):</strong> Use the <strong>median</strong> (location) and the <strong>interquartile range / IQR</strong> (spread). This is because extreme outliers in the 'tail' of skewed data will drastically distort the mean, but the median remains unaffected.
+                    <strong className="text-emerald-800 dark:text-emerald-300">Skewed Data (Positive or Negative):</strong> Use the <strong>median</strong> (location) and the <strong>interquartile range / IQR</strong> (spread). This is because extreme outliers in the 'tail' of skewed data will drastically distort the mean, but the median remains unaffected.
                   </li>
                 </ul>
               </div>
@@ -3163,11 +3163,11 @@ export const higherAppsData: Section[] = [
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-purple-300">Sentence 1 (Location):</strong> Compare the averages using the word "average", state which is higher/lower, and explicitly state the numbers. <br/>
+                    <strong className="text-purple-700 dark:text-purple-300">Sentence 1 (Location):</strong> Compare the averages using the word "average", state which is higher/lower, and explicitly state the numbers. <br/>
                     <em className="text-muted-foreground text-sm ml-4">(e.g., "On average, Group A was faster because its median (12s) is lower than Group B's (15s).")</em>
                   </li>
                   <li>
-                    <strong className="text-purple-300">Sentence 2 (Spread):</strong> Compare the spread using the word "consistent" or "varied", and explicitly state the numbers. <br/>
+                    <strong className="text-purple-700 dark:text-purple-300">Sentence 2 (Spread):</strong> Compare the spread using the word "consistent" or "varied", and explicitly state the numbers. <br/>
                     <em className="text-muted-foreground text-sm ml-4">(e.g., "Group A's times were more consistent because its IQR (2s) is smaller than Group B's (5s).")</em>
                   </li>
                 </ul>
@@ -3176,10 +3176,10 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">4. R Studio Commands</h4>
                 <ul className="space-y-2 mt-2 font-mono text-sm ml-4 bg-card/50 p-4 rounded-lg border border-muted/50">
-                  <li><span className="text-blue-400">mean(X)</span> / <span className="text-blue-400">sd(X)</span> <span className="text-muted-foreground">- calculates the mean and standard deviation.</span></li>
-                  <li><span className="text-blue-400">median(X)</span> / <span className="text-blue-400">IQR(X)</span> <span className="text-muted-foreground">- calculates the median and interquartile range.</span></li>
-                  <li><span className="text-blue-400">summary(X)</span> <span className="text-muted-foreground">- provides the 5-figure summary (min, Q1, median, mean, Q3, max).</span></li>
-                  <li><span className="text-blue-400">prop.table(table(X))</span> <span className="text-muted-foreground">- calculates the proportions of a categorical variable.</span></li>
+                  <li><span className="text-blue-700 dark:text-blue-400">mean(X)</span> / <span className="text-blue-700 dark:text-blue-400">sd(X)</span> <span className="text-muted-foreground">- calculates the mean and standard deviation.</span></li>
+                  <li><span className="text-blue-700 dark:text-blue-400">median(X)</span> / <span className="text-blue-700 dark:text-blue-400">IQR(X)</span> <span className="text-muted-foreground">- calculates the median and interquartile range.</span></li>
+                  <li><span className="text-blue-700 dark:text-blue-400">summary(X)</span> <span className="text-muted-foreground">- provides the 5-figure summary (min, Q1, median, mean, Q3, max).</span></li>
+                  <li><span className="text-blue-700 dark:text-blue-400">prop.table(table(X))</span> <span className="text-muted-foreground">- calculates the proportions of a categorical variable.</span></li>
                 </ul>
               </div>
             </div>
@@ -3304,7 +3304,7 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. Pearson's Correlation Coefficient (r)</h4>
                 <p className="mb-2">
-                  We use the statistical software code <code className="text-blue-300 font-mono">cor.test(X,Y)</code> to calculate the correlation coefficient, often denoted as <strong>r</strong>. This calculation gives us a number exactly between -1 and 1, which tells us the strength and direction of the linear relationship.
+                  We use the statistical software code <code className="text-blue-700 dark:text-blue-300 font-mono">cor.test(X,Y)</code> to calculate the correlation coefficient, often denoted as <strong>r</strong>. This calculation gives us a number exactly between -1 and 1, which tells us the strength and direction of the linear relationship.
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li><strong>r = 1:</strong> A perfect positive linear relationship (as X increases, Y increases perfectly).</li>
@@ -3312,8 +3312,8 @@ export const higherAppsData: Section[] = [
                   <li><strong>r = 0:</strong> No linear relationship.</li>
                 </ul>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <p className="text-amber-200 font-semibold mb-1">Exam Rule:</p>
-                  <p className="text-amber-100/80">
+                  <p className="text-amber-800 dark:text-amber-200 font-semibold mb-1">Exam Rule:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     When interpreting an r value, you must state both the <strong>strength</strong> (weak, moderate, or strong) and the <strong>direction</strong> (positive or negative) in the context of the question.
                   </p>
                 </div>
@@ -3326,7 +3326,7 @@ export const higherAppsData: Section[] = [
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2">
                   <li>
-                    <strong className="text-rose-300">Correlation does not imply causation.</strong> Just because two variables have a strong mathematical correlation does not prove that a change in one directly causes a change in the other.
+                    <strong className="text-rose-700 dark:text-rose-300">Correlation does not imply causation.</strong> Just because two variables have a strong mathematical correlation does not prove that a change in one directly causes a change in the other.
                   </li>
                   <li>
                     There may be an outside influence, known as a <strong>confounding variable</strong>, that is actually causing both variables to change simultaneously.
@@ -3420,14 +3420,14 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground">1. The Equation of the Regression Line</h4>
                 <p className="mb-2">
-                  The equation of a straight line is typically written as <code className="text-blue-300 font-mono">y = mx + c</code> or <code className="text-blue-300 font-mono">y = c + mx</code>, where <code className="text-blue-300 font-mono">m</code> is the slope (gradient) and <code className="text-blue-300 font-mono">c</code> is the y-intercept.
+                  The equation of a straight line is typically written as <code className="text-blue-700 dark:text-blue-300 font-mono">y = mx + c</code> or <code className="text-blue-700 dark:text-blue-300 font-mono">y = c + mx</code>, where <code className="text-blue-700 dark:text-blue-300 font-mono">m</code> is the slope (gradient) and <code className="text-blue-700 dark:text-blue-300 font-mono">c</code> is the y-intercept.
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2">
                   <li>
-                    In R Studio, we generate this equation using the command <code className="text-blue-300 font-mono">lm(Y~X)</code> (which stands for linear model).
+                    In R Studio, we generate this equation using the command <code className="text-blue-700 dark:text-blue-300 font-mono">lm(Y~X)</code> (which stands for linear model).
                   </li>
                   <li>
-                    The R Studio output will provide two "Coefficients". The <code className="text-blue-300 font-mono">(Intercept)</code> is the y-intercept, and the value next to the independent variable is the slope.
+                    The R Studio output will provide two "Coefficients". The <code className="text-blue-700 dark:text-blue-300 font-mono">(Intercept)</code> is the y-intercept, and the value next to the independent variable is the slope.
                   </li>
                 </ul>
               </div>
@@ -3439,17 +3439,17 @@ export const higherAppsData: Section[] = [
                 </p>
                 <div className="space-y-3 mt-2">
                   <div className="bg-card/50 p-4 rounded-lg border border-muted/50">
-                    <p><strong className="text-purple-300">Slope:</strong></p>
+                    <p><strong className="text-purple-700 dark:text-purple-300">Slope:</strong></p>
                     <p className="font-mono text-sm mt-1 text-foreground-2">"For every additional 1 [unit] of [Independent Variable], the [Dependent Variable] increases/decreases by [Slope value]"</p>
                   </div>
                   <div className="bg-card/50 p-4 rounded-lg border border-muted/50">
-                    <p><strong className="text-purple-300">Intercept:</strong></p>
+                    <p><strong className="text-purple-700 dark:text-purple-300">Intercept:</strong></p>
                     <p className="font-mono text-sm mt-1 text-foreground-2">"If the [Independent Variable] is 0, the estimated [Dependent Variable] would be [Intercept value]"</p>
                   </div>
                 </div>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <p className="text-amber-200 font-semibold mb-1">Note:</p>
-                  <p className="text-amber-100/80">
+                  <p className="text-amber-800 dark:text-amber-200 font-semibold mb-1">Note:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     Sometimes the intercept is mathematically correct but physically impossible in real life (e.g., negative time, or a negative weight). You may be asked to point this out.
                   </p>
                 </div>
@@ -3458,12 +3458,12 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">3. Making Predictions &amp; Assessing Reliability</h4>
                 <p className="mb-2">
-                  You can make predictions either by substituting an x-value into your equation, or by using the R Studio predict command: <code className="text-blue-300 font-mono">predict(lm(Y~X), newdata=data.frame(X=C), interval="pred")</code>.
+                  You can make predictions either by substituting an x-value into your equation, or by using the R Studio predict command: <code className="text-blue-700 dark:text-blue-300 font-mono">predict(lm(Y~X), newdata=data.frame(X=C), interval="pred")</code>.
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>When reading the output of a predict command, the predicted value is always the number listed under <strong>fit</strong>.</li>
                   <li>
-                    <strong className="text-emerald-300">Reliability:</strong> A prediction is only reliable if it is an <strong>interpolation</strong> — meaning the value you are testing is strictly within the range of the data used to make the model, and the model has a strong correlation.
+                    <strong className="text-emerald-800 dark:text-emerald-300">Reliability:</strong> A prediction is only reliable if it is an <strong>interpolation</strong> — meaning the value you are testing is strictly within the range of the data used to make the model, and the model has a strong correlation.
                   </li>
                   <li>
                     If you make a prediction using a value outside the original data range, this is called <strong>extrapolation</strong> and is generally unreliable.
@@ -3584,10 +3584,10 @@ export const higherAppsData: Section[] = [
                 <p className="mb-2">Every statistical test starts with two opposing statements:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> A statement that nothing unusual is happening. It usually states that there is no difference, no relationship, or no effect.
+                    <strong className="text-blue-700 dark:text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> A statement that nothing unusual is happening. It usually states that there is no difference, no relationship, or no effect.
                   </li>
                   <li>
-                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub> or H<sub>a</sub>):</strong> A statement that something is happening. It states that there is a difference, relationship, or effect.
+                    <strong className="text-blue-700 dark:text-blue-300">Alternative Hypothesis (H<sub>1</sub> or H<sub>a</sub>):</strong> A statement that something is happening. It states that there is a difference, relationship, or effect.
                   </li>
                 </ul>
               </div>
@@ -3599,15 +3599,15 @@ export const higherAppsData: Section[] = [
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">If p &lt; 0.05:</strong> The result is statistically significant. You must <strong>reject</strong> the null hypothesis.
+                    <strong className="text-emerald-800 dark:text-emerald-300">If p &lt; 0.05:</strong> The result is statistically significant. You must <strong>reject</strong> the null hypothesis.
                   </li>
                   <li>
-                    <strong className="text-emerald-300">If p &ge; 0.05:</strong> The result is not statistically significant. You must <strong>fail to reject</strong> the null hypothesis.
+                    <strong className="text-emerald-800 dark:text-emerald-300">If p &ge; 0.05:</strong> The result is not statistically significant. You must <strong>fail to reject</strong> the null hypothesis.
                   </li>
                 </ul>
                 <div className="mt-4 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg">
-                  <p className="text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
-                  <p className="text-rose-100/80">
+                  <p className="text-rose-700 dark:text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
+                  <p className="text-rose-700 dark:text-rose-100/80">
                     Never write "we accept the null hypothesis". The test only ever looks for evidence <em>against</em> H<sub>0</sub>, and finding none is not the same as showing H<sub>0</sub> is true. Always use the phrase <strong>"fail to reject"</strong>.
                   </p>
                 </div>
@@ -3620,10 +3620,10 @@ export const higherAppsData: Section[] = [
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-purple-300">Type I Error (False Positive):</strong> Rejecting the null hypothesis when it is actually true. <span className="text-muted-foreground">(e.g., Concluding a drug works when it actually does nothing).</span>
+                    <strong className="text-purple-700 dark:text-purple-300">Type I Error (False Positive):</strong> Rejecting the null hypothesis when it is actually true. <span className="text-muted-foreground">(e.g., Concluding a drug works when it actually does nothing).</span>
                   </li>
                   <li>
-                    <strong className="text-purple-300">Type II Error (False Negative):</strong> Failing to reject the null hypothesis when it is actually false. <span className="text-muted-foreground">(e.g., Concluding a drug does nothing, when in reality it does work).</span>
+                    <strong className="text-purple-700 dark:text-purple-300">Type II Error (False Negative):</strong> Failing to reject the null hypothesis when it is actually false. <span className="text-muted-foreground">(e.g., Concluding a drug does nothing, when in reality it does work).</span>
                   </li>
                 </ul>
               </div>
@@ -3758,7 +3758,7 @@ export const higherAppsData: Section[] = [
                   If an exam question asks you to interpret what a 95% confidence interval <em>literally</em> means, you must memorise and use this exact phrasing:
                 </p>
                 <div className="mt-2 p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                  <p className="text-purple-200 font-medium italic">
+                  <p className="text-purple-700 dark:text-purple-200 font-medium italic">
                     "If you were to repeat the study 100 times, 95 of these times the true population mean (or proportion) would lie within the interval"
                   </p>
                 </div>
@@ -3860,10 +3860,10 @@ export const higherAppsData: Section[] = [
                 <p className="mb-2">For a correlation test, the hypotheses are always written in terms of a <strong>linear</strong> relationship. Pearson's coefficient only measures how close the points lie to a straight line, so the word "linear" matters:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no linear relationship between [Variable 1] and [Variable 2].
+                    <strong className="text-blue-700 dark:text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no linear relationship between [Variable 1] and [Variable 2].
                   </li>
                   <li>
-                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a linear relationship between [Variable 1] and [Variable 2].
+                    <strong className="text-blue-700 dark:text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a linear relationship between [Variable 1] and [Variable 2].
                   </li>
                 </ul>
               </div>
@@ -3880,13 +3880,13 @@ export const higherAppsData: Section[] = [
                 <h4 className="text-lg font-semibold text-foreground mt-6">3. Interpreting the Output (The Exam Rules)</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">The p-value:</strong> Look at the p-value. If p &lt; 0.05, you <strong>reject</strong> the null hypothesis and conclude there is evidence of a linear relationship. If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis.
+                    <strong className="text-emerald-800 dark:text-emerald-300">The p-value:</strong> Look at the p-value. If p &lt; 0.05, you <strong>reject</strong> the null hypothesis and conclude there is evidence of a linear relationship. If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis.
                   </li>
                   <li>
-                    <strong className="text-emerald-300">The Correlation Coefficient (cor):</strong> This is found at the very bottom of the R Studio output under <code>sample estimates: cor</code>. You must use this number to comment on the <strong>strength</strong> (weak, moderate, strong) and <strong>direction</strong> (positive, negative) of the linear relationship.
+                    <strong className="text-emerald-800 dark:text-emerald-300">The Correlation Coefficient (cor):</strong> This is found at the very bottom of the R Studio output under <code>sample estimates: cor</code>. You must use this number to comment on the <strong>strength</strong> (weak, moderate, strong) and <strong>direction</strong> (positive, negative) of the linear relationship.
                   </li>
                   <li>
-                    <strong className="text-emerald-300">The Confidence Interval:</strong> We can be 95% confident that the true population correlation lies between the two numbers given in the interval.
+                    <strong className="text-emerald-800 dark:text-emerald-300">The Confidence Interval:</strong> We can be 95% confident that the true population correlation lies between the two numbers given in the interval.
                     <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-muted-foreground">
                       <li>If the interval <strong>contains zero</strong> (i.e., it goes from a negative number to a positive number), zero is a plausible value for the true correlation, so there is not enough evidence of a linear relationship. This is consistent with a decision to <strong>fail to reject</strong> the null hypothesis.</li>
                       <li>If the interval <strong>does not contain zero</strong>, it provides further statistical evidence that a relationship truly exists.</li>
@@ -3997,10 +3997,10 @@ export const higherAppsData: Section[] = [
                 <p className="mb-2">This is the only decision you have to make, and everything else follows from it. Ask: <em>did the same subjects produce both sets of numbers?</em></p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Paired</strong> — the same people, animals or objects measured <em>twice</em>. Before and after a treatment, morning versus afternoon, summer versus winter. Each value in one list has a partner in the other.
+                    <strong className="text-blue-700 dark:text-blue-300">Paired</strong> — the same people, animals or objects measured <em>twice</em>. Before and after a treatment, morning versus afternoon, summer versus winter. Each value in one list has a partner in the other.
                   </li>
                   <li>
-                    <strong className="text-blue-300">Independent</strong> — two <em>separate</em> groups. Manufacturer A versus Manufacturer B, one school versus another, one age band versus another. Nothing links a particular value in one list to a particular value in the other.
+                    <strong className="text-blue-700 dark:text-blue-300">Independent</strong> — two <em>separate</em> groups. Manufacturer A versus Manufacturer B, one school versus another, one age band versus another. Nothing links a particular value in one list to a particular value in the other.
                   </li>
                 </ul>
                 <p className="mt-3">A useful check: if the two lists <strong>must</strong> be the same length for the data to make sense, the test is paired. Independent groups can be — and usually are — different sizes, and that is not a problem.</p>
@@ -4009,9 +4009,9 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. Performing the Test in R Studio</h4>
                 <p className="mb-2">Independent groups:</p>
-                <p><code className="text-blue-300 font-mono">t.test(X, Y)</code></p>
+                <p><code className="text-blue-700 dark:text-blue-300 font-mono">t.test(X, Y)</code></p>
                 <p className="mb-2 mt-3">The same subjects measured twice:</p>
-                <p><code className="text-blue-300 font-mono">t.test(X, Y, paired=TRUE)</code></p>
+                <p><code className="text-blue-700 dark:text-blue-300 font-mono">t.test(X, Y, paired=TRUE)</code></p>
                 <p className="mt-3">
                   The output to read is the <strong>p-value</strong> and the <strong>confidence interval</strong>, interpreted exactly as for any other hypothesis test.
                 </p>
@@ -4030,17 +4030,17 @@ export const higherAppsData: Section[] = [
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">4. Writing the Hypotheses</h4>
                 <div className="mt-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg mb-4">
-                  <p className="text-rose-200 font-semibold mb-1">Common Trap:</p>
-                  <p className="text-rose-100/80">
+                  <p className="text-rose-700 dark:text-rose-200 font-semibold mb-1">Common Trap:</p>
+                  <p className="text-rose-700 dark:text-rose-100/80">
                     A t-test hypothesis must contain the word <strong>mean</strong> or <strong>average</strong>. Writing "there is no difference between the two groups" is too vague to gain the mark — a difference in <em>what</em>?
                   </p>
                 </div>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no difference in the mean [variable] between [Group A] and [Group B].
+                    <strong className="text-blue-700 dark:text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no difference in the mean [variable] between [Group A] and [Group B].
                   </li>
                   <li>
-                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a difference in the mean [variable] between [Group A] and [Group B].
+                    <strong className="text-blue-700 dark:text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a difference in the mean [variable] between [Group A] and [Group B].
                   </li>
                 </ul>
                 <p className="mt-3">Name the actual groups and the actual quantity. Generic letters will not do.</p>
@@ -4117,7 +4117,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p>H<sub>0</sub>: There is no difference in the mean height of tomato plants grown in Greenhouse A and Greenhouse B.</p>
                 <p>H<sub>1</sub>: There is a difference in the mean height of tomato plants grown in Greenhouse A and Greenhouse B.</p>
                 <p><strong>(b)</strong> The two samples are separate groups of plants, so this is an independent t-test:</p>
-                <p><code className="text-blue-300 font-mono">t.test(Height.A, Height.B)</code></p>
+                <p><code className="text-blue-700 dark:text-blue-300 font-mono">t.test(Height.A, Height.B)</code></p>
                 <p><strong>(c)</strong> p = 0.214, which is greater than 0.05, so we <strong>fail to reject the null hypothesis</strong>. There is insufficient evidence of a difference in the mean height of tomato plants between the two greenhouses.</p>
                 <p className="text-muted-foreground text-sm mt-2">Note the wording: we have <em>not</em> proved the heights are the same. Failing to find evidence of a difference is not the same as showing there is none.</p>
               </div>
@@ -4138,7 +4138,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             <div className="space-y-4">
               <div>
                 <h4 className="text-lg font-semibold text-foreground">1. Performing the Test in R Studio</h4>
-                <p className="mb-2">In R Studio, the command used to perform this test is <code className="text-blue-300 font-mono">prop.test(x = c(a, b), n = c(n1, n2))</code>.</p>
+                <p className="mb-2">In R Studio, the command used to perform this test is <code className="text-blue-700 dark:text-blue-300 font-mono">prop.test(x = c(a, b), n = c(n1, n2))</code>.</p>
                 <p>
                   In this formula, <code className="text-muted-foreground font-mono">x</code> represents the number of "successes" (the specific event of interest) for group A and group B, and <code className="text-muted-foreground font-mono">n</code> represents the total number of observations (the sample size) for group A and group B.
                 </p>
@@ -4147,17 +4147,17 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">2. Formulating Hypotheses for Z-Tests (The "Proportion" Trap)</h4>
                 <div className="mt-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg mb-4">
-                  <p className="text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
-                  <p className="text-rose-100/80">
+                  <p className="text-rose-700 dark:text-rose-200 font-semibold mb-1">Massive Exam Trap:</p>
+                  <p className="text-rose-700 dark:text-rose-100/80">
                     Just as t-tests require the word "mean", z-test hypotheses must explicitly use the word <strong>proportion</strong> (or percentage).
                   </p>
                 </div>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no difference in the proportion of [Variable] between [Group A] and [Group B].
+                    <strong className="text-blue-700 dark:text-blue-300">Null Hypothesis (H<sub>0</sub>):</strong> There is no difference in the proportion of [Variable] between [Group A] and [Group B].
                   </li>
                   <li>
-                    <strong className="text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a difference in the proportion of [Variable] between [Group A] and [Group B].
+                    <strong className="text-blue-700 dark:text-blue-300">Alternative Hypothesis (H<sub>1</sub>):</strong> There is a difference in the proportion of [Variable] between [Group A] and [Group B].
                   </li>
                 </ul>
               </div>
@@ -4166,10 +4166,10 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <h4 className="text-lg font-semibold text-foreground mt-6">3. Interpreting the Output</h4>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">The p-value:</strong> If p &lt; 0.05, you <strong>reject</strong> the null hypothesis (there is a statistically significant difference in the proportions). If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis (there is not enough evidence to suggest a difference).
+                    <strong className="text-emerald-800 dark:text-emerald-300">The p-value:</strong> If p &lt; 0.05, you <strong>reject</strong> the null hypothesis (there is a statistically significant difference in the proportions). If p &ge; 0.05, you <strong>fail to reject</strong> the null hypothesis (there is not enough evidence to suggest a difference).
                   </li>
                   <li>
-                    <strong className="text-emerald-300">The Confidence Interval:</strong> This gives the 95% confidence interval for the true difference between the two proportions.
+                    <strong className="text-emerald-800 dark:text-emerald-300">The Confidence Interval:</strong> This gives the 95% confidence interval for the true difference between the two proportions.
                     <ul className="list-circle list-inside ml-8 space-y-1 mt-1 text-muted-foreground">
                       <li>If the interval <strong>contains zero</strong> (goes from a negative number to a positive number), zero is a plausible value for the difference, so there is not enough evidence of a difference between the proportions.</li>
                       <li>If the interval <strong>does not contain zero</strong>, it provides further evidence that a statistical difference between the proportions truly exists.</li>
@@ -4196,7 +4196,7 @@ t = 2.9143, df = 59, p-value = 0.005022
             ),
             solution: (
               <div className="space-y-2">
-                <p><code className="bg-card border border-muted px-2 py-1 rounded text-blue-300 font-mono">prop.test(x = c(82, 78), n = c(150, 120))</code></p>
+                <p><code className="bg-card border border-muted px-2 py-1 rounded text-blue-700 dark:text-blue-300 font-mono">prop.test(x = c(82, 78), n = c(150, 120))</code></p>
               </div>
             )
           },
@@ -4326,13 +4326,13 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p className="mb-2">Regardless of which test you choose, the rules for interpreting the R Studio output remain exactly the same:</p>
                 <ul className="list-disc list-inside ml-4 space-y-2 mt-2">
                   <li>
-                    <strong className="text-emerald-300">p &lt; 0.05:</strong> The result is statistically significant. You must <strong>reject</strong> the null hypothesis.
+                    <strong className="text-emerald-800 dark:text-emerald-300">p &lt; 0.05:</strong> The result is statistically significant. You must <strong>reject</strong> the null hypothesis.
                   </li>
                   <li>
-                    <strong className="text-emerald-300">p &ge; 0.05:</strong> The result is not statistically significant. You must <strong>fail to reject</strong> the null hypothesis.
+                    <strong className="text-emerald-800 dark:text-emerald-300">p &ge; 0.05:</strong> The result is not statistically significant. You must <strong>fail to reject</strong> the null hypothesis.
                   </li>
                   <li>
-                    <strong className="text-blue-300">Confidence Intervals:</strong> If the 95% confidence interval <strong>contains zero</strong>, zero is a plausible value for the difference, which is consistent with failing to reject the null hypothesis. If it <strong>does not contain zero</strong>, it provides further evidence to reject the null hypothesis.
+                    <strong className="text-blue-700 dark:text-blue-300">Confidence Intervals:</strong> If the 95% confidence interval <strong>contains zero</strong>, zero is a plausible value for the difference, which is consistent with failing to reject the null hypothesis. If it <strong>does not contain zero</strong>, it provides further evidence to reject the null hypothesis.
                   </li>
                 </ul>
               </div>
@@ -5621,7 +5621,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <ConstructingPertExample3 />
                 </div>
                 
-                <h5 className="font-semibold text-emerald-300 mt-4">Forward Scan (Left to Right - finding EST):</h5>
+                <h5 className="font-semibold text-emerald-800 dark:text-emerald-300 mt-4">Forward Scan (Left to Right - finding EST):</h5>
                 <ul className="list-none space-y-1 text-sm ml-4">
                   <li><strong>START:</strong> EST = 0, Dur = 0.</li>
                   <li><strong>A:</strong> Preceded by START. EST = 0.</li>
@@ -5633,7 +5633,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <li><strong>END:</strong> Preceded by F (12 + 1 = 13). Total project time is 13 weeks.</li>
                 </ul>
 
-                <h5 className="font-semibold text-rose-300 mt-4">Backward Scan (Right to Left - finding LET):</h5>
+                <h5 className="font-semibold text-rose-700 dark:text-rose-300 mt-4">Backward Scan (Right to Left - finding LET):</h5>
                 <ul className="list-none space-y-1 text-sm ml-4">
                   <li><strong>END:</strong> LET = 13, Dur = 0.</li>
                   <li><strong>F:</strong> Succeeded by END (13 &minus; 0 = 13). LET = 13.</li>
@@ -5841,8 +5841,8 @@ t = 2.9143, df = 59, p-value = 0.005022
                   On a Gantt chart, float time is usually represented by a lightly shaded box or a thin line extending out from the end of the solid duration block, stretching all the way to the LET.
                 </p>
                 <div className="mt-4 bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
-                  <p className="font-semibold text-amber-300 mb-1">Massive Exam Trap:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Massive Exam Trap:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     The marking instructions state that colours <strong>cannot</strong> be used in exams. If you are asked to draw float time, you must use a different pattern (like cross-hatching) or a thin line, rather than switching from a blue pen to a red pen! Sometimes, an exam question will explicitly ask you to draw a Gantt chart <em>without</em> float times, so always read the question carefully.
                   </p>
                 </div>
@@ -6087,8 +6087,8 @@ t = 2.9143, df = 59, p-value = 0.005022
                   <InlineMath math="\text{Expected Success} = \text{Probability} \times \text{Sample Size}" />
                 </div>
                 <div className="mt-4 bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
-                  <p className="font-semibold text-blue-300 mb-1">Crucial Note:</p>
-                  <p className="text-blue-100/80">
+                  <p className="font-semibold text-blue-700 dark:text-blue-300 mb-1">Crucial Note:</p>
+                  <p className="text-blue-700 dark:text-blue-100/80">
                     Expected probability does <em>not</em> guarantee an exact, real-world result. Instead, it provides businesses and project managers with a strong mathematical indication of what is most likely to happen, allowing them to adjust their finances and schedules accordingly.
                   </p>
                 </div>
@@ -6328,8 +6328,8 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div>
                 <h4 className="text-lg font-semibold text-foreground mt-6">3. Constructing Venn Diagrams (The Subtraction Trap)</h4>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Massive Exam Trap:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Massive Exam Trap:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     When you are given the total number of people in a category, that total <em>includes</em> the people in the overlapping sections. You must <strong>always subtract the intersection</strong> from the group totals to find the number of people who belong to "only" one category.
                   </p>
                 </div>
@@ -6600,8 +6600,8 @@ t = 2.9143, df = 59, p-value = 0.005022
                   Because we are dealing with multiple sequential or simultaneous probabilities, tree diagrams are the best mathematical tool to use to find the overall chance of a delay.
                 </p>
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg my-4">
-                  <p className="font-semibold text-amber-300 mb-1">Exam Shortcut:</p>
-                  <p className="text-amber-100/80">
+                  <p className="font-semibold text-amber-800 dark:text-amber-300 mb-1">Exam Shortcut:</p>
+                  <p className="text-amber-800 dark:text-amber-100/80">
                     Remember the "At Least One" rule from Section 7! Instead of calculating all the combinations of things going wrong, simply calculate the probability of everything going perfectly (e.g., No Delay &times; No Delay) and subtract your answer from 1.
                   </p>
                 </div>
@@ -6612,7 +6612,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <p>
                   When a company is choosing between several different control measures (e.g., Option 1, Option 2, or doing both), you must conduct a separate cost-benefit analysis for every single option.
                 </p>
-                <p className="mt-2 text-indigo-300 font-semibold">
+                <p className="mt-2 text-indigo-600 dark:text-indigo-300 font-semibold">
                   The Golden Rule: When you pay for a specific control measure, it usually only eliminates that specific risk. The other risks will still exist, and you must factor their remaining expected penalty into your calculation.
                 </p>
                 <div className="bg-muted p-4 rounded-lg my-4 text-center">
@@ -6744,7 +6744,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 There is a full interactive workbook covering everything you need: loading a dataset, descriptive statistics, boxplots, tables, histograms, scattergraphs, correlation and regression, t-tests and z-tests — with practice datasets to download and past paper questions worked through.
               </p>
               <p>
-                <a href="/course/higher-apps/rstudio/" className="text-blue-300 underline font-semibold">Open the RStudio Workbook →</a>
+                <a href="/course/higher-apps/rstudio/" className="text-blue-700 dark:text-blue-300 underline font-semibold">Open the RStudio Workbook →</a>
               </p>
             </div>
 
@@ -6760,24 +6760,24 @@ t = 2.9143, df = 59, p-value = 0.005022
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-foreground/10">
-                    <tr><td className="py-2 font-mono text-blue-300">read.csv(&quot;file.csv&quot;)</td><td className="py-2">Loads a dataset into RStudio</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">attach(file)</td><td className="py-2">Makes the column headings usable as variable names</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">head(file)</td><td className="py-2">Shows the first few rows — useful for checking exact heading names</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">summary(X)</td><td className="py-2">Minimum, quartiles, median, mean and maximum</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">mean(X)  sd(X)  median(X)  IQR(X)</td><td className="py-2">Individual descriptive statistics</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">table(X)</td><td className="py-2">Frequency table</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">table(X, Y)</td><td className="py-2">Contingency table for two categorical variables</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">prop.table(table(X))*100</td><td className="py-2">Proportions, shown as percentages</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">hist(X)</td><td className="py-2">Histogram — use it to judge the shape of a distribution</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">boxplot(X)</td><td className="py-2">Boxplot; <span className="font-mono">boxplot(X, Y)</span> compares two sets</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">plot(X, Y)</td><td className="py-2">Scattergraph of two numerical variables</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">cor(X, Y)</td><td className="py-2">Correlation coefficient r</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">cor.test(X, Y)</td><td className="py-2">Correlation hypothesis test — gives r and a p-value</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">lm(Y ~ X)</td><td className="py-2">Fits a regression line; <span className="font-mono">summary(lm(Y ~ X))</span> adds R²</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">t.test(X, Y)</td><td className="py-2">Independent t-test comparing two means</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">t.test(X, Y, paired=TRUE)</td><td className="py-2">Paired t-test, for the same subjects measured twice</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">prop.test(x = c(a, b), n = c(n1, n2))</td><td className="py-2">Z-test comparing two proportions</td></tr>
-                    <tr><td className="py-2 font-mono text-blue-300">detach(file)</td><td className="py-2">Run at the end of a session to clear the heading names</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">read.csv(&quot;file.csv&quot;)</td><td className="py-2">Loads a dataset into RStudio</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">attach(file)</td><td className="py-2">Makes the column headings usable as variable names</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">head(file)</td><td className="py-2">Shows the first few rows — useful for checking exact heading names</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">summary(X)</td><td className="py-2">Minimum, quartiles, median, mean and maximum</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">mean(X)  sd(X)  median(X)  IQR(X)</td><td className="py-2">Individual descriptive statistics</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">table(X)</td><td className="py-2">Frequency table</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">table(X, Y)</td><td className="py-2">Contingency table for two categorical variables</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">prop.table(table(X))*100</td><td className="py-2">Proportions, shown as percentages</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">hist(X)</td><td className="py-2">Histogram — use it to judge the shape of a distribution</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">boxplot(X)</td><td className="py-2">Boxplot; <span className="font-mono">boxplot(X, Y)</span> compares two sets</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">plot(X, Y)</td><td className="py-2">Scattergraph of two numerical variables</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">cor(X, Y)</td><td className="py-2">Correlation coefficient r</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">cor.test(X, Y)</td><td className="py-2">Correlation hypothesis test — gives r and a p-value</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">lm(Y ~ X)</td><td className="py-2">Fits a regression line; <span className="font-mono">summary(lm(Y ~ X))</span> adds R²</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">t.test(X, Y)</td><td className="py-2">Independent t-test comparing two means</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">t.test(X, Y, paired=TRUE)</td><td className="py-2">Paired t-test, for the same subjects measured twice</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">prop.test(x = c(a, b), n = c(n1, n2))</td><td className="py-2">Z-test comparing two proportions</td></tr>
+                    <tr><td className="py-2 font-mono text-blue-700 dark:text-blue-300">detach(file)</td><td className="py-2">Run at the end of a session to clear the heading names</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -6816,20 +6816,20 @@ t = 2.9143, df = 59, p-value = 0.005022
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-foreground/10">
-                    <tr><td className="py-2 font-mono text-emerald-300">SUM</td><td className="py-2">Totalling a column of payments or hours</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">PRODUCT</td><td className="py-2">Multiplying values, such as rate × hours</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">IF</td><td className="py-2">Applying a rule only when a condition is met — tax bands, overtime thresholds</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">AND / OR</td><td className="py-2">Combining two conditions inside an IF</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">ROUND</td><td className="py-2">Rounding money to 2 decimal places</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">ABS</td><td className="py-2">Size of a difference, ignoring its sign — useful for errors and tolerance</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">INT</td><td className="py-2">Whole number part — whole years, whole units</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">GOAL SEEK</td><td className="py-2">Working backwards to a required input — present value, repayments</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">AVERAGE</td><td className="py-2">Mean of a range</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">MIN / MAX</td><td className="py-2">Smallest and largest values</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">MEDIAN</td><td className="py-2">Middle value, for skewed data</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">COUNTIF</td><td className="py-2">Counting entries that meet a condition</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">STDEV</td><td className="py-2">Standard deviation of a sample</td></tr>
-                    <tr><td className="py-2 font-mono text-emerald-300">PEARSON</td><td className="py-2">Correlation coefficient between two ranges</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">SUM</td><td className="py-2">Totalling a column of payments or hours</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">PRODUCT</td><td className="py-2">Multiplying values, such as rate × hours</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">IF</td><td className="py-2">Applying a rule only when a condition is met — tax bands, overtime thresholds</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">AND / OR</td><td className="py-2">Combining two conditions inside an IF</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">ROUND</td><td className="py-2">Rounding money to 2 decimal places</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">ABS</td><td className="py-2">Size of a difference, ignoring its sign — useful for errors and tolerance</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">INT</td><td className="py-2">Whole number part — whole years, whole units</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">GOAL SEEK</td><td className="py-2">Working backwards to a required input — present value, repayments</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">AVERAGE</td><td className="py-2">Mean of a range</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">MIN / MAX</td><td className="py-2">Smallest and largest values</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">MEDIAN</td><td className="py-2">Middle value, for skewed data</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">COUNTIF</td><td className="py-2">Counting entries that meet a condition</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">STDEV</td><td className="py-2">Standard deviation of a sample</td></tr>
+                    <tr><td className="py-2 font-mono text-emerald-800 dark:text-emerald-300">PEARSON</td><td className="py-2">Correlation coefficient between two ranges</td></tr>
                   </tbody>
                 </table>
               </div>

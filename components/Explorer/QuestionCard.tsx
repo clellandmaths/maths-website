@@ -308,7 +308,7 @@ export default function QuestionCard({
         </div>
 
         {failed && (
-          <p className="text-xs text-amber-300/90 mb-2">
+          <p className="text-xs text-amber-800 dark:text-amber-300/90 mb-2">
             Could not make a new question like this one just now.
           </p>
         )}

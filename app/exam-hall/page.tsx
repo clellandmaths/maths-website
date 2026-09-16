@@ -427,7 +427,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 bg-orange-600/20 rounded-lg">
-                  <Flame className="h-8 w-8 text-orange-500" />
+                  <Flame className="h-8 w-8 text-orange-800 dark:text-orange-500" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-foreground">Warm Up</h2>
@@ -449,7 +449,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 bg-cyan-600/20 rounded-lg">
-                  <CheckSquare className="h-8 w-8 text-cyan-500" />
+                  <CheckSquare className="h-8 w-8 text-cyan-800 dark:text-cyan-500" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-foreground">Checklists</h2>

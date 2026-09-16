@@ -698,7 +698,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     </span>
                     <button
                       onClick={clearAllFilters}
-                      className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                      className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-red-700 dark:text-red-400 hover:bg-red-400/10 rounded transition-colors"
                     >
                       <X className="h-3 w-3" />
                       Clear all filters
@@ -710,7 +710,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       <button
                         key={`af-year-${year}`}
                         onClick={() => removeYear(year)}
-                        className="shrink-0 px-2.5 py-1 bg-cyan-600/20 text-cyan-400 text-xs rounded-full flex items-center gap-1.5 hover:bg-cyan-600/30 transition-colors"
+                        className="shrink-0 px-2.5 py-1 bg-cyan-600/20 text-cyan-800 dark:text-cyan-400 text-xs rounded-full flex items-center gap-1.5 hover:bg-cyan-600/30 transition-colors"
                       >
                         {year}
                         <X className="h-3 w-3" />
@@ -721,7 +721,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       <button
                         key={`af-paper-${paper}`}
                         onClick={() => removePaper(paper)}
-                        className="shrink-0 px-2.5 py-1 bg-amber-600/20 text-amber-400 text-xs rounded-full flex items-center gap-1.5 hover:bg-amber-600/30 transition-colors"
+                        className="shrink-0 px-2.5 py-1 bg-amber-600/20 text-amber-800 dark:text-amber-400 text-xs rounded-full flex items-center gap-1.5 hover:bg-amber-600/30 transition-colors"
                       >
                         Paper {paper}
                         <X className="h-3 w-3" />
@@ -1055,7 +1055,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                             showClearConfirm
                               ? 'bg-red-600 hover:bg-red-500 text-white'
-                              : 'bg-red-600/10 text-red-400 hover:bg-red-600/20'
+                              : 'bg-red-600/10 text-red-700 dark:text-red-400 hover:bg-red-600/20'
                           }`}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -1304,7 +1304,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           {/* Remove button */}
                           <button
                             onClick={() => removeItem(q)}
-                            className="no-print shrink-0 p-1.5 text-muted-dim hover:text-red-400 rounded-lg hover:bg-muted transition-colors"
+                            className="no-print shrink-0 p-1.5 text-muted-dim hover:text-red-700 dark:text-red-400 rounded-lg hover:bg-muted transition-colors"
                             title="Remove from worksheet"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -1475,7 +1475,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${
                           showClearConfirm
                             ? 'bg-red-600 text-white'
-                            : 'text-red-400/70 hover:text-red-400'
+                            : 'text-red-700 dark:text-red-400/70 hover:text-red-700 dark:text-red-400'
                         }`}
                       >
                         <Trash2 className="h-3 w-3" />

@@ -142,13 +142,13 @@ export default function PracticePaperClient({
         </p>
 
         {missing > 0 && !drawing && (
-          <p className="mt-3 text-sm text-amber-300/90">
+          <p className="mt-3 text-sm text-amber-800 dark:text-amber-300/90">
             {missing} question{missing === 1 ? '' : 's'} could not be generated. They are
             named below, with a link to the original.
           </p>
         )}
         {failed && (
-          <p className="mt-3 text-sm text-amber-300/90">
+          <p className="mt-3 text-sm text-amber-800 dark:text-amber-300/90">
             Something went wrong drawing this paper. Reload to try again.
           </p>
         )}
@@ -208,7 +208,7 @@ export default function PracticePaperClient({
                   <Marks marks={q.marks} theme={theme} />
                 </>
               ) : (
-                <span className="font-mono text-xs text-amber-300/90">
+                <span className="font-mono text-xs text-amber-800 dark:text-amber-300/90">
                   no new question could be made for {plan[i].label ?? `question ${plan[i].number}`}
                 </span>
               )}

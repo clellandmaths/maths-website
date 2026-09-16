@@ -373,7 +373,7 @@ function Builder({ courseId, courseName, groups }: Props) {
                   behind it — so if it does, say so rather than quietly hand
                   back a shorter sheet than was asked for. */}
               {short > 0 && (
-                <p className="mb-4 rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
+                <p className="mb-4 rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-800 dark:text-amber-200">
                   {short} question{short === 1 ? '' : 's'} could not be generated and
                   {short === 1 ? ' is' : ' are'} missing from this sheet.
                 </p>

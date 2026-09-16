@@ -81,6 +81,19 @@ const BASELINE = join(import.meta.dirname,
  *
  * `check:budget` groups 542 pages into 27 templates, and text colour is a
  * property of the template rather than of the question on it.
+ *
+ * **One page per template was not enough, and this file said so while being
+ * wrong.** Course notes carry ~340 coloured text classes of their own —
+ * `text-emerald-300`, `text-blue-300`, `text-amber-100/80` — inside callout
+ * boxes, and every one was chosen for a dark ground. On the light page they ran
+ * from 1.01:1 to 2.85:1. This check reported *every measured node clears AA*
+ * throughout, because the single notes topic it opened, `algebraic-fractions`,
+ * happens to have no callouts in it.
+ *
+ * So the notes fixtures below are the **densest pages in the build**, found by
+ * counting coloured classes in `out/` rather than by picking a topic that
+ * looked representative. This repo's own lessons already say it: when a check
+ * picks a fixture, pick the worst one on purpose.
  */
 const PAGES = [
   ['/', 'home'],
@@ -94,6 +107,10 @@ const PAGES = [
   ['/course/n5/papers/2024/paper-1', 'paper'],
   ['/course/n5/notes/algebra/algebraic-fractions', 'notes'],
   ['/course/n5/generate', 'generate'],
+  // The three notes pages carrying the most coloured text in the whole build.
+  ['/course/higher-apps/notes/planning-decision-making/constructing-pert-charts', 'notes: pert'],
+  ['/course/higher/notes/functions-and-graphs/graph-transformations', 'notes: transforms'],
+  ['/course/ah/notes/systems-of-equations/gaussian-elimination', 'notes: gaussian'],
 ];
 
 const PROBE = `(() => {
@@ -281,7 +298,7 @@ const totals = {
 const add = r => { for (const k of Object.keys(totals)) totals[k] += r[k] || 0; };
 
 await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
-  evaluate, click, buttonNamed, go: navigate, sleep,
+  evaluate, click, buttonNamed, buttonMatching, go: navigate, sleep,
 }) => {
   /**
    * Navigate with the theme already in force, through the site's own mechanism.
@@ -372,6 +389,28 @@ await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
       + `  ${r.fails.length} below AA`
       + (r.onBitmap ? `  (${r.onBitmap} on a bitmap)` : '')
       + (r.unreadableColour ? `  (${r.unreadableColour} UNREADABLE)` : ''));
+  }
+
+  // ── the Explorer with its filters open ─────────────────────────────────
+  /* The year and topic chips are only in the DOM once the sidebar is open, so
+     loading `/explorer` and measuring what is on screen never sees them — and
+     they are exactly the kind of small coloured label that goes weak on a light
+     ground. Ticking a year also changes the cards, which is a second state the
+     bare page does not reach. */
+  {
+    await go('/explorer?c=n5', 6000);
+    const opened = await click(buttonMatching(/Filter|Filters/));
+    await sleep(900);
+    const ticked = await click(`[...document.querySelectorAll('label,button')]
+      .find(e => e.textContent.trim() === '2024')`);
+    await sleep(1600);
+    const r = await measure('explorer filters');
+    t.check(r.measured > 40 && r.unreadableColour === 0,
+      `${'explorer filters'.padEnd(15)} ${String(r.measured).padStart(4)} measured of ${String(r.total).padStart(4)}`
+      + `  ${r.fails.length} below AA`
+      + (opened || ticked ? '' : '   (NOTHING WAS OPENED)'));
+    t.check(opened || ticked,
+      'the filter sidebar actually opened — otherwise this measured the bare page again');
   }
 
   // ── the states no URL can reach ────────────────────────────────────────

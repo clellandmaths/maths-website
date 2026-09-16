@@ -231,7 +231,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
         </button>
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="p-4 bg-orange-600/20 rounded-full mb-6">
-            <Flame className="h-12 w-12 text-orange-500" />
+            <Flame className="h-12 w-12 text-orange-800 dark:text-orange-500" />
           </div>
           <h2 className="text-3xl font-bold mb-3">Session Complete</h2>
           <p className="text-muted-foreground text-lg mb-2">
@@ -260,7 +260,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                 </p>
               )}
               {more === 'failed' && (
-                <p className="text-amber-300/90 text-sm">
+                <p className="text-amber-800 dark:text-amber-300/90 text-sm">
                   Could not build them just now. Try again in a moment.
                 </p>
               )}
@@ -302,7 +302,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           </button>
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted-dim hidden sm:inline">{dateString}</span>
-            <div className="px-2 py-1 bg-orange-600/20 text-orange-400 text-xs font-medium rounded">
+            <div className="px-2 py-1 bg-orange-600/20 text-orange-800 dark:text-orange-400 text-xs font-medium rounded">
               Daily Warm Up
             </div>
           </div>
