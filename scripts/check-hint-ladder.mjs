@@ -42,17 +42,31 @@ const PIN = (n) => `(() => {
   const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
   document.querySelectorAll('[data-ladder]').forEach(el => el.removeAttribute('data-ladder'));
   const b = [...document.querySelectorAll('button')].filter(laid)
-    .filter(x => /^(Hint|Another hint|More help)/i.test(x.textContent.trim()))[${n}];
+    .filter(x => /^Hint$/i.test(x.textContent.trim()))[${n}];
   if (!b) return false;
   b.parentElement.setAttribute('data-ladder', 'here');
   return true;
 })()`;
 
+/**
+ * The control that advances the ladder.
+ *
+ * **Two places, because the ladder is an overlay now.** Closed, it is the
+ * pinned card's own Hint button; open, it is the reveal button inside the
+ * dialog. Pressing the card's button while the dialog is open would only
+ * re-open what is already open, which is how this check first read a
+ * ten-press ladder that had never advanced past press one.
+ */
+const DIALOG = `document.querySelector('[role="dialog"][aria-label="Hint"]')`;
+
 const BUTTON = `(() => {
-  const box = document.querySelector('[data-ladder]');
   const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+  const dlg = ${DIALOG};
+  if (dlg) return [...dlg.querySelectorAll('button')].filter(laid)
+    .find(x => /^(Another hint|More help)/i.test(x.textContent.trim())) ?? null;
+  const box = document.querySelector('[data-ladder]');
   return box ? [...box.querySelectorAll('button')].filter(laid)
-    .find(x => /^(Hint|Another hint|More help)/i.test(x.textContent.trim())) : null;
+    .find(x => /^Hint$/i.test(x.textContent.trim())) ?? null : null;
 })()`;
 
 /**
@@ -63,9 +77,13 @@ const BUTTON = `(() => {
 const PANEL = `(() => {
   const box = document.querySelector('[data-ladder]');
   const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
-  const b = box ? [...box.querySelectorAll('button')].filter(laid)
-    .find(x => /^(Hint|Another hint|More help)/i.test(x.textContent.trim())) : null;
-  const panel = box ? box.querySelector('div.rounded-lg') : null;
+  const dlg = ${DIALOG};
+  const b = dlg
+    ? [...dlg.querySelectorAll('button')].filter(laid)
+        .find(x => /^(Another hint|More help)/i.test(x.textContent.trim())) ?? null
+    : (box ? [...box.querySelectorAll('button')].filter(laid)
+        .find(x => /^Hint$/i.test(x.textContent.trim())) ?? null : null);
+  const panel = dlg ? dlg.querySelector('div.space-y-2') : null;
   let text = '';
   let chips = [];
   let rungs = 0;
@@ -89,7 +107,7 @@ const PANEL = `(() => {
     text, chips, rungs,
     // Scoped to this ladder, not the page: another question's control must not
     // be mistaken for this one's.
-    worked: !!box && /worked right through/i.test(box.innerText),
+    worked: !!dlg && /worked right through/i.test(dlg.innerText),
   };
 })()`;
 
@@ -241,6 +259,63 @@ await withPage({ port: 8191, cdp: 9291, width: 1280, height: 1000 }, async (page
     'a generated question is NEVER offered a worked twin — it already is one');
   t.check(/as far as a hint goes/i.test(genLast.text),
     'it closes by saying the last step is the answer itself');
+});
+
+/* ── the reason it is an overlay ─────────────────────────────────────────
+   Inline, every press grew the card under the reader's finger: two prose
+   lines, up to four moves with their working, then a whole worked question
+   with every step and its answer. These three assertions are the change —
+   without them the overlay is just a different shape. */
+await withPage({ port: 8159, cdp: 9259, width: 390, height: 844 }, async ({ evaluate, click, go, sleep }) => {
+  const LAID = `(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; })`;
+  const CARD = `(() => {
+    const b = [...document.querySelectorAll('button')].filter(${LAID})
+      .find(x => x.textContent.trim() === 'Hint');
+    const c = b ? b.closest('div.border') : null;
+    return c ? Math.round(c.getBoundingClientRect().height) : 0;
+  })()`;
+  const HINT = `[...document.querySelectorAll('button')].filter(${LAID}).find(b => b.textContent.trim() === 'Hint')`;
+
+  await go('/course/n5/practice/surds', 5000);
+  const before = await evaluate(CARD);
+  t.check(before > 0, `a practice card is ${before}px tall before any hint`);
+
+  await click(HINT);
+  await sleep(2500);
+  t.check(await evaluate(`!!${DIALOG}`), 'pressing Hint opens the ladder over the page');
+  /* The condition the whole idea rests on: a hint about a question you cannot
+     see is a hint you have to memorise the question for. */
+  t.check(await evaluate(`!!${DIALOG}.querySelector('.question-content')`),
+    'and the question comes with it');
+
+  // walk it to the bottom, which is where the inline panel grew worst
+  for (let i = 0; i < 6; i++) {
+    /* **`!!`, and it matters.** `evaluate` serialises the result, and a DOM
+       node does not survive that — it comes back as something falsy whatever
+       is on screen. Without the coercion this loop broke on its first pass,
+       left the ladder on step one, and the reopen assertion below failed
+       against behaviour that was perfectly correct. */
+    const more = await evaluate(`!![...${DIALOG}.querySelectorAll('button')].filter(${LAID})
+      .find(b => /^(Another hint|More help)/i.test(b.textContent.trim()))`);
+    if (!more) break;
+    await click(`[...${DIALOG}.querySelectorAll('button')].filter(${LAID})
+      .find(b => /^(Another hint|More help)/i.test(b.textContent.trim()))`);
+    await sleep(1200);
+  }
+  t.check(await evaluate(CARD) === before,
+    `and the card behind it never moved (${await evaluate(CARD)}px, was ${before}px)`);
+
+  await click(`${DIALOG}.querySelector('[aria-label="Close the hint"]')`);
+  await sleep(1200);
+  t.check(!(await evaluate(`!!${DIALOG}`)), 'closing puts it away');
+  t.check(await evaluate(CARD) === before, 'leaving the card exactly as it was');
+
+  /* Closing is not undoing. Press again and you get back what you earned. */
+  await click(HINT);
+  await sleep(2000);
+  t.check(await evaluate(`/what it asks/i.test(${DIALOG}?.innerText ?? '')
+    && /how the marks go/i.test(${DIALOG}?.innerText ?? '')`),
+    'and pressing Hint again reopens everything already revealed, not step one');
 });
 
 /* ── the help is not the smallest thing on screen ────────────────────────

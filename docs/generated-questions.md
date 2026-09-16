@@ -241,6 +241,18 @@ More help (n)    2–4 authored moves, each with THIS question's own working
 | authored | **197 of 197** exam variations, ratcheted in `__checks__/plans.ts` |
 | never shown | the last row of a question, and **52 mid-rows that are answers too** |
 
+**The ladder is an overlay, from 2026-09-16.** It was a panel that grew on the
+card, and every press made it taller — two prose lines, up to four moves with
+their working, then a whole worked question with every step and its answer. In
+full screen there was nowhere to put that: the row of controls alone is 250px
+of an 844px phone. It now opens over the page, the same idiom as the formulae
+sheet, **with the question pinned at the top** — a hint about a question you
+cannot see is one you have to memorise the question for, and that condition is
+what makes it better than the panel rather than merely different. Closing is
+not undoing: press Hint again and everything already revealed comes back.
+`HintPanel` is fetched at the press, not shipped to every page carrying a
+button.
+
 **Three things that are not obvious.**
 
 *Moves, not marks.* Ladder length was the mark count, so a 7-mark question took

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Lightbulb } from 'lucide-react';
+import { Lightbulb, X } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 /**
  * **Loaded at the last press, not with the page.**
@@ -13,7 +13,7 @@ import MathRenderer from '@/components/MathRenderer';
  * example should not be part of what the browse page downloads to show them a
  * question. It also keeps Hints off the static graph that reaches the engine.
  */
-const WorkedExample = dynamic(() => import('@/components/WorkedExample'), { ssr: false });
+const HintPanel = dynamic(() => import('@/components/HintPanel'), { ssr: false });
 import { paperLabelOf, courseHasHints } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -96,7 +96,7 @@ interface Props {
 }
 
 /** One press of the ladder, once the two prose lines are past. */
-interface Rung {
+export interface Rung {
   /** What to do next. */
   move: string;
   /** What it is worth. **0 prints no chip at all**, never "0 marks". */
@@ -105,7 +105,7 @@ interface Rung {
   shows?: string | null;
 }
 
-interface Staged {
+export interface Staged {
   skill: string;
   method: string;
   rungs: Rung[];
@@ -124,6 +124,15 @@ export default function Hints({
   const body = size === 'stage' ? 'text-lg' : 'text-base';
   const aside = size === 'stage' ? 'text-base' : 'text-sm';
   const [shown, setShown] = useState(0);
+  /**
+   * Whether the ladder is on screen.
+   *
+   * **Separate from `shown`, and that separation is the point.** `shown` is how
+   * much of the ladder has been earned and it never goes down; `open` is
+   * whether you are looking at it. Close the overlay and press Hint again and
+   * you get back everything you had revealed, because closing is not undoing.
+   */
+  const [open, setOpen] = useState(false);
   const [staged, setStaged] = useState<Staged | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -224,123 +233,62 @@ export default function Hints({
   const total = staged ? staged.rungs.length + 2 : 2;
   const more = shown < total;
 
+  /** Open it, and earn the first rung if nothing has been earned yet. */
+  const openLadder = async () => {
+    setOpen(true);
+    if (shown === 0) await reveal();
+  };
+
   return (
-    /* **Full width only once it is open.** Closed, this is a single button and
-       belongs in the row of buttons beside Formulae and Show answer; open, the
-       panel needs the whole line. Sizing it by its own state lets one component
-       do both, instead of every caller guessing which it will be. */
-    <div className={`no-print ${shown > 0 ? 'w-full' : ''} ${className}`}>
-      {shown > 0 && staged && (
-        <div className="mb-2 space-y-2 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
-          {/*
-            Both prose lines go through the renderer, not just the steps.
-            They are mostly words, but a dozen of them name the thing they are
-            about — "Write x² + bx + c in the form (x + p)² + q" — and until
-            this they were the one part of a hint shown as raw text, carets and
-            all. A div rather than a p: MathRenderer renders an element, and an
-            element inside a p is invalid nesting.
-          */}
-          <div className={body}>
-            <span className={`font-semibold ${theme.text}`}>What it asks: </span>
-            <MathRenderer html={staged.skill} className="inline text-slate-300" />
-          </div>
-          {shown > 1 && (
-            <div className={body}>
-              <span className={`font-semibold ${theme.text}`}>How the marks go: </span>
-              <MathRenderer html={staged.method} className="inline text-slate-300" />
-            </div>
-          )}
-          {staged.rungs.slice(0, Math.max(0, shown - 2)).map((rung, i) => (
-            <div key={i} className="border-t border-slate-800 pt-2">
-              <div className="flex items-start gap-2">
-                <MathRenderer
-                  html={rung.move}
-                  className={`answer-content flex-1 ${body} text-slate-300`}
-                />
-                {/* **A move worth 0 shows nothing at all.** Two variations are
-                    worth a single mark and still take two moves to explain —
-                    moves are pedagogy, marks are accounting — so the first of
-                    those earns nothing on its own. "0 marks" beside a hint
-                    reads as a fault; an absent chip reads as what it is. */}
-                {rung.marks !== undefined && rung.marks > 0 && (
-                  <span className="shrink-0 rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-slate-400">
-                    {rung.marks} mark{rung.marks === 1 ? '' : 's'}
-                  </span>
-                )}
-              </div>
-              {/* This question's own working as the move begins — the concrete
-                  half. Absent where showing it would hand over an answer. */}
-              {rung.shows && (
-                <MathRenderer
-                  html={rung.shows}
-                  className={`answer-content mt-1 ${aside} text-slate-400`}
-                />
-              )}
-            </div>
-          ))}
-          {!more && (
-            <div className="border-t border-slate-800 pt-2">
-              <p className="text-xs text-muted-foreground">
-                {staged.heldBack
-                  ? 'That is as far as a hint goes — the last step is the answer itself.'
-                  : staged.rungs.length
-                    ? 'That is the whole method. The working for the last move is the answer, so it is not here.'
-                    : 'That is as far as a hint goes for a past paper question — the full working is in the video solution.'}
-              </p>
-              {/*
-                **Only a past paper question gets a worked example, and only it
-                needs one.**
-
-                A generated question already *is* a twin — offering it another,
-                worked, is `Show answer` with extra steps, and *Another* sits
-                right there on the card besides. So the branch turns on `own`,
-                the same test the rest of this component uses.
-
-                **There is no video button here for either kind, and that was a
-                correction.** One was written for the generated half on the
-                reasoning that a generated question has no video of its own. It
-                does — `useGeneratedDraw` attaches the parent's — and every one
-                of the six surfaces that renders this ladder already puts a video
-                control on the card. A second one inside the panel is a duplicate
-                a few pixels from the first. The same argument had already been
-                used to deny the *paper* half a video; it just took the JS budget
-                check failing on `explorer.html` to notice it applied to both.
-              */}
-              {!own && (
-                <WorkedExample
-                  question={question}
-                  theme={theme}
-                  courseId={courseId}
-                  label={given}
-                />
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {more && (
+    <>
+      {/* The control stays in the row of buttons whatever the ladder is doing.
+          It used to disappear once the ladder was spent, which is how a walk
+          across a practice page ended up pressing the NEXT question's button. */}
+      <div className={`no-print ${className}`}>
         <button
-          onClick={reveal}
+          onClick={openLadder}
           disabled={loading}
           className={buttonClassName
             ?? `inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
         >
           <Lightbulb className="h-4 w-4" />
-          {/* **"Next step (k of N)" would lie now.** N used to be the mark
-              count, one rung per mark; a ladder is two to four authored moves
-              and a 7-mark question no longer takes eight presses. What is left
-              to say is how much help remains. */}
-          {loading
-            ? 'Loading…'
-            : shown === 0
-              ? 'Hint'
-              : shown === 1
-                ? 'Another hint'
-                : `More help (${total - shown} left)`}
+          {loading ? 'Loading…' : 'Hint'}
         </button>
-      )}
+      </div>
 
-    </div>
+      {/* **The ladder is an overlay, not a panel on the card.**
+
+          Inline, every press grew the card under the reader's finger — two
+          prose lines, up to four moves with their working, then a whole worked
+          question with every step and its answer. In full screen there was
+          nowhere for that to go: the row of controls alone is 250px of an 844px
+          phone. It is the same idiom as the formulae sheet and the data
+          booklet, so it is not a new thing to learn.
+
+          **The question comes with it.** A hint is about *this* question, and
+          reading "halve the coefficient of x" with no x on screen means
+          memorising the question first. That is the whole condition on which
+          this is better than the panel it replaces.
+
+          Above the full-screen modes, which are z-50. */}
+      {open && (
+        <HintPanel
+          question={question}
+          theme={theme}
+          courseId={courseId}
+          given={given}
+          staged={staged}
+          shown={shown}
+          total={total}
+          more={more}
+          loading={loading}
+          own={!!own}
+          body={body}
+          aside={aside}
+          onReveal={reveal}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
   );
 }
