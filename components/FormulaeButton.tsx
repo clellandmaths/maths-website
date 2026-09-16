@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { Sigma } from 'lucide-react';
-import dynamic from 'next/dynamic';
-const FormulaeModal = dynamic(() => import('@/components/FormulaeModal'), { ssr: false });
+import FormulaeModal from '@/components/FormulaeModal';
 import { hasFormulae } from '@/lib/formulae-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
