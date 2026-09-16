@@ -71,6 +71,17 @@
 // The accent is deeper in light than the dark theme's glow, which is the honest
 // trade: a 400 that reads on black cannot also read on white.
 //
+// **The whole accent family follows the text hue in light, not just the text.**
+// An outlined button is `border` + `tint` + `text` together, and leaving the
+// first two on cyan while the third moved to blue put a blue label inside a
+// cyan ring. In light, National 5 is blue and Higher is red throughout; the
+// gradients and solid buttons stay cyan and orange, because those are surfaces
+// and a surface is the role that hue was always right for.
+//
+// The light wash is **12%, not 15%**: `text` sits on `tint`, and red-700 on a
+// 15% red tint is 4.48:1 — under by a hair. At 12% it is 4.74. All five use the
+// same alpha so the washes read at one strength.
+//
 // `border` and `progress` are not text, so the bar is 3:1 rather than 4.5 — but
 // the 500s fail even that on white (cyan-500 is 2.37), so they take 600 in light.
 
@@ -90,25 +101,25 @@ export const COURSE_THEMES: Record<string, CourseTheme> = {
     text: 'text-blue-700 dark:text-cyan-400',
     bg: 'bg-cyan-700',
     bgHover: 'hover:bg-cyan-600',
-    tint: 'bg-cyan-600/15',
-    border: 'border-cyan-600 dark:border-cyan-500',
-    progress: 'bg-cyan-600 dark:bg-cyan-500',
+    tint: 'bg-blue-600/12 dark:bg-cyan-600/15',
+    border: 'border-blue-600 dark:border-cyan-500',
+    progress: 'bg-blue-600 dark:bg-cyan-500',
   },
   higher: {
     gradient: 'from-orange-700 to-red-700',
     text: 'text-red-700 dark:text-orange-400',
     bg: 'bg-orange-700',
     bgHover: 'hover:bg-orange-600',
-    tint: 'bg-orange-600/15',
-    border: 'border-orange-600 dark:border-orange-500',
-    progress: 'bg-orange-600 dark:bg-orange-500',
+    tint: 'bg-red-600/12 dark:bg-orange-600/15',
+    border: 'border-red-600 dark:border-orange-500',
+    progress: 'bg-red-600 dark:bg-orange-500',
   },
   ah: {
     gradient: 'from-emerald-700 to-teal-700',
     text: 'text-emerald-800 dark:text-emerald-400',
     bg: 'bg-emerald-700',
     bgHover: 'hover:bg-emerald-600',
-    tint: 'bg-emerald-600/15',
+    tint: 'bg-emerald-600/12 dark:bg-emerald-600/15',
     border: 'border-emerald-600 dark:border-emerald-500',
     progress: 'bg-emerald-600 dark:bg-emerald-500',
   },
@@ -117,7 +128,7 @@ export const COURSE_THEMES: Record<string, CourseTheme> = {
     text: 'text-amber-800 dark:text-amber-400',
     bg: 'bg-amber-700',
     bgHover: 'hover:bg-amber-600',
-    tint: 'bg-amber-600/15',
+    tint: 'bg-amber-600/12 dark:bg-amber-600/15',
     border: 'border-amber-600 dark:border-amber-500',
     progress: 'bg-amber-600 dark:bg-amber-500',
   },
@@ -128,7 +139,7 @@ export const COURSE_THEMES: Record<string, CourseTheme> = {
     text: 'text-violet-700 dark:text-violet-400',
     bg: 'bg-violet-600',
     bgHover: 'hover:bg-violet-500',
-    tint: 'bg-violet-600/15',
+    tint: 'bg-violet-600/12 dark:bg-violet-600/15',
     border: 'border-violet-600 dark:border-violet-500',
     progress: 'bg-violet-600 dark:bg-violet-500',
   },

@@ -619,6 +619,18 @@ a dull mauve. That was the "too muted" gradient. It now uses
 `--signal-magenta`, which is `#ff00ed` in **both** themes and washes to a clean
 `#f5d7f6`. Identical in dark, where the two tokens are the same colour.
 
+### The whole accent family follows the hue, not just the text
+
+Moving `text` to blue left `border` and `tint` on cyan — and an outlined button
+is all three at once, so *Start Paper* came out as a blue label inside a cyan
+ring. In light, National 5 is blue and Higher is red **throughout**; the
+gradients and solid buttons stay cyan and orange, because those are surfaces and
+a surface is the role that hue was always right for.
+
+The light wash is **12%, not 15%**: `text` sits on `tint`, and red-700 on a 15%
+red tint is 4.48:1 — under by a hair. At 12% it is 4.74, and all five courses
+use the same alpha so the washes read at one strength.
+
 ### Elevation, which is the thing light mode actually needs
 
 Both the [Material dark theme guidance](https://m2.material.io/design/color/dark-theme.html)
