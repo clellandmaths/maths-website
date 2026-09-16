@@ -105,7 +105,7 @@ export default function FilterSidebar({
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
-            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+            className="text-xs text-muted-foreground hover:text-foreground-2 flex items-center gap-1"
           >
             <X className="h-3 w-3" />
             Clear
@@ -137,7 +137,7 @@ export default function FilterSidebar({
                 onChange={() => toggleYear(year)}
                 className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
               />
-              <span className="text-foreground group-hover:text-foreground text-sm">
+              <span className="text-foreground-2 group-hover:text-foreground text-sm">
                 {year}
               </span>
             </label>
@@ -159,7 +159,7 @@ export default function FilterSidebar({
               onChange={() => togglePaper(1)}
               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
             />
-            <span className="text-foreground group-hover:text-foreground text-sm">
+            <span className="text-foreground-2 group-hover:text-foreground text-sm">
               Paper 1 (Non-Calculator)
             </span>
           </label>
@@ -170,7 +170,7 @@ export default function FilterSidebar({
               onChange={() => togglePaper(2)}
               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
             />
-            <span className="text-foreground group-hover:text-foreground text-sm">
+            <span className="text-foreground-2 group-hover:text-foreground text-sm">
               Paper 2 (Calculator)
             </span>
           </label>
@@ -194,11 +194,11 @@ export default function FilterSidebar({
             // when a form control smaller than 16px takes focus, and does not
             // zoom back out afterwards — so tapping this left the Explorer
             // magnified. Scoped to mobile so the desktop sidebar is unchanged.
-            className="w-full pl-8 pr-8 py-1.5 bg-card border border-muted rounded-lg text-base md:text-sm text-foreground placeholder:text-muted-dim focus:outline-none focus:border-foreground/40"
+            className="w-full pl-8 pr-8 py-1.5 bg-card border border-muted rounded-lg text-base md:text-sm text-foreground-2 placeholder:text-muted-dim focus:outline-none focus:border-foreground/40"
           />
           {topicSearch && (
             <button onClick={() => setTopicSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2">
-              <X className="h-3.5 w-3.5 text-muted-dim hover:text-foreground" />
+              <X className="h-3.5 w-3.5 text-muted-dim hover:text-foreground-2" />
             </button>
           )}
         </div>
@@ -251,7 +251,7 @@ export default function FilterSidebar({
                           onChange={() => toggleSubtopic(subtopics[0])}
                           className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
                         />
-                        <span className="text-foreground group-hover:text-foreground font-medium text-sm">
+                        <span className="text-foreground-2 group-hover:text-foreground font-medium text-sm">
                           {mainTopic}
                         </span>
                       </label>
@@ -265,7 +265,7 @@ export default function FilterSidebar({
                     <div className="flex items-center gap-2 py-2">
                       <button
                         onClick={() => toggleMainTopic(mainTopic)}
-                        className="text-muted-foreground hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground-2"
                       >
                         {isExpanded ? (
                           <ChevronDown className="h-4 w-4" />
@@ -283,7 +283,7 @@ export default function FilterSidebar({
                           onChange={() => selectAllInTopic(mainTopic)}
                           className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
                         />
-                        <span className="text-foreground group-hover:text-foreground font-medium text-sm">
+                        <span className="text-foreground-2 group-hover:text-foreground font-medium text-sm">
                           {mainTopic}
                         </span>
                         {selectedCount > 0 && (
@@ -306,7 +306,7 @@ export default function FilterSidebar({
                               onChange={() => toggleSubtopic(subtopic)}
                               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
                             />
-                            <span className="text-muted-foreground group-hover:text-foreground text-sm">
+                            <span className="text-muted-foreground group-hover:text-foreground-2 text-sm">
                               {subtopic}
                             </span>
                           </label>
@@ -330,7 +330,7 @@ export default function FilterSidebar({
               <button
                 key={`year-${year}`}
                 onClick={() => toggleYear(year)}
-                className="px-2 py-1 bg-muted-hover/50 text-foreground text-xs rounded-full flex items-center gap-1 hover:bg-muted-hover"
+                className="px-2 py-1 bg-muted-hover/50 text-foreground-2 text-xs rounded-full flex items-center gap-1 hover:bg-muted-hover"
               >
                 {year}
                 <X className="h-3 w-3" />
@@ -340,7 +340,7 @@ export default function FilterSidebar({
               <button
                 key={`paper-${paper}`}
                 onClick={() => togglePaper(paper)}
-                className="px-2 py-1 bg-muted-hover/50 text-foreground text-xs rounded-full flex items-center gap-1 hover:bg-muted-hover"
+                className="px-2 py-1 bg-muted-hover/50 text-foreground-2 text-xs rounded-full flex items-center gap-1 hover:bg-muted-hover"
               >
                 P{paper}
                 <X className="h-3 w-3" />

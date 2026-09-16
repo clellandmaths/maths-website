@@ -12,7 +12,7 @@ export const national5MathsData: Section[] = [
         title: "Fractions",
         videoUrl: "https://www.youtube.com/embed/53PsE0cXAu0",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Candidates must be able to perform operations and combinations of operations on fractions, including mixed numbers (e.g., <InlineMath math="3\tfrac{1}{2}" />, <InlineMath math="1\tfrac{1}{3}" />, <InlineMath math="1\tfrac{1}{4}" />).
             </p>
@@ -125,7 +125,7 @@ export const national5MathsData: Section[] = [
         title: "Percentages",
         videoUrl: "https://www.youtube.com/embed/Mi6kgQZmX7M",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Appreciation/Depreciation</h4>
               <p>
@@ -242,7 +242,7 @@ export const national5MathsData: Section[] = [
         title: "Surds",
         videoUrl: "https://www.youtube.com/embed/EDgTB5nobk0",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Surds involve simplifying expressions and rationalising the denominators of fractions.
             </p>
@@ -387,7 +387,7 @@ export const national5MathsData: Section[] = [
         title: "Indices",
         videoUrl: "https://www.youtube.com/embed/DldNSN5D0vQ",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Candidates must be able to multiply and divide using positive and negative indices, including fractions.
             </p>
@@ -536,7 +536,7 @@ export const national5MathsData: Section[] = [
         title: "Scientific notation",
         videoUrl: "https://www.youtube.com/embed/fepyJHUAcRk",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               You must be able to perform calculations using scientific notation.
             </p>
@@ -630,7 +630,7 @@ export const national5MathsData: Section[] = [
         title: "Rounding",
         videoUrl: "https://www.youtube.com/embed/AC00r7UwLEI",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               You need to round answers to a specified number of significant figures or decimal places.
             </p>
@@ -728,7 +728,7 @@ export const national5MathsData: Section[] = [
         title: "Expanding",
         videoUrl: "https://www.youtube.com/embed/HFK6XYYp-FU",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Expanding Brackets</h4>
               <p>You must be able to multiply out algebraic expressions by multiplying every term inside the bracket by the term(s) outside.</p>
@@ -825,7 +825,7 @@ export const national5MathsData: Section[] = [
         title: "Factorising",
         videoUrl: "https://www.youtube.com/embed/oOTGt2pm5is",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Factorising is the inverse process to expanding brackets.
             </p>
@@ -953,7 +953,7 @@ export const national5MathsData: Section[] = [
         title: "Functions",
         videoUrl: "https://www.youtube.com/embed/T__kY8zKOts",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               A function is a mathematical relationship often denoted using functional notation like <InlineMath math="f(x)" /> or <InlineMath math="g(x)" />.
             </p>
@@ -1060,7 +1060,7 @@ export const national5MathsData: Section[] = [
         title: "Straight line",
         videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Gradient</h4>
               <p>The gradient (m) defines the steepness of a line. The formula is <InlineMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />.</p>
@@ -1185,7 +1185,7 @@ export const national5MathsData: Section[] = [
         title: "Equations",
         videoUrl: "https://www.youtube.com/embed/Nw6MwxfxLak",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               You must be able to solve linear equations, including those with rational/fractional coefficients and variables on both sides.
             </p>
@@ -1294,7 +1294,7 @@ export const national5MathsData: Section[] = [
         title: "Inequalities",
         videoUrl: "https://www.youtube.com/embed/cB1vHiKQu2A",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Inequalities (or inequations) are solved using the exact same steps and inverse operations as linear equations, but with an inequality sign in the middle.
             </p>
@@ -1385,7 +1385,7 @@ export const national5MathsData: Section[] = [
         title: "Algebraic fractions",
         videoUrl: "https://www.youtube.com/embed/RQ9h0QdidV8",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Simplifying</h4>
               <p>You can only simplify an algebraic fraction if there is a common factor or identical bracket on the top and bottom. You cannot cancel individual terms inside brackets; you must fully factorise first.</p>
@@ -1529,7 +1529,7 @@ export const national5MathsData: Section[] = [
         title: "Change of subject",
         videoUrl: "https://www.youtube.com/embed/i8gdFHvaL88",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Changing the subject involves algebraically rearranging a formula to isolate a different variable.
             </p>
@@ -1638,7 +1638,7 @@ export const national5MathsData: Section[] = [
         title: "Simultaneous equations",
         videoUrl: "https://www.youtube.com/embed/gJ4OMGXTCyI",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               You must be able to construct simultaneous equations from a written context and solve them algebraically or graphically.
             </p>
@@ -1758,7 +1758,7 @@ export const national5MathsData: Section[] = [
         title: "Completing the square",
         videoUrl: "https://www.youtube.com/embed/xfilfExHe2E",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Completing the Square transforms a general quadratic <InlineMath math="y = ax^2 + bx + c" /> into the vertex form <InlineMath math="y = (x + p)^2 + q" />.
             </p>
@@ -1837,7 +1837,7 @@ export const national5MathsData: Section[] = [
         title: "Quadratic Graphs",
         videoUrl: "https://www.youtube.com/embed/G8dC4UTU4rY",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The graph of a quadratic function is a <strong>parabola</strong>. You should be able to read its key features straight from the equation, and — going the other way — work out the equation from a graph.</p>
             <div>
               <h4 className="text-foreground font-semibold">Reading Features from the Equation</h4>
@@ -1962,7 +1962,7 @@ export const national5MathsData: Section[] = [
         title: "Solving Quadratic Equations",
         videoUrl: "https://www.youtube.com/embed/G8dC4UTU4rY",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Solving</h4>
               <p>To calculate the roots, set the equation to zero. Try to solve by factorising first. If that isn't possible, use the Quadratic Formula: <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />.</p>
@@ -2101,7 +2101,7 @@ export const national5MathsData: Section[] = [
         title: "Gradient",
         videoUrl: "https://www.youtube.com/embed/pXnz7Xmx8R4",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               The gradient (m) represents the steepness of a slope and is calculated using the formula <InlineMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />.
             </p>
@@ -2182,7 +2182,7 @@ export const national5MathsData: Section[] = [
         title: "Arcs & sectors",
         videoUrl: "https://www.youtube.com/embed/B-KPRnhEcaQ",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               An arc is a fraction of the circumference, and a sector is a fraction of the circle's area.
             </p>
@@ -2283,7 +2283,7 @@ export const national5MathsData: Section[] = [
         title: "Volume",
         videoUrl: "https://www.youtube.com/embed/BE2iN-HM2m0",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               You must be able to calculate the volume of standard solids:
             </p>
@@ -2368,7 +2368,7 @@ export const national5MathsData: Section[] = [
         title: "Pythagoras",
         videoUrl: "https://www.youtube.com/embed/P7Kaza8Ot_w",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Pythagoras' Theorem</h4>
               <p>For any right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides (<InlineMath math="a^2 + b^2 = c^2" />).</p>
@@ -2449,7 +2449,7 @@ export const national5MathsData: Section[] = [
         title: "Angles in shapes",
         videoUrl: "https://www.youtube.com/embed/GPN6PXMDIPo",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Polygons</h4>
               <p>The exterior angles of any regular polygon sum to 360&deg;.</p>
@@ -2533,7 +2533,7 @@ export const national5MathsData: Section[] = [
         title: "Similarity",
         videoUrl: "https://www.youtube.com/embed/Vdr3WypZJhk",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               Similarity involves the interrelationship of scale across length, area, and volume.
             </p>
@@ -2612,7 +2612,7 @@ export const national5MathsData: Section[] = [
         title: "Vectors",
         videoUrl: "https://www.youtube.com/embed/LbjRj3AIfyQ",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <div>
               <h4 className="text-foreground font-semibold">Component Form & Operations</h4>
               <p>Vectors can be added or subtracted using directed line segments (nose-to-tail) or by algebraically adding/subtracting their x, y, and z components.</p>
@@ -2710,7 +2710,7 @@ export const national5MathsData: Section[] = [
         title: "3D coordinates",
         videoUrl: "https://www.youtube.com/embed/PIwYneqDKXM",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>
               You must be able to determine the x, y, and z coordinates of a specific point from a diagram representing a 3-dimensional object (like a cuboid or pyramid).
             </p>
@@ -2773,7 +2773,7 @@ export const national5MathsData: Section[] = [
         title: "Area of a Triangle",
         videoUrl: "https://www.youtube.com/embed/JbWh5FXL2HA",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The area of any non-right-angled triangle can be calculated if you know the lengths of two sides and the size of the angle included between them.</p>
             <p>The formula provided on the exam sheet is:</p>
             <BlockMath math="A = \frac{1}{2}ab\sin C" />
@@ -2872,7 +2872,7 @@ export const national5MathsData: Section[] = [
         title: "Sine Rule",
         videoUrl: "https://www.youtube.com/embed/EKg4x9-JCIc",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The Sine Rule is used for non-right-angled triangles when you know one corresponding side-and-angle pair, plus one additional piece of information.</p>
             <p>The formula provided on the exam sheet is:</p>
             <BlockMath math="\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}" />
@@ -2968,7 +2968,7 @@ export const national5MathsData: Section[] = [
         title: "Cosine Rule",
         videoUrl: "https://www.youtube.com/embed/HOf68yEUcg4",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The Cosine Rule is used to find a missing side when two sides and the included angle are known, or to find a missing angle when all three sides are known.</p>
             <p>Both forms of the formula are provided on the exam sheet:</p>
             <BlockMath math="a^2 = b^2 + c^2 - 2bc\cos A" />
@@ -3055,7 +3055,7 @@ export const national5MathsData: Section[] = [
         title: "Bearings",
         videoUrl: "https://www.youtube.com/embed/BCpGCSUkdhg",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Bearings use trigonometry (often the sine or cosine rules) to calculate a distance or direction.</p>
             <p>Bearings are always measured clockwise from North and are expressed as three digits (e.g., <InlineMath math="045^\circ" />).</p>
             <p>A common error candidates make is treating non-right-angled bearing scenarios as right-angled triangles, which leads to incorrectly using basic SOH-CAH-TOA or Pythagoras instead of the sine/cosine rules.</p>
@@ -3148,7 +3148,7 @@ export const national5MathsData: Section[] = [
         title: "Trig Graphs",
         videoUrl: "https://www.youtube.com/embed/swTl5ge5HVA",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>You must be familiar with the basic shapes of <InlineMath math="y = \sin x" />, <InlineMath math="y = \cos x" />, and <InlineMath math="y = \tan x" /> graphs between <InlineMath math="0^\circ" /> and <InlineMath math="360^\circ" />.</p>
             <p>The General Equation of a Trigonometric Function is <InlineMath math="y = a\sin(bx + c) + d" />.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -3236,7 +3236,7 @@ export const national5MathsData: Section[] = [
         title: "Trig Equations",
         videoUrl: "https://www.youtube.com/embed/z-LJgscYobI",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>You must be able to solve trigonometric equations for a given domain (usually <InlineMath math="0^\circ \le x \le 360^\circ" />).</p>
             <p>There are usually two solutions. The CAST diagram (or the symmetry of trigonometric graphs) is used to find the related angles in different quadrants depending on whether the trig ratio is positive or negative.</p>
 
@@ -3359,7 +3359,7 @@ export const national5MathsData: Section[] = [
         title: "Trig Identities",
         videoUrl: "https://www.youtube.com/embed/7Mg-VlhLuO0",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Trigonometric identities are used to simplify expressions. While many exist, you are only required to memorise two for National 5:</p>
             <BlockMath math="\sin^2 x + \cos^2 x = 1" />
             <BlockMath math="\tan x = \frac{\sin x}{\cos x}" />
@@ -3475,7 +3475,7 @@ export const national5MathsData: Section[] = [
         title: "Comparing Data Sets",
         videoUrl: "https://www.youtube.com/embed/KsQH1RBJQhw",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Candidates must calculate averages (mean or median) and measures of spread (Standard Deviation or Interquartile Range) to analyse data.</p>
             <p><strong>Crucial Update:</strong> The National 5 syllabus now requires the calculation of the Interquartile Range (IQR) (<InlineMath math="Q_3 - Q_1" />), having removed the Semi-Interquartile Range (SIQR).</p>
             <p><strong>Standard Deviation (<InlineMath math="s" />):</strong> This measures how spread out data is around the mean. The formula is provided on the exam sheet in two forms:</p>
@@ -3597,7 +3597,7 @@ export const national5MathsData: Section[] = [
         // lesson video and correctly starts at the beginning.
         videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE?start=687",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>A scattergraph plots data points to show the relationship between two variables. You must be able to draw a straight "line of best fit" through the data.</p>
             <h4 className="text-foreground font-semibold">Determining the Equation</h4>
             <p>To find the equation of your line of best fit, you select two points that lie <strong>exactly</strong> on the line (not necessarily data points). You then calculate the gradient (<InlineMath math="m" />) and use <InlineMath math="y - b = m(x - a)" /> to find the equation in terms of the variables on the axes.</p>

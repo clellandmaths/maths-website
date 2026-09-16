@@ -330,11 +330,11 @@ export const higherMathsData: Section[] = [
              
              <h4 className="font-bold text-foreground text-xl mb-4">Bisector</h4>
              <p className="mb-2">A line which divides another line into two <strong className="text-foreground">equal</strong> parts.</p>
-             <p className="text-base text-foreground mb-8">i.e. a line which cuts through the midpoint of another line.</p>
+             <p className="text-base text-foreground-2 mb-8">i.e. a line which cuts through the midpoint of another line.</p>
              
              <h4 className="font-bold text-foreground text-xl mb-4">Perpendicular Bisector</h4>
              <p className="mb-2">A line which divides another line into two equal parts at right angles.</p>
-             <p className="text-base text-foreground mb-8">i.e. a line which cuts through the midpoint of another line at right angles.</p>
+             <p className="text-base text-foreground-2 mb-8">i.e. a line which cuts through the midpoint of another line at right angles.</p>
              
              <div className="flex flex-col gap-8 items-center w-full mb-8">
                <PerpendicularBisectorCross />
@@ -516,7 +516,7 @@ export const higherMathsData: Section[] = [
           theory: (
             <div className="space-y-4">
               <p>Many problems involve lines which intersect (cross each other). Once we have equations for the lines, there are three ways of calculating the point of intersection using simultaneous equations:</p>
-              <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
+              <ul className="list-disc list-inside ml-4 space-y-1 text-foreground-2">
                 <li>Elimination</li>
                 <li>Equating</li>
                 <li>Substitution</li>
@@ -527,12 +527,12 @@ export const higherMathsData: Section[] = [
                 <table className="min-w-full divide-y divide-foreground/10">
                   <thead className="bg-foreground/5">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">Line Type</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">Point Used</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">Gradient Used</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground-2 uppercase tracking-wider">Line Type</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground-2 uppercase tracking-wider">Point Used</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground-2 uppercase tracking-wider">Gradient Used</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-foreground/5 text-sm text-foreground">
+                  <tbody className="divide-y divide-foreground/5 text-sm text-foreground-2">
                     <tr>
                       <td className="px-4 py-3">Perpendicular Bisector of AB</td>
                       <td className="px-4 py-3">Midpoint of AB</td>
@@ -621,7 +621,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4">
             <p>A <strong>recurrence relation</strong> is a type of recursive sequence which relies on knowing the previous term in order to obtain the next consecutive term.</p>
-            <p className="text-foreground italic">i.e. if we wanted to know the <InlineMath math="100^{th}" /> term in a sequence, we would need to know the first 99 terms.</p>
+            <p className="text-foreground-2 italic">i.e. if we wanted to know the <InlineMath math="100^{th}" /> term in a sequence, we would need to know the first 99 terms.</p>
             
             <p className="mt-4">e.g. For the sequence 1, 5, 9, 13, ...</p>
             <p><InlineMath math="U_0 = 1" /> where <InlineMath math="U_0" /> is the initial term in the sequence.</p>
@@ -631,7 +631,7 @@ export const higherMathsData: Section[] = [
             <div className="bg-foreground/5 p-4 rounded-xl mt-6 border border-foreground/10 text-lg">
                 <p>An example of a recurrence relation is gaining compound interest on money in a bank account.</p>
                 <p className="mt-2">You invest £100 in a bank account with an interest rate of 2%.</p>
-                <ul className="list-none space-y-2 mt-4 font-mono text-foreground">
+                <ul className="list-none space-y-2 mt-4 font-mono text-foreground-2">
                   <li><InlineMath math="U_0 = 100" /></li>
                   <li><InlineMath math="U_1 = 102\% \text{ of } 100 = 1.02 \times 100 = 102" /></li>
                   <li><InlineMath math="U_2 = 102\% \text{ of } 102 = 1.02 \times 102 = 104.04" /></li>
@@ -661,10 +661,10 @@ export const higherMathsData: Section[] = [
             <p className="text-xl">Linear recurrence relations are of the form:</p>
             <div className="bg-indigo-500/10 p-6 rounded-xl border border-indigo-500/20 text-center">
               <BlockMath math="U_{n+1} = aU_n + b" />
-              <p className="text-foreground mt-2">where <InlineMath math="U_0" /> is the initial value</p>
+              <p className="text-foreground-2 mt-2">where <InlineMath math="U_0" /> is the initial value</p>
               <p className="font-bold my-4">or</p>
               <BlockMath math="U_n = aU_{n-1} + b" />
-              <p className="text-foreground mt-2">where <InlineMath math="U_1" /> is the initial value</p>
+              <p className="text-foreground-2 mt-2">where <InlineMath math="U_1" /> is the initial value</p>
               <p className="mt-4 text-indigo-300"><InlineMath math="a \neq 0 \text{ and } b \in \mathbb{R}" /></p>
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -873,7 +873,7 @@ export const higherMathsData: Section[] = [
          title: "Problems in Context",
          videoUrl: "https://www.youtube.com/embed/Y3eGTMlMgNs?start=1175",
          theory: (
-           <div className="space-y-4 text-foreground">
+           <div className="space-y-4 text-foreground-2">
              <p>Recurrence relations are most often examined through a real situation — a population, a drug dose, a bank balance, a pollutant in a loch. The mathematics is exactly the same as before; the difficulty is turning the words into <InlineMath math="u_{n+1} = au_n + b" />.</p>
              <p>Read the description for two separate things:</p>
              <ul className="list-disc list-inside space-y-1 ml-4">
@@ -910,7 +910,7 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p><strong>a)</strong> Recurrence relation: <InlineMath math="U_{n+1} = 0.983U_n + 8000" /> where <InlineMath math="U_0 = 500{,}000" />.</p>
-                 <p className="text-foreground italic">4 years means 8 periods of 6 months (<InlineMath math="n = 8" />).</p>
+                 <p className="text-foreground-2 italic">4 years means 8 periods of 6 months (<InlineMath math="n = 8" />).</p>
                  <BlockMath math="U_1 = 0.983(500{,}000) + 8000 = 499{,}500" />
                  <BlockMath math="\vdots" />
                  <BlockMath math="U_8 \approx 496{,}252.17" />
@@ -970,7 +970,7 @@ export const higherMathsData: Section[] = [
             <div className="flex flex-col gap-6 mt-4">
               <div className="bg-red-500/10 p-5 rounded-xl border border-red-500/20">
                 <h4 className="font-bold text-red-400 text-lg mb-2">Division by Zero</h4>
-                <p className="text-base text-foreground">Since we cannot divide any number by zero, the domains of functions involving fractions must exclude numbers which would result in a denominator of zero.</p>
+                <p className="text-base text-foreground-2">Since we cannot divide any number by zero, the domains of functions involving fractions must exclude numbers which would result in a denominator of zero.</p>
                 <div className="mt-4 space-y-2">
                   <p><InlineMath math="f(x) = \frac{3}{x} \implies x \neq 0" /></p>
                   <p><InlineMath math="f(x) = \frac{2}{10-x} \implies x \neq 10" /></p>
@@ -979,7 +979,7 @@ export const higherMathsData: Section[] = [
               </div>
               <div className="bg-emerald-500/10 p-5 rounded-xl border border-emerald-500/20">
                 <h4 className="font-bold text-emerald-400 text-lg mb-2">Even Roots</h4>
-                <p className="text-base text-foreground">We cannot evaluate an even root of a negative number. The domain must exclude numbers which would result in negative numbers under the root.</p>
+                <p className="text-base text-foreground-2">We cannot evaluate an even root of a negative number. The domain must exclude numbers which would result in negative numbers under the root.</p>
                 <div className="mt-4 space-y-2">
                   <p><InlineMath math="f(x) = \sqrt{x} \implies x \geq 0" /></p>
                   <p><InlineMath math="f(x) = \sqrt{x-4} \implies x \geq 4" /></p>
@@ -1029,7 +1029,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4">
             <p>A <strong>composite function</strong> is when one function is 'inside' another function.</p>
-            <p className="mt-2 text-foreground">It is formed by applying one function to the result of another.</p>
+            <p className="mt-2 text-foreground-2">It is formed by applying one function to the result of another.</p>
             <p>e.g., <InlineMath math="g(f(x))" /> means you compute <InlineMath math="f(x)" /> first, and plug the result into <InlineMath math="g" />.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -1198,10 +1198,10 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p>Set <InlineMath math="y = f(x)" />:</p>
                 <BlockMath math="y = x^3 + 1" />
-                <p className="mt-2 mb-2 text-foreground">Change the subject to <InlineMath math="x" />:</p>
+                <p className="mt-2 mb-2 text-foreground-2">Change the subject to <InlineMath math="x" />:</p>
                 <BlockMath math="y - 1 = x^3" />
                 <BlockMath math="x = \sqrt[3]{y - 1}" />
-                <p className="mt-2 mb-2 text-foreground">Rewrite in terms of <InlineMath math="x" />:</p>
+                <p className="mt-2 mb-2 text-foreground-2">Rewrite in terms of <InlineMath math="x" />:</p>
                 <BlockMath math="f^{-1}(x) = \sqrt[3]{x - 1}" />
               </div>
             )
@@ -1215,7 +1215,7 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4">
             <p className="text-lg">If we have a graph of a function, we can find the graph of the inverse function by <strong>reflecting it in the line <InlineMath math="y = x" /></strong>.</p>
-            <p className="text-foreground mt-2">Every coordinate <InlineMath math="(a,b)" /> on the original graph becomes <InlineMath math="(b,a)" /> on the inverse graph.</p>
+            <p className="text-foreground-2 mt-2">Every coordinate <InlineMath math="(a,b)" /> on the original graph becomes <InlineMath math="(b,a)" /> on the inverse graph.</p>
             <div className="bg-foreground/5 p-4 rounded-xl mt-4 border border-foreground/10 text-center font-mono">
               <p><InlineMath math="f(a) = b \implies f^{-1}(b) = a" /></p>
             </div>
@@ -1250,7 +1250,7 @@ export const higherMathsData: Section[] = [
                   <li><InlineMath math="(0, 1) \to (1, 0)" /></li>
                   <li><InlineMath math="(1, 2) \to (2, 1)" /></li>
                 </ul>
-                <p className="text-foreground">Plot these new points and draw a smooth curve through them, ensuring it is a perfect reflection across the line <InlineMath math="y=x" />.</p>
+                <p className="text-foreground-2">Plot these new points and draw a smooth curve through them, ensuring it is a perfect reflection across the line <InlineMath math="y=x" />.</p>
               </div>
             )
           }
@@ -1375,7 +1375,7 @@ export const higherMathsData: Section[] = [
                     </tbody>
                   </table>
                 </div>
-                <p className="text-foreground">Plot the final points and connect them with a curve similar to the original shape.</p>
+                <p className="text-foreground-2">Plot the final points and connect them with a curve similar to the original shape.</p>
               </div>
             )
           },
@@ -1494,7 +1494,7 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p>Halve the coefficient of <InlineMath math="x" />: <InlineMath math="6 \div 2 = 3" />.</p>
                 <BlockMath math="\begin{aligned} &= (x + 3)^2 - (3)^2 - 2 \\ &= (x + 3)^2 - 9 - 2 \\ &= (x + 3)^2 - 11 \end{aligned}" />
-                <p className="text-foreground">Here <InlineMath math="p = 3" /> and <InlineMath math="q = -11" />.</p>
+                <p className="text-foreground-2">Here <InlineMath math="p = 3" /> and <InlineMath math="q = -11" />.</p>
               </div>
             )
           },
@@ -1546,7 +1546,7 @@ export const higherMathsData: Section[] = [
           <div className="space-y-6">
             <h3 className="text-xl font-bold">Introduction</h3>
             <p>An <strong>exponential function</strong> is a function of the form <InlineMath math="f(x) = a^x" /> where <InlineMath math="a \in \mathbb{R}" /> and <InlineMath math="a > 0" />.</p>
-            <p className="mt-2 text-foreground">Therefore, <InlineMath math="f(x)" /> is an exponential function to the <strong>base</strong> <InlineMath math="a" />.</p>
+            <p className="mt-2 text-foreground-2">Therefore, <InlineMath math="f(x)" /> is an exponential function to the <strong>base</strong> <InlineMath math="a" />.</p>
             <ul className="list-disc list-inside ml-4 mt-2 mb-4">
               <li>When <InlineMath math="x = 0, f(0) = a^0 = 1" />. Graph passes through <InlineMath math="(0, 1)" />.</li>
               <li>When <InlineMath math="x = 1, f(1) = a^1 = a" />. Graph passes through <InlineMath math="(1, a)" />.</li>
@@ -1768,7 +1768,7 @@ export const higherMathsData: Section[] = [
         title: "Introduction to Polynomials",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1017",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Polynomials are expressions with one or more terms of the form:</p>
             <BlockMath math="a_n x^n+a_{n-1} x^{n-1}+a_{n-2} x^{n-2} + ... + a_2 x^2+a_1 x^1+a_0 x^0" />
             <p>where <InlineMath math="a_0, \dots, a_n" /> are constants with <InlineMath math="a_n \neq 0" />.</p>
@@ -1820,7 +1820,7 @@ export const higherMathsData: Section[] = [
         title: "Evaluation",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1111",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Polynomials can be evaluated using substitution.</p>
             <p>For example, if we take <InlineMath math="f(x)=2x^3-9x^2+2x+1" /> and we evaluate <InlineMath math="f(5)" />, we obtain:</p>
             <BlockMath math="f(5) = 2(5)^3 - 9(5)^2 + 2(5) + 1 = 36" />
@@ -1911,7 +1911,7 @@ export const higherMathsData: Section[] = [
         title: "Finding Unknown Coefficients",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1345",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Consider a polynomial with some unknown coefficients, such as <InlineMath math="x^3+2px^2-px+4" />, where <InlineMath math="p" /> is a constant.</p>
             <p>If we divide the polynomial by <InlineMath math="x-h" />, then we will obtain an expression for the remainder in terms of the unknown constants.</p>
             <p>If we already know the value of the remainder then we can solve for the unknown constants.</p>
@@ -1980,7 +1980,7 @@ export const higherMathsData: Section[] = [
         title: "Factorising",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1606",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We can use synthetic division (or polynomial long division) alongside the factor theorem to fully factorise polynomials of degree 3 or higher.</p>
             <p>Once a linear factor <InlineMath math="(x-h)" /> is found, we divide the polynomial by <InlineMath math="(x-h)" /> to obtain a quotient. We then factorise the quotient if possible.</p>
             <div className="bg-muted p-4 rounded-lg mt-4">
@@ -2057,7 +2057,7 @@ export const higherMathsData: Section[] = [
         title: "Finding Roots",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1920",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Finding the roots of a polynomial equation <InlineMath math="f(x)=0" /> follows the same principles as finding roots of a quadratic. We must first fully factorise the polynomial and then set each factor equal to zero.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -2112,7 +2112,7 @@ export const higherMathsData: Section[] = [
         title: "Determining the Equation of a Graph",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=2050",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Given the roots and at least one other point on the graph, we can establish the graph's equation.</p>
             <p>If the roots are <InlineMath math="x = a, x = b" /> and <InlineMath math="x = c" />, the equation is of the form <InlineMath math="y = k(x-a)(x-b)(x-c)" />. We can find <InlineMath math="k" /> using the other given point.</p>
             
@@ -2190,7 +2190,7 @@ export const higherMathsData: Section[] = [
         title: "Intersection of Two Graphs",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=2298",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>Given two equations of graphs, we can find their points of intersection. We already have experience of this with straight lines (National 5) and quadratics/lines.</p>
             <p>To find the intersection, equate the two expressions <InlineMath math="f(x) = g(x)" /> and solve for <InlineMath math="x" />.</p>
             <p>Two graphs could have several points of intersection, one point of intersection, or none:</p>
@@ -2245,7 +2245,7 @@ export const higherMathsData: Section[] = [
         title: "Discriminant",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=9",
         theory: (
-          <div className="space-y-6 text-lg text-foreground">
+          <div className="space-y-6 text-lg text-foreground-2">
             <p>Given a quadratic equation of the form, <InlineMath math="ax^2+bx+c=0" />, the <strong>discriminant</strong> is defined by <InlineMath math="b^2-4ac" />.</p>
             <p>It is worth seeing where it comes from. Any quadratic equation can be solved with the <strong>quadratic formula</strong>:</p>
             <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />
@@ -2325,7 +2325,7 @@ export const higherMathsData: Section[] = [
         title: "Intersection of Lines and Parabolas",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=309",
         theory: (
-          <div className="space-y-6 text-lg text-foreground">
+          <div className="space-y-6 text-lg text-foreground-2">
             <p>A line may:</p>
             <ul className="list-disc list-inside space-y-2 mb-4">
               <li>intersect a parabola twice</li>
@@ -2400,7 +2400,7 @@ export const higherMathsData: Section[] = [
         title: "Solving Quadratic Inequalities",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=545",
         theory: (
-          <div className="space-y-6 text-lg text-foreground">
+          <div className="space-y-6 text-lg text-foreground-2">
             <p>Quadratic inequalities can come in one of the following forms:</p>
             <BlockMath math="ax^2 + bx + c \gt 0 \qquad ax^2 + bx + c \geq 0" />
             <BlockMath math="ax^2 + bx + c \lt 0 \qquad ax^2 + bx + c \leq 0" />
@@ -2518,7 +2518,7 @@ export const higherMathsData: Section[] = [
         title: "Introduction",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=0",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The equation of a circle with centre <InlineMath math="(0,0)" /> is <InlineMath math="x^2+y^2=r^2" /></p>
             <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
               <svg viewBox="-60 -60 120 120" className="w-[15rem] h-auto vector-graphic text-foreground max-w-full">
@@ -2604,7 +2604,7 @@ export const higherMathsData: Section[] = [
         title: "Equation of a Circle",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=19",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The equation of a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units is:</p>
             <BlockMath math="(x-a)^2+(y-b)^2=r^2" />
             <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
@@ -2708,7 +2708,7 @@ export const higherMathsData: Section[] = [
         title: "Testing a Point",
         videoUrl: "https://www.youtube.com/embed/OCrqCAz9llk",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Given a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units, we can determine whether a point <InlineMath math="(p,q)" /> lies within the circle, on the circumference of the circle or out with the circle.</p>
             <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-foreground/10 rounded-xl">
               <div className="flex flex-col items-center">
@@ -2785,7 +2785,7 @@ export const higherMathsData: Section[] = [
         title: "General Equation of a Circle",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=711",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The equation of a circle can be written in expanded form.</p>
             <p>The circle with centre (-2, 3) and radius 5 units has equation:</p>
             <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 text-center">
@@ -2870,7 +2870,7 @@ export const higherMathsData: Section[] = [
         title: "Intersection of Circles",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1121",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Consider two circles with radii <InlineMath math="r_1" /> and <InlineMath math="r_2" /> with <InlineMath math="r_1 > r_2" />.</p>
             <p>Let <InlineMath math="d" /> be the distance between the centres of the two circles.</p>
             <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6 mb-6">
@@ -3054,7 +3054,7 @@ export const higherMathsData: Section[] = [
         title: "Equations of Tangents to Circles",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1597",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We know from National 5 that if we have a circle and a tangent to that circle, the tangent meets the radius at right angles.</p>
             <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
               <svg viewBox="-40 -10 80 80" className="w-[12rem] h-auto vector-graphic">
@@ -3114,7 +3114,7 @@ export const higherMathsData: Section[] = [
         title: "Intersections of Lines and Circles",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1747",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We have previously studied the intersection of lines and curves. Similarly, lines and circles can intersect at two points, one point (tangent), or no points.</p>
             <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-foreground/10 rounded-xl">
               <div className="flex flex-col items-center">
@@ -3243,7 +3243,7 @@ export const higherMathsData: Section[] = [
               <h4 className="font-bold text-foreground text-xl mb-4">Differentiation from First Principles</h4>
               <p className="mb-4">The derivative of a function <InlineMath math="f(x)" /> is defined as the limit:</p>
               <BlockMath math="f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}" />
-              <p className="mt-4 text-sm text-foreground"><InlineMath math="f'(x)" /> is the <strong>derived function</strong> or <strong>derivative</strong> of <InlineMath math="f(x)" />.</p>
+              <p className="mt-4 text-sm text-foreground-2"><InlineMath math="f'(x)" /> is the <strong>derived function</strong> or <strong>derivative</strong> of <InlineMath math="f(x)" />.</p>
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -3278,7 +3278,7 @@ export const higherMathsData: Section[] = [
             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
               <h4 className="font-bold text-foreground text-xl mb-4">General Rule</h4>
               <p className="mb-4 text-center">If <InlineMath math="f(x) = x^n" /> then <InlineMath math="f'(x) = nx^{n-1} \quad (n \in \mathbb{R})" /></p>
-              <p className="text-sm text-foreground text-center">Multiply by the power, reduce the power by 1.</p>
+              <p className="text-sm text-foreground-2 text-center">Multiply by the power, reduce the power by 1.</p>
             </div>
             <p className="mb-6">This rule applies to positive, negative, and fractional indices.</p>
             <div className="bg-muted p-4 rounded-lg mt-4">
@@ -3520,7 +3520,7 @@ export const higherMathsData: Section[] = [
               <BlockMath math="\text{If } f(x) = \sin x \text{ then } f'(x) = \cos x" />
               <BlockMath math="\text{If } f(x) = \cos x \text{ then } f'(x) = -\sin x" />
             </div>
-            <p className="mt-4 text-sm text-foreground">Wait, if the angle is in degrees, we must convert to radians to differentiate. Always assume <InlineMath math="x" /> is in radians for calculus.</p>
+            <p className="mt-4 text-sm text-foreground-2">Wait, if the angle is in degrees, we must convert to radians to differentiate. Always assume <InlineMath math="x" /> is in radians for calculus.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
@@ -4040,7 +4040,7 @@ export const higherMathsData: Section[] = [
              
              <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-6 text-base">
                <h4 className="font-bold text-foreground text-xl mb-4">Steps for Optimisation Problems</h4>
-               <ul className="list-decimal list-inside space-y-3 mt-4 text-foreground">
+               <ul className="list-decimal list-inside space-y-3 mt-4 text-foreground-2">
                  <li>Identify the quantity to be maximised or minimised.</li>
                  <li>Form an equation for this quantity in terms of two variables (e.g. area <InlineMath math="A" /> in terms of <InlineMath math="x" /> and <InlineMath math="y" />).</li>
                  <li>Use the given constraint (e.g. total perimeter) to write one variable in terms of the other.</li>
@@ -4188,7 +4188,7 @@ export const higherMathsData: Section[] = [
                   </tbody>
                 </table>
              </div>
-             <p className="text-foreground text-sm italic">For example, if <InlineMath math="f(x)" /> is a cubic with two turning points, <InlineMath math="f'(x)" /> will be a parabola with two roots.</p>
+             <p className="text-foreground-2 text-sm italic">For example, if <InlineMath math="f(x)" /> is a cubic with two turning points, <InlineMath math="f'(x)" /> will be a parabola with two roots.</p>
              <div className="bg-muted p-4 rounded-lg mt-4">
                <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
@@ -4208,7 +4208,7 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p>The original graph is a parabola with a minimum turning point at <InlineMath math="(-1, -11)" />.</p>
-                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground">
+                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground-2">
                    <li>When <InlineMath math="x < -1" />, the function is decreasing, so the gradient is negative (<InlineMath math="f'(x) < 0" />).</li>
                    <li>At <InlineMath math="x = -1" />, there is a turning point, so the gradient is zero (<InlineMath math="f'(-1) = 0" />).</li>
                    <li>When <InlineMath math="x > -1" />, the function is increasing, so the gradient is positive (<InlineMath math="f'(x) > 0" />).</li>
@@ -4226,7 +4226,7 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p>The original graph is a cubic with a maximum turning point at <InlineMath math="(0, -6)" /> and a minimum turning point at <InlineMath math="(3, -18)" />.</p>
-                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground">
+                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground-2">
                    <li>At <InlineMath math="x = 0" /> and <InlineMath math="x = 3" />, there are turning points, so <InlineMath math="f'(0) = 0" /> and <InlineMath math="f'(3) = 0" /> (roots of the derived graph).</li>
                    <li>Between <InlineMath math="0" /> and <InlineMath math="3" />, the function is decreasing, so <InlineMath math="f'(x)" /> is negative (below the x-axis).</li>
                    <li>Outside of this interval (<InlineMath math="x < 0" /> and <InlineMath math="x > 3" />), the function is increasing, so <InlineMath math="f'(x)" /> is positive (above the x-axis).</li>
@@ -4244,7 +4244,7 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p>The original graph has a rising point of inflection at <InlineMath math="(0, 5)" /> and a maximum turning point at <InlineMath math="(1.5, 8.375)" />.</p>
-                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground">
+                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground-2">
                    <li>At <InlineMath math="x = 0" /> and <InlineMath math="x = 1.5" />, the gradient is zero, so <InlineMath math="f'(0) = 0" /> and <InlineMath math="f'(1.5) = 0" />.</li>
                    <li>Since <InlineMath math="(0, 5)" /> is a rising point of inflection, the graph is increasing both before and immediately after <InlineMath math="x = 0" />. So <InlineMath math="f'(x)" /> is positive, touches <InlineMath math="0" />, and stays positive.</li>
                    <li>After the maximum at <InlineMath math="x = 1.5" />, the graph decreases, so the gradient becomes negative.</li>
@@ -4263,7 +4263,7 @@ export const higherMathsData: Section[] = [
         title: "Further Differentiation of Brackets",
         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6707",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>When differentiating composite functions involving linear expressions raised to a power, we can use the chain rule.</p>
             <p>If the functions <InlineMath math="f" /> and <InlineMath math="g" /> are defined on suitable domains, then:</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
@@ -4345,7 +4345,7 @@ export const higherMathsData: Section[] = [
         title: "Further Differentiation of Trigonometric Functions",
         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6707",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The chain rule is also required when differentiating composite trigonometric functions.</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[\sin(f(x))] = \cos(f(x)) \times f'(x)" />
@@ -4416,7 +4416,7 @@ export const higherMathsData: Section[] = [
         title: "Introduction",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=0",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We have previously learned how to differentiate terms.</p>
             <p>If <InlineMath math="f(x)=x^n" /> then <InlineMath math="f'(x)=nx^{n-1}" /> (<InlineMath math="n \in \mathbb{R}" />).</p>
             <p>Say we are given the derivatives of some functions. Can we find the original functions?</p>
@@ -4445,7 +4445,7 @@ export const higherMathsData: Section[] = [
         title: "Indefinite Integrals",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=17",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>When integrating a term of the form <InlineMath math="ax^n" />, we increase the power by 1 and divide by the new power:</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\int ax^n \,dx = \frac{ax^{n+1}}{n+1} + C \quad (n \neq -1)" />
@@ -4536,7 +4536,7 @@ export const higherMathsData: Section[] = [
         title: "Differential Equations",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=916",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>As previously stated, integration is the reverse of differentiation.</p>
             <p>As a result, if we integrate the derivative of a function then we obtain the original function:</p>
             <BlockMath math="\int \frac{dy}{dx} \,dx = y" />
@@ -4586,7 +4586,7 @@ export const higherMathsData: Section[] = [
         title: "Definite Integrals",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1208",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Let <InlineMath math="F(x)" /> be the integral of <InlineMath math="f(x)" />.</p>
             <p>We define <InlineMath math="\int_a^b f(x) \,dx = F(b) - F(a)" /> where <InlineMath math="a" /> and <InlineMath math="b" /> are the limits of the integral and <InlineMath math="b > a" />.</p>
             <p>Example:</p>
@@ -4650,7 +4650,7 @@ export const higherMathsData: Section[] = [
          title: "Area Under a Curve",
          videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1619",
          theory: (
-           <div className="space-y-4 text-foreground">
+           <div className="space-y-4 text-foreground-2">
              <div className="flex justify-center my-6">
                 <AreaUnderCurveIntroGraph />
              </div>
@@ -4712,7 +4712,7 @@ export const higherMathsData: Section[] = [
          title: "Area Between Curves",
          videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1973",
          theory: (
-           <div className="space-y-4 text-foreground">
+           <div className="space-y-4 text-foreground-2">
              <div className="flex justify-center my-6">
                 <AreaBetweenCurvesIntroGraph />
              </div>
@@ -4799,7 +4799,7 @@ export const higherMathsData: Section[] = [
          title: "Area Under the x-axis",
          videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3142",
          theory: (
-           <div className="space-y-4 text-foreground">
+           <div className="space-y-4 text-foreground-2">
              <div className="flex justify-center my-6">
                 <AreaUnderXAxisIntroGraph />
              </div>
@@ -4842,7 +4842,7 @@ id: "integration-of-brackets",
         title: "Further Integration of Brackets",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3573",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We have previously learned how to differentiate functions of the form <InlineMath math="f(ax+b)" />:</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^{n+1}] = (n+1)(ax+b)^n \times a = a(n+1)(ax+b)^n" />
@@ -4892,7 +4892,7 @@ id: "integration-of-brackets",
         title: "Further Integration of Trigonometric Functions",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3869",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We have previously learned how to differentiate trigonometric functions of the form <InlineMath math="\sin(ax+b)" /> and <InlineMath math="\cos(ax+b)" />.</p>
             <p>When integrating these, we must divide by the derivative of the angle (which is <InlineMath math="a" />):</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
@@ -5094,7 +5094,7 @@ id: "integration-of-brackets",
 
             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 text-base">
               <h4 className="font-bold text-foreground text-xl mb-4">Values at <InlineMath math="30^\circ, 45^\circ, 60^\circ" /></h4>
-              <p className="mb-6 text-foreground">You can easily remember these values using two special right-angled triangles.</p>
+              <p className="mb-6 text-foreground-2">You can easily remember these values using two special right-angled triangles.</p>
               
               <div className="flex flex-col md:flex-row gap-8 justify-center mb-8">
                 <div className="flex flex-col items-center">
@@ -5169,22 +5169,22 @@ id: "integration-of-brackets",
                 
                 <div className="absolute top-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-emerald-400 text-3xl">A</div>
-                  <div className="text-sm text-foreground">All +ve</div>
+                  <div className="text-sm text-foreground-2">All +ve</div>
                 </div>
                 
                 <div className="absolute top-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-blue-400 text-3xl">S</div>
-                  <div className="text-sm text-foreground">Sine +ve</div>
+                  <div className="text-sm text-foreground-2">Sine +ve</div>
                 </div>
                 
                 <div className="absolute bottom-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-indigo-400 text-3xl">T</div>
-                  <div className="text-sm text-foreground">Tan +ve</div>
+                  <div className="text-sm text-foreground-2">Tan +ve</div>
                 </div>
                 
                 <div className="absolute bottom-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-rose-400 text-3xl">C</div>
-                  <div className="text-sm text-foreground">Cos +ve</div>
+                  <div className="text-sm text-foreground-2">Cos +ve</div>
                 </div>
                 
                 <div className="absolute -right-16 text-sm">0 / 360°</div>
@@ -5544,7 +5544,7 @@ id: "integration-of-brackets",
                 <BlockMath math="\sin(A \pm B) = \sin A \cos B \pm \cos A \sin B" />
                 <BlockMath math="\cos(A \pm B) = \cos A \cos B \mp \sin A \sin B" />
               </div>
-              <p className="mt-6 text-sm text-foreground text-center">Notice how the signs work: sine keeps the same sign (<InlineMath math="\pm \to \pm" />) while cosine flips the sign (<InlineMath math="\pm \to \mp" />).</p>
+              <p className="mt-6 text-sm text-foreground-2 text-center">Notice how the signs work: sine keeps the same sign (<InlineMath math="\pm \to \pm" />) while cosine flips the sign (<InlineMath math="\pm \to \mp" />).</p>
             </div>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -5922,7 +5922,7 @@ id: "integration-of-brackets",
         title: "Solving Simultaneous Equations",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3163",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>You are already familiar with some wave functions, namely <InlineMath math="f(x)=\sin x" /> and <InlineMath math="f(x)=\cos x" />.</p>
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center my-6">
               <SineWaveGraph />
@@ -5987,7 +5987,7 @@ id: "integration-of-brackets",
         title: "Using the Addition Formula",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2086",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Given a function of the form <InlineMath math="a\sin x + b\cos x" />, it is useful to express this as a single function rather than the sum of two separate functions.</p>
             <p>A single function would allow us to calculate maximum and minimum values of expressions of the form <InlineMath math="a\sin x + b\cos x" />, sketch graphs more easily and solve equations involving expressions of this form.</p>
             <p>We previously studied the addition formulae, and this will help to express sums of two separate functions as single functions.</p>
@@ -6038,7 +6038,7 @@ id: "integration-of-brackets",
         title: "Wave Function",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3163",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We can combine everything learned so far to rewrite trigonometric sums as a single wave function.</p>
             <p>The point is this: an expression like <InlineMath math="a\sin x^\circ + b\cos x^\circ" /> is the sum of <em>two</em> waves, which is awkward to work with. It can always be rewritten as a <strong>single</strong> wave — and once it is, the maximum, the minimum and the solutions of equations can all be read off almost immediately.</p>
             <p>There are four possible target forms, and the question will always tell you which one to use:</p>
@@ -6132,7 +6132,7 @@ id: "integration-of-brackets",
         title: "Multiple Angles",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3658",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The wave function method works exactly the same if there are multiple angles inside the trigonometric functions, as long as both terms have the same multiple angle.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -6172,7 +6172,7 @@ id: "integration-of-brackets",
         title: "Minimum and Maximum Values",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3674",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>By expressing <InlineMath math="f(x) = p\cos x + q\sin x" /> as a single trigonometric function, we can find the minimum and maximum values of the function and the corresponding angles at which these values occur.</p>
             <p>It is useful to remember the minimum and maximum values of <InlineMath math="f(x) = \sin x" /> and <InlineMath math="f(x) = \cos x" />.</p>
             
@@ -6226,7 +6226,7 @@ id: "integration-of-brackets",
         title: "Sketching Graphs",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=4067",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Once you have converted <InlineMath math="a\sin x + b\cos x" /> into a single wave form, such as <InlineMath math="k\cos(x - \alpha)" />, sketch it by applying the phase shift <InlineMath math="\alpha" /> to the <InlineMath math="\cos" /> or <InlineMath math="\sin" /> curve multiplied by amplitude <InlineMath math="k" />.</p>
             <div className="bg-muted p-4 rounded-lg mt-4">
               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -6268,7 +6268,7 @@ id: "integration-of-brackets",
         title: "Solving Equations",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=4311",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
              <p>A composite trigonometric equation can be solved using the wave function format. Once compiled as <InlineMath math="k\cos(x - \alpha) = c" />, it acts like solving standard basic trigonometric equations.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -6328,7 +6328,7 @@ id: "integration-of-brackets",
         title: "Properties of Logarithmic Functions",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=551",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>A logarithmic function is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a>0" /> and <InlineMath math="x>0" />.</p>
             <p>The relationship between exponential functions and logarithmic functions can be expressed as:</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
@@ -6374,7 +6374,7 @@ id: "integration-of-brackets",
         title: "Working with Logarithmic Functions",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=1222",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>If we have the sum of several terms involving logarithmic functions then we can combine the terms in one step.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
@@ -6405,7 +6405,7 @@ id: "integration-of-brackets",
         title: "Further Logarithmic Equations",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=1728",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Many mathematical models of real-life situations use exponential and logarithmic functions.</p>
             <p>We have previously studied basic logarithmic equations and can now solve equations using the properties of logarithmic functions we have now become familiar with.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -6472,7 +6472,7 @@ id: "integration-of-brackets",
         title: "Exponentials & Logarithms to the Base e",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2104",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><InlineMath math="\log_e x" /> is a logarithm to the base <InlineMath math="e" />. This is also known as the natural logarithm of <InlineMath math="x" />, and is often written as <InlineMath math="\ln x" />.</p>
             <BlockMath math="\ln x = \log_e x" />
             <p>Usual properties of logarithms can be applied to the natural logarithm function.</p>
@@ -6523,7 +6523,7 @@ id: "integration-of-brackets",
         title: "Solving Equations with Unknown Exponents",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2388",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>If an unknown value is the exponent of a term (e.g. <InlineMath math="10^x" /> or <InlineMath math="e^x" />), we can solve for <InlineMath math="x" /> by taking the logarithm of both sides of the equation.</p>
             <p>The same solution will be obtained using any base, but generally calculators only work in base 10 or base <InlineMath math="e" /> (natural logarithm).</p>
             <div className="bg-muted p-4 rounded-lg mt-4">
@@ -6584,7 +6584,7 @@ id: "integration-of-brackets",
         title: "Exponential Growth & Decay",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2841",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We previously learned that exponential functions are sometimes known as growth or decay functions. These often occur in models of real-life situations.</p>
             <p>For example, radioactive decay can be modelled using an exponential function. An important measurement is the half-life of radioactive substance, which is the time taken for the mass of the radioactive substance to halve.</p>
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -6647,7 +6647,7 @@ id: "integration-of-brackets",
         title: "Experimental Data & Linear Models",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=3163",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The results of an experiment may show that there is an exponential relationship between the variables. However, the rapid rise/decrease can often make it difficult to interpret the results.</p>
             <p>We can use logarithms to convert these exponential graphs to linear graphs which makes it easier to find the relationship between the variables.</p>
             
@@ -6770,7 +6770,7 @@ id: "integration-of-brackets",
         title: "Revision of N5 Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=13",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <h3 className="text-xl font-bold text-foreground">Magnitude</h3>
             <p>A vector is a quantity with both magnitude and direction. As a result, we can describe vectors as having 'directional growth'.</p>
             <p>A vector can be named in one of the following ways:</p>
@@ -6822,7 +6822,7 @@ id: "integration-of-brackets",
         title: "Revision of Position Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=13",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The vector from origin <InlineMath math="O" /> to point <InlineMath math="A" /> is called the position vector of point A: <InlineMath math="\vec{OA}" /> or <InlineMath math="\vec{a}" />.</p>
             <p>The vector <InlineMath math="\vec{AB}" /> is the vector which originates at A and ends at B. <InlineMath math="\vec{AB}" /> is the position vector of B relative to A.</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
@@ -6867,7 +6867,7 @@ id: "integration-of-brackets",
         title: "Collinearity",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=717",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Points A, B and C are collinear if <InlineMath math="\vec{AB}" /> and <InlineMath math="\vec{BC}" /> are parallel, with B a common point.</p>
             <p><strong>NB:</strong> vectors are parallel if they are scalar multiples of the same vector:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
@@ -6935,7 +6935,7 @@ id: "integration-of-brackets",
         title: "Dividing Lines in a Given Ratio",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1570",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>If a point T divides a line segment PR in the ratio <InlineMath math="m:n" />, we can use position vectors to find the coordinates of T.</p>
             <p>From the ratio, <InlineMath math="\vec{PT} = \frac{m}{m+n} \vec{PR}" /> or we can use the ratio of parts: <InlineMath math="n\vec{PT} = m\vec{TR}" />.</p>
             <div className="bg-muted p-4 rounded-lg mt-4">
@@ -6970,7 +6970,7 @@ id: "integration-of-brackets",
         title: "Unit Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1716",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Any vector with a magnitude of 1 is called a unit vector.</p>
             <p>e.g. Let <InlineMath math="\vec{u} = \begin{pmatrix} \sqrt{3}/2 \\ 0 \\ 1/2 \end{pmatrix}" />, then</p>
             <BlockMath math="|\vec{u}| = \sqrt{\left(\frac{\sqrt{3}}{2}\right)^2 + 0^2 + \left(\frac{1}{2}\right)^2} = \sqrt{\frac{3}{4} + 0 + \frac{1}{4}} = \sqrt{1} = 1" />
@@ -7007,7 +7007,7 @@ id: "integration-of-brackets",
         title: "Unit Vector Form",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1839",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>We can express a vector in terms of the standard basis vectors <InlineMath math="\mathbf{i}" />, <InlineMath math="\mathbf{j}" />, and <InlineMath math="\mathbf{k}" /> (which have length 1 and point along the x, y, and z axes respectively).</p>
             <BlockMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix} = x\mathbf{i} + y\mathbf{j} + z\mathbf{k}" />
           <div className="bg-muted p-4 rounded-lg mt-4">
@@ -7051,7 +7051,7 @@ id: "integration-of-brackets",
         title: "Scalar/Dot Product (1)",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2188",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The dot product can be thought of as directional multiplication. Multiplying two vectors means we are applying the directional growth of one vector to another. The result is how much stronger we have made the original vector.</p>
             <p>The final result of the dot product process can be:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
@@ -7101,7 +7101,7 @@ id: "integration-of-brackets",
         title: "Scalar/Dot Product (2)",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2318",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Polar perspective):</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />
@@ -7135,7 +7135,7 @@ id: "integration-of-brackets",
         title: "Perpendicular Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2551",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
             <p>Since <InlineMath math="\cos 90^\circ = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos 90^\circ = 0" />.</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-300">
@@ -7181,7 +7181,7 @@ id: "integration-of-brackets",
         title: "Angle Between Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2741",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>From the dot product formula <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />, we can rearrange this to find the angle between two vectors:</p>
             <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}" />
@@ -7237,7 +7237,7 @@ id: "integration-of-brackets",
         title: "Properties of the Scalar Product",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=3224",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>1. The scalar product is commutative i.e. <InlineMath math="\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}" /></p>
             <p>2. The scalar product is distributive i.e. <InlineMath math="\vec{a} \cdot (\vec{b} + \vec{c}) = \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}" /></p>
             <p>3. The scalar product of a vector and itself is a positive real number if <InlineMath math="\vec{a} \neq 0" /> i.e. <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}|^2" />.</p>

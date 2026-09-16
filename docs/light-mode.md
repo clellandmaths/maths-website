@@ -571,6 +571,69 @@ cannot see a selector that has stopped matching, because it is a string.
 
 ---
 
+## Third pass — the secondary tier, hue identity, and elevation
+
+Three faults, and the second one is the interesting one.
+
+### `--foreground-2` is back, and the restore was mechanical
+
+355 call sites had been `text-slate-300` and were merged into `--foreground`,
+flattening body text into its own headings. Splitting them again was **driven
+off git history**, not by hand: for every line in the pre-migration file, apply
+the same mapping twice — once as it was applied, once with `text-slate-300`
+going to `text-foreground-2` — and where a line's transformed form is unique to
+slate-300 sources, replace it. 320 fell out in one pass; the last 35 were lines
+edited since (`signal-magenta` became `accent`, a `hover:text-white` became
+`hover:text-accent`) and were done by name. Two `hover:text-slate-200` lines
+were correctly left alone.
+
+Dark: `#cad5e2`, exactly what it was. Light: `#45454f`, 8.63:1 on the page —
+about half the primary tier's contrast, which is what makes it read as
+secondary rather than faint.
+
+### A dark hue is not the same hue
+
+**"National 5 Maths" came out green while the gradient pill beside it looked
+right.** `text-cyan-800` is the accessible version of cyan on white and it does
+not read as cyan — cyan's dark end is teal.
+
+[Radix's scale](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale)
+names the reason: steps 9–10 are **solid backgrounds**, steps 11–12 are **text**,
+and some hues are only ever one of the two. A background and a text colour are
+different roles, not the same hue at a different step.
+
+So each light accent takes **the other end of the course's own gradient**, where
+that end survives being darkened:
+
+```
+n5           cyan  -> blue-700     dark cyan is teal
+higher       orange-> red-700      dark orange is brown
+higher-apps  violet-700            violet stays violet
+ah           emerald-800           AH is green; dark green is still green
+n5-apps      amber-800             a deep amber, and the one to watch
+```
+
+The same mistake was in the home Academy card: `from-accent/10` used the *text*
+magenta, which light darkens to `#a3009a`, and a 10% wash of it is `#ecdcee` —
+a dull mauve. That was the "too muted" gradient. It now uses
+`--signal-magenta`, which is `#ff00ed` in **both** themes and washes to a clean
+`#f5d7f6`. Identical in dark, where the two tokens are the same colour.
+
+### Elevation, which is the thing light mode actually needs
+
+Both the [Material dark theme guidance](https://m2.material.io/design/color/dark-theme.html)
+and every write-up of the same problem say it: **a light interface separates
+surfaces with a shadow; a dark one has nothing to cast against and separates by
+being lighter instead.** The first light pass inherited the dark theme's surface
+ladder, which is why it read flat.
+
+`--shadow-1` is a real shadow in light and `none` in dark, so the single rule
+that applies it needs no theme branch. `bg-card` is the marker for "this is a
+surface", with or without an alpha. It sits in `@layer base` so a component
+that sets its own shadow — the navigation dropdown's `shadow-xl` — still wins.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.

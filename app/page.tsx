@@ -166,7 +166,13 @@ export default function Home() {
           rather than a gate in front of it. */}
       <section className="px-4 sm:px-6 lg:px-8 pb-16">
         <div className="max-w-6xl mx-auto">
-          <div className="rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/10 to-transparent p-6 sm:p-8">
+          {/* **The wash uses the vivid brand magenta, not `--accent`.** `--accent` is
+              the *text* magenta and light darkens it to #a3009a to clear AA — as a
+              10% wash that comes out #ecdcee, a dull mauve, which is what "too
+              muted" was. A background is a different role: `--signal-magenta` is
+              #ff00ed in both themes and washes to a clean #f5d7f6. Identical in
+              dark, where the two tokens are the same colour anyway. */}
+          <div className="rounded-2xl border border-signal-magenta/35 bg-gradient-to-br from-signal-magenta/12 to-transparent p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               <div className="flex-1">
                 <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent mb-2">

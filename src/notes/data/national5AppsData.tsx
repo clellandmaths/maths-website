@@ -12,7 +12,7 @@ export const national5AppsData: Section[] = [
         title: "Basic Operations & Estimation",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> candidates frequently lose valuable marks in Paper 1 (the non-calculator paper) by not demonstrating solid basic number skills. It is essential to maintain and practise these non-calculator arithmetic skills to secure your marks.</p>
 
             <h4 className="text-foreground font-semibold">1. Decimals: Addition & Subtraction</h4>
@@ -115,7 +115,7 @@ export const national5AppsData: Section[] = [
         title: "Fractions",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> Fractions in National 5 Applications often involve adding and subtracting parts of a whole to find a missing amount, or calculating leftover amounts from multiple wholes (such as multiple cakes or pizzas). Always ensure you have a common denominator before doing any addition or subtraction!</p>
 
             <h4 className="text-foreground font-semibold">1. Adding & Subtracting Fractions</h4>
@@ -228,7 +228,7 @@ export const national5AppsData: Section[] = [
         title: "Percentages",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> understanding the interrelationships between fractions, decimals, and percentages lets you choose the most efficient route to a solution, saving you vital time in the non-calculator paper.</p>
             
             <h4 className="text-foreground font-semibold">1. Equivalences (Fractions, Decimals, and Percentages)</h4>
@@ -330,7 +330,7 @@ export const national5AppsData: Section[] = [
         title: "Compound Percentages (Appreciation & Depreciation)",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> use the most efficient strategy available when answering compound percentage questions — calculate them with a decimal multiplier and a power, rather than a slow, step-by-step, year-by-year approach.</p>
             <h4 className="text-foreground font-semibold">1. Finding the Decimal Multiplier</h4>
             <p>Before doing any calculations, you must convert the percentage change into a decimal multiplier.</p>
@@ -432,7 +432,7 @@ export const national5AppsData: Section[] = [
         title: "Ratio & Proportion",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> The most critical step in any proportion question is stopping to ask yourself: "Is this Direct or Inverse proportion?" If you apply the wrong rule, you will lose almost all the marks for that question.</p>
 
             <h4 className="text-foreground font-semibold">1. Simplifying Ratios</h4>
@@ -537,7 +537,7 @@ export const national5AppsData: Section[] = [
         title: "Rounding",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> If a question requires you to round your answer, you must write down your unrounded answer from your calculator display first before you write your rounded answer. If you do not write down your unrounded answer first, you will risk losing multiple marks, even if your final rounded answer is completely correct.</p>
 
             <h4 className="text-foreground font-semibold">1. Decimal Places (d.p.)</h4>
@@ -645,7 +645,7 @@ export const national5AppsData: Section[] = [
         title: "Income (Gross/Net, Overtime, Bonus, Commission & Allowances)",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> income questions constantly test your ability to read the fine print. Before calculating commission, you must always check if the percentage is applied to total sales or only on sales over a certain amount.</p>
 
             <h4 className="text-foreground font-semibold">1. Gross Pay vs. Net Pay</h4>
@@ -759,7 +759,7 @@ export const national5AppsData: Section[] = [
         title: "Deductions & Tax (Income Tax, National Insurance, Pensions)",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> deductions questions test your ability to follow the exact sequence. You must remember that National Insurance is always calculated on a person’s salary before deductions such as pension contributions.</p>
 
             <h4 className="text-foreground font-semibold">1. National Insurance & Tax Bands</h4>
@@ -847,7 +847,7 @@ export const national5AppsData: Section[] = [
         title: "Budgeting & Best Deals",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When an exam question asks you to determine the "best deal" or the "lowest price" across three different shops, you MUST show the full calculation and final price for all three options. If you only calculate two options and guess the third, you will lose the final justification marks.</p>
 
             <h4 className="text-foreground font-semibold">1. Balancing Outgoings & Saving Up</h4>
@@ -966,7 +966,7 @@ export const national5AppsData: Section[] = [
         title: "Foreign Exchange",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When converting between two different foreign currencies, you must almost always use British Pounds (£) as a "middle bridge" unless a direct exchange rate is explicitly given. Because you are dealing with money, ensure your final answers are always rounded to exactly two decimal places where appropriate.</p>
 
             <h4 className="text-foreground font-semibold">1. The Basic Conversions</h4>
@@ -1087,7 +1087,7 @@ export const national5AppsData: Section[] = [
         title: "Saving & Borrowing",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When an exam question asks you to determine which of two investment or savings options is best, you must clearly calculate the final total value for both options to make a valid comparison.</p>
 
             <h4 className="text-foreground font-semibold">1. Simple Interest</h4>
@@ -1242,7 +1242,7 @@ export const national5AppsData: Section[] = [
         title: "Converting Units of Measurement",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> decide first whether the unit you are moving to is <em>smaller</em> or <em>larger</em>. Moving to a <strong>smaller</strong> unit means more of them, so you <strong>multiply</strong>; moving to a <strong>larger</strong> unit means fewer of them, so you <strong>divide</strong>. Checking this before you calculate stops the most common error of all.</p>
 
             <h4 className="text-foreground font-semibold">1. Metric Length, Weight and Volume</h4>
@@ -1333,7 +1333,7 @@ export const national5AppsData: Section[] = [
         title: "Reading Scales & Tolerance",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When reading a scale, you must always count the gaps between the numbers, not the physical lines. When dealing with tolerance, always calculate and write down your explicit maximum and minimum limits before attempting to make any decisions.</p>
 
             <h4 className="text-foreground font-semibold">1. Reading Minor Unnumbered Divisions</h4>
@@ -1451,7 +1451,7 @@ export const national5AppsData: Section[] = [
         title: "Using Formulae",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> The most critical step when using any formula is checking the units before you substitute your numbers. Questions frequently give you a measurement in centimetres when the formula explicitly requires metres. If you plug the raw numbers in without converting first, you will lose the majority of the marks.</p>
 
             <h4 className="text-foreground font-semibold">1. Given Formulae</h4>
@@ -1554,7 +1554,7 @@ export const national5AppsData: Section[] = [
         title: "Speed, Distance & Time",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> The most common mistake candidates make in this entire course is misinterpreting decimal time. You must remember that there are 60 minutes in an hour, not 100. Therefore, a time of 4.3 hours is not 4 hours and 3 minutes.</p>
 
             <h4 className="text-foreground font-semibold">1. The Formula Triangle</h4>
@@ -1660,7 +1660,7 @@ export const national5AppsData: Section[] = [
         title: "Perimeter, Circumference & Area",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When calculating the perimeter of a shape that includes a fraction of a circle (like a semi-circle), candidates constantly calculate the curved arc length and stop. To find the true perimeter, you must always add the straight, flat edges back onto your curved answer.</p>
 
             <h4 className="text-foreground font-semibold">1. Basic Area Formulae</h4>
@@ -1786,7 +1786,7 @@ export const national5AppsData: Section[] = [
         title: "Volume of Solids",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> If a volume question asks you to round your final answer to a specific number of significant figures, you must write down your unrounded answer from your calculator display first. Failing to show the unrounded calculation will cost you vital process marks, even if the rounded answer is correct.</p>
 
             <h4 className="text-foreground font-semibold">1. Using Given Formulae</h4>
@@ -1913,7 +1913,7 @@ export const national5AppsData: Section[] = [
         title: "Costs from a Calculated Value",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Many Applications questions are two jobs in one: first <strong>calculate a quantity</strong> (an area, a volume, a distance or a number of items), then use it to work out a <strong>cost</strong>. The marks are split across both stages, so the measurement work matters as much as the money.</p>
 
             <h4 className="text-foreground font-semibold">1. The Two-Stage Method</h4>
@@ -2007,7 +2007,7 @@ export const national5AppsData: Section[] = [
         title: "Pythagoras' Theorem",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> In National 5 Applications of Mathematics, Pythagoras questions are strictly designed to be two-stage calculations. If you calculate a single missing side using <InlineMath math="a^2 = b^2 + c^2" /> and stop, you have only completed half the problem. You must always use your new measurement to complete a second step, such as finding a second missing side, calculating a total perimeter, or finding the depth of a liquid.</p>
 
             <h4 className="text-foreground font-semibold">1. The Standard Formulae</h4>
@@ -2125,7 +2125,7 @@ export const national5AppsData: Section[] = [
         title: "Gradient",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> the two most common ways to lose marks in gradient questions are failing to ensure the dimensions are in consistent units, and failing to express the final gradient as a fraction in its simplest form. Always check your units before doing any calculation!</p>
 
             <h4 className="text-foreground font-semibold">1. The Gradient Formula</h4>
@@ -2240,7 +2240,7 @@ export const national5AppsData: Section[] = [
         title: "Time Management & Time Zones",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When calculating flight arrival times across different time zones, always complete the entire journey using the departure country's time zone first, and only add or subtract the time difference at the very final step.</p>
 
             <h4 className="text-foreground font-semibold">1. Decimal Time Conversions</h4>
@@ -2319,7 +2319,7 @@ export const national5AppsData: Section[] = [
         title: "Scale Drawing & Navigation",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> Bearings must always be measured clockwise from North, and they must always be written using exactly three digits (e.g., 045°, not 45°). When plotting a multi-stage journey, you must draw a completely new, perfectly vertical North line at every single checkpoint before measuring your next angle.</p>
 
             <h4 className="text-foreground font-semibold">1. Using a Scale</h4>
@@ -2418,7 +2418,7 @@ export const national5AppsData: Section[] = [
         title: "3D Container Packing",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> Never calculate the total volume of the large container and divide it by the total volume of the small box. This assumes the items can be melted down like liquid! You must divide the Length by Length, Breadth by Breadth, and Height by Height.</p>
 
             <h4 className="text-foreground font-semibold">1. The Packing Strategy</h4>
@@ -2504,7 +2504,7 @@ export const national5AppsData: Section[] = [
         title: "Precedence Tables & Critical Path",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> The "minimum time" to complete a massive project is always the longest path through the activity network. This is called the Critical Path. If any job on this path is delayed, the entire project is delayed.</p>
 
             <h4 className="text-foreground font-semibold">1. Constructing the Network Diagram</h4>
@@ -2617,7 +2617,7 @@ export const national5AppsData: Section[] = [
         title: "Averages & Spread",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> Before finding the median or quartiles, you must always rewrite your list of numbers in ascending order. When comparing the interquartile range or standard deviation, you must never use the phrase "on average," as these are measures of spread, not averages.</p>
 
             <h4 className="text-foreground font-semibold">1. Mean, Mode, Median and Range</h4>
@@ -2754,7 +2754,7 @@ export const national5AppsData: Section[] = [
         title: "Statistical Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When constructing a pie chart, you must remember to multiply your fraction by 360 to find the angle. A very common lost mark is calculating percentages (multiplying by 100) instead of angle sizes.</p>
 
             <h4 className="text-foreground font-semibold">1. Pie Charts</h4>
@@ -2874,7 +2874,7 @@ export const national5AppsData: Section[] = [
         title: "Interpreting Graphs & Tables",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>This skill is about <em>reading</em> data that is given to you — in graphs and tables — and using it to answer questions and make decisions. It is the reverse of the &ldquo;Statistical Diagrams&rdquo; topic, which is about <em>constructing</em> them.</p>
 
             <h4 className="text-foreground font-semibold">1. Reading a Graph</h4>
@@ -2976,7 +2976,7 @@ export const national5AppsData: Section[] = [
         title: "Probability & Risk",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p><strong>The Golden Rule:</strong> When a question involves two events (like rolling two dice or spinning two spinners), do not try to calculate the combinations in your head. You must draw a two-way grid/table to accurately count the total number of possible outcomes and the number of successful outcomes.</p>
 
             <h4 className="text-foreground font-semibold">1. Simple Probability</h4>

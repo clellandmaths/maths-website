@@ -13,7 +13,7 @@ export const higherAppsData: Section[] = [
         title: "Finance Revision & Gross Income",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A person's <strong>gross income</strong> is the total amount of money they earn from all sources <em>before</em> any deductions (like tax or pension contributions) are taken away.
             </p>
@@ -144,7 +144,7 @@ export const higherAppsData: Section[] = [
         title: "National Insurance",
         videoUrl: "https://www.youtube.com/embed/NbXeQFcU9MQ",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               National Insurance (NI) is a tax paid by employees and employers to fund state benefits, such as the State Pension. In the Higher Applications of Mathematics exam, you will be expected to calculate a worker's NI contributions using the specific figures provided in your data booklet for that year.
             </p>
@@ -275,7 +275,7 @@ export const higherAppsData: Section[] = [
         title: "Income Tax",
         videoUrl: "https://www.youtube.com/embed/v6UA3kNY2sY",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Income tax is paid to the government to help fund public services. For most employees, this is automatically deducted from their wages throughout the year through a system called PAYE (Pay As You Earn).
             </p>
@@ -433,7 +433,7 @@ export const higherAppsData: Section[] = [
         title: "Deductions",
         videoUrl: "https://www.youtube.com/embed/Z_UsKwnFgDI",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A person's <strong>net pay</strong> (often called "take-home pay") is the final amount of money they receive in their bank account after all deductions have been subtracted from their gross pay.
             </p>
@@ -583,7 +583,7 @@ export const higherAppsData: Section[] = [
         title: "Other Taxes",
         videoUrl: "https://www.youtube.com/embed/gkpnyMhmPV0",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               While Income Tax and National Insurance are deducted automatically from a person's payslip, there are several other taxes that individuals must manage and pay themselves, either regularly or on an occasional basis.
             </p>
@@ -704,7 +704,7 @@ export const higherAppsData: Section[] = [
         title: "Multipliers & Interest",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Before you can tackle complex financial questions, you must be completely comfortable converting percentages into decimals and using multipliers. A multiplier allows you to calculate a percentage increase or decrease in a single step on your calculator.
             </p>
@@ -822,7 +822,7 @@ export const higherAppsData: Section[] = [
         title: "Interest - Varying Time Units",
         videoUrl: "https://www.youtube.com/embed/8-mHZxNeDJU",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Now that we are comfortable using multipliers for a single percentage change, we can upgrade our approach to handle multiple time periods (compound interest) using a simple formula.
             </p>
@@ -951,7 +951,7 @@ export const higherAppsData: Section[] = [
         title: "Combining Interest Rates",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               In the real world, interest rates rarely stay exactly the same for years at a time. The Bank of England regularly changes the central interest rate, meaning the effective rates of interest on savings accounts and loans will fluctuate over long periods.
             </p>
@@ -1102,7 +1102,7 @@ export const higherAppsData: Section[] = [
         title: "Accumulation Calculations (Regular Payments)",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               When a person makes regular payments into a savings account (e.g., depositing &pound;100 on the 1st of every month), you cannot simply add the payments together and calculate the interest at the end. Because the deposits are made at different times, each deposit sits in the account earning interest for a different length of time.
             </p>
@@ -1243,7 +1243,7 @@ export const higherAppsData: Section[] = [
         title: "Accumulation - Irregular Payments and Withdrawals",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Real-world finances are rarely as perfectly structured as a regular monthly deposit. People receive unexpected bonuses, make emergency withdrawals, and borrow additional funds.
             </p>
@@ -1400,7 +1400,7 @@ export const higherAppsData: Section[] = [
         title: "Converting Between Time Frequencies",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Often in finance, you will be given an interest rate for one time period (e.g., an annual rate) but you will need to apply it to a completely different time period (e.g., monthly payments). You must convert the interest rate to match the payment frequency.
             </p>
@@ -1554,7 +1554,7 @@ export const higherAppsData: Section[] = [
         title: "Working with Start and End Values",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Sometimes in finance, you will know exactly how much money you started with (the Capital) and exactly how much you ended up with (the Final Balance), but you will <strong>not know the interest rate</strong> that was applied.
             </p>
@@ -1681,7 +1681,7 @@ export const higherAppsData: Section[] = [
         title: "Present Value (Fixed Interest Rates)",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Often in financial planning, a person will have a specific future savings goal in mind (e.g., saving a deposit for a house or paying for university fees). When we need to find out exactly how much money must be invested <em>today</em> to reach that future target, we are calculating the <strong>Present Value</strong>.
             </p>
@@ -1784,7 +1784,7 @@ export const higherAppsData: Section[] = [
         title: "Present Value (Variable Interest Rates)",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Calculating the Present Value of an investment becomes slightly more complex when the interest rate changes over the term of the investment. Just as we used a chain of multipliers to accumulate money forward, we can use a chain of division to work backwards.
             </p>
@@ -1917,7 +1917,7 @@ export const higherAppsData: Section[] = [
         title: "Accumulation: Investment Schedules",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               When saving for a long-term goal (like retirement or a deposit for a house), making regular monthly payments over many years requires hundreds of repetitive calculations. Instead of doing this manually using the Chronological Method, we use spreadsheet software (like Microsoft Excel) to automate the process by creating an Investment Schedule.
             </p>
@@ -2025,27 +2025,27 @@ export const higherAppsData: Section[] = [
                   <table className="min-w-full bg-muted border border-muted text-sm">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Month</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Opening Balance (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Interest Earned (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Deposit (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Closing Balance (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Month</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Opening Balance (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Interest Earned (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Deposit (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Closing Balance (&pound;)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">1</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">0.00</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">0.00</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">400.00</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">400.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">1</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">0.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">0.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">400.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">400.00</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2 text-foreground">2</td>
-                        <td className="px-4 py-2 text-foreground">400.00</td>
-                        <td className="px-4 py-2 text-foreground"></td>
-                        <td className="px-4 py-2 text-foreground"></td>
-                        <td className="px-4 py-2 text-foreground"></td>
+                        <td className="px-4 py-2 text-foreground-2">2</td>
+                        <td className="px-4 py-2 text-foreground-2">400.00</td>
+                        <td className="px-4 py-2 text-foreground-2"></td>
+                        <td className="px-4 py-2 text-foreground-2"></td>
+                        <td className="px-4 py-2 text-foreground-2"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -2079,7 +2079,7 @@ export const higherAppsData: Section[] = [
         title: "Loans & Loan Schedules",
         videoUrl: "https://www.youtube.com/embed/XoA_f73A_Ec",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               When an individual or business borrows money, they must repay the original amount (the capital) plus an additional fee for borrowing the money (the interest). There are several ways to structure this repayment, such as repaying nothing until the end of the term, repaying only the interest during the term and the capital at the very end, or making regular level repayments of both capital and interest.
             </p>
@@ -2139,27 +2139,27 @@ export const higherAppsData: Section[] = [
                   <table className="min-w-full bg-muted border border-muted text-sm">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Time (months)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Repayment (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Interest content (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Capital content (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Loan outstanding (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Time (months)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Repayment (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Interest content (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Capital content (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Loan outstanding (&pound;)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">0</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground"></td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground"></td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground"></td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">8000.00</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">0</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2"></td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2"></td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2"></td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">8000.00</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2 text-foreground">1</td>
-                        <td className="px-4 py-2 text-foreground">260.00</td>
-                        <td className="px-4 py-2 text-foreground"></td>
-                        <td className="px-4 py-2 text-foreground"></td>
-                        <td className="px-4 py-2 text-foreground"></td>
+                        <td className="px-4 py-2 text-foreground-2">1</td>
+                        <td className="px-4 py-2 text-foreground-2">260.00</td>
+                        <td className="px-4 py-2 text-foreground-2"></td>
+                        <td className="px-4 py-2 text-foreground-2"></td>
+                        <td className="px-4 py-2 text-foreground-2"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -2234,7 +2234,7 @@ export const higherAppsData: Section[] = [
         title: "Inflation",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Inflation is a general rise in prices over time, which is measured as a percentage. Here in the UK, the Bank of England is responsible for keeping inflation low and stable, with a government target of 2%.
             </p>
@@ -2364,7 +2364,7 @@ export const higherAppsData: Section[] = [
         title: "Pension Savings",
         videoUrl: "https://www.youtube.com/embed/KD4jJ8ACp28",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A pension is a long-term savings plan designed to provide a person with a regular income during their retirement, when they are no longer working.
             </p>
@@ -2508,7 +2508,7 @@ export const higherAppsData: Section[] = [
         title: "Insurance",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Insurance products provide a form of financial protection against unexpected costs. By paying a fee called a premium, you transfer the financial risk of a specific event (like a car crash or a broken phone) to an insurance company, who will cover the loss if it occurs.
             </p>
@@ -2584,21 +2584,21 @@ export const higherAppsData: Section[] = [
                   <table className="min-w-full bg-muted border border-muted text-sm">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground"></th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Cost per year (&pound;)</th>
-                        <th className="px-4 py-2 border-b border-muted text-left text-foreground">Total excess (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2"></th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Cost per year (&pound;)</th>
+                        <th className="px-4 py-2 border-b border-muted text-left text-foreground-2">Total excess (&pound;)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-4 py-2 border-b border-muted text-foreground font-semibold">Option A</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">216.94</td>
-                        <td className="px-4 py-2 border-b border-muted text-foreground">350</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2 font-semibold">Option A</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">216.94</td>
+                        <td className="px-4 py-2 border-b border-muted text-foreground-2">350</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2 text-foreground font-semibold">Option B</td>
-                        <td className="px-4 py-2 text-foreground">281.95</td>
-                        <td className="px-4 py-2 text-foreground">100</td>
+                        <td className="px-4 py-2 text-foreground-2 font-semibold">Option B</td>
+                        <td className="px-4 py-2 text-foreground-2">281.95</td>
+                        <td className="px-4 py-2 text-foreground-2">100</td>
                       </tr>
                     </tbody>
                   </table>
@@ -2641,7 +2641,7 @@ export const higherAppsData: Section[] = [
         title: "Classifying Data",
         videoUrl: "", // Replace when available
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Before analysing any data, it is crucial to understand exactly what type of data you are working with, as this determines which statistical tests and diagrams are appropriate to use.
             </p>
@@ -2761,7 +2761,7 @@ export const higherAppsData: Section[] = [
         title: "Samples, Populations & Outliers",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               When gathering and analysing data, it is important to understand where the data comes from and whether it paints an accurate picture of what you are trying to study.
             </p>
@@ -2867,7 +2867,7 @@ export const higherAppsData: Section[] = [
         title: "Statistical Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Once data has been classified and gathered, we use statistical diagrams to visualise it. The type of diagram you choose depends entirely on the type of data (categorical or numerical) you are analysing.
             </p>
@@ -3003,7 +3003,7 @@ export const higherAppsData: Section[] = [
         title: "Distributions",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               When working with continuous numerical data, plotting a histogram allows you to see the <strong>distribution</strong> (the overall shape and spread) of the data. Identifying the correct distribution is vital because it dictates which descriptive statistics you are allowed to use.
             </p>
@@ -3125,7 +3125,7 @@ export const higherAppsData: Section[] = [
         title: "Descriptive Statistics",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Descriptive statistics are used to summarise and describe the main features of a dataset. The statistics you use depend on whether your data is categorical or numerical.
             </p>
@@ -3192,7 +3192,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 1: Categorical Proportions</strong></p>
                 <p>A cinema surveys its customers to find out their favourite movie genre.</p>
-                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
+                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground-2">
                   <li>Out of 400 teenagers surveyed, 120 chose 'Horror'.</li>
                   <li>Out of 650 adults surveyed, 143 chose 'Horror'.</li>
                 </ul>
@@ -3221,7 +3221,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 2: Selecting the Correct Measures</strong></p>
                 <p>A researcher is analysing two datasets using statistical software.</p>
-                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2 text-foreground">
+                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2 text-foreground-2">
                   <li>Dataset A (Reaction Times) produces a perfectly symmetrical histogram.</li>
                   <li>Dataset B (Annual Incomes) produces a histogram that is heavily skewed to the right.</li>
                 </ul>
@@ -3241,7 +3241,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 3: Making Valid Comparisons (Contextual)</strong></p>
                 <p>A logistics company wants to compare the delivery times (in minutes) of two of its drivers, David and Sarah.</p>
-                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2 text-foreground">
+                <ul className="list-none space-y-1 ml-4 border-l-2 border-muted pl-4 my-2 text-foreground-2">
                   <li>David has a mean delivery time of 42 minutes and a standard deviation of 8.5 minutes.</li>
                   <li>Sarah has a mean delivery time of 38 minutes and a standard deviation of 3.2 minutes.</li>
                 </ul>
@@ -3283,7 +3283,7 @@ export const higherAppsData: Section[] = [
         title: "Correlation",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               <strong>Correlation</strong> is used when we want to explore the relationship between two numerical variables (bivariate data). At this stage, no variables are being manipulated; we are simply observing how they interact.
             </p>
@@ -3411,7 +3411,7 @@ export const higherAppsData: Section[] = [
         title: "Linear Regression",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Linear regression is a statistical method used to model the relationship between two numerical variables. We use it to draw a "line of best fit" through a scatterplot, which allows us to make predictions.
             </p>
@@ -3440,11 +3440,11 @@ export const higherAppsData: Section[] = [
                 <div className="space-y-3 mt-2">
                   <div className="bg-card/50 p-4 rounded-lg border border-muted/50">
                     <p><strong className="text-purple-300">Slope:</strong></p>
-                    <p className="font-mono text-sm mt-1 text-foreground">"For every additional 1 [unit] of [Independent Variable], the [Dependent Variable] increases/decreases by [Slope value]"</p>
+                    <p className="font-mono text-sm mt-1 text-foreground-2">"For every additional 1 [unit] of [Independent Variable], the [Dependent Variable] increases/decreases by [Slope value]"</p>
                   </div>
                   <div className="bg-card/50 p-4 rounded-lg border border-muted/50">
                     <p><strong className="text-purple-300">Intercept:</strong></p>
-                    <p className="font-mono text-sm mt-1 text-foreground">"If the [Independent Variable] is 0, the estimated [Dependent Variable] would be [Intercept value]"</p>
+                    <p className="font-mono text-sm mt-1 text-foreground-2">"If the [Independent Variable] is 0, the estimated [Dependent Variable] would be [Intercept value]"</p>
                   </div>
                 </div>
                 <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
@@ -3573,7 +3573,7 @@ export const higherAppsData: Section[] = [
         title: "Hypothesis Testing & Errors",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Hypothesis testing is a statistical method used to draw conclusions about a whole population based on a smaller sample of data. It removes subjective guesswork and allows us to make decisions free from bias.
             </p>
@@ -3716,7 +3716,7 @@ export const higherAppsData: Section[] = [
         title: "Confidence Intervals & P Values",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               When we take a sample, the mean or proportion we calculate is only an estimate of the true population. Statistical software provides specific values to help us understand how reliable this estimate is, and whether we can make firm conclusions.
             </p>
@@ -3849,7 +3849,7 @@ export const higherAppsData: Section[] = [
         title: "Correlation Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A correlation test is used to explore whether a statistically significant linear relationship exists between two numerical variables. Remember, even if a strong relationship is found, no variables are being directly manipulated, so we cannot establish cause and effect (correlation does not imply causation).
             </p>
@@ -3904,7 +3904,7 @@ export const higherAppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Example 1: Significant Relationship & Output Interpretation</strong></p>
                 <p>A researcher is investigating whether there is a relationship between the number of hours athletes spend practising a specific drill per week and their success rate (%) in matches. They run a correlation test in R Studio and get the following output:</p>
-                <div className="bg-card border border-muted p-4 rounded-md font-mono text-xs text-foreground my-4">
+                <div className="bg-card border border-muted p-4 rounded-md font-mono text-xs text-foreground-2 my-4">
                   <p>Pearson's product-moment correlation</p>
                   <p>data:  Practice.Hours and Success.Rate</p>
                   <p>t = 5.342, df = 45, p-value = 0.00000281</p>
@@ -3986,7 +3986,7 @@ export const higherAppsData: Section[] = [
         title: "T Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A <strong>t-test</strong> compares the <strong>means</strong> of numerical data from two groups, and asks whether the difference between them is big enough to be a real effect rather than chance. It is the test to reach for whenever the research question is about an <em>average</em>.
             </p>
@@ -4130,7 +4130,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Z Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               While t-tests are used to compare the means of numerical data, a z-test (specifically a 2-sample test for equality of proportions) is used to analyse categorical data to compare the proportions of two different groups.
             </p>
@@ -4187,7 +4187,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Example 1: Generating the R Studio Code</strong></p>
                 <p>A driving instructor wants to compare the first-time pass rates of pupils learning in a manual car versus an automatic car.</p>
-                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
+                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground-2">
                   <li>Out of 150 pupils who learned in a manual car, 82 passed first time.</li>
                   <li>Out of 120 pupils who learned in an automatic car, 78 passed first time.</li>
                 </ul>
@@ -4244,7 +4244,7 @@ t = 2.9143, df = 59, p-value = 0.005022
               <div className="space-y-2">
                 <p><strong>Example 4: Interpreting a Z-Test (Rejecting H<sub>0</sub>)</strong></p>
                 <p>A local council wants to know if there is a difference in the adoption of smart energy meters between City X and City Y.</p>
-                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
+                <ul className="list-disc list-inside ml-4 space-y-1 text-foreground-2">
                   <li>In City X, 312 out of 500 surveyed households have a smart meter.</li>
                   <li>In City Y, 245 out of 550 surveyed households have a smart meter.</li>
                 </ul>
@@ -4273,7 +4273,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Mixed Hypothesis Tests",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               In the real world, and specifically in your final Qualifications Scotland exam and project, you will not always be told which statistical test to run. You must be able to analyse the research question and the type of data provided to choose the correct test yourself.
             </p>
@@ -4285,7 +4285,7 @@ t = 2.9143, df = 59, p-value = 0.005022
                 <div className="space-y-4 mt-4">
                   <div className="p-4 bg-muted rounded-lg border border-muted">
                     <p className="font-medium text-foreground">Are you comparing two proportions or percentages?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground-2">
                       <li><strong>Data Type:</strong> Categorical (e.g., Pass/Fail, Yes/No).</li>
                       <li><strong>Test to use:</strong> Z-test <span className="text-muted-foreground">(2-sample test for equality of proportions)</span>.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Proportion".</li>
@@ -4294,7 +4294,7 @@ t = 2.9143, df = 59, p-value = 0.005022
 
                   <div className="p-4 bg-muted rounded-lg border border-muted">
                     <p className="font-medium text-foreground">Are you looking for a relationship between two numerical variables?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground-2">
                       <li><strong>Data Type:</strong> Two numerical variables measured on the same subjects (e.g., Height and Weight).</li>
                       <li><strong>Test to use:</strong> Correlation Test.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Relationship".</li>
@@ -4303,7 +4303,7 @@ t = 2.9143, df = 59, p-value = 0.005022
 
                   <div className="p-4 bg-muted rounded-lg border border-muted">
                     <p className="font-medium text-foreground">Are you comparing the averages of two completely separate groups?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground-2">
                       <li><strong>Data Type:</strong> Numerical data, normally distributed, from two independent groups (e.g., Group A vs Group B).</li>
                       <li><strong>Test to use:</strong> Independent t-test.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Mean".</li>
@@ -4312,7 +4312,7 @@ t = 2.9143, df = 59, p-value = 0.005022
 
                   <div className="p-4 bg-muted rounded-lg border border-muted">
                     <p className="font-medium text-foreground">Are you comparing the averages of the exact same group measured twice?</p>
-                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground">
+                    <ul className="list-disc list-inside ml-4 space-y-1 mt-2 text-sm text-foreground-2">
                       <li><strong>Data Type:</strong> Numerical data, normally distributed, from the same subjects (e.g., Before and After).</li>
                       <li><strong>Test to use:</strong> Paired t-test.</li>
                       <li><strong>Hypothesis Keyword:</strong> "Mean".</li>
@@ -4437,7 +4437,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Introduction to Modelling",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>In the real world, we are often faced with problems involving variables that are difficult or entirely impossible to measure with absolute precision. To tackle this, we use mathematical modelling.</p>
 
             <h4 className="text-foreground font-semibold">1. What is a Mathematical Model?</h4>
@@ -4523,7 +4523,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Fermi Estimations",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>A <strong>Fermi Estimation</strong> is a specific type of mathematical model used to produce a fast, "ballpark" approximation for a quantity that is incredibly difficult—or completely impossible—to measure directly.</p>
 
             <h4 className="text-foreground font-semibold">1. Where does the name come from?</h4>
@@ -4626,7 +4626,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Modelling Situations With Graphs",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Graphs are an incredibly useful way to model mathematical situations because they allow us to instantly visualise how changing an input affects the final output.</p>
             <p>When analysing or sketching a graphical model, you must pay close attention to three main features:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -4713,7 +4713,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Units Of Measure",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>In mathematical modelling, paying close attention to units of measure is essential. You must ensure that your units make logical sense and remain consistent throughout your calculations.</p>
 
             <div className="bg-muted p-4 rounded-lg mt-4">
@@ -4808,7 +4808,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Errors And Tolerance",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>In mathematical modelling, measurements are rarely perfect. We must account for the fact that data often has a built-in level of uncertainty, which we call an error or tolerance.</p>
 
             <h4 className="text-foreground font-semibold">1. Absolute and Relative Errors</h4>
@@ -4923,7 +4923,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Recurrence Relations",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Recurrence relations describe how each term in a sequence relates to the ones that come before it. They are incredibly valuable for modelling and analysing processes that evolve over time, such as population growth or financial forecasting.</p>
 
             <h4 className="text-foreground font-semibold">1. The Structure of the Model</h4>
@@ -5017,7 +5017,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Linear Relationships",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Linear models are used to describe situations that involve a constant rate of change. This means that every time the input variable increases by one unit, the output variable changes by the exact same, fixed amount.</p>
 
             <h4 className="text-foreground font-semibold">1. The Structure of a Linear Model</h4>
@@ -5127,7 +5127,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Quadratic Relationships",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>Unlike linear models, which have a constant rate of change, quadratic models are used when the dependent variable increases and then decreases, or decreases and then increases.</p>
 
             <h4 className="text-foreground font-semibold">1. The Structure of a Quadratic Model</h4>
@@ -5221,7 +5221,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Exponential Relationships",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>While linear models have a constant rate of change, exponential models describe situations where a quantity changes at a rate proportional to its current size.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Exponential Growth:</strong> As the input increases steadily, the output increases by progressively larger amounts (e.g., the spread of a virus, or population growth).</li>
@@ -5329,7 +5329,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Introduction to Planning & Decision Making",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-4 text-foreground-2">
             <p>This section explores techniques such as project planning, critical path analysis, and other decision-making models to optimize outcomes.</p>
             <p>Key concepts include:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
@@ -5346,7 +5346,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Precedence Tables",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Any project, whether it is baking a cake, building a house, or developing software, can be broken down into a set of separate, manageable activities. However, you cannot always do everything at once.
             </p>
@@ -5486,7 +5486,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Constructing PERT Charts",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A PERT Chart (Programme Evaluation and Review Technique) is a visual activity network that is highly useful in project planning. Instead of just showing the order of tasks, it calculates the exact timeline of the project.
             </p>
@@ -5653,7 +5653,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Interpreting PERT Charts",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Once a PERT chart has been constructed and the forward and backward scans are complete, we can analyse the data to find out where a project has flexibility and where it does not.
             </p>
@@ -5817,7 +5817,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Gantt Charts",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               While a PERT chart is excellent for calculating the maths behind a project, a <strong>Gantt Chart</strong> is a much better visual communication tool. It looks like a bar chart and makes it very easy to track day-to-day progress and schedule staff or resources.
             </p>
@@ -5939,7 +5939,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Calculating Basic Probabilities",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Probability measures the likelihood or chance of a specific outcome happening. We can describe probability using words like 'certain', 'likely', or 'impossible', but in mathematics, we measure it precisely as a fraction, decimal, or percentage.
             </p>
@@ -6074,7 +6074,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Expected Probabilities",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Probability doesn't just tell us the chance of a single event happening; it allows us to predict the future on a larger scale. Expected probabilities (also known as expected values or expected success) are used to predict how many times we expect a specific outcome to happen over a large number of trials.
             </p>
@@ -6166,7 +6166,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Tree Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Probability trees are visual diagrams used to calculate the probabilities of different outcomes in sequential events (events that happen one after the other). They help visualise and compute probabilities in a clear, organised manner.
             </p>
@@ -6300,7 +6300,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Venn Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               A Venn diagram is a powerful visual tool used to organise data and show how different items fit into specific categories (or sets). They make calculating complex probabilities much easier.
             </p>
@@ -6465,7 +6465,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Risk & Control Measures",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               Every action we take in our daily lives involves an inherent element of risk. Whether it is in business or daily life, we constantly assess potential risks and take actions to minimise or prevent them.
             </p>
@@ -6585,7 +6585,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Multiple Control Measures",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               In reality, very few projects are delayed by just one single issue. There are usually multiple different risk factors impacting a project, and consequently, a business will have multiple different control measures available to choose from.
             </p>
@@ -6733,7 +6733,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "RStudio Workbook",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               The question paper and the project both require you to use statistical software, and RStudio is what this course uses. It is free, and you can install it on your own computer from <span className="font-mono text-muted-foreground">posit.co</span> in a few minutes.
             </p>
@@ -6792,7 +6792,7 @@ t = 2.9143, df = 59, p-value = 0.005022
         title: "Excel Skills",
         videoUrl: "",
         theory: (
-          <div className="space-y-6 text-foreground">
+          <div className="space-y-6 text-foreground-2">
             <p>
               The question paper requires you to use spreadsheet software as well as statistical software. Spreadsheets are used most heavily in the <strong>Finance</strong> section — pay and deductions, interest, accumulation, loan schedules and present value — and for straightforward counting and averaging elsewhere.
             </p>

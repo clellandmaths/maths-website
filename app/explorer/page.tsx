@@ -586,7 +586,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
             </div>
             <button
               onClick={() => setShowMobileFilters(false)}
-              className="absolute top-5 right-5 p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted"
+              className="absolute top-5 right-5 p-2 text-muted-foreground hover:text-foreground-2 rounded-lg hover:bg-muted"
             >
               <X className="h-5 w-5" />
             </button>
@@ -620,7 +620,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <Link
                 href={`/course/${course}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-foreground hover:text-accent bg-muted/50 hover:bg-muted rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-foreground-2 hover:text-accent bg-muted/50 hover:bg-muted rounded-lg transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 shrink-0" />
                 Back to {config.label}
@@ -648,7 +648,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 viewMode === 'browse'
                   ? `${theme.border} ${theme.text}`
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground-2'
               }`}
             >
               <Search className="h-4 w-4" />
@@ -659,7 +659,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 viewMode === 'worksheet'
                   ? `${theme.border} ${theme.text}`
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground-2'
               }`}
             >
               <ClipboardList className="h-4 w-4" />
@@ -678,7 +678,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               {/* Mobile Filter Button */}
               <button
                 onClick={() => setShowMobileFilters(true)}
-                className="lg:hidden flex items-center gap-2 mb-6 px-4 py-2 bg-muted rounded-lg text-foreground"
+                className="lg:hidden flex items-center gap-2 mb-6 px-4 py-2 bg-muted rounded-lg text-foreground-2"
               >
                 <Filter className="h-4 w-4" />
                 Filters
@@ -845,7 +845,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             id="gen-count"
                             value={genCount}
                             onChange={e => setGenCount(Number(e.target.value))}
-                            className="bg-muted text-foreground text-sm rounded px-2 py-1.5 border border-muted"
+                            className="bg-muted text-foreground-2 text-sm rounded px-2 py-1.5 border border-muted"
                           >
                             {[3, 5, 10, 15, 20].map(n => (
                               <option key={n} value={n}>{n}</option>
@@ -867,7 +867,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <a
                       href={`/course/${course}/generate`}
                       title="Choose exact skills — Adding Mixed Numbers rather than Fractions — and how many of each"
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-muted text-foreground hover:bg-muted-hover transition-colors"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-muted text-foreground-2 hover:bg-muted-hover transition-colors"
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Build by skill
@@ -879,7 +879,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               {/* How many of each, when more than one topic is picked. */}
               {showGenPlan && canGenerate && selectedSubtopics.length > 1 && (
                 <div className="mt-3 rounded-xl border border-border bg-card/60 p-4">
-                  <p className="text-sm text-foreground">
+                  <p className="text-sm text-foreground-2">
                     How many new questions on each?
                   </p>
                   {/* Say what the numbers count. A teacher who ticked "Surds"
@@ -905,7 +905,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => stepGroup(subs, -1)}
                               aria-label={`One fewer ${main}`}
-                              className="w-7 h-7 rounded bg-muted text-foreground hover:bg-muted-hover transition-colors"
+                              className="w-7 h-7 rounded bg-muted text-foreground-2 hover:bg-muted-hover transition-colors"
                             >
                               −
                             </button>
@@ -917,7 +917,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => stepGroup(subs, 1)}
                               aria-label={`One more ${main}`}
-                              className="w-7 h-7 rounded bg-muted text-foreground hover:bg-muted-hover transition-colors"
+                              className="w-7 h-7 rounded bg-muted text-foreground-2 hover:bg-muted-hover transition-colors"
                             >
                               +
                             </button>
@@ -942,7 +942,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                   >
                                     −
                                   </button>
-                                  <span className="w-6 text-center text-xs tabular-nums text-foreground">
+                                  <span className="w-6 text-center text-xs tabular-nums text-foreground-2">
                                     {perTopic[topic] ?? 0}
                                   </span>
                                   <button
@@ -1094,28 +1094,28 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         )}
                         <button
                           onClick={() => setPresentStartIndex(0)}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                         >
                           <Maximize2 className="h-4 w-4" />
                           Present
                         </button>
                         <button
                           onClick={() => setShowFocusMode(true)}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                         >
                           <BookOpen className="h-4 w-4" />
                           Focus
                         </button>
                         <button
                           onClick={() => setShowShare(true)}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                         >
                           <Share2 className="h-4 w-4" />
                           Share
                         </button>
                         <DownloadFilesButton
                           questions={worksheetItems}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                         />
                         {/* A teacher's own checkout, so the markscheme lives
                             here and only here. It is a separate button and a
@@ -1125,7 +1125,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <button
                           onClick={handlePrintMarkscheme}
                           disabled={markschemeBusy}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                           title="Print the marking instructions for this worksheet"
                         >
                           <ClipboardCheck className="h-4 w-4" />
@@ -1255,7 +1255,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, 0)}
                               disabled={index === 0}
-                              className="hidden lg:block p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="hidden lg:block p-1 text-muted-dim hover:text-foreground-2 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move to top"
                             >
                               <ChevronsUp className="h-3.5 w-3.5" />
@@ -1263,7 +1263,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index - 1)}
                               disabled={index === 0}
-                              className="p-3 lg:p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-muted-dim hover:text-foreground-2 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move up"
                             >
                               <ChevronUp className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -1271,7 +1271,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index + 1)}
                               disabled={index === worksheetItems.length - 1}
-                              className="p-3 lg:p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-muted-dim hover:text-foreground-2 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move down"
                             >
                               <ChevronDown className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -1279,7 +1279,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, worksheetItems.length - 1)}
                               disabled={index === worksheetItems.length - 1}
-                              className="hidden lg:block p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="hidden lg:block p-1 text-muted-dim hover:text-foreground-2 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move to bottom"
                             >
                               <ChevronsDown className="h-3.5 w-3.5" />
@@ -1329,7 +1329,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                         <MathRenderer
                           html={q.question}
-                          className="text-foreground question-content text-lg leading-relaxed"
+                          className="text-foreground-2 question-content text-lg leading-relaxed"
                         />
 
                         {/* Higher Apps data files — needed to attempt the question */}
@@ -1358,7 +1358,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <p className={`answer-label text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                             <MathRenderer
                               html={q.answer}
-                              className="text-foreground answer-content"
+                              className="text-foreground-2 answer-content"
                             />
                           </div>
                         )}
@@ -1367,7 +1367,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <div className="no-print flex items-center justify-between mt-4 pt-4 border-t border-border">
                           <button
                             onClick={() => setPresentStartIndex(index)}
-                            className="text-xs text-muted-dim hover:text-foreground transition-colors"
+                            className="text-xs text-muted-dim hover:text-foreground-2 transition-colors"
                           >
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
@@ -1491,28 +1491,28 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <div className="flex flex-wrap items-center justify-center gap-2">
                       <button
                         onClick={() => setPresentStartIndex(0)}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         <Maximize2 className="h-4 w-4" />
                         Present
                       </button>
                       <button
                         onClick={() => setShowFocusMode(true)}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         <BookOpen className="h-4 w-4" />
                         Focus
                       </button>
                       <button
                         onClick={() => setShowShare(true)}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         <Share2 className="h-4 w-4" />
                         Share
                       </button>
                       <DownloadFilesButton
                         questions={worksheetItems}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                       />
                       <button
                         onClick={() => printWorksheet()}
@@ -1669,7 +1669,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
                 <p className="text-sm text-muted-dim mb-6">{course.subtitle}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {explorerFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-foreground">
+                    <li key={feature} className="flex items-center gap-3 text-foreground-2">
                       <Check className={`h-5 w-5 ${cardTheme.text} shrink-0`} />
                       <span>{feature}</span>
                     </li>

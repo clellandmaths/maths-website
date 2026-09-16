@@ -89,12 +89,12 @@ export default function HintPanel({
         */}
         <div className={body}>
           <span className={`font-semibold ${theme.text}`}>What it asks: </span>
-          <MathRenderer html={staged.skill} className="inline text-foreground" />
+          <MathRenderer html={staged.skill} className="inline text-foreground-2" />
         </div>
         {shown > 1 && (
           <div className={body}>
             <span className={`font-semibold ${theme.text}`}>How the marks go: </span>
-            <MathRenderer html={staged.method} className="inline text-foreground" />
+            <MathRenderer html={staged.method} className="inline text-foreground-2" />
           </div>
         )}
         {staged.rungs.slice(0, Math.max(0, shown - 2)).map((rung, i) => (
@@ -102,7 +102,7 @@ export default function HintPanel({
             <div className="flex items-start gap-2">
               <MathRenderer
                 html={rung.move}
-                className={`answer-content flex-1 ${body} text-foreground`}
+                className={`answer-content flex-1 ${body} text-foreground-2`}
               />
               {/* **A move worth 0 shows nothing at all.** Two variations are
                   worth a single mark and still take two moves to explain —

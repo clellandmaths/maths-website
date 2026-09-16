@@ -32,6 +32,26 @@
 // at 600 that white already passed. Matching it to the others would have been
 // consistency for its own sake, moving a colour that was not wrong.
 //
+// **A dark hue is not the same hue.** `text-cyan-800` is the accessible version
+// of cyan on white and it does not read as cyan — it reads GREEN, because
+// cyan's dark end is teal. "National 5 **Maths**" came out green while the
+// gradient pill beside it looked right, which is the whole lesson: a solid
+// background and a text colour are **different roles**, and Radix's scale names
+// them separately for exactly this reason — steps 9-10 are solid backgrounds,
+// steps 11-12 are text, and some hues are simply never one of the two.
+//
+// So the light accent takes the **other end of the course's own gradient**,
+// where that end is a hue that survives being darkened:
+//
+//     n5           cyan -> blue-700      because dark cyan is teal
+//     higher       orange -> red-700     because dark orange is brown
+//     higher-apps  violet-700            violet stays violet
+//     ah           emerald-800           AH is green; dark green is still green
+//     n5-apps      amber-800             a deep amber, and the one to watch
+//
+// Each clears AA on the page, on a card, and on its own 15% tint — the tint is
+// the tightest of the three and the reason the first attempt went to 800.
+//
 // **`text` at 400 cannot survive a light page, and 700 is not enough either.**
 // Those levels were chosen to glow on near-black: `text-cyan-400` is 10.94:1 on
 // the dark page and **1.65:1** on the light one.
@@ -67,7 +87,7 @@ export interface CourseTheme {
 export const COURSE_THEMES: Record<string, CourseTheme> = {
   n5: {
     gradient: 'from-cyan-700 to-blue-700',
-    text: 'text-cyan-800 dark:text-cyan-400',
+    text: 'text-blue-700 dark:text-cyan-400',
     bg: 'bg-cyan-700',
     bgHover: 'hover:bg-cyan-600',
     tint: 'bg-cyan-600/15',
@@ -76,7 +96,7 @@ export const COURSE_THEMES: Record<string, CourseTheme> = {
   },
   higher: {
     gradient: 'from-orange-700 to-red-700',
-    text: 'text-orange-800 dark:text-orange-400',
+    text: 'text-red-700 dark:text-orange-400',
     bg: 'bg-orange-700',
     bgHover: 'hover:bg-orange-600',
     tint: 'bg-orange-600/15',
@@ -105,7 +125,7 @@ export const COURSE_THEMES: Record<string, CourseTheme> = {
     // Unchanged: white on violet-600 is 5.89 and on purple-600 is 5.54, both
     // already AA. See the note above about not moving a colour that was right.
     gradient: 'from-violet-600 to-purple-600',
-    text: 'text-violet-800 dark:text-violet-400',
+    text: 'text-violet-700 dark:text-violet-400',
     bg: 'bg-violet-600',
     bgHover: 'hover:bg-violet-500',
     tint: 'bg-violet-600/15',

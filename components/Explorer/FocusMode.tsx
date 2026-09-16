@@ -151,7 +151,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
           {doneCount > 0 ? (
             <span className={theme.text}>{doneCount}/{questions.length} done</span>
           ) : (
-            <span className="text-foreground">{questions.length} question{questions.length === 1 ? '' : 's'}</span>
+            <span className="text-foreground-2">{questions.length} question{questions.length === 1 ? '' : 's'}</span>
           )}
         </p>
       </div>
@@ -313,7 +313,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   <p className={`text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                   <MathRenderer
                     html={q.answer}
-                    className="text-foreground answer-content text-xl leading-relaxed"
+                    className="text-foreground-2 answer-content text-xl leading-relaxed"
                   />
                   {q.solutionUrl && (
                     // Guided practice questions from maths.scot: linking to his

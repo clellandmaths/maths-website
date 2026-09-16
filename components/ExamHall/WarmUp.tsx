@@ -271,7 +271,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             onClick={onBack}
             className={
               courseHasHints(course)
-                ? 'px-8 py-3 border border-muted text-foreground font-semibold rounded-lg hover:bg-muted transition-colors'
+                ? 'px-8 py-3 border border-muted text-foreground-2 font-semibold rounded-lg hover:bg-muted transition-colors'
                 : `px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`
             }
           >
@@ -309,7 +309,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           <div className="text-right">
             <p className="text-muted-foreground text-sm">
               Question <span className={`${theme.text} font-medium`}>{currentIndex + 1}</span> of{' '}
-              <span className="text-foreground">{questions!.length}</span>
+              <span className="text-foreground-2">{questions!.length}</span>
             </p>
             <p className="text-muted-dim text-xs mt-0.5">
               {question.year} Paper {question.paperNumber} Q{question.questionNumber}
@@ -364,7 +364,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               {course === 'higher-apps' ? (
                 <button
                   onClick={() => setShowBooklet(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors"
                 >
                   <BookOpen className="h-5 w-5" />
                   Data Booklet
@@ -373,14 +373,14 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                 <FormulaeButton
                   courseId={course}
                   theme={theme}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors"
                 />
               )}
               <button
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                   showAnswer
-                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground'
+                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground-2'
                     : 'bg-cyan-600 hover:bg-cyan-500 text-white'
                 }`}
               >

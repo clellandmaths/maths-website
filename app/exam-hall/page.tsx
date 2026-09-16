@@ -146,7 +146,7 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
                 <p className="text-sm text-muted-dim mb-6">{info.papers}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {lobbyFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-foreground">
+                    <li key={feature} className="flex items-center gap-3 text-foreground-2">
                       <Check className={`h-5 w-5 ${cardTheme.text} shrink-0`} />
                       <span>{feature}</span>
                     </li>
@@ -261,7 +261,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                 <div className="px-4 pb-4">
                   {Object.entries(cat.topics).map(([mainTopic, subtopics]) => (
                     <div key={mainTopic} className="mb-4 last:mb-0">
-                      <p className="text-sm font-medium text-foreground mb-2 ml-8">{mainTopic}</p>
+                      <p className="text-sm font-medium text-foreground-2 mb-2 ml-8">{mainTopic}</p>
                       <div className="space-y-1">
                         {subtopics.map((sub) => {
                           const isChecked = checked.has(sub);
@@ -280,7 +280,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                               >
                                 {isChecked && <Check className="h-3 w-3 text-white" />}
                               </div>
-                              <span className={`text-sm transition-colors ${isChecked ? 'text-muted-dim line-through' : 'text-foreground'}`}>
+                              <span className={`text-sm transition-colors ${isChecked ? 'text-muted-dim line-through' : 'text-foreground-2'}`}>
                                 {sub}
                               </span>
                             </button>
@@ -366,7 +366,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-3">
               <Clock className={`h-6 w-6 ${theme.text}`} />
-              <p className="text-foreground font-medium">
+              <p className="text-foreground-2 font-medium">
                 {info.examDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}{', '}
                 {info.examDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true })}
                 {info.estimated && (

@@ -32,10 +32,10 @@ export const TreeDiagramExample1 = () => {
       
       {/* Outcomes */}
       <text x="450" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-muted-foreground">Outcome</text>
-      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">L, L</text>
-      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">L, O</text>
-      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">O, L</text>
-      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">O, O</text>
+      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">L, L</text>
+      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">L, O</text>
+      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">O, L</text>
+      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">O, O</text>
     </svg>
   );
 };
@@ -72,10 +72,10 @@ export const TreeDiagramExample2 = () => {
       
       {/* Outcomes */}
       <text x="450" y="20" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="bold" className="text-muted-foreground">Outcome</text>
-      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">B, B</text>
-      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">B, W</text>
-      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">W, B</text>
-      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">W, W</text>
+      <text x="450" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">B, B</text>
+      <text x="450" y="94" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">B, W</text>
+      <text x="450" y="154" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">W, B</text>
+      <text x="450" y="214" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">W, W</text>
     </svg>
   );
 };
@@ -196,9 +196,9 @@ export const ConstructingPertExample3 = () => {
       <line x1="20" y1="20" x2="20" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
       <line x1="40" y1="20" x2="40" y2="40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
       <text x="30" y="14" textAnchor="middle" fill="currentColor" fontSize="13" fontWeight="bold" className="text-foreground">{id}</text>
-      <text x="10" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">{est}</text>
-      <text x="30" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">{dur}</text>
-      <text x="50" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground">{letVal}</text>
+      <text x="10" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">{est}</text>
+      <text x="30" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">{dur}</text>
+      <text x="50" y="34" textAnchor="middle" fill="currentColor" fontSize="12" className="text-foreground-2">{letVal}</text>
     </g>
   );
 
@@ -1749,9 +1749,9 @@ export const ArgandDiagramPlotting = () => {
             </g>
             {/* Axis names: Re ends at x=372 (inside the 400 viewBox); Im sits above the axis top */}
             <text x="350" y={OY - 8} fill="currentColor" fontSize="14" fontStyle="italic"
-                className="text-foreground">Re</text>
+                className="text-foreground-2">Re</text>
             <text x={OX + 9} y="48" fill="currentColor" fontSize="14" fontStyle="italic"
-                className="text-foreground">Im</text>
+                className="text-foreground-2">Im</text>
 
             {/* Axis numbers — every tick on both axes, including 2.
                 Uses a true minus sign (U+2212) to match the labels. */}

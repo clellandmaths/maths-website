@@ -227,7 +227,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
           <div className="text-right">
             <p className="text-muted-foreground text-sm">
               Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
-              <span className="text-foreground">{position.total}</span>
+              <span className="text-foreground-2">{position.total}</span>
             </p>
             {/* A twin says what it is and where it came from. Leaving the paper
                 question's own label up there would credit this question to a
@@ -319,7 +319,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {hasDataBooklet && (
                 <button
                   onClick={() => setShowBooklet(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors"
                 >
                   <BookOpen className="h-5 w-5" />
                   Data Booklet
@@ -329,7 +329,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 <FormulaeButton
                   courseId={courseId}
                   theme={theme}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors"
                 />
               )}
               {/* Before the answer button, deliberately: a pupil who is stuck
@@ -353,7 +353,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium transition-colors ${
                   showAnswer
-                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground'
+                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground-2'
                     : `${theme.bg} ${theme.bgHover} text-white`
                 }`}
               >

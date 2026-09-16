@@ -116,7 +116,7 @@ export default function WorkedExample({ question, theme, courseId, label: given 
           <li key={i} className="border-t border-border pt-2">
             <MathRenderer
               html={step}
-              className="answer-content text-sm text-foreground"
+              className="answer-content text-sm text-foreground-2"
             />
           </li>
         ))}

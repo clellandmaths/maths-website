@@ -182,7 +182,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
         {config && (
           <Link
             href={`/explorer?c=${courseId}`}
-            className="mb-8 inline-flex items-center gap-2 rounded-lg border border-muted px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5 hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 rounded-lg border border-muted px-3 py-2 text-sm font-medium text-foreground-2 transition-colors hover:bg-foreground/5 hover:text-white"
           >
             <Compass className="h-4 w-4 shrink-0" />
             Open the Topic Explorer
@@ -313,7 +313,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                 <Link
                                   href={`/course/${courseId}/generate/paper/${paper.year}/paper-${paper.paperNumber}`}
                                   title={`Build a new practice paper modelled question by question on the ${paper.year} Paper ${paper.paperNumber} — same topics, same marks, numbers you have not seen`}
-                                  className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground text-sm font-medium rounded-lg transition-colors"
+                                  className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 text-sm font-medium rounded-lg transition-colors"
                                 >
                                   <Dices className="h-4 w-4" />
                                   {/* **"Practice Paper" did not say what it
@@ -328,7 +328,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                               )}
                               <button
                                 onClick={() => handleExpandPaper(paper.year, paper.paperNumber)}
-                                className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground text-sm font-medium rounded-lg transition-colors ml-auto"
+                                className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 text-sm font-medium rounded-lg transition-colors ml-auto"
                               >
                                 {isExpanded ? (
                                   <>

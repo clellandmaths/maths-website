@@ -257,7 +257,7 @@ export default function QuestionCard({
               className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors disabled:opacity-60 ${
                 (variant ? variantAdded : inWorksheet)
                   ? `${theme.tint} ${theme.text} hover:bg-foreground/10`
-                  : 'bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground-2'
               }`}
             >
               {(variant ? variantAdded : inWorksheet) ? (
@@ -276,7 +276,7 @@ export default function QuestionCard({
             {variant ? (
               <button
                 onClick={() => showFace(null)}
-                className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground transition-colors"
+                className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground-2 transition-colors"
               >
                 <ArrowLeft className="h-3 w-3" />
                 Exam question
@@ -294,7 +294,7 @@ export default function QuestionCard({
                   className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors disabled:opacity-50 ${
                     added > 0
                       ? `${theme.tint} ${theme.text} hover:bg-foreground/10`
-                      : 'bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground'
+                      : 'bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground-2'
                   }`}
                 >
                   {drawing
@@ -342,7 +342,7 @@ export default function QuestionCard({
         <MathRenderer
           key={variant?.uid ?? 'exam'}
           html={shown.question}
-          className="card-face text-foreground mb-4 question-content question-card text-sm xl:text-base 2xl:text-lg leading-relaxed"
+          className="card-face text-foreground-2 mb-4 question-content question-card text-sm xl:text-base 2xl:text-lg leading-relaxed"
         />
 
         {/* Attachments — Higher Apps data files (CSV/XLSX/DOCX). Never on a
@@ -367,7 +367,7 @@ export default function QuestionCard({
         <div className="pt-3 mt-3 flex items-start justify-between gap-3">
           <button
             onClick={() => setShowAnswer(!showAnswer)}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-medium mb-2"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground-2 text-sm font-medium mb-2"
           >
             {showAnswer ? (
               <>
@@ -403,7 +403,7 @@ export default function QuestionCard({
         {showAnswer && (
           <MathRenderer
             html={shown.answer}
-            className="bg-muted/50 rounded-lg p-3 text-foreground answer-content"
+            className="bg-muted/50 rounded-lg p-3 text-foreground-2 answer-content"
           />
         )}
 
@@ -414,7 +414,7 @@ export default function QuestionCard({
             <button
               onClick={handleShowVariation}
               disabled={drawing}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium bg-muted text-foreground hover:bg-muted-hover transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium bg-muted text-foreground-2 hover:bg-muted-hover transition-colors disabled:opacity-50"
             >
               {drawing
                 ? <Loader2 className="h-3 w-3 animate-spin" />

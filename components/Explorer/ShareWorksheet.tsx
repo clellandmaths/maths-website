@@ -84,7 +84,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
           readOnly
           value={links[which]}
           onFocus={e => e.currentTarget.select()}
-          className="flex-1 min-w-0 px-3 py-2 bg-card border border-muted rounded-lg font-mono text-xs text-foreground"
+          className="flex-1 min-w-0 px-3 py-2 bg-card border border-muted rounded-lg font-mono text-xs text-foreground-2"
         />
         <button
           onClick={() => copy(which)}

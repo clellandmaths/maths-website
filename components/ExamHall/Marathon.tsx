@@ -111,7 +111,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
       {special.liveStreamDate && (
         <div className="flex items-start gap-3 mb-8 p-4 bg-card border border-border rounded-xl">
           <Radio className={`h-5 w-5 shrink-0 mt-0.5 ${theme.text}`} />
-          <p className="text-sm text-foreground">
+          <p className="text-sm text-foreground-2">
             Originally streamed live on <span className="font-medium">{special.liveStreamDate}</span>.
             The full recording and every question below are free to use any time.
           </p>
