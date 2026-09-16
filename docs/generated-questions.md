@@ -35,6 +35,7 @@ Seven surfaces, all National 5 only.
 | **Practice topic page** | *Keep practising* at the foot, and *Another like this one* on each question |
 | **Exam Hall Warm Up** | five more, on the completion screen only |
 | **`/worksheet`** | rebuilds a shared sheet from its codes and seeds |
+| **Static paper pages** | *Hints* and *Another like this one* on all 22 National 5 papers — the addresses a search lands on |
 | **Full screen and Focus** | *Another like this one* on the question a pupil is stuck on — the past paper archive, a practice topic, the revision marathon, and a shared sheet whose maker granted hints |
 
 **Two things deliberately do not generate.** Notes pages send a pupil to
@@ -306,6 +307,36 @@ can make far more than two questions and the engine picked a different one by
 chance. Repeats only become likely on a shallow variation — the measurement
 behind the exclude set was six identical draws from a six-deep pool — and no
 question reachable from that check is reliably that shallow.
+
+---
+
+## The doors into a paper, and what each gave
+
+Fixed 2026-09-16. One paper row on `/course/n5` offers five ways into the same
+questions, and the hint ladder was in **two** of them:
+
+| door | hints |
+|---|---|
+| the heading — `/course/n5/papers/2026/paper-1`, 18px, the largest text in the row | was ❌, now ✅ |
+| *Start Paper* — full-screen overlay | ✅ |
+| *Focus Mode* — focus overlay | ✅ |
+| *Browse Questions* — expands in place | ❌ |
+| *New Paper Like This* — a printable clone | ❌ by design, help is via *open as a worksheet* |
+
+The pattern was not random: **the ladder existed only in the two full-screen
+overlays, and an overlay has no URL.** Every address a pupil could bookmark, be
+sent by a teacher, or land on from a search had the version with no help — and
+those 22 pages are in `sitemap.xml` precisely so people land on them, which
+matters most in exam season.
+
+**Reversing a recorded decision, deliberately.** The paper page carried a
+comment saying a control there *"would make every one of them a client
+surface"*. That was right when written. The reversal keeps its caution:
+`Papers/QuestionHelp` loads both controls through `next/dynamic`, so the
+measured cost is **+4 KB** rather than the **+14 KB** of importing them
+directly — on the one template that still had its whole 10 KB of headroom. The
+other half of the concern, the archive drifting towards the engine, is held by
+`check-engine-isolation.mjs` at **0 of 542**.
 
 ---
 

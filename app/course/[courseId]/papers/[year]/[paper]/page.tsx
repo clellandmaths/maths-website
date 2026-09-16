@@ -29,6 +29,7 @@ import MathHtml from '@/components/MathHtml';
 import WatchSolutionButton from '@/components/Papers/WatchSolutionButton';
 import BookletButton from '@/components/Papers/BookletButton';
 import FormulaeButton from '@/components/FormulaeButton';
+import QuestionHelp from '@/components/Papers/QuestionHelp';
 import { Paperclip } from 'lucide-react';
 
 // Every past paper is a statically generated page with all questions,
@@ -183,11 +184,24 @@ export default async function PaperPage(
           <FormulaeButton courseId={courseId} theme={theme} />
         </div>
 
-        {/* A plain link, and deliberately not a button. These are 110 pure
-            server pages sharing one measured 826 KB baseline; a control here
-            would make every one of them a client surface and put the archive
-            one refactor away from importing the engine. National 5 only — it
-            is the only course with audited variations. */}
+        {/* A plain link, and deliberately not a button.
+
+            This used to read "a control here would make every one of them a
+            client surface", and that stood until 2026-09-16, when the hint
+            ladder was added above. The reasoning was sound and the reversal was
+            deliberate: the ladder lived only in the two full-screen modes,
+            which have no URL, so every address a pupil could bookmark, be sent
+            or land on from a search had the version with no help — and in exam
+            season these are the pages people land on.
+
+            What survives is the caution. The help goes through
+            `Papers/QuestionHelp`, which loads both controls with
+            `next/dynamic`, so the cost is +4 KB rather than the +14 KB of
+            importing them here; and the archive is still no closer to the
+            engine, which `check-engine-isolation.mjs` holds at 0 of 542.
+
+            This link stays a link because nothing about it needs the client.
+            National 5 only — it is the only course with audited variations. */}
         {courseId === 'n5' && (
           <Link
             href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}`}
@@ -247,10 +261,32 @@ export default async function PaperPage(
                   page header: by question 12 the header has scrolled away, and
                   a question saying "refer to the data booklet" is unanswerable
                   without it. Exactly one of these renders per course. */}
+              {/* **Hints belong here, above the answer.** A pupil who is stuck
+                  should meet help before they meet the answer — the same order
+                  the full-screen modes use.
+
+                  This page had neither hints nor "another like this one" while
+                  the same fourteen questions, opened through Start Paper or
+                  Focus Mode on the course page, had both. The ladder existed
+                  only in the two full-screen overlays, and overlays have no
+                  URL — so every address a pupil could bookmark, be sent, or
+                  land on from a search had the version with no help. These 22
+                  pages are in the sitemap precisely so people land on them, and
+                  they are the ones that matter in exam season.
+
+                  Server component rendering client ones: `q` and `theme` are
+                  plain objects, so they serialise. Both render nothing outside
+                  National 5, which is the only course with audited variations —
+                  absent rather than dead, as everywhere else. */}
               <div className="flex flex-wrap gap-2 mt-4">
                 {isHigherApps && <BookletButton year={year} theme={theme} compact />}
                 <FormulaeButton courseId={courseId} theme={theme} compact />
+                <QuestionHelp question={q} theme={theme} courseId={courseId} />
               </div>
+
+              {/* Below the controls and above the answer, as on a practice page:
+                  somebody who has given up and read the answer is past wanting
+                  another one. */}
             </div>
 
             <details className="group border-t border-border">

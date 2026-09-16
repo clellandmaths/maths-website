@@ -253,6 +253,34 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
       'and offers another like it, from the reference printed on the question');
   }
 
+  /* ── the static paper page, which is where a search lands ───────────────
+     The ladder used to exist only in the two full-screen modes. Those have no
+     URL, so every address a pupil could bookmark, be sent, or land on from a
+     search had the version with no help — and these 22 pages are in the
+     sitemap precisely so people land on them. Same paper, same questions, and
+     for a while a different amount of help depending on which door you used. */
+  await go('/course/n5/papers/2024/paper-1', 6000);
+  const onPaperPage = await evaluate(`(() => {
+    const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const b = [...document.querySelectorAll('button,summary')].filter(laid).map(x => x.textContent.trim());
+    return {
+      questions: b.filter(x => /show answer/i.test(x)).length,
+      hints: b.filter(x => x === 'Hint').length,
+      another: b.filter(x => /another like this/i.test(x)).length,
+    };
+  })()`);
+  t.check(onPaperPage?.questions > 0,
+    `the static paper page holds ${onPaperPage?.questions} questions`);
+  t.check(onPaperPage?.hints === onPaperPage?.questions,
+    `and every one of them offers a hint (${onPaperPage?.hints})`);
+  t.check(onPaperPage?.another === onPaperPage?.questions,
+    `and another like it (${onPaperPage?.another})`);
+
+  /* A URL is the point, so it is asserted as one: no overlay, no click to get
+     here, nothing that a bookmark or a search result would miss. */
+  t.check(await evaluate(`location.pathname === '/course/n5/papers/2024/paper-1'`),
+    'reached by its own address rather than an overlay');
+
   // ── four courses out of five have nothing behind them ───────────────────
   await go('/course/higher', 3000);
   await click(buttonNamed('Start Paper'));
@@ -260,6 +288,15 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
   t.check(await evaluate(`!!${OVERLAY}`), 'a Higher past paper opens full screen');
   t.check(!(await evaluate(`!!(${drawButton(OVERLAY)})`)),
     'and offers nothing — absent, not a dead button');
+
+  /* And the same on its static paper page, where National 5 now has both. */
+  await go('/course/higher/papers/2024/paper-1', 5000);
+  t.check(await evaluate(`(() => {
+    const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const b = [...document.querySelectorAll('button,summary')].filter(laid).map(x => x.textContent.trim());
+    return b.filter(x => /show answer/i.test(x)).length > 0
+        && b.filter(x => x === 'Hint').length === 0;
+  })()`), 'a Higher paper page has questions and no hints, which is correct there');
 });
 
 t.done('another like this one is where a pupil gets stuck, and nowhere else');
