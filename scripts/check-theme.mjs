@@ -171,26 +171,33 @@ console.log('\nthe layout:');
   }
 
   /**
-   * **Both states are legal, and which one is legal is decided below.**
+   * **React must not render `data-theme`, and this is the expensive one.**
    *
-   * While the site is dark-only, `<html>` must carry `data-theme="dark"` so the
-   * built HTML paints dark for everyone regardless of their OS. When the light
-   * mode is finished the stamp comes OFF, and the stylesheet's
-   * `prefers-color-scheme` block answers for anyone who has not chosen — which
-   * is the only way an unstamped reader can get their own theme in a static
-   * export. Insisting on the stamp unconditionally would make the finished
-   * state fail; insisting on its absence would make today fail. The pairing
-   * with the toggle, checked at the end of this file, is what says which state
-   * is meant to be in force.
+   * It was `<html data-theme="dark">` for exactly one commit. `check:contrast`
+   * found what that costs: on `/explorer?c=n5` a reader who had chosen light
+   * got dark — deterministically, while plain `/explorer` was fine. The
+   * Explorer reads its own `?c=` in a lazy `useState` initialiser, so that URL
+   * makes the client's first render disagree with the built HTML; React
+   * discards the server DOM, re-renders from scratch, and re-asserts every
+   * attribute in the layout's JSX — putting the built theme back over the one
+   * the script had set from the reader's choice.
+   *
+   * Any hydration mismatch, anywhere, does the same. The only durable fix is to
+   * give React nothing to restore: the script owns the attribute outright.
    */
   const html = /<html[^>]*>/.exec(layout);
   if (!html) {
     fail('no <html> element found in app/layout.tsx');
-  } else if (html[0].indexOf('data-theme') >= 0) {
-    console.log(`  ok    <html> is stamped server-side  ${html[0].trim()}`);
+  } else if (/data-theme/.test(html[0])) {
+    fail('<html> renders data-theme from JSX. A hydration mismatch — '
+       + '/explorer?c=n5 is one — makes React re-render the tree and put this '
+       + `value back over the reader's choice. Let the script own it: ${html[0].trim()}`);
+  } else if (!/suppressHydrationWarning/.test(html[0])) {
+    fail('<html> needs suppressHydrationWarning — the script adds an attribute '
+       + 'React did not render, and React will warn about it on every page');
   } else {
-    console.log('  ok    <html> carries no stamp — the stylesheet decides for '
-              + 'a reader who has not chosen');
+    console.log('  ok    <html> leaves data-theme to the script, and suppresses '
+              + 'the warning for it');
   }
 
   const body = layout.indexOf('<body');
@@ -214,6 +221,17 @@ console.log('\nthe layout:');
          + 'stored choice and then do nothing with it');
     } else {
       console.log('  ok    and it writes the attribute the stylesheet reads');
+    }
+    /* Setting it once is not enough. React wipes attributes it did not author
+       when a page hydrates with a mismatch — `/explorer?c=n5` does, from a
+       lazy `useState` reading the query — and the reader's theme goes with
+       them. The script has to watch and restore. */
+    if (!/MutationObserver/.test(layout) || !/attributeFilter/.test(layout)) {
+      fail('the script sets data-theme but does not defend it. A hydration '
+         + 'mismatch (/explorer?c=n5 is one) makes React remove attributes it '
+         + "did not render, taking the reader's theme with them");
+    } else {
+      console.log('  ok    and defends it against a hydration re-render');
     }
   }
 }
@@ -254,18 +272,30 @@ console.log('\nthe toggle and the default:');
 
   const navbar = codeOnly(fs.readFileSync(path.join(root, 'components', 'Navbar.tsx'), 'utf8'));
   const mounted = /<ThemeToggle[\s/>]/.test(navbar);
-  const html = /<html[^>]*>/.exec(layout);
-  const hardDark = !!html && /data-theme\s*=\s*["']dark["']/.test(html[0]);
 
-  if (hardDark && mounted) {
-    fail('the toggle is mounted while <html> is still hard-stamped dark — a '
-       + 'reader could press it and land in a half-converted light site. Mount '
-       + 'it in the same change that drops the stamp');
-  } else if (!hardDark && !mounted) {
-    fail('the hard dark stamp is gone but the toggle is not mounted — the OS '
-       + 'can now put a reader in light with no way back to dark');
-  } else if (hardDark) {
-    console.log('  ok    dark is still forced, and the toggle is correctly not mounted yet');
+  /**
+   * **The default now lives in the script's fallback, not in the markup.**
+   *
+   * `data-theme` came out of the JSX because React was re-asserting it over the
+   * reader's choice on any hydration mismatch. So "is the site still forced
+   * dark?" is no longer a question about `<html>` — it is whether the script
+   * substitutes `'dark'` when nothing has been chosen. Keying the pairing off
+   * the behaviour rather than off a markup detail is the better test anyway:
+   * it is the thing a reader actually experiences.
+   */
+  const forcedDark = /\?\s*c\s*:\s*'dark'/.test(layout) || /:\s*'dark'\s*;/.test(layout);
+
+  if (forcedDark && mounted) {
+    fail('the toggle is mounted while the script still forces dark on anyone '
+       + 'who has not chosen — a reader could press it and land in a '
+       + 'half-converted light site. Mount it in the change that drops the '
+       + "script's 'dark' fallback");
+  } else if (!forcedDark && !mounted) {
+    fail('the script no longer forces dark but the toggle is not mounted — the '
+       + 'OS can now put a reader in light with no way back to dark');
+  } else if (forcedDark) {
+    console.log('  ok    dark is still forced for the unchosen, and the toggle '
+              + 'is correctly not mounted yet');
   } else {
     console.log('  ok    the theme is the reader\'s, and the toggle is mounted');
   }

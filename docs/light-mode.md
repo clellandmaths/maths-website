@@ -232,12 +232,106 @@ it is listed below.
 
 ---
 
+## The accents, and the 48 dark failures (step 3, done)
+
+One file, `lib/course-theme.ts`: 35 strings, 265 call sites. It fixed the dark
+site outright and took light from 505 nodes below AA to **263**.
+
+### The dark site now passes
+
+**48 -> 0.** `check:contrast` reports *every measured node clears AA* on all
+fourteen surfaces, and the baseline is re-recorded at **zero pairings** — so the
+accents can never drift back without failing the check.
+
+700 is the first level where white clears AA in every hue used:
+
+```
+cyan-600   3.62 -> cyan-700   5.28      amber-500   2.13 -> amber-700   5.03
+orange-600 3.58 -> orange-700 5.22      emerald-600 3.65 -> emerald-700 5.36
+```
+
+Higher Applications was left alone: white on violet-600 is 5.89 and on
+purple-600 is 5.54, both already AA. Matching it to the others would have been
+consistency for its own sake.
+
+Two things outside the theme file were in the same family:
+
+- **`app/page.tsx` carried its own copy of all five gradients.** Every other
+  surface moved to 700 and the home page alone kept failing at 3.22:1. The field
+  is gone from `CourseCover`; `ExamCover` reads `getCourseTheme(course.id)`.
+  One course identity, one place.
+- **`text-white/80` and `text-white/90` fail on *every* colour in the site**, not
+  only the ones whose surface was wrong — 3.31 on red-700, 3.92 on purple-600.
+  Both are now full white. Three Connect buttons were darkened too (amber-500
+  2.13, yellow-600 2.94, green-600 3.22).
+
+### `theme.text` had to go to 800, not 700
+
+700 clears AA on a card (5.28) and on the page (4.81) and was the first answer.
+But `theme.text` is also read **on `theme.tint`** — the accent at 15% over the
+page — and **246 nodes landed there between 4.05 and 4.43**. Just under,
+everywhere.
+
+Lightening the tint does not rescue it: at 8% the page-tint still gives only
+4.39. The page ground costs it, not the wash. 800 clears every context the token
+appears in; the worst case across all five courses is **5.51**.
+
+The light accent is therefore deeper than the dark theme's glow. That is the
+honest trade — a 400 that reads on black cannot also read on white.
+
+### Two real bugs found on the way, neither of them about colour
+
+**React was destroying the reader's theme.** `data-theme` was rendered from JSX
+in `app/layout.tsx`. On `/explorer?c=n5` a reader who had chosen light got dark,
+deterministically, while plain `/explorer` was fine: the Explorer reads its own
+`?c=` in a **lazy `useState` initialiser**, so that URL makes the client's first
+render disagree with the built HTML, React discards the server DOM and
+re-renders the tree — re-asserting every attribute the layout's JSX declares.
+Removing it from JSX was not enough; React then *deleted* it instead. The script
+now owns the attribute and **defends it with a `MutationObserver`**, which is
+the only form that survives a mismatch anywhere, not just this one.
+
+`PracticeModes` already documents this exact trap and names `app/explorer/page.tsx`
+as doing it. **The Explorer's lazy initialiser is still there** — it is a
+pre-existing bug that throws away the server render on every shared link, and
+fixing it is a visible behaviour change to the landing experience, so it is
+listed below rather than done here.
+
+**`check:contrast` was measuring a half-recalculated page.** Stamping
+`data-theme` after load does not restyle elements that already exist: a freshly
+created element reading `var(--muted-foreground)` computed the light value while
+an `<a class="text-muted-foreground">` present since load still computed the
+dark one — same variable, same document, same frame. The light sweep was
+inventing failures; the real count was 819 reported against 505 actual. It now
+seeds `localStorage` and navigates, so every page is styled from the first byte
+by the site's own script — which also means a broken theme script fails the
+check instead of being stepped around.
+
+**And `check-headers-redirects` had a latent false positive.** Next splits the
+inlined RSC payload on byte count with no regard for what it cuts through. One
+class string growing from `text-cyan-400` to `text-cyan-700 dark:text-cyan-400`
+moved a seam into the middle of lucide's SVG namespace, and the build failed
+with `origin www.w3.or is fetched but not in the CSP`. The scan now closes the
+seams first, which is what the browser does with them.
+
+### What is left, all of it step 4 or 5
+
+```
+ x77  #005f78 on #082339   accent on bg-slate-950/900   <- step 4
+ x31  #e0fff4 on #fefeff   signal-mint as TEXT          <- step 5
+ x85  #5a5a66 / #5b6b80 on dark slate surfaces          <- step 4
+ x25  #90a1b9 / #cad5e2 as text on the light page       <- step 4
+ x14  #ff00ed on #333644   signal-magenta as TEXT       <- step 5
+```
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.
 2. ~~Light palette and theme plumbing~~ — done, `check:theme` guards it.
-3. **`lib/course-theme.ts`** — 35 strings, 265 call sites, **343 of the 819
-   failures**. Next.
+3. ~~`lib/course-theme.ts` and the 48 dark failures~~ — done. Dark is at zero;
+   light went 505 -> 263.
 4. **The six mechanical slate mappings** across 45 files.
 5. **The ~160 alpha washes** and the judgement tail.
 6. **Full sweep at both themes** with `check:contrast`, plus a second baseline
@@ -254,6 +348,13 @@ it is listed below.
   before light mode adds anything. Mounting the toggle at the end needs ~1 KB
   reclaimed from those templates, or a deliberate re-baseline. Needs a decision
   before step 6.
-- **The logo variants** need the source artwork. Also `text-signal-magenta` is
-  used as *text* in the navbar and on two icons; `#ff00ed` is 3.03:1 on white,
-  so those call sites want `text-accent` instead. Part of step 3.
+- **The logo variants** need the source artwork. Also `text-signal-magenta` and
+  `text-signal-mint` are used as *text*; on white they are 3.03:1 and about
+  1.05:1. Those call sites want `text-accent`. Step 5.
+- **The Explorer's lazy `useState` initialiser** (`app/explorer/page.tsx:1694`)
+  reads `?c=` and `localStorage` during render, so every shared link hydrates
+  with a mismatch and React re-renders the whole page client-side. It is the
+  pattern `PracticeModes` documents as wrong, and it names this file. Fixing it
+  means the course chooser shows for a frame before the saved course appears —
+  a visible change to the landing experience, so it needs a decision rather
+  than a quiet fix. The theme no longer depends on it.

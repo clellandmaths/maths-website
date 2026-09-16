@@ -61,22 +61,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    /* **`data-theme`, not `className="dark"`.**
+    /* **`data-theme`, not `className="dark"` — and React must not render it.**
 
        The class was Tailwind's dark-variant switch and nothing read it: there
        was not one `dark:` utility in the codebase, and `:root` simply WAS the
-       dark palette. The attribute is what `globals.css` and its
-       `@custom-variant` both key off now, and it is server-rendered, so the
-       first paint is already the right theme rather than one corrected a frame
-       later.
+       dark palette. The attribute below is what `globals.css` and its
+       `@custom-variant` key off now.
 
-       **Stamped `dark` here on purpose, for now.** 665 colour literals still
-       name slate directly and never reach a token, so a page resolving to light
-       today would be half converted. This attribute is the last thing the
-       light-mode work changes: when the literals are gone it comes off and the
-       palette's `prefers-color-scheme` block answers for anyone who has not
-       chosen. See docs/light-mode.md. */
-    <html lang="en" data-theme="dark">
+       **It is set by the script, never by JSX, and that is not a style
+       preference.** It was `<html data-theme="dark">` here for one commit and
+       `check:contrast` caught what that does: on `/explorer?c=n5` a reader who
+       had chosen light got dark, deterministically, while `/explorer` with no
+       query was fine. The Explorer reads its own `?c=` in a lazy `useState`
+       initialiser, so that URL makes the client's first render disagree with the
+       built HTML; React discards the server DOM, re-renders the tree from
+       scratch — and re-asserts every attribute in this JSX, including the theme
+       the script had already set from the reader's choice.
+
+       Any hydration mismatch anywhere would do the same. So the attribute has no
+       JSX to be restored from: the script owns it outright, and React has
+       nothing to put back. `suppressHydrationWarning` is the other half — React
+       must not complain about an attribute it can now see but never wrote.
+
+       While the site is still dark-only the script's own fallback supplies the
+       default; `check:theme` ties that fallback to whether the toggle is
+       mounted. See docs/light-mode.md. */
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen`}>
         {/* **Before anything paints, and deliberately not in a component.**
 
@@ -97,12 +107,24 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{`
+              + `var pick=function(){`
               + `var c=localStorage.getItem('theme');`
               // The one line the final step changes. While the site is still
               // dark-only an unchosen reader gets dark; afterwards this falls
               // through to null and the stylesheet decides.
-              + `var t=(c==='light'||c==='dark')?c:'dark';`
-              + `document.documentElement.setAttribute('data-theme',t);`
+              + `return (c==='light'||c==='dark')?c:'dark';};`
+              + `var el=document.documentElement;`
+              + `var apply=function(){var t=pick();`
+              + `if(el.getAttribute('data-theme')!==t)el.setAttribute('data-theme',t);};`
+              + `apply();`
+              // **And defend it.** See the comment above the <html> tag: a
+              // hydration mismatch makes React re-render the tree and wipe
+              // attributes it did not author. Re-applying costs nothing until
+              // that happens and cannot loop — `apply` only writes when the
+              // value differs, so restoring our own value fires the observer
+              // once more and then agrees with itself.
+              + `new MutationObserver(apply).observe(el,`
+              + `{attributes:true,attributeFilter:['data-theme']});`
               + `}catch(e){}})()`,
           }}
         />

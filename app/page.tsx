@@ -47,7 +47,6 @@ const courses: CourseCover[] = [
     band: 'S4/S5 · National 5',
     name: 'National 5',
     subject: 'Mathematics',
-    gradient: 'from-cyan-600 to-blue-600',
     contents: courseFeatures('n5', n5PaperVideos),
   },
   {
@@ -55,7 +54,6 @@ const courses: CourseCover[] = [
     band: 'S5/S6 · Higher',
     name: 'Higher',
     subject: 'Mathematics',
-    gradient: 'from-orange-600 to-red-600',
     contents: courseFeatures('higher', higherPaperVideos),
   },
   {
@@ -63,7 +61,6 @@ const courses: CourseCover[] = [
     band: 'S6 · Advanced Higher',
     name: 'Advanced Higher',
     subject: 'Mathematics',
-    gradient: 'from-emerald-600 to-teal-600',
     contents: courseFeatures('ah', ahPaperVideos),
   },
   {
@@ -71,7 +68,6 @@ const courses: CourseCover[] = [
     band: 'S4/S5 · National 5',
     name: 'N5 Applications',
     subject: 'Applications of Maths',
-    gradient: 'from-amber-500 to-orange-500',
     contents: courseFeatures('n5-apps', n5AppsPaperVideos),
   },
   {
@@ -79,7 +75,6 @@ const courses: CourseCover[] = [
     band: 'S5/S6 · Higher',
     name: 'Higher Applications',
     subject: 'Applications of Maths',
-    gradient: 'from-violet-600 to-purple-600',
     contents: courseFeatures('higher-apps', higherAppsPaperVideos),
   },
 ];

@@ -37,7 +37,13 @@ function LinkButton({ link }: { link: ConnectLink }) {
       <Icon className="h-5 w-5 shrink-0" />
       <span className="flex-1">
         {link.name}
-        <span className="block text-xs font-normal text-white/80">{link.description}</span>
+        {/* Full white, not `text-white/80`. At 12px on a coloured button the
+            faded white was the single worst contrast on the site — 1.83:1 on
+            the old amber — and it fails on EVERY colour in this list, even the
+            ones whose surface is fine: 3.31 on red-700, 3.92 on purple-600.
+            The description is already smaller and lighter in weight than the
+            name above it, so the hierarchy survives losing the 20%. */}
+        <span className="block text-xs font-normal text-white">{link.description}</span>
       </span>
     </a>
   );

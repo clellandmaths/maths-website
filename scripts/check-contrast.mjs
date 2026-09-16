@@ -284,19 +284,37 @@ await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
   evaluate, click, buttonNamed, go: navigate, sleep,
 }) => {
   /**
-   * Navigate, then put the page in the theme being measured.
+   * Navigate with the theme already in force, through the site's own mechanism.
    *
-   * Stamped after every navigation rather than once: each `go` is a fresh
-   * document and the built HTML carries `data-theme="dark"`, so a theme set on
-   * the previous page is gone. Measuring light against a page that quietly
-   * reverted to dark would report the dark site twice and call it a pass.
+   * **Stamping `data-theme` after load does not fully restyle the page**, and
+   * that quietly corrupted a whole run. Setting the attribute and then reading
+   * back gave: a freshly created element with `color: var(--muted-foreground)`
+   * computed the LIGHT value, while an `<a class="text-muted-foreground">` that
+   * had been in the document since load still computed the DARK one — same
+   * variable, same document, same frame. Elements present before the attribute
+   * changed keep their old computed colour. The light sweep was therefore
+   * measuring a half-recalculated page and inventing failures.
+   *
+   * So the theme is put in `localStorage` once and every navigation after that
+   * is styled from the first byte by the pre-paint script in `app/layout.tsx`.
+   * Nothing is stale because nothing changed after paint — and it exercises the
+   * real production path rather than a test-only shortcut, so a broken script
+   * shows up here as a wrong theme instead of being stepped around.
    */
+  let seeded = false;
   const go = async (path, settle) => {
+    if (!seeded) {
+      await navigate(path, 2000);
+      await evaluate(`localStorage.setItem('theme', ${JSON.stringify(THEME)})`);
+      seeded = true;
+    }
     await navigate(path, settle);
-    const got = await evaluate(
-      `(document.documentElement.setAttribute('data-theme', ${JSON.stringify(THEME)}),`
-      + ` document.documentElement.getAttribute('data-theme'))`);
-    if (got !== THEME) throw new Error(`could not put the page in ${THEME} (got ${got})`);
+    const got = await evaluate(`document.documentElement.getAttribute('data-theme')`);
+    if (got !== THEME) {
+      throw new Error(`the page loaded as "${got}", not "${THEME}" — the theme `
+        + 'script did not honour the stored choice, so nothing below would be '
+        + 'measuring the theme it claims to');
+    }
   };
 
   const measure = async (where) => {

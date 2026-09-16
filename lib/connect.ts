@@ -13,7 +13,17 @@ export interface ConnectLink {
   url: string;
   /** Lucide icon name, resolved on the page. */
   icon: 'youtube' | 'tiktok' | 'app' | 'star' | 'shirt' | 'coffee' | 'cameo';
-  /** Solid button colour, carried over from the live app so the two match. */
+  /**
+   * Solid button colour, carried over from the live app so the two match.
+   *
+   * **Three were darkened, because white text on them failed WCAG AA.**
+   * `check:contrast` measured them: amber-500 at **2.13:1**, yellow-600 at
+   * 2.94 and green-600 at 3.22, against a 4.5 requirement. 700 is the first
+   * level where white clears it in each of those hues — amber 5.03, yellow
+   * 4.93, green 4.95 — and the hover keeps its "one step darker" shape at 800.
+   * Red, blue, purple and black already passed and are untouched, so the
+   * recognition this list exists for survives everywhere it was not a problem.
+   */
   colour: string;
 }
 
@@ -49,21 +59,21 @@ export const SUPPORT_LINKS: ConnectLink[] = [
     description: 'Members-only content on YouTube.',
     url: 'https://www.youtube.com/channel/UC8XkJnNLavN1Jbicf0nLNdQ/join',
     icon: 'star',
-    colour: 'bg-yellow-600 hover:bg-yellow-700',
+    colour: 'bg-yellow-700 hover:bg-yellow-800',
   },
   {
     name: 'Merch store',
     description: 'T-shirts and hoodies.',
     url: 'https://clellandmaths.teemill.com',
     icon: 'shirt',
-    colour: 'bg-green-600 hover:bg-green-700',
+    colour: 'bg-green-700 hover:bg-green-800',
   },
   {
     name: 'Buy me a coffee',
     description: 'One-off support for the free resources.',
     url: 'https://buymeacoffee.com/clellandmaths',
     icon: 'coffee',
-    colour: 'bg-amber-500 hover:bg-amber-600',
+    colour: 'bg-amber-700 hover:bg-amber-800',
   },
   {
     name: 'Cameo',

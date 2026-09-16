@@ -21,8 +21,32 @@ const warn = [];
 const origins = new Map();   // origin -> example file  (main site)
 const rsOrigins = new Map(); // origin -> example file  (RStudio workbook)
 
+/**
+ * The built file, with the RSC payload's chunk seams closed up.
+ *
+ * **A URL that straddles a seam reads as a different origin.** Next inlines the
+ * flight payload as a run of `self.__next_f.push([1,"..."])` scripts, split on
+ * byte count with no regard for what it is cutting through. A page whose markup
+ * shifts by a few characters can move a seam into the middle of a URL, and that
+ * happened here: one class string grew from `text-cyan-400` to
+ * `text-cyan-700 dark:text-cyan-400`, the seam landed inside lucide's SVG
+ * namespace, and the scan below reported
+ *
+ *     origin www.w3.or is fetched but not in the CSP
+ *
+ * `w3.org` is allow-listed; `www.w3.or` is not, so the build failed on a colour
+ * change. Real-looking, non-deterministic, and about nothing.
+ *
+ * Joining the chunks is what the browser does with them, so it is also the
+ * honest thing to scan. The seam is a fixed literal — the end of one push call
+ * and the start of the next — so closing it cannot merge two things that were
+ * not one string to begin with.
+ */
+const RSC_SEAM = /"\]\)<\/script><script>self\.__next_f\.push\(\[1,"/g;
+const read = p => fs.readFileSync(p, 'utf8').replace(RSC_SEAM, '');
+
 function scanRStudio(p) {
-  const src = fs.readFileSync(p, 'utf8');
+  const src = read(p);
   for (const m of src.matchAll(/https:\/\/([a-zA-Z0-9.-]+\.[a-z]{2,})/g)) {
     const host = m[1];
     if (host.endsWith('clellandmaths.com')) continue;
@@ -37,7 +61,7 @@ function scan(dir) {
     // The workbook is scanned too, against its own policy — skipping it here
     // is precisely how a blocked Google Fonts import reached production.
     if (p.includes('rstudio')) { scanRStudio(p); continue; }
-    const src = fs.readFileSync(p, 'utf8');
+    const src = read(p);
     for (const m of src.matchAll(/https?:\/\/([a-zA-Z0-9.-]+\.[a-z]{2,})/g)) {
       const host = m[1];
       if (host.endsWith('clellandmaths.com')) continue;   // our own

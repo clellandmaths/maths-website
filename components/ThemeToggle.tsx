@@ -67,10 +67,21 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
   const flip = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-    // A choice, recorded. Wrapped because a private window can throw on write,
-    // and a toggle that throws would take the click handler down with it.
+    /**
+     * **Storage first, then the attribute, and the order is load-bearing.**
+     *
+     * The pre-paint script in `app/layout.tsx` watches `data-theme` and puts
+     * back whatever `localStorage` says, because React wipes attributes it did
+     * not author whenever a page hydrates with a mismatch. Set the attribute
+     * first and that guard sees a value disagreeing with storage and reverts
+     * it — the toggle would visibly bounce back. Written this way the guard
+     * reads the new choice and agrees with it.
+     *
+     * Wrapped because a private window can throw on write, and a toggle that
+     * throws would take the click handler down with it.
+     */
     try { localStorage.setItem('theme', next); } catch { /* no memory, still works */ }
+    document.documentElement.setAttribute('data-theme', next);
   };
 
   const toLight = theme === 'dark';
