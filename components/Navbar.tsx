@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles, Mail } from 'lucide-react';
 
+
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   // One name everywhere. The footer, the home hero and the page's own <h1>
@@ -115,6 +116,40 @@ export default function Navbar() {
               lands it belongs beside the menu button rather than inside the
               menu: someone who needs the other theme needs it on arrival, not
               three taps in. See docs/light-mode.md. */}
+
+          {/* **Light or dark, with no React state at all.**
+
+              Which icon shows is a fact about the theme, and the theme already
+              lives on `<html data-theme>` — so CSS reads it directly and both
+              icons ship in the markup with one hidden. State here would only
+              mirror something the document already knows, and mirroring it is
+              what made the old component need an effect to avoid a hydration
+              mismatch.
+
+              Storage before the attribute: the pre-paint script in
+              `app/layout.tsx` watches `data-theme` and restores whatever
+              storage says, so the other order makes the guard undo the press.
+
+              Beside the menu button rather than inside it — a reader who needs
+              the other theme needs it on arrival, not three taps in. */}
+          <button
+            type="button"
+            onClick={() => {
+              /* An unstamped reader is on whatever their system says, so read
+                 that rather than the absent attribute — otherwise the first
+                 press on a dark-OS machine "sets" dark and looks broken. */
+              const el = document.documentElement;
+              const now = el.getAttribute('data-theme')
+                ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+              const next = now === 'dark' ? 'light' : 'dark';
+              try { localStorage.setItem('theme', next); } catch { /* private window */ }
+              el.setAttribute('data-theme', next);
+            }}
+            aria-label="Switch between light and dark mode"
+            className="p-2 rounded-lg text-foreground hover:text-accent hover:bg-muted/50 transition-colors"
+          >
+            <span className="theme-icon" aria-hidden="true" />
+          </button>
 
           {/* Mobile Menu Button */}
           <button

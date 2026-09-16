@@ -221,6 +221,66 @@ body {
   border-bottom: 1px solid var(--glass-line);
 }
 
+/* The logo, swapped rather than filtered.
+ *
+ * **The motif is the brand mint `#ccffed`, which is 1.05:1 on a light page.**
+ * On white the geometric shape behind the wordmark simply vanishes and the mark
+ * loses half of itself. No filter recolours one ink and leaves the others, so
+ * this swaps the whole asset for a variant whose motif is a deep teal —
+ * `#0b5d57`, chosen to hold the relationships the original has in dark: bold
+ * against the page (7.04:1 where the mint is 17.99:1) and clearly separated
+ * from the magenta wordmark (2.38:1 where the mint is 2.95:1). Every other ink
+ * in the file is untouched, and the letters' "white outline" is transparency,
+ * so it needs nothing.
+ *
+ * `content` on an `<img>` rather than two elements toggled by CSS, because the
+ * footer also renders this logo and the footer is not this branch's to edit.
+ * One rule covers every use of the mark, present and future, and costs no JS.
+ *
+ * Three blocks, mirroring the palette: light is the default, and the two dark
+ * cases put the element's own `src` back.
+ */
+img[src$="/clelland-maths-logo.png"] {
+  content: url("/img/logo/clelland-maths-logo-light.png");
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) img[src$="/clelland-maths-logo.png"] {
+    content: normal;
+  }
+}
+:root[data-theme="dark"] img[src$="/clelland-maths-logo.png"] {
+  content: normal;
+}
+
+/* The theme button's glyph, drawn in CSS rather than shipped as markup.
+ *
+ * **518 bytes decided this.** Two lucide SVGs cost about a kilobyte of eager
+ * JavaScript once they were inline in the navbar, and five `course/*` templates
+ * had only 10 KB of budget headroom with 9.4 KB already spent. A half-filled
+ * disc is the conventional contrast glyph and it is two CSS declarations, so it
+ * costs the JS budget nothing at all.
+ *
+ * It rotates in dark, which is free state feedback: the filled half is on the
+ * right in light and the left in dark. The button's accessible name says what
+ * pressing it does, which is the part that has to be unambiguous.
+ */
+.theme-icon {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid currentColor;
+  border-radius: 9999px;
+  background: linear-gradient(to right, transparent 50%, currentColor 50%);
+  transition: transform 200ms;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon { transform: rotate(180deg); }
+}
+:root[data-theme="dark"] .theme-icon { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon { transition: none; }
+}
+
 /* Question container fixes */
 .question-content {
   overflow-wrap: break-word;

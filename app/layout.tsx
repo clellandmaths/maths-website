@@ -52,7 +52,14 @@ export const metadata: Metadata = {
 // silently dropped, and the Android browser chrome stays white above a dark
 // page.
 export const viewport: Viewport = {
-  themeColor: "#0a0e17",
+  /* One per theme. A single dark value painted the Android browser chrome
+     near-black above a light page, which is the same class of bug as the
+     navigation bar keeping `rgba(2, 6, 23, 0.8)` under a light theme — a
+     colour hard-coded when there was only one theme to hard-code for. */
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f4f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+  ],
 };
 
 export default function RootLayout({
@@ -83,9 +90,10 @@ export default function RootLayout({
        nothing to put back. `suppressHydrationWarning` is the other half — React
        must not complain about an attribute it can now see but never wrote.
 
-       While the site is still dark-only the script's own fallback supplies the
-       default; `check:theme` ties that fallback to whether the toggle is
-       mounted. See docs/light-mode.md. */
+       There is no server-rendered default any more: a reader who has chosen
+       nothing gets no stamp, and the palette's `prefers-color-scheme` block
+       answers for them. `check:theme` ties that to the toggle being mounted, so
+       the two halves of the switch cannot move apart. See docs/light-mode.md. */
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen`}>
         {/* **Before anything paints, and deliberately not in a component.**
@@ -109,12 +117,17 @@ export default function RootLayout({
             __html: `(function(){try{`
               + `var pick=function(){`
               + `var c=localStorage.getItem('theme');`
-              // The one line the final step changes. While the site is still
-              // dark-only an unchosen reader gets dark; afterwards this falls
-              // through to null and the stylesheet decides.
-              + `return (c==='light'||c==='dark')?c:'dark';};`
+              // **Null, not 'dark'.** This returned 'dark' for the whole of the
+              // light-mode work, so that a half-converted light theme could not
+              // reach anyone. Both themes now measure zero nodes below AA, so a
+              // reader who has expressed no preference gets no stamp at all and
+              // the stylesheet's `prefers-color-scheme` block answers for them.
+              + `return (c==='light'||c==='dark')?c:null;};`
               + `var el=document.documentElement;`
               + `var apply=function(){var t=pick();`
+              // No stored choice means no attribute: an attribute would pin the
+              // theme and silently override the reader's own system setting.
+              + `if(t===null){el.removeAttribute('data-theme');return;}`
               + `if(el.getAttribute('data-theme')!==t)el.setAttribute('data-theme',t);};`
               + `apply();`
               // **And defend it.** See the comment above the <html> tag: a

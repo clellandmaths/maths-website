@@ -410,6 +410,78 @@ below, and now the most obvious thing left.
 
 ---
 
+## Turning it on (steps 7 and 8, done)
+
+**Light mode is live.** A reader who has expressed no preference gets their OS's
+choice; a toggle in the navigation bar overrides it and the choice persists.
+
+### The toggle cost 518 bytes too many, so it stopped being a component
+
+`components/ThemeToggle.tsx` was a tidy client component — `'use client'`,
+`useState`, an effect, two lucide icons — and it cost about **1.0 KB**. Five
+`course/*` templates had already drifted to 9.4 KB of their 10 KB `check:budget`
+headroom, so it failed all five at once, **518 bytes** over the line.
+
+Raising the baseline was the obvious move and the wrong one: `--baseline`
+refuses above `baseline + headroom`, so it would have meant hand-editing the
+guard's own data file to get past it — over half a kilobyte, on a session where
+the checks caught three real faults including two of mine.
+
+None of that kilobyte was necessary. `<html data-theme>` already holds the
+theme, so:
+
+- **the glyph is drawn in CSS** — a half-filled disc, the conventional contrast
+  icon, two declarations, and it rotates 180° in dark for free state feedback
+- **no state and no effect**, because nothing needed mirroring
+- **no separate module**: the button is markup in `Navbar.tsx`
+
+`1.0 KB -> 268 bytes inside the headroom.` No baseline was moved.
+
+### The handler has to know what an unstamped reader is seeing
+
+Once the default is "no attribute", `getAttribute('data-theme')` returns null
+for most readers — so a handler reading only the attribute would compute
+`'dark'` on a dark-OS machine and the first press would set the theme they were
+already in. It reads `prefers-color-scheme` as the fallback, and `check:theme`
+fails if it stops doing so.
+
+### The logo
+
+`public/img/logo/clelland-maths-logo-light.png`: the mint motif recoloured to
+`#0b5d57`, **every other ink untouched**. Chosen to hold the relationships the
+original has in dark — 7.04:1 against the page where the mint is 17.99, and
+2.38:1 against the magenta wordmark where the mint is 2.95. A lighter teal that
+looked better in isolation measured **1.02:1 against the wordmark**, which is
+the classic magenta/teal confusion pair, and was rejected on that number.
+
+The letters' apparent white outline turned out to be **transparency**, not white
+ink, so it needed nothing.
+
+Swapped with a `content` rule on the `<img>`, in the same three blocks as the
+palette. That covers the navigation bar, the footer and any future use of the
+mark **without editing `Footer.tsx`**, which is not this branch's to touch, and
+costs no JavaScript. Verified: `content: normal` in dark, the light asset in
+light, an identical 69x44 box in both, no layout shift.
+
+`themeColor` in the viewport was a single `#0a0e17` and is now one value per
+theme — the same class of bug as `.glass`, a colour hard-coded when there was
+only one theme to hard-code for.
+
+### Verified end to end
+
+```
+fresh reader        data-theme = null   body #f4f4f7   (the OS decides)
+after 1st press     data-theme = dark   body #0a0a0c
+after 2nd press     data-theme = light  body #f4f4f7
+after navigation    the choice survives
+/explorer?c=n5      the choice survives  <- the page React used to clobber
+```
+
+Both themes: **every measured node clears AA**. `check:budget`: no template grew
+by more than 10 KB.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.
@@ -422,11 +494,9 @@ below, and now the most obvious thing left.
    mechanical rather than the judgement call it looked like.
 6. ~~Full sweep at both themes~~ — done. `contrast-baseline.json` and
    `contrast-baseline-light.json` both record **zero pairings**.
-7. **Turn it on.** Mount `ThemeToggle` and drop the script's `'dark'` fallback,
-   in one change — `check:theme` enforces that pairing. **Blocked**: the toggle
-   costs 1.0 KB and `course/*` has 0.6 KB of budget headroom left. See below.
-8. **The logo.** A light navigation bar shows it as a smudge. Needs the source
-   artwork; it is the last visible gap.
+7. ~~Turn it on~~ — done. The toggle is in the navbar and the forced-dark
+   fallback is gone, in one change, as `check:theme` requires.
+8. ~~The logo~~ — done, without touching `Footer.tsx`.
 
 ## Open questions for the owner
 

@@ -240,64 +240,64 @@ console.log('\nthe layout:');
 /**
  * **A reader can reach light exactly when light is finished, and not before.**
  *
- * Two things say whether the light mode has shipped: the hard
- * `data-theme="dark"` on `<html>`, which keeps everyone on dark whatever their
- * OS says, and whether `ThemeToggle` is actually mounted in the navbar. They
- * have to move together. Mounted while the stamp is still hard means a reader
- * presses the toggle and lands in a site that is 665 colour literals from
- * converted; unmounted after the stamp is gone means the OS can put someone in
- * light with no way back to dark.
+ * Two things say whether the light mode has shipped: whether the pre-paint
+ * script still substitutes `'dark'` for a reader who has chosen nothing, and
+ * whether the navbar actually offers a toggle. They have to move together.
+ * Forced-dark with a toggle mounted means a reader can press their way into a
+ * theme the site is not finished for; no forced default and no toggle means the
+ * OS can put someone in light with no way back to dark.
  *
  * Asserting the pairing rather than either half is what makes this survive the
- * middle of the job: it is correct now, correct at the end, and fails in the
- * gap. The absence is checked as hard as the presence, and for the reason it is
- * meant to be there for.
+ * middle of the job: correct before, correct after, and failing in the gap.
  */
 console.log('\nthe toggle and the default:');
 {
-  const toggle = path.join(root, 'components', 'ThemeToggle.tsx');
-  if (!fs.existsSync(toggle)) {
-    fail('components/ThemeToggle.tsx is gone — nothing can offer the choice');
-  } else {
-    const src = fs.readFileSync(toggle, 'utf8');
-    const writes = src.indexOf('data-theme') >= 0
-                && src.indexOf("localStorage.setItem('theme'") >= 0;
-    if (!writes) {
-      fail('ThemeToggle does not both set data-theme and record the choice, so '
-         + 'a press would not survive the next page load');
-    } else {
-      console.log('  ok    ThemeToggle sets the attribute and records the choice');
-    }
-  }
-
   const navbar = codeOnly(fs.readFileSync(path.join(root, 'components', 'Navbar.tsx'), 'utf8'));
-  const mounted = /<ThemeToggle[\s/>]/.test(navbar);
 
   /**
-   * **The default now lives in the script's fallback, not in the markup.**
+   * **The toggle is markup in the navbar, not a component.**
    *
-   * `data-theme` came out of the JSX because React was re-asserting it over the
-   * reader's choice on any hydration mismatch. So "is the site still forced
-   * dark?" is no longer a question about `<html>` — it is whether the script
-   * substitutes `'dark'` when nothing has been chosen. Keying the pairing off
-   * the behaviour rather than off a markup detail is the better test anyway:
-   * it is the thing a reader actually experiences.
+   * It was `components/ThemeToggle.tsx` — a client component with `useState`,
+   * an effect and two lucide icons — and it cost about a kilobyte, which put
+   * five `course/*` templates 518 bytes past `check:budget`. None of that was
+   * needed: `<html data-theme>` already holds the theme, so CSS draws the glyph
+   * and decides which way round it points, and the button is a plain handler.
+   * Inline, it landed 268 bytes inside the headroom.
    */
-  const forcedDark = /\?\s*c\s*:\s*'dark'/.test(layout) || /:\s*'dark'\s*;/.test(layout);
+  const mounted = /localStorage\.setItem\('theme'/.test(navbar)
+               && /setAttribute\('data-theme'/.test(navbar);
+  if (mounted) {
+    console.log('  ok    the navbar toggle records the choice and sets the attribute');
+  }
+
+  /* An unstamped reader is on whatever their OS says, so the handler has to
+     read that rather than the absent attribute — or the first press on a
+     dark-OS machine "sets" dark and appears to do nothing. */
+  if (mounted && !/prefers-color-scheme/.test(navbar)) {
+    fail('the toggle reads only the attribute. A reader who has chosen nothing '
+       + 'has none, so the first press would set the theme they are already in '
+       + 'and look broken — read prefers-color-scheme as the fallback');
+  } else if (mounted) {
+    console.log('  ok    and it knows what an unstamped reader is currently seeing');
+  }
+
+  /* Whether the script still forces dark, read from the fallback in `pick()` —
+     that, not any markup, is what decides the default now. */
+  const script = layout.replace(/\s+/g, '');
+  const forcedDark = /\?c:'dark'/.test(script);
 
   if (forcedDark && mounted) {
     fail('the toggle is mounted while the script still forces dark on anyone '
-       + 'who has not chosen — a reader could press it and land in a '
-       + 'half-converted light site. Mount it in the change that drops the '
+       + 'who has not chosen — a reader could press it and land in a theme the '
+       + "site is not finished for. Mount it in the change that drops the "
        + "script's 'dark' fallback");
   } else if (!forcedDark && !mounted) {
-    fail('the script no longer forces dark but the toggle is not mounted — the '
-       + 'OS can now put a reader in light with no way back to dark');
+    fail('the script no longer forces dark but no toggle is mounted — the OS '
+       + 'can now put a reader in light with no way back to dark');
   } else if (forcedDark) {
-    console.log('  ok    dark is still forced for the unchosen, and the toggle '
-              + 'is correctly not mounted yet');
+    console.log('  ok    dark is still forced for the unchosen, and no toggle is mounted yet');
   } else {
-    console.log('  ok    the theme is the reader\'s, and the toggle is mounted');
+    console.log("  ok    the theme is the reader's, and the toggle is mounted");
   }
 }
 
