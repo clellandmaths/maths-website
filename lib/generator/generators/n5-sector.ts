@@ -79,6 +79,29 @@ function drawAngle(sweep: SectorContext['sweep']): number {
   return getRandomInt(0, 1) === 0 ? getRandomInt(20, 165) : getRandomInt(200, 340);
 }
 
+/**
+ * The angles a Paper 1 sector question may use.
+ *
+ * Both Paper 1 sector questions in the archive work because the angle cancels
+ * against 360 to almost nothing. 2016 P1 Q3 is 45° — an eighth — so an eighth
+ * of 20² is 50 and the sum is 3·14 × 50. 2019 P1 Q4 is 240°, two thirds, so
+ * two thirds of the 60 cm diameter is 40 and the sum is 3·14 × 40. Every angle
+ * here reduces to a denominator of 12 or less.
+ *
+ * `drawAngle` above stays exactly as it was: Paper 2 has a calculator and any
+ * whole number of degrees is fair there.
+ */
+const P1_ANGLES = {
+  minor: [30, 36, 40, 45, 60, 72, 90, 120, 135, 150],
+  major: [210, 225, 240, 270, 300, 315],
+} as const;
+
+function drawP1Angle(sweep: SectorContext['sweep']): number {
+  if (sweep === 'minor') return pick([...P1_ANGLES.minor]);
+  if (sweep === 'major') return pick([...P1_ANGLES.major]);
+  return pick([...P1_ANGLES.minor, ...P1_ANGLES.major]);
+}
+
 type Kind = 'area-angle' | 'arc-angle' | 'area-arc' | 'angle-arc' | 'radius-arc';
 
 // ── the area of a segment: a sector less the triangle inside it ─────────────
@@ -289,6 +312,26 @@ export function sectorQuestion(kinds: Kind[]): Q {
       if (arc <= 0) continue;
       angle = arc * 360 / (2 * Math.PI * r);
       if (angle < 15 || angle > 345) continue;
+    } else if (paper1) {
+      /* **A non-calculator question has to be non-calculable.**
+         Until this, `paper1` changed pi to 3·14 and the wording and nothing
+         else — the radius and the angle were drawn exactly as for Paper 2, so
+         a "take pi as 3·14" question could read 37 cm and 76°. Ten consecutive
+         draws gave 37/76, 10/119, 45/82, 45/53, 8/31, 18/125, 17/63, 21/122,
+         10/28, 14/112, and not one of them is a sum anybody does by hand.
+
+         The two real ones are not like that, and `conePi` in n5-volume.ts had
+         already written down why: the numbers must leave 3·14 times a whole
+         number. So the angle comes from the pool above and the radius has to
+         make the share come out whole — the area's `angle/360 × r²`, the arc's
+         `angle/360 × 2r`. Tested with integers rather than floats, because
+         two thirds of 60 is 40 and `240/360*60` is 40.000000000000006.
+
+         Failing the test re-draws both, which is what the 3000 tries are for. */
+      angle = drawP1Angle(c.sweep);
+      const share = kind === 'area-angle' ? angle * r * r : angle * 2 * r;
+      if (share % 360 !== 0) continue;
+      arc = angle / 360 * 2 * Math.PI * r;
     } else {
       angle = drawAngle(c.sweep);
       arc = angle / 360 * 2 * Math.PI * r;
