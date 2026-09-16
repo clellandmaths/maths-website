@@ -12,7 +12,7 @@ The generator itself — what it makes and why — is
 
 ```
 npm run build                  # the source checks run first, then two on out/
-node scripts/check-card-variation.mjs      # and nine more that need Chrome
+node scripts/check-card-variation.mjs      # and sixteen more that need Chrome
 ```
 
 **The engine is on 0 of 542 pages, and that is the number to watch.** It is
@@ -384,8 +384,16 @@ that is mapping each one to the variation it matches — which buys presses 1 an
 
 ## What is still open
 
-- **`dev` is a long way ahead of `master` and none of it is live.**
+- **`dev` is 71 commits ahead of `master` and none of it is live.**
   `git rev-list --count master..dev` says how far.
+- **The responsive baseline read-back is the gate**, and it has never been done.
+  Every layout change here was verified in headless Chrome at fixed widths,
+  which is not a device. See [responsive.md](responsive.md) — about 90 minutes,
+  immediately before any merge.
+- **CLS is 0.84 on a practice page**, where 0.1 is good. Cause: 443 question
+  images declare no dimensions, so nothing reserves their space. Not scheduled.
+- **Lessons for the next course** are written up in
+  `worksheet_generator/docs/new-course.md`.
 - The findings in [navigation.md](navigation.md), recorded and not acted on.
 - The responsive baseline has still never been read back — see
   [responsive.md](responsive.md). That is the ~90 minutes to spend immediately
