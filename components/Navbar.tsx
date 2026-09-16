@@ -101,6 +101,21 @@ export default function Navbar() {
             })}
           </div>
 
+          {/* **The theme toggle goes here, and deliberately not yet.**
+
+              `components/ThemeToggle.tsx` is written and works. Mounting it
+              today would offer a reader a light mode that is 665 colour
+              literals away from finished — they would press it and land in a
+              half-converted site, which is worse than having no toggle at all.
+
+              It goes in as part of the same change that drops the hard
+              `data-theme="dark"` from `app/layout.tsx`. `check:theme` ties the
+              two together, so the toggle cannot appear before the site is ready
+              for it and the site cannot go theme-aware without it. When it
+              lands it belongs beside the menu button rather than inside the
+              menu: someone who needs the other theme needs it on arrival, not
+              three taps in. See docs/light-mode.md. */}
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}

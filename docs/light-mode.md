@@ -16,7 +16,7 @@ Measured, not assumed.
 |---|---|
 | **443 past paper diagrams** | 39 of 40 sampled are **pure-white opaque PNGs**. They sit as white rectangles on today's dark page. Light mode needs **none** of them touched, and they will look better |
 | **National 5 generated diagrams** | emit **no colour at all** — every stroke inherits. Every hard-coded `stroke="black"`, `#333`, `#111827` in the engine is in one file, `apps.ts`, and that content is already light-styled |
-| **The switch** | `className="dark"` on `<html>`, **one place**, `app/layout.tsx:64` |
+| **The switch** | one place, `app/layout.tsx` — it was `className="dark"`, now `data-theme` |
 | **The accent system** | **265 call sites** of `theme.text`/`theme.tint`/`theme.border` collapse to **35 strings** in `lib/course-theme.ts` |
 | **Print** | a separate narrow path that already forces white. It will not fight a light mode |
 
@@ -38,8 +38,8 @@ behind it (`--muted-foreground`, `--card`, `--border`).
 
 Two things make it more than a find-and-replace:
 
-- `:root` in `globals.css` **is** the dark palette. There is no light one, no
-  `@media (prefers-color-scheme)` and no `[data-theme]` block.
+- `:root` in `globals.css` **was** the dark palette — no light one, no
+  `@media (prefers-color-scheme)`, no `[data-theme]` block. Done in step 2.
 - There are **zero** `dark:` variants in the codebase. No colour decision on
   this site has ever been made twice.
 
@@ -137,16 +137,107 @@ Coverage went from **33 of 190** nodes on the homepage to **169 of 190**.
 
 ---
 
+## The palette and the plumbing (step 2, done)
+
+The three-block palette is in `globals.css`: `:root` is light, dark is applied
+twice — once behind `prefers-color-scheme` for the reader who has chosen
+nothing, once behind `[data-theme="dark"]` so an explicit choice beats the OS
+either way. `@custom-variant dark` binds Tailwind's `dark:` to the same
+attribute, because Tailwind 4 would otherwise key it off the OS and a `dark:`
+utility would disagree with the token beside it.
+
+**Every light value was chosen against a number, not by eye**, because the
+existing `--muted-dim` comment sets that standard:
+
+| token | light | on page | on card | the dark value, for comparison |
+|---|---|---|---|---|
+| `--foreground` | `#16161a` | 16.86 | 18.04 | 18.17 / 16.57 |
+| `--muted-foreground` | `#5a5a66` | 6.35 | 6.80 | 7.08 / 6.46 |
+| `--muted-dim` | `#5b6b80` | 5.09 | 5.44 | 5.77 / 5.26 |
+| `--accent` | `#b800ab` | 5.28 | 5.79 | 6.10 / 5.56 |
+
+Page `#f4f4f7` and card `#ffffff` sit **1.098:1** apart, which is the separation
+`#0a0a0c` and `#16161a` already have. Matched on purpose: a card should lift off
+the page by the same amount in both themes.
+
+**The brand magenta could not be `--accent` on a light ground** — `#ff00ed` is
+3.03:1 on the page, large-text only, and `text-accent` is body text in nine
+places. `#b800ab` clears AA in both roles the token plays: as text on the page
+and card, and as the surface carrying `text-background`. The exact brand hexes
+stay untouched in `--signal-magenta` / `--signal-mint` for the logo.
+
+### Two things are deliberately not done yet
+
+**`<html>` is still hard-stamped `data-theme="dark"`** and **`ThemeToggle` is
+not mounted in the navbar.** Both land in the same change at the end. A toggle
+offered today would drop a reader into a site 665 literals short of converted,
+which is worse than no toggle.
+
+`check:theme` holds them together. It asserts the pairing rather than either
+half, so it is correct now, correct at the end, and **fails in the gap** — the
+toggle cannot appear early and the stamp cannot come off without it.
+
+### `check:theme`
+
+Also asserts the thing duplication always breaks: the two dark blocks are
+compared **declaration by declaration**, because if they drift, the site someone
+gets from their OS and the site they get from the toggle are different and
+nothing else here would notice. And that no token is defined for light only —
+those do not go missing, they *leak*, showing a light value in the dark theme.
+
+It failed on its own first run by finding the phrase `className="dark"` inside
+the comment explaining that `className="dark"` had been removed. Source read as
+text has to know prose from code; the same lesson is already written down here
+about the hints parity check.
+
+### What light looks like today, measured
+
+```
+[light] 4894 of 6270 text nodes measured
+819 node(s) below AA, from 53 distinct pairings
+```
+
+Not a surprise and not a problem — it is the remaining work, with a number on
+it. The shape confirms the estimate above:
+
+```
+1.40-1.71:1  #00d3f2 on various      x343   cyan-400 = theme.text, National 5
+1.35:1       #cad5e2 on #f4f4f7        x7   text-slate-300
+1.24:1       #90a1b9 on #898f9a        x1   text-slate-400
+1.00-1.08:1  #d4fdf0 / #d6fff1         x2   signal-mint as text
+```
+
+**`theme.text` alone is 343 of the 819** — 42%, from 35 strings in one file.
+That is step 3, and it is the cheapest 42% in the job.
+
+**No light baseline is recorded, deliberately.** `--theme=light` fails until the
+work is done, which is the direction the ratchet should point. Record one only
+at the end, for whatever is genuinely accepted.
+
+### One thing found on the way, and it is not light mode's fault
+
+`check:budget` failed on all five `course/*` templates the moment the toggle was
+mounted. The toggle costs **1.0 KB**. The templates had already drifted to
+**9.4 KB of their 10 KB headroom** — so any kilobyte, anywhere, would have done
+it. That is precisely the trap `worksheet_generator/docs/new-course.md`
+describes: growth inside the headroom is tolerated, never banked, and **never
+reported**, so a template reaches the edge in silence and the next person to add
+a button pays for everyone. The Explorer once reached 12 bytes this way.
+
+Unmounting the toggle put it back to 882 KB. **The drift is still there**, it is
+pre-existing, and the ratchet refuses to re-record upward by design — so mounting
+the toggle at the end will fail unless ~1 KB is reclaimed from those templates
+first, or the baseline is deliberately moved. That is a decision, not a bug, and
+it is listed below.
+
+---
+
 ## The order
 
 1. ~~`check:contrast`~~ — done, baseline recorded.
-2. **Light palette + theme plumbing.** A light `:root`, the dark set moved
-   behind `:root[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`,
-   the toggle, and persistence. **The trap**: this is a static export, so the
-   theme must be applied by an inline script before paint or there is a flash of
-   the wrong theme — and reading storage in a render path gives a hydration
-   mismatch, the same fault already documented in `PracticeModes`.
-3. **`lib/course-theme.ts`** — 35 strings, 265 call sites fixed at once.
+2. ~~Light palette and theme plumbing~~ — done, `check:theme` guards it.
+3. **`lib/course-theme.ts`** — 35 strings, 265 call sites, **343 of the 819
+   failures**. Next.
 4. **The six mechanical slate mappings** across 45 files.
 5. **The ~160 alpha washes** and the judgement tail.
 6. **Full sweep at both themes** with `check:contrast`, plus a second baseline
@@ -154,8 +245,15 @@ Coverage went from **33 of 190** nodes on the homepage to **169 of 190**.
 
 ## Open questions for the owner
 
-- **The 48 AA failures on the dark site.** Fix now, fix as part of this, or
-  accept? They are the primary button on six surfaces.
-- **Does light mode follow the OS, or is it a toggle, or both?** Both is the
-  usual answer and costs little extra once the plumbing exists.
-- **The logo variants** need the source artwork.
+- ~~The 48 AA failures on the dark site~~ — **fix them in this branch**, decided
+  2026-09-16, alongside the accent work in step 3 since both edit the same file.
+- ~~Follow the OS, toggle, or both?~~ — **both**, decided 2026-09-16. Built.
+- ~~How far does light go?~~ — **true light, near-white surfaces**, decided
+  2026-09-16. Built: page `#f4f4f7`, cards `#ffffff`.
+- **The `course/*` budget drift.** 9.4 KB of 10 KB headroom is already spent,
+  before light mode adds anything. Mounting the toggle at the end needs ~1 KB
+  reclaimed from those templates, or a deliberate re-baseline. Needs a decision
+  before step 6.
+- **The logo variants** need the source artwork. Also `text-signal-magenta` is
+  used as *text* in the navbar and on two icons; `#ff00ed` is 3.03:1 on white,
+  so those call sites want `text-accent` instead. Part of step 3.

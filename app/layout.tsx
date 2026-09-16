@@ -61,8 +61,51 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    /* **`data-theme`, not `className="dark"`.**
+
+       The class was Tailwind's dark-variant switch and nothing read it: there
+       was not one `dark:` utility in the codebase, and `:root` simply WAS the
+       dark palette. The attribute is what `globals.css` and its
+       `@custom-variant` both key off now, and it is server-rendered, so the
+       first paint is already the right theme rather than one corrected a frame
+       later.
+
+       **Stamped `dark` here on purpose, for now.** 665 colour literals still
+       name slate directly and never reach a token, so a page resolving to light
+       today would be half converted. This attribute is the last thing the
+       light-mode work changes: when the literals are gone it comes off and the
+       palette's `prefers-color-scheme` block answers for anyone who has not
+       chosen. See docs/light-mode.md. */
+    <html lang="en" data-theme="dark">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen`}>
+        {/* **Before anything paints, and deliberately not in a component.**
+
+            A reader's chosen theme lives in `localStorage`, which no server can
+            see — and this is a static export, so the HTML was built once, with
+            no reader in existence. Applying the choice in an effect would paint
+            the built theme and correct it a frame later, which is the flash
+            every themed site is judged on.
+
+            First child of `<body>`, synchronous: it runs before the markup below
+            it is parsed. It touches no React state — the attribute sits on
+            `<html>`, outside the tree React hydrates, so it cannot produce a
+            hydration mismatch. That is the trap `PracticeModes` documents for
+            reading `location` in a render path.
+
+            The CSP allows `'unsafe-inline'` for scripts, which is what makes
+            this legal here. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{`
+              + `var c=localStorage.getItem('theme');`
+              // The one line the final step changes. While the site is still
+              // dark-only an unchosen reader gets dark; afterwards this falls
+              // through to null and the stylesheet decides.
+              + `var t=(c==='light'||c==='dark')?c:'dark';`
+              + `document.documentElement.setAttribute('data-theme',t);`
+              + `}catch(e){}})()`,
+          }}
+        />
         {/* The video thumbnails on every course page come from YouTube, which
             is a third origin: without a hint, the first one pays a full DNS +
             TCP + TLS handshake before a byte arrives, and on a course page that

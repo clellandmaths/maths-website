@@ -60,7 +60,21 @@ const t = tally();
 const args = process.argv.slice(2);
 const SELFTEST = args.includes('--selftest');
 const RECORD = args.includes('--baseline');
-const BASELINE = join(import.meta.dirname, 'contrast-baseline.json');
+/**
+ * Which theme to measure.
+ *
+ * `--theme=light` stamps `data-theme` after each navigation rather than relying
+ * on the built HTML, so the light palette can be measured while the site still
+ * ships dark by default. Each theme keeps its own baseline: they are different
+ * sites and a shared file would let a fault in one hide behind the other.
+ */
+const THEME = (args.find(a => a.startsWith('--theme=')) || '--theme=dark').slice(8);
+if (THEME !== 'light' && THEME !== 'dark') {
+  console.error(`  --theme must be light or dark, not "${THEME}"`);
+  process.exit(1);
+}
+const BASELINE = join(import.meta.dirname,
+  THEME === 'dark' ? 'contrast-baseline.json' : `contrast-baseline-${THEME}.json`);
 
 /**
  * The pages, chosen to cover every template rather than every page.
@@ -267,8 +281,24 @@ const totals = {
 const add = r => { for (const k of Object.keys(totals)) totals[k] += r[k] || 0; };
 
 await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
-  evaluate, click, buttonNamed, go, sleep,
+  evaluate, click, buttonNamed, go: navigate, sleep,
 }) => {
+  /**
+   * Navigate, then put the page in the theme being measured.
+   *
+   * Stamped after every navigation rather than once: each `go` is a fresh
+   * document and the built HTML carries `data-theme="dark"`, so a theme set on
+   * the previous page is gone. Measuring light against a page that quietly
+   * reverted to dark would report the dark site twice and call it a pass.
+   */
+  const go = async (path, settle) => {
+    await navigate(path, settle);
+    const got = await evaluate(
+      `(document.documentElement.setAttribute('data-theme', ${JSON.stringify(THEME)}),`
+      + ` document.documentElement.getAttribute('data-theme'))`);
+    if (got !== THEME) throw new Error(`could not put the page in ${THEME} (got ${got})`);
+  };
+
   const measure = async (where) => {
     const r = await evaluate(PROBE);
     add(r);
@@ -368,7 +398,7 @@ await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
 });
 
 // ── the report ───────────────────────────────────────────────────────────
-console.log(`\n  ${totals.measured} of ${totals.total} text nodes measured`);
+console.log(`\n  [${THEME}] ${totals.measured} of ${totals.total} text nodes measured`);
 console.log(`  not measured: ${totals.script} script/style, ${totals.hidden} hidden, `
           + `${totals.zeroBox} zero-box, ${totals.faded} under an opacity, `
           + `${totals.onBitmap} on a bitmap, ${totals.unreadableColour} unreadable colour`);
@@ -405,7 +435,7 @@ if (!pairs.length) {
 if (RECORD) {
   writeFileSync(BASELINE, JSON.stringify({
     recorded: new Date().toISOString().slice(0, 10),
-    theme: 'dark',
+    theme: THEME,
     totals,
     pairs: pairs.map(p => ({ fg: p.fg, bg: p.bg, ratio: p.ratio, need: p.need, n: p.n,
                              where: [...p.wheres], text: p.text })),
