@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run check:gensync && npm run check:reach && npm run check:hintgap && npm run check:topicmaps && npm run check:callsites && npm run check:math && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:punctuation && npm run check:qbreaks && next build",
+    "build": "npm run check:gensync && npm run check:reach && npm run check:hintgap && npm run check:theme && npm run check:topicmaps && npm run check:callsites && npm run check:math && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:punctuation && npm run check:qbreaks && next build",
     "postbuild": "node scripts/check-headers-redirects.mjs && node scripts/check-rendered-math.mjs && node scripts/check-engine-isolation.mjs && node scripts/check-js-budget.mjs",
     "build:only": "next build",
     "start": "next start",
     "lint": "eslint",
     "check:math": "node scripts/check-math-render.mjs",
     "check:latex": "node scripts/check-notes-latex.mjs",
-    "check": "npm run check:gensync && npm run check:reach && npm run check:hintgap && npm run check:topicmaps && npm run check:callsites && npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:punctuation && npm run check:qbreaks && npm run check:qimages",
+    "check": "npm run check:gensync && npm run check:reach && npm run check:hintgap && npm run check:theme && npm run check:topicmaps && npm run check:callsites && npm run check:math && npm run check:latex && npm run check:homepage && npm run check:papers && npm run check:timestamps && npm run check:qnumbers && npm run check:sharerefs && npm run check:latexdelims && npm run check:punctuation && npm run check:qbreaks && npm run check:qimages",
     "check:homepage": "node scripts/check-homepage-years.mjs",
     "check:papers": "node scripts/check-paper-registry.mjs",
     "check:timestamps": "node scripts/check-timestamps.mjs",
@@ -27,6 +27,7 @@
     "check:budget": "node scripts/check-js-budget.mjs",
     "check:reach": "node scripts/check-variation-reach.mjs",
     "check:hintgap": "node scripts/check-hint-gap.mjs",
+    "check:theme": "node scripts/check-theme.mjs",
     "check:topicmaps": "node scripts/check-topic-maps.mjs",
     "check:callsites": "node scripts/check-engine-callsites.mjs",
     "check:responsive": "node scripts/check-responsive.mjs",
@@ -47,6 +48,7 @@
     "check:wslayout": "node scripts/check-worksheet-layout.mjs",
     "check:nozoom": "node scripts/check-no-page-zoom.mjs",
     "check:nomarkscheme": "node scripts/check-no-markscheme.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
   "dependencies": {

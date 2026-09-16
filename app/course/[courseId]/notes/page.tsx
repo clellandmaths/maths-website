@@ -95,7 +95,7 @@ export default async function NotesHubPage(
                   <Link
                     key={topic.id}
                     href={`/course/${courseId}/notes/${section.id}/${topic.id}`}
-                    className="group flex flex-col justify-between bg-card border border-border hover:border-white/25 rounded-xl p-4 transition-colors"
+                    className="group flex flex-col justify-between bg-card border border-border hover:border-foreground/25 rounded-xl p-4 transition-colors"
                   >
                     <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground leading-snug mb-3">
                       {topic.title}

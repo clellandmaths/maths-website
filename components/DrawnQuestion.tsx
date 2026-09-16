@@ -88,7 +88,7 @@ export default function DrawnQuestion({
         {!showAnswer && (
           <button
             onClick={() => setShowAnswer(true)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-foreground/10`}
           >
             <Eye className="h-3.5 w-3.5" />
             Show answer
@@ -104,7 +104,7 @@ export default function DrawnQuestion({
         {question.videoId && (
           <button
             onClick={() => setPlaying(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
           >
             <Play className="h-3.5 w-3.5" />
             Watch the method
@@ -119,7 +119,7 @@ export default function DrawnQuestion({
       {showAnswer && (
         <MathRenderer
           html={question.answer}
-          className="mt-3 rounded-lg p-3 bg-white/5 answer-content text-foreground"
+          className="mt-3 rounded-lg p-3 bg-foreground/5 answer-content text-foreground"
         />
       )}
 

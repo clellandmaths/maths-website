@@ -307,7 +307,7 @@ function SharedWorksheet() {
                           ? `A worked example — ${q.videoOf}`
                           : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`,
                       })}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 text-sm font-medium rounded-lg transition-colors`}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 text-sm font-medium rounded-lg transition-colors`}
                     >
                       <Play className="h-4 w-4" />
                       {/* **Short on a phone, full from a tablet up.** "Watch a
@@ -336,7 +336,7 @@ function SharedWorksheet() {
                       key={file.url}
                       href={file.url}
                       download
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
                     >
                       <Paperclip className="h-3 w-3" />
                       {file.name}

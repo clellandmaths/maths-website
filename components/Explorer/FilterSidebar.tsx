@@ -95,7 +95,7 @@ export default function FilterSidebar({
   const hasActiveFilters = selectedSubtopics.length > 0 || selectedYears.length > 0 || selectedPapers.length > 0;
 
   return (
-    <aside className="w-72 border-r border-slate-800 h-[calc(100vh-4rem)] overflow-y-auto sticky top-16 p-6 bg-slate-950">
+    <aside className="w-72 border-r border-border h-[calc(100vh-4rem)] overflow-y-auto sticky top-16 p-6 bg-background">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function FilterSidebar({
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
-            className="text-xs text-slate-400 hover:text-slate-300 flex items-center gap-1"
+            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
           >
             <X className="h-3 w-3" />
             Clear
@@ -114,15 +114,15 @@ export default function FilterSidebar({
       </div>
 
       {/* Results Count */}
-      <div className="mb-6 px-3 py-2 bg-slate-900 rounded-lg">
-        <span className="text-sm text-slate-400">
+      <div className="mb-6 px-3 py-2 bg-card rounded-lg">
+        <span className="text-sm text-muted-foreground">
           Showing <span className={`${theme.text} font-medium`}>{questionCount}</span> questions
         </span>
       </div>
 
       {/* Year Filter - Multi-select */}
       <div className="mb-6">
-        <h3 className="text-sm font-medium text-slate-400 mb-3 uppercase tracking-wide">
+        <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
           Year
         </h3>
         <div className="space-y-1 max-h-48 overflow-y-auto">
@@ -135,9 +135,9 @@ export default function FilterSidebar({
                 type="checkbox"
                 checked={selectedYears.includes(year)}
                 onChange={() => toggleYear(year)}
-                className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30 focus:ring-offset-slate-900`}
+                className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
               />
-              <span className="text-slate-300 group-hover:text-slate-100 text-sm">
+              <span className="text-foreground group-hover:text-foreground text-sm">
                 {year}
               </span>
             </label>
@@ -148,7 +148,7 @@ export default function FilterSidebar({
       {/* Paper Filter — hidden for single-paper courses (Higher Apps) */}
       {showPaperFilter && (
       <div className="mb-6">
-        <h3 className="text-sm font-medium text-slate-400 mb-3 uppercase tracking-wide">
+        <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
           Paper
         </h3>
         <div className="space-y-1">
@@ -157,9 +157,9 @@ export default function FilterSidebar({
               type="checkbox"
               checked={selectedPapers.includes(1)}
               onChange={() => togglePaper(1)}
-              className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30 focus:ring-offset-slate-900`}
+              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
             />
-            <span className="text-slate-300 group-hover:text-slate-100 text-sm">
+            <span className="text-foreground group-hover:text-foreground text-sm">
               Paper 1 (Non-Calculator)
             </span>
           </label>
@@ -168,9 +168,9 @@ export default function FilterSidebar({
               type="checkbox"
               checked={selectedPapers.includes(2)}
               onChange={() => togglePaper(2)}
-              className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30 focus:ring-offset-slate-900`}
+              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
             />
-            <span className="text-slate-300 group-hover:text-slate-100 text-sm">
+            <span className="text-foreground group-hover:text-foreground text-sm">
               Paper 2 (Calculator)
             </span>
           </label>
@@ -180,11 +180,11 @@ export default function FilterSidebar({
 
       {/* Topic Filter */}
       <div className="mb-6">
-        <h3 className="text-sm font-medium text-slate-400 mb-3 uppercase tracking-wide">
+        <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
           Topics
         </h3>
         <div className="relative mb-3">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-dim" />
           <input
             type="text"
             value={topicSearch}
@@ -194,11 +194,11 @@ export default function FilterSidebar({
             // when a form control smaller than 16px takes focus, and does not
             // zoom back out afterwards — so tapping this left the Explorer
             // magnified. Scoped to mobile so the desktop sidebar is unchanged.
-            className="w-full pl-8 pr-8 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-base md:text-sm text-slate-300 placeholder:text-muted-dim focus:outline-none focus:border-white/40"
+            className="w-full pl-8 pr-8 py-1.5 bg-card border border-muted rounded-lg text-base md:text-sm text-foreground placeholder:text-muted-dim focus:outline-none focus:border-foreground/40"
           />
           {topicSearch && (
             <button onClick={() => setTopicSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2">
-              <X className="h-3.5 w-3.5 text-muted-dim hover:text-slate-300" />
+              <X className="h-3.5 w-3.5 text-muted-dim hover:text-foreground" />
             </button>
           )}
         </div>
@@ -243,15 +243,15 @@ export default function FilterSidebar({
                 // Single subtopic — render as flat checkbox, no expand
                 if (subtopics.length === 1) {
                   return (
-                    <div key={mainTopic} className="border-b border-slate-800/50 last:border-b-0">
+                    <div key={mainTopic} className="border-b border-border/50 last:border-b-0">
                       <label className="flex items-center gap-2 cursor-pointer group py-2 pl-6">
                         <input
                           type="checkbox"
                           checked={selectedSubtopics.includes(subtopics[0])}
                           onChange={() => toggleSubtopic(subtopics[0])}
-                          className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30 focus:ring-offset-slate-900`}
+                          className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
                         />
-                        <span className="text-slate-300 group-hover:text-slate-100 font-medium text-sm">
+                        <span className="text-foreground group-hover:text-foreground font-medium text-sm">
                           {mainTopic}
                         </span>
                       </label>
@@ -260,12 +260,12 @@ export default function FilterSidebar({
                 }
 
                 return (
-                  <div key={mainTopic} className="border-b border-slate-800/50 last:border-b-0">
+                  <div key={mainTopic} className="border-b border-border/50 last:border-b-0">
                     {/* Main Topic Header */}
                     <div className="flex items-center gap-2 py-2">
                       <button
                         onClick={() => toggleMainTopic(mainTopic)}
-                        className="text-slate-400 hover:text-slate-300"
+                        className="text-muted-foreground hover:text-foreground"
                       >
                         {isExpanded ? (
                           <ChevronDown className="h-4 w-4" />
@@ -281,9 +281,9 @@ export default function FilterSidebar({
                             if (el) el.indeterminate = someSelected;
                           }}
                           onChange={() => selectAllInTopic(mainTopic)}
-                          className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30 focus:ring-offset-slate-900`}
+                          className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
                         />
-                        <span className="text-slate-300 group-hover:text-slate-100 font-medium text-sm">
+                        <span className="text-foreground group-hover:text-foreground font-medium text-sm">
                           {mainTopic}
                         </span>
                         {selectedCount > 0 && (
@@ -304,9 +304,9 @@ export default function FilterSidebar({
                               type="checkbox"
                               checked={selectedSubtopics.includes(subtopic)}
                               onChange={() => toggleSubtopic(subtopic)}
-                              className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30 focus:ring-offset-slate-900`}
+                              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
                             />
-                            <span className="text-slate-400 group-hover:text-slate-300 text-sm">
+                            <span className="text-muted-foreground group-hover:text-foreground text-sm">
                               {subtopic}
                             </span>
                           </label>
@@ -330,7 +330,7 @@ export default function FilterSidebar({
               <button
                 key={`year-${year}`}
                 onClick={() => toggleYear(year)}
-                className="px-2 py-1 bg-slate-700/50 text-slate-300 text-xs rounded-full flex items-center gap-1 hover:bg-slate-700"
+                className="px-2 py-1 bg-muted-hover/50 text-foreground text-xs rounded-full flex items-center gap-1 hover:bg-muted-hover"
               >
                 {year}
                 <X className="h-3 w-3" />
@@ -340,7 +340,7 @@ export default function FilterSidebar({
               <button
                 key={`paper-${paper}`}
                 onClick={() => togglePaper(paper)}
-                className="px-2 py-1 bg-slate-700/50 text-slate-300 text-xs rounded-full flex items-center gap-1 hover:bg-slate-700"
+                className="px-2 py-1 bg-muted-hover/50 text-foreground text-xs rounded-full flex items-center gap-1 hover:bg-muted-hover"
               >
                 P{paper}
                 <X className="h-3 w-3" />
@@ -350,7 +350,7 @@ export default function FilterSidebar({
               <button
                 key={subtopic}
                 onClick={() => toggleSubtopic(subtopic)}
-                className={`px-2 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1 hover:bg-white/10`}
+                className={`px-2 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1 hover:bg-foreground/10`}
               >
                 {subtopic.length > 15 ? subtopic.slice(0, 15) + '...' : subtopic}
                 <X className="h-3 w-3" />

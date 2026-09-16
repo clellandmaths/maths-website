@@ -103,7 +103,7 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
       <Link
         key={topic.name}
         href={`/course/${courseId}/practice/${topicSlug(topic.name)}`}
-        className="block rounded-xl border border-border p-4 hover:border-white/25 hover:bg-white/5 transition-colors"
+        className="block rounded-xl border border-border p-4 hover:border-foreground/25 hover:bg-foreground/5 transition-colors"
       >
         <p className="font-medium mb-1">{topic.name}</p>
         <p className="font-mono text-xs text-muted-dim">
@@ -154,7 +154,7 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
                 open={i === 0}
                 className="group rounded-xl border border-border overflow-hidden"
               >
-                <summary className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer list-none hover:bg-white/5 transition-colors">
+                <summary className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer list-none hover:bg-foreground/5 transition-colors">
                   <span className={`font-mono text-xs uppercase tracking-widest ${theme.text}`}>
                     {section.title}
                   </span>

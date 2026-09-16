@@ -47,7 +47,6 @@ const courses: CourseCover[] = [
     band: 'S4/S5 · National 5',
     name: 'National 5',
     subject: 'Mathematics',
-    gradient: 'from-cyan-600 to-blue-600',
     contents: courseFeatures('n5', n5PaperVideos),
   },
   {
@@ -55,7 +54,6 @@ const courses: CourseCover[] = [
     band: 'S5/S6 · Higher',
     name: 'Higher',
     subject: 'Mathematics',
-    gradient: 'from-orange-600 to-red-600',
     contents: courseFeatures('higher', higherPaperVideos),
   },
   {
@@ -63,7 +61,6 @@ const courses: CourseCover[] = [
     band: 'S6 · Advanced Higher',
     name: 'Advanced Higher',
     subject: 'Mathematics',
-    gradient: 'from-emerald-600 to-teal-600',
     contents: courseFeatures('ah', ahPaperVideos),
   },
   {
@@ -71,7 +68,6 @@ const courses: CourseCover[] = [
     band: 'S4/S5 · National 5',
     name: 'N5 Applications',
     subject: 'Applications of Maths',
-    gradient: 'from-amber-500 to-orange-500',
     contents: courseFeatures('n5-apps', n5AppsPaperVideos),
   },
   {
@@ -79,7 +75,6 @@ const courses: CourseCover[] = [
     band: 'S5/S6 · Higher',
     name: 'Higher Applications',
     subject: 'Applications of Maths',
-    gradient: 'from-violet-600 to-purple-600',
     contents: courseFeatures('higher-apps', higherAppsPaperVideos),
   },
 ];
@@ -91,7 +86,7 @@ export default function Home() {
       <section className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-20 lg:pb-16 overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_420px] gap-12 items-center">
           <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-signal-mint/80 mb-4">
+          <p className="font-mono text-xs uppercase tracking-widest text-mint-ink mb-4">
             Scottish curriculum · N5 to Advanced Higher
           </p>
           <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight max-w-3xl mb-6">
@@ -115,7 +110,7 @@ export default function Home() {
             </a>
             <Link
               href="/explorer"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-white/25 text-foreground font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-foreground/25 text-foreground font-semibold rounded-lg transition-colors"
             >
               <Compass className="h-4 w-4" />
               Topic Explorer

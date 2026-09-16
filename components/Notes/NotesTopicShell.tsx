@@ -159,7 +159,7 @@ export default function NotesTopicShell({
             <div key={section.id}>
               <button
                 onClick={() => toggleSection(sIdx)}
-                className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left hover:bg-white/5 transition-colors group"
+                className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left hover:bg-foreground/5 transition-colors group"
               >
                 <span className={`font-mono text-xs font-semibold ${theme.text}`}>
                   {String(sIdx + 1).padStart(2, '0')}
@@ -189,7 +189,7 @@ export default function NotesTopicShell({
                         className={`flex items-center gap-2.5 pl-4 pr-2.5 py-1.5 text-left text-sm border-l-2 transition-colors ${
                           isActive
                             ? `${theme.border} ${theme.tint} ${theme.text} font-medium`
-                            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-white/5'
+                            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-foreground/5'
                         }`}
                       >
                         <span
@@ -251,7 +251,7 @@ export default function NotesTopicShell({
         <div className="flex items-center gap-3 mb-6 lg:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 bg-card border border-border hover:border-white/20 rounded-lg text-sm text-foreground/80 transition-colors shrink-0"
+            className="flex items-center gap-2 px-3 py-2 bg-card border border-border hover:border-foreground/20 rounded-lg text-sm text-foreground/80 transition-colors shrink-0"
           >
             <Menu className="h-4 w-4" />
             Topics

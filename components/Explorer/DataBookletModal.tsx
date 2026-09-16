@@ -59,7 +59,7 @@ export default function DataBookletModal({ year, theme, onClose }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-white/5 shrink-0"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-foreground/5 shrink-0"
             aria-label="Close data booklet"
           >
             <X className="h-5 w-5" />

@@ -556,7 +556,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className={`w-8 h-8 border-2 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto mb-4`} />
-          <p className="text-slate-400">Loading {config.label} questions...</p>
+          <p className="text-muted-foreground">Loading {config.label} questions...</p>
         </div>
       </div>
     );
@@ -572,11 +572,11 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
         {/* Mobile Filter Overlay — full screen */}
         {showMobileFilters && (
-          <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-slate-950">
+          <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-background">
             <div className="flex-1 overflow-y-auto [&>aside]:w-full [&>aside]:border-r-0 [&>aside]:min-h-0 [&>aside]:h-auto [&>aside]:sticky-none [&>aside]:relative">
               <FilterSidebar {...filterSidebarProps} />
             </div>
-            <div className="p-4 border-t border-slate-800">
+            <div className="p-4 border-t border-border">
               <button
                 onClick={() => setShowMobileFilters(false)}
                 className={`w-full py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -586,7 +586,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
             </div>
             <button
               onClick={() => setShowMobileFilters(false)}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-300 rounded-lg hover:bg-slate-800"
+              className="absolute top-5 right-5 p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted"
             >
               <X className="h-5 w-5" />
             </button>
@@ -620,14 +620,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <Link
                 href={`/course/${course}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-foreground hover:text-accent bg-muted/50 hover:bg-muted rounded-lg transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 shrink-0" />
                 Back to {config.label}
               </Link>
               <button
                 onClick={onChangeCourse}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-400 hover:text-slate-200 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground bg-muted/50 hover:bg-muted rounded-lg transition-colors"
               >
                 Change Course
               </button>
@@ -636,19 +636,19 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               </span>
             </div>
             <h1 className="text-2xl font-bold mb-2">Topic Explorer</h1>
-            <p className="text-slate-400">
+            <p className="text-muted-foreground">
               Use filters to find questions, then add them to build a custom worksheet.
             </p>
           </div>
 
           {/* Tabs */}
-          <div className="no-print flex items-center gap-1 mb-6 border-b border-slate-800 sticky top-16 z-20 bg-slate-950/90 backdrop-blur-sm -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+          <div className="no-print flex items-center gap-1 mb-6 border-b border-border sticky top-16 z-20 bg-background/90 backdrop-blur-sm -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <button
               onClick={() => setViewMode('browse')}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 viewMode === 'browse'
                   ? `${theme.border} ${theme.text}`
-                  : 'border-transparent text-slate-400 hover:text-slate-300'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
               <Search className="h-4 w-4" />
@@ -659,7 +659,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 viewMode === 'worksheet'
                   ? `${theme.border} ${theme.text}`
-                  : 'border-transparent text-slate-400 hover:text-slate-300'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
               <ClipboardList className="h-4 w-4" />
@@ -678,7 +678,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               {/* Mobile Filter Button */}
               <button
                 onClick={() => setShowMobileFilters(true)}
-                className="lg:hidden flex items-center gap-2 mb-6 px-4 py-2 bg-slate-800 rounded-lg text-slate-300"
+                className="lg:hidden flex items-center gap-2 mb-6 px-4 py-2 bg-muted rounded-lg text-foreground"
               >
                 <Filter className="h-4 w-4" />
                 Filters
@@ -691,14 +691,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
               {/* Active Filters Bar */}
               {hasFilters && (
-                <div className="mb-4 p-3 bg-slate-900/95 border border-slate-800 rounded-lg sticky top-[7.5rem] z-[9] backdrop-blur-sm">
+                <div className="mb-4 p-3 bg-card/95 border border-border rounded-lg sticky top-[7.5rem] z-[9] backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-400">
+                    <span className="text-sm text-muted-foreground">
                       <span className={`${theme.text} font-medium`}>{filteredQuestions.length}</span> of {allQuestions.length} questions
                     </span>
                     <button
                       onClick={clearAllFilters}
-                      className="flex items-center gap-1 px-2 py-1 text-xs text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                      className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-red-400 hover:bg-red-400/10 rounded transition-colors"
                     >
                       <X className="h-3 w-3" />
                       Clear all filters
@@ -732,7 +732,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       <button
                         key={`af-topic-${subtopic}`}
                         onClick={() => removeSubtopic(subtopic)}
-                        className={`shrink-0 px-2.5 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1.5 hover:bg-white/10 transition-colors`}
+                        className={`shrink-0 px-2.5 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1.5 hover:bg-foreground/10 transition-colors`}
                       >
                         {subtopic.length > 25 ? subtopic.slice(0, 25) + '...' : subtopic}
                         <X className="h-3 w-3" />
@@ -745,8 +745,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               {/* Empty State - No Filters Selected */}
               {!hasFilters && (
                 <div className="text-center py-16">
-                  <BookOpen className="h-16 w-16 mx-auto text-slate-700 mb-4" />
-                  <h3 className="text-xl font-medium text-slate-400 mb-2">
+                  <BookOpen className="h-16 w-16 mx-auto text-muted-faint mb-4" />
+                  <h3 className="text-xl font-medium text-muted-foreground mb-2">
                     Build Your Worksheet
                   </h3>
                   <p className="text-muted-dim max-w-md mx-auto mb-6">
@@ -784,8 +784,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     }}
                     className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                       filteredQuestions.every(q => isInWorksheet(q))
-                        ? 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                        : `${theme.tint} ${theme.text} hover:bg-white/10`
+                        ? 'bg-muted text-muted-foreground hover:bg-muted-hover'
+                        : `${theme.tint} ${theme.text} hover:bg-foreground/10`
                     }`}
                   >
                     {filteredQuestions.every(q => isInWorksheet(q))
@@ -803,7 +803,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <button
                       onClick={handleVaryEach}
                       disabled={generating}
-                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                     >
                       {generating
                         ? <Loader2 className="h-4 w-4 animate-spin" />
@@ -816,13 +816,13 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       absent elsewhere rather than disabled. */}
                   {canGenerate && (
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-600">|</span>
+                      <span className="text-muted-faint">|</span>
                       <button
                         onClick={() => selectedSubtopics.length > 1
                           ? setShowGenPlan(v => !v)
                           : handleGenerate()}
                         disabled={generating}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                        className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                       >
                         {generating
                           ? <Loader2 className="h-4 w-4 animate-spin" />
@@ -845,7 +845,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             id="gen-count"
                             value={genCount}
                             onChange={e => setGenCount(Number(e.target.value))}
-                            className="bg-slate-800 text-slate-300 text-sm rounded px-2 py-1.5 border border-slate-700"
+                            className="bg-muted text-foreground text-sm rounded px-2 py-1.5 border border-muted"
                           >
                             {[3, 5, 10, 15, 20].map(n => (
                               <option key={n} value={n}>{n}</option>
@@ -867,7 +867,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <a
                       href={`/course/${course}/generate`}
                       title="Choose exact skills — Adding Mixed Numbers rather than Fractions — and how many of each"
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-muted text-foreground hover:bg-muted-hover transition-colors"
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Build by skill
@@ -878,8 +878,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
               {/* How many of each, when more than one topic is picked. */}
               {showGenPlan && canGenerate && selectedSubtopics.length > 1 && (
-                <div className="mt-3 rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-                  <p className="text-sm text-slate-300">
+                <div className="mt-3 rounded-xl border border-border bg-card/60 p-4">
+                  <p className="text-sm text-foreground">
                     How many new questions on each?
                   </p>
                   {/* Say what the numbers count. A teacher who ticked "Surds"
@@ -895,7 +895,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         {/* The topic a teacher actually clicked. Its stepper
                             spreads across the kinds beneath it. */}
                         <div className="flex items-center gap-3">
-                          <span className="text-sm font-medium text-slate-200 flex-1 min-w-0 truncate">
+                          <span className="text-sm font-medium text-foreground flex-1 min-w-0 truncate">
                             {main}
                             {subs.length > 1 && (
                               <span className="text-muted-dim font-normal"> · {subs.length} kinds</span>
@@ -905,19 +905,19 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => stepGroup(subs, -1)}
                               aria-label={`One fewer ${main}`}
-                              className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                              className="w-7 h-7 rounded bg-muted text-foreground hover:bg-muted-hover transition-colors"
                             >
                               −
                             </button>
                             <span className={`w-7 text-center text-sm tabular-nums font-medium ${
-                              groupTotal(subs) > 0 ? theme.text : 'text-slate-500'
+                              groupTotal(subs) > 0 ? theme.text : 'text-muted-dim'
                             }`}>
                               {groupTotal(subs)}
                             </span>
                             <button
                               onClick={() => stepGroup(subs, 1)}
                               aria-label={`One more ${main}`}
-                              className="w-7 h-7 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                              className="w-7 h-7 rounded bg-muted text-foreground hover:bg-muted-hover transition-colors"
                             >
                               +
                             </button>
@@ -928,27 +928,27 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             topic with a single subtopic would show the same
                             number twice for no reason. */}
                         {subs.length > 1 && (
-                          <div className="mt-1 space-y-1 pl-4 border-l border-slate-800">
+                          <div className="mt-1 space-y-1 pl-4 border-l border-border">
                             {subs.map(topic => (
                               <div key={topic} className="flex items-center gap-3">
-                                <span className="text-xs text-slate-400 flex-1 min-w-0 truncate">
+                                <span className="text-xs text-muted-foreground flex-1 min-w-0 truncate">
                                   {topic}
                                 </span>
                                 <div className="flex items-center gap-1 shrink-0">
                                   <button
                                     onClick={() => stepTopic(topic, -1)}
                                     aria-label={`One fewer ${topic}`}
-                                    className="w-6 h-6 rounded bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors text-xs"
+                                    className="w-6 h-6 rounded bg-muted text-muted-foreground hover:bg-muted-hover transition-colors text-xs"
                                   >
                                     −
                                   </button>
-                                  <span className="w-6 text-center text-xs tabular-nums text-slate-300">
+                                  <span className="w-6 text-center text-xs tabular-nums text-foreground">
                                     {perTopic[topic] ?? 0}
                                   </span>
                                   <button
                                     onClick={() => stepTopic(topic, 1)}
                                     aria-label={`One more ${topic}`}
-                                    className="w-6 h-6 rounded bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors text-xs"
+                                    className="w-6 h-6 rounded bg-muted text-muted-foreground hover:bg-muted-hover transition-colors text-xs"
                                   >
                                     +
                                   </button>
@@ -964,14 +964,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <button
                       onClick={handleGeneratePlan}
                       disabled={generating || plannedTotal === 0}
-                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                     >
                       {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Dices className="h-4 w-4" />}
                       {plannedTotal > 0 ? `Generate ${plannedTotal}` : 'Pick some'}
                     </button>
                     <button
                       onClick={() => setShowGenPlan(false)}
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors"
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-muted text-muted-foreground hover:bg-muted-hover transition-colors"
                     >
                       Cancel
                     </button>
@@ -980,7 +980,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               )}
 
               {genNote && (
-                <p className="mb-4 text-sm text-slate-400">{genNote}</p>
+                <p className="mb-4 text-sm text-muted-foreground">{genNote}</p>
               )}
 
               {/* Questions Grid - Only Show When Filters Active.
@@ -1008,8 +1008,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               {/* No Results */}
               {hasFilters && filteredQuestions.length === 0 && (
                 <div className="text-center py-16">
-                  <Filter className="h-12 w-12 mx-auto text-slate-600 opacity-50 mb-4" />
-                  <h3 className="text-lg font-medium text-slate-400 mb-2">
+                  <Filter className="h-12 w-12 mx-auto text-muted-faint opacity-50 mb-4" />
+                  <h3 className="text-lg font-medium text-muted-foreground mb-2">
                     No questions found
                   </h3>
                   <p className="text-muted-dim">
@@ -1025,8 +1025,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
             <>
               {worksheetItems.length === 0 ? (
                 <div className="text-center py-16">
-                  <ClipboardList className="h-16 w-16 mx-auto text-slate-700 mb-4" />
-                  <h3 className="text-xl font-medium text-slate-400 mb-2">
+                  <ClipboardList className="h-16 w-16 mx-auto text-muted-faint mb-4" />
+                  <h3 className="text-xl font-medium text-muted-foreground mb-2">
                     Your Worksheet is Empty
                   </h3>
                   <p className="text-muted-dim max-w-md mx-auto mb-6">
@@ -1044,10 +1044,10 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
               ) : (
                 <>
                   {/* Worksheet Toolbar — sticky on desktop */}
-                  <div className="mb-6 space-y-3 no-print hidden lg:block lg:sticky lg:top-28 z-10 bg-slate-950/90 backdrop-blur-sm py-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-b border-slate-800">
+                  <div className="mb-6 space-y-3 no-print hidden lg:block lg:sticky lg:top-28 z-10 bg-background/90 backdrop-blur-sm py-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-b border-border">
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-muted-foreground text-sm">
                           {worksheetItems.length} {worksheetItems.length === 1 ? 'question' : 'questions'}
                         </p>
                         <button
@@ -1068,18 +1068,18 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showAnswersInView}
                             onChange={(e) => setShowAnswersInView(e.target.checked)}
-                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                            className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
-                          <span className="text-sm text-slate-400">Show answers</span>
+                          <span className="text-sm text-muted-foreground">Show answers</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={showQRCodes}
                             onChange={(e) => setShowQRCodes(e.target.checked)}
-                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                            className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
-                          <span className="text-sm text-slate-400">QR codes</span>
+                          <span className="text-sm text-muted-foreground">QR codes</span>
                         </label>
                         {courseHasHints(course) && (
                         <label className="flex items-center gap-2 cursor-pointer">
@@ -1087,35 +1087,35 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showHints}
                             onChange={(e) => setShowHints(e.target.checked)}
-                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                            className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
-                          <span className="text-sm text-slate-400">Hints</span>
+                          <span className="text-sm text-muted-foreground">Hints</span>
                         </label>
                         )}
                         <button
                           onClick={() => setPresentStartIndex(0)}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
                         >
                           <Maximize2 className="h-4 w-4" />
                           Present
                         </button>
                         <button
                           onClick={() => setShowFocusMode(true)}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
                         >
                           <BookOpen className="h-4 w-4" />
                           Focus
                         </button>
                         <button
                           onClick={() => setShowShare(true)}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
                         >
                           <Share2 className="h-4 w-4" />
                           Share
                         </button>
                         <DownloadFilesButton
                           questions={worksheetItems}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground rounded-lg text-sm font-medium transition-colors"
                         />
                         {/* A teacher's own checkout, so the markscheme lives
                             here and only here. It is a separate button and a
@@ -1125,7 +1125,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         <button
                           onClick={handlePrintMarkscheme}
                           disabled={markschemeBusy}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground rounded-lg text-sm font-medium transition-colors"
                           title="Print the marking instructions for this worksheet"
                         >
                           <ClipboardCheck className="h-4 w-4" />
@@ -1140,7 +1140,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         </button>
                       </div>
                     </div>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-muted-dim">
                       Tip: Use the arrows to reorder questions. Toggle answers and QR codes to control what appears in your print/PDF.
                     </p>
                   </div>
@@ -1193,7 +1193,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     {worksheetItems.map((q, index) => (
                       <div
                         key={`ws-${q.year}-${q.paperNumber}-${q.questionIndex}`}
-                        className={`worksheet-question bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6${index === lastMovedIndex ? ' card-just-moved' : ''}`}
+                        className={`worksheet-question bg-card border border-border rounded-xl p-4 sm:p-6${index === lastMovedIndex ? ' card-just-moved' : ''}`}
                       >
                         {/* **Two rows, and the controls pinned to the top.**
                             One wrapping row put the reorder buttons at the
@@ -1241,7 +1241,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 {q.topics?.slice(0, 2).map((topic) => (
                                   <span
                                     key={topic}
-                                    className="topic-tag px-2 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded"
+                                    className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
                                   >
                                     {topic}
                                   </span>
@@ -1255,7 +1255,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, 0)}
                               disabled={index === 0}
-                              className="hidden lg:block p-1 text-slate-600 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="hidden lg:block p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move to top"
                             >
                               <ChevronsUp className="h-3.5 w-3.5" />
@@ -1263,7 +1263,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index - 1)}
                               disabled={index === 0}
-                              className="p-3 lg:p-1 text-muted-dim hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move up"
                             >
                               <ChevronUp className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -1271,7 +1271,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, index + 1)}
                               disabled={index === worksheetItems.length - 1}
-                              className="p-3 lg:p-1 text-muted-dim hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="p-3 lg:p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move down"
                             >
                               <ChevronDown className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -1279,7 +1279,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReorder(index, worksheetItems.length - 1)}
                               disabled={index === worksheetItems.length - 1}
-                              className="hidden lg:block p-1 text-slate-600 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              className="hidden lg:block p-1 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                               title="Move to bottom"
                             >
                               <ChevronsDown className="h-3.5 w-3.5" />
@@ -1292,7 +1292,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <button
                               onClick={() => handleReroll(q)}
                               disabled={rerolling !== null}
-                              className="no-print shrink-0 p-1.5 text-muted-dim hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-40"
+                              className="no-print shrink-0 p-1.5 text-muted-dim hover:text-foreground rounded-lg hover:bg-muted transition-colors disabled:opacity-40"
                               title="New numbers for this question"
                               aria-label="New numbers for this question"
                             >
@@ -1304,7 +1304,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           {/* Remove button */}
                           <button
                             onClick={() => removeItem(q)}
-                            className="no-print shrink-0 p-1.5 text-muted-dim hover:text-red-400 rounded-lg hover:bg-slate-800 transition-colors"
+                            className="no-print shrink-0 p-1.5 text-muted-dim hover:text-red-400 rounded-lg hover:bg-muted transition-colors"
                             title="Remove from worksheet"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -1329,7 +1329,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                         <MathRenderer
                           html={q.question}
-                          className="text-slate-300 question-content text-lg leading-relaxed"
+                          className="text-foreground question-content text-lg leading-relaxed"
                         />
 
                         {/* Higher Apps data files — needed to attempt the question */}
@@ -1340,7 +1340,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 key={file.url}
                                 href={file.url}
                                 download
-                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
                               >
                                 <Paperclip className="h-3 w-3" />
                                 {file.name}
@@ -1354,20 +1354,20 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         )}
 
                         {showAnswersInView && (
-                          <div className="answer-section mt-4 pt-4 border-t border-slate-800">
+                          <div className="answer-section mt-4 pt-4 border-t border-border">
                             <p className={`answer-label text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                             <MathRenderer
                               html={q.answer}
-                              className="text-slate-300 answer-content"
+                              className="text-foreground answer-content"
                             />
                           </div>
                         )}
 
                         {/* Watch Solution + Present from here (hidden on print) */}
-                        <div className="no-print flex items-center justify-between mt-4 pt-4 border-t border-slate-800">
+                        <div className="no-print flex items-center justify-between mt-4 pt-4 border-t border-border">
                           <button
                             onClick={() => setPresentStartIndex(index)}
-                            className="text-xs text-muted-dim hover:text-slate-300 transition-colors"
+                            className="text-xs text-muted-dim hover:text-foreground transition-colors"
                           >
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
                             Full screen from here
@@ -1396,7 +1396,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                   timestamp: timestampToSeconds(q.timestamp),
                                   title: `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`
                                 })}
-                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                               >
                                 <Play className="h-4 w-4" />
                                 {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
@@ -1404,7 +1404,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             ) : hasMarkscheme(q.year, q.paperNumber) && (
                               <button
                                 onClick={() => setMarkschemeQ(q)}
-                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                                className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                               >
                                 <ClipboardCheck className="h-4 w-4" />
                                 Markscheme
@@ -1430,7 +1430,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                   </div>
 
                   {/* Mobile bottom action bar — always visible on scroll */}
-                  <div className="fixed bottom-0 left-0 right-0 lg:hidden no-print z-10 bg-slate-950/90 backdrop-blur-sm border-t border-slate-800 px-4 py-3">
+                  <div className="fixed bottom-0 left-0 right-0 lg:hidden no-print z-10 bg-background/90 backdrop-blur-sm border-t border-border px-4 py-3">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
                         <label className="flex items-center gap-2 cursor-pointer">
@@ -1438,18 +1438,18 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             type="checkbox"
                             checked={showAnswersInView}
                             onChange={(e) => setShowAnswersInView(e.target.checked)}
-                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                            className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
-                          <span className="text-sm text-slate-400">Answers</span>
+                          <span className="text-sm text-muted-foreground">Answers</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={showQRCodes}
                             onChange={(e) => setShowQRCodes(e.target.checked)}
-                            className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                            className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
-                          <span className="text-sm text-slate-400">QR</span>
+                          <span className="text-sm text-muted-foreground">QR</span>
                         </label>
                         {/* **Hints belong here too.** The toolbar that carries
                             this toggle is `hidden lg:block`, so below 1024px —
@@ -1464,9 +1464,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                               type="checkbox"
                               checked={showHints}
                               onChange={(e) => setShowHints(e.target.checked)}
-                              className={`w-4 h-4 rounded border-slate-600 bg-slate-800 ${theme.text} focus:ring-white/30`}
+                              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                             />
-                            <span className="text-sm text-slate-400">Hints</span>
+                            <span className="text-sm text-muted-foreground">Hints</span>
                           </label>
                         )}
                       </div>
@@ -1491,28 +1491,28 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <div className="flex flex-wrap items-center justify-center gap-2">
                       <button
                         onClick={() => setPresentStartIndex(0)}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
                       >
                         <Maximize2 className="h-4 w-4" />
                         Present
                       </button>
                       <button
                         onClick={() => setShowFocusMode(true)}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
                       >
                         <BookOpen className="h-4 w-4" />
                         Focus
                       </button>
                       <button
                         onClick={() => setShowShare(true)}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground rounded-lg text-sm font-medium transition-colors"
                       >
                         <Share2 className="h-4 w-4" />
                         Share
                       </button>
                       <DownloadFilesButton
                         questions={worksheetItems}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-60 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground rounded-lg text-sm font-medium transition-colors"
                       />
                       <button
                         onClick={() => printWorksheet()}
@@ -1647,9 +1647,9 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="text-center max-w-5xl w-full">
-        <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
+        <GraduationCap className="h-16 w-16 mx-auto text-accent mb-6" />
         <h1 className="font-display text-3xl font-bold mb-3">Topic Explorer</h1>
-        <p className="text-slate-400 mb-10 text-lg">
+        <p className="text-muted-foreground mb-10 text-lg">
           Browse Qualifications Scotland past paper questions by topic and year, then build a custom
           maths worksheet with answers, QR-coded video solutions and PDF export —
           free for students and teachers. Choose your course to start.
@@ -1660,7 +1660,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
             return (
               <div
                 key={course.id}
-                className="group relative flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-white/20 hover:scale-[1.02] transition-all"
+                className="group relative flex flex-col p-8 bg-card border border-border rounded-2xl overflow-hidden hover:border-foreground/20 hover:scale-[1.02] transition-all"
               >
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cardTheme.gradient}`} />
                 <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
@@ -1669,7 +1669,7 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
                 <p className="text-sm text-muted-dim mb-6">{course.subtitle}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {explorerFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-slate-300">
+                    <li key={feature} className="flex items-center gap-3 text-foreground">
                       <Check className={`h-5 w-5 ${cardTheme.text} shrink-0`} />
                       <span>{feature}</span>
                     </li>

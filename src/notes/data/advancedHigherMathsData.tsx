@@ -30,8 +30,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\textbf{Pascal's rule:}\quad \binom{n}{r} + \binom{n}{r+1} = \binom{n+1}{r+1}" />
             <p>Symmetry is the mirror image of the triangle; Pascal's rule is the &ldquo;add the two above&rdquo; construction written algebraically.</p>
             <p><strong>The Golden Rule:</strong> to prove an identity in binomial coefficients, replace every <InlineMath math="\binom{n}{r}" /> by its factorial definition, put the terms over a common denominator, and simplify until the required form appears. Never argue from a few numerical rows — that is a check, not a proof.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting <InlineMath math="0! = 1" />:</strong> this is a definition, not a calculation, and it is what makes <InlineMath math="\binom{n}{0} = 1" /> work.</li>
                 <li><strong>Verifying instead of proving:</strong> checking an identity for <InlineMath math="n=5,\ r=2" /> earns no marks. A proof must hold for general <InlineMath math="n" /> and <InlineMath math="r" />.</li>
@@ -114,8 +114,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="(a+b)^n = \sum_{r=0}^{n} \binom{n}{r} a^{n-r} b^r" />
             <p>Here <InlineMath math="\binom{n}{r} = \dfrac{n!}{r!\,(n-r)!}" /> is the binomial coefficient — the <InlineMath math="{}^nC_r" /> button on your calculator, or the entries of a row of Pascal's triangle. For example, the coefficients for <InlineMath math="n=4" /> are <InlineMath math="1,\ 4,\ 6,\ 4,\ 1" />.</p>
             <p><strong>The Golden Rule:</strong> the power of the first term counts <strong>down</strong> from <InlineMath math="n" /> to <InlineMath math="0" />, while the power of the second term counts <strong>up</strong> from <InlineMath math="0" /> to <InlineMath math="n" />. In every term the two powers must add up to <InlineMath math="n" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Not raising the whole term to the power:</strong> <InlineMath math="(2x)^3 = 8x^3" />, not <InlineMath math="2x^3" />. The coefficient must be raised to the power as well as the variable.</li>
                 <li><strong>Sign slips with a negative second term:</strong> in <InlineMath math="(a-b)^n" /> the signs alternate <InlineMath math="+,\,-,\,+,\,-\dots" /> — write the bracket as <InlineMath math="(a+(-b))^n" /> to keep track.</li>
@@ -164,8 +164,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>Often an exam asks only for one term — the term in <InlineMath math="x^5" />, or the constant term — so expanding everything is wasted effort. Instead, use the <strong>general term</strong> (the <InlineMath math="(r+1)" />th term) of <InlineMath math="(a+b)^n" />:</p>
             <BlockMath math="T_{r+1} = \binom{n}{r} a^{n-r} b^r" />
             <p><strong>The Golden Rule:</strong> find <InlineMath math="r" /> first. Write the general term, simplify the power of <InlineMath math="x" /> to a single expression in <InlineMath math="r" />, set it equal to the power you need, and solve for <InlineMath math="r" />. Only then substitute back to evaluate that one term.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Off-by-one:</strong> it is the <InlineMath math="(r+1)" />th term, so <InlineMath math="r" /> starts at <InlineMath math="0" />. The term in <InlineMath math="x^k" /> is not the <InlineMath math="k" />th term.</li>
                 <li><strong>&ldquo;The <InlineMath math="k" />th term&rdquo; means <InlineMath math="r = k-1" />:</strong> a question asking for the fourth term needs <InlineMath math="r = 3" />, not <InlineMath math="r = 4" />.</li>
@@ -233,8 +233,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="3.1^4 = (3 + 0.1)^4, \qquad 1.02^6 = (1 + 0.02)^6, \qquad 0.97^5 = (1 - 0.03)^5" />
             <p>Because the small part is raised to ever higher powers, the terms shrink rapidly. If the index <InlineMath math="n" /> is a positive whole number the expansion <em>terminates</em>, so summing every term gives an <strong>exact</strong> answer. When a question asks only for a stated accuracy, you may stop once the remaining terms are too small to affect the last required figure.</p>
             <p><strong>The Golden Rule:</strong> choose the split so the second term is small and the first is easy to raise to powers — <InlineMath math="(3 + 0.1)" />, not <InlineMath math="(2 + 1.1)" />. Then keep expanding until the next term cannot change the digit you have been asked for, and state clearly why you stopped.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Rounding too early:</strong> keep full accuracy in every term and round only at the very end, or the final digit will be wrong.</li>
                 <li><strong>Stopping too soon:</strong> before truncating, check the size of the <em>next</em> term. Only discard it if it cannot affect the required decimal place.</li>
@@ -310,8 +310,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\frac{f(x)}{g(x)} = q(x) + \frac{r(x)}{g(x)}" />
             <p>At each stage, divide the leading term of what is left by the leading term of the divisor, multiply the whole divisor by that result, and subtract. Stop when the degree of what remains is <em>lower</em> than the degree of the divisor — that leftover is the remainder, and the fraction <InlineMath math="\frac{r(x)}{g(x)}" /> is guaranteed to be proper.</p>
             <p><strong>The Golden Rule:</strong> compare degrees before you do anything else. Only divide the <em>leading</em> terms to get each new term of the quotient, and keep going only while the degree of the remainder is at least the degree of the divisor.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Missing terms:</strong> write in placeholders such as <InlineMath math="0x^2" /> so that like terms stay in line — this is the single most common source of error.</li>
                 <li><strong>Sign errors on subtraction:</strong> you subtract the <em>whole</em> product, so every sign in it changes. Bracket it before subtracting.</li>
@@ -371,8 +371,8 @@ export const advancedHigherMathsData: Section[] = [
             </ul>
             <p>A denominator may contain several of these at once. Each factor contributes its own term (or terms) independently, so <InlineMath math="(x+1)^2(x^2+4)" /> needs <em>three</em> unknowns in total: two for the repeated linear factor and one linear numerator over the quadratic.</p>
             <p><strong>The Golden Rule:</strong> factorise the denominator fully and check the fraction is proper before you start. Then choose the correct numerator shape for each factor — a <em>constant</em> over a linear factor, but a <em>linear expression</em> <InlineMath math="(Bx+C)" /> over an irreducible quadratic.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Wrong numerator over a quadratic:</strong> use <InlineMath math="Bx+C" /> over an irreducible quadratic, not a single constant.</li>
                 <li><strong>Missing the extra term for a repeated factor:</strong> <InlineMath math="(x-a)^2" /> needs <em>both</em> <InlineMath math="\dfrac{A}{x-a}" /> and <InlineMath math="\dfrac{B}{(x-a)^2}" />.</li>
@@ -458,8 +458,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>A rational function is <strong>improper</strong> when the degree of the numerator is greater than or equal to the degree of the denominator. You must <strong>divide first</strong> — using algebraic long division — to get a polynomial quotient plus a proper remainder fraction, and only then apply partial fractions to the remainder.</p>
             <p><strong>The Golden Rule:</strong> if the top degree is greater than or equal to the bottom degree, divide before you decompose. The final answer is a polynomial <em>plus</em> proper partial fractions.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Skipping the division:</strong> setting up partial fractions directly on an improper fraction does not work — divide first.</li>
                 <li><strong>Losing the quotient:</strong> the polynomial part of the answer is worth marks — don't drop it.</li>
@@ -526,8 +526,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="I = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \qquad AI = IA = A, \qquad A^{-1}A = AA^{-1} = I" />
             <p>That last statement is the <em>definition</em> of the inverse, and it is what makes the row-reduction method for larger matrices work.</p>
             <p><strong>The Golden Rule:</strong> matrix multiplication is <strong>not</strong> commutative — in general <InlineMath math="AB \neq BA" />. Check the inner dimensions match before multiplying, and the result takes the outer dimensions.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Assuming <InlineMath math="AB = BA" />:</strong> order matters. If the question asks for <InlineMath math="AB" />, do not compute <InlineMath math="BA" />.</li>
                 <li><strong>Multiplying entry-by-entry:</strong> matrix multiplication is row-into-column, not element-wise.</li>
@@ -608,8 +608,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>The three permitted operations are the familiar ones: <strong>interchange</strong> two rows, <strong>multiply</strong> a row by a non-zero constant, and <strong>add a multiple</strong> of one row to another. Every operation must be applied right across the array, both blocks together.</p>
             <p>If at any stage a row of the left block becomes entirely zero, the matrix is <strong>singular</strong> — its determinant is zero and no inverse exists.</p>
             <p><strong>The Golden Rule:</strong> work down the leading diagonal one column at a time — first make the pivot entry <InlineMath math="1" />, then clear every other entry in that column to <InlineMath math="0" />, and only then move to the next column. Jumping around leads to undoing your own work.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting the right-hand block:</strong> every row operation must be carried out on <em>both</em> halves. Missing one is the single most common error.</li>
                 <li><strong>Clearing above as well as below:</strong> unlike Gaussian elimination, which stops at upper triangular form, here you must keep going until the left block is the full identity — zeros above the diagonal too.</li>
@@ -672,8 +672,8 @@ export const advancedHigherMathsData: Section[] = [
               <li>Scaling (dilatation) by factor <InlineMath math="k" />: <InlineMath math="\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}" /></li>
             </ul>
             <p><strong>The Golden Rule:</strong> to combine transformations, multiply their matrices — but the transformation applied <em>first</em> goes on the <em>right</em>. &ldquo;Do <InlineMath math="A" /> then <InlineMath math="B" />&rdquo; has combined matrix <InlineMath math="BA" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Wrong order for a composition:</strong> &ldquo;A then B&rdquo; is <InlineMath math="BA" />, not <InlineMath math="AB" /> — the second transformation sits on the left.</li>
                 <li><strong>Rotation direction:</strong> the standard matrix is anticlockwise (positive <InlineMath math="\theta" />); a clockwise rotation uses <InlineMath math="-\theta" />.</li>
@@ -731,8 +731,8 @@ export const advancedHigherMathsData: Section[] = [
             </ul>
             <p>A related idea is <strong>ill-conditioning</strong>: a system where a tiny change in a coefficient or constant produces a large change in the solution (geometrically, the lines or planes are nearly parallel).</p>
             <p><strong>The Golden Rule:</strong> use <em>row</em> operations only, never column operations, and show each operation (e.g. <InlineMath math="R_2 \to R_2 - 2R_1" />). Read the final row carefully: <InlineMath math="0=0" /> means redundant, <InlineMath math="0=\text{non-zero}" /> means inconsistent.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Redundant vs inconsistent:</strong> a final row of <InlineMath math="0\ 0\ 0\ |\ 0" /> is infinitely many solutions; <InlineMath math="0\ 0\ 0\ |\ k" /> (<InlineMath math="k \neq 0" />) is none.</li>
                 <li><strong>Arithmetic under pressure:</strong> keep the augmented bar aligned and state each row operation so slips are easy to spot and recover.</li>
@@ -876,8 +876,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>Adding the two lines pairs the first term of one with the last of the other. Every pair sums to the same total, <InlineMath math="2a + (n-1)d" />, and there are <InlineMath math="n" /> pairs:</p>
             <BlockMath math="2S_n = n\bigl[2a + (n-1)d\bigr] \quad\implies\quad S_n = \frac{n}{2}\bigl[2a + (n-1)d\bigr]" />
             <p><strong>The Golden Rule:</strong> almost every arithmetic question reduces to finding <InlineMath math="a" /> and <InlineMath math="d" /> — pin those down first, then substitute.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The <InlineMath math="(n-1)" /> slip:</strong> the <InlineMath math="n" />th term uses <InlineMath math="(n-1)d" />, not <InlineMath math="nd" /> — the first term already counts as one.</li>
                 <li><strong>Wrong sum formula:</strong> only use <InlineMath math="\frac{n}{2}(a+l)" /> when the last term <InlineMath math="l" /> is actually known.</li>
@@ -943,8 +943,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>If <InlineMath math="|r| < 1" /> the series converges, and the <strong>sum to infinity</strong> is:</p>
             <BlockMath math="S_\infty = \frac{a}{1 - r}, \qquad |r| < 1" />
             <p><strong>The Golden Rule:</strong> find <InlineMath math="a" /> and <InlineMath math="r" /> first, and remember that a sum to infinity <em>only exists</em> when <InlineMath math="|r| < 1" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Using <InlineMath math="S_\infty" /> when <InlineMath math="|r| \geq 1" />:</strong> the series diverges and has no sum to infinity — always check the ratio first.</li>
                 <li><strong>Power slip:</strong> the <InlineMath math="n" />th term is <InlineMath math="ar^{\,n-1}" />, not <InlineMath math="ar^{\,n}" />.</li>
@@ -1019,8 +1019,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>Summation is <strong>linear</strong>, so a sum of several terms can be split apart, and a constant <InlineMath math="c" /> sums to:</p>
             <BlockMath math="\sum_{r=1}^{n} c = cn" />
             <p><strong>The Golden Rule:</strong> split the summation using linearity, apply each standard formula, then factorise — the answer almost always simplifies to a neat factorised form.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Summing a constant:</strong> <InlineMath math="\sum_{r=1}^{n} c = cn" />, not <InlineMath math="c" />.</li>
                 <li><strong>Coefficients:</strong> a factor multiplies the <em>whole</em> standard formula, e.g. <InlineMath math="\sum 2r = 2 \cdot \frac{n(n+1)}{2}" />.</li>
@@ -1079,8 +1079,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\begin{aligned} e^x &= 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots &&\text{all } x \\ \sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots &&\text{all } x \\ \cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots &&\text{all } x \\ \ln(1+x) &= x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots &&-1 < x \le 1 \\ \tan x &= x + \frac{x^3}{3} + \frac{2x^5}{15} + \cdots &&|x| < \tfrac{\pi}{2} \end{aligned}" />
             <p>Note the ranges: <InlineMath math="e^x" />, <InlineMath math="\sin x" /> and <InlineMath math="\cos x" /> converge for every <InlineMath math="x" />, but <InlineMath math="\ln(1+x)" /> is only valid on <InlineMath math="-1 < x \le 1" />. Angles must be in <strong>radians</strong>.</p>
             <p><strong>The Golden Rule:</strong> always evaluate each derivative <em>at</em> <InlineMath math="x = 0" /> before substituting, and never drop the <InlineMath math="n!" /> denominators.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Dropping the factorials:</strong> each term is divided by <InlineMath math="n!" /> — <InlineMath math="\frac{f'''(0)}{3!}" />, not just <InlineMath math="f'''(0)" />.</li>
                 <li><strong>Leaving derivatives as functions:</strong> substitute <InlineMath math="x=0" /> into every derivative before using it.</li>
@@ -1134,8 +1134,8 @@ export const advancedHigherMathsData: Section[] = [
             </ul>
             <p>The saving is real: a product that would need four rounds of the product rule reduces to multiplying out a bracket.</p>
             <p><strong>The Golden Rule:</strong> decide the highest power you need <em>first</em>, then take enough terms from each standard series to reach it — and discard any product that overshoots. If you want the <InlineMath math="x^3" /> term, a term in <InlineMath math="x^2" /> multiplied by one in <InlineMath math="x^2" /> can be ignored entirely.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Taking too few terms:</strong> to reach <InlineMath math="x^3" /> in a product you may still need the <InlineMath math="x^3" /> term of <em>each</em> factor, since it pairs with the constant term of the other.</li>
                 <li><strong>Keeping terms you don't need:</strong> anything above the required power is wasted work and invites arithmetic slips — cross it out as you go.</li>
@@ -1210,10 +1210,10 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="z\bar{z} = (a+bi)(a-bi) = a^2 + b^2" />
             <p>To <strong>divide</strong>, multiply the numerator and denominator by the conjugate of the denominator, which makes the denominator real.</p>
 
-            <h4 className="text-white font-semibold">Plotting on an Argand Diagram</h4>
+            <h4 className="text-foreground font-semibold">Plotting on an Argand Diagram</h4>
             <p>Complex numbers are represented geometrically on an <strong>Argand diagram</strong>. It looks like ordinary <InlineMath math="x" />–<InlineMath math="y" /> axes, but the horizontal axis is the <strong>real</strong> axis and the vertical axis is the <strong>imaginary</strong> axis. The number <InlineMath math="z = a + bi" /> is plotted at the point <InlineMath math="(a,\,b)" />.</p>
             <p>So <InlineMath math="3 + 2i" /> sits 3 right and 2 up; <InlineMath math="-1 - 4i" /> sits 1 left and 4 down. A <em>real</em> number such as <InlineMath math="5" /> lies on the horizontal axis, and a purely <em>imaginary</em> number such as <InlineMath math="3i" /> lies on the vertical axis.</p>
-            <div className="bg-black/20 p-6 rounded-xl border border-white/10 flex justify-center">
+            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
               <ArgandDiagramPlotting />
             </div>
             <p>Two geometric facts follow immediately and are worth knowing, because questions lean on them:</p>
@@ -1224,8 +1224,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>This diagram is the foundation for modulus and argument (the distance from the origin and the angle from the positive real axis), for loci, and for the pattern made by the roots of an equation — so being able to plot quickly and accurately pays off throughout the topic.</p>
 
             <p><strong>The Golden Rule:</strong> to divide complex numbers, multiply top and bottom by the conjugate of the <em>denominator</em> — this clears <InlineMath math="i" /> from the bottom.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting <InlineMath math="i^2 = -1" />:</strong> the <InlineMath math="i^2" /> term becomes a real number and changes the real part.</li>
                 <li><strong>Conjugating the wrong part:</strong> when dividing, it is the denominator you conjugate, not the numerator.</li>
@@ -1324,8 +1324,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\begin{aligned} |z_1z_2| &= |z_1||z_2| & \arg(z_1z_2) &= \arg z_1 + \arg z_2 \\ \left|\frac{z_1}{z_2}\right| &= \frac{|z_1|}{|z_2|} & \arg\!\left(\frac{z_1}{z_2}\right) &= \arg z_1 - \arg z_2 \\ |\bar{z}| &= |z| & \arg(\bar{z}) &= -\arg z \\ z\bar{z} &= |z|^2 && \end{aligned}" />
             <p><strong>Loci</strong> describe sets of points: <InlineMath math="|z - a| = k" /> is a circle of radius <InlineMath math="k" /> centred at the point <InlineMath math="a" />; <InlineMath math="|z - a| = |z - b|" /> is the perpendicular bisector of the segment joining <InlineMath math="a" /> and <InlineMath math="b" />.</p>
             <p><strong>The Golden Rule:</strong> always identify which quadrant <InlineMath math="z" /> lies in before stating the argument — <InlineMath math="\arctan\frac{b}{a}" /> alone cannot tell the second quadrant from the fourth.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Argument quadrant:</strong> <InlineMath math="\arctan\frac{b}{a}" /> gives a principal value — adjust by <InlineMath math="\pm\pi" /> for the second and third quadrants.</li>
                 <li><strong>Circle centre:</strong> <InlineMath math="|z - a| = k" /> is centred at the point <InlineMath math="a" />, not at the origin.</li>
@@ -1404,8 +1404,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>That gives a reliable method: <strong>find one root, pair it with its conjugate, form the real quadratic factor, divide, and solve what's left.</strong></p>
             <p>A useful consequence is that you can predict the shape of the answer. A cubic with real coefficients has either three real roots, or one real root and one conjugate pair — it can never have exactly two non-real roots and one non-real left over, because they must pair up.</p>
             <p><strong>The Golden Rule:</strong> the conjugate-pair result holds <em>only</em> when every coefficient is real. Check that first; if the equation contains an <InlineMath math="i" /> in its coefficients, the pairing does not apply and you must solve directly.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting the real root:</strong> a cubic has <em>three</em> roots. Finding the conjugate pair is only two thirds of the answer.</li>
                 <li><strong>Sign slip forming the quadratic:</strong> the middle coefficient is <InlineMath math="-2x" /> — twice the <em>real</em> part, negated — and the constant is <InlineMath math="x^2 + y^2" />, a sum, not a difference.</li>
@@ -1484,8 +1484,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>It is used to evaluate powers, to find <InlineMath math="n" />th roots (which are equally spaced around a circle), and to derive multiple-angle trig identities. To find all <InlineMath math="n" />th roots, add <InlineMath math="2k\pi" /> to the argument before dividing by <InlineMath math="n" />.</p>
             <p>The <strong>Fundamental Theorem of Algebra</strong> states that a polynomial of degree <InlineMath math="n" /> has exactly <InlineMath math="n" /> roots in <InlineMath math="\mathbb{C}" /> (counting multiplicity). For a polynomial with <em>real</em> coefficients, any complex roots occur in <strong>conjugate pairs</strong>.</p>
             <p><strong>The Golden Rule:</strong> when finding roots, write the argument as <InlineMath math="\theta + 2k\pi" /> first, then take <InlineMath math="k = 0, 1, \dots, n-1" /> to capture all <InlineMath math="n" /> distinct roots.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Only finding one root:</strong> you must add <InlineMath math="2k\pi" /> to the argument to obtain all <InlineMath math="n" /> roots.</li>
                 <li><strong>Forgetting conjugate pairs:</strong> a real polynomial with root <InlineMath math="p + qi" /> also has root <InlineMath math="p - qi" />.</li>
@@ -1553,8 +1553,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="z^k + \frac{1}{z^k} = 2\cos k\theta, \qquad z^k - \frac{1}{z^k} = 2i\sin k\theta" />
             <p>So to convert something like <InlineMath math="\cos^4\theta" /> into multiple angles, expand <InlineMath math="\left(z + \frac{1}{z}\right)^4" /> by the Binomial Theorem and pair the outer terms inwards — each pair collapses to a <InlineMath math="2\cos k\theta" />.</p>
             <p><strong>The Golden Rule:</strong> read the question to decide the direction. Going <em>from</em> <InlineMath math="\cos n\theta" /> <em>to</em> powers of <InlineMath math="\cos\theta" /> uses De Moivre with the Binomial Theorem; going <em>from</em> a power like <InlineMath math="\cos^n\theta" /> <em>to</em> multiple angles uses <InlineMath math="z + \frac{1}{z}" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Powers of <InlineMath math="i" />:</strong> the cycle is <InlineMath math="i^2 = -1" />, <InlineMath math="i^3 = -i" />, <InlineMath math="i^4 = 1" />. Getting one wrong flips a sign in the middle of the expansion.</li>
                 <li><strong>Dropping the <InlineMath math="i" /> when equating:</strong> the imaginary part of <InlineMath math="4ic^3s" /> is <InlineMath math="4c^3s" />, not <InlineMath math="4ic^3s" /> — compare coefficients of <InlineMath math="i" />.</li>
@@ -1642,8 +1642,8 @@ export const advancedHigherMathsData: Section[] = [
             <p><strong>Euclid's algorithm</strong> finds the greatest common divisor (gcd) of two positive integers by repeated division. Write each step as <InlineMath math="a = qb + r" /> with <InlineMath math="0 \leq r < b" />, then replace <InlineMath math="(a, b)" /> with <InlineMath math="(b, r)" /> and repeat until the remainder is <InlineMath math="0" />. The last non-zero remainder is the gcd.</p>
             <p>The gcd can then be written as a <strong>linear combination</strong> of the two numbers, <InlineMath math="\gcd(a,b) = ax + by" /> for integers <InlineMath math="x, y" />, by <strong>back-substituting</strong> through the equations.</p>
             <p><strong>The Golden Rule:</strong> keep dividing until the remainder is <InlineMath math="0" />; the gcd is the <em>last non-zero</em> remainder. For the linear combination, work backwards through the algorithm's equations.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Reading the wrong remainder:</strong> the gcd is the last non-zero remainder, not the final <InlineMath math="0" />.</li>
                 <li><strong>Back-substitution slips:</strong> substitute one equation at a time and keep the two original numbers visible so the coefficients stay correct.</li>
@@ -1687,8 +1687,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>A number written in <strong>base <InlineMath math="b" /></strong> uses digits <InlineMath math="0" /> to <InlineMath math="b-1" />, with place values that are powers of <InlineMath math="b" />. To convert <strong>to base 10</strong>, multiply each digit by its place value and add. To convert <strong>from base 10</strong>, divide repeatedly by <InlineMath math="b" /> and read the remainders from the bottom up.</p>
             <p><strong>The Golden Rule:</strong> converting <em>to</em> base 10 uses place values (powers of the base); converting <em>from</em> base 10 uses repeated division, reading the remainders in reverse.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Remainder order:</strong> when dividing down, the base-<InlineMath math="b" /> digits are read from the <em>last</em> remainder to the first.</li>
                 <li><strong>Place values:</strong> the rightmost digit has place value <InlineMath math="b^0 = 1" />, then <InlineMath math="b^1, b^2, \dots" /> moving left.</li>
@@ -1739,8 +1739,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>A <strong>direct proof</strong> starts from the definitions and assumptions and deduces the conclusion through valid steps. The key is translating words into algebra: an even number is <InlineMath math="2k" />, an odd number is <InlineMath math="2k+1" />, for some integer <InlineMath math="k" />.</p>
             <p>To <strong>disprove</strong> a statement claimed to hold for <em>all</em> cases, a single <strong>counterexample</strong> is enough.</p>
             <p><strong>The Golden Rule:</strong> for a direct proof, turn the words into general algebra and manipulate to the required form. To disprove a &ldquo;for all&rdquo; claim, you need only one case that fails.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Testing numbers instead of proving:</strong> checking a few cases does not prove a general statement — use a general <InlineMath math="2k+1" />, etc.</li>
                 <li><strong>Invalid counterexample:</strong> a counterexample must satisfy the hypothesis but break the conclusion.</li>
@@ -1784,8 +1784,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>To prove &ldquo;if <InlineMath math="P" /> then <InlineMath math="Q" />&rdquo;, it is sometimes easier to prove the logically equivalent <strong>contrapositive</strong>: &ldquo;if not <InlineMath math="Q" /> then not <InlineMath math="P" />&rdquo;. The two statements are always true or false together.</p>
             <BlockMath math="(P \Rightarrow Q) \quad\equiv\quad (\lnot Q \Rightarrow \lnot P)" />
             <p><strong>The Golden Rule:</strong> the contrapositive negates <em>and</em> swaps the two parts. It is <em>not</em> the converse &ldquo;if <InlineMath math="Q" /> then <InlineMath math="P" />&rdquo;, which is not equivalent.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Contrapositive vs converse:</strong> the converse <InlineMath math="Q \Rightarrow P" /> is a different statement — do not prove that instead.</li>
                 <li><strong>Negating carelessly:</strong> the negation of &ldquo;even&rdquo; is &ldquo;odd&rdquo;; make sure the negations are exact.</li>
@@ -1834,8 +1834,8 @@ export const advancedHigherMathsData: Section[] = [
               <li><strong>Conclusion:</strong> state that, by induction, <InlineMath math="P(n)" /> holds for all <InlineMath math="n \geq 1" />.</li>
             </ul>
             <p><strong>The Golden Rule:</strong> you must actually <em>use</em> the inductive hypothesis when proving <InlineMath math="P(k+1)" /> — that is the heart of the method — and never skip the base case or the concluding statement.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Missing the base case:</strong> without <InlineMath math="P(1)" /> the induction has no foundation.</li>
                 <li><strong>Not using the hypothesis:</strong> the <InlineMath math="P(k+1)" /> working must build on the assumed <InlineMath math="P(k)" />.</li>
@@ -1881,8 +1881,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>To prove &ldquo;if <InlineMath math="A" /> then <InlineMath math="B" />&rdquo;, assume <InlineMath math="A" /> is true <em>and</em> <InlineMath math="B" /> is false, and derive a contradiction. The classic results proved this way are that <InlineMath math="\sqrt{2}" /> is irrational and that there are infinitely many primes.</p>
             <p>The most-used tool is the representation of integers: an even number is <InlineMath math="2k" /> and an odd number is <InlineMath math="2k+1" /> (or <InlineMath math="2k-1" />) for integer <InlineMath math="k" />. Squaring these keeps the parity visible.</p>
             <p><strong>The Golden Rule:</strong> state the assumption explicitly — &ldquo;Assume, for contradiction, that&hellip;&rdquo; — carry it through until two statements directly conflict, then name the contradiction before concluding. The examiner is looking for that named clash.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Negating the statement wrongly:</strong> the opposite of &ldquo;<InlineMath math="n" /> is even&rdquo; is &ldquo;<InlineMath math="n" /> is odd&rdquo;, and you must assume that alongside the given hypothesis, not instead of it.</li>
                 <li><strong>Never actually reaching a contradiction:</strong> the proof only works once you point to two things that cannot both be true. Circular reasoning that never conflicts proves nothing.</li>
@@ -1946,8 +1946,8 @@ export const advancedHigherMathsData: Section[] = [
             <p><strong>Proof by exhaustion</strong> works when the statement need only be checked over a <em>finite</em> number of cases. You split the possibilities into a complete set of cases and verify the claim in every one. If it holds in all of them, it holds in general — because there is nothing left to check.</p>
             <p>The method is only available when the cases really are finite and genuinely cover every possibility. A common device is to split the integers by their remainder on division by some number: every integer is of the form <InlineMath math="3k" />, <InlineMath math="3k+1" /> or <InlineMath math="3k+2" />, for instance, which is three cases covering all integers.</p>
             <p><strong>The Golden Rule:</strong> the cases must be <em>exhaustive</em> — together they must account for every possibility, with none omitted. Before concluding, say in words that the cases are complete; a proof that quietly skips a case is not a proof.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Missing a case:</strong> if you split by remainder mod <InlineMath math="3" />, you need all three of <InlineMath math="3k" />, <InlineMath math="3k+1" />, <InlineMath math="3k+2" /> — leaving one out breaks the proof entirely.</li>
                 <li><strong>Using it on infinite cases:</strong> exhaustion cannot prove a statement about &ldquo;all integers&rdquo; by testing a few examples. The <em>cases</em> must be finite, even though the numbers they represent need not be.</li>
@@ -2008,8 +2008,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}" />
             <p>Differentiating <strong>from first principles</strong> means using this definition directly — without any of the standard rules or known derivatives.</p>
             <p><strong>The Golden Rule:</strong> expand <InlineMath math="f(x+h)" /> completely, then subtract <InlineMath math="f(x)" />. Every surviving term <em>must</em> contain a factor of <InlineMath math="h" /> — if one doesn't, you have made an algebra slip. Cancel that <InlineMath math="h" /> against the denominator, and only then let <InlineMath math="h \to 0" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Setting <InlineMath math="h = 0" /> too early:</strong> you cannot substitute <InlineMath math="h=0" /> while <InlineMath math="h" /> is still in the denominator — that gives <InlineMath math="\frac{0}{0}" />. Cancel first, take the limit second.</li>
                 <li><strong>Dropping the limit notation:</strong> write <InlineMath math="\lim_{h \to 0}" /> in front of every line until you actually take the limit. Marks are awarded for it.</li>
@@ -2083,8 +2083,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\begin{aligned} \frac{d}{dx}(\tan x) &= \sec^2 x & \frac{d}{dx}(\cot x) &= -\operatorname{cosec}^2 x \\ \frac{d}{dx}(\sec x) &= \sec x \tan x & \frac{d}{dx}(\operatorname{cosec} x) &= -\operatorname{cosec} x \cot x \\ \frac{d}{dx}(e^x) &= e^x & \frac{d}{dx}(\ln x) &= \frac{1}{x} \end{aligned}" />
             <p>The two functions beginning with &ldquo;co&rdquo; — <InlineMath math="\cot" /> and <InlineMath math="\operatorname{cosec}" /> — are the ones with <strong>negative</strong> derivatives, exactly as <InlineMath math="\cos" /> is. (The inverse trigonometric functions <InlineMath math="\sin^{-1}" />, <InlineMath math="\cos^{-1}" /> and <InlineMath math="\tan^{-1}" /> have their own topic.)</p>
             <p><strong>The Golden Rule:</strong> identify the structure before differentiating — a product, a quotient, or a composition — and apply the matching rule. For combinations, work from the outside in.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Quotient rule order:</strong> the numerator is <InlineMath math="u'v - uv'" />, in that order — reversing it flips the sign.</li>
                 <li><strong>Chain rule inside factor:</strong> always multiply by the derivative of the inner function.</li>
@@ -2167,8 +2167,8 @@ export const advancedHigherMathsData: Section[] = [
             </ul>
             <p>Questions also ask you to compute the first few derivatives of a function and then <strong>conjecture</strong> a formula for the <InlineMath math="n" />th, so look for a pattern in three things at once: the sign, the numerical coefficient, and the power.</p>
             <p><strong>The Golden Rule:</strong> differentiate one step at a time, simplifying fully before starting the next step — an untidy first derivative makes the second far harder than it needs to be.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Getting the test backwards:</strong> positive second derivative means <em>minimum</em>. Picture a valley — the gradient rises from negative, through zero, to positive.</li>
                 <li><strong>Assuming <InlineMath math="f''(a)=0" /> means a point of inflection:</strong> it does not. The test is simply inconclusive, and you must use a nature table instead.</li>
@@ -2242,8 +2242,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>When the argument is a function rather than just <InlineMath math="x" />, apply the chain rule — replace <InlineMath math="x" /> by <InlineMath math="f(x)" /> throughout and multiply by <InlineMath math="f'(x)" />:</p>
             <BlockMath math="\frac{d}{dx}\bigl(\tan^{-1}f(x)\bigr) = \frac{f'(x)}{1 + \bigl[f(x)\bigr]^2}" />
             <p><strong>The Golden Rule:</strong> to derive one of these, write the inverse statement (<InlineMath math="y = \sin^{-1}x \iff x = \sin y" />), differentiate <em>that</em> with respect to <InlineMath math="y" />, invert it, and finally convert back into terms of <InlineMath math="x" /> using a Pythagorean identity.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong><InlineMath math="\sin^{-1}x" /> is not <InlineMath math="\frac{1}{\sin x}" />:</strong> the <InlineMath math="-1" /> denotes the inverse function. The reciprocal of <InlineMath math="\sin x" /> is <InlineMath math="\operatorname{cosec} x" />.</li>
                 <li><strong>Losing the minus sign:</strong> <InlineMath math="\cos^{-1}" /> differentiates to the <em>negative</em> of the <InlineMath math="\sin^{-1}" /> result — that sign is the only difference between them.</li>
@@ -2325,8 +2325,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>When <InlineMath math="y" /> is defined <strong>implicitly</strong> (the equation is not solved for <InlineMath math="y" />), differentiate both sides with respect to <InlineMath math="x" />, treating <InlineMath math="y" /> as a function of <InlineMath math="x" />. Each <InlineMath math="y" />-term picks up a factor of <InlineMath math="\frac{dy}{dx}" /> by the chain rule; then collect and solve.</p>
             <BlockMath math="\frac{d}{dx}\bigl(y^n\bigr) = n\,y^{n-1}\frac{dy}{dx}" />
             <p><strong>The Golden Rule:</strong> every time you differentiate a term containing <InlineMath math="y" />, multiply by <InlineMath math="\frac{dy}{dx}" />; then gather all <InlineMath math="\frac{dy}{dx}" /> terms on one side and factor.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Dropping <InlineMath math="\frac{dy}{dx}" />:</strong> differentiating a <InlineMath math="y" />-term without the chain-rule factor is the most common error.</li>
                 <li><strong>Mixed terms:</strong> a term like <InlineMath math="xy" /> needs the product rule: <InlineMath math="\frac{d}{dx}(xy) = y + x\frac{dy}{dx}" />.</li>
@@ -2411,8 +2411,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p><strong>Logarithmic differentiation</strong> takes the natural log of both sides first, using log laws to turn products, quotients and powers into sums and multiples, and then differentiates implicitly. It is essential when the variable appears in the index, such as <InlineMath math="y = x^x" />.</p>
             <p><strong>The Golden Rule:</strong> take <InlineMath math="\ln" /> of both sides, simplify with log laws, differentiate implicitly (the left side becomes <InlineMath math="\frac{1}{y}\frac{dy}{dx}" />), then multiply through by <InlineMath math="y" /> and substitute it back.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The left side:</strong> differentiating <InlineMath math="\ln y" /> gives <InlineMath math="\frac{1}{y}\frac{dy}{dx}" /> — don't forget the <InlineMath math="\frac{dy}{dx}" />.</li>
                 <li><strong>Not substituting <InlineMath math="y" /> back:</strong> the final answer should be in terms of <InlineMath math="x" />.</li>
@@ -2496,8 +2496,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>The second derivative differentiates <InlineMath math="\frac{dy}{dx}" /> with respect to <InlineMath math="t" />, then divides by <InlineMath math="\frac{dx}{dt}" /> again:</p>
             <BlockMath math="\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}\!\left(\frac{dy}{dx}\right)}{dx/dt}" />
             <p><strong>The Golden Rule:</strong> divide the <InlineMath math="t" />-derivatives to get <InlineMath math="\frac{dy}{dx}" />. For the second derivative, differentiate <InlineMath math="\frac{dy}{dx}" /> with respect to <InlineMath math="t" /> and divide by <InlineMath math="\frac{dx}{dt}" /> once more.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The second derivative is NOT <InlineMath math="\frac{d^2y/dt^2}{d^2x/dt^2}" />:</strong> you must divide by <InlineMath math="\frac{dx}{dt}" />, not by <InlineMath math="\frac{d^2x}{dt^2}" />.</li>
                 <li><strong>Dividing vs differentiating:</strong> <InlineMath math="\frac{dy}{dx}" /> is a quotient of the two <InlineMath math="t" />-derivatives.</li>
@@ -2576,8 +2576,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="|v| = \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}" />
             <p>This gives the instantaneous speed of the particle at time <InlineMath math="t" />. Note that speed is always positive, even when one or both components are negative.</p>
             <p><strong>The Golden Rule:</strong> most questions do not give you <InlineMath math="t" /> directly — they describe an <em>event</em> (&ldquo;when it hits the ground&rdquo;, &ldquo;when it reaches the target&rdquo;). Translate that event into an equation, solve it for <InlineMath math="t" /> first, and only then substitute into the derivatives.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Rejecting the wrong root:</strong> &ldquo;hits the ground&rdquo; usually gives <InlineMath math="t = 0" /> as well as the answer — but <InlineMath math="t=0" /> is the moment of launch, so discard it.</li>
                 <li><strong>Squaring away the sign:</strong> a downward velocity is negative, but <InlineMath math="(-20)^2 = 400" />. Keep the sign while differentiating; it only disappears at the squaring stage.</li>
@@ -2653,8 +2653,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="a = \frac{dv}{dt} = \frac{dv}{ds}\cdot\frac{ds}{dt} = v\frac{dv}{ds}" />
             <p>Most questions describe an <em>event</em> rather than giving a value, so learn the translations: &ldquo;at rest&rdquo; means <InlineMath math="v = 0" />; &ldquo;returns to the starting point&rdquo; means <InlineMath math="s = 0" />; &ldquo;maximum velocity&rdquo; means <InlineMath math="a = 0" />.</p>
             <p><strong>The Golden Rule:</strong> distance and displacement are not the same thing. Displacement is simply <InlineMath math="s" /> at the end minus <InlineMath math="s" /> at the start, but if the particle changes direction — that is, if <InlineMath math="v" /> changes sign — the total <em>distance</em> must be found in separate stages and the magnitudes added.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Distance vs displacement:</strong> always check whether <InlineMath math="v = 0" /> inside the time interval. If it does, the particle turned round and the two answers differ.</li>
                 <li><strong><InlineMath math="a = 0" /> is about velocity, not position:</strong> it gives maximum or minimum <em>velocity</em>. Maximum displacement occurs where <InlineMath math="v = 0" />.</li>
@@ -2726,8 +2726,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>In a <strong>related rates</strong> problem, two quantities are linked by an equation and both change with time. Differentiate the relationship with respect to time <InlineMath math="t" /> (using the chain rule) to connect their rates, then substitute the values at the instant asked.</p>
             <p><strong>The Golden Rule:</strong> write the equation relating the quantities, differentiate the whole equation with respect to <InlineMath math="t" />, and only <em>then</em> substitute the given values.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Differentiate with respect to time:</strong> the derivative is with respect to <InlineMath math="t" />, so every variable picks up a rate (e.g. <InlineMath math="\frac{dr}{dt}" />).</li>
                 <li><strong>Substituting too early:</strong> keep quantities as variables until after differentiating.</li>
@@ -2822,8 +2822,8 @@ export const advancedHigherMathsData: Section[] = [
               <li>Numerator one degree higher &rarr; a slant (oblique) asymptote, found by algebraic division.</li>
             </ul>
             <p><strong>The Golden Rule:</strong> vertical asymptotes come from the zeros of the denominator; for the non-vertical asymptote, compare the degrees — divide if the top degree is the larger.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Hidden hole:</strong> if a factor cancels, there is a hole, not an asymptote — check the numerator is non-zero there.</li>
                 <li><strong>Slant asymptote:</strong> needs polynomial division; the asymptote is the quotient (ignoring the remainder term).</li>
@@ -2873,8 +2873,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>Be careful to distinguish this from <InlineMath math="y = f(|x|)" />, which is a different transformation: it keeps the graph for <InlineMath math="x \ge 0" /> and reflects <em>that</em> in the <InlineMath math="y" />-axis, discarding the original left-hand side.</p>
             <p>To solve an equation or inequality containing a modulus, split it into cases at the points where the expression inside changes sign, solve each case separately, and then check each solution back in the original.</p>
             <p><strong>The Golden Rule:</strong> <InlineMath math="|A| = B" /> means <InlineMath math="A = B" /> <em>or</em> <InlineMath math="A = -B" /> — always two cases. Solve both, then verify each answer in the original equation, because the case analysis can introduce solutions that do not actually work.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Only taking the positive case:</strong> forgetting <InlineMath math="A = -B" /> loses half the solutions.</li>
                 <li><strong>Not checking back:</strong> squaring or splitting cases can produce values that fail the original equation. Substitute every candidate.</li>
@@ -2939,8 +2939,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>A function is <strong>even</strong> if <InlineMath math="f(-x) = f(x)" /> (symmetric about the <InlineMath math="y" />-axis, like <InlineMath math="x^2" /> or <InlineMath math="\cos x" />), and <strong>odd</strong> if <InlineMath math="f(-x) = -f(x)" /> (rotational symmetry about the origin, like <InlineMath math="x^3" /> or <InlineMath math="\sin x" />). A function that satisfies neither is simply neither.</p>
             <p><strong>The Golden Rule:</strong> compute <InlineMath math="f(-x)" /> and compare: equal to <InlineMath math="f(x)" /> means even, equal to <InlineMath math="-f(x)" /> means odd, otherwise neither.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>A mixed function is neither:</strong> a sum like <InlineMath math="x^2 + x" /> is neither odd nor even — every term must fit the same pattern.</li>
                 <li><strong>Negating the whole function:</strong> <InlineMath math="-f(x)" /> negates every term, not just some.</li>
@@ -2992,8 +2992,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p><strong>Stationary points</strong> occur where <InlineMath math="f'(x) = 0" />. Classify them using the second derivative: <InlineMath math="f''(x) > 0" /> gives a minimum, <InlineMath math="f''(x) < 0" /> gives a maximum. A <strong>point of inflection</strong> is where the concavity changes — where <InlineMath math="f''(x) = 0" /> <em>and</em> <InlineMath math="f''" /> changes sign.</p>
             <p><strong>The Golden Rule:</strong> solve <InlineMath math="f'(x) = 0" /> for the stationary points, then use the sign of <InlineMath math="f''(x)" /> to classify each; for an inflection, confirm the concavity actually changes.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong><InlineMath math="f''(x) = 0" /> is not enough:</strong> an inflection also needs a genuine change of sign in <InlineMath math="f''" />.</li>
                 <li><strong>Missing the <InlineMath math="y" />-coordinate:</strong> give full coordinates for each stationary point.</li>
@@ -3038,8 +3038,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>On a <strong>closed interval</strong> <InlineMath math="[a, b]" />, the greatest and least values of a continuous function occur either at a stationary point inside the interval or at an endpoint. The method is: find the stationary points in <InlineMath math="(a, b)" />, then evaluate the function at those points and at both endpoints, and compare.</p>
             <p><strong>The Golden Rule:</strong> on a closed interval, always evaluate the endpoints as well as the interior stationary points — the extreme value is often at an end.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting endpoints:</strong> checking only stationary points can miss the true maximum or minimum.</li>
                 <li><strong>Out-of-range stationary points:</strong> discard any that fall outside the interval.</li>
@@ -3086,8 +3086,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\frac{dQ}{dx} = 0 \quad \text{then check} \quad \frac{d^2Q}{dx^2}" />
             <p>A negative second derivative confirms a maximum, a positive one a minimum.</p>
             <p><strong>The Golden Rule:</strong> the modelling comes before the calculus. Write down the quantity to optimise, write down the constraint, and use the constraint to get the quantity in terms of <em>one</em> variable — only then differentiate. And always confirm the nature of the stationary point; a question about a maximum expects you to <em>show</em> it is one.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Trying to differentiate two variables:</strong> you must use the constraint to eliminate one first, or there is nothing to differentiate with respect to.</li>
                 <li><strong>Not justifying the nature:</strong> finding a stationary point is not enough — use the second derivative (or a nature table) to show it really is the maximum or minimum asked for.</li>
@@ -3165,8 +3165,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>A full <strong>curve sketch</strong> combines intercepts, stationary points, asymptotes and behaviour at infinity. <strong>Related graphs</strong> are obtained from <InlineMath math="y = f(x)" /> by transformations: <InlineMath math="f(x) + a" /> shifts up, <InlineMath math="f(x + a) " /> shifts left, <InlineMath math="af(x)" /> stretches vertically, <InlineMath math="-f(x)" /> reflects in the <InlineMath math="x" />-axis, <InlineMath math="|f(x)|" /> reflects the negative parts upward, and <InlineMath math="y = f^{-1}(x)" /> reflects in the line <InlineMath math="y = x" />.</p>
             <p><strong>The Golden Rule:</strong> apply one transformation at a time and track how the key features — roots, turning points and asymptotes — move.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Horizontal shift direction:</strong> <InlineMath math="f(x + a)" /> moves the graph <em>left</em> for <InlineMath math="a > 0" /> — the opposite of what many expect.</li>
                 <li><strong>Modulus graph:</strong> <InlineMath math="|f(x)|" /> reflects only the parts below the <InlineMath math="x" />-axis; the rest is unchanged.</li>
@@ -3219,8 +3219,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>The signal is the <em>shape</em> of the denominator: a square root of &ldquo;constant minus <InlineMath math="x^2" />&rdquo; points to <InlineMath math="\sin^{-1}" />, while &ldquo;constant plus <InlineMath math="x^2" />&rdquo; with no root points to <InlineMath math="\tan^{-1}" />. If the coefficient of <InlineMath math="x^2" /> is not <InlineMath math="1" />, factor it out first to reach the standard form.</p>
             <p>For <strong>integration by substitution</strong>, choose <InlineMath math="u" /> so that its derivative appears (up to a constant) in the integrand, and convert every part — including <InlineMath math="dx" /> — into <InlineMath math="u" />.</p>
             <p><strong>The Golden Rule:</strong> spot the <InlineMath math="\frac{f'(x)}{f(x)}" /> and <InlineMath math="g(f(x))f'(x)" /> patterns for a quick substitution, and always replace <InlineMath math="dx" /> using <InlineMath math="du = \frac{du}{dx}\,dx" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting the <InlineMath math="dx \to du" /> step:</strong> the whole integrand, including <InlineMath math="dx" />, must be in terms of <InlineMath math="u" />.</li>
                 <li><strong>Definite limits:</strong> either change the limits to <InlineMath math="u" />-values or substitute back before applying them.</li>
@@ -3292,8 +3292,8 @@ export const advancedHigherMathsData: Section[] = [
           <div className="space-y-4">
             <p>To integrate a rational function, first express it in <strong>partial fractions</strong> (dividing first if it is improper), then integrate each simpler piece. Linear factors give logarithms; some quadratic denominators give an inverse tangent.</p>
             <p><strong>The Golden Rule:</strong> decompose into partial fractions before integrating — a term <InlineMath math="\frac{A}{x-a}" /> integrates to <InlineMath math="A\ln|x-a|" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Improper fractions:</strong> divide first — you cannot decompose an improper fraction directly.</li>
                 <li><strong>Modulus in logs:</strong> the answer is <InlineMath math="\ln|x-a|" />, with the absolute value.</li>
@@ -3339,8 +3339,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\int u\,\frac{dv}{dx}\,dx = uv - \int v\,\frac{du}{dx}\,dx" />
             <p>Choose <InlineMath math="u" /> to be the factor that becomes simpler when differentiated. A useful guide is <strong>LIATE</strong> (Logarithm, Inverse trig, Algebraic, Trig, Exponential): the factor earliest in this list is usually <InlineMath math="u" />. Some integrals need parts applied more than once.</p>
             <p><strong>The Golden Rule:</strong> pick <InlineMath math="u" /> so that <InlineMath math="\frac{du}{dx}" /> is simpler, and <InlineMath math="\frac{dv}{dx}" /> as the part you can integrate; then apply <InlineMath math="uv - \int v\,\frac{du}{dx}\,dx" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Wrong choice of <InlineMath math="u" />:</strong> if the new integral is harder, you likely chose <InlineMath math="u" /> and <InlineMath math="dv" /> the wrong way round.</li>
                 <li><strong>Sign error:</strong> the formula subtracts the second integral.</li>
@@ -3434,8 +3434,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="V = \pi \int_a^b y^2\,dx" />
             <p>About the <InlineMath math="y" />-axis, between <InlineMath math="y = c" /> and <InlineMath math="y = d" />: <InlineMath math="V = \pi \int_c^d x^2\,dy" />.</p>
             <p><strong>The Golden Rule:</strong> square the radius (the function), integrate, and multiply by <InlineMath math="\pi" />; rotating about the <InlineMath math="x" />-axis uses <InlineMath math="\int y^2\,dx" />, about the <InlineMath math="y" />-axis uses <InlineMath math="\int x^2\,dy" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting to square:</strong> the integrand is <InlineMath math="y^2" /> (or <InlineMath math="x^2" />), not <InlineMath math="y" />.</li>
                 <li><strong>Wrong variable:</strong> rotation about the <InlineMath math="y" />-axis integrates with respect to <InlineMath math="y" />.</li>
@@ -3484,8 +3484,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\text{Area} = \int_c^d x\,dy" />
             <p>To use it, rearrange the equation of the curve to give <InlineMath math="x" /> in terms of <InlineMath math="y" /> before integrating.</p>
             <p><strong>The Golden Rule:</strong> for the area between curves, find the intersection points first (they are the limits), then integrate &ldquo;upper minus lower&rdquo;. If the region is bounded by the <InlineMath math="y" />-axis rather than the <InlineMath math="x" />-axis, switch to <InlineMath math="\int x\,dy" /> and use <InlineMath math="y" />-limits throughout.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Wrong way round:</strong> it is upper curve minus lower curve — check which is on top over the interval.</li>
                 <li><strong>Limits:</strong> the intersection points give the limits of integration — solve <InlineMath math="f(x) = g(x)" /> first.</li>
@@ -3554,8 +3554,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\int \frac{1}{g(y)}\,dy = \int f(x)\,dx" />
             <p>The <strong>general solution</strong> contains an arbitrary constant; a <strong>particular solution</strong> uses an initial condition to fix it.</p>
             <p><strong>The Golden Rule:</strong> separate first, integrate both sides, and include just <em>one</em> constant of integration — then apply any initial condition.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Two constants:</strong> only one constant of integration is needed — combine them into one.</li>
                 <li><strong>Forgetting the condition:</strong> use the given initial condition to find the constant for a particular solution.</li>
@@ -3605,8 +3605,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="I = e^{\int P\,dx}" />
             <p>The left side then becomes an exact derivative, <InlineMath math="\frac{d}{dx}(Iy)" />, so integrating gives <InlineMath math="Iy = \int IQ\,dx" />.</p>
             <p><strong>The Golden Rule:</strong> put the equation in standard form (coefficient of <InlineMath math="\frac{dy}{dx}" /> equal to 1) before reading off <InlineMath math="P" />, then multiply by <InlineMath math="e^{\int P\,dx}" /> and recognise the left side as <InlineMath math="\frac{d}{dx}(Iy)" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Not in standard form:</strong> divide through so the <InlineMath math="\frac{dy}{dx}" /> coefficient is 1 before identifying <InlineMath math="P" />.</li>
                 <li><strong>Integrating factor:</strong> use <InlineMath math="e^{\int P\,dx}" /> with no separate constant.</li>
@@ -3658,8 +3658,8 @@ export const advancedHigherMathsData: Section[] = [
               <li>Complex roots <InlineMath math="p \pm qi" />: <InlineMath math="y = e^{px}(A\cos qx + B\sin qx)" /></li>
             </ul>
             <p><strong>The Golden Rule:</strong> solve the auxiliary equation first — the type of roots (distinct real, repeated, or complex) determines which of the three solution forms to use.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Repeated root:</strong> you need the <InlineMath math="(A + Bx)" /> form, not just <InlineMath math="Ae^{mx}" />.</li>
                 <li><strong>Complex roots:</strong> use the <InlineMath math="e^{px}(A\cos qx + B\sin qx)" /> form.</li>
@@ -3717,8 +3717,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="y = \text{CF} + \text{PI}" />
             <p>Trial forms: a constant or polynomial for a polynomial <InlineMath math="f(x)" />, <InlineMath math="Ce^{kx}" /> for an exponential, and <InlineMath math="C\cos + D\sin" /> for a trig term. If the trial clashes with the CF, multiply it by <InlineMath math="x" />.</p>
             <p><strong>The Golden Rule:</strong> find the CF from the auxiliary equation, find a PI by substituting a suitable trial function, add them — and apply any conditions to the <em>full</em> solution, not just the CF.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Missing a part:</strong> the general solution is CF <em>plus</em> PI — both are required.</li>
                 <li><strong>Wrong trial:</strong> match the PI trial to the form of <InlineMath math="f(x)" />.</li>
@@ -3773,8 +3773,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>That last one is <strong>Newton's law of cooling</strong>. The substitution <InlineMath math="u = \theta - \theta_0" /> turns it into the same separable equation as the others.</p>
             <p>The workflow is always the same: form the equation, separate the variables and integrate, then use the given data to pin down the constants. There are usually <strong>two</strong> unknowns — the constant of integration and the constant of proportionality <InlineMath math="k" /> — so expect two pieces of information.</p>
             <p><strong>The Golden Rule:</strong> translate the words into an equation before doing any calculus, and count your unknowns against the data you have been given. If you have two unknowns and only one condition, you have mis-formed the equation.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Sign of <InlineMath math="k" />:</strong> for decay or cooling, write the minus sign into the equation and keep <InlineMath math="k" /> positive. Doing both — a minus sign <em>and</em> a negative <InlineMath math="k" /> — reverses the model.</li>
                 <li><strong>Using conditions in the wrong order:</strong> the initial condition (at <InlineMath math="t=0" />) gives the constant of integration most easily, because the exponential term becomes <InlineMath math="1" />. Find that first, then use the second condition for <InlineMath math="k" />.</li>
@@ -3862,8 +3862,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta \implies \cos\theta = \frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{a}||\mathbf{b}|}" />
             <p>The <strong>vector (cross) product</strong> <InlineMath math="\mathbf{a} \times \mathbf{b}" /> is a vector perpendicular to both, computed as a determinant. The <strong>scalar triple product</strong> <InlineMath math="\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})" /> gives the volume of the parallelepiped and is zero when the vectors are coplanar.</p>
             <p><strong>The Golden Rule:</strong> use the scalar product for angles, the vector product when you need a perpendicular direction, and the scalar triple product to test coplanarity — a zero value means coplanar.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Scalar vs vector:</strong> the dot product is a number, the cross product is a vector.</li>
                 <li><strong>Order of the cross product:</strong> <InlineMath math="\mathbf{a}\times\mathbf{b} = -(\mathbf{b}\times\mathbf{a})" /> — the order matters.</li>
@@ -3924,8 +3924,8 @@ export const advancedHigherMathsData: Section[] = [
             <BlockMath math="\text{Vector: } \mathbf{r} = \mathbf{a} + t\mathbf{d} \qquad \text{Symmetric: } \frac{x - a_1}{d_1} = \frac{y - a_2}{d_2} = \frac{z - a_3}{d_3}" />
             <p>The angle between two lines is the angle between their direction vectors.</p>
             <p><strong>The Golden Rule:</strong> a line is a point plus a direction. Given two points, subtract to get the direction, then convert freely between vector, parametric and symmetric forms.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Direction from two points:</strong> subtract the position vectors to get <InlineMath math="\mathbf{d}" />.</li>
                 <li><strong>Symmetric denominators:</strong> these are the components of the direction vector.</li>
@@ -3977,8 +3977,8 @@ export const advancedHigherMathsData: Section[] = [
             <p>The angle between a <strong>line and a plane</strong> is the one case that behaves differently. The line's direction <InlineMath math="\mathbf{d}" /> makes some angle with the normal, but the plane itself lies at <InlineMath math="90^\circ" /> to that normal — so the angle we want is the <em>complement</em>. Since <InlineMath math="\cos(90^\circ - \alpha) = \sin\alpha" />, the formula uses <strong>sine</strong>:</p>
             <BlockMath math="\sin\alpha = \frac{|\mathbf{d} \cdot \mathbf{n}|}{|\mathbf{d}||\mathbf{n}|}" />
             <p><strong>The Golden Rule:</strong> the coefficients <InlineMath math="(a, b, c)" /> in <InlineMath math="ax + by + cz = d" /> <em>are</em> the normal vector; find <InlineMath math="d" /> by substituting a point on the plane. For angles, use <InlineMath math="\cos" /> between two planes and <InlineMath math="\sin" /> between a line and a plane.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Normal from coefficients:</strong> read the normal directly from the Cartesian equation's coefficients.</li>
                 <li><strong>Three points:</strong> use a cross product of two in-plane vectors to get the normal.</li>
@@ -4049,8 +4049,8 @@ export const advancedHigherMathsData: Section[] = [
             <p><strong>Two planes.</strong> Non-parallel planes always meet in a <em>line</em>. Solve the two equations together, setting one variable equal to a parameter <InlineMath math="\lambda" />, and express the other two in terms of it.</p>
             <p><strong>Three planes.</strong> This is a <InlineMath math="3\times 3" /> system, so use Gaussian elimination. A unique solution means the planes meet at a single point; a row of zeros means they share a whole line; an inconsistent row means there is no common point at all.</p>
             <p><strong>The Golden Rule:</strong> when testing two lines, always use two different parameters, and <em>never</em> stop after solving two equations — the third equation is the entire test. Skipping it means you cannot distinguish intersecting lines from skew ones.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Using <InlineMath math="t" /> for both lines:</strong> the two lines reach the meeting point at different parameter values, so a shared letter forces a false conclusion.</li>
                 <li><strong>Skipping the third-equation check:</strong> two equations can always be solved for two unknowns — that alone proves nothing.</li>

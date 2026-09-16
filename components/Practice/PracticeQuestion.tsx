@@ -127,7 +127,7 @@ export default function PracticeQuestion({
         {!open && (
           <button
             onClick={reveal}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-white/10`}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-foreground/10`}
           >
             <Eye className="h-3.5 w-3.5" />
             Show answer
@@ -136,7 +136,7 @@ export default function PracticeQuestion({
         {hasDataBooklet && (
           <button
             onClick={() => setBooklet(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
           >
             <BookOpen className="h-3.5 w-3.5" />
             Data Booklet
@@ -148,7 +148,7 @@ export default function PracticeQuestion({
           <FormulaeButton
             courseId={courseId}
             theme={theme}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
           />
         )}
         {/* On the collapsed card, not inside the answer: a pupil scanning the
@@ -215,7 +215,7 @@ export default function PracticeQuestion({
       <div
         ref={answerRef}
         hidden={!open}
-        className="mt-3 rounded-lg bg-slate-800/60 border border-border p-4 space-y-3"
+        className="mt-3 rounded-lg bg-muted/60 border border-border p-4 space-y-3"
       >
         <div>
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">Answer</p>
@@ -229,7 +229,7 @@ export default function PracticeQuestion({
           {embedSrc && !playing && (
             <button
               onClick={play}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.text} text-sm font-medium hover:bg-white/10 transition-colors`}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.text} text-sm font-medium hover:bg-foreground/10 transition-colors`}
             >
               <Play className="h-3.5 w-3.5" />
               Watch the solution
@@ -253,7 +253,7 @@ export default function PracticeQuestion({
               href={solutionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-white/5 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               Full written solution at Maths.scot

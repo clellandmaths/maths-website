@@ -57,7 +57,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
   if (!special) {
     return (
       <div className="text-center py-16">
-        <p className="text-slate-400 mb-6">There is no revision marathon for {courseLabel} yet.</p>
+        <p className="text-muted-foreground mb-6">There is no revision marathon for {courseLabel} yet.</p>
         <button onClick={onBack} className={`${theme.text} font-medium`}>← Back to Exam Hall</button>
       </div>
     );
@@ -67,7 +67,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
     <div>
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-slate-400 hover:text-slate-200 mb-6 transition-colors"
+        className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Exam Hall
@@ -75,7 +75,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
 
       <div className="mb-8">
         <h2 className="text-2xl sm:text-3xl font-bold mb-2">{special.name}</h2>
-        <p className="text-slate-400">
+        <p className="text-muted-foreground">
           {special.questions.length} exam questions · {runs.length} topics · every topic in the course, in one session.
         </p>
       </div>
@@ -90,7 +90,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
         </button>
         <button
           onClick={() => setShowVideo(true)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-muted hover:bg-muted-hover text-foreground font-medium rounded-lg transition-colors"
         >
           <Play className="h-4 w-4" />
           Watch the full session
@@ -100,7 +100,7 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
             href={special.pdfLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-muted hover:bg-muted-hover text-foreground font-medium rounded-lg transition-colors"
           >
             <FileDown className="h-4 w-4" />
             Download the booklet
@@ -109,9 +109,9 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
       </div>
 
       {special.liveStreamDate && (
-        <div className="flex items-start gap-3 mb-8 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+        <div className="flex items-start gap-3 mb-8 p-4 bg-card border border-border rounded-xl">
           <Radio className={`h-5 w-5 shrink-0 mt-0.5 ${theme.text}`} />
-          <p className="text-sm text-slate-300">
+          <p className="text-sm text-foreground">
             Originally streamed live on <span className="font-medium">{special.liveStreamDate}</span>.
             The full recording and every question below are free to use any time.
           </p>
@@ -126,9 +126,9 @@ export default function Marathon({ courseId, courseLabel, onBack }: Props) {
           <button
             key={`${run.topic}-${run.startIndex}`}
             onClick={() => setStartIndex(run.startIndex)}
-            className="flex items-center justify-between gap-3 text-left px-4 py-3 bg-slate-900 border border-slate-800 rounded-lg hover:border-white/25 transition-colors group"
+            className="flex items-center justify-between gap-3 text-left px-4 py-3 bg-card border border-border rounded-lg hover:border-foreground/25 transition-colors group"
           >
-            <span className="text-sm text-slate-200 group-hover:text-white transition-colors">
+            <span className="text-sm text-foreground group-hover:text-white transition-colors">
               {run.topic}
             </span>
             <span className="shrink-0 font-mono text-xs text-muted-foreground">

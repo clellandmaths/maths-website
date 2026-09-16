@@ -199,13 +199,13 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
 
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col">
+      <div className="fixed inset-0 z-50 bg-background flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-800">
+        <div className="flex items-center justify-between p-4 border-b border-border">
           <div className="flex items-center gap-1 min-w-0">
             <button
               onClick={onClose}
-              className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
             >
               <X className="h-5 w-5" />
               <span className="hidden sm:inline text-sm">Close</span>
@@ -217,7 +217,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             {backTo && (
               <Link
                 href={backTo.href}
-                className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 transition-colors min-w-0"
+                className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors min-w-0"
               >
                 <ArrowLeft className="h-4 w-4 shrink-0" />
                 <span className="text-sm truncate">{backTo.label}</span>
@@ -225,9 +225,9 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             )}
           </div>
           <div className="text-right">
-            <p className="text-slate-400 text-sm">
+            <p className="text-muted-foreground text-sm">
               Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
-              <span className="text-slate-300">{position.total}</span>
+              <span className="text-foreground">{position.total}</span>
             </p>
             {/* A twin says what it is and where it came from. Leaving the paper
                 question's own label up there would credit this question to a
@@ -250,7 +250,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {shown.topics?.slice(0, 3).map((topic) => (
                 <span
                   key={topic}
-                  className="px-2 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded"
+                  className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
                 >
                   {topic}
                 </span>
@@ -263,7 +263,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               const hasImages = imageSrcs.length > 0;
 
               return (
-                <div className={`flex-1 min-h-0 overflow-hidden bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8 ${hasImages ? 'lg:grid lg:grid-cols-[3fr_2fr] lg:gap-6' : 'lg:flex lg:flex-col lg:items-center lg:text-center'}`}>
+                <div className={`flex-1 min-h-0 overflow-hidden bg-card border border-border rounded-xl p-6 md:p-8 ${hasImages ? 'lg:grid lg:grid-cols-[3fr_2fr] lg:gap-6' : 'lg:flex lg:flex-col lg:items-center lg:text-center'}`}>
                   {/* Text column — scrollable if question is long */}
                   <div className={hasImages ? 'lg:[&_img]:!hidden' : ''}>
                     <MathRenderer
@@ -275,7 +275,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                       // device it matters most on, while the page behind it
                       // was 20px. The app sets 20px from the start and that is
                       // the size this was being measured against.
-                      className="text-slate-200 question-content text-xl md:text-2xl leading-relaxed"
+                      className="text-foreground question-content text-xl md:text-2xl leading-relaxed"
                     />
                   </div>
                   {/* Desktop only: images absolutely positioned so they never affect layout sizing */}
@@ -305,7 +305,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                     key={file.url}
                     href={file.url}
                     download
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-sm font-medium transition-colors`}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                   >
                     <Paperclip className="h-4 w-4" />
                     {file.name}
@@ -319,7 +319,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {hasDataBooklet && (
                 <button
                   onClick={() => setShowBooklet(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
                 >
                   <BookOpen className="h-5 w-5" />
                   Data Booklet
@@ -329,7 +329,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 <FormulaeButton
                   courseId={courseId}
                   theme={theme}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors"
                 />
               )}
               {/* Before the answer button, deliberately: a pupil who is stuck
@@ -345,7 +345,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                      be 32px tall and 73px wide next to four 48px full-width
                      ones — the smallest control in the row, and the one a stuck
                      pupil is looking for. */
-                  buttonClassName={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap rounded-lg px-6 py-3 font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                  buttonClassName={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap rounded-lg px-6 py-3 font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                 />
               )}
               {allowAnswers && (
@@ -353,7 +353,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 onClick={() => setShowAnswer(!showAnswer)}
                 className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium transition-colors ${
                   showAnswer
-                    ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground'
                     : `${theme.bg} ${theme.bgHover} text-white`
                 }`}
               >
@@ -392,7 +392,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               ) : (
                 // Neither a video nor marking instructions: say so, rather
                 // than leaving a gap that reads as a missing button
-                <span className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-dashed border-slate-700 text-muted-dim font-medium">
+                <span className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-dashed border-muted text-muted-dim font-medium">
                   <Play className="h-5 w-5" />
                   Video solution coming soon
                 </span>
@@ -438,11 +438,11 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
 
             {/* Answer Section */}
             {allowAnswers && showAnswer && (
-              <div ref={answerRef} className="shrink-0 mt-4 bg-slate-900 border border-slate-800 rounded-xl p-6 md:p-8">
+              <div ref={answerRef} className="shrink-0 mt-4 bg-card border border-border rounded-xl p-6 md:p-8">
                 <h3 className={`text-sm font-medium ${theme.text} mb-3`}>Answer:</h3>
                 <MathRenderer
                   html={shown.answer}
-                  className="text-slate-200 answer-content text-xl leading-relaxed"
+                  className="text-foreground answer-content text-xl leading-relaxed"
                 />
                 {shown.solutionUrl && (
                   // Guided practice questions from maths.scot: linking to his
@@ -452,7 +452,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                     href={shown.solutionUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 mt-4 text-sm text-slate-400 hover:text-slate-200 underline transition-colors"
+                    className="inline-flex items-center gap-1.5 mt-4 text-sm text-muted-foreground hover:text-foreground underline transition-colors"
                   >
                     Full written solution at Maths.scot
                   </a>
@@ -463,12 +463,12 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
         </div>
 
         {/* Navigation Footer */}
-        <div className="border-t border-slate-800 p-4">
+        <div className="border-t border-border p-4">
           <div className="max-w-4xl lg:max-w-none mx-auto lg:px-12 xl:px-16 flex justify-between gap-4">
             <button
               onClick={goPrev}
               disabled={isFirst}
-              className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-6 py-3 bg-muted hover:bg-muted-hover text-foreground font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="h-5 w-5" />
               Previous
@@ -478,7 +478,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               className={`flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-colors ${
                 isLast
                   ? 'bg-teal-600 hover:bg-teal-500 text-white'
-                  : 'bg-slate-800 hover:bg-slate-700 text-white'
+                  : 'bg-muted hover:bg-muted-hover text-foreground'
               }`}
             >
               {isLast ? 'Finish' : 'Next'}

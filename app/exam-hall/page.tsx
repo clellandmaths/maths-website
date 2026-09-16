@@ -126,9 +126,9 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="text-center max-w-5xl w-full">
-        <GraduationCap className="h-16 w-16 mx-auto text-signal-magenta mb-6" />
+        <GraduationCap className="h-16 w-16 mx-auto text-accent mb-6" />
         <h1 className="font-display text-3xl font-bold mb-3">Welcome to the Exam Hall</h1>
-        <p className="text-slate-400 mb-10 text-lg">
+        <p className="text-muted-foreground mb-10 text-lg">
           Your distraction-free zone. Sync your exam countdown, track your topic checklist, and run timed warm-ups.
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -137,7 +137,7 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
             return (
               <div
                 key={id}
-                className="group relative flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-white/20 hover:scale-[1.02] transition-all"
+                className="group relative flex flex-col p-8 bg-card border border-border rounded-2xl overflow-hidden hover:border-foreground/20 hover:scale-[1.02] transition-all"
               >
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cardTheme.gradient}`} />
                 <h2 className={`text-2xl font-bold mb-1 ${cardTheme.text}`}>
@@ -146,7 +146,7 @@ function ExamHallLobby({ onSelect }: { onSelect: (course: Course) => void }) {
                 <p className="text-sm text-muted-dim mb-6">{info.papers}</p>
                 <ul className="space-y-3 text-left mb-8">
                   {lobbyFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-slate-300">
+                    <li key={feature} className="flex items-center gap-3 text-foreground">
                       <Check className={`h-5 w-5 ${cardTheme.text} shrink-0`} />
                       <span>{feature}</span>
                     </li>
@@ -209,7 +209,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
       {/* Back button */}
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-colors mb-6"
+        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
       >
         <ArrowLeft className="h-5 w-5" />
         <span className="text-sm font-medium">Back to Dashboard</span>
@@ -218,10 +218,10 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
       {/* Title + overall progress */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-1">{info.label} Topic Checklist</h2>
-        <p className="text-slate-400 text-sm mb-4">
+        <p className="text-muted-foreground text-sm mb-4">
           {totalChecked}/{totalSubtopics} complete · {progressPercent}%
         </p>
-        <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
+        <div className="h-3 bg-muted rounded-full overflow-hidden">
           <div
             className={`h-full ${theme.progress} rounded-full transition-all duration-300`}
             style={{ width: `${progressPercent}%` }}
@@ -237,17 +237,17 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
           const catChecked = countCategoryChecked(cat, checked);
 
           return (
-            <div key={cat.category} className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+            <div key={cat.category} className="bg-card border border-border rounded-xl overflow-hidden">
               {/* Category header */}
               <button
                 onClick={() => toggleCategory(cat.category)}
-                className="w-full flex items-center justify-between p-4 hover:bg-slate-800/50 transition-colors"
+                className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   {isCollapsed ? (
-                    <ChevronRight className="h-5 w-5 text-slate-500" />
+                    <ChevronRight className="h-5 w-5 text-muted-dim" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-500" />
+                    <ChevronDown className="h-5 w-5 text-muted-dim" />
                   )}
                   <span className="text-lg font-semibold">{cat.category}</span>
                 </div>
@@ -261,7 +261,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                 <div className="px-4 pb-4">
                   {Object.entries(cat.topics).map(([mainTopic, subtopics]) => (
                     <div key={mainTopic} className="mb-4 last:mb-0">
-                      <p className="text-sm font-medium text-slate-300 mb-2 ml-8">{mainTopic}</p>
+                      <p className="text-sm font-medium text-foreground mb-2 ml-8">{mainTopic}</p>
                       <div className="space-y-1">
                         {subtopics.map((sub) => {
                           const isChecked = checked.has(sub);
@@ -269,18 +269,18 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
                             <button
                               key={sub}
                               onClick={() => toggleSubtopic(sub)}
-                              className="w-full flex items-center gap-3 py-2 px-3 ml-5 rounded-lg hover:bg-slate-800/50 transition-colors text-left"
+                              className="w-full flex items-center gap-3 py-2 px-3 ml-5 rounded-lg hover:bg-muted/50 transition-colors text-left"
                             >
                               <div
                                 className={`flex items-center justify-center h-5 w-5 rounded-full border-2 shrink-0 transition-colors ${
                                   isChecked
                                     ? `${theme.bg} ${theme.border}`
-                                    : 'border-slate-600'
+                                    : 'border-muted'
                                 }`}
                               >
                                 {isChecked && <Check className="h-3 w-3 text-white" />}
                               </div>
-                              <span className={`text-sm transition-colors ${isChecked ? 'text-muted-dim line-through' : 'text-slate-300'}`}>
+                              <span className={`text-sm transition-colors ${isChecked ? 'text-muted-dim line-through' : 'text-foreground'}`}>
                                 {sub}
                               </span>
                             </button>
@@ -342,7 +342,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={onChangeCourse}
-            className="flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-colors"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className={`text-sm font-medium px-2 py-1 ${theme.tint} ${theme.text} rounded-md`}>
@@ -355,18 +355,18 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
             {info.label} <span className={theme.text}>Exam Hall</span>
           </h1>
-          <p className="text-slate-400 max-w-lg mx-auto">
+          <p className="text-muted-foreground max-w-lg mx-auto">
             Focused revision mode. Countdown to your exam, warm up with quick questions, and track your progress.
           </p>
         </div>
 
         {/* Exam Countdown */}
-        <div className={`relative overflow-hidden bg-slate-900 border border-slate-800 rounded-xl p-6 mb-8`}>
+        <div className={`relative overflow-hidden bg-card border border-border rounded-xl p-6 mb-8`}>
           <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${theme.gradient}`} />
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-3">
               <Clock className={`h-6 w-6 ${theme.text}`} />
-              <p className="text-slate-300 font-medium">
+              <p className="text-foreground font-medium">
                 {info.examDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}{', '}
                 {info.examDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true })}
                 {info.estimated && (
@@ -375,7 +375,7 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
               </p>
             </div>
             {countdown.passed ? (
-              <p className="text-xl font-bold text-slate-400">Exam has passed</p>
+              <p className="text-xl font-bold text-muted-foreground">Exam has passed</p>
             ) : (
               <p className={`text-2xl font-bold ${theme.text}`}>
                 {countdown.days} days · {countdown.hours} hours to go
@@ -423,18 +423,18 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             {/* Warm Up Card */}
             <div
               onClick={() => setShowWarmUp(true)}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-white/25 transition-all cursor-pointer group"
+              className="bg-card border border-border rounded-xl p-6 hover:border-foreground/25 transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 bg-orange-600/20 rounded-lg">
                   <Flame className="h-8 w-8 text-orange-500" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-50">Warm Up</h2>
-                  <p className="text-slate-400">Daily revision session</p>
+                  <h2 className="text-xl font-bold text-foreground">Warm Up</h2>
+                  <p className="text-muted-foreground">Daily revision session</p>
                 </div>
               </div>
-              <p className="text-slate-400 mb-4">
+              <p className="text-muted-foreground mb-4">
                 5 daily questions from across all {info.label} topics. Same questions for everyone — resets at midnight.
               </p>
               <span className={`${theme.text} group-hover:opacity-80 font-medium transition-opacity`}>
@@ -445,21 +445,21 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
             {/* Checklists Card */}
             <div
               onClick={() => setShowChecklist(true)}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-white/25 transition-all cursor-pointer group"
+              className="bg-card border border-border rounded-xl p-6 hover:border-foreground/25 transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 bg-cyan-600/20 rounded-lg">
                   <CheckSquare className="h-8 w-8 text-cyan-500" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-50">Checklists</h2>
-                  <p className="text-slate-400">Track your progress</p>
+                  <h2 className="text-xl font-bold text-foreground">Checklists</h2>
+                  <p className="text-muted-foreground">Track your progress</p>
                 </div>
               </div>
-              <p className="text-slate-400 mb-3">
+              <p className="text-muted-foreground mb-3">
                 {checkedCount}/{totalSubtopics} topics complete
               </p>
-              <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-4">
+              <div className="h-2 bg-muted rounded-full overflow-hidden mb-4">
                 <div
                   className={`h-full ${theme.progress} rounded-full transition-all duration-300`}
                   style={{ width: `${progressPercent}%` }}

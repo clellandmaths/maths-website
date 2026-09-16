@@ -208,10 +208,10 @@ export default function QuestionCard({
 
   return (
     <>
-      <div className={`bg-slate-900 border rounded-xl p-5 transition-colors ${
+      <div className={`bg-card border rounded-xl p-5 transition-colors ${
         inWorksheet
-          ? `${theme.border} ring-1 ring-white/10`
-          : 'border-slate-800 hover:border-white/20'
+          ? `${theme.border} ring-1 ring-foreground/10`
+          : 'border-border hover:border-foreground/20'
       }`}>
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
@@ -226,11 +226,11 @@ export default function QuestionCard({
                     that here printed a bare "Generated" and left a teacher
                     unable to tell what it came from. */}
                 {parentLabel && (
-                  <span className="text-slate-400 font-normal">based on {parentLabel}</span>
+                  <span className="text-muted-foreground font-normal">based on {parentLabel}</span>
                 )}
               </p>
             ) : (
-              <p className="text-slate-200 font-semibold text-sm">
+              <p className="text-foreground font-semibold text-sm">
                 {year} Paper {paperNumber} Q{fullQuestion.questionNumber}
               </p>
             )}
@@ -238,7 +238,7 @@ export default function QuestionCard({
               {mainTopics.slice(0, 2).map((topic) => (
                 <span
                   key={topic}
-                  className="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded"
+                  className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded"
                 >
                   {topic}
                 </span>
@@ -256,8 +256,8 @@ export default function QuestionCard({
               disabled={variant ? variantAdded || drawing : false}
               className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors disabled:opacity-60 ${
                 (variant ? variantAdded : inWorksheet)
-                  ? `${theme.tint} ${theme.text} hover:bg-white/10`
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300'
+                  ? `${theme.tint} ${theme.text} hover:bg-foreground/10`
+                  : 'bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground'
               }`}
             >
               {(variant ? variantAdded : inWorksheet) ? (
@@ -276,7 +276,7 @@ export default function QuestionCard({
             {variant ? (
               <button
                 onClick={() => showFace(null)}
-                className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300 transition-colors"
+                className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="h-3 w-3" />
                 Exam question
@@ -293,8 +293,8 @@ export default function QuestionCard({
                   aria-label="Show a new question like this one"
                   className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors disabled:opacity-50 ${
                     added > 0
-                      ? `${theme.tint} ${theme.text} hover:bg-white/10`
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-300'
+                      ? `${theme.tint} ${theme.text} hover:bg-foreground/10`
+                      : 'bg-muted text-muted-foreground hover:bg-muted-hover hover:text-foreground'
                   }`}
                 >
                   {drawing
@@ -319,7 +319,7 @@ export default function QuestionCard({
             live: the count comes from the worksheet, so removing one from the
             sheet makes it available again. */}
         {exhausted && (
-          <p className="text-xs text-slate-400 mb-2">
+          <p className="text-xs text-muted-foreground mb-2">
             {drawn.current.length > 0
               ? `That is all ${drawn.current.length} different question${drawn.current.length === 1 ? '' : 's'} this one can make.`
               : 'Every variation of this question is already on your worksheet.'}
@@ -342,7 +342,7 @@ export default function QuestionCard({
         <MathRenderer
           key={variant?.uid ?? 'exam'}
           html={shown.question}
-          className="card-face text-slate-300 mb-4 question-content question-card text-sm xl:text-base 2xl:text-lg leading-relaxed"
+          className="card-face text-foreground mb-4 question-content question-card text-sm xl:text-base 2xl:text-lg leading-relaxed"
         />
 
         {/* Attachments — Higher Apps data files (CSV/XLSX/DOCX). Never on a
@@ -354,7 +354,7 @@ export default function QuestionCard({
                 key={file.url}
                 href={file.url}
                 download
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-white/10 rounded-lg text-xs font-medium transition-colors`}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
               >
                 <Paperclip className="h-3 w-3" />
                 {file.name}
@@ -367,7 +367,7 @@ export default function QuestionCard({
         <div className="pt-3 mt-3 flex items-start justify-between gap-3">
           <button
             onClick={() => setShowAnswer(!showAnswer)}
-            className="flex items-center gap-2 text-slate-400 hover:text-slate-300 text-sm font-medium mb-2"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-medium mb-2"
           >
             {showAnswer ? (
               <>
@@ -403,18 +403,18 @@ export default function QuestionCard({
         {showAnswer && (
           <MathRenderer
             html={shown.answer}
-            className="bg-slate-800/50 rounded-lg p-3 text-slate-300 answer-content"
+            className="bg-muted/50 rounded-lg p-3 text-foreground answer-content"
           />
         )}
 
         {/* What to do with the one on screen. Only on the variation face — the
             exam question has no "another", there is only the one. */}
         {variant && (
-          <div className="flex flex-wrap items-center gap-2 pt-3 mt-3 border-t border-slate-800">
+          <div className="flex flex-wrap items-center gap-2 pt-3 mt-3 border-t border-border">
             <button
               onClick={handleShowVariation}
               disabled={drawing}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium bg-muted text-foreground hover:bg-muted-hover transition-colors disabled:opacity-50"
             >
               {drawing
                 ? <Loader2 className="h-3 w-3 animate-spin" />
@@ -424,14 +424,14 @@ export default function QuestionCard({
             <button
               onClick={() => handleAddSeveral(5)}
               disabled={drawing}
-              className={`px-2.5 py-1 rounded text-xs font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+              className={`px-2.5 py-1 rounded text-xs font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
             >
               Add 5 like it
             </button>
             {/* The video is of the paper question, worked with different
                 numbers. A pupil who is not told that concludes they are wrong. */}
             {variant.videoOf && (
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-muted-dim">
                 worked example: {variant.videoOf}
               </span>
             )}

@@ -50,10 +50,10 @@ export default function HintPanel({
         onClick={onClose}
       >
         <div
-          className="flex max-h-[88vh] w-full flex-col rounded-t-2xl border border-slate-800 bg-slate-950 sm:max-w-2xl sm:rounded-2xl"
+          className="flex max-h-[88vh] w-full flex-col rounded-t-2xl border border-border bg-background sm:max-w-2xl sm:rounded-2xl"
           onClick={e => e.stopPropagation()}
         >
-          <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3 sm:px-6">
+          <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-6">
             <span className={`flex items-center gap-2 font-semibold ${theme.text}`}>
               <Lightbulb className="h-5 w-5" />
               Hint
@@ -61,7 +61,7 @@ export default function HintPanel({
             <button
               onClick={onClose}
               aria-label="Close the hint"
-              className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <X className="h-5 w-5" />
             </button>
@@ -70,10 +70,10 @@ export default function HintPanel({
           <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6">
             {/* The question, small and first, so the hint has something to be
                 about. */}
-            <div className="mb-4 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
+            <div className="mb-4 rounded-lg border border-border bg-card/60 p-3">
               <MathRenderer
                 html={question.question}
-                className="question-content text-sm text-slate-400"
+                className="question-content text-sm text-muted-foreground"
               />
             </div>
 
@@ -89,20 +89,20 @@ export default function HintPanel({
         */}
         <div className={body}>
           <span className={`font-semibold ${theme.text}`}>What it asks: </span>
-          <MathRenderer html={staged.skill} className="inline text-slate-300" />
+          <MathRenderer html={staged.skill} className="inline text-foreground" />
         </div>
         {shown > 1 && (
           <div className={body}>
             <span className={`font-semibold ${theme.text}`}>How the marks go: </span>
-            <MathRenderer html={staged.method} className="inline text-slate-300" />
+            <MathRenderer html={staged.method} className="inline text-foreground" />
           </div>
         )}
         {staged.rungs.slice(0, Math.max(0, shown - 2)).map((rung, i) => (
-          <div key={i} className="border-t border-slate-800 pt-2">
+          <div key={i} className="border-t border-border pt-2">
             <div className="flex items-start gap-2">
               <MathRenderer
                 html={rung.move}
-                className={`answer-content flex-1 ${body} text-slate-300`}
+                className={`answer-content flex-1 ${body} text-foreground`}
               />
               {/* **A move worth 0 shows nothing at all.** Two variations are
                   worth a single mark and still take two moves to explain —
@@ -110,7 +110,7 @@ export default function HintPanel({
                   those earns nothing on its own. "0 marks" beside a hint
                   reads as a fault; an absent chip reads as what it is. */}
               {rung.marks !== undefined && rung.marks > 0 && (
-                <span className="shrink-0 rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-slate-400">
+                <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
                   {rung.marks} mark{rung.marks === 1 ? '' : 's'}
                 </span>
               )}
@@ -120,13 +120,13 @@ export default function HintPanel({
             {rung.shows && (
               <MathRenderer
                 html={rung.shows}
-                className={`answer-content mt-1 ${aside} text-slate-400`}
+                className={`answer-content mt-1 ${aside} text-muted-foreground`}
               />
             )}
           </div>
         ))}
         {!more && (
-          <div className="border-t border-slate-800 pt-2">
+          <div className="border-t border-border pt-2">
             <p className="text-xs text-muted-foreground">
               {staged.heldBack
                 ? 'That is as far as a hint goes — the last step is the answer itself.'
@@ -168,11 +168,11 @@ export default function HintPanel({
           </div>
 
           {more && (
-            <div className="border-t border-slate-800 px-4 py-3 sm:px-6">
+            <div className="border-t border-border px-4 py-3 sm:px-6">
               <button
                 onClick={onReveal}
                 disabled={loading}
-                className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-white/10`}
+                className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
               >
                 <Lightbulb className="h-4 w-4" />
                 {/* **"Next step (k of N)" would lie now.** N used to be the

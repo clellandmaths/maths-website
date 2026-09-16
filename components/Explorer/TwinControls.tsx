@@ -33,7 +33,7 @@ interface Props {
 }
 
 const BUTTON =
-  'w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors disabled:opacity-60';
+  'w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground transition-colors disabled:opacity-60';
 
 export default function TwinControls({
   courseId, question, showing, alsoExclude, onDrawn, onBack,
@@ -48,7 +48,7 @@ export default function TwinControls({
         alsoExclude={alsoExclude}
         onDrawn={onDrawn}
         className={BUTTON}
-        noticeClassName="w-full text-center text-sm text-slate-400"
+        noticeClassName="w-full text-center text-sm text-muted-foreground"
       />
       {showing && (
         <button onClick={onBack} className={BUTTON}>

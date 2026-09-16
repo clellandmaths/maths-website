@@ -12,7 +12,7 @@ export const national5MathsData: Section[] = [
         title: "Fractions",
         videoUrl: "https://www.youtube.com/embed/53PsE0cXAu0",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Candidates must be able to perform operations and combinations of operations on fractions, including mixed numbers (e.g., <InlineMath math="3\tfrac{1}{2}" />, <InlineMath math="1\tfrac{1}{3}" />, <InlineMath math="1\tfrac{1}{4}" />).
             </p>
@@ -23,8 +23,8 @@ export const national5MathsData: Section[] = [
               A key skill is understanding the interrelationships between fractions, decimal fractions, and percentages to choose an efficient route to a solution.
             </p>
             <p><strong>The Golden Rule:</strong> before you multiply or divide, turn every mixed number into a top-heavy (improper) fraction. Before you add or subtract, find a common denominator. Get those set up first and the rest is routine.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Adding the denominators:</strong> <InlineMath math="\frac{1}{3} + \frac{1}{4}" /> is <em>not</em> <InlineMath math="\frac{2}{7}" />. Only the numerators are added, once the denominators match.</li>
                 <li><strong>Multiplying mixed numbers directly:</strong> <InlineMath math="2\frac{1}{2} \times 1\frac{1}{3}" /> is not <InlineMath math="2\frac{1}{6}" />. Convert to <InlineMath math="\frac{5}{2} \times \frac{4}{3}" /> first.</li>
@@ -125,22 +125,22 @@ export const national5MathsData: Section[] = [
         title: "Percentages",
         videoUrl: "https://www.youtube.com/embed/Mi6kgQZmX7M",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Appreciation/Depreciation</h4>
+              <h4 className="text-foreground font-semibold">Appreciation/Depreciation</h4>
               <p>
                 You need to calculate compound interest and depreciation over time. It is encouraged to use the most efficient strategy, such as calculating a compound percentage using a decimal multiplier and a power, rather than a year-by-year approach.
               </p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Reverse Percentages</h4>
+              <h4 className="text-foreground font-semibold">Reverse Percentages</h4>
               <p>
                 You must know how to use reverse percentages to calculate an original quantity before a percentage was added or subtracted (e.g., calculating the price excluding VAT).
               </p>
             </div>
             <p><strong>The Golden Rule:</strong> decide first whether the original amount (100%) is known or unknown. If it is known, apply a multiplier. If it is <em>unknown</em> — the price already includes the change — it is a reverse percentage, so work back from the percentage you are given.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Treating a reverse percentage as a normal one:</strong> if £60 is the price after 20% off, that £60 is <InlineMath math="80\%" /> of the original — you cannot just add 20% of £60 back on.</li>
                 <li><strong>Adding percentages across years:</strong> two years of 10% growth is <InlineMath math="\times 1.1^2 = 1.21" />, a 21% rise, not 20%. Compound with a power.</li>
@@ -242,7 +242,7 @@ export const national5MathsData: Section[] = [
         title: "Surds",
         videoUrl: "https://www.youtube.com/embed/EDgTB5nobk0",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Surds involve simplifying expressions and rationalising the denominators of fractions.
             </p>
@@ -250,13 +250,13 @@ export const national5MathsData: Section[] = [
               Exact values are an important method of communication in maths, science, and technology.
             </p>
             <p>The key rules to memorise are:</p>
-            <div className="bg-slate-800 p-4 rounded-lg space-y-3">
+            <div className="bg-muted p-4 rounded-lg space-y-3">
                <BlockMath math="\sqrt{ab} = \sqrt{a} \times \sqrt{b}" />
                <BlockMath math="\sqrt{\dfrac{a}{b}} = \dfrac{\sqrt{a}}{\sqrt{b}}" />
             </div>
             <p><strong>The Golden Rule:</strong> to simplify, split off the <em>largest</em> square factor. To rationalise, multiply top and bottom by the surd on the denominator. Both leave the value unchanged — you are only rewriting it in a tidier form.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Not using the largest square factor:</strong> writing <InlineMath math="\sqrt{72} = \sqrt{4}\sqrt{18} = 2\sqrt{18}" /> is not finished — <InlineMath math="\sqrt{18}" /> still simplifies. Take out <InlineMath math="36" /> in one go.</li>
                 <li><strong>Adding unlike surds:</strong> <InlineMath math="\sqrt{2} + \sqrt{3}" /> does <em>not</em> equal <InlineMath math="\sqrt{5}" />. Only like surds combine, e.g. <InlineMath math="2\sqrt{3} + 4\sqrt{3} = 6\sqrt{3}" />.</li>
@@ -387,14 +387,14 @@ export const national5MathsData: Section[] = [
         title: "Indices",
         videoUrl: "https://www.youtube.com/embed/DldNSN5D0vQ",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Candidates must be able to multiply and divide using positive and negative indices, including fractions.
             </p>
             <p>
               Key laws of indices to apply include:
             </p>
-            <div className="bg-slate-800 p-4 rounded-lg space-y-4">
+            <div className="bg-muted p-4 rounded-lg space-y-4">
               <BlockMath math="(ab)^m = a^m b^m" />
               <BlockMath math="(a^m)^n = a^{mn}" />
               <BlockMath math="a^{m/n} = \sqrt[n]{a^m}" />
@@ -404,8 +404,8 @@ export const national5MathsData: Section[] = [
               Where possible, applying the laws in combination is desirable as preparation for Higher Maths.
             </p>
             <p><strong>The Golden Rule:</strong> the laws only apply when the <em>bases match</em>. With the same base, add the indices to multiply and subtract them to divide. A negative index means &ldquo;one over&rdquo;, and a fractional index means a root.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Ignoring the coefficient:</strong> <InlineMath math="(2a)^3 = 8a^3" />, not <InlineMath math="2a^3" /> — the <InlineMath math="2" /> is cubed as well.</li>
                 <li><strong>A negative index is not a negative number:</strong> <InlineMath math="x^{-2} = \frac{1}{x^2}" />, which is positive. The sign of the index controls the reciprocal, not the sign of the answer.</li>
@@ -536,7 +536,7 @@ export const national5MathsData: Section[] = [
         title: "Scientific notation",
         videoUrl: "https://www.youtube.com/embed/fepyJHUAcRk",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               You must be able to perform calculations using scientific notation.
             </p>
@@ -544,8 +544,8 @@ export const national5MathsData: Section[] = [
               It is heavily linked to science and technology to represent very large or very small numbers (e.g., ms<sup className="-mt-1">&minus;1</sup>).
             </p>
             <p><strong>The Golden Rule:</strong> a number in scientific notation is written as <InlineMath math="a \times 10^n" /> where <InlineMath math="a" /> is between 1 and 10 (that is, <InlineMath math="1 \le a < 10" />). Always check the front number is in that range — especially after a calculation, where it can drift out.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Front number out of range:</strong> <InlineMath math="42 \times 10^3" /> is not standard form. Rewrite it as <InlineMath math="4.2 \times 10^4" />.</li>
                 <li><strong>Sign of the index:</strong> small numbers below 1 take a <em>negative</em> power, e.g. <InlineMath math="0.0003 = 3 \times 10^{-4}" />.</li>
@@ -630,7 +630,7 @@ export const national5MathsData: Section[] = [
         title: "Rounding",
         videoUrl: "https://www.youtube.com/embed/AC00r7UwLEI",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               You need to round answers to a specified number of significant figures or decimal places.
             </p>
@@ -638,8 +638,8 @@ export const national5MathsData: Section[] = [
               You should consider the effects of rounding appropriately. For example, there is a precision limitation if you round an angle prematurely after calculating it using trigonometry, especially as distances increase.
             </p>
             <p><strong>The Golden Rule:</strong> significant figures are counted from the first non-zero digit; decimal places are counted after the point. Whichever you are asked for, look at the <em>next</em> digit to decide whether to round up, and keep any place-holding zeros.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Confusing the two:</strong> 2 significant figures is not the same as 2 decimal places. <InlineMath math="0.057134" /> to 2 s.f. is <InlineMath math="0.057" />; to 2 d.p. it is <InlineMath math="0.06" />.</li>
                 <li><strong>Leading zeros are not significant:</strong> in <InlineMath math="0.057" /> the first significant figure is the 5, not the zeros.</li>
@@ -728,21 +728,21 @@ export const national5MathsData: Section[] = [
         title: "Expanding",
         videoUrl: "https://www.youtube.com/embed/HFK6XYYp-FU",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Expanding Brackets</h4>
+              <h4 className="text-foreground font-semibold">Expanding Brackets</h4>
               <p>You must be able to multiply out algebraic expressions by multiplying every term inside the bracket by the term(s) outside.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Double Brackets</h4>
+              <h4 className="text-foreground font-semibold">Double Brackets</h4>
               <p>To expand two brackets, you multiply each term in the first bracket by each term in the second bracket. This is often summarised using the acronym "FOIL" (First, Outside, Inside, Last).</p>
             </div>
             <p>
               Candidates must be able to expand expressions ranging from <InlineMath math="(ax+b)(cx+d)" /> to multiplying a linear bracket by a trinomial bracket, <InlineMath math="(ax+b)(cx^2+dx+e)" />.
             </p>
             <p><strong>The Golden Rule:</strong> every term inside the bracket must be multiplied by every term outside it — none left behind. When two brackets meet, be systematic (FOIL for two-by-two, or each term of the first across the whole second), then collect like terms at the end.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Sign errors with a negative outside:</strong> <InlineMath math="-2(x+5)" /> is <InlineMath math="-2x-10" />, not <InlineMath math="-2x+10" /> — the minus multiplies <em>both</em> terms.</li>
                 <li><strong>Squaring a bracket:</strong> <InlineMath math="(x+3)^2" /> means <InlineMath math="(x+3)(x+3) = x^2+6x+9" />, not <InlineMath math="x^2+9" />.</li>
@@ -825,7 +825,7 @@ export const national5MathsData: Section[] = [
         title: "Factorising",
         videoUrl: "https://www.youtube.com/embed/oOTGt2pm5is",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Factorising is the inverse process to expanding brackets.
             </p>
@@ -836,8 +836,8 @@ export const national5MathsData: Section[] = [
               Some expressions will require a combination of these methods (e.g., extracting a common factor before factorising a difference of squares).
             </p>
             <p><strong>The Golden Rule:</strong> always check for a <em>common factor first</em> — take it outside a bracket before trying anything else. Then look at what is left: two terms is likely a difference of two squares; three terms is a trinomial.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Missing the common factor:</strong> jumping straight to a trinomial and forgetting to take out a factor first leaves the answer only partly factorised — and loses marks.</li>
                 <li><strong>Sum of two squares:</strong> <InlineMath math="x^2 + 9" /> does <em>not</em> factorise. The difference of two squares needs a minus sign.</li>
@@ -953,7 +953,7 @@ export const national5MathsData: Section[] = [
         title: "Functions",
         videoUrl: "https://www.youtube.com/embed/T__kY8zKOts",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               A function is a mathematical relationship often denoted using functional notation like <InlineMath math="f(x)" /> or <InlineMath math="g(x)" />.
             </p>
@@ -961,8 +961,8 @@ export const national5MathsData: Section[] = [
               You must be able to substitute values into a function to evaluate it, and determine a missing variable when a function's overall output is given.
             </p>
             <p><strong>The Golden Rule:</strong> <InlineMath math="f(\text{something})" /> means &ldquo;replace every <InlineMath math="x" /> in the formula with that something&rdquo;. Put the value in brackets when you substitute — it keeps signs and powers correct.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Squaring a negative:</strong> <InlineMath math="f(-3)" /> with an <InlineMath math="x^2" /> term gives <InlineMath math="(-3)^2 = 9" />, positive — not <InlineMath math="-9" />. Always bracket the substituted value.</li>
                 <li><strong><InlineMath math="f(x) = 0" /> is not the same as <InlineMath math="f(0)" />:</strong> the first solves an equation for <InlineMath math="x" />; the second substitutes <InlineMath math="x = 0" />.</li>
@@ -1060,27 +1060,27 @@ export const national5MathsData: Section[] = [
         title: "Straight line",
         videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Gradient</h4>
+              <h4 className="text-foreground font-semibold">Gradient</h4>
               <p>The gradient (m) defines the steepness of a line. The formula is <InlineMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Equation of a Line</h4>
+              <h4 className="text-foreground font-semibold">Equation of a Line</h4>
               <p>A straight line is usually written as <InlineMath math="y = mx + c" />, where <InlineMath math="m" /> is the gradient and <InlineMath math="c" /> is the <InlineMath math="y" />-intercept. When given the gradient and any point <InlineMath math="(a, b)" />, use <InlineMath math="y - b = m(x - a)" /> instead.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">The General Form</h4>
+              <h4 className="text-foreground font-semibold">The General Form</h4>
               <p>Lines are often given in the <strong>general form</strong> <InlineMath math="ax + by + c = 0" /> (for example <InlineMath math="3x - 7y - 4 = 0" />). You cannot read the gradient off this directly — you must <strong>rearrange it into <InlineMath math="y = mx + c" /></strong> first, and then <InlineMath math="m" /> and the <InlineMath math="y" />-intercept can be read off. This is one of the most frequently examined straight-line skills.</p>
               <p>To find where any line <strong>crosses the axes</strong>: set <InlineMath math="y = 0" /> to find the <InlineMath math="x" />-axis crossing, and set <InlineMath math="x = 0" /> to find the <InlineMath math="y" />-axis crossing.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Special Lines</h4>
+              <h4 className="text-foreground font-semibold">Special Lines</h4>
               <p>A <strong>horizontal</strong> line has gradient <InlineMath math="0" /> and equation <InlineMath math="y = c" />. A <strong>vertical</strong> line has an <strong>undefined</strong> gradient and equation <InlineMath math="x = k" />. <strong>Parallel</strong> lines have equal gradients.</p>
             </div>
             <p><strong>The Golden Rule:</strong> to write the equation of a line you always need a gradient and a point. Given two points, find the gradient first, then use <InlineMath math="y - b = m(x - a)" />. Given a line in general form, rearrange to <InlineMath math="y = mx + c" /> <em>before</em> reading off anything.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Reading the gradient off the general form:</strong> in <InlineMath math="3x - 7y - 4 = 0" /> the gradient is <em>not</em> 3. You must rearrange into <InlineMath math="y = mx + c" /> first — this is the single most common mistake here.</li>
                 <li><strong>Gradient formula order:</strong> subtract the coordinates in the <em>same</em> order on top and bottom. Flipping one gives the wrong sign.</li>
@@ -1185,7 +1185,7 @@ export const national5MathsData: Section[] = [
         title: "Equations",
         videoUrl: "https://www.youtube.com/embed/Nw6MwxfxLak",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               You must be able to solve linear equations, including those with rational/fractional coefficients and variables on both sides.
             </p>
@@ -1193,8 +1193,8 @@ export const national5MathsData: Section[] = [
               The primary method involves using inverse operations to add or subtract from both sides. The goal is to isolate the variable (the letter) on one side and the numerical constants on the other.
             </p>
             <p><strong>The Golden Rule:</strong> whatever you do to one side, do to the other. When brackets appear, expand them first; when fractions appear, multiply <em>every</em> term by the lowest common denominator to clear them before solving.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Clearing fractions incompletely:</strong> when you multiply through by the common denominator, every term must be multiplied — including any whole numbers, not just the fractions.</li>
                 <li><strong>Sign slips moving terms:</strong> a term crossing the equals sign changes sign. Collect the letters on the side that keeps their coefficient positive to avoid negatives.</li>
@@ -1294,7 +1294,7 @@ export const national5MathsData: Section[] = [
         title: "Inequalities",
         videoUrl: "https://www.youtube.com/embed/cB1vHiKQu2A",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Inequalities (or inequations) are solved using the exact same steps and inverse operations as linear equations, but with an inequality sign in the middle.
             </p>
@@ -1302,8 +1302,8 @@ export const national5MathsData: Section[] = [
               When evaluating real-life situations, limitations should be considered (e.g., the maximum safe load for a concrete beam).
             </p>
             <p><strong>The Golden Rule:</strong> solve an inequality exactly like an equation — <em>except</em> that multiplying or dividing both sides by a <strong>negative</strong> number flips the direction of the sign. A neat way to avoid this altogether is to collect the letters on whichever side keeps their coefficient positive.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting to flip:</strong> dividing by a negative reverses the sign — <InlineMath math="-3y \geq -6" /> becomes <InlineMath math="y \leq 2" />, not <InlineMath math="y \geq 2" />.</li>
                 <li><strong>Flipping when you add or subtract:</strong> the sign only flips for <em>multiplying or dividing</em> by a negative, never for adding or subtracting.</li>
@@ -1385,18 +1385,18 @@ export const national5MathsData: Section[] = [
         title: "Algebraic fractions",
         videoUrl: "https://www.youtube.com/embed/RQ9h0QdidV8",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Simplifying</h4>
+              <h4 className="text-foreground font-semibold">Simplifying</h4>
               <p>You can only simplify an algebraic fraction if there is a common factor or identical bracket on the top and bottom. You cannot cancel individual terms inside brackets; you must fully factorise first.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Four Operations</h4>
+              <h4 className="text-foreground font-semibold">Four Operations</h4>
               <p>You must be able to add, subtract, multiply, and divide algebraic fractions, expressing them in their simplest form. To add or subtract, use a common denominator; to divide, flip the second fraction and multiply.</p>
             </div>
             <p><strong>The Golden Rule:</strong> you can only cancel <em>factors</em>, never individual terms — so always <strong>factorise fully first</strong>, then cancel identical brackets. For adding and subtracting, the common denominator of two different brackets is simply their product.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Cancelling terms, not factors:</strong> in <InlineMath math="\frac{x+2}{x+4}" /> you cannot cancel the <InlineMath math="x" />s or the numbers — nothing cancels unless it is a whole bracket top and bottom.</li>
                 <li><strong>Subtraction sign:</strong> when subtracting, the minus applies to the <em>whole</em> numerator of the second fraction — bracket it, e.g. <InlineMath math="\ldots - (3x - 1)" />.</li>
@@ -1529,7 +1529,7 @@ export const national5MathsData: Section[] = [
         title: "Change of subject",
         videoUrl: "https://www.youtube.com/embed/i8gdFHvaL88",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Changing the subject involves algebraically rearranging a formula to isolate a different variable.
             </p>
@@ -1540,8 +1540,8 @@ export const national5MathsData: Section[] = [
               You are expected to apply this to real-life contexts using formulae from science, health, and finance (e.g., <InlineMath math="E = \frac{1}{2}mv^2" /> or calculating the radius of a sphere given its volume).
             </p>
             <p><strong>The Golden Rule:</strong> use inverse operations to peel away everything around the target variable, in reverse order (undo <InlineMath math="+/-" /> before <InlineMath math="\times/\div" />, and undo those before powers/roots). To undo a square, take a root; to undo a root, square both sides. If the target appears in two terms, factorise it out first.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Undoing in the wrong order:</strong> reverse the order of operations — deal with terms added or subtracted <em>before</em> multiplying or dividing.</li>
                 <li><strong>Clearing a fraction:</strong> if the subject is trapped in a fraction, multiply <em>both sides</em> by the denominator first.</li>
@@ -1638,7 +1638,7 @@ export const national5MathsData: Section[] = [
         title: "Simultaneous equations",
         videoUrl: "https://www.youtube.com/embed/gJ4OMGXTCyI",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               You must be able to construct simultaneous equations from a written context and solve them algebraically or graphically.
             </p>
@@ -1647,8 +1647,8 @@ export const national5MathsData: Section[] = [
             </p>
             <p>They can also be solved <strong>graphically</strong>: draw both lines on the same grid (a quick way is to find where each crosses the axes), and the coordinates of the point where they cross are the solution.</p>
             <p><strong>The Golden Rule:</strong> to eliminate a variable by adding or subtracting, its coefficients must match. Scale one or both equations until they do — then add if the matching signs are opposite, subtract if they are the same. Always substitute back to find the second variable.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Add vs subtract:</strong> if the matching terms have the <em>same</em> sign, subtract; if <em>opposite</em> signs, add. Getting this wrong is the usual error.</li>
                 <li><strong>Only scaling one equation:</strong> sometimes both equations must be multiplied (by different numbers) to make a pair of coefficients match.</li>
@@ -1758,7 +1758,7 @@ export const national5MathsData: Section[] = [
         title: "Completing the square",
         videoUrl: "https://www.youtube.com/embed/xfilfExHe2E",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Completing the Square transforms a general quadratic <InlineMath math="y = ax^2 + bx + c" /> into the vertex form <InlineMath math="y = (x + p)^2 + q" />.
             </p>
@@ -1769,8 +1769,8 @@ export const national5MathsData: Section[] = [
               Once in this form, you can immediately identify the exact coordinates of the parabola's turning point, which are given by <InlineMath math="(-p, q)" />.
             </p>
             <p><strong>The Golden Rule:</strong> <InlineMath math="p" /> is always <em>half</em> the coefficient of <InlineMath math="x" />. Write the bracket <InlineMath math="(x + p)^2" />, then subtract <InlineMath math="p^2" /> to cancel the extra it introduces, and finally add the original constant.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Forgetting to subtract <InlineMath math="p^2" />:</strong> <InlineMath math="(x + p)^2" /> expands to include an extra <InlineMath math="p^2" />, which must be subtracted back off.</li>
                 <li><strong>Sign of <InlineMath math="p" />:</strong> a negative <InlineMath math="x" /> coefficient gives a negative <InlineMath math="p" />, e.g. <InlineMath math="x^2 - 6x" /> leads to <InlineMath math="(x - 3)^2" />.</li>
@@ -1837,10 +1837,10 @@ export const national5MathsData: Section[] = [
         title: "Quadratic Graphs",
         videoUrl: "https://www.youtube.com/embed/G8dC4UTU4rY",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The graph of a quadratic function is a <strong>parabola</strong>. You should be able to read its key features straight from the equation, and — going the other way — work out the equation from a graph.</p>
             <div>
-              <h4 className="text-white font-semibold">Reading Features from the Equation</h4>
+              <h4 className="text-foreground font-semibold">Reading Features from the Equation</h4>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li><strong>Shape &amp; nature:</strong> a positive <InlineMath math="x^2" /> term gives a &ldquo;smile&rdquo; with a <em>minimum</em>; a negative <InlineMath math="x^2" /> term gives a &ldquo;frown&rdquo; with a <em>maximum</em>.</li>
                 <li><strong><InlineMath math="y" />-intercept:</strong> the constant term <InlineMath math="c" /> — the graph crosses the <InlineMath math="y" />-axis at <InlineMath math="(0, c)" />.</li>
@@ -1849,7 +1849,7 @@ export const national5MathsData: Section[] = [
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Determining the Equation from a Graph</h4>
+              <h4 className="text-foreground font-semibold">Determining the Equation from a Graph</h4>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li><strong><InlineMath math="y = kx^2" />:</strong> turning point at the origin. Substitute a known point to find <InlineMath math="k" />.</li>
                 <li><strong>Turning point form <InlineMath math="y = k(x - a)^2 + b" />:</strong> read <InlineMath math="(a, b)" /> from the turning point, then use another point to find <InlineMath math="k" />.</li>
@@ -1857,8 +1857,8 @@ export const national5MathsData: Section[] = [
               </ul>
             </div>
             <p><strong>The Golden Rule:</strong> match the information you are given to the right form — origin turning point means <InlineMath math="y = kx^2" />; a turning point elsewhere means vertex form; visible roots mean root form. Then substitute one more point to pin down <InlineMath math="k" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Sign of the roots in root form:</strong> a root at <InlineMath math="x = 3" /> gives a factor <InlineMath math="(x - 3)" />; a root at <InlineMath math="x = -3" /> gives <InlineMath math="(x + 3)" />.</li>
                 <li><strong>Turning-point sign:</strong> vertex form <InlineMath math="(x - a)^2" /> has its turning point at <InlineMath math="x = +a" />, not <InlineMath math="-a" />.</li>
@@ -1962,13 +1962,13 @@ export const national5MathsData: Section[] = [
         title: "Solving Quadratic Equations",
         videoUrl: "https://www.youtube.com/embed/G8dC4UTU4rY",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Solving</h4>
+              <h4 className="text-foreground font-semibold">Solving</h4>
               <p>To calculate the roots, set the equation to zero. Try to solve by factorising first. If that isn't possible, use the Quadratic Formula: <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">The Discriminant</h4>
+              <h4 className="text-foreground font-semibold">The Discriminant</h4>
               <p>The expression <InlineMath math="b^2 - 4ac" /> is the discriminant. It dictates the nature of the roots:</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li><InlineMath math="b^2 - 4ac > 0" />: 2 real distinct roots.</li>
@@ -1977,8 +1977,8 @@ export const national5MathsData: Section[] = [
               </ul>
             </div>
             <p><strong>The Golden Rule:</strong> to solve, always make one side <strong>zero</strong> first, then factorise if you can and use the formula only if you cannot. To describe the roots without solving, evaluate the discriminant <InlineMath math="b^2 - 4ac" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Not setting to zero:</strong> <InlineMath math="16t - t^2 = 60" /> must be rearranged to <InlineMath math="t^2 - 16t + 60 = 0" /> before factorising.</li>
                 <li><strong>Formula sign errors:</strong> substitute <InlineMath math="a, b, c" /> with their signs. If <InlineMath math="c = -4" /> then <InlineMath math="-4ac" /> becomes <InlineMath math="+" /> — mishandling this is the most common formula slip.</li>
@@ -2101,7 +2101,7 @@ export const national5MathsData: Section[] = [
         title: "Gradient",
         videoUrl: "https://www.youtube.com/embed/pXnz7Xmx8R4",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               The gradient (m) represents the steepness of a slope and is calculated using the formula <InlineMath math="m = \frac{y_2 - y_1}{x_2 - x_1}" />.
             </p>
@@ -2112,8 +2112,8 @@ export const national5MathsData: Section[] = [
               You must be able to recognise and interpret lines with a zero gradient (a perfectly horizontal line) and gradients that are undefined (a perfectly vertical line).
             </p>
             <p><strong>The Golden Rule:</strong> subtract the coordinates in the <em>same order</em> on the top and bottom of the fraction. Equal gradients mean the lines are parallel — so to prove two lines parallel, show their gradients are equal and say so.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Order consistency:</strong> if you write <InlineMath math="y_2 - y_1" /> on top you must write <InlineMath math="x_2 - x_1" /> on the bottom, in the same order — swapping one flips the sign.</li>
                 <li><strong>Zero vs undefined:</strong> a horizontal line has gradient <InlineMath math="0" />; a vertical line's gradient is <em>undefined</em> (division by zero), not 0.</li>
@@ -2182,14 +2182,14 @@ export const national5MathsData: Section[] = [
         title: "Arcs & sectors",
         videoUrl: "https://www.youtube.com/embed/B-KPRnhEcaQ",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               An arc is a fraction of the circumference, and a sector is a fraction of the circle's area.
             </p>
             <p>
               The formulae rely on the angle at the centre (x&deg;):
             </p>
-            <div className="bg-slate-800 p-4 rounded-lg space-y-4">
+            <div className="bg-muted p-4 rounded-lg space-y-4">
               <BlockMath math="\text{Arc Length} = \frac{x}{360} \times \pi d" />
               <BlockMath math="\text{Sector Area} = \frac{x}{360} \times \pi r^2" />
             </div>
@@ -2197,8 +2197,8 @@ export const national5MathsData: Section[] = [
               You must be able to calculate the length of an arc or the area of a sector, and also work backwards to find the angle at the centre or the radius when given the area/length.
             </p>
             <p><strong>The Golden Rule:</strong> everything is the fraction <InlineMath math="\frac{x}{360}" /> of a whole circle — of the <em>circumference</em> for an arc, of the <em>area</em> for a sector. Write the full formula first, then substitute; to work backwards, substitute what you know and solve for the missing letter.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Radius vs diameter:</strong> arc length uses <InlineMath math="\pi d" /> (diameter); sector area uses <InlineMath math="\pi r^2" /> (radius). Mixing them up is the classic error.</li>
                 <li><strong>Major arc / reflex angle:</strong> for a <em>major</em> arc, the angle at the centre is the reflex angle <InlineMath math="360^\circ - x" />, not the marked one.</li>
@@ -2283,7 +2283,7 @@ export const national5MathsData: Section[] = [
         title: "Volume",
         videoUrl: "https://www.youtube.com/embed/BE2iN-HM2m0",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               You must be able to calculate the volume of standard solids:
             </p>
@@ -2298,8 +2298,8 @@ export const national5MathsData: Section[] = [
               Complex problems will require calculating the volume of composite solids (shapes joined together) or simple fractional parts of solids (e.g., hemispheres).
             </p>
             <p><strong>The Golden Rule:</strong> choose the right formula, and check whether you are given the radius or the <em>diameter</em>. For a composite solid, add the parts (or subtract, if one is removed). If the volume is given and a length is unknown, substitute and rearrange.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Diameter given, not radius:</strong> if told the diameter, halve it first — a very common lost mark.</li>
                 <li><strong>The <InlineMath math="\frac{1}{3}" /> for cones and pyramids:</strong> forgetting it triples the answer.</li>
@@ -2368,21 +2368,21 @@ export const national5MathsData: Section[] = [
         title: "Pythagoras",
         videoUrl: "https://www.youtube.com/embed/P7Kaza8Ot_w",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Pythagoras' Theorem</h4>
+              <h4 className="text-foreground font-semibold">Pythagoras' Theorem</h4>
               <p>For any right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides (<InlineMath math="a^2 + b^2 = c^2" />).</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Converse of Pythagoras</h4>
+              <h4 className="text-foreground font-semibold">Converse of Pythagoras</h4>
               <p>This is used to prove whether a triangle is right-angled. You square the longest side, separately sum the squares of the two shorter sides, and compare the results.</p>
             </div>
             <p>
               You must be able to apply Pythagoras in complex situations, including 3D problems (like finding the space diagonal inside a cuboid) and circle problems involving chords.
             </p>
             <p><strong>The Golden Rule:</strong> the hypotenuse is the longest side and sits opposite the right angle. To find the hypotenuse, <em>add</em> the squares; to find a shorter side, <em>subtract</em>. In a circle, a line from the centre to the midpoint of a chord meets it at a right angle — that is what creates the triangle.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Adding when you should subtract:</strong> finding a shorter side means <InlineMath math="a^2 = c^2 - b^2" /> — subtract, don't add.</li>
                 <li><strong>Half the chord:</strong> in a circle problem, the right-angled triangle uses <em>half</em> the chord length, because the radius bisects the chord.</li>
@@ -2449,13 +2449,13 @@ export const national5MathsData: Section[] = [
         title: "Angles in shapes",
         videoUrl: "https://www.youtube.com/embed/GPN6PXMDIPo",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Polygons</h4>
+              <h4 className="text-foreground font-semibold">Polygons</h4>
               <p>The exterior angles of any regular polygon sum to 360&deg;.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Circle Properties</h4>
+              <h4 className="text-foreground font-semibold">Circle Properties</h4>
               <p>You must use circle properties to find missing angles. Key rules:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>A tangent meets a radius at exactly 90&deg;.</li>
@@ -2465,8 +2465,8 @@ export const national5MathsData: Section[] = [
               </ul>
             </div>
             <p><strong>The Golden Rule:</strong> in a circle problem, hunt for the special angles first — a tangent–radius right angle, an angle in a semicircle, or the equal base angles of an isosceles radius triangle. Mark them on the diagram, then chase the missing angle using &ldquo;angles in a triangle sum to 180&deg;&rdquo;.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Interior vs exterior:</strong> for a regular polygon, find the exterior angle (<InlineMath math="360 \div n" />) first, then subtract from 180&deg; for the interior.</li>
                 <li><strong>Two radii are equal:</strong> that is why the triangle is isosceles — the two base angles are equal, which is often the key step.</li>
@@ -2533,7 +2533,7 @@ export const national5MathsData: Section[] = [
         title: "Similarity",
         videoUrl: "https://www.youtube.com/embed/Vdr3WypZJhk",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               Similarity involves the interrelationship of scale across length, area, and volume.
             </p>
@@ -2543,8 +2543,8 @@ export const national5MathsData: Section[] = [
               <li><strong>Volume Factor:</strong> The Volume Factor is equal to the <InlineMath math="(\text{Scale Factor})^3" />.</li>
             </ul>
             <p><strong>The Golden Rule:</strong> find the linear scale factor first, as <InlineMath math="\frac{\text{new length}}{\text{old length}}" />. For lengths, multiply by the scale factor; for <em>areas</em> multiply by its square; for <em>volumes</em> multiply by its cube.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Using the linear factor for area/volume:</strong> areas scale by <InlineMath math="k^2" /> and volumes by <InlineMath math="k^3" />, not by <InlineMath math="k" />.</li>
                 <li><strong>Scaling the wrong way:</strong> to go from small to large multiply (factor &gt; 1); from large to small the factor is less than 1.</li>
@@ -2612,22 +2612,22 @@ export const national5MathsData: Section[] = [
         title: "Vectors",
         videoUrl: "https://www.youtube.com/embed/LbjRj3AIfyQ",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <div>
-              <h4 className="text-white font-semibold">Component Form & Operations</h4>
+              <h4 className="text-foreground font-semibold">Component Form & Operations</h4>
               <p>Vectors can be added or subtracted using directed line segments (nose-to-tail) or by algebraically adding/subtracting their x, y, and z components.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Magnitude</h4>
+              <h4 className="text-foreground font-semibold">Magnitude</h4>
               <p>The magnitude (length) of a vector, denoted as |a|, is calculated using Pythagoras' theorem. For a 3D vector <InlineMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix}" />, the magnitude is <InlineMath math="\sqrt{x^2 + y^2 + z^2}" />.</p>
             </div>
             <div>
-              <h4 className="text-white font-semibold">Journeys (Pathways)</h4>
+              <h4 className="text-foreground font-semibold">Journeys (Pathways)</h4>
               <p>A vector between two points can be built from a &ldquo;journey&rdquo; along other vectors, added nose-to-tail. Travelling a vector backwards reverses its sign, so <InlineMath math="\overrightarrow{BA} = -\overrightarrow{AB}" />.</p>
             </div>
             <p><strong>The Golden Rule:</strong> to add or subtract in component form, work one row (component) at a time. For a journey between two points, take any route along known vectors — adding them nose-to-tail — and reverse the sign of any vector travelled backwards.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Reverse direction:</strong> <InlineMath math="\overrightarrow{BA}" /> is the negative of <InlineMath math="\overrightarrow{AB}" /> — swapping the letters flips every sign.</li>
                 <li><strong>Scalar multiplies every component:</strong> <InlineMath math="2\mathbf{u}" /> doubles all of the components, not just the first.</li>
@@ -2710,13 +2710,13 @@ export const national5MathsData: Section[] = [
         title: "3D coordinates",
         videoUrl: "https://www.youtube.com/embed/PIwYneqDKXM",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>
               You must be able to determine the x, y, and z coordinates of a specific point from a diagram representing a 3-dimensional object (like a cuboid or pyramid).
             </p>
             <p><strong>The Golden Rule:</strong> read each coordinate as how far the point is along the <InlineMath math="x" />, then <InlineMath math="y" />, then <InlineMath math="z" /> axis from the origin. For a midpoint or a centre, take the <em>average</em> of the coordinates of the two ends (or of the corners).</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Order matters:</strong> always give coordinates as <InlineMath math="(x, y, z)" /> in that order.</li>
                 <li><strong>Points on the floor:</strong> a point on the base has <InlineMath math="z = 0" />; a point directly above another shares its <InlineMath math="x" /> and <InlineMath math="y" />.</li>
@@ -2773,14 +2773,14 @@ export const national5MathsData: Section[] = [
         title: "Area of a Triangle",
         videoUrl: "https://www.youtube.com/embed/JbWh5FXL2HA",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The area of any non-right-angled triangle can be calculated if you know the lengths of two sides and the size of the angle included between them.</p>
             <p>The formula provided on the exam sheet is:</p>
             <BlockMath math="A = \frac{1}{2}ab\sin C" />
             <p>Candidates may also be required to work backwards from a given area to calculate a missing angle or side.</p>
             <p><strong>The Golden Rule:</strong> the angle must be the one <em>between</em> the two sides you use (the included angle). Working backwards, substitute the known values and rearrange for <InlineMath math="\sin C" /> — and if the angle is described as obtuse, take <InlineMath math="180^\circ" /> minus the calculator value.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Wrong angle:</strong> the formula needs the angle <em>between</em> the two sides — not just any angle in the triangle.</li>
                 <li><strong>The obtuse case:</strong> <InlineMath math="\sin C = \sin(180^\circ - C)" />, so a value like <InlineMath math="\sin C = 0.5" /> gives both <InlineMath math="30^\circ" /> and <InlineMath math="150^\circ" /> — pick the one the question asks for.</li>
@@ -2872,13 +2872,13 @@ export const national5MathsData: Section[] = [
         title: "Sine Rule",
         videoUrl: "https://www.youtube.com/embed/EKg4x9-JCIc",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The Sine Rule is used for non-right-angled triangles when you know one corresponding side-and-angle pair, plus one additional piece of information.</p>
             <p>The formula provided on the exam sheet is:</p>
             <BlockMath math="\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}" />
             <p><strong>The Golden Rule:</strong> use the Sine Rule when you have a <em>matching pair</em> — a side and its opposite angle — plus one more piece of information. Put the unknown on top: use the fractions the &ldquo;normal&rdquo; way up to find a side, and flip them (angles on top) to find an angle.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Side opposite angle:</strong> each side pairs with the angle <em>opposite</em> it, not the one next to it.</li>
                 <li><strong>Third angle:</strong> if you are given two angles, the third is <InlineMath math="180^\circ" /> minus their sum — find it if you need its opposite side.</li>
@@ -2968,12 +2968,12 @@ export const national5MathsData: Section[] = [
         title: "Cosine Rule",
         videoUrl: "https://www.youtube.com/embed/HOf68yEUcg4",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The Cosine Rule is used to find a missing side when two sides and the included angle are known, or to find a missing angle when all three sides are known.</p>
             <p>Both forms of the formula are provided on the exam sheet:</p>
             <BlockMath math="a^2 = b^2 + c^2 - 2bc\cos A" />
             <BlockMath math="\cos A = \frac{b^2 + c^2 - a^2}{2bc}" />
-            <h4 className="text-white font-semibold">Selecting the Right Rule</h4>
+            <h4 className="text-foreground font-semibold">Selecting the Right Rule</h4>
             <p>With three tools available, the marks often go to choosing correctly. Look at what you are <em>given</em>:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Two sides + the angle between them → area.</strong> Use <InlineMath math="A = \tfrac{1}{2}ab\sin C" /> if the question asks for the area.</li>
@@ -2983,8 +2983,8 @@ export const national5MathsData: Section[] = [
             </ul>
             <p>The quickest test: if you can see a side and the angle <em>opposite</em> it, the Sine Rule will work. If you cannot, it must be the Cosine Rule.</p>
             <p><strong>The Golden Rule:</strong> reach for the Cosine Rule when the Sine Rule cannot start — that is, when you have <em>two sides and the angle between them</em> (to find the third side), or <em>all three sides</em> (to find any angle). The angle in the first form is always opposite the side you are finding.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Order of operations:</strong> work out <InlineMath math="2bc\cos A" /> as one quantity, then subtract — don't subtract before multiplying.</li>
                 <li><strong>Square-rooting:</strong> the formula gives <InlineMath math="a^2" />; remember the final square root to get <InlineMath math="a" />.</li>
@@ -3055,13 +3055,13 @@ export const national5MathsData: Section[] = [
         title: "Bearings",
         videoUrl: "https://www.youtube.com/embed/BCpGCSUkdhg",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Bearings use trigonometry (often the sine or cosine rules) to calculate a distance or direction.</p>
             <p>Bearings are always measured clockwise from North and are expressed as three digits (e.g., <InlineMath math="045^\circ" />).</p>
             <p>A common error candidates make is treating non-right-angled bearing scenarios as right-angled triangles, which leads to incorrectly using basic SOH-CAH-TOA or Pythagoras instead of the sine/cosine rules.</p>
             <p><strong>The Golden Rule:</strong> always sketch the situation with a North line at each point. Use the North lines and the angle facts (angles round a point, alternate angles between parallel Norths) to find the angle inside the triangle, then apply the Sine or Cosine Rule. To go back the other way, a <strong>back bearing</strong> differs from the original by <InlineMath math="180^\circ" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Three figures:</strong> always write bearings with three digits, e.g. <InlineMath math="072^\circ" />, not <InlineMath math="72^\circ" />.</li>
                 <li><strong>Back bearing:</strong> the reverse direction is <InlineMath math="\pm 180^\circ" /> — add 180 if the bearing is under 180, subtract if it is over.</li>
@@ -3148,7 +3148,7 @@ export const national5MathsData: Section[] = [
         title: "Trig Graphs",
         videoUrl: "https://www.youtube.com/embed/swTl5ge5HVA",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>You must be familiar with the basic shapes of <InlineMath math="y = \sin x" />, <InlineMath math="y = \cos x" />, and <InlineMath math="y = \tan x" /> graphs between <InlineMath math="0^\circ" /> and <InlineMath math="360^\circ" />.</p>
             <p>The General Equation of a Trigonometric Function is <InlineMath math="y = a\sin(bx + c) + d" />.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -3158,8 +3158,8 @@ export const national5MathsData: Section[] = [
               <li><strong>d:</strong> Vertical Shift (translation up or down).</li>
             </ul>
             <p><strong>The Golden Rule:</strong> read the four numbers off a graph like this — <InlineMath math="a = \frac{\text{max} - \text{min}}{2}" /> (amplitude), <InlineMath math="d = \frac{\text{max} + \text{min}}{2}" /> (the midline), <InlineMath math="b" /> is the number of complete waves in <InlineMath math="360^\circ" />, and <InlineMath math="c" /> is the horizontal shift.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>b is cycles, not period:</strong> if the wave repeats every <InlineMath math="120^\circ" /> then <InlineMath math="b = 360 \div 120 = 3" />.</li>
                 <li><strong>Shift direction:</strong> <InlineMath math="(x + c)" /> shifts the graph <em>left</em>, <InlineMath math="(x - c)" /> shifts it <em>right</em> — the opposite of the sign.</li>
@@ -3236,18 +3236,18 @@ export const national5MathsData: Section[] = [
         title: "Trig Equations",
         videoUrl: "https://www.youtube.com/embed/z-LJgscYobI",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>You must be able to solve trigonometric equations for a given domain (usually <InlineMath math="0^\circ \le x \le 360^\circ" />).</p>
             <p>There are usually two solutions. The CAST diagram (or the symmetry of trigonometric graphs) is used to find the related angles in different quadrants depending on whether the trig ratio is positive or negative.</p>
 
-            <h4 className="text-white font-semibold">Related Values</h4>
+            <h4 className="text-foreground font-semibold">Related Values</h4>
             <p>You may be given one value — say <InlineMath math="\sin 40^\circ = 0.643" /> — and asked to write down a <em>related</em> value without a calculator, or to put several values in order of size. Both use the same symmetry:</p>
             <BlockMath math="\sin(180^\circ - x) = \sin x \qquad \sin(180^\circ + x) = -\sin x \qquad \sin(360^\circ - x) = -\sin x" />
             <BlockMath math="\cos(360^\circ - x) = \cos x \qquad \cos(180^\circ - x) = -\cos x" />
             <p>In practice you do not need to memorise these as formulas — read them off the CAST diagram or the shape of the graph. CAST tells you the <strong>sign</strong> in each quadrant, and the related acute angle tells you the <strong>size</strong>.</p>
             <p><strong>The Golden Rule:</strong> first rearrange to get <InlineMath math="\sin x" />, <InlineMath math="\cos x" /> or <InlineMath math="\tan x" /> on its own. Take the inverse of the <em>positive</em> value to get the base angle, then use the sign to decide which two quadrants (via CAST) the solutions fall in.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Base angle from the positive value:</strong> always take <InlineMath math="\sin^{-1}" /> etc. of the <em>positive</em> number, then place the answers using the sign.</li>
                 <li><strong>Which quadrants:</strong> positive sine → Q1 &amp; Q2; negative cosine → Q2 &amp; Q3; positive tan → Q1 &amp; Q3, and so on. CAST keeps this straight.</li>
@@ -3359,14 +3359,14 @@ export const national5MathsData: Section[] = [
         title: "Trig Identities",
         videoUrl: "https://www.youtube.com/embed/7Mg-VlhLuO0",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Trigonometric identities are used to simplify expressions. While many exist, you are only required to memorise two for National 5:</p>
             <BlockMath math="\sin^2 x + \cos^2 x = 1" />
             <BlockMath math="\tan x = \frac{\sin x}{\cos x}" />
             <p><strong>Crucial Note:</strong> These formulas are not given on the exam formula sheet and must be memorised.</p>
             <p><strong>The Golden Rule:</strong> two moves solve almost everything — replace <InlineMath math="\tan x" /> with <InlineMath math="\frac{\sin x}{\cos x}" />, and swap <InlineMath math="\sin^2 x + \cos^2 x" /> for <InlineMath math="1" /> (or the rearrangements <InlineMath math="\sin^2 x = 1 - \cos^2 x" /> and <InlineMath math="\cos^2 x = 1 - \sin^2 x" />). Always show the working — these questions carry a &ldquo;show your working&rdquo; instruction.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Notation:</strong> <InlineMath math="\sin^2 x" /> means <InlineMath math="(\sin x)^2" />, not <InlineMath math="\sin(x^2)" />.</li>
                 <li><strong>Same angle:</strong> the identity <InlineMath math="\sin^2 x + \cos^2 x = 1" /> only applies when both terms have the <em>same</em> angle.</li>
@@ -3475,14 +3475,14 @@ export const national5MathsData: Section[] = [
         title: "Comparing Data Sets",
         videoUrl: "https://www.youtube.com/embed/KsQH1RBJQhw",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Candidates must calculate averages (mean or median) and measures of spread (Standard Deviation or Interquartile Range) to analyse data.</p>
             <p><strong>Crucial Update:</strong> The National 5 syllabus now requires the calculation of the Interquartile Range (IQR) (<InlineMath math="Q_3 - Q_1" />), having removed the Semi-Interquartile Range (SIQR).</p>
             <p><strong>Standard Deviation (<InlineMath math="s" />):</strong> This measures how spread out data is around the mean. The formula is provided on the exam sheet in two forms:</p>
             <BlockMath math="s = \sqrt{\frac{\sum(x - \bar{x})^2}{n - 1}}" />
             <p>and</p>
             <BlockMath math="s = \sqrt{\frac{\sum x^2 - (\sum x)^2 / n}{n - 1}}" />
-            <h4 className="text-white font-semibold mt-4">Comparing Data</h4>
+            <h4 className="text-foreground font-semibold mt-4">Comparing Data</h4>
             <p>When comparing two datasets, you must provide two distinct statements using standard Qualifications Scotland phraseology:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Compare the average (e.g., "On average, [Subject A] was higher/lower...").</li>
@@ -3490,8 +3490,8 @@ export const national5MathsData: Section[] = [
             </ul>
             <p>You must not just list the numbers; the context and comparative words are required.</p>
             <p><strong>The Golden Rule:</strong> a comparison always needs <em>two</em> statements — one about the average (which is bigger) and one about the spread (which is more consistent). A <em>smaller</em> standard deviation or IQR means the data is more consistent / less spread out.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Divide by <InlineMath math="n - 1" />:</strong> the standard-deviation formula uses <InlineMath math="n - 1" />, not <InlineMath math="n" />.</li>
                 <li><strong>Even-sized data:</strong> with an even number of values the median is the <em>average</em> of the two middle numbers, and the halves for the quartiles do not include a shared middle value.</li>
@@ -3597,15 +3597,15 @@ export const national5MathsData: Section[] = [
         // lesson video and correctly starts at the beginning.
         videoUrl: "https://www.youtube.com/embed/NkHSgrUeOPE?start=687",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>A scattergraph plots data points to show the relationship between two variables. You must be able to draw a straight "line of best fit" through the data.</p>
-            <h4 className="text-white font-semibold">Determining the Equation</h4>
+            <h4 className="text-foreground font-semibold">Determining the Equation</h4>
             <p>To find the equation of your line of best fit, you select two points that lie <strong>exactly</strong> on the line (not necessarily data points). You then calculate the gradient (<InlineMath math="m" />) and use <InlineMath math="y - b = m(x - a)" /> to find the equation in terms of the variables on the axes.</p>
-            <h4 className="text-white font-semibold">Estimating</h4>
+            <h4 className="text-foreground font-semibold">Estimating</h4>
             <p>Once you have the linear model (the equation), you must be able to use it to estimate a <InlineMath math="y" />-value for a given <InlineMath math="x" />-value (or use transposition to find <InlineMath math="x" /> given <InlineMath math="y" />).</p>
             <p><strong>The Golden Rule:</strong> pick two points that lie exactly on the <em>line</em> (not raw data points), find the gradient, then use <InlineMath math="y - b = m(x - a)" /> — and rename <InlineMath math="x" /> and <InlineMath math="y" /> to the letters on the axes. To estimate, substitute into the finished equation; to reverse it, substitute and rearrange.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Points on the line:</strong> read the two points off the drawn line where it crosses grid corners — do not use scattered data points.</li>
                 <li><strong>Rename the variables:</strong> the answer must be in the question's letters (e.g. <InlineMath math="W" /> and <InlineMath math="A" />), not <InlineMath math="x" /> and <InlineMath math="y" />.</li>

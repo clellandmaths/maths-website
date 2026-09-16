@@ -43,8 +43,8 @@ export const higherMathsData: Section[] = [
             <p>To calculate the distance between two points, we can construct a right-angled triangle and use Pythagoras' Theorem.</p>
             <p>The distance <InlineMath math="d" /> between two points <InlineMath math="(x_1, y_1)" /> and <InlineMath math="(x_2, y_2)" /> is given by:</p>
             <BlockMath math="d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}" />
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Leave the answer as a surd:</strong> the distance formula usually gives a root. Simplify it rather than rounding, especially when the result feeds into later working.</li>
               <li><strong>Squaring kills the sign:</strong> so the order of the points does not matter — but brackets around a negative difference do.</li>
@@ -81,8 +81,8 @@ export const higherMathsData: Section[] = [
             <p>The midpoint is the exact centre point of a straight line connecting two points.</p>
             <p>The midpoint of <InlineMath math="(x_1, y_1)" /> and <InlineMath math="(x_2, y_2)" /> is found by averaging the <InlineMath math="x" /> and <InlineMath math="y" /> coordinates:</p>
             <BlockMath math="\text{Midpoint} = \left(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2}\right)" />
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Add then divide, do not subtract:</strong> the midpoint averages the coordinates. Using the difference gives the length, not the middle.</li>
               <li><strong>Working backwards is common:</strong> given one endpoint and the midpoint, use <InlineMath math="x_2 = 2x_m - x_1" />. Guessing rarely works with negatives.</li>
@@ -137,8 +137,8 @@ export const higherMathsData: Section[] = [
               <li>The gradient of AB equals the gradient of BC (<InlineMath math="m_{AB} = m_{BC}" />)</li>
               <li>They share a common point (B)</li>
             </ul>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Write the conclusion out.</strong> Conclusions here are very often left unstated, and that is where the marks go. Equal gradients on their own do not finish it — state that the gradients are equal, that <InlineMath math="B" /> is common to both, and therefore the points are collinear.</li>
                 <li><strong>The common point is half the proof:</strong> two separate lines can have equal gradients and never meet. Naming the shared point is what rules that out.</li>
@@ -188,8 +188,8 @@ export const higherMathsData: Section[] = [
              <p>The gradient is also related to the angle <InlineMath math="\theta" /> the line makes with the positive x-axis:</p>
              <BlockMath math="m = \tan\theta" />
              <GradientTypes />
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>Keep the order consistent:</strong> whichever point you call the first, use it first in both the numerator and the denominator. Swapping halfway through flips the sign.</li>
                <li><strong>Rearrange before reading off <InlineMath math="m" />:</strong> from <InlineMath math="3x+2y=12" /> you must make <InlineMath math="y" /> the subject. The coefficient of <InlineMath math="x" /> in the original is not the gradient.</li>
@@ -265,25 +265,25 @@ export const higherMathsData: Section[] = [
          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=1537",
          theory: (
            <div className="space-y-8">
-             <h3 className="font-bold text-2xl text-white border-b border-white/10 pb-2 mb-6">Parallel Lines</h3>
-             <p className="mb-6">Parallel lines have <strong className="text-white">equal</strong> gradients.</p>
+             <h3 className="font-bold text-2xl text-foreground border-b border-foreground/10 pb-2 mb-6">Parallel Lines</h3>
+             <p className="mb-6">Parallel lines have <strong className="text-foreground">equal</strong> gradients.</p>
              <div className="flex justify-center w-full mb-12">
                <ParallelLines />
              </div>
              
-             <h3 className="font-bold text-2xl text-white border-b border-white/10 pb-2 mb-6">Perpendicular Lines</h3>
-             <p className="mb-4">If <InlineMath math="m_{AB} \times m_{CD} = -1" /> then AB & CD are <strong className="text-white">perpendicular</strong>.</p>
-             <p className="mb-8">If AB & CD are <strong className="text-white">perpendicular</strong>, then <InlineMath math="m_{AB} \times m_{CD} = -1" />.</p>
+             <h3 className="font-bold text-2xl text-foreground border-b border-foreground/10 pb-2 mb-6">Perpendicular Lines</h3>
+             <p className="mb-4">If <InlineMath math="m_{AB} \times m_{CD} = -1" /> then AB & CD are <strong className="text-foreground">perpendicular</strong>.</p>
+             <p className="mb-8">If AB & CD are <strong className="text-foreground">perpendicular</strong>, then <InlineMath math="m_{AB} \times m_{CD} = -1" />.</p>
              <div className="flex justify-center w-full mb-12">
                <PerpendicularLines />
              </div>
 
-             <h3 className="font-bold text-2xl text-white border-b border-white/10 pb-2 mb-6">Horizontal & Vertical Lines</h3>
+             <h3 className="font-bold text-2xl text-foreground border-b border-foreground/10 pb-2 mb-6">Horizontal & Vertical Lines</h3>
              <div className="flex justify-center w-full mb-8">
                <HorizontalVerticalLines />
              </div>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>Negative <em>and</em> reciprocal:</strong> incorrect perpendicular gradients are one of the most common slips in this whole section. Doing only half the operation — flipping the fraction but keeping the sign, or vice versa — is the usual cause. From <InlineMath math="m = \frac{2}{3}" /> the perpendicular gradient is <InlineMath math="-\frac{3}{2}" />.</li>
                  <li><strong>Whole numbers are fractions too:</strong> perpendicular to <InlineMath math="m = 4" /> is <InlineMath math="-\frac{1}{4}" />, not <InlineMath math="-4" />.</li>
@@ -325,41 +325,41 @@ export const higherMathsData: Section[] = [
          videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=1922",
          theory: (
            <div className="space-y-8 text-lg">
-             <h4 className="font-bold text-white text-xl mb-4">Perpendicular</h4>
+             <h4 className="font-bold text-foreground text-xl mb-4">Perpendicular</h4>
              <p className="mb-8">At right angles</p>
              
-             <h4 className="font-bold text-white text-xl mb-4">Bisector</h4>
-             <p className="mb-2">A line which divides another line into two <strong className="text-white">equal</strong> parts.</p>
-             <p className="text-base text-slate-300 mb-8">i.e. a line which cuts through the midpoint of another line.</p>
+             <h4 className="font-bold text-foreground text-xl mb-4">Bisector</h4>
+             <p className="mb-2">A line which divides another line into two <strong className="text-foreground">equal</strong> parts.</p>
+             <p className="text-base text-foreground mb-8">i.e. a line which cuts through the midpoint of another line.</p>
              
-             <h4 className="font-bold text-white text-xl mb-4">Perpendicular Bisector</h4>
+             <h4 className="font-bold text-foreground text-xl mb-4">Perpendicular Bisector</h4>
              <p className="mb-2">A line which divides another line into two equal parts at right angles.</p>
-             <p className="text-base text-slate-300 mb-8">i.e. a line which cuts through the midpoint of another line at right angles.</p>
+             <p className="text-base text-foreground mb-8">i.e. a line which cuts through the midpoint of another line at right angles.</p>
              
              <div className="flex flex-col gap-8 items-center w-full mb-8">
                <PerpendicularBisectorCross />
                <PerpendicularBisectorTriangle />
              </div>
 
-             <div className="border-t border-white/10 pt-8">
-               <h4 className="font-bold text-xl text-white mb-6">To find the equation:</h4>
+             <div className="border-t border-foreground/10 pt-8">
+               <h4 className="font-bold text-xl text-foreground mb-6">To find the equation:</h4>
                <ol className="list-decimal list-inside ml-4 space-y-4">
-                  <li>Find the <strong className="text-white">midpoint</strong> of the line.</li>
-                  <li>Find the <strong className="text-white">gradient</strong> of the line.</li>
-                  <li>Find the <strong className="text-white">perpendicular gradient</strong> (<InlineMath math="m_1 m_2 = -1" />).</li>
+                  <li>Find the <strong className="text-foreground">midpoint</strong> of the line.</li>
+                  <li>Find the <strong className="text-foreground">gradient</strong> of the line.</li>
+                  <li>Find the <strong className="text-foreground">perpendicular gradient</strong> (<InlineMath math="m_1 m_2 = -1" />).</li>
                   <li>Use <InlineMath math="y - b = m(x - a)" /> with the midpoint and perpendicular gradient.</li>
                </ol>
              </div>
              
              <div className="pt-8">
-               <p className="mb-4">The three perpendicular bisectors of a triangle meet at the <strong className="text-white">circumcentre</strong>.</p>
-               <p className="mb-8">The <strong className="text-white">circumcentre</strong> is the centre of the triangle's circumcircle which passes through all vertices of the triangle.</p>
+               <p className="mb-4">The three perpendicular bisectors of a triangle meet at the <strong className="text-foreground">circumcentre</strong>.</p>
+               <p className="mb-8">The <strong className="text-foreground">circumcentre</strong> is the centre of the triangle's circumcircle which passes through all vertices of the triangle.</p>
                <div className="flex justify-center w-full">
                  <Circumcentre />
                </div>
              </div>
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>Two steps, both needed:</strong> the midpoint of the line <em>and</em> the perpendicular gradient. Missing either one is the usual way marks are lost.</li>
                <li><strong>Perpendicular means negative reciprocal:</strong> flip the fraction <em>and</em> change the sign — doing only one of the two is the classic error.</li>
@@ -375,13 +375,13 @@ export const higherMathsData: Section[] = [
                question: <p>A is the point <InlineMath math="(-2, 1)" /> and B is the point <InlineMath math="(4, 7)" />. Find the equation of the perpendicular bisector of AB.</p>,
                solution: (
                  <div className="space-y-4">
-                   <p><strong className="text-white">1. Midpoint of AB:</strong></p>
+                   <p><strong className="text-foreground">1. Midpoint of AB:</strong></p>
                    <BlockMath math="\begin{aligned} M &= \left(\frac{-2+4}{2}, \frac{1+7}{2}\right) \\ &= (1, 4) \end{aligned}" />
-                   <p><strong className="text-white">2. Gradient of AB:</strong></p>
+                   <p><strong className="text-foreground">2. Gradient of AB:</strong></p>
                    <BlockMath math="\begin{aligned} m_{AB} &= \frac{7 - 1}{4 - (-2)} \\ &= \frac{6}{6} \\ &= 1 \end{aligned}" />
-                   <p><strong className="text-white">3. Perpendicular Gradient:</strong></p>
+                   <p><strong className="text-foreground">3. Perpendicular Gradient:</strong></p>
                    <BlockMath math="m_{\perp} = -1" />
-                   <p><strong className="text-white">4. Equation:</strong></p>
+                   <p><strong className="text-foreground">4. Equation:</strong></p>
                    <BlockMath math="y - 4 = -1(x - 1)" />
                    <BlockMath math="y - 4 = -x + 1" />
                    <BlockMath math="y = -x + 5 \text{ or } x + y - 5 = 0" />
@@ -396,13 +396,13 @@ export const higherMathsData: Section[] = [
           videoUrl: "https://www.youtube.com/embed/gHtYHW9h4ek?start=2342",
           theory: (
             <div className="space-y-8 text-lg">
-              <p className="mb-8">The <strong className="text-white">altitude</strong> of a triangle is a line drawn from one vertex which meets the opposite side at right angles.</p>
+              <p className="mb-8">The <strong className="text-foreground">altitude</strong> of a triangle is a line drawn from one vertex which meets the opposite side at right angles.</p>
               
               <div className="flex justify-center w-full mb-8">
                 <Altitudes />
               </div>
 
-              <div className="border-t border-white/10 pt-8">
+              <div className="border-t border-foreground/10 pt-8">
                 <ol className="list-decimal list-inside ml-4 space-y-4">
                    <li>Find the gradient of the opposite side.</li>
                    <li>Find the perpendicular gradient (<InlineMath math="m_1 m_2 = -1" />).</li>
@@ -411,13 +411,13 @@ export const higherMathsData: Section[] = [
               </div>
 
               <div className="pt-8">
-                <p className="mb-6">The three altitudes of a triangle meet at the <strong className="text-white">orthocentre</strong>.</p>
+                <p className="mb-6">The three altitudes of a triangle meet at the <strong className="text-foreground">orthocentre</strong>.</p>
                 <div className="flex justify-center w-full">
                   <Orthocentre />
                 </div>
               </div>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>An altitude is perpendicular to the opposite side:</strong> so you need the gradient of the <em>side</em>, then its negative reciprocal.</li>
                 <li><strong>It passes through the opposite vertex:</strong> use the vertex the altitude comes <em>from</em>, not a point on the side it meets.</li>
@@ -434,11 +434,11 @@ export const higherMathsData: Section[] = [
                 solution: (
                   <div className="space-y-4">
                     <p>The altitude from A meets BC at right angles.</p>
-                    <p><strong className="text-white">1. Gradient of BC:</strong></p>
+                    <p><strong className="text-foreground">1. Gradient of BC:</strong></p>
                     <BlockMath math="\begin{aligned} m_{BC} &= \frac{2 - 3}{-7 - 4} \\ &= \frac{-1}{-11} \\ &= \frac{1}{11} \end{aligned}" />
-                    <p><strong className="text-white">2. Perpendicular Gradient:</strong></p>
+                    <p><strong className="text-foreground">2. Perpendicular Gradient:</strong></p>
                     <BlockMath math="m_{\perp} = -11" />
-                    <p><strong className="text-white">3. Equation (using point A):</strong></p>
+                    <p><strong className="text-foreground">3. Equation (using point A):</strong></p>
                     <BlockMath math="y - (-5) = -11(x - 3)" />
                     <BlockMath math="y + 5 = -11x + 33" />
                     <BlockMath math="y = -11x + 28 \text{ or } 11x + y - 28 = 0" />
@@ -454,7 +454,7 @@ export const higherMathsData: Section[] = [
           theory: (
             <div className="space-y-8 text-lg">
               <div>
-                <h4 className="font-bold text-white text-xl mb-4">Median</h4>
+                <h4 className="font-bold text-foreground text-xl mb-4">Median</h4>
                 <p className="mb-8">A line which joins a vertex to the midpoint of the opposite side.</p>
               </div>
               
@@ -462,23 +462,23 @@ export const higherMathsData: Section[] = [
                 <Medians />
               </div>
 
-              <div className="border-t border-white/10 pt-8">
-                <h4 className="font-bold text-xl text-white mb-6">To find the equation:</h4>
+              <div className="border-t border-foreground/10 pt-8">
+                <h4 className="font-bold text-xl text-foreground mb-6">To find the equation:</h4>
                 <ol className="list-decimal list-inside ml-4 space-y-4">
-                   <li>Find the <strong className="text-white">midpoint</strong> of the opposite side.</li>
-                   <li>Find the <strong className="text-white">gradient</strong> between the vertex and the midpoint.</li>
+                   <li>Find the <strong className="text-foreground">midpoint</strong> of the opposite side.</li>
+                   <li>Find the <strong className="text-foreground">gradient</strong> between the vertex and the midpoint.</li>
                    <li>Use <InlineMath math="y - b = m(x - a)" /> with either the vertex or the midpoint.</li>
                 </ol>
               </div>
               
               <div className="pt-8">
-                <p className="mb-6">The three medians of a triangle meet at the <strong className="text-white">centroid</strong>.</p>
+                <p className="mb-6">The three medians of a triangle meet at the <strong className="text-foreground">centroid</strong>.</p>
                 <div className="flex justify-center w-full">
                   <Centroid />
                 </div>
               </div>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>A median goes to a midpoint:</strong> so find the midpoint of the opposite side first. No perpendicular gradient is involved — that is an altitude.</li>
                 <li><strong>Use the vertex and the midpoint:</strong> the gradient is between those two points, then apply <InlineMath math="y - b = m(x - a)" />.</li>
@@ -495,11 +495,11 @@ export const higherMathsData: Section[] = [
                  solution: (
                    <div className="space-y-4">
                      <p>The median from A meets the midpoint of BC.</p>
-                     <p><strong className="text-white">1. Midpoint of BC:</strong></p>
+                     <p><strong className="text-foreground">1. Midpoint of BC:</strong></p>
                      <BlockMath math="\begin{aligned} M &= \left(\frac{10+4}{2}, \frac{2-4}{2}\right) \\ &= (7, -1) \end{aligned}" />
-                     <p><strong className="text-white">2. Gradient from A to M:</strong></p>
+                     <p><strong className="text-foreground">2. Gradient from A to M:</strong></p>
                      <BlockMath math="\begin{aligned} m_{AM} &= \frac{-1 - (-9)}{7 - 4} \\ &= \frac{8}{3} \end{aligned}" />
-                     <p><strong className="text-white">3. Equation (using point A):</strong></p>
+                     <p><strong className="text-foreground">3. Equation (using point A):</strong></p>
                      <BlockMath math="y - (-9) = \frac{8}{3}(x - 4)" />
                      <BlockMath math="3(y + 9) = 8(x - 4)" />
                      <BlockMath math="3y + 27 = 8x - 32" />
@@ -516,23 +516,23 @@ export const higherMathsData: Section[] = [
           theory: (
             <div className="space-y-4">
               <p>Many problems involve lines which intersect (cross each other). Once we have equations for the lines, there are three ways of calculating the point of intersection using simultaneous equations:</p>
-              <ul className="list-disc list-inside ml-4 space-y-1 text-slate-300">
+              <ul className="list-disc list-inside ml-4 space-y-1 text-foreground">
                 <li>Elimination</li>
                 <li>Equating</li>
                 <li>Substitution</li>
               </ul>
               <p>Use whichever method is most efficient for the problem you are tackling.</p>
               
-              <div className="mt-6 border border-white/10 rounded-xl overflow-hidden bg-black/20">
-                <table className="min-w-full divide-y divide-white/10">
-                  <thead className="bg-white/5">
+              <div className="mt-6 border border-foreground/10 rounded-xl overflow-hidden bg-black/20">
+                <table className="min-w-full divide-y divide-foreground/10">
+                  <thead className="bg-foreground/5">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-300 uppercase tracking-wider">Line Type</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-300 uppercase tracking-wider">Point Used</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-300 uppercase tracking-wider">Gradient Used</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">Line Type</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">Point Used</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">Gradient Used</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5 text-sm text-slate-300">
+                  <tbody className="divide-y divide-foreground/5 text-sm text-foreground">
                     <tr>
                       <td className="px-4 py-3">Perpendicular Bisector of AB</td>
                       <td className="px-4 py-3">Midpoint of AB</td>
@@ -551,8 +551,8 @@ export const higherMathsData: Section[] = [
                   </tbody>
                 </table>
               </div>
-              <div className="bg-slate-800 p-4 rounded-lg mt-4">
-                <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+              <div className="bg-muted p-4 rounded-lg mt-4">
+                <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                 <ul className="list-disc list-inside space-y-2 ml-2">
                   <li><strong>Substitution is usually the faster route:</strong> candidates reach for <em>elimination</em> out of habit where substitution is far quicker, and the extra steps invite errors. If one equation is already in the form <InlineMath math="y = \ldots" />, substitute it.</li>
                   <li><strong>Do not score out terms mid-line:</strong> scoring out terms in simultaneous equations produces lines of working that no longer follow from each other, and that costs marks even when the answer is right. Write each new equation out in full.</li>
@@ -578,15 +578,15 @@ export const higherMathsData: Section[] = [
                   ),
                   solution: (
                     <div className="space-y-4">
-                      <p><strong className="text-white">a) Altitude QS</strong></p>
+                      <p><strong className="text-foreground">a) Altitude QS</strong></p>
                       <BlockMath math="\begin{aligned} m_{PR} &= \frac{-3 - 3}{2 - 8} \\ &= \frac{-6}{-6} \\ &= 1 \end{aligned}" />
                       <BlockMath math="m_{\perp} = -1" />
                       <BlockMath math="y - 6 = -1(x - (-1))" />
                       <BlockMath math="y - 6 = -x - 1 \implies x + y = 5 \text{ (1)}" />
                       
-                      <div className="my-6 border-t border-white/10" />
+                      <div className="my-6 border-t border-foreground/10" />
                       
-                      <p><strong className="text-white">b) Median RT</strong></p>
+                      <p><strong className="text-foreground">b) Median RT</strong></p>
                       <p>Midpoint of PQ (T):</p>
                       <BlockMath math="\begin{aligned} T &= \left(\frac{8 + (-1)}{2}, \frac{3 + 6}{2}\right) \\ &= \left(\frac{7}{2}, \frac{9}{2}\right) \end{aligned}" />
                       <BlockMath math="\begin{aligned} m_{RT} &= \frac{\frac{9}{2} - (-3)}{\frac{7}{2} - 2} \\ &= \frac{\frac{15}{2}}{\frac{3}{2}} \\ &= 5 \end{aligned}" />
@@ -594,9 +594,9 @@ export const higherMathsData: Section[] = [
                       <BlockMath math="y + 3 = 5x - 10" />
                       <BlockMath math="y = 5x - 13 \text{ (2)}" />
 
-                      <div className="my-6 border-t border-white/10" />
+                      <div className="my-6 border-t border-foreground/10" />
                       
-                      <p><strong className="text-white">c) Point of Intersection M</strong></p>
+                      <p><strong className="text-foreground">c) Point of Intersection M</strong></p>
                       <p>Substitute (2) into (1):</p>
                       <BlockMath math="x + (5x - 13) = 5" />
                       <BlockMath math="\begin{aligned} 6x - 13 &= 5 \\ 6x &= 18 \\ x &= 3 \end{aligned}" />
@@ -621,17 +621,17 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4">
             <p>A <strong>recurrence relation</strong> is a type of recursive sequence which relies on knowing the previous term in order to obtain the next consecutive term.</p>
-            <p className="text-slate-300 italic">i.e. if we wanted to know the <InlineMath math="100^{th}" /> term in a sequence, we would need to know the first 99 terms.</p>
+            <p className="text-foreground italic">i.e. if we wanted to know the <InlineMath math="100^{th}" /> term in a sequence, we would need to know the first 99 terms.</p>
             
             <p className="mt-4">e.g. For the sequence 1, 5, 9, 13, ...</p>
             <p><InlineMath math="U_0 = 1" /> where <InlineMath math="U_0" /> is the initial term in the sequence.</p>
             <p><strong>Rule:</strong> add 4 to previous term</p>
             <p>i.e. <InlineMath math="U_{n+1} = U_n + 4" /></p>
             
-            <div className="bg-white/5 p-4 rounded-xl mt-6 border border-white/10 text-lg">
+            <div className="bg-foreground/5 p-4 rounded-xl mt-6 border border-foreground/10 text-lg">
                 <p>An example of a recurrence relation is gaining compound interest on money in a bank account.</p>
                 <p className="mt-2">You invest £100 in a bank account with an interest rate of 2%.</p>
-                <ul className="list-none space-y-2 mt-4 font-mono text-slate-300">
+                <ul className="list-none space-y-2 mt-4 font-mono text-foreground">
                   <li><InlineMath math="U_0 = 100" /></li>
                   <li><InlineMath math="U_1 = 102\% \text{ of } 100 = 1.02 \times 100 = 102" /></li>
                   <li><InlineMath math="U_2 = 102\% \text{ of } 102 = 1.02 \times 102 = 104.04" /></li>
@@ -639,8 +639,8 @@ export const higherMathsData: Section[] = [
                 </ul>
                 <p className="mt-4">i.e. <InlineMath math="U_{n+1} = 1.02U_n, \ U_0 = 100" /> where <InlineMath math="U_n" /> is the amount in the bank account after <InlineMath math="n" /> years.</p>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong><InlineMath math="u_0" /> or <InlineMath math="u_1" />?</strong> read which term the sequence starts from. Being one term out runs through the entire rest of the question.</li>
               <li><strong>Each term depends on the one before:</strong> you cannot jump to the tenth term without generating the ones in between, unless a formula is given.</li>
@@ -661,14 +661,14 @@ export const higherMathsData: Section[] = [
             <p className="text-xl">Linear recurrence relations are of the form:</p>
             <div className="bg-indigo-500/10 p-6 rounded-xl border border-indigo-500/20 text-center">
               <BlockMath math="U_{n+1} = aU_n + b" />
-              <p className="text-slate-300 mt-2">where <InlineMath math="U_0" /> is the initial value</p>
+              <p className="text-foreground mt-2">where <InlineMath math="U_0" /> is the initial value</p>
               <p className="font-bold my-4">or</p>
               <BlockMath math="U_n = aU_{n-1} + b" />
-              <p className="text-slate-300 mt-2">where <InlineMath math="U_1" /> is the initial value</p>
+              <p className="text-foreground mt-2">where <InlineMath math="U_1" /> is the initial value</p>
               <p className="mt-4 text-indigo-300"><InlineMath math="a \neq 0 \text{ and } b \in \mathbb{R}" /></p>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Identify <InlineMath math="a" /> and <InlineMath math="b" /> from the words:</strong> <InlineMath math="a" /> is the multiplier and <InlineMath math="b" /> the amount added each time. Percentage changes belong in <InlineMath math="a" />, fixed quantities in <InlineMath math="b" />.</li>
               <li><strong>A decrease of 20% means <InlineMath math="a = 0.8" />:</strong> not <InlineMath math="-0.2" />. The multiplier is what remains.</li>
@@ -694,7 +694,7 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="U_1 = 0.6(7) + 4 = 8.2" />
                  <BlockMath math="U_2 = 0.6(8.2) + 4 = 8.92" />
                  <BlockMath math="U_3 = 0.6(8.92) + 4 = 9.352" />
-                 <div className="h-px w-full bg-white/10 my-4"></div>
+                 <div className="h-px w-full bg-foreground/10 my-4"></div>
                  <p><strong>b)</strong> Continue calculating terms:</p>
                  <BlockMath math="U_4 = 0.6(9.352) + 4 = 9.6112" />
                  <BlockMath math="U_5 = 0.6(9.6112) + 4 = 9.76672" />
@@ -717,12 +717,12 @@ export const higherMathsData: Section[] = [
                  <p><strong>a)</strong> 22% is lost, meaning 78% remains (<InlineMath math="0.78" />).</p>
                  <p>An extra 25 ml is added.</p>
                  <BlockMath math="U_{n+1} = 0.78U_n + 25, \quad U_0 = 156" />
-                 <div className="h-px w-full bg-white/10 my-4"></div>
+                 <div className="h-px w-full bg-foreground/10 my-4"></div>
                  <p><strong>b)</strong> 24 hours implies 3 periods of 8 hours (so we need <InlineMath math="U_3" />).</p>
                  <BlockMath math="U_1 = 0.78(156) + 25 = 146.68" />
                  <BlockMath math="U_2 = 0.78(146.68) + 25 = 139.4104" />
                  <BlockMath math="U_3 = 0.78(139.4104) + 25 = 133.740112" />
-                 <p className="mt-2 text-indigo-300">Amount of drug remaining after 24 hours is approximately <strong className="text-white">133.74 ml</strong>.</p>
+                 <p className="mt-2 text-indigo-300">Amount of drug remaining after 24 hours is approximately <strong className="text-foreground">133.74 ml</strong>.</p>
               </div>
             )
           }
@@ -735,9 +735,9 @@ export const higherMathsData: Section[] = [
          theory: (
            <div className="space-y-4">
              <p className="text-lg">If a sequence is defined by a linear recurrence relation <InlineMath math="U_{n+1} = aU_n + b" /> with unknowns <InlineMath math="a" /> and <InlineMath math="b" />, but we know several terms of the sequence, then we can find the values of <InlineMath math="a" /> and <InlineMath math="b" />.</p>
-             <p className="font-bold text-white text-xl mt-4">We can then solve for <InlineMath math="a" /> and <InlineMath math="b" /> using simultaneous equations.</p>
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <p className="font-bold text-foreground text-xl mt-4">We can then solve for <InlineMath math="a" /> and <InlineMath math="b" /> using simultaneous equations.</p>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>Two unknowns need two equations:</strong> use two consecutive pairs of terms to form simultaneous equations in <InlineMath math="a" /> and <InlineMath math="b" />.</li>
                <li><strong>Subtract to eliminate <InlineMath math="b" />:</strong> since <InlineMath math="b" /> appears with the same coefficient in both, subtracting one equation from the other leaves <InlineMath math="a" /> alone.</li>
@@ -762,10 +762,10 @@ export const higherMathsData: Section[] = [
                  <p>Set up two equations using the known terms:</p>
                  <BlockMath math="\text{(1)}\quad 3.6 = 4a + b" />
                  <BlockMath math="\text{(2)}\quad 2.04 = 3.6a + b" />
-                 <div className="h-px w-full bg-white/10 my-4"></div>
+                 <div className="h-px w-full bg-foreground/10 my-4"></div>
                  <p>Subtract (2) from (1):</p>
                  <BlockMath math="1.56 = 0.4a \implies a = 3.9" />
-                 <div className="h-px w-full bg-white/10 my-4"></div>
+                 <div className="h-px w-full bg-foreground/10 my-4"></div>
                  <p>Substitute <InlineMath math="a=3.9" /> into (1):</p>
                  <BlockMath math="3.6 = 4(3.9) + b" />
                  <BlockMath math="3.6 = 15.6 + b \implies b = -12" />
@@ -795,20 +795,20 @@ export const higherMathsData: Section[] = [
                <p className="text-emerald-300/80 italic mt-2">i.e. it will settle at approximately the same value.</p>
              </div>
              
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10">
-               <h4 className="font-bold text-white text-2xl mb-4">Limit of a Sequence</h4>
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10">
+               <h4 className="font-bold text-foreground text-2xl mb-4">Limit of a Sequence</h4>
                <p>For convergent sequences defined by <InlineMath math="U_{n+1} = aU_n + b" /> with <InlineMath math="-1 < a < 1" />, <InlineMath math="U_n" /> tends to a limit <InlineMath math="L" /> as <InlineMath math="n \to \infty" />.</p>
                <div className="mt-6 flex flex-col items-center">
                  <BlockMath math="L = aL + b" />
                  <BlockMath math="L - aL = b" />
                  <BlockMath math="L(1 - a) = b" />
-                 <div className="border-t border-white/20 pt-4 mt-2 w-full max-w-xs text-center">
+                 <div className="border-t border-foreground/20 pt-4 mt-2 w-full max-w-xs text-center">
                    <BlockMath math="L = \frac{b}{1 - a}" />
                  </div>
                </div>
              </div>
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>A limit exists only when <InlineMath math="-1 \lt a \lt 1" />:</strong> state this condition. Quoting a limit without justifying that it exists loses marks.</li>
                <li><strong><InlineMath math="L = \frac{b}{1-a}" />:</strong> note it is <InlineMath math="1-a" /> on the bottom, not <InlineMath math="a-1" />. Getting this the wrong way round flips the sign.</li>
@@ -831,10 +831,10 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p><strong>a)</strong> Yes, a limit exists because <InlineMath math="-1 < 0.6 < 1" />.</p>
-                 <div className="h-px w-full bg-white/10 my-4"></div>
+                 <div className="h-px w-full bg-foreground/10 my-4"></div>
                  <p><strong>b)</strong> Using the formula <InlineMath math="L = \frac{b}{1 - a}" />:</p>
                  <BlockMath math="\begin{aligned} L &= \frac{5}{1 - 0.6} \\ &= \frac{5}{0.4} \\ &= 12.5 \end{aligned}" />
-                 <p className="text-indigo-300 mt-2">The limit is <strong className="text-white">12.5</strong>.</p>
+                 <p className="text-indigo-300 mt-2">The limit is <strong className="text-foreground">12.5</strong>.</p>
                </div>
              )
            },
@@ -844,8 +844,8 @@ export const higherMathsData: Section[] = [
                  <div className="space-y-4 text-emerald-100">
                    <p>The deer population in a forest is estimated to drop by 7.3% each year.</p>
                    <p>Each year, 20 deer are introduced to the forest. The initial deer population is 200.</p>
-                   <p className="text-white">a) How many deer will there be in the forest after 3 years?</p>
-                   <p className="text-white">b) What is the long-term effect on the population?</p>
+                   <p className="text-foreground">a) How many deer will there be in the forest after 3 years?</p>
+                   <p className="text-foreground">b) What is the long-term effect on the population?</p>
                  </div>
              ),
              solution: (
@@ -855,14 +855,14 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="U_1 = 0.927(200) + 20 = 205.4" />
                  <BlockMath math="U_2 = 0.927(205.4) + 20 = 210.4058" />
                  <BlockMath math="U_3 = 0.927(210.4058) + 20 \approx 215.046" />
-                 <p className="text-emerald-300 mt-2">There will be approximately <strong className="text-white">215</strong> deer after 3 years.</p>
+                 <p className="text-emerald-300 mt-2">There will be approximately <strong className="text-foreground">215</strong> deer after 3 years.</p>
                  
-                 <div className="h-px w-full bg-white/10 my-4"></div>
+                 <div className="h-px w-full bg-foreground/10 my-4"></div>
                  
                  <p><strong>b)</strong> To find the long-term effect, calculate the limit:</p>
                  <p>Limit exists since <InlineMath math="-1 < 0.927 < 1" />.</p>
                  <BlockMath math="\begin{aligned} L &= \frac{b}{1 - a} \\ &= \frac{20}{1 - 0.927} \\ &= \frac{20}{0.073} \\ &\approx 273.97 \end{aligned}" />
-                 <p className="text-emerald-300 mt-2">The population will settle at around <strong className="text-white">274</strong> deer.</p>
+                 <p className="text-emerald-300 mt-2">The population will settle at around <strong className="text-foreground">274</strong> deer.</p>
                </div>
              )
            }
@@ -873,7 +873,7 @@ export const higherMathsData: Section[] = [
          title: "Problems in Context",
          videoUrl: "https://www.youtube.com/embed/Y3eGTMlMgNs?start=1175",
          theory: (
-           <div className="space-y-4 text-slate-300">
+           <div className="space-y-4 text-foreground">
              <p>Recurrence relations are most often examined through a real situation — a population, a drug dose, a bank balance, a pollutant in a loch. The mathematics is exactly the same as before; the difficulty is turning the words into <InlineMath math="u_{n+1} = au_n + b" />.</p>
              <p>Read the description for two separate things:</p>
              <ul className="list-disc list-inside space-y-1 ml-4">
@@ -883,8 +883,8 @@ export const higherMathsData: Section[] = [
              <p>A fall of 15% leaves 85%, so <InlineMath math="a = 0.85" />; a rise of 15% gives <InlineMath math="a = 1.15" />. A quantity removed each time makes <InlineMath math="b" /> negative.</p>
              <p>The long-term behaviour question — &ldquo;will the level ever exceed…&rdquo;, &ldquo;what happens in the long run&rdquo; — is asking for the <strong>limit</strong>, which requires <InlineMath math="-1 \lt a \lt 1" />.</p>
              <p><strong>The Golden Rule:</strong> always say what <InlineMath math="u_n" /> stands for, including its units and the period it covers. A recurrence relation with undefined terms does not answer a context question.</p>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>Translate the words carefully:</strong> &ldquo;increases by 5% then 200 are removed&rdquo; gives <InlineMath math="u_{n+1} = 1.05u_n - 200" />. Order and sign both matter.</li>
                  <li><strong>Answer the question that was asked:</strong> often the useful answer is whether a level is safe or sustainable, not the value of <InlineMath math="u_{10}" />. Read to the end.</li>
@@ -910,23 +910,23 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p><strong>a)</strong> Recurrence relation: <InlineMath math="U_{n+1} = 0.983U_n + 8000" /> where <InlineMath math="U_0 = 500{,}000" />.</p>
-                 <p className="text-slate-300 italic">4 years means 8 periods of 6 months (<InlineMath math="n = 8" />).</p>
+                 <p className="text-foreground italic">4 years means 8 periods of 6 months (<InlineMath math="n = 8" />).</p>
                  <BlockMath math="U_1 = 0.983(500{,}000) + 8000 = 499{,}500" />
                  <BlockMath math="\vdots" />
                  <BlockMath math="U_8 \approx 496{,}252.17" />
-                 <p className="text-indigo-300 mt-2">The bank will have approximately <strong className="text-white">496,252</strong> customers.</p>
+                 <p className="text-indigo-300 mt-2">The bank will have approximately <strong className="text-foreground">496,252</strong> customers.</p>
 
-                 <div className="h-px w-full bg-white/10 my-6"></div>
+                 <div className="h-px w-full bg-foreground/10 my-6"></div>
 
                  <p><strong>b)</strong> Long term limit:</p>
                  <BlockMath math="\begin{aligned} L &= \frac{8000}{1 - 0.983} \\ &= \frac{8000}{0.017} \\ &\approx 470{,}588 \end{aligned}" />
-                 <p className="text-indigo-300 mt-2">The number of customers will fall and settle at approximately <strong className="text-white">470,588</strong>.</p>
+                 <p className="text-indigo-300 mt-2">The number of customers will fall and settle at approximately <strong className="text-foreground">470,588</strong>.</p>
 
-                 <div className="h-px w-full bg-white/10 my-6"></div>
+                 <div className="h-px w-full bg-foreground/10 my-6"></div>
 
                  <p><strong>c)</strong> To maintain 0.5 million customers, the limit must be 500,000.</p>
                  <BlockMath math="\begin{aligned} 500{,}000 &= \frac{b}{1 - 0.983} \\ 500{,}000 &= \frac{b}{0.017} \\ b &= 500{,}000 \times 0.017 \\ &= 8500 \end{aligned}" />
-                 <p className="text-indigo-300 mt-2">The bank would need to attract <strong className="text-white">8500</strong> new customers each 6 month period.</p>
+                 <p className="text-indigo-300 mt-2">The bank would need to attract <strong className="text-foreground">8500</strong> new customers each 6 month period.</p>
                </div>
              )
            }
@@ -944,17 +944,17 @@ export const higherMathsData: Section[] = [
         videoUrl: "https://www.youtube.com/embed/NoGdMUAVEe4?start=282",
         theory: (
           <div className="space-y-6">
-            <h3 className="text-xl font-bold text-white">Introduction To Functions & Sets</h3>
+            <h3 className="text-xl font-bold text-foreground">Introduction To Functions & Sets</h3>
             <p>A <strong>function</strong> is a rule which connects one set of numbers to another.</p>
             <p>A function can be expressed in the following forms:</p>
-            <ul className="list-disc list-inside ml-4 marker:text-slate-400">
+            <ul className="list-disc list-inside ml-4 marker:text-muted-foreground">
               <li>Table</li>
               <li>Graph</li>
               <li>Arrow diagram</li>
               <li>Formula</li>
             </ul>
-            <div className="bg-slate-500/10 p-4 rounded-xl border border-slate-500/20 mt-4">
-              <h4 className="font-bold text-slate-200 mb-2">Notation</h4>
+            <div className="bg-foreground/5 p-4 rounded-xl border border-muted-foreground/20 mt-4">
+              <h4 className="font-bold text-foreground mb-2">Notation</h4>
               <p><InlineMath math="f(x) = \dots" /> i.e. f of x</p>
               <p><InlineMath math="g(u) = \dots" /> i.e. g of u</p>
             </div>
@@ -962,15 +962,15 @@ export const higherMathsData: Section[] = [
               A function is a relation between two sets where each member of the first set is related to <strong>only one</strong> member of the second set.
             </p>
 
-            <div className="h-px w-full bg-white/10 my-4"></div>
+            <div className="h-px w-full bg-foreground/10 my-4"></div>
 
-            <h3 className="text-xl font-bold text-white mt-6">Domain of a Function</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Domain of a Function</h3>
             <p>The domain of a function is the set of all possible input values (x-values) for which the function is defined.</p>
             
             <div className="flex flex-col gap-6 mt-4">
               <div className="bg-red-500/10 p-5 rounded-xl border border-red-500/20">
                 <h4 className="font-bold text-red-400 text-lg mb-2">Division by Zero</h4>
-                <p className="text-base text-slate-300">Since we cannot divide any number by zero, the domains of functions involving fractions must exclude numbers which would result in a denominator of zero.</p>
+                <p className="text-base text-foreground">Since we cannot divide any number by zero, the domains of functions involving fractions must exclude numbers which would result in a denominator of zero.</p>
                 <div className="mt-4 space-y-2">
                   <p><InlineMath math="f(x) = \frac{3}{x} \implies x \neq 0" /></p>
                   <p><InlineMath math="f(x) = \frac{2}{10-x} \implies x \neq 10" /></p>
@@ -979,7 +979,7 @@ export const higherMathsData: Section[] = [
               </div>
               <div className="bg-emerald-500/10 p-5 rounded-xl border border-emerald-500/20">
                 <h4 className="font-bold text-emerald-400 text-lg mb-2">Even Roots</h4>
-                <p className="text-base text-slate-300">We cannot evaluate an even root of a negative number. The domain must exclude numbers which would result in negative numbers under the root.</p>
+                <p className="text-base text-foreground">We cannot evaluate an even root of a negative number. The domain must exclude numbers which would result in negative numbers under the root.</p>
                 <div className="mt-4 space-y-2">
                   <p><InlineMath math="f(x) = \sqrt{x} \implies x \geq 0" /></p>
                   <p><InlineMath math="f(x) = \sqrt{x-4} \implies x \geq 4" /></p>
@@ -988,19 +988,19 @@ export const higherMathsData: Section[] = [
               </div>
             </div>
 
-            <div className="h-px w-full bg-white/10 my-4"></div>
+            <div className="h-px w-full bg-foreground/10 my-4"></div>
 
-            <h3 className="text-xl font-bold text-white mt-6">Range of a Function</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Range of a Function</h3>
             <p>The range of a function is the spread of possible y-values (outputs).</p>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-4 overflow-hidden">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 mt-4 overflow-hidden">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="pb-2 font-bold text-white">Function</th>
-                      <th className="pb-2 font-bold text-white">Range</th>
+                    <tr className="border-b border-foreground/10">
+                      <th className="pb-2 font-bold text-foreground">Function</th>
+                      <th className="pb-2 font-bold text-foreground">Range</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/10">
+                  <tbody className="divide-y divide-foreground/10">
                     <tr><td className="py-2"><InlineMath math="f(x) = \cos x" /></td><td className="py-2"><InlineMath math="-1 \leq f(x) \leq 1" /></td></tr>
                     <tr><td className="py-2"><InlineMath math="f(x) = x^2 + 4" /></td><td className="py-2"><InlineMath math="f(x) \geq 4" /></td></tr>
                     <tr><td className="py-2"><InlineMath math="f(x) = \sqrt{x}" /></td><td className="py-2"><InlineMath math="f(x) \geq 0" /></td></tr>
@@ -1009,8 +1009,8 @@ export const higherMathsData: Section[] = [
                   </tbody>
                 </table>
             </div>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>State the condition, not just the domain.</strong> Marks are routinely lost by giving the domain without saying <em>why</em> it is restricted. Name the value that breaks it: a denominator of zero, or a negative under a square root.</li>
                 <li><strong>Denominators:</strong> for <InlineMath math="f(x) = \frac{1}{x-3}" /> the function is undefined at <InlineMath math="x = 3" />, so the domain is all real <InlineMath math="x" /> except 3. Set the denominator equal to zero to find it.</li>
@@ -1029,10 +1029,10 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4">
             <p>A <strong>composite function</strong> is when one function is 'inside' another function.</p>
-            <p className="mt-2 text-slate-300">It is formed by applying one function to the result of another.</p>
+            <p className="mt-2 text-foreground">It is formed by applying one function to the result of another.</p>
             <p>e.g., <InlineMath math="g(f(x))" /> means you compute <InlineMath math="f(x)" /> first, and plug the result into <InlineMath math="g" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Order matters:</strong> <InlineMath math="f(g(x))" /> means do <InlineMath math="g" /> first, then <InlineMath math="f" />. Reading it left to right and applying <InlineMath math="f" /> first is the standard error, and gives a completely different function.</li>
               <li><strong>Substitute the whole function:</strong> every <InlineMath math="x" /> in the outer function is replaced by the entire inner expression, in brackets.</li>
@@ -1058,7 +1058,7 @@ export const higherMathsData: Section[] = [
                 <p><strong>a)</strong> To find <InlineMath math="f(g(x))" />, substitute <InlineMath math="g(x)" /> into <InlineMath math="f" />:</p>
                 <BlockMath math="f(g(x)) = f(x - 3)" />
                 <BlockMath math="f(g(x)) = 2(x - 3) = 2x - 6" />
-                <div className="h-px w-full bg-white/10 my-4"></div>
+                <div className="h-px w-full bg-foreground/10 my-4"></div>
                 <p><strong>b)</strong> To find <InlineMath math="g(f(x))" />, substitute <InlineMath math="f(x)" /> into <InlineMath math="g" />:</p>
                 <BlockMath math="g(f(x)) = g(2x)" />
                 <BlockMath math="g(f(x)) = (2x) - 3 = 2x - 3" />
@@ -1079,7 +1079,7 @@ export const higherMathsData: Section[] = [
                 <BlockMath math="f(g(x)) = f\left(\frac{1}{x}\right)" />
                 <BlockMath math="h(x) = \left(\frac{1}{x}\right)^3 + 3 = \frac{1}{x^3} + 3" />
                 
-                <div className="h-px w-full bg-white/10 my-4"></div>
+                <div className="h-px w-full bg-foreground/10 my-4"></div>
                 
                 <p>For <InlineMath math="k(x) = g(f(x))" />:</p>
                 <BlockMath math="g(f(x)) = g(x^3 + 3)" />
@@ -1104,7 +1104,7 @@ export const higherMathsData: Section[] = [
                 <p>Multiply numerator and denominator by <InlineMath math="x" />:</p>
                 <BlockMath math="f(g(x)) = \frac{1}{x - 1}" />
                 
-                <div className="h-px w-full bg-white/10 my-4"></div>
+                <div className="h-px w-full bg-foreground/10 my-4"></div>
                 
                 <p><strong>b)</strong> Substitute <InlineMath math="h(x)" /> into <InlineMath math="f" />:</p>
                 <BlockMath math="\begin{aligned} f(h(x)) &= f\left(\frac{1}{1-x}\right) \\ &= \frac{\frac{1}{1-x}}{1 - \frac{1}{1-x}} \end{aligned}" />
@@ -1127,34 +1127,34 @@ export const higherMathsData: Section[] = [
               <p>The domain of an inverse function is the range of the original function and vice versa.</p>
               <p className="mt-2 text-indigo-300"><InlineMath math="f^{-1}(f(x)) = x" /></p>
             </div>
-            <div className="mt-6 flex flex-col gap-6 p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="mt-6 flex flex-col gap-6 p-4 bg-foreground/5 rounded-xl border border-foreground/10">
                {/* Box Diagrams manually recreated to look like the uploaded image */}
                <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x = 5</div>
-                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
+                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
-                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(5) = 14" /></span></div>
+                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(5) = 14" /></span></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
                  <div className="flex flex-col text-xs font-mono items-start">
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(14) = 5" /></div>
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(5)) = 5" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(14) = 5" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(5)) = 5" /></div>
                  </div>
                </div>
                
                <div className="flex flex-col md:flex-row items-center gap-4 md:min-w-[600px] justify-center text-sm md:text-base">
                  <div className="font-mono">x</div>
-                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
+                 <div className="flex-1 max-w-[40px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="f(x) = 3x - 1" /></div>
-                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-white/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(x) = 3x - 1" /></span></div>
+                 <div className="font-mono flex items-center relative gap-2"><div className="flex-1 min-w-[30px] h-0 border-t-2 border-foreground/40 border-dashed relative"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><span className="-ml-6 mt-6 whitespace-nowrap text-xs"><InlineMath math="f(x) = 3x - 1" /></span></div>
                  <div className="px-6 py-4 border-2 border-white text-center bg-transparent shrink-0"><InlineMath math="g(x) = \frac{x+1}{3}" /></div>
                  <div className="flex flex-col text-xs font-mono items-start">
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(3x-1) = x" /></div>
-                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-white/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(x)) = x" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(3x-1) = x" /></div>
+                    <div className="flex items-center"><div className="w-10 h-0 border-t-2 border-foreground/40 relative mr-2"><div className="absolute right-0 -top-[5px] border-t-[5px] border-b-[5px] border-l-[6px] border-transparent border-l-white/40"></div></div><InlineMath math="g(f(x)) = x" /></div>
                  </div>
                </div>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Swap, then rearrange:</strong> write <InlineMath math="y = f(x)" />, swap <InlineMath math="x" /> and <InlineMath math="y" />, then make <InlineMath math="y" /> the subject. Rearranging without swapping is the most common failure.</li>
               <li><strong>Write the answer as <InlineMath math="f^{-1}(x)" />:</strong> leaving it as <InlineMath math="y = \ldots" /> does not finish the question.</li>
@@ -1180,7 +1180,7 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p><strong>a)</strong></p>
                 <BlockMath math="\begin{aligned} f(g(x)) &= f\left(1 - \frac{2}{x}\right) \\ &= \frac{2}{1 - \left(1 - \frac{2}{x}\right)} \\ &= \frac{2}{\frac{2}{x}} \\ &= 2 \times \frac{x}{2} \\ &= x \end{aligned}" />
-                <div className="h-px w-full bg-white/10 my-4"></div>
+                <div className="h-px w-full bg-foreground/10 my-4"></div>
                 <p><strong>b)</strong> Since <InlineMath math="f(g(x)) = x" />, <InlineMath math="f" /> and <InlineMath math="g" /> are inverse functions.</p>
               </div>
             )
@@ -1198,10 +1198,10 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p>Set <InlineMath math="y = f(x)" />:</p>
                 <BlockMath math="y = x^3 + 1" />
-                <p className="mt-2 mb-2 text-slate-300">Change the subject to <InlineMath math="x" />:</p>
+                <p className="mt-2 mb-2 text-foreground">Change the subject to <InlineMath math="x" />:</p>
                 <BlockMath math="y - 1 = x^3" />
                 <BlockMath math="x = \sqrt[3]{y - 1}" />
-                <p className="mt-2 mb-2 text-slate-300">Rewrite in terms of <InlineMath math="x" />:</p>
+                <p className="mt-2 mb-2 text-foreground">Rewrite in terms of <InlineMath math="x" />:</p>
                 <BlockMath math="f^{-1}(x) = \sqrt[3]{x - 1}" />
               </div>
             )
@@ -1215,13 +1215,13 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-4">
             <p className="text-lg">If we have a graph of a function, we can find the graph of the inverse function by <strong>reflecting it in the line <InlineMath math="y = x" /></strong>.</p>
-            <p className="text-slate-300 mt-2">Every coordinate <InlineMath math="(a,b)" /> on the original graph becomes <InlineMath math="(b,a)" /> on the inverse graph.</p>
-            <div className="bg-white/5 p-4 rounded-xl mt-4 border border-white/10 text-center font-mono">
+            <p className="text-foreground mt-2">Every coordinate <InlineMath math="(a,b)" /> on the original graph becomes <InlineMath math="(b,a)" /> on the inverse graph.</p>
+            <div className="bg-foreground/5 p-4 rounded-xl mt-4 border border-foreground/10 text-center font-mono">
               <p><InlineMath math="f(a) = b \implies f^{-1}(b) = a" /></p>
             </div>
             <InverseGraphReflection />
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Reflect in <InlineMath math="y = x" />:</strong> not in either axis. Every point <InlineMath math="(a,b)" /> becomes <InlineMath math="(b,a)" />.</li>
               <li><strong>Draw the line <InlineMath math="y = x" /> on your sketch:</strong> it makes the reflection much easier to get right, and shows the marker what you did.</li>
@@ -1250,7 +1250,7 @@ export const higherMathsData: Section[] = [
                   <li><InlineMath math="(0, 1) \to (1, 0)" /></li>
                   <li><InlineMath math="(1, 2) \to (2, 1)" /></li>
                 </ul>
-                <p className="text-slate-300">Plot these new points and draw a smooth curve through them, ensuring it is a perfect reflection across the line <InlineMath math="y=x" />.</p>
+                <p className="text-foreground">Plot these new points and draw a smooth curve through them, ensuring it is a perfect reflection across the line <InlineMath math="y=x" />.</p>
               </div>
             )
           }
@@ -1264,16 +1264,16 @@ export const higherMathsData: Section[] = [
           <div className="space-y-6">
             <p>Given any graph <InlineMath math="f(x)" />, we can reflect, move, or scale it. Each transformation influences the points on the graph.</p>
             
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-4">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 mt-4">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-white/10 text-white">
+                    <tr className="border-b border-foreground/10 text-foreground">
                       <th className="pb-2 font-bold px-2">Notation</th>
                       <th className="pb-2 font-bold px-2">Description</th>
                       <th className="pb-2 font-bold px-2">Change to Points <InlineMath math="(x,y)" /></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/10 text-sm">
+                  <tbody className="divide-y divide-foreground/10 text-sm">
                     <tr>
                       <td className="py-3 px-2"><InlineMath math="f(x) + a" /></td>
                       <td className="py-3 px-2">Graph moves up by <InlineMath math="a" /> units</td>
@@ -1318,8 +1318,8 @@ export const higherMathsData: Section[] = [
               <p className="text-sm">Changes <strong>inside</strong> the bracket affect the <strong>x-coordinates</strong> (horizontally) and do the <em>opposite</em> of what you might expect.</p>
               <p className="text-sm mt-2">Changes <strong>outside</strong> the bracket affect the <strong>y-coordinates</strong> (vertically) and do exactly what they say.</p>
             </div>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Label the point you were asked for:</strong> a very common loss is failing to identify clearly which coordinates are the <em>maximum</em> of the transformed graph, or naming the wrong ones. Mark and name it explicitly.</li>
                 <li><strong>Inside the bracket does the opposite:</strong> <InlineMath math="f(x+3)" /> moves the graph <strong>left</strong> 3, not right. This is the most common transformation error there is.</li>
@@ -1347,35 +1347,35 @@ export const higherMathsData: Section[] = [
                   <li><InlineMath math="-2" /> inside the bracket: Move <strong>right 2 units</strong>. (<InlineMath math="x \to x + 2" />).</li>
                   <li>Negative sign outside: <strong>Reflect over the x-axis</strong>. (<InlineMath math="y \to -y" />).</li>
                 </ol>
-                <div className="mt-4 border border-white/10 rounded-xl">
+                <div className="mt-4 border border-foreground/10 rounded-xl">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-white/5 border-b border-white/10 text-sm">
-                        <th className="p-2 border-r border-white/10">Original Point <InlineMath math="(x,y)" /></th>
-                        <th className="p-2 border-r border-white/10">Move right 2 <InlineMath math="(x+2,y)" /></th>
+                      <tr className="bg-foreground/5 border-b border-foreground/10 text-sm">
+                        <th className="p-2 border-r border-foreground/10">Original Point <InlineMath math="(x,y)" /></th>
+                        <th className="p-2 border-r border-foreground/10">Move right 2 <InlineMath math="(x+2,y)" /></th>
                         <th className="p-2">Reflect x-axis <InlineMath math="(x,-y)" /></th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/10 font-mono text-sm">
+                    <tbody className="divide-y divide-foreground/10 font-mono text-sm">
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-emerald-400">(-3, 0)</td>
-                        <td className="p-2 border-r border-white/10">(-1, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-emerald-400">(-3, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(-1, 0)</td>
                         <td className="p-2 text-indigo-400">(-1, 0)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-red-400">(-2, 10)</td>
-                        <td className="p-2 border-r border-white/10">(0, 10)</td>
+                        <td className="p-2 border-r border-foreground/10 text-red-400">(-2, 10)</td>
+                        <td className="p-2 border-r border-foreground/10">(0, 10)</td>
                         <td className="p-2 text-indigo-400">(0, -10)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-blue-400">(1, -17)</td>
-                        <td className="p-2 border-r border-white/10">(3, -17)</td>
+                        <td className="p-2 border-r border-foreground/10 text-blue-400">(1, -17)</td>
+                        <td className="p-2 border-r border-foreground/10">(3, -17)</td>
                         <td className="p-2 text-indigo-400">(3, 17)</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <p className="text-slate-300">Plot the final points and connect them with a curve similar to the original shape.</p>
+                <p className="text-foreground">Plot the final points and connect them with a curve similar to the original shape.</p>
               </div>
             )
           },
@@ -1396,39 +1396,39 @@ export const higherMathsData: Section[] = [
                   <li><InlineMath math="3" /> outside: Vertical stretch by 3. (<InlineMath math="y \to 3y" />).</li>
                   <li><InlineMath math="+ 1" /> outside: Move up 1 unit. (<InlineMath math="y \to y + 1" />).</li>
                 </ol>
-                <div className="mt-4 border border-white/10 rounded-xl">
+                <div className="mt-4 border border-foreground/10 rounded-xl">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-white/5 border-b border-white/10 text-xs text-center">
-                        <th className="p-2 border-r border-white/10">Original <InlineMath math="(x,y)" /></th>
-                        <th className="p-2 border-r border-white/10">Horiz compress <InlineMath math="\left(\frac{x}{2},y\right)" /></th>
-                        <th className="p-2 border-r border-white/10">Vertical stretch <InlineMath math="(x, 3y)" /></th>
+                      <tr className="bg-foreground/5 border-b border-foreground/10 text-xs text-center">
+                        <th className="p-2 border-r border-foreground/10">Original <InlineMath math="(x,y)" /></th>
+                        <th className="p-2 border-r border-foreground/10">Horiz compress <InlineMath math="\left(\frac{x}{2},y\right)" /></th>
+                        <th className="p-2 border-r border-foreground/10">Vertical stretch <InlineMath math="(x, 3y)" /></th>
                         <th className="p-2">Move up 1 <InlineMath math="(x, y+1)" /></th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/10 font-mono text-sm text-center">
+                    <tbody className="divide-y divide-foreground/10 font-mono text-sm text-center">
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-purple-400">(-1, 0)</td>
-                        <td className="p-2 border-r border-white/10">(-0.5, 0)</td>
-                        <td className="p-2 border-r border-white/10">(-0.5, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-purple-400">(-1, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(-0.5, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(-0.5, 0)</td>
                         <td className="p-2 text-indigo-400">(-0.5, 1)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-emerald-400">(0, 2)</td>
-                        <td className="p-2 border-r border-white/10">(0, 2)</td>
-                        <td className="p-2 border-r border-white/10">(0, 6)</td>
+                        <td className="p-2 border-r border-foreground/10 text-emerald-400">(0, 2)</td>
+                        <td className="p-2 border-r border-foreground/10">(0, 2)</td>
+                        <td className="p-2 border-r border-foreground/10">(0, 6)</td>
                         <td className="p-2 text-indigo-400">(0, 7)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-blue-400">(1, 0)</td>
-                        <td className="p-2 border-r border-white/10">(0.5, 0)</td>
-                        <td className="p-2 border-r border-white/10">(0.5, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-blue-400">(1, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(0.5, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(0.5, 0)</td>
                         <td className="p-2 text-indigo-400">(0.5, 1)</td>
                       </tr>
                       <tr>
-                        <td className="p-2 border-r border-white/10 text-red-400">(3, 0)</td>
-                        <td className="p-2 border-r border-white/10">(1.5, 0)</td>
-                        <td className="p-2 border-r border-white/10">(1.5, 0)</td>
+                        <td className="p-2 border-r border-foreground/10 text-red-400">(3, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(1.5, 0)</td>
+                        <td className="p-2 border-r border-foreground/10">(1.5, 0)</td>
                         <td className="p-2 text-indigo-400">(1.5, 1)</td>
                       </tr>
                     </tbody>
@@ -1448,8 +1448,8 @@ export const higherMathsData: Section[] = [
             <p><strong>Completing the square</strong> is a method used to write a quadratic expression <InlineMath math="ax^2 + bx + c" /> in the form <InlineMath math="a(x + p)^2 + q" />.</p>
             <p>This form is very useful for finding the turning point (vertex) of a parabola and solving quadratic equations.</p>
             
-            <div className="bg-white/5 p-5 rounded-xl border border-white/10 mt-4">
-              <h4 className="font-bold text-white mb-2">The Process (when a = 1):</h4>
+            <div className="bg-foreground/5 p-5 rounded-xl border border-foreground/10 mt-4">
+              <h4 className="font-bold text-foreground mb-2">The Process (when a = 1):</h4>
               <ol className="list-decimal list-inside ml-4 space-y-2">
                 <li>Start with <InlineMath math="x^2 + bx + c" /></li>
                 <li>Halve the coefficient of <InlineMath math="x" /> (which is <InlineMath math="b/2" />)</li>
@@ -1470,8 +1470,8 @@ export const higherMathsData: Section[] = [
                 <li>The axis of symmetry is the line <InlineMath math="x = -p" />.</li>
               </ul>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Halve the coefficient of <InlineMath math="x" />, then square it:</strong> both steps, in that order. Halving without squaring, or squaring without halving, is the usual slip.</li>
               <li><strong>Subtract what you added:</strong> <InlineMath math="x^2+6x" /> becomes <InlineMath math="(x+3)^2 - 9" />. The <InlineMath math="-9" /> keeps the expression equal to what you started with.</li>
@@ -1494,7 +1494,7 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p>Halve the coefficient of <InlineMath math="x" />: <InlineMath math="6 \div 2 = 3" />.</p>
                 <BlockMath math="\begin{aligned} &= (x + 3)^2 - (3)^2 - 2 \\ &= (x + 3)^2 - 9 - 2 \\ &= (x + 3)^2 - 11 \end{aligned}" />
-                <p className="text-slate-300">Here <InlineMath math="p = 3" /> and <InlineMath math="q = -11" />.</p>
+                <p className="text-foreground">Here <InlineMath math="p = 3" /> and <InlineMath math="q = -11" />.</p>
               </div>
             )
           },
@@ -1546,14 +1546,14 @@ export const higherMathsData: Section[] = [
           <div className="space-y-6">
             <h3 className="text-xl font-bold">Introduction</h3>
             <p>An <strong>exponential function</strong> is a function of the form <InlineMath math="f(x) = a^x" /> where <InlineMath math="a \in \mathbb{R}" /> and <InlineMath math="a > 0" />.</p>
-            <p className="mt-2 text-slate-300">Therefore, <InlineMath math="f(x)" /> is an exponential function to the <strong>base</strong> <InlineMath math="a" />.</p>
+            <p className="mt-2 text-foreground">Therefore, <InlineMath math="f(x)" /> is an exponential function to the <strong>base</strong> <InlineMath math="a" />.</p>
             <ul className="list-disc list-inside ml-4 mt-2 mb-4">
               <li>When <InlineMath math="x = 0, f(0) = a^0 = 1" />. Graph passes through <InlineMath math="(0, 1)" />.</li>
               <li>When <InlineMath math="x = 1, f(1) = a^1 = a" />. Graph passes through <InlineMath math="(1, a)" />.</li>
             </ul>
             <p>Every exponential graph of the form <InlineMath math="f(x) = a^x" /> passes through the points <InlineMath math="(0, 1)" /> and <InlineMath math="(1, a)" />.</p>
 
-            <div className="h-px bg-white/10 my-4"></div>
+            <div className="h-px bg-foreground/10 my-4"></div>
 
             <h3 className="text-xl font-bold">The Exponential Constant</h3>
             <p><InlineMath math="e" /> can be considered one of the most important numbers in mathematics and is often called Euler's number. It is known to over 1 trillion digits of accuracy.</p>
@@ -1561,8 +1561,8 @@ export const higherMathsData: Section[] = [
             
             <h3 className="text-lg font-bold mt-4">The Natural Exponential Function</h3>
             <p>The function <InlineMath math="f(x) = e^x" /> is called the <strong>natural exponential function</strong>.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Every exponential passes through <InlineMath math="(0,1)" />:</strong> because <InlineMath math="a^0 = 1" /> for any base. It is the single most useful checkpoint on a sketch.</li>
               <li><strong>Growth or decay depends on the base:</strong> <InlineMath math="a \gt 1" /> grows, <InlineMath math="0 \lt a \lt 1" /> decays. Sketching the wrong direction throws away the whole question.</li>
@@ -1588,7 +1588,7 @@ export const higherMathsData: Section[] = [
                 <p><strong>a)</strong> Start with base graph <InlineMath math="y = 2^x" /> passing through <InlineMath math="(0,1)" /> and <InlineMath math="(1,2)" />.</p>
                 <p>The <InlineMath math="+1" /> outside shifts the graph UP by 1 unit.</p>
                 <p>New key points: <InlineMath math="(0,2)" /> and <InlineMath math="(1,3)" />. Asymptote moves to <InlineMath math="y=1" />.</p>
-                <div className="h-px bg-white/10 my-4"></div>
+                <div className="h-px bg-foreground/10 my-4"></div>
                 <p><strong>b)</strong> Start with base graph <InlineMath math="y = 3^x" /> passing through <InlineMath math="(0,1)" /> and <InlineMath math="(1,3)" />.</p>
                 <p>The <InlineMath math="2x" /> inside squashes the graph horizontally by factor of 1/2.</p>
                 <p>Key points map: <InlineMath math="(1,3) \to (0.5, 3)" />.</p>
@@ -1630,8 +1630,8 @@ export const higherMathsData: Section[] = [
             <div className="bg-indigo-500/10 p-5 rounded-xl border border-indigo-500/20 text-center font-mono text-xl text-indigo-300">
                <BlockMath math="y = a^x \iff \log_a y = x" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>A logarithm is an index in disguise:</strong> <InlineMath math="\log_a x = y" /> means exactly <InlineMath math="a^y = x" />. Being able to switch between these two forms instantly is what most log questions actually test.</li>
               <li><strong>You cannot take the log of zero or a negative:</strong> so check that any solution keeps every argument positive, and discard those that do not.</li>
@@ -1655,7 +1655,7 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p><strong>a)</strong> Using <InlineMath math="a^x = y \implies \log_a y = x" />:</p>
                 <BlockMath math="\log_5 125 = 3" />
-                <div className="h-px bg-white/10 my-4"></div>
+                <div className="h-px bg-foreground/10 my-4"></div>
                 <p><strong>b)</strong> Let <InlineMath math="\log_4 16 = x" />.</p>
                 <p>Rearrange into exponential form: <InlineMath math="4^x = 16" />.</p>
                 <p>Since <InlineMath math="4^2 = 16" />, <InlineMath math="x = 2" />.</p>
@@ -1676,11 +1676,11 @@ export const higherMathsData: Section[] = [
               <div className="space-y-4">
                 <p><strong>a)</strong> Convert to exponential form:</p>
                 <BlockMath math="x = 5^3 \implies x = 125" />
-                <div className="h-px bg-white/10 my-4"></div>
+                <div className="h-px bg-foreground/10 my-4"></div>
                 <p><strong>b)</strong> Convert to exponential form:</p>
                 <BlockMath math="x^2 = 81" />
                 <BlockMath math="x = 9" />
-                <p className="text-sm text-slate-400">(Note: base <InlineMath math="x" /> must be &gt; 0, so ignore -9)</p>
+                <p className="text-sm text-muted-foreground">(Note: base <InlineMath math="x" /> must be &gt; 0, so ignore -9)</p>
               </div>
             )
           }
@@ -1699,8 +1699,8 @@ export const higherMathsData: Section[] = [
               <li>When <InlineMath math="x = a, f(a) = \log_a a = 1 \implies (a, 1)" /></li>
             </ul>
             <p>Every logarithmic graph of the form <InlineMath math="f(x) = \log_a x" /> passes through the points <InlineMath math="(1, 0)" /> and <InlineMath math="(a, 1)" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Every log graph passes through <InlineMath math="(1,0)" />:</strong> because <InlineMath math="\log_a 1 = 0" />. This is the counterpart of <InlineMath math="(0,1)" /> on the exponential.</li>
               <li><strong>The <InlineMath math="y" />-axis is the asymptote:</strong> vertical, not horizontal — the opposite of the exponential graph. There is no <InlineMath math="y" />-intercept.</li>
@@ -1747,7 +1747,7 @@ export const higherMathsData: Section[] = [
                 <BlockMath math="0 = \log_m(-4 + k)" />
                 <p>Convert to exponential form:</p>
                 <BlockMath math="m^0 = -4 + k \implies 1 = -4 + k \implies k = 5" />
-                <div className="h-px bg-white/10 my-4"></div>
+                <div className="h-px bg-foreground/10 my-4"></div>
                 <p>Now equation is <InlineMath math="y = \log_m(x + 5)" />. Substitute point <InlineMath math="(5, 1)" />:</p>
                 <BlockMath math="1 = \log_m(5 + 5) \implies 1 = \log_m(10)" />
                 <BlockMath math="m^1 = 10 \implies m = 10" />
@@ -1768,12 +1768,12 @@ export const higherMathsData: Section[] = [
         title: "Introduction to Polynomials",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1017",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Polynomials are expressions with one or more terms of the form:</p>
             <BlockMath math="a_n x^n+a_{n-1} x^{n-1}+a_{n-2} x^{n-2} + ... + a_2 x^2+a_1 x^1+a_0 x^0" />
             <p>where <InlineMath math="a_0, \dots, a_n" /> are constants with <InlineMath math="a_n \neq 0" />.</p>
             <p>Each term has a coefficient followed by a variable raised to a whole number exponent.</p>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-6">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 mt-6">
               <p>For example,</p>
               <ul className="list-disc list-inside space-y-2 mt-2">
                 <li><InlineMath math="3x^5+x^3+2x^2-6" /> is a polynomial of degree 5 as the highest power of <InlineMath math="x" /> is 5.</li>
@@ -1782,16 +1782,16 @@ export const higherMathsData: Section[] = [
               </ul>
             </div>
             
-            <p className="mt-8 font-bold text-white">Task: Complete the table</p>
-            <div className="border border-white/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <p className="mt-8 font-bold text-foreground">Task: Complete the table</p>
+            <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-white/5 border-b border-white/10">
-                    <th className="p-3 font-bold text-white">Polynomial</th>
-                    <th className="p-3 font-bold text-white">Degree</th>
+                  <tr className="bg-foreground/5 border-b border-foreground/10">
+                    <th className="p-3 font-bold text-foreground">Polynomial</th>
+                    <th className="p-3 font-bold text-foreground">Degree</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/10">
+                <tbody className="divide-y divide-foreground/10">
                   <tr><td className="p-3"><InlineMath math="4x^2+2x+5" /></td><td className="p-3">2</td></tr>
                   <tr><td className="p-3"><InlineMath math="4x^4-x^3+x^2-x+1" /></td><td className="p-3">4</td></tr>
                   <tr><td className="p-3"><InlineMath math="3x^2" /></td><td className="p-3">2</td></tr>
@@ -1802,8 +1802,8 @@ export const higherMathsData: Section[] = [
                 </tbody>
               </table>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The degree is the highest power:</strong> not the number of terms, and not the first coefficient you see.</li>
               <li><strong>Write terms in descending order:</strong> before doing anything else, and include a zero for any missing power — a missing term will wreck synthetic division.</li>
@@ -1820,7 +1820,7 @@ export const higherMathsData: Section[] = [
         title: "Evaluation",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1111",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Polynomials can be evaluated using substitution.</p>
             <p>For example, if we take <InlineMath math="f(x)=2x^3-9x^2+2x+1" /> and we evaluate <InlineMath math="f(5)" />, we obtain:</p>
             <BlockMath math="f(5) = 2(5)^3 - 9(5)^2 + 2(5) + 1 = 36" />
@@ -1834,16 +1834,16 @@ export const higherMathsData: Section[] = [
             <BlockMath math="g(x) = (x+2)q(x)" />
             <p>where <InlineMath math="q(x)" /> is a quadratic in this case.</p>
             
-            <p className="mt-8 font-bold text-white">Task: Complete the table</p>
-            <div className="border border-white/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <p className="mt-8 font-bold text-foreground">Task: Complete the table</p>
+            <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-white/5 border-b border-white/10">
-                    <th className="p-3 font-bold text-white">Root</th>
-                    <th className="p-3 font-bold text-white">Associated Factor</th>
+                  <tr className="bg-foreground/5 border-b border-foreground/10">
+                    <th className="p-3 font-bold text-foreground">Root</th>
+                    <th className="p-3 font-bold text-foreground">Associated Factor</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/10">
+                <tbody className="divide-y divide-foreground/10">
                   <tr><td className="p-3"><InlineMath math="x = -2" /></td><td className="p-3"><InlineMath math="x+2" /></td></tr>
                   <tr><td className="p-3"><InlineMath math="x = 5" /></td><td className="p-3"><InlineMath math="x-5" /></td></tr>
                   <tr><td className="p-3"><InlineMath math="x = -7" /></td><td className="p-3"><InlineMath math="x+7" /></td></tr>
@@ -1857,8 +1857,8 @@ export const higherMathsData: Section[] = [
                 </tbody>
               </table>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Include zeros for missing powers:</strong> for <InlineMath math="x^3 - 7x + 6" /> the row is 1, 0, −7, 6. Omitting the zero is the most common synthetic division error there is.</li>
               <li><strong>Divide by <InlineMath math="a" />, not <InlineMath math="-a" />:</strong> to test the factor <InlineMath math="(x-3)" /> you use 3 in the box. The sign reverses.</li>
@@ -1911,12 +1911,12 @@ export const higherMathsData: Section[] = [
         title: "Finding Unknown Coefficients",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1345",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Consider a polynomial with some unknown coefficients, such as <InlineMath math="x^3+2px^2-px+4" />, where <InlineMath math="p" /> is a constant.</p>
             <p>If we divide the polynomial by <InlineMath math="x-h" />, then we will obtain an expression for the remainder in terms of the unknown constants.</p>
             <p>If we already know the value of the remainder then we can solve for the unknown constants.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>A factor means remainder zero:</strong> that is the equation you solve for the unknown. Set the last entry of the synthetic division to 0.</li>
               <li><strong>Two unknowns need two conditions:</strong> the question will give you both — usually two factors, or a factor and a remainder. Form both equations and solve simultaneously.</li>
@@ -1980,11 +1980,11 @@ export const higherMathsData: Section[] = [
         title: "Factorising",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1606",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We can use synthetic division (or polynomial long division) alongside the factor theorem to fully factorise polynomials of degree 3 or higher.</p>
             <p>Once a linear factor <InlineMath math="(x-h)" /> is found, we divide the polynomial by <InlineMath math="(x-h)" /> to obtain a quotient. We then factorise the quotient if possible.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Take out a common factor first:</strong> skipping this is extremely common, and it makes the factorisation far harder than it needs to be. Check for one before you start dividing.</li>
                 <li><strong>Sign of the root:</strong> a factor <InlineMath math="(x-h)" /> corresponds to the root <InlineMath math="x = h" />, so you divide by <InlineMath math="h" />, not <InlineMath math="-h" />. Sign errors are the single biggest cause of lost marks on polynomial questions.</li>
@@ -2057,10 +2057,10 @@ export const higherMathsData: Section[] = [
         title: "Finding Roots",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=1920",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Finding the roots of a polynomial equation <InlineMath math="f(x)=0" /> follows the same principles as finding roots of a quadratic. We must first fully factorise the polynomial and then set each factor equal to zero.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Factorise fully before solving:</strong> a partly factorised polynomial hides roots. Keep going until every factor is linear or an irreducible quadratic.</li>
               <li><strong>Reverse the sign for the root:</strong> the factor <InlineMath math="(x+4)" /> gives the root <InlineMath math="x = -4" />.</li>
@@ -2112,16 +2112,16 @@ export const higherMathsData: Section[] = [
         title: "Determining the Equation of a Graph",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=2050",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Given the roots and at least one other point on the graph, we can establish the graph's equation.</p>
             <p>If the roots are <InlineMath math="x = a, x = b" /> and <InlineMath math="x = c" />, the equation is of the form <InlineMath math="y = k(x-a)(x-b)(x-c)" />. We can find <InlineMath math="k" /> using the other given point.</p>
             
-            <h4 className="text-xl font-bold text-white mt-8 mb-4">Repeated Roots</h4>
+            <h4 className="text-xl font-bold text-foreground mt-8 mb-4">Repeated Roots</h4>
             <p>If a repeated root exists, then a stationary point lies on the x-axis.</p>
             <p>Recall that a repeated root exists when two roots, and hence two factors, are equal.</p>
             <p>If a graph has a root <InlineMath math="x=a" /> and a repeated root at <InlineMath math="x=b" /> (where it touches the x-axis), the equation is of the form <InlineMath math="y = k(x-a)(x-b)^2" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>You must find <InlineMath math="k" />.</strong> Many candidates find the factors and then stop, with <em>no strategy at all for finding k</em>. Substitute another point from the graph — usually the <InlineMath math="y" />-intercept — and solve.</li>
                 <li><strong>Signs of the roots:</strong> sign errors here are extremely common. A root at <InlineMath math="x = -3" /> gives the factor <InlineMath math="(x+3)" />.</li>
@@ -2190,15 +2190,15 @@ export const higherMathsData: Section[] = [
         title: "Intersection of Two Graphs",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=2298",
         theory: (
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-6 text-foreground">
             <p>Given two equations of graphs, we can find their points of intersection. We already have experience of this with straight lines (National 5) and quadratics/lines.</p>
             <p>To find the intersection, equate the two expressions <InlineMath math="f(x) = g(x)" /> and solve for <InlineMath math="x" />.</p>
             <p>Two graphs could have several points of intersection, one point of intersection, or none:</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
+            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
               <PolyIntersectionDiagrams />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Set the equations equal:</strong> intersections happen where the <InlineMath math="y" /> values match. Bring everything to one side to get a polynomial equal to zero.</li>
               <li><strong>Solve fully, then find the <InlineMath math="y" /> values:</strong> the <InlineMath math="x" /> values are only half the answer. Substitute each back to give coordinates.</li>
@@ -2245,12 +2245,12 @@ export const higherMathsData: Section[] = [
         title: "Discriminant",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=9",
         theory: (
-          <div className="space-y-6 text-lg text-slate-300">
+          <div className="space-y-6 text-lg text-foreground">
             <p>Given a quadratic equation of the form, <InlineMath math="ax^2+bx+c=0" />, the <strong>discriminant</strong> is defined by <InlineMath math="b^2-4ac" />.</p>
             <p>It is worth seeing where it comes from. Any quadratic equation can be solved with the <strong>quadratic formula</strong>:</p>
             <BlockMath math="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}" />
             <p>The discriminant is exactly the expression <em>under the square root</em>. That is why it controls the roots: you cannot take the square root of a negative number, and a square root of zero adds nothing, so the sign of <InlineMath math="b^2-4ac" /> decides how many roots there are before you calculate anything.</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
+            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
               <DiscriminantDiagram />
             </div>
             <p>This gives three cases, which you should be able to state and recognise:</p>
@@ -2259,8 +2259,8 @@ export const higherMathsData: Section[] = [
             <p>If <InlineMath math="b^2-4ac \gt 0" /> and is a <strong>perfect square</strong>, the roots are <em>rational</em> and the quadratic factorises; if it is positive but not a perfect square, the roots are <em>irrational</em>.</p>
             <p>The discriminant has many uses including finding unknown terms in a quadratic equation.</p>
             <p><strong>The Golden Rule:</strong> before substituting, write the equation in the form <InlineMath math="ax^2+bx+c=0" /> with everything on one side — reading <InlineMath math="a" />, <InlineMath math="b" /> and <InlineMath math="c" /> off an equation that has not been rearranged is the most common way to lose these marks.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>State the condition you are using.</strong> The most frequently repeated fault on discriminant questions is using an incorrect condition, or never stating the inequality being solved at all. Write down <InlineMath math="b^2-4ac \lt 0" /> (or whichever applies) before you solve it.</li>
                 <li><strong>Brackets when substituting:</strong> marks are routinely lost for not using brackets when substituting into <InlineMath math="b^2-4ac" />. With <InlineMath math="b" /> negative or a coefficient in terms of <InlineMath math="k" />, brackets are essential.</li>
@@ -2325,7 +2325,7 @@ export const higherMathsData: Section[] = [
         title: "Intersection of Lines and Parabolas",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=309",
         theory: (
-          <div className="space-y-6 text-lg text-slate-300">
+          <div className="space-y-6 text-lg text-foreground">
             <p>A line may:</p>
             <ul className="list-disc list-inside space-y-2 mb-4">
               <li>intersect a parabola twice</li>
@@ -2337,11 +2337,11 @@ export const higherMathsData: Section[] = [
             <BlockMath math="px^2+qx-mx+r-k=0" />
             <BlockMath math="px^2+(q-m)x+(r-k)=0" />
             <p>This gives us a quadratic equation; hence, we can conclude:</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
+            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
               <IntersectionDiagram />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>State the condition you are testing:</strong> two intersections need <InlineMath math="b^2-4ac \gt 0" />, a tangent needs <InlineMath math="= 0" />, and no intersection needs <InlineMath math="\lt 0" />. Write it down before you solve — leaving it unstated is one of the most repeated faults on these questions.</li>
               <li><strong>Rearrange to zero first:</strong> substitute the line into the curve, then collect everything on one side before reading off <InlineMath math="a" />, <InlineMath math="b" /> and <InlineMath math="c" />.</li>
@@ -2400,16 +2400,16 @@ export const higherMathsData: Section[] = [
         title: "Solving Quadratic Inequalities",
         videoUrl: "https://www.youtube.com/embed/eaJ5zODvn2M?start=545",
         theory: (
-          <div className="space-y-6 text-lg text-slate-300">
+          <div className="space-y-6 text-lg text-foreground">
             <p>Quadratic inequalities can come in one of the following forms:</p>
             <BlockMath math="ax^2 + bx + c \gt 0 \qquad ax^2 + bx + c \geq 0" />
             <BlockMath math="ax^2 + bx + c \lt 0 \qquad ax^2 + bx + c \leq 0" />
             <p>To solve a quadratic inequality we must determine which part of the graph lies above or below the x-axis. We can determine this via a sketch of the parabola.</p>
-            <div className="my-8 p-6 bg-black/20 rounded-xl border border-white/10">
+            <div className="my-8 p-6 bg-black/20 rounded-xl border border-foreground/10">
               <InequalitiesDiagram />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Sketch the parabola:</strong> find the roots, decide whether it opens up or down, then read off where it is above or below the axis. Guessing the direction of the inequality is the main way marks go here.</li>
               <li><strong>Two regions need two inequalities:</strong> an answer such as "<InlineMath math="x \lt 1" /> or <InlineMath math="x \gt 4" />" cannot be compressed into a single chain.</li>
@@ -2461,7 +2461,7 @@ export const higherMathsData: Section[] = [
                 <p>We want <InlineMath math="< 0" /> (below the x-axis).</p>
                 <p>From a sketch, the graph is below the x-axis passing outside the roots.</p>
                 <p>The solution is <InlineMath math="x < -\frac{2}{3}" /> or <InlineMath math="x > \frac{2}{3}" />.</p>
-                <p className="text-sm italic text-slate-400 mt-4">Alternatively, multiplying by -1 gives <InlineMath math="9x^2 - 4 > 0" />. This produces the same result using a positive "U" shaped parabola.</p>
+                <p className="text-sm italic text-muted-foreground mt-4">Alternatively, multiplying by -1 gives <InlineMath math="9x^2 - 4 > 0" />. This produces the same result using a positive "U" shaped parabola.</p>
               </div>
             )
           },
@@ -2518,10 +2518,10 @@ export const higherMathsData: Section[] = [
         title: "Introduction",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=0",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The equation of a circle with centre <InlineMath math="(0,0)" /> is <InlineMath math="x^2+y^2=r^2" /></p>
-            <div className="bg-black/20 p-6 rounded-xl border border-white/10 flex justify-center">
-              <svg viewBox="-60 -60 120 120" className="w-[15rem] h-auto vector-graphic text-slate-100 max-w-full">
+            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center">
+              <svg viewBox="-60 -60 120 120" className="w-[15rem] h-auto vector-graphic text-foreground max-w-full">
                 <line x1="-50" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="0.5" />
                 <line x1="0" y1="-50" x2="0" y2="50" stroke="currentColor" strokeWidth="0.5" />
                 <polygon points="50,0 47,-2 47,2" fill="currentColor" />
@@ -2548,8 +2548,8 @@ export const higherMathsData: Section[] = [
                 <polyline points="18,0 18,3 21,3" fill="none" stroke="#EF4444" strokeWidth="0.5" />
               </svg>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Radius or diameter?</strong> the equation uses <InlineMath math="r^2" />, so a question that gives the diameter needs halving first. This is the most common single error in circle work.</li>
               <li><strong>The angle in a semicircle is a right angle:</strong> it is worth knowing, because it converts many circle problems into perpendicular-gradient problems.</li>
@@ -2604,11 +2604,11 @@ export const higherMathsData: Section[] = [
         title: "Equation of a Circle",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=19",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The equation of a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units is:</p>
             <BlockMath math="(x-a)^2+(y-b)^2=r^2" />
-            <div className="bg-black/20 p-6 rounded-xl border border-white/10 flex justify-center mt-6">
-              <svg viewBox="-40 -40 100 100" className="w-[15rem] h-auto vector-graphic text-slate-100 max-w-full">
+            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
+              <svg viewBox="-40 -40 100 100" className="w-[15rem] h-auto vector-graphic text-foreground max-w-full">
                 <line x1="-30" y1="0" x2="50" y2="0" stroke="currentColor" strokeWidth="0.5" />
                 <line x1="0" y1="-30" x2="0" y2="50" stroke="currentColor" strokeWidth="0.5" />
                 <polygon points="50,0 47,-2 47,2" fill="currentColor" />
@@ -2636,18 +2636,18 @@ export const higherMathsData: Section[] = [
               </svg>
             </div>
             
-            <p className="mt-8 font-bold text-white">Task: Complete the tables</p>
-            <div className="border border-white/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <p className="mt-8 font-bold text-foreground">Task: Complete the tables</p>
+            <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
               <div className="overflow-x-auto mb-6">
                 <table className="w-full text-left border-collapse text-sm sm:text-base">
                   <thead>
-                    <tr className="bg-white/5 border-b border-white/10">
-                      <th className="p-3 font-bold text-white">Equation of Circle</th>
-                      <th className="p-3 font-bold text-white">Centre</th>
-                      <th className="p-3 font-bold text-white">Radius</th>
+                    <tr className="bg-foreground/5 border-b border-foreground/10">
+                      <th className="p-3 font-bold text-foreground">Equation of Circle</th>
+                      <th className="p-3 font-bold text-foreground">Centre</th>
+                      <th className="p-3 font-bold text-foreground">Radius</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/10">
+                  <tbody className="divide-y divide-foreground/10">
                     <tr><td className="p-3"><InlineMath math="(x-5)^2+(y-1)^2=8^2" /></td><td className="p-3"><InlineMath math="(5, 1)" /></td><td className="p-3">8</td></tr>
                     <tr><td className="p-3"><InlineMath math="(x+5)^2+(y+1)^2=100" /></td><td className="p-3"><InlineMath math="(-5, -1)" /></td><td className="p-3">10</td></tr>
                     <tr><td className="p-3"><InlineMath math="(x-2)^2+(y+1)^2=65" /></td><td className="p-3"><InlineMath math="(2, -1)" /></td><td className="p-3"><InlineMath math="\sqrt{65}" /></td></tr>
@@ -2657,13 +2657,13 @@ export const higherMathsData: Section[] = [
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse text-sm sm:text-base">
                   <thead>
-                    <tr className="bg-white/5 border-b border-white/10">
-                      <th className="p-3 font-bold text-white">Centre</th>
-                      <th className="p-3 font-bold text-white">Radius</th>
-                      <th className="p-3 font-bold text-white">Equation of Circle</th>
+                    <tr className="bg-foreground/5 border-b border-foreground/10">
+                      <th className="p-3 font-bold text-foreground">Centre</th>
+                      <th className="p-3 font-bold text-foreground">Radius</th>
+                      <th className="p-3 font-bold text-foreground">Equation of Circle</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/10">
+                  <tbody className="divide-y divide-foreground/10">
                     <tr><td className="p-3"><InlineMath math="(4, 9)" /></td><td className="p-3">7 units</td><td className="p-3"><InlineMath math="(x-4)^2+(y-9)^2=49" /></td></tr>
                     <tr><td className="p-3"><InlineMath math="(-2, 9)" /></td><td className="p-3"><InlineMath math="\sqrt{3}" /> units</td><td className="p-3"><InlineMath math="(x+2)^2+(y-9)^2=3" /></td></tr>
                     <tr><td className="p-3"><InlineMath math="(-2, -6)" /></td><td className="p-3"><InlineMath math="2\sqrt{5}" /> units</td><td className="p-3"><InlineMath math="(x+2)^2+(y+6)^2=20" /></td></tr>
@@ -2671,8 +2671,8 @@ export const higherMathsData: Section[] = [
                 </table>
               </div>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The signs inside the brackets flip:</strong> a centre of <InlineMath math="(3,-2)" /> gives <InlineMath math="(x-3)^2 + (y+2)^2 = r^2" />. Reading the centre straight out of the brackets without changing sign is the classic slip.</li>
               <li><strong>It is <InlineMath math="r^2" /> on the right:</strong> so a radius of 5 gives 25. Going the other way, remember to square root before quoting the radius.</li>
@@ -2708,9 +2708,9 @@ export const higherMathsData: Section[] = [
         title: "Testing a Point",
         videoUrl: "https://www.youtube.com/embed/OCrqCAz9llk",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Given a circle with centre <InlineMath math="(a,b)" /> and radius <InlineMath math="r" /> units, we can determine whether a point <InlineMath math="(p,q)" /> lies within the circle, on the circumference of the circle or out with the circle.</p>
-            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-white/10 rounded-xl">
+            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-foreground/10 rounded-xl">
               <div className="flex flex-col items-center">
                 <svg viewBox="0 0 111 100" className="w-24 h-24">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
@@ -2742,8 +2742,8 @@ export const higherMathsData: Section[] = [
                 </div>
               </div>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Compare distance with radius:</strong> work out the distance from the centre to the point, then compare. Less than the radius is inside, equal is on, greater is outside.</li>
               <li><strong>State the conclusion:</strong> a calculation with no sentence does not answer a question that asks whether the point lies on the circle.</li>
@@ -2785,10 +2785,10 @@ export const higherMathsData: Section[] = [
         title: "General Equation of a Circle",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=711",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The equation of a circle can be written in expanded form.</p>
             <p>The circle with centre (-2, 3) and radius 5 units has equation:</p>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 text-center">
               <BlockMath math="(x+2)^2+(y-3)^2=25" />
               <BlockMath math="x^2+4x+4+y^2-6y+9=25" />
               <BlockMath math="x^2+4x+y^2-6y=12" />
@@ -2797,7 +2797,7 @@ export const higherMathsData: Section[] = [
             <p>This form of the equation is called the <strong>general equation of a circle</strong>.</p>
             
             <p className="mt-6">Working in reverse from the general equation you can find the centre and radius using completing the square.</p>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 text-center">
               <BlockMath math="x^2+4x+y^2-6y=12" />
               <BlockMath math="(x+2)^2-4+(y-3)^2-9=12" />
               <BlockMath math="(x+2)^2+(y-3)^2=25" />
@@ -2805,20 +2805,20 @@ export const higherMathsData: Section[] = [
             </div>
             
             <p className="mt-6">Given what we have learned about the general equation of a circle so far, we can use this as a quicker way to find the centre and radius.</p>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 text-center">
               <BlockMath math="x^2+y^2+2gx+2fy+c=0" />
               <BlockMath math="x^2+y^2+2gx+2fy=-c" />
               <BlockMath math="(x+g)^2-g^2+(y+f)^2-f^2=-c" />
               <BlockMath math="(x+g)^2+(y+f)^2=g^2+f^2-c" />
             </div>
             <p>This is now in the form <InlineMath math="(x-a)^2+(y-b)^2=r^2" />, giving:</p>
-            <ul className="list-disc list-inside bg-black/20 p-4 rounded-xl space-y-2 mt-4 inline-block mx-auto text-white">
+            <ul className="list-disc list-inside bg-black/20 p-4 rounded-xl space-y-2 mt-4 inline-block mx-auto text-foreground">
               <li>Centre: <strong><InlineMath math="(-g, -f)" /></strong></li>
               <li>Radius: <strong><InlineMath math="r = \sqrt{g^2+f^2-c}" /></strong></li>
               <li>Valid if: <strong><InlineMath math="g^2+f^2-c > 0" /></strong></li>
             </ul>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Sign of the centre:</strong> the centre is <InlineMath math="(-g,-f)" />, so the coefficients <InlineMath math="2g" /> and <InlineMath math="2f" /> flip sign twice. For <InlineMath math="x^2+y^2+4x-8y+7=0" />, <InlineMath math="2g=4" /> gives <InlineMath math="g=2" /> and the centre has <InlineMath math="x = -2" />.</li>
                 <li><strong>Halve before you negate:</strong> reading the centre straight off as <InlineMath math="(-4, 8)" /> instead of <InlineMath math="(-2, 4)" /> is the classic slip.</li>
@@ -2870,10 +2870,10 @@ export const higherMathsData: Section[] = [
         title: "Intersection of Circles",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1121",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Consider two circles with radii <InlineMath math="r_1" /> and <InlineMath math="r_2" /> with <InlineMath math="r_1 > r_2" />.</p>
             <p>Let <InlineMath math="d" /> be the distance between the centres of the two circles.</p>
-            <div className="bg-black/20 p-6 rounded-xl border border-white/10 flex justify-center mt-6 mb-6">
+            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6 mb-6">
               <svg viewBox="0 -40 180 80" className="w-[20rem] h-auto vector-graphic">
                 <circle cx="40" cy="0" r="35" fill="none" stroke="#A855F7" strokeWidth="2" />
                 <circle cx="40" cy="0" r="2" fill="#A855F7" />
@@ -2890,20 +2890,20 @@ export const higherMathsData: Section[] = [
               </svg>
             </div>
             
-            <div className="overflow-x-auto bg-black/20 rounded-xl border border-white/10 p-2">
+            <div className="overflow-x-auto bg-black/20 rounded-xl border border-foreground/10 p-2">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-white/20">
-                    <th className="p-2 border-r border-white/20"></th>
-                    <th className="p-2 border-r border-white/20">The circles do not touch</th>
-                    <th className="p-2 border-r border-white/20">The circles meet at one point only</th>
+                  <tr className="border-b border-foreground/20">
+                    <th className="p-2 border-r border-foreground/20"></th>
+                    <th className="p-2 border-r border-foreground/20">The circles do not touch</th>
+                    <th className="p-2 border-r border-foreground/20">The circles meet at one point only</th>
                     <th className="p-2">The circles meet at two distinct points</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/20 text-center">
+                <tbody className="divide-y divide-foreground/20 text-center">
                   <tr>
-                    <td className="p-4 border-r border-white/20 text-left font-bold">External</td>
-                    <td className="p-4 border-r border-white/20">
+                    <td className="p-4 border-r border-foreground/20 text-left font-bold">External</td>
+                    <td className="p-4 border-r border-foreground/20">
                       <svg viewBox="-40 -40 160 80" className="w-[10rem] h-auto vector-graphic mx-auto">
                         <circle cx="0" cy="0" r="25" fill="none" stroke="#A855F7" strokeWidth="2" />
                         <circle cx="70" cy="0" r="15" fill="none" stroke="#22C55E" strokeWidth="2" />
@@ -2914,7 +2914,7 @@ export const higherMathsData: Section[] = [
                       </svg>
                       <div className="mt-2"><InlineMath math="d > r_1 + r_2" /></div>
                     </td>
-                    <td className="p-4 border-r border-white/20">
+                    <td className="p-4 border-r border-foreground/20">
                       <svg viewBox="-40 -40 120 80" className="w-[8rem] h-auto vector-graphic mx-auto">
                         <circle cx="0" cy="0" r="25" fill="none" stroke="#A855F7" strokeWidth="2" />
                         <circle cx="40" cy="0" r="15" fill="none" stroke="#22C55E" strokeWidth="2" />
@@ -2938,8 +2938,8 @@ export const higherMathsData: Section[] = [
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-4 border-r border-white/20 text-left font-bold">Internal</td>
-                    <td className="p-4 border-r border-white/20">
+                    <td className="p-4 border-r border-foreground/20 text-left font-bold">Internal</td>
+                    <td className="p-4 border-r border-foreground/20">
                       <svg viewBox="-30 -30 60 60" className="w-[6rem] h-auto vector-graphic mx-auto">
                         <circle cx="0" cy="0" r="25" fill="none" stroke="#A855F7" strokeWidth="2" />
                         <circle cx="-5" cy="0" r="10" fill="none" stroke="#22C55E" strokeWidth="2" />
@@ -2950,7 +2950,7 @@ export const higherMathsData: Section[] = [
                       </svg>
                       <div className="mt-2"><InlineMath math="d < r_1 - r_2" /></div>
                     </td>
-                    <td className="p-4 border-r border-white/20">
+                    <td className="p-4 border-r border-foreground/20">
                       <svg viewBox="-30 -30 60 60" className="w-[6rem] h-auto vector-graphic mx-auto">
                         <circle cx="0" cy="0" r="25" fill="none" stroke="#A855F7" strokeWidth="2" />
                         <circle cx="10" cy="0" r="15" fill="none" stroke="#22C55E" strokeWidth="2" />
@@ -2961,13 +2961,13 @@ export const higherMathsData: Section[] = [
                       </svg>
                       <div className="mt-2"><InlineMath math="d = r_1 - r_2" /></div>
                     </td>
-                    <td className="p-4 bg-white/5"></td>
+                    <td className="p-4 bg-foreground/5"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Compare the distance between centres with the radii:</strong> touching externally means <InlineMath math="d = r_1 + r_2" />; touching internally means <InlineMath math="d = r_1 - r_2" />. Work out all three numbers before concluding.</li>
               <li><strong>Do not stop at the distance:</strong> the marks are for the comparison and the conclusion, so state which case applies and why.</li>
@@ -3054,9 +3054,9 @@ export const higherMathsData: Section[] = [
         title: "Equations of Tangents to Circles",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1597",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We know from National 5 that if we have a circle and a tangent to that circle, the tangent meets the radius at right angles.</p>
-            <div className="bg-black/20 p-6 rounded-xl border border-white/10 flex justify-center mt-6">
+            <div className="bg-black/20 p-6 rounded-xl border border-foreground/10 flex justify-center mt-6">
               <svg viewBox="-40 -10 80 80" className="w-[12rem] h-auto vector-graphic">
                 <circle cx="0" cy="30" r="30" fill="none" stroke="#22C55E" strokeWidth="2" />
                 <circle cx="0" cy="30" r="2" fill="#22C55E" />
@@ -3072,8 +3072,8 @@ export const higherMathsData: Section[] = [
             <p>If the point of contact between the circle and the tangent is known, then we can calculate the gradient of the radius.</p>
             <p>The gradient of the tangent can then be found using <InlineMath math="m_{radius} \times m_{tangent} = -1" />.</p>
             <p>We then know the gradient of the tangent and we have the point of contact, therefore can find the equation of the tangent using <InlineMath math="y - b = m(x - a)" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Radius and tangent are perpendicular:</strong> so the tangent's gradient is the negative reciprocal of the radius gradient. Using the radius gradient itself is the standard error.</li>
               <li><strong>Find the radius gradient first:</strong> from the centre to the point of contact — in that order, though the gradient is the same either way.</li>
@@ -3114,9 +3114,9 @@ export const higherMathsData: Section[] = [
         title: "Intersections of Lines and Circles",
         videoUrl: "https://www.youtube.com/embed/lRdDjVcj8B0?start=1747",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We have previously studied the intersection of lines and curves. Similarly, lines and circles can intersect at two points, one point (tangent), or no points.</p>
-            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-white/10 rounded-xl">
+            <div className="flex flex-wrap gap-6 items-center justify-center p-6 bg-black/20 border border-foreground/10 rounded-xl">
               <div className="flex flex-col items-center">
                 <svg viewBox="-50 -50 126 100" className="w-24 h-24">
                   <circle cx="0" cy="0" r="35" fill="none" stroke="#22C55E" strokeWidth="3" />
@@ -3149,8 +3149,8 @@ export const higherMathsData: Section[] = [
               </div>
             </div>
             <p>We can use substitution to find out how many times a line and a circle touch.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Answer the question that was asked:</strong> a common waste of time is finding the centre and radius when the question <em>does not require them</em>. Substituting the line into the circle is the method — the centre and radius are not the answer.</li>
                 <li><strong>Substitute, then use the discriminant:</strong> two intersections need <InlineMath math="b^2-4ac \gt 0" />, a tangent needs <InlineMath math="= 0" />, and no intersection needs <InlineMath math="\lt 0" />. State which you are testing.</li>
@@ -3239,14 +3239,14 @@ export const higherMathsData: Section[] = [
           <div className="space-y-8 text-lg">
             <p className="mb-6">Calculus provides a tool for solving problems involving motion, such as orbits of planets or paths of rockets. It can be used to study any situation where a rate of increase or decrease is involved.</p>
             <p className="mb-6">The instantaneous speed at a certain moment in time is known as the <strong>rate of change</strong>. This is the same as finding the <strong>gradient of the tangent</strong> to a curve at a certain point.</p>
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-              <h4 className="font-bold text-white text-xl mb-4">Differentiation from First Principles</h4>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
+              <h4 className="font-bold text-foreground text-xl mb-4">Differentiation from First Principles</h4>
               <p className="mb-4">The derivative of a function <InlineMath math="f(x)" /> is defined as the limit:</p>
               <BlockMath math="f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}" />
-              <p className="mt-4 text-sm text-slate-300"><InlineMath math="f'(x)" /> is the <strong>derived function</strong> or <strong>derivative</strong> of <InlineMath math="f(x)" />.</p>
+              <p className="mt-4 text-sm text-foreground"><InlineMath math="f'(x)" /> is the <strong>derived function</strong> or <strong>derivative</strong> of <InlineMath math="f(x)" />.</p>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Keep the limit notation until the end:</strong> every line needs <InlineMath math="\lim_{h \to 0}" /> in front of it until you actually take the limit. Dropping it early is a communication error even if the algebra is right.</li>
               <li><strong>Expand <InlineMath math="f(x+h)" /> carefully:</strong> <InlineMath math="(x+h)^2 = x^2 + 2xh + h^2" />, not <InlineMath math="x^2 + h^2" />. This single expansion is where most first-principles marks are lost.</li>
@@ -3275,14 +3275,14 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">Rather than using first principles every time, we can use a general rule for polynomials.</p>
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-              <h4 className="font-bold text-white text-xl mb-4">General Rule</h4>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
+              <h4 className="font-bold text-foreground text-xl mb-4">General Rule</h4>
               <p className="mb-4 text-center">If <InlineMath math="f(x) = x^n" /> then <InlineMath math="f'(x) = nx^{n-1} \quad (n \in \mathbb{R})" /></p>
-              <p className="text-sm text-slate-300 text-center">Multiply by the power, reduce the power by 1.</p>
+              <p className="text-sm text-foreground text-center">Multiply by the power, reduce the power by 1.</p>
             </div>
             <p className="mb-6">This rule applies to positive, negative, and fractional indices.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Negative indices:</strong> negative indices are the most reliable source of dropped marks in differentiation. Reducing the power by 1 makes it <em>more</em> negative — <InlineMath math="x^{-2}" /> differentiates to <InlineMath math="-2x^{-3}" />, not <InlineMath math="-2x^{-1}" />.</li>
                 <li><strong>Rewrite before you differentiate:</strong> the power rule only works on terms in the form <InlineMath math="ax^n" />. Roots and fractions must be written as indices first.</li>
@@ -3348,8 +3348,8 @@ export const higherMathsData: Section[] = [
           <div className="space-y-8 text-lg">
             <p className="mb-6">Before differentiating, you must rewrite expressions in the form <InlineMath math="x^n" /> or <InlineMath math="ax^n" />.</p>
             <p className="mb-6">If the expression contains brackets, you should multiply them out first.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Multiply out completely before differentiating:</strong> there is no product rule at Higher, so a product must be expanded first. Differentiating each bracket separately is simply wrong.</li>
               <li><strong>Watch signs when expanding:</strong> a negative outside a bracket changes every term inside it.</li>
@@ -3392,8 +3392,8 @@ export const higherMathsData: Section[] = [
           <div className="space-y-8 text-lg">
             <p className="mb-6">Before differentiating, rewrite roots as fractional indices (<InlineMath math="\sqrt[n]{x^m} = x^{\frac{m}{n}}" />).</p>
             <p className="mb-6">Move variables out of the denominator to the numerator using negative indices (<InlineMath math="\frac{1}{x^n} = x^{-n}" />).</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Rewrite roots as fractional indices:</strong> <InlineMath math="\sqrt{x} = x^{1/2}" /> and <InlineMath math="\sqrt[3]{x^2} = x^{2/3}" />. You cannot apply the power rule until every term is in the form <InlineMath math="ax^n" />.</li>
               <li><strong>Subtracting 1 from a fraction:</strong> <InlineMath math="\tfrac{1}{2} - 1 = -\tfrac{1}{2}" />, so <InlineMath math="x^{1/2}" /> differentiates to <InlineMath math="\tfrac{1}{2}x^{-1/2}" />. This is a very common slip.</li>
@@ -3458,8 +3458,8 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">If you have a fraction with a single term in the denominator, you should separate it into multiple fractions and simplify the indices before differentiating.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Split the fraction term by term:</strong> <InlineMath math="\frac{a+b}{c} = \frac{a}{c} + \frac{b}{c}" />. You can only do this when the <em>denominator</em> is a single term.</li>
               <li><strong>You cannot split the other way:</strong> <InlineMath math="\frac{1}{a+b}" /> is <em>not</em> <InlineMath math="\frac{1}{a} + \frac{1}{b}" />. A sum in the denominator cannot be separated.</li>
@@ -3501,7 +3501,7 @@ export const higherMathsData: Section[] = [
                <div className="space-y-4">
                  <p>Write as fractional indices, then expand the brackets:</p>
                  <BlockMath math="\begin{aligned} y &= x^{\frac{1}{2}} (x^2 + x^{\frac{1}{3}}) \\ y &= x^{\frac{1}{2}}x^2 + x^{\frac{1}{2}}x^{\frac{1}{3}} \\ y &= x^{\frac{5}{2}} + x^{\frac{5}{6}} \end{aligned}" />
-                 <p className="text-sm text-slate-400">Remember to add powers when multiplying: <InlineMath math="\frac{1}{2} + 2 = \frac{5}{2}" /> and <InlineMath math="\frac{1}{2} + \frac{1}{3} = \frac{3}{6} + \frac{2}{6} = \frac{5}{6}" />.</p>
+                 <p className="text-sm text-muted-foreground">Remember to add powers when multiplying: <InlineMath math="\frac{1}{2} + 2 = \frac{5}{2}" /> and <InlineMath math="\frac{1}{2} + \frac{1}{3} = \frac{3}{6} + \frac{2}{6} = \frac{5}{6}" />.</p>
                  <p>Now differentiate:</p>
                  <BlockMath math="\begin{aligned} \frac{dy}{dx} &= \frac{5}{2}x^{\frac{3}{2}} + \frac{5}{6}x^{-\frac{1}{6}} \\ &= \frac{5}{2}\sqrt{x^3} + \frac{5}{6\sqrt[6]{x}} \end{aligned}" />
                </div>
@@ -3516,13 +3516,13 @@ export const higherMathsData: Section[] = [
         theory: (
           <div className="space-y-8 text-lg">
             <p className="mb-6">The derivatives of the core trigonometric functions are:</p>
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8 space-y-4">
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8 space-y-4">
               <BlockMath math="\text{If } f(x) = \sin x \text{ then } f'(x) = \cos x" />
               <BlockMath math="\text{If } f(x) = \cos x \text{ then } f'(x) = -\sin x" />
             </div>
-            <p className="mt-4 text-sm text-slate-300">Wait, if the angle is in degrees, we must convert to radians to differentiate. Always assume <InlineMath math="x" /> is in radians for calculus.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <p className="mt-4 text-sm text-foreground">Wait, if the angle is in degrees, we must convert to radians to differentiate. Always assume <InlineMath math="x" /> is in radians for calculus.</p>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The minus sign belongs to cosine:</strong> <InlineMath math="\sin x" /> differentiates to <InlineMath math="\cos x" />, but <InlineMath math="\cos x" /> differentiates to <InlineMath math="-\sin x" />. Losing that minus is the single most common error here.</li>
               <li><strong>These rules need radians:</strong> they are only valid when <InlineMath math="x" /> is in radians, so work in radians throughout a calculus question.</li>
@@ -3561,8 +3561,8 @@ export const higherMathsData: Section[] = [
           <div className="space-y-8 text-lg">
             <p className="mb-6">The derivative of a function describes its <strong>rate of change</strong>. This can be evaluated for specific values by substituting these into the derivative.</p>
             
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-              <h4 className="font-bold text-white text-xl mb-4">Displacement, Velocity & Acceleration</h4>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
+              <h4 className="font-bold text-foreground text-xl mb-4">Displacement, Velocity & Acceleration</h4>
               <p className="mb-4">The velocity (<InlineMath math="v" />) of an object is defined as the rate of change of displacement (<InlineMath math="s" />) with respect to time (<InlineMath math="t" />)</p>
               <div className="flex justify-center mb-4">
                 <BlockMath math="v(t) = s'(t)" />
@@ -3574,8 +3574,8 @@ export const higherMathsData: Section[] = [
             </div>
 
             <p className="mb-6">As we already know, the gradient of a straight line is constant. We can determine the <strong>gradient</strong> of a curve, at a particular point, by differentiating i.e. finding the <strong>rate of change</strong>.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Differentiate with respect to the right variable:</strong> in a context question the letters change. If the formula is in terms of <InlineMath math="t" />, you want <InlineMath math="\frac{dV}{dt}" />, not <InlineMath math="\frac{dy}{dx}" />.</li>
                 <li><strong>Rate of change means the derivative, evaluated:</strong> substitute the given value in. An unsubstituted derivative does not answer the question.</li>
@@ -3631,12 +3631,12 @@ export const higherMathsData: Section[] = [
          videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=2229",
          theory: (
            <div className="space-y-8 text-lg">
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8 max-w-sm mx-auto">
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8 max-w-sm mx-auto">
                 <TangentDiagram />
              </div>
              <p className="mb-6">Once we have determined the gradient of a curve at a particular point (<InlineMath math="m = \frac{dy}{dx}" />), we can use this information directly with <InlineMath math="y - b = m(x - a)" /> to find the equation of the tangent line touching the curve at this point.</p>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>Negative indices:</strong> candidates who can otherwise do this question routinely lose marks by differentiating negative indices incorrectly. Check that step before going on.</li>
                  <li><strong>Gradient, then point:</strong> <InlineMath math="\frac{dy}{dx}" /> gives a <em>formula</em> for the gradient. You must substitute the <InlineMath math="x" />-coordinate into it to get the number. Using the derivative itself as <InlineMath math="m" /> is a guaranteed loss.</li>
@@ -3699,29 +3699,29 @@ export const higherMathsData: Section[] = [
          videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=2951",
          theory: (
            <div className="space-y-8 text-lg">
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-6">
-                <h4 className="font-bold text-white text-xl mb-4 text-emerald-400">Increasing Functions</h4>
-                <div className="mb-4 bg-white/5 rounded-lg py-4">
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-6">
+                <h4 className="font-bold text-foreground text-xl mb-4 text-emerald-400">Increasing Functions</h4>
+                <div className="mb-4 bg-foreground/5 rounded-lg py-4">
                    <IncreasingFunctionGraph />
                 </div>
                 <p>If <InlineMath math="y" /> increases as <InlineMath math="x" /> increases, the curve is strictly increasing.</p>
                 <p className="mt-2">Tangents slope upwards, so their gradients are positive: <InlineMath math="\frac{dy}{dx} > 0" />.</p>
              </div>
              
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-6">
-                <h4 className="font-bold text-white text-xl mb-4 text-rose-400">Decreasing Functions</h4>
-                <div className="mb-4 bg-white/5 rounded-lg py-4">
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-6">
+                <h4 className="font-bold text-foreground text-xl mb-4 text-rose-400">Decreasing Functions</h4>
+                <div className="mb-4 bg-foreground/5 rounded-lg py-4">
                    <DecreasingFunctionGraph />
                 </div>
                 <p>If <InlineMath math="y" /> decreases as <InlineMath math="x" /> increases, the curve is strictly decreasing.</p>
                 <p className="mt-2">Tangents slope downwards, so their gradients are negative: <InlineMath math="\frac{dy}{dx} < 0" />.</p>
              </div>
              
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mt-8 overflow-hidden flex justify-center py-8">
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mt-8 overflow-hidden flex justify-center py-8">
                <IncDecCombinedGraph />
              </div>
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>Answer with an inequality, not a number:</strong> the question asks for the values of <InlineMath math="x" /> for which the function is increasing, so the answer is a range such as <InlineMath math="x \gt 2" />.</li>
                <li><strong>Justify with the sign of the derivative:</strong> state <InlineMath math="\frac{dy}{dx} \gt 0" /> for increasing and <InlineMath math="\frac{dy}{dx} \lt 0" /> for decreasing. An unsupported answer does not gain full marks.</li>
@@ -3766,34 +3766,34 @@ export const higherMathsData: Section[] = [
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-6">Points where the curve is neither increasing nor decreasing are called <strong>stationary points</strong>. At these points, the tangent is horizontal.</p>
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-               <p className="font-bold text-white mb-2">We can find stationary points by solving:</p>
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
+               <p className="font-bold text-foreground mb-2">We can find stationary points by solving:</p>
                <BlockMath math="\frac{dy}{dx} = 0 \quad \text{or} \quad f'(x) = 0" />
              </div>
              
              <p className="mb-4">There are four possible types of stationary point:</p>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-               <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center">
-                 <h5 className="font-bold text-white mb-4">Minimum Turning Point</h5>
+               <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 flex flex-col items-center">
+                 <h5 className="font-bold text-foreground mb-4">Minimum Turning Point</h5>
                  <MinTurningPoint />
                </div>
-               <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center">
-                 <h5 className="font-bold text-white mb-4">Maximum Turning Point</h5>
+               <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 flex flex-col items-center">
+                 <h5 className="font-bold text-foreground mb-4">Maximum Turning Point</h5>
                  <MaxTurningPoint />
                </div>
-               <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center">
-                 <h5 className="font-bold text-white mb-4">Rising Point of Inflection</h5>
+               <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 flex flex-col items-center">
+                 <h5 className="font-bold text-foreground mb-4">Rising Point of Inflection</h5>
                  <RisingInflection />
                </div>
-               <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center">
-                 <h5 className="font-bold text-white mb-4">Falling Point of Inflection</h5>
+               <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 flex flex-col items-center">
+                 <h5 className="font-bold text-foreground mb-4">Falling Point of Inflection</h5>
                  <FallingInflection />
                </div>
              </div>
              
              <p>A stationary point's nature is determined by its behaviour to the left and right, using a <strong>nature table</strong>.</p>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>The nature table has minimum requirements:</strong> a table that does not meet them scores nothing. It must show the <InlineMath math="x" /> values either side of the stationary point, the sign of <InlineMath math="\frac{dy}{dx}" /> in each region, and the shape of the slope — not just an answer.</li>
                  <li><strong>Label it correctly:</strong> incorrect labelling within the table is a common and needless error. Say which <InlineMath math="x" /> values you are testing.</li>
@@ -3824,37 +3824,37 @@ export const higherMathsData: Section[] = [
                     <table className="w-full text-center border-collapse text-sm">
                       <thead>
                         <tr>
-                          <td className="border border-white/20 p-2"><InlineMath math="x" /></td>
-                          <td className="border border-white/20 p-2"><InlineMath math="\to 0" /></td>
-                          <td className="border border-white/20 p-2">0</td>
-                          <td className="border border-white/20 p-2"><InlineMath math="0 \to 1.5" /></td>
-                          <td className="border border-white/20 p-2">1.5</td>
-                          <td className="border border-white/20 p-2"><InlineMath math="1.5 \to" /></td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="x" /></td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="\to 0" /></td>
+                          <td className="border border-foreground/20 p-2">0</td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="0 \to 1.5" /></td>
+                          <td className="border border-foreground/20 p-2">1.5</td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="1.5 \to" /></td>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td className="border border-white/20 p-2"><InlineMath math="dy/dx" /></td>
-                          <td className="border border-white/20 p-2 text-emerald-400">+</td>
-                          <td className="border border-white/20 p-2">0</td>
-                          <td className="border border-white/20 p-2 text-emerald-400">+</td>
-                          <td className="border border-white/20 p-2">0</td>
-                          <td className="border border-white/20 p-2 text-rose-400">-</td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="dy/dx" /></td>
+                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2">0</td>
+                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2">0</td>
+                          <td className="border border-foreground/20 p-2 text-rose-400">-</td>
                         </tr>
                         <tr>
-                          <td className="border border-white/20 p-2">Shape</td>
-                          <td className="border border-white/20 p-2">/</td>
-                          <td className="border border-white/20 p-2">—</td>
-                          <td className="border border-white/20 p-2">/</td>
-                          <td className="border border-white/20 p-2">—</td>
-                          <td className="border border-white/20 p-2">\</td>
+                          <td className="border border-foreground/20 p-2">Shape</td>
+                          <td className="border border-foreground/20 p-2">/</td>
+                          <td className="border border-foreground/20 p-2">—</td>
+                          <td className="border border-foreground/20 p-2">/</td>
+                          <td className="border border-foreground/20 p-2">—</td>
+                          <td className="border border-foreground/20 p-2">\</td>
                         </tr>
                       </tbody>
                     </table>
                  </div>
                  
-                 <p className="mt-4"><strong className="text-white">(0,0) is a Rising Point of Inflection.</strong></p>
-                 <p><strong className="text-white">(1.5, 3.375) is a Maximum Turning Point.</strong></p>
+                 <p className="mt-4"><strong className="text-foreground">(0,0) is a Rising Point of Inflection.</strong></p>
+                 <p><strong className="text-foreground">(1.5, 3.375) is a Maximum Turning Point.</strong></p>
                </div>
              )
            },
@@ -3878,37 +3878,37 @@ export const higherMathsData: Section[] = [
                     <table className="w-full text-center border-collapse text-sm">
                       <thead>
                         <tr>
-                          <td className="border border-white/20 p-2"><InlineMath math="x" /></td>
-                          <td className="border border-white/20 p-2"><InlineMath math="\to -1" /></td>
-                          <td className="border border-white/20 p-2">-1</td>
-                          <td className="border border-white/20 p-2"><InlineMath math="-1 \to 3" /></td>
-                          <td className="border border-white/20 p-2">3</td>
-                          <td className="border border-white/20 p-2"><InlineMath math="3 \to" /></td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="x" /></td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="\to -1" /></td>
+                          <td className="border border-foreground/20 p-2">-1</td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="-1 \to 3" /></td>
+                          <td className="border border-foreground/20 p-2">3</td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="3 \to" /></td>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td className="border border-white/20 p-2"><InlineMath math="dy/dx" /></td>
-                          <td className="border border-white/20 p-2 text-emerald-400">+</td>
-                          <td className="border border-white/20 p-2">0</td>
-                          <td className="border border-white/20 p-2 text-rose-400">-</td>
-                          <td className="border border-white/20 p-2">0</td>
-                          <td className="border border-white/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2"><InlineMath math="dy/dx" /></td>
+                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                          <td className="border border-foreground/20 p-2">0</td>
+                          <td className="border border-foreground/20 p-2 text-rose-400">-</td>
+                          <td className="border border-foreground/20 p-2">0</td>
+                          <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
                         </tr>
                         <tr>
-                          <td className="border border-white/20 p-2">Shape</td>
-                          <td className="border border-white/20 p-2">/</td>
-                          <td className="border border-white/20 p-2">—</td>
-                          <td className="border border-white/20 p-2">\</td>
-                          <td className="border border-white/20 p-2">—</td>
-                          <td className="border border-white/20 p-2">/</td>
+                          <td className="border border-foreground/20 p-2">Shape</td>
+                          <td className="border border-foreground/20 p-2">/</td>
+                          <td className="border border-foreground/20 p-2">—</td>
+                          <td className="border border-foreground/20 p-2">\</td>
+                          <td className="border border-foreground/20 p-2">—</td>
+                          <td className="border border-foreground/20 p-2">/</td>
                         </tr>
                       </tbody>
                     </table>
                  </div>
                  
-                 <p className="mt-4"><strong className="text-white">(-1, 10) is a Maximum Turning Point.</strong></p>
-                 <p><strong className="text-white">(3, -22) is a Minimum Turning Point.</strong></p>
+                 <p className="mt-4"><strong className="text-foreground">(-1, 10) is a Maximum Turning Point.</strong></p>
+                 <p><strong className="text-foreground">(3, -22) is a Minimum Turning Point.</strong></p>
                </div>
              )
            },
@@ -3942,40 +3942,40 @@ export const higherMathsData: Section[] = [
                    <table className="w-full text-center border-collapse text-sm">
                      <thead>
                        <tr>
-                         <td className="border border-white/20 p-2"><InlineMath math="x" /></td>
-                         <td className="border border-white/20 p-2"><InlineMath math="\to 0" /></td>
-                         <td className="border border-white/20 p-2">0</td>
-                         <td className="border border-white/20 p-2"><InlineMath math="0 \to 2" /></td>
-                         <td className="border border-white/20 p-2">2</td>
-                         <td className="border border-white/20 p-2"><InlineMath math="2 \to" /></td>
+                         <td className="border border-foreground/20 p-2"><InlineMath math="x" /></td>
+                         <td className="border border-foreground/20 p-2"><InlineMath math="\to 0" /></td>
+                         <td className="border border-foreground/20 p-2">0</td>
+                         <td className="border border-foreground/20 p-2"><InlineMath math="0 \to 2" /></td>
+                         <td className="border border-foreground/20 p-2">2</td>
+                         <td className="border border-foreground/20 p-2"><InlineMath math="2 \to" /></td>
                        </tr>
                      </thead>
                      <tbody>
                        <tr>
-                         <td className="border border-white/20 p-2"><InlineMath math="dy/dx" /></td>
-                         <td className="border border-white/20 p-2 text-emerald-400">+</td>
-                         <td className="border border-white/20 p-2">0</td>
-                         <td className="border border-white/20 p-2 text-rose-400">-</td>
-                         <td className="border border-white/20 p-2">0</td>
-                         <td className="border border-white/20 p-2 text-emerald-400">+</td>
+                         <td className="border border-foreground/20 p-2"><InlineMath math="dy/dx" /></td>
+                         <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
+                         <td className="border border-foreground/20 p-2">0</td>
+                         <td className="border border-foreground/20 p-2 text-rose-400">-</td>
+                         <td className="border border-foreground/20 p-2">0</td>
+                         <td className="border border-foreground/20 p-2 text-emerald-400">+</td>
                        </tr>
                        <tr>
-                         <td className="border border-white/20 p-2">Shape</td>
-                         <td className="border border-white/20 p-2">/</td>
-                         <td className="border border-white/20 p-2">—</td>
-                         <td className="border border-white/20 p-2">\</td>
-                         <td className="border border-white/20 p-2">—</td>
-                         <td className="border border-white/20 p-2">/</td>
+                         <td className="border border-foreground/20 p-2">Shape</td>
+                         <td className="border border-foreground/20 p-2">/</td>
+                         <td className="border border-foreground/20 p-2">—</td>
+                         <td className="border border-foreground/20 p-2">\</td>
+                         <td className="border border-foreground/20 p-2">—</td>
+                         <td className="border border-foreground/20 p-2">/</td>
                        </tr>
                      </tbody>
                    </table>
                  </div>
                  
-                 <p><strong className="text-white">(0, 0) is a Maximum Turning Point.</strong></p>
-                 <p><strong className="text-white">(2, -4) is a Minimum Turning Point.</strong></p>
+                 <p><strong className="text-foreground">(0, 0) is a Maximum Turning Point.</strong></p>
+                 <p><strong className="text-foreground">(2, -4) is a Minimum Turning Point.</strong></p>
                  
                  <p className="mt-4"><strong>4. Completed Diagram:</strong></p>
-                 <div className="bg-white/5 p-6 rounded-xl border border-white/10 mt-6 flex justify-center py-8">
+                 <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mt-6 flex justify-center py-8">
                    <CurveSketchExample />
                  </div>
                </div>
@@ -3990,8 +3990,8 @@ export const higherMathsData: Section[] = [
          theory: (
            <div className="space-y-8 text-lg">
              <p className="mb-6">In a closed interval, the maximum and minimum values of a function are either at a <strong>stationary point</strong> or at an <strong>end point</strong> of the interval.</p>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>Check both ends:</strong> this is the classic way to lose marks here — <em>most</em> candidates who drop marks never consider both ends of the closed interval. You must evaluate the function at <strong>both</strong> endpoints as well as at every stationary point inside the interval.</li>
                  <li><strong>Compare values, not natures:</strong> the greatest value is simply the largest of the numbers you have worked out. A maximum turning point inside the interval is not automatically the greatest value — an endpoint can beat it.</li>
@@ -4023,8 +4023,8 @@ export const higherMathsData: Section[] = [
                  </ul>
                  
                  <p className="mt-4 text-emerald-300">Compare all values: <InlineMath math="-\frac{23}{27}" />, <InlineMath math="2.25" />, <InlineMath math="-27" />, <InlineMath math="21" />.</p>
-                 <p><strong className="text-white">Maximum value is 21</strong> (at <InlineMath math="x=2" />).</p>
-                 <p><strong className="text-white">Minimum value is -27</strong> (at <InlineMath math="x=-2" />).</p>
+                 <p><strong className="text-foreground">Maximum value is 21</strong> (at <InlineMath math="x=2" />).</p>
+                 <p><strong className="text-foreground">Minimum value is -27</strong> (at <InlineMath math="x=-2" />).</p>
                </div>
              )
            }
@@ -4038,9 +4038,9 @@ export const higherMathsData: Section[] = [
            <div className="space-y-8 text-lg">
              <p className="mb-4"><strong>Optimisation</strong> involves finding the greatest (maximum) or least (minimum) value of a quantity under certain constraints, such as finding the maximum volume of a box or the minimum material needed to make a can.</p>
              
-             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-6 text-base">
-               <h4 className="font-bold text-white text-xl mb-4">Steps for Optimisation Problems</h4>
-               <ul className="list-decimal list-inside space-y-3 mt-4 text-slate-300">
+             <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-6 text-base">
+               <h4 className="font-bold text-foreground text-xl mb-4">Steps for Optimisation Problems</h4>
+               <ul className="list-decimal list-inside space-y-3 mt-4 text-foreground">
                  <li>Identify the quantity to be maximised or minimised.</li>
                  <li>Form an equation for this quantity in terms of two variables (e.g. area <InlineMath math="A" /> in terms of <InlineMath math="x" /> and <InlineMath math="y" />).</li>
                  <li>Use the given constraint (e.g. total perimeter) to write one variable in terms of the other.</li>
@@ -4050,8 +4050,8 @@ export const higherMathsData: Section[] = [
                  <li>Calculate the maximum/minimum value of the quantity required.</li>
                </ul>
              </div>
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>Get to one variable first:</strong> use the constraint given in the question to eliminate a variable before differentiating. You cannot differentiate a formula in two unknowns.</li>
                <li><strong>Justify the nature:</strong> finding the stationary point is not enough — a nature table is needed to show it really is the maximum or minimum.</li>
@@ -4067,11 +4067,11 @@ export const higherMathsData: Section[] = [
              id: "opt-ex1",
              question: (
                <div className="space-y-4">
-                 <p className="font-bold border-b border-white/20 pb-2 mb-4">Example 1</p>
+                 <p className="font-bold border-b border-foreground/20 pb-2 mb-4">Example 1</p>
                  <p>A square piece of card of length 30cm has a square of side <InlineMath math="x\text{ cm}" /> cut from each corner. An open box is formed by turning up the sides.</p>
                  <p className="pl-4">a) Show that the volume, <InlineMath math="V" />, of the box can be expressed by <InlineMath math="900x - 120x^2 + 4x^3" />.</p>
                  <p className="pl-4">b) Find the maximum volume of the box.</p>
-                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex justify-center py-6 mt-4">
+                 <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 flex justify-center py-6 mt-4">
                    <Example1Diagram />
                  </div>
                </div>
@@ -4083,14 +4083,14 @@ export const higherMathsData: Section[] = [
                  <p>The height of the box is <InlineMath math="x" />.</p>
                  <BlockMath math="\begin{aligned} V &= \text{Area of base} \times \text{height} \\ V &= (30 - 2x)^2 \times x \\ V &= (900 - 120x + 4x^2)x \\ V &= 900x - 120x^2 + 4x^3 \end{aligned}" />
 
-                 <p className="mt-6 border-t border-white/20 pt-4"><strong>Part b) Maximising Volume</strong></p>
+                 <p className="mt-6 border-t border-foreground/20 pt-4"><strong>Part b) Maximising Volume</strong></p>
                  <p>Differentiate and set to 0 for a maximum:</p>
                  <BlockMath math="\begin{aligned} V'(x) &= 900 - 240x + 12x^2 \\ 12x^2 - 240x + 900 &= 0 \end{aligned}" />
                  <p>Divide by 12:</p>
                  <BlockMath math="\begin{aligned} x^2 - 20x + 75 &= 0 \\ (x - 5)(x - 15) &= 0 \end{aligned}" />
                  <p>So <InlineMath math="x = 5" /> or <InlineMath math="x = 15" />.</p>
                  
-                 <p className="mt-4 text-emerald-300">If <InlineMath math="x = 15" />, the length of the base would be <InlineMath math="30 - 2(15) = 0" />, which is impossible. So <strong className="text-white">x = 5</strong>.</p>
+                 <p className="mt-4 text-emerald-300">If <InlineMath math="x = 15" />, the length of the base would be <InlineMath math="30 - 2(15) = 0" />, which is impossible. So <strong className="text-foreground">x = 5</strong>.</p>
                  
                  <p className="mt-4">Verify it's a maximum using the second derivative factor:</p>
                  <BlockMath math="V''(x) = -240 + 24x" />
@@ -4099,7 +4099,7 @@ export const higherMathsData: Section[] = [
                  <p className="mt-4">Calculate the maximum volume:</p>
                  <BlockMath math="\begin{aligned} V(5) &= 900(5) - 120(5)^2 + 4(5)^3 \\ &= 4500 - 120(25) + 4(125) \\ &= 4500 - 3000 + 500 \\ &= 2000 \end{aligned}" />
                  
-                 <p>The maximum volume of the box is <strong className="text-white">2000 cm³</strong>.</p>
+                 <p>The maximum volume of the box is <strong className="text-foreground">2000 cm³</strong>.</p>
                </div>
              )
            },
@@ -4107,9 +4107,9 @@ export const higherMathsData: Section[] = [
              id: "opt-ex2",
              question: (
                <div className="space-y-4">
-                 <p className="font-bold border-b border-white/20 pb-2 mb-4">Example 2</p>
+                 <p className="font-bold border-b border-foreground/20 pb-2 mb-4">Example 2</p>
                  <p>An open box with a square base has volume <InlineMath math="256\text{ cm}^3" />.</p>
-                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex justify-center py-6 mt-4">
+                 <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 flex justify-center py-6 mt-4">
                    <Example2Diagram />
                  </div>
                  <p className="pl-4">a) Taking <InlineMath math="x" /> as the length of the base, show that the surface area of the inside of the box can be expressed as <InlineMath math="x^2 + \frac{1024}{x}" />.</p>
@@ -4129,7 +4129,7 @@ export const higherMathsData: Section[] = [
                  <p>Substitute <InlineMath math="h" />:</p>
                  <BlockMath math="\begin{aligned} A &= x^2 + 4x\left(\frac{256}{x^2}\right) \\ &= x^2 + \frac{1024}{x} \end{aligned}" />
                  
-                 <p className="mt-6 border-t border-white/20 pt-4"><strong>Part b) Minimising Surface Area</strong></p>
+                 <p className="mt-6 border-t border-foreground/20 pt-4"><strong>Part b) Minimising Surface Area</strong></p>
                  <BlockMath math="A(x) = x^2 + 1024x^{-1}" />
                  
                  <p>Differentiate and set to 0 for a minimum:</p>
@@ -4143,11 +4143,11 @@ export const higherMathsData: Section[] = [
                  <p className="mt-4"><strong>Dimensions and Minimum Area:</strong></p>
                  <p>Length and width are <InlineMath math="x = 8\text{ cm}" />.</p>
                  <p>Height <InlineMath math="h = \frac{256}{8^2} = \frac{256}{64} = 4\text{ cm}" />.</p>
-                 <p>Dimensions are <strong className="text-white">8 cm × 8 cm × 4 cm</strong>.</p>
+                 <p>Dimensions are <strong className="text-foreground">8 cm × 8 cm × 4 cm</strong>.</p>
                  
                  <p className="mt-2">Minimum surface area:</p>
                  <BlockMath math="\begin{aligned} A(8) &= 8^2 + \frac{1024}{8} \\ &= 64 + 128 \\ &= 192 \end{aligned}" />
-                 <p>The minimum surface area is <strong className="text-white">192 cm²</strong>.</p>
+                 <p>The minimum surface area is <strong className="text-foreground">192 cm²</strong>.</p>
                </div>
              )
            }
@@ -4164,33 +4164,33 @@ export const higherMathsData: Section[] = [
                 <table className="w-full text-center border-collapse">
                   <thead>
                      <tr>
-                        <th className="border-b border-white/20 pb-2 text-rose-300">Original Graph: <InlineMath math="f(x)" /></th>
-                        <th className="border-b border-white/20 pb-2 text-emerald-300">Derived Graph: <InlineMath math="f'(x)" /></th>
+                        <th className="border-b border-foreground/20 pb-2 text-rose-300">Original Graph: <InlineMath math="f(x)" /></th>
+                        <th className="border-b border-foreground/20 pb-2 text-emerald-300">Derived Graph: <InlineMath math="f'(x)" /></th>
                      </tr>
                   </thead>
                   <tbody>
                      <tr>
-                        <td className="py-3 border-b border-white/10">Increasing</td>
-                        <td className="py-3 border-b border-white/10">Positive (above x-axis)</td>
+                        <td className="py-3 border-b border-foreground/10">Increasing</td>
+                        <td className="py-3 border-b border-foreground/10">Positive (above x-axis)</td>
                      </tr>
                      <tr>
-                        <td className="py-3 border-b border-white/10">Decreasing</td>
-                        <td className="py-3 border-b border-white/10">Negative (below x-axis)</td>
+                        <td className="py-3 border-b border-foreground/10">Decreasing</td>
+                        <td className="py-3 border-b border-foreground/10">Negative (below x-axis)</td>
                      </tr>
                      <tr>
-                        <td className="py-3 border-b border-white/10 text-white font-bold">Turning Point</td>
-                        <td className="py-3 border-b border-white/10 text-white font-bold">Root (cuts x-axis)</td>
+                        <td className="py-3 border-b border-foreground/10 text-foreground font-bold">Turning Point</td>
+                        <td className="py-3 border-b border-foreground/10 text-foreground font-bold">Root (cuts x-axis)</td>
                      </tr>
                      <tr>
-                        <td className="py-3 border-b border-white/10 text-white font-bold">Point of Inflection</td>
-                        <td className="py-3 border-b border-white/10 text-white font-bold">Root and Turning Point (touches x-axis)</td>
+                        <td className="py-3 border-b border-foreground/10 text-foreground font-bold">Point of Inflection</td>
+                        <td className="py-3 border-b border-foreground/10 text-foreground font-bold">Root and Turning Point (touches x-axis)</td>
                      </tr>
                   </tbody>
                 </table>
              </div>
-             <p className="text-slate-300 text-sm italic">For example, if <InlineMath math="f(x)" /> is a cubic with two turning points, <InlineMath math="f'(x)" /> will be a parabola with two roots.</p>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <p className="text-foreground text-sm italic">For example, if <InlineMath math="f(x)" /> is a cubic with two turning points, <InlineMath math="f'(x)" /> will be a parabola with two roots.</p>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>This is one of the worst-answered questions in the course.</strong> Most candidates gain no marks on it at all. It is very winnable if you follow the rules below.</li>
                  <li><strong>Get the degree right:</strong> many candidates draw a curve of the wrong type — a quartic differentiates to a cubic, a cubic to a parabola. Decide the shape before you draw anything.</li>
@@ -4208,13 +4208,13 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p>The original graph is a parabola with a minimum turning point at <InlineMath math="(-1, -11)" />.</p>
-                 <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
+                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground">
                    <li>When <InlineMath math="x < -1" />, the function is decreasing, so the gradient is negative (<InlineMath math="f'(x) < 0" />).</li>
                    <li>At <InlineMath math="x = -1" />, there is a turning point, so the gradient is zero (<InlineMath math="f'(-1) = 0" />).</li>
                    <li>When <InlineMath math="x > -1" />, the function is increasing, so the gradient is positive (<InlineMath math="f'(x) > 0" />).</li>
                  </ul>
                  <p>The derivative of a quadratic is a linear function (straight line), crossing the x-axis at <InlineMath math="-1" />.</p>
-                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-white/10">
+                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-foreground/10">
                    <DerivedEx1 />
                  </div>
                </div>
@@ -4226,13 +4226,13 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p>The original graph is a cubic with a maximum turning point at <InlineMath math="(0, -6)" /> and a minimum turning point at <InlineMath math="(3, -18)" />.</p>
-                 <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
+                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground">
                    <li>At <InlineMath math="x = 0" /> and <InlineMath math="x = 3" />, there are turning points, so <InlineMath math="f'(0) = 0" /> and <InlineMath math="f'(3) = 0" /> (roots of the derived graph).</li>
                    <li>Between <InlineMath math="0" /> and <InlineMath math="3" />, the function is decreasing, so <InlineMath math="f'(x)" /> is negative (below the x-axis).</li>
                    <li>Outside of this interval (<InlineMath math="x < 0" /> and <InlineMath math="x > 3" />), the function is increasing, so <InlineMath math="f'(x)" /> is positive (above the x-axis).</li>
                  </ul>
                  <p>The derivative of a cubic is an upward-opening parabola crossing at <InlineMath math="0" /> and <InlineMath math="3" />.</p>
-                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-white/10">
+                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-foreground/10">
                    <DerivedEx2 />
                  </div>
                </div>
@@ -4244,13 +4244,13 @@ export const higherMathsData: Section[] = [
              solution: (
                <div className="space-y-4">
                  <p>The original graph has a rising point of inflection at <InlineMath math="(0, 5)" /> and a maximum turning point at <InlineMath math="(1.5, 8.375)" />.</p>
-                 <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
+                 <ul className="list-disc list-inside space-y-2 text-sm text-foreground">
                    <li>At <InlineMath math="x = 0" /> and <InlineMath math="x = 1.5" />, the gradient is zero, so <InlineMath math="f'(0) = 0" /> and <InlineMath math="f'(1.5) = 0" />.</li>
                    <li>Since <InlineMath math="(0, 5)" /> is a rising point of inflection, the graph is increasing both before and immediately after <InlineMath math="x = 0" />. So <InlineMath math="f'(x)" /> is positive, touches <InlineMath math="0" />, and stays positive.</li>
                    <li>After the maximum at <InlineMath math="x = 1.5" />, the graph decreases, so the gradient becomes negative.</li>
                  </ul>
                  <p>The derived graph touches the x-axis at <InlineMath math="0" /> and crosses it at <InlineMath math="1.5" />.</p>
-                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-white/10">
+                 <div className="my-6 p-4 bg-black/20 rounded-xl border border-foreground/10">
                    <DerivedEx3 />
                  </div>
                </div>
@@ -4263,22 +4263,22 @@ export const higherMathsData: Section[] = [
         title: "Further Differentiation of Brackets",
         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6707",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>When differentiating composite functions involving linear expressions raised to a power, we can use the chain rule.</p>
             <p>If the functions <InlineMath math="f" /> and <InlineMath math="g" /> are defined on suitable domains, then:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)" />
             </div>
             <p>For brackets raised to a power:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^n] = n(ax+b)^{n-1} \times a = an(ax+b)^{n-1}" />
             </div>
             <p>Alternatively, using Leibniz notation, if <InlineMath math="y = f(u)" /> and <InlineMath math="u = g(x)" />:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Multiply by the derivative of the inside:</strong> the chain rule is easy to state and easy to forget. <InlineMath math="(3x+1)^5" /> differentiates to <InlineMath math="5(3x+1)^4 \times 3" />, and that <InlineMath math="\times 3" /> is where the marks go.</li>
               <li><strong>Do not expand the bracket:</strong> for a high power the chain rule is the only realistic route.</li>
@@ -4345,14 +4345,14 @@ export const higherMathsData: Section[] = [
         title: "Further Differentiation of Trigonometric Functions",
         videoUrl: "https://www.youtube.com/embed/kjRzrHzwU0s?start=6707",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The chain rule is also required when differentiating composite trigonometric functions.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[\sin(f(x))] = \cos(f(x)) \times f'(x)" />
               <BlockMath math="\frac{d}{dx}[\cos(f(x))] = -\sin(f(x)) \times f'(x)" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Two things must happen:</strong> differentiate the trig function <em>and</em> multiply by the derivative of the angle. <InlineMath math="\sin(4x)" /> differentiates to <InlineMath math="4\cos(4x)" />.</li>
               <li><strong>The minus still belongs to cosine:</strong> <InlineMath math="\cos(3x)" /> differentiates to <InlineMath math="-3\sin(3x)" /> — both the chain factor and the minus sign are needed.</li>
@@ -4416,7 +4416,7 @@ export const higherMathsData: Section[] = [
         title: "Introduction",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=0",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We have previously learned how to differentiate terms.</p>
             <p>If <InlineMath math="f(x)=x^n" /> then <InlineMath math="f'(x)=nx^{n-1}" /> (<InlineMath math="n \in \mathbb{R}" />).</p>
             <p>Say we are given the derivatives of some functions. Can we find the original functions?</p>
@@ -4427,8 +4427,8 @@ export const higherMathsData: Section[] = [
               <li><InlineMath math="f'(x)=0 \implies f(x) = c" /> (where <InlineMath math="c" /> is a constant)</li>
             </ul>
             <p>Integration is a branch of calculus. It is the inverse of differentiation.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Integration undoes differentiation:</strong> every check you make should be "does differentiating my answer give me back the original?" It catches most errors in seconds.</li>
               <li><strong>The constant is part of the answer:</strong> an indefinite integral without <InlineMath math="+\,C" /> is incomplete, and the working that follows it can be treated as invalid.</li>
@@ -4445,14 +4445,14 @@ export const higherMathsData: Section[] = [
         title: "Indefinite Integrals",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=17",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>When integrating a term of the form <InlineMath math="ax^n" />, we increase the power by 1 and divide by the new power:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\int ax^n \,dx = \frac{ax^{n+1}}{n+1} + C \quad (n \neq -1)" />
             </div>
             <p>Where <InlineMath math="C" /> is the constant of integration.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The <InlineMath math="+\,C" /> is not optional:</strong> omitting the constant of integration <em>invalidates the working that follows</em> — it costs more than one mark because everything after it is wrong too.</li>
                 <li><strong>Write <InlineMath math="dx" />:</strong> integral notation must be accurate. An integral sign with no <InlineMath math="dx" /> is incomplete.</li>
@@ -4536,15 +4536,15 @@ export const higherMathsData: Section[] = [
         title: "Differential Equations",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=916",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>As previously stated, integration is the reverse of differentiation.</p>
             <p>As a result, if we integrate the derivative of a function then we obtain the original function:</p>
             <BlockMath math="\int \frac{dy}{dx} \,dx = y" />
             <BlockMath math="\int f'(x) \,dx = f(x)" />
             <p>The above obtains a general solution for the original function.</p>
             <p>However, if we have additional information about the function, we can find the value of the constant of integration (<InlineMath math="C" />) to obtain a particular solution.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>You cannot skip the constant here:</strong> the whole point is to find it. Integrate, write <InlineMath math="+\,C" />, then use the given condition to pin it down.</li>
               <li><strong>Substitute the condition immediately:</strong> put the given point into your integrated expression before doing anything else, and solve for <InlineMath math="C" />.</li>
@@ -4563,7 +4563,7 @@ export const higherMathsData: Section[] = [
                 <BlockMath math="\begin{aligned} y &= \int (x^2 - 5) \,dx \\ &= \frac{x^3}{3} - 5x + C \end{aligned}" />
                 <p>Substitute <InlineMath math="x=3, y=-4" />:</p>
                 <BlockMath math="\begin{aligned} -4 &= \frac{3^3}{3} - 5(3) + C \\ -4 &= 9 - 15 + C \\ -4 &= -6 + C \\ 2 &= C \end{aligned}" />
-                <p className="text-emerald-300">Solution: <strong className="text-white"><InlineMath math="y = \frac{x^3}{3} - 5x + 2" /></strong></p>
+                <p className="text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="y = \frac{x^3}{3} - 5x + 2" /></strong></p>
               </div>
             )
           },
@@ -4575,7 +4575,7 @@ export const higherMathsData: Section[] = [
                  <BlockMath math="\begin{aligned} f(x) &= \int (x^2 + x^{-2} + \frac{2}{3}) \,dx \\ &= \frac{x^3}{3} - x^{-1} + \frac{2}{3}x + C \\ &= \frac{x^3}{3} - \frac{1}{x} + \frac{2}{3}x + C \end{aligned}" />
                  <p>Substitute <InlineMath math="x=1, f(1)=4" />:</p>
                  <BlockMath math="\begin{aligned} 4 &= \frac{1^3}{3} - \frac{1}{1} + \frac{2}{3}(1) + C \\ 4 &= \frac{1}{3} - 1 + \frac{2}{3} + C \\ 4 &= C \end{aligned}" />
-                 <p className="text-emerald-300">Solution: <strong className="text-white"><InlineMath math="f(x) = \frac{x^3}{3} - \frac{1}{x} + \frac{2}{3}x + 4" /></strong></p>
+                 <p className="text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="f(x) = \frac{x^3}{3} - \frac{1}{x} + \frac{2}{3}x + 4" /></strong></p>
                </div>
              )
           }
@@ -4586,14 +4586,14 @@ export const higherMathsData: Section[] = [
         title: "Definite Integrals",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1208",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Let <InlineMath math="F(x)" /> be the integral of <InlineMath math="f(x)" />.</p>
             <p>We define <InlineMath math="\int_a^b f(x) \,dx = F(b) - F(a)" /> where <InlineMath math="a" /> and <InlineMath math="b" /> are the limits of the integral and <InlineMath math="b > a" />.</p>
             <p>Example:</p>
             <BlockMath math="\begin{aligned} \int_a^b x \,dx &= \left[\frac{x^2}{2} + C\right]_a^b \\ &= \left(\frac{b^2}{2} + C\right) - \left(\frac{a^2}{2} + C\right) \\ &= \frac{b^2}{2} - \frac{a^2}{2} \end{aligned}" />
             <p className="text-emerald-300">Note: The constant of integration simplifies to 0 so is not required for definite integrals.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Brackets when substituting:</strong> definite integrals are where brackets matter most, especially when a limit is negative. Write <InlineMath math="\left[\ldots\right]" /> and substitute the negative limit in brackets.</li>
                 <li><strong>Upper limit first:</strong> it is <InlineMath math="F(b) - F(a)" />. Switching the limits and then mishandling the resulting negative is a common and costly error.</li>
@@ -4650,14 +4650,14 @@ export const higherMathsData: Section[] = [
          title: "Area Under a Curve",
          videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1619",
          theory: (
-           <div className="space-y-4 text-slate-300">
+           <div className="space-y-4 text-foreground">
              <div className="flex justify-center my-6">
                 <AreaUnderCurveIntroGraph />
              </div>
              <p>In general, we can find the area enclosed by a curve and the <InlineMath math="x" />-axis between <InlineMath math="x=a" /> and <InlineMath math="x=b" /> by using:</p>
              <BlockMath math="\int_a^b f(x) \,dx" />
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>Find the limits if you are not given them:</strong> "the area between the curve and the <InlineMath math="x" />-axis" means you must solve <InlineMath math="y = 0" /> to get the roots first.</li>
                <li><strong>An area is never negative:</strong> if the integral comes out negative the region is below the axis. Take the positive value and say why.</li>
@@ -4674,7 +4674,7 @@ export const higherMathsData: Section[] = [
               question: (
                 <div className="space-y-4">
                   <p>The graph of <InlineMath math="y=x^2-4x" /> is shown below.<br/>Calculate the shaded area.</p>
-                  <div className="flex justify-center bg-slate-800/50 p-4 rounded-xl">
+                  <div className="flex justify-center bg-muted/50 p-4 rounded-xl">
                     <AreaUnderCurveEx1Graph />
                   </div>
                 </div>
@@ -4691,7 +4691,7 @@ export const higherMathsData: Section[] = [
               question: (
                 <div className="space-y-4">
                   <p>Find the area enclosed by the graph of <InlineMath math="y = -x^2 + 5x - 6" /> and the <InlineMath math="x" />-axis.</p>
-                  <div className="flex justify-center bg-slate-800/50 p-4 rounded-xl">
+                  <div className="flex justify-center bg-muted/50 p-4 rounded-xl">
                     <AreaUnderCurveEx2Graph />
                   </div>
                 </div>
@@ -4712,15 +4712,15 @@ export const higherMathsData: Section[] = [
          title: "Area Between Curves",
          videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=1973",
          theory: (
-           <div className="space-y-4 text-slate-300">
+           <div className="space-y-4 text-foreground">
              <div className="flex justify-center my-6">
                 <AreaBetweenCurvesIntroGraph />
              </div>
              <p>In general, we can find the area enclosed between two curves from <InlineMath math="x=a" /> to <InlineMath math="x=b" /> by using:</p>
              <BlockMath math="\int_a^b \big( f(x) - g(x) \big) \,dx" />
              <p>where <InlineMath math="f(x)" /> is the <strong>upper</strong> curve and <InlineMath math="g(x)" /> is the <strong>lower</strong> curve.</p>
-             <div className="bg-slate-800 p-4 rounded-lg mt-4">
-               <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+             <div className="bg-muted p-4 rounded-lg mt-4">
+               <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
                <ul className="list-disc list-inside space-y-2 ml-2">
                  <li><strong>Brackets round the second curve:</strong> bracket errors are the most common way to lose marks on this question. Write <InlineMath math="\big(f(x) - g(x)\big)" /> — subtracting <InlineMath math="g(x)" /> means subtracting <em>every</em> term of it, signs included.</li>
                  <li><strong>Upper minus lower, not left minus right:</strong> decide which curve is on top over the interval. Getting it the wrong way round gives the right size with the wrong sign.</li>
@@ -4737,7 +4737,7 @@ export const higherMathsData: Section[] = [
               question: (
                 <div className="space-y-4">
                   <p>Calculate the shaded area enclosed by <InlineMath math="y = 4x + 16" /> and <InlineMath math="y = 2x^2 + 10" />.</p>
-                  <div className="flex justify-center bg-slate-800/50 p-4 rounded-xl">
+                  <div className="flex justify-center bg-muted/50 p-4 rounded-xl">
                     <AreaBetweenCurvesEx1Graph />
                   </div>
                 </div>
@@ -4754,7 +4754,7 @@ export const higherMathsData: Section[] = [
               question: (
                 <div className="space-y-4">
                   <p>Calculate the shaded area enclosed by the curves with equations <InlineMath math="y = 6 - 3x^2" /> and <InlineMath math="y = -3 - 2x^2" />.</p>
-                  <div className="flex justify-center bg-slate-800/50 p-4 rounded-xl">
+                  <div className="flex justify-center bg-muted/50 p-4 rounded-xl">
                     <AreaBetweenCurvesEx2Graph />
                   </div>
                 </div>
@@ -4774,7 +4774,7 @@ export const higherMathsData: Section[] = [
                 <div className="space-y-4">
                   <p>Two functions are defined by <InlineMath math="x \in \mathbb{R}" /> by <InlineMath math="f(x) = x^3 - 7x^2 + 8x + 16" /> and <InlineMath math="g(x) = 4x + 4" />.</p>
                   <p>Calculate the shaded area.</p>
-                  <div className="flex justify-center bg-slate-800/50 p-4 rounded-xl">
+                  <div className="flex justify-center bg-muted/50 p-4 rounded-xl">
                     <AreaBetweenCurvesEx3Graph />
                   </div>
                 </div>
@@ -4799,14 +4799,14 @@ export const higherMathsData: Section[] = [
          title: "Area Under the x-axis",
          videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3142",
          theory: (
-           <div className="space-y-4 text-slate-300">
+           <div className="space-y-4 text-foreground">
              <div className="flex justify-center my-6">
                 <AreaUnderXAxisIntroGraph />
              </div>
              <p>If the area is below the x-axis, the definite integral will yield a negative value.  Since area must be positive, we can calculate it as the area between two curves, where the upper curve is <InlineMath math="y=0" /> (the x-axis) and the lower curve is the function.</p>
              <BlockMath math="\int_a^b (0 - f(x)) \,dx = - \int_a^b f(x) \,dx" />
-           <div className="bg-slate-800 p-4 rounded-lg mt-4">
-             <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+           <div className="bg-muted p-4 rounded-lg mt-4">
+             <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
              <ul className="list-disc list-inside space-y-2 ml-2">
                <li><strong>The negative is information, not a mistake:</strong> a negative integral tells you the region lies below the axis. Interpret it rather than quietly dropping the sign.</li>
                <li><strong>Never add a negative area to a positive one:</strong> work out each piece separately and add the <em>magnitudes</em>.</li>
@@ -4822,7 +4822,7 @@ export const higherMathsData: Section[] = [
               question: (
                 <div className="space-y-4">
                   <p>Calculate the shaded area shown.</p>
-                  <div className="flex justify-center bg-slate-800/50 p-4 rounded-xl">
+                  <div className="flex justify-center bg-muted/50 p-4 rounded-xl">
                     <AreaUnderXAxisEx1Graph />
                   </div>
                 </div>
@@ -4842,17 +4842,17 @@ id: "integration-of-brackets",
         title: "Further Integration of Brackets",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3573",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We have previously learned how to differentiate functions of the form <InlineMath math="f(ax+b)" />:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\frac{d}{dx}[(ax+b)^{n+1}] = (n+1)(ax+b)^n \times a = a(n+1)(ax+b)^n" />
             </div>
             <p>For integrating linear brackets raised to a power, we use:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\int (ax+b)^n \,dx = \frac{(ax+b)^{n+1}}{a(n+1)} + C \quad (n \neq -1)" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Divide by the derivative of the bracket:</strong> integrating <InlineMath math="(3x+2)^4" /> needs <InlineMath math="\times \frac{1}{3}" /> as well as raising the power. Forgetting that factor is the standard error.</li>
               <li><strong>This only works for a linear bracket:</strong> the shortcut is valid when the inside is <InlineMath math="ax+b" />. It does not work when the bracket contains <InlineMath math="x^2" />.</li>
@@ -4892,15 +4892,15 @@ id: "integration-of-brackets",
         title: "Further Integration of Trigonometric Functions",
         videoUrl: "https://www.youtube.com/embed/n68SZ605FQQ?start=3869",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We have previously learned how to differentiate trigonometric functions of the form <InlineMath math="\sin(ax+b)" /> and <InlineMath math="\cos(ax+b)" />.</p>
             <p>When integrating these, we must divide by the derivative of the angle (which is <InlineMath math="a" />):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full space-y-4">
               <BlockMath math="\int \cos(ax+b) \, dx = \frac{1}{a} \sin(ax+b) + C" />
               <BlockMath math="\int \sin(ax+b) \, dx = -\frac{1}{a} \cos(ax+b) + C" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The minus sign swaps sides:</strong> <InlineMath math="\int \sin x\,dx = -\cos x + C" />, while <InlineMath math="\int \cos x\,dx = \sin x + C" />. This is the reverse of differentiation, and mixing the two up is the most common error in the topic.</li>
               <li><strong>Divide by the coefficient of <InlineMath math="x" />:</strong> <InlineMath math="\int \cos(4x)\,dx = \frac{1}{4}\sin(4x) + C" />. The chain factor divides when integrating and multiplies when differentiating.</li>
@@ -4967,36 +4967,36 @@ id: "integration-of-brackets",
             
             <BlockMath math="\text{Radian} = \frac{\text{distance travelled}}{\text{radius}}" />
             
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mt-8 text-base">
-              <h4 className="font-bold text-white text-xl mb-4">Conversion Rules</h4>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mt-8 text-base">
+              <h4 className="font-bold text-foreground text-xl mb-4">Conversion Rules</h4>
               <ul className="list-disc list-inside ml-4 space-y-4 mb-6">
                 <li>To convert <strong>Degrees to Radians</strong>: Multiply by <InlineMath math="\frac{\pi}{180}" /></li>
                 <li>To convert <strong>Radians to Degrees</strong>: Multiply by <InlineMath math="\frac{180}{\pi}" /></li>
               </ul>
               
-              <div className="border border-white/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+              <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
                 <table className="w-full text-left border-collapse mt-6">
                   <thead>
                     <tr>
-                      <th className="border-b border-white/20 pb-2">Degrees</th>
-                      <th className="border-b border-white/20 pb-2">Radians</th>
+                      <th className="border-b border-foreground/20 pb-2">Degrees</th>
+                      <th className="border-b border-foreground/20 pb-2">Radians</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="180^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\pi" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="360^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="2\pi" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="30^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{\pi}{6}" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="45^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{\pi}{4}" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="60^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{\pi}{3}" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="90^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{\pi}{2}" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="270^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{3\pi}{2}" /></td></tr>
-                    <tr><td className="py-2 border-b border-white/10"><InlineMath math="225^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{5\pi}{4}" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="180^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\pi" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="360^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="2\pi" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="30^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{\pi}{6}" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="45^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{\pi}{4}" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="60^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{\pi}{3}" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="90^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{\pi}{2}" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="270^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{3\pi}{2}" /></td></tr>
+                    <tr><td className="py-2 border-b border-foreground/10"><InlineMath math="225^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{5\pi}{4}" /></td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Never mix the two in one line:</strong> mixing degrees and radians <em>within a single line of working</em> is a frequent and expensive error. Decide which the question is in and stay there.</li>
                 <li><strong>Answer in the units asked for:</strong> working in degrees throughout when radians were wanted is a common mistake. If the domain is given as <InlineMath math="0 \leq x \leq 2\pi" />, the answer must be in radians.</li>
@@ -5053,95 +5053,95 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">It is important to know the exact values for the trigonometric functions at key angles.</p>
             
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8 text-base">
-              <h4 className="font-bold text-white text-xl mb-4">Values at <InlineMath math="0^\circ, 90^\circ, 180^\circ, 270^\circ, 360^\circ" /></h4>
-              <div className="border border-white/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8 text-base">
+              <h4 className="font-bold text-foreground text-xl mb-4">Values at <InlineMath math="0^\circ, 90^\circ, 180^\circ, 270^\circ, 360^\circ" /></h4>
+              <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
                 <table className="w-full text-left border-collapse mb-6">
                   <thead>
                     <tr>
-                      <th className="border-b border-white/20 pb-2">Degrees</th>
-                      <th className="border-b border-white/20 pb-2">Radians</th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="\sin\theta" /></th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="\cos\theta" /></th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="\tan\theta" /></th>
+                      <th className="border-b border-foreground/20 pb-2">Degrees</th>
+                      <th className="border-b border-foreground/20 pb-2">Radians</th>
+                      <th className="border-b border-foreground/20 pb-2"><InlineMath math="\sin\theta" /></th>
+                      <th className="border-b border-foreground/20 pb-2"><InlineMath math="\cos\theta" /></th>
+                      <th className="border-b border-foreground/20 pb-2"><InlineMath math="\tan\theta" /></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="0^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="0" /></td>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="0" /></td><td className="py-2 border-b border-white/10"><InlineMath math="1" /></td><td className="py-2 border-b border-white/10"><InlineMath math="0" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="0^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="1" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td>
                     </tr>
                     <tr>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="90^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{\pi}{2}" /></td>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="1" /></td><td className="py-2 border-b border-white/10"><InlineMath math="0" /></td><td className="py-2 border-b border-white/10">undefined</td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="90^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{\pi}{2}" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="1" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td><td className="py-2 border-b border-foreground/10">undefined</td>
                     </tr>
                     <tr>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="180^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\pi" /></td>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="0" /></td><td className="py-2 border-b border-white/10"><InlineMath math="-1" /></td><td className="py-2 border-b border-white/10"><InlineMath math="0" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="180^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\pi" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="-1" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td>
                     </tr>
                     <tr>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="270^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="\frac{3\pi}{2}" /></td>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="-1" /></td><td className="py-2 border-b border-white/10"><InlineMath math="0" /></td><td className="py-2 border-b border-white/10">undefined</td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="270^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="\frac{3\pi}{2}" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="-1" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td><td className="py-2 border-b border-foreground/10">undefined</td>
                     </tr>
                     <tr>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="360^\circ" /></td><td className="py-2 border-b border-white/10"><InlineMath math="2\pi" /></td>
-                      <td className="py-2 border-b border-white/10"><InlineMath math="0" /></td><td className="py-2 border-b border-white/10"><InlineMath math="1" /></td><td className="py-2 border-b border-white/10"><InlineMath math="0" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="360^\circ" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="2\pi" /></td>
+                      <td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="1" /></td><td className="py-2 border-b border-foreground/10"><InlineMath math="0" /></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 text-base">
-              <h4 className="font-bold text-white text-xl mb-4">Values at <InlineMath math="30^\circ, 45^\circ, 60^\circ" /></h4>
-              <p className="mb-6 text-slate-300">You can easily remember these values using two special right-angled triangles.</p>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 text-base">
+              <h4 className="font-bold text-foreground text-xl mb-4">Values at <InlineMath math="30^\circ, 45^\circ, 60^\circ" /></h4>
+              <p className="mb-6 text-foreground">You can easily remember these values using two special right-angled triangles.</p>
               
               <div className="flex flex-col md:flex-row gap-8 justify-center mb-8">
                 <div className="flex flex-col items-center">
                   <ExactValueTriangle45 />
-                  <p className="text-slate-400 mt-4 text-sm text-center">For <InlineMath math="45^\circ" /> (or <InlineMath math="\frac{\pi}{4}" />)</p>
+                  <p className="text-muted-foreground mt-4 text-sm text-center">For <InlineMath math="45^\circ" /> (or <InlineMath math="\frac{\pi}{4}" />)</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <ExactValueTriangle3060 />
-                  <p className="text-slate-400 mt-4 text-sm text-center">For <InlineMath math="30^\circ" /> and <InlineMath math="60^\circ" /> (or <InlineMath math="\frac{\pi}{6}" /> and <InlineMath math="\frac{\pi}{3}" />)</p>
+                  <p className="text-muted-foreground mt-4 text-sm text-center">For <InlineMath math="30^\circ" /> and <InlineMath math="60^\circ" /> (or <InlineMath math="\frac{\pi}{6}" /> and <InlineMath math="\frac{\pi}{3}" />)</p>
                 </div>
               </div>
 
-              <div className="border border-white/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
+              <div className="border border-foreground/10 rounded-xl bg-black/20 p-2 sm:p-4 mt-6">
                 <table className="w-full text-center border-collapse">
                   <thead>
                     <tr>
-                      <th className="border-b border-white/20 pb-2 text-left">Function</th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="30^\circ \quad \left(\frac{\pi}{6}\right)" /></th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="45^\circ \quad \left(\frac{\pi}{4}\right)" /></th>
-                      <th className="border-b border-white/20 pb-2"><InlineMath math="60^\circ \quad \left(\frac{\pi}{3}\right)" /></th>
+                      <th className="border-b border-foreground/20 pb-2 text-left">Function</th>
+                      <th className="border-b border-foreground/20 pb-2"><InlineMath math="30^\circ \quad \left(\frac{\pi}{6}\right)" /></th>
+                      <th className="border-b border-foreground/20 pb-2"><InlineMath math="45^\circ \quad \left(\frac{\pi}{4}\right)" /></th>
+                      <th className="border-b border-foreground/20 pb-2"><InlineMath math="60^\circ \quad \left(\frac{\pi}{3}\right)" /></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\sin\theta" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{2}" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{\sqrt{2}}" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{\sqrt{3}}{2}" /></td>
+                      <td className="py-4 border-b border-foreground/10 text-left font-bold text-foreground"><InlineMath math="\sin\theta" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{1}{2}" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{1}{\sqrt{2}}" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{\sqrt{3}}{2}" /></td>
                     </tr>
                     <tr>
-                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\cos\theta" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{\sqrt{3}}{2}" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{\sqrt{2}}" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{2}" /></td>
+                      <td className="py-4 border-b border-foreground/10 text-left font-bold text-foreground"><InlineMath math="\cos\theta" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{\sqrt{3}}{2}" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{1}{\sqrt{2}}" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{1}{2}" /></td>
                     </tr>
                     <tr>
-                      <td className="py-4 border-b border-white/10 text-left font-bold text-white"><InlineMath math="\tan\theta" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\frac{1}{\sqrt{3}}" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="1" /></td>
-                      <td className="py-4 border-b border-white/10"><InlineMath math="\sqrt{3}" /></td>
+                      <td className="py-4 border-b border-foreground/10 text-left font-bold text-foreground"><InlineMath math="\tan\theta" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\frac{1}{\sqrt{3}}" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="1" /></td>
+                      <td className="py-4 border-b border-foreground/10"><InlineMath math="\sqrt{3}" /></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>These must be memorised:</strong> exact values are a known weak spot across the course, and in the non-calculator paper there is no way round them. Learn the two triangles rather than the table — you can rebuild every value from them.</li>
               <li><strong>Exact means exact:</strong> a decimal such as 0.866 gains nothing when <InlineMath math="\frac{\sqrt{3}}{2}" /> was asked for.</li>
@@ -5159,32 +5159,32 @@ id: "integration-of-brackets",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=296",
         theory: (
           <div className="space-y-8 text-lg">
-            <h3 className="font-bold text-2xl text-white mb-6">The CAST Diagram</h3>
+            <h3 className="font-bold text-2xl text-foreground mb-6">The CAST Diagram</h3>
             <p className="mb-6">The CAST diagram helps us determine the sign (positive or negative) of trigonometric functions in each of the four quadrants.</p>
             
             <div className="flex justify-center w-full mb-8">
-              <div className="relative w-64 h-64 mx-auto border-2 border-white/20 rounded-full flex items-center justify-center">
-                <div className="absolute w-full h-0.5 bg-white/20"></div>
-                <div className="absolute h-full w-0.5 bg-white/20"></div>
+              <div className="relative w-64 h-64 mx-auto border-2 border-foreground/20 rounded-full flex items-center justify-center">
+                <div className="absolute w-full h-0.5 bg-foreground/20"></div>
+                <div className="absolute h-full w-0.5 bg-foreground/20"></div>
                 
                 <div className="absolute top-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-emerald-400 text-3xl">A</div>
-                  <div className="text-sm text-slate-300">All +ve</div>
+                  <div className="text-sm text-foreground">All +ve</div>
                 </div>
                 
                 <div className="absolute top-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-blue-400 text-3xl">S</div>
-                  <div className="text-sm text-slate-300">Sine +ve</div>
+                  <div className="text-sm text-foreground">Sine +ve</div>
                 </div>
                 
                 <div className="absolute bottom-8 left-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-indigo-400 text-3xl">T</div>
-                  <div className="text-sm text-slate-300">Tan +ve</div>
+                  <div className="text-sm text-foreground">Tan +ve</div>
                 </div>
                 
                 <div className="absolute bottom-8 right-8 text-center bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                   <div className="font-bold text-rose-400 text-3xl">C</div>
-                  <div className="text-sm text-slate-300">Cos +ve</div>
+                  <div className="text-sm text-foreground">Cos +ve</div>
                 </div>
                 
                 <div className="absolute -right-16 text-sm">0 / 360°</div>
@@ -5195,8 +5195,8 @@ id: "integration-of-brackets",
             </div>
             
             <p className="mb-6">We can use this diagram along with our exact values in the first quadrant to evaluate trigonometric functions for any angle.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Find the acute related angle first:</strong> for <InlineMath math="150^\circ" /> that is <InlineMath math="30^\circ" />. Work out the exact value for the acute angle, then attach the sign.</li>
               <li><strong>The quadrant decides the sign:</strong> use CAST. The size of the value never changes — only whether it is positive or negative.</li>
@@ -5289,8 +5289,8 @@ id: "integration-of-brackets",
               <li>Use the CAST diagram to determine which two quadrants the solutions lie in based on the sign of <InlineMath math="k" />.</li>
               <li>Calculate your final answers using the base angle and the quadrants, checking that they fall inside the required domain.</li>
             </ol>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Give every solution in the domain:</strong> a calculator returns one angle. Each equation normally has two solutions per revolution — use CAST to find the others.</li>
               <li><strong>Check the domain and its units:</strong> <InlineMath math="0 \leq x \leq 360" /> wants degrees; <InlineMath math="0 \leq x \leq 2\pi" /> wants radians. Answering in the wrong one loses the marks.</li>
@@ -5309,7 +5309,7 @@ id: "integration-of-brackets",
                 <p>Base angle: <InlineMath math="\sin^{-1}\left(\frac{1}{2}\right) = 30^\circ" /></p>
                 <p>Since Sine is positive, solutions are in quadrants 1 and 2.</p>
                 <BlockMath math="\begin{aligned} x &= 30 \quad \text{(Q1)} \\ x &= 180 - 30 \\ &= 150 \quad \text{(Q2)} \end{aligned}" />
-                <p className="text-emerald-300">Solutions: <strong className="text-white">30°, 150°</strong></p>
+                <p className="text-emerald-300">Solutions: <strong className="text-foreground">30°, 150°</strong></p>
               </div>
             )
           },
@@ -5321,7 +5321,7 @@ id: "integration-of-brackets",
                 <p>Base angle: <InlineMath math="\cos^{-1}\left(\frac{1}{\sqrt{5}}\right) \approx  1.107 \text{ rad}" /></p>
                 <p>Since Cosine is negative, solutions are in quadrants 2 and 3.</p>
                 <BlockMath math="\begin{aligned} x &= \pi - 1.107 \\ &\approx 2.034 \quad \text{(Q2)} \\ x &= \pi + 1.107 \\ &\approx 4.249 \quad \text{(Q3)} \end{aligned}" />
-                <p className="text-emerald-300">Solutions: <strong className="text-white">2.034, 4.249</strong></p>
+                <p className="text-emerald-300">Solutions: <strong className="text-foreground">2.034, 4.249</strong></p>
               </div>
             )
           },
@@ -5362,8 +5362,8 @@ id: "integration-of-brackets",
               <li><InlineMath math="y = \cos 4x^\circ" /> has a period of <InlineMath math="90^\circ" />.</li>
             </ul>
             <p className="mb-6">When solving multiple angle equations, adjust your domain to match the argument. E.g. if the domain is <InlineMath math="0 \leq x \leq 360" />, solve <InlineMath math="0 \leq 2x \leq 720" /> first, then divide your answers by 2.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Widen the domain before you solve:</strong> for <InlineMath math="\sin 2x" /> with <InlineMath math="0 \leq x \leq 360" />, solve for <InlineMath math="2x" /> over <InlineMath math="0 \leq 2x \leq 720" />. Forgetting this is the classic way to lose half the solutions.</li>
               <li><strong>Divide at the very end:</strong> find all the values of <InlineMath math="2x" /> first, then halve each one.</li>
@@ -5409,10 +5409,10 @@ id: "integration-of-brackets",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=1351",
         theory: (
           <div className="space-y-8 text-lg">
-            <p className="mb-6">When solving an equation involving a squared term (like <InlineMath math="\sin^2 x" /> or <InlineMath math="\cos^2 x" />), taking the square root requires remembering the <strong className="text-white">plus or minus (<InlineMath math="\pm" />)</strong> sign.</p>
+            <p className="mb-6">When solving an equation involving a squared term (like <InlineMath math="\sin^2 x" /> or <InlineMath math="\cos^2 x" />), taking the square root requires remembering the <strong className="text-foreground">plus or minus (<InlineMath math="\pm" />)</strong> sign.</p>
             <p className="mb-6">This means you will usually be looking for solutions in all four quadrants.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Do not lose the negative root:</strong> <InlineMath math="\sin^2 x = \tfrac{1}{4}" /> gives <InlineMath math="\sin x = \pm\tfrac{1}{2}" />. Taking only the positive root halves your solutions.</li>
               <li><strong>That means four solutions, not two:</strong> each of the two values produces its own pair of angles.</li>
@@ -5458,8 +5458,8 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">Some trigonometric equations take the structure of a quadratic equation. You will need to factorise them to solve.</p>
             <p className="mb-6">Sometimes, the equation contains both sine and cosine terms. You must use the identity <InlineMath math="\sin^2 x + \cos^2 x = 1" />. Rearrange it to replace one squared term, ensuring the whole equation is expressed using only one trigonometric function.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Factorise — never divide by a trig term:</strong> dividing by <InlineMath math="\sin x" /> throws away every solution where <InlineMath math="\sin x = 0" />. Take the common factor out and set each factor to zero.</li>
               <li><strong>Substitute to see the quadratic:</strong> letting <InlineMath math="u = \sin x" /> makes the structure obvious and stops sign errors.</li>
@@ -5479,20 +5479,20 @@ id: "integration-of-brackets",
                 <BlockMath math="\begin{aligned} 3u^2 - 4u + 1 &= 0 \\ (3u - 1)(u - 1) &= 0 \end{aligned}" />
                 <p>This means either <InlineMath math="3u - 1 = 0 \implies u = \frac{1}{3}" /> or <InlineMath math="u - 1 = 0 \implies u = 1" />.</p>
                 
-                <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\sin x^\circ = \frac{1}{3}" /></p>
+                <div className="border-t border-foreground/10 pt-6 mt-6">
+                  <p className="font-bold text-foreground mb-4">For <InlineMath math="\sin x^\circ = \frac{1}{3}" /></p>
                   <p>Base angle <InlineMath math="\approx 19.5^\circ" />. Sine is positive in Q1, Q2.</p>
                   <BlockMath math="\begin{aligned} x &= 19.5 \\ x &= 180 - 19.5 \\ &= 160.5 \end{aligned}" />
                 </div>
                 
-                <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\sin x^\circ = 1" /></p>
+                <div className="border-t border-foreground/10 pt-6 mt-6">
+                  <p className="font-bold text-foreground mb-4">For <InlineMath math="\sin x^\circ = 1" /></p>
                   <p>From the sine graph exact values:</p>
                   <BlockMath math="x = 90" />
                 </div>
                 
-                <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="text-emerald-300">Final Solutions: <strong className="text-white">19.5°, 90°, 160.5°</strong></p>
+                <div className="border-t border-foreground/10 pt-6 mt-6">
+                  <p className="text-emerald-300">Final Solutions: <strong className="text-foreground">19.5°, 90°, 160.5°</strong></p>
                 </div>
               </div>
             )
@@ -5509,20 +5509,20 @@ id: "integration-of-brackets",
                 <p>Factorise (let <InlineMath math="u = \cos x^\circ" />):</p>
                 <BlockMath math="(4\cos x^\circ - 3)(2\cos x^\circ + 1) = 0" />
                 
-                <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\cos x^\circ = \frac{3}{4}" /></p>
+                <div className="border-t border-foreground/10 pt-6 mt-6">
+                  <p className="font-bold text-foreground mb-4">For <InlineMath math="\cos x^\circ = \frac{3}{4}" /></p>
                   <p>Base angle <InlineMath math="\approx 41.4^\circ" />. Cosine is positive in Q1, Q4.</p>
                   <BlockMath math="\begin{aligned} x &= 41.4 \\ x &= 360 - 41.4 \\ &= 318.6 \end{aligned}" />
                 </div>
                 
-                <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="font-bold text-white mb-4">For <InlineMath math="\cos x^\circ = -\frac{1}{2}" /></p>
+                <div className="border-t border-foreground/10 pt-6 mt-6">
+                  <p className="font-bold text-foreground mb-4">For <InlineMath math="\cos x^\circ = -\frac{1}{2}" /></p>
                   <p>Base angle for <InlineMath math="\frac{1}{2}" /> is <InlineMath math="60^\circ" />. Cosine is negative in Q2, Q3.</p>
                   <BlockMath math="\begin{aligned} x &= 180 - 60 \\ &= 120 \\ x &= 180 + 60 \\ &= 240 \end{aligned}" />
                 </div>
                 
-                <div className="border-t border-white/10 pt-6 mt-6">
-                  <p className="text-emerald-300">Final Solutions: <strong className="text-white">41.4°, 120°, 240°, 318.6°</strong></p>
+                <div className="border-t border-foreground/10 pt-6 mt-6">
+                  <p className="text-emerald-300">Final Solutions: <strong className="text-foreground">41.4°, 120°, 240°, 318.6°</strong></p>
                 </div>
               </div>
             )
@@ -5538,16 +5538,16 @@ id: "integration-of-brackets",
             <p className="mb-6">Compound angles are formed by adding or subtracting angles, for example <InlineMath math="45^\circ + 30^\circ = 75^\circ" /> or <InlineMath math="45^\circ - 30^\circ = 15^\circ" />.</p>
             <p className="mb-6">Note that <InlineMath math="\sin(A + B) \neq \sin A + \sin B" />. You can verify this by checking that <InlineMath math="\sin(45^\circ + 30^\circ)" /> and <InlineMath math="\sin 45^\circ + \sin 30^\circ" /> give different answers.</p>
             
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-              <h4 className="font-bold text-white text-xl mb-6 text-center">Addition Formulae</h4>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
+              <h4 className="font-bold text-foreground text-xl mb-6 text-center">Addition Formulae</h4>
               <div className="space-y-4 max-w-xl mx-auto">
                 <BlockMath math="\sin(A \pm B) = \sin A \cos B \pm \cos A \sin B" />
                 <BlockMath math="\cos(A \pm B) = \cos A \cos B \mp \sin A \sin B" />
               </div>
-              <p className="mt-6 text-sm text-slate-300 text-center">Notice how the signs work: sine keeps the same sign (<InlineMath math="\pm \to \pm" />) while cosine flips the sign (<InlineMath math="\pm \to \mp" />).</p>
+              <p className="mt-6 text-sm text-foreground text-center">Notice how the signs work: sine keeps the same sign (<InlineMath math="\pm \to \pm" />) while cosine flips the sign (<InlineMath math="\pm \to \mp" />).</p>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The signs behave differently:</strong> <InlineMath math="\cos(A+B) = \cos A\cos B - \sin A\sin B" /> — the sign <em>flips</em> for cosine but matches for sine. Mixing these up is the most common compound-angle error.</li>
               <li><strong>Do not distribute:</strong> <InlineMath math="\sin(A+B)" /> is not <InlineMath math="\sin A + \sin B" />. The formula exists precisely because that shortcut is false.</li>
@@ -5608,8 +5608,8 @@ id: "integration-of-brackets",
             </div>
             
             <p className="mb-6">Given one of these ratios as a fraction, we can draw a right-angled triangle and use Pythagoras' Theorem to find the third side. We can then state the other two trigonometric ratios.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Draw the right-angled triangle:</strong> from <InlineMath math="\sin A = \tfrac{3}{5}" /> you can build a triangle and read off <InlineMath math="\cos A" /> and <InlineMath math="\tan A" /> directly. This is faster and safer than identities.</li>
               <li><strong>Use Pythagoras for the third side:</strong> and check the quadrant before deciding its sign.</li>
@@ -5641,15 +5641,15 @@ id: "integration-of-brackets",
                 <p>First, find the missing sides for both angles using Pythagoras.</p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-4">
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                    <p className="font-bold text-white mb-2">For angle p:</p>
+                  <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
+                    <p className="font-bold text-foreground mb-2">For angle p:</p>
                     <p><InlineMath math="\sin p = \frac{4}{5} \left(\frac{O}{H}\right)" /></p>
                     <BlockMath math="\begin{aligned} A^2 &= 5^2 - 4^2 \\ A^2 &= 25 - 16 = 9 \\ A &= 3 \end{aligned}" />
                     <p>So, <InlineMath math="\cos p = \frac{3}{5}" /></p>
                   </div>
                   
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                    <p className="font-bold text-white mb-2">For angle q:</p>
+                  <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
+                    <p className="font-bold text-foreground mb-2">For angle q:</p>
                     <p><InlineMath math="\cos q = \frac{12}{13} \left(\frac{A}{H}\right)" /></p>
                     <BlockMath math="\begin{aligned} O^2 &= 13^2 - 12^2 \\ O^2 &= 169 - 144 = 25 \\ O &= 5 \end{aligned}" />
                     <p>So, <InlineMath math="\sin q = \frac{5}{13}" /></p>
@@ -5671,8 +5671,8 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">We can derive the Double Angle Formulae by replacing <InlineMath math="B" /> with <InlineMath math="A" /> in our addition formulae.</p>
             
-            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-              <h4 className="font-bold text-white text-xl mb-6">Double Angle Formulae</h4>
+            <div className="bg-foreground/5 p-6 rounded-xl border border-foreground/10 mb-8">
+              <h4 className="font-bold text-foreground text-xl mb-6">Double Angle Formulae</h4>
               <div className="space-y-4 max-w-xl">
                 <BlockMath math="\sin 2A = 2\sin A\cos A" />
                 <BlockMath math="\begin{aligned} \cos 2A &= \cos^2 A - \sin^2 A \\ &= 2\cos^2 A - 1 \\ &= 1 - 2\sin^2 A \end{aligned}" />
@@ -5680,8 +5680,8 @@ id: "integration-of-brackets",
             </div>
             
             <p className="mb-6">The three versions of the <InlineMath math="\cos 2A" /> formula are derived using the National 5 identity <InlineMath math="\sin^2 A + \cos^2 A = 1" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong><InlineMath math="\sin 2x" /> is not <InlineMath math="2\sin x" />:</strong> it is <InlineMath math="2\sin x\cos x" />. The same applies to cosine — doubling the angle is not doubling the function.</li>
               <li><strong>Three versions of <InlineMath math="\cos 2x" />:</strong> pick the one that leaves the equation in a single trig function. Choosing badly turns an easy question into a hard one.</li>
@@ -5722,11 +5722,11 @@ id: "integration-of-brackets",
                 <p>Hypotenuse = <InlineMath math="\sqrt{4^2 + 3^2} = \sqrt{16 + 9} = \sqrt{25} = 5" />.</p>
                 <p>Therefore, <InlineMath math="\sin p = \frac{4}{5}" /> and <InlineMath math="\cos p = \frac{3}{5}" />.</p>
                 
-                <div className="border-t border-white/10 pt-4 mt-4">
+                <div className="border-t border-foreground/10 pt-4 mt-4">
                   <BlockMath math="\begin{aligned} \sin 2p &= 2\sin p \cos p \\ &= 2\left(\frac{4}{5}\right)\left(\frac{3}{5}\right) \\ &= \frac{24}{25} \end{aligned}" />
                 </div>
                 
-                <div className="border-t border-white/10 pt-4 mt-4">
+                <div className="border-t border-foreground/10 pt-4 mt-4">
                   <p>You can use any of the three <InlineMath math="\cos 2A" /> formulae. Let's use <InlineMath math="\cos^2 A - \sin^2 A" />:</p>
                   <BlockMath math="\begin{aligned} \cos 2p &= \cos^2 p - \sin^2 p \\ &= \left(\frac{3}{5}\right)^2 - \left(\frac{4}{5}\right)^2 \\ &= \frac{9}{25} - \frac{16}{25} \\ &= -\frac{7}{25} \end{aligned}" />
                 </div>
@@ -5740,13 +5740,13 @@ id: "integration-of-brackets",
                <div className="space-y-4">
                  <p>Use the double angle formulae that only contain one term:</p>
                  
-                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-4 mb-6">
-                   <p className="font-bold text-white mb-2">To find <InlineMath math="\cos x" />:</p>
+                 <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 mt-4 mb-6">
+                   <p className="font-bold text-foreground mb-2">To find <InlineMath math="\cos x" />:</p>
                    <BlockMath math="\begin{aligned} 2\cos^2 x - 1 &= \frac{5}{13} \\ 2\cos^2 x &= \frac{18}{13} \\ \cos^2 x &= \frac{9}{13} \\ \cos x &= \frac{3}{\sqrt{13}} \end{aligned}" />
                  </div>
                  
-                 <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-4 mb-6">
-                   <p className="font-bold text-white mb-2">To find <InlineMath math="\sin x" />:</p>
+                 <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 mt-4 mb-6">
+                   <p className="font-bold text-foreground mb-2">To find <InlineMath math="\sin x" />:</p>
                    <BlockMath math="\begin{aligned} 1 - 2\sin^2 x &= \frac{5}{13} \\ 2\sin^2 x &= \frac{8}{13} \\ \sin^2 x &= \frac{4}{13} \\ \sin x &= \frac{2}{\sqrt{13}} \end{aligned}" />
                  </div>
                </div>
@@ -5769,8 +5769,8 @@ id: "integration-of-brackets",
                <li><InlineMath math="\sin^2 x + \cos^2 x = 1" /></li>
                <li>Factorising or using common denominators for fractions.</li>
             </ul>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Work on one side only:</strong> start with the more complicated side and transform it until it matches the other. Moving terms across the equals sign assumes what you are trying to prove.</li>
               <li><strong><InlineMath math="\sin^2 x + \cos^2 x = 1" /> is the workhorse:</strong> and its rearrangements <InlineMath math="\sin^2 x = 1 - \cos^2 x" /> and <InlineMath math="\cos^2 x = 1 - \sin^2 x" /> are what let you switch between functions.</li>
@@ -5808,8 +5808,8 @@ id: "integration-of-brackets",
           <div className="space-y-8 text-lg">
             <p className="mb-6">Trigonometric equations which contain a mixture of double angles (like <InlineMath math="2x" />) and single angles (like <InlineMath math="x" />) require using Double Angle Formulae to find solutions.</p>
             <p className="mb-6">The goal is to substitute the double angle term so that the entire equation is in terms of the same single angle trig function, which often results in a quadratic equation you can factorise.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Never divide by a trig term — factorise it out.</strong> Dividing an equation by <InlineMath math="\cos x" /> <em>loses solutions</em>. Dividing throws away every solution where <InlineMath math="\cos x = 0" />. Take the common factor out and set each factor to zero instead.</li>
                 <li><strong>Extract the common factor:</strong> many candidates do not spot one at all. After substituting the double angle formula, always look for a shared <InlineMath math="\sin x" /> or <InlineMath math="\cos x" />.</li>
@@ -5832,21 +5832,21 @@ id: "integration-of-brackets",
                 <p>This gives two equations to solve:</p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-6">
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                  <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
                     <BlockMath math="\sin x^\circ = 0" />
                     <p className="mt-4">From the sine graph:</p>
                     <BlockMath math="x = 0, 180" />
-                    <p className="text-sm text-slate-400">Note: 360 is not in the domain (<InlineMath math="<360" />).</p>
+                    <p className="text-sm text-muted-foreground">Note: 360 is not in the domain (<InlineMath math="<360" />).</p>
                   </div>
                   
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                  <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
                     <BlockMath math="\begin{aligned} 2\cos x^\circ + 1 &= 0 \\ \cos x^\circ &= -\frac{1}{2} \end{aligned}" />
                     <p className="mt-4">Base angle: <InlineMath math="60^\circ" />. Q2, Q3.</p>
                     <BlockMath math="\begin{aligned} x &= 180 - 60 = 120 \\ x &= 180 + 60 = 240 \end{aligned}" />
                   </div>
                 </div>
                 
-                <p className="text-emerald-300">Solutions: <strong className="text-white">0°, 120°, 180°, 240°</strong></p>
+                <p className="text-emerald-300">Solutions: <strong className="text-foreground">0°, 120°, 180°, 240°</strong></p>
               </div>
             )
           },
@@ -5861,20 +5861,20 @@ id: "integration-of-brackets",
                  <BlockMath math="(2\cos x + 1)(\cos x - 1) = 0" />
                  
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-6">
-                   <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                   <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
                      <BlockMath math="\begin{aligned} 2\cos x + 1 &= 0 \\ \cos x &= -\frac{1}{2} \end{aligned}" />
                      <p className="mt-4">Base angle: <InlineMath math="\frac{\pi}{3}" />. Q2, Q3.</p>
                      <BlockMath math="\begin{aligned} x &= \pi - \frac{\pi}{3} = \frac{2\pi}{3} \\ x &= \pi + \frac{\pi}{3} = \frac{4\pi}{3} \end{aligned}" />
                    </div>
                    
-                   <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                   <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
                      <BlockMath math="\cos x = 1" />
                      <p className="mt-4">From the cosine graph:</p>
                      <BlockMath math="x = 0, 2\pi" />
                    </div>
                  </div>
                  
-                 <p className="text-emerald-300">Solutions: <strong className="text-white"><InlineMath math="0" />, <InlineMath math="\frac{2\pi}{3}" />, <InlineMath math="\frac{4\pi}{3}" />, <InlineMath math="2\pi" /></strong></p>
+                 <p className="text-emerald-300">Solutions: <strong className="text-foreground"><InlineMath math="0" />, <InlineMath math="\frac{2\pi}{3}" />, <InlineMath math="\frac{4\pi}{3}" />, <InlineMath math="2\pi" /></strong></p>
                </div>
              )
           },
@@ -5891,13 +5891,13 @@ id: "integration-of-brackets",
                   <BlockMath math="2\sin x(3\cos x - 1) = 0" />
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 mt-6">
-                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
                       <BlockMath math="\begin{aligned} 2\sin x &= 0 \\ \sin x &= 0 \end{aligned}" />
                       <p className="mt-4">From the sine graph:</p>
                       <BlockMath math="x = 0, \pi, 2\pi" />
                     </div>
                     
-                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
                       <BlockMath math="\begin{aligned} 3\cos x - 1 &= 0 \\ \cos x &= \frac{1}{3} \end{aligned}" />
                       <p className="mt-4">Base angle <InlineMath math="\approx 1.231" /> rad. Q1, Q4.</p>
                       <BlockMath math="\begin{aligned} x &= 1.231 \\ x &= 2\pi - 1.231 = 5.052 \end{aligned}" />
@@ -5906,11 +5906,11 @@ id: "integration-of-brackets",
                   
                   <p>Usually, "points of intersection" requires coordinates. Substitute these x-values back into either original equation (e.g., <InlineMath math="y = 2\sin x + 1" />) to find y-coordinates.</p>
                   <ul className="list-disc list-inside ml-4 mt-2 mb-4 text-emerald-300">
-                     <li>When <InlineMath math="x = 0" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-white"><InlineMath math="(0, 1)" /></strong></li>
-                     <li>When <InlineMath math="x = \pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-white"><InlineMath math="(\pi, 1)" /></strong></li>
-                     <li>When <InlineMath math="x = 2\pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-white"><InlineMath math="(2\pi, 1)" /></strong></li>
-                     <li>When <InlineMath math="x = 1.231" />, <InlineMath math="\sin(1.231) = \sqrt{1 - (1/3)^2} = \frac{\sqrt{8}}{3}" />. <InlineMath math="y = 2(\frac{\sqrt{8}}{3}) + 1 = \frac{2\sqrt{8}+3}{3} \approx 2.89" />. Point: <strong className="text-white"><InlineMath math="(1.231, 2.89)" /></strong></li>
-                     <li>When <InlineMath math="x = 5.052" />, <InlineMath math="\sin(5.052) = -\frac{\sqrt{8}}{3}" />. <InlineMath math="y = 2(-\frac{\sqrt{8}}{3}) + 1 = \frac{3-2\sqrt{8}}{3} \approx -0.89" />. Point: <strong className="text-white"><InlineMath math="(5.052, -0.89)" /></strong></li>
+                     <li>When <InlineMath math="x = 0" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-foreground"><InlineMath math="(0, 1)" /></strong></li>
+                     <li>When <InlineMath math="x = \pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-foreground"><InlineMath math="(\pi, 1)" /></strong></li>
+                     <li>When <InlineMath math="x = 2\pi" />, <InlineMath math="y = 2(0) + 1 = 1" />. Point: <strong className="text-foreground"><InlineMath math="(2\pi, 1)" /></strong></li>
+                     <li>When <InlineMath math="x = 1.231" />, <InlineMath math="\sin(1.231) = \sqrt{1 - (1/3)^2} = \frac{\sqrt{8}}{3}" />. <InlineMath math="y = 2(\frac{\sqrt{8}}{3}) + 1 = \frac{2\sqrt{8}+3}{3} \approx 2.89" />. Point: <strong className="text-foreground"><InlineMath math="(1.231, 2.89)" /></strong></li>
+                     <li>When <InlineMath math="x = 5.052" />, <InlineMath math="\sin(5.052) = -\frac{\sqrt{8}}{3}" />. <InlineMath math="y = 2(-\frac{\sqrt{8}}{3}) + 1 = \frac{3-2\sqrt{8}}{3} \approx -0.89" />. Point: <strong className="text-foreground"><InlineMath math="(5.052, -0.89)" /></strong></li>
                   </ul>
                 </div>
              )
@@ -5922,7 +5922,7 @@ id: "integration-of-brackets",
         title: "Solving Simultaneous Equations",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3163",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>You are already familiar with some wave functions, namely <InlineMath math="f(x)=\sin x" /> and <InlineMath math="f(x)=\cos x" />.</p>
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center my-6">
               <SineWaveGraph />
@@ -5941,11 +5941,11 @@ id: "integration-of-brackets",
               <li><InlineMath math="f(x)=k \cos(x+\alpha)" /></li>
             </ul>
             <p>We are required to solve simultaneous equations of the form:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\begin{aligned} k \sin\alpha &= a \\ k \cos\alpha &= b \end{aligned}" />
             </div>
             <p>Solving for <InlineMath math="k" />:</p>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+            <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10">
               <BlockMath math="\begin{aligned} (k \sin\alpha)^2 &= a^2 \\ k^2 \sin^2\alpha &= a^2 \end{aligned}" />
               <BlockMath math="k^2 \sin^2\alpha + k^2 \cos^2\alpha = a^2 + b^2" />
               <BlockMath math="k^2 (\sin^2\alpha + \cos^2\alpha) = a^2 + b^2" />
@@ -5953,8 +5953,8 @@ id: "integration-of-brackets",
               <BlockMath math="k^2 = a^2 + b^2" />
               <BlockMath math="k = \sqrt{a^2 + b^2}" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Divide to eliminate <InlineMath math="k" />:</strong> dividing one equation by the other cancels <InlineMath math="k" /> and leaves a tangent, which is what gives you the angle.</li>
               <li><strong>Square and add for <InlineMath math="k" />:</strong> using <InlineMath math="\sin^2 + \cos^2 = 1" /> gives <InlineMath math="k^2" /> directly. Always take the positive root.</li>
@@ -5976,7 +5976,7 @@ id: "integration-of-brackets",
                 <BlockMath math="\begin{aligned} \frac{k\sin\alpha}{k\cos\alpha} &= \frac{\sqrt{3}}{1} \\ \tan\alpha &= \sqrt{3} \end{aligned}" />
                 <p>Base angle <InlineMath math="\alpha = \tan^{-1}(\sqrt{3}) = 60^\circ" />.</p>
                 <p>Check quadrants: <InlineMath math="\sin\alpha" /> is positive (+), <InlineMath math="\cos\alpha" /> is positive (+). They are both positive in Quadrant 1, so <InlineMath math="\alpha = 60^\circ" />.</p>
-                <p className="text-emerald-300">Solution: <strong className="text-white"><InlineMath math="k = 2, \alpha = 60^\circ" /></strong></p>
+                <p className="text-emerald-300">Solution: <strong className="text-foreground"><InlineMath math="k = 2, \alpha = 60^\circ" /></strong></p>
               </div>
             )
           }
@@ -5987,12 +5987,12 @@ id: "integration-of-brackets",
         title: "Using the Addition Formula",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=2086",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Given a function of the form <InlineMath math="a\sin x + b\cos x" />, it is useful to express this as a single function rather than the sum of two separate functions.</p>
             <p>A single function would allow us to calculate maximum and minimum values of expressions of the form <InlineMath math="a\sin x + b\cos x" />, sketch graphs more easily and solve equations involving expressions of this form.</p>
             <p>We previously studied the addition formulae, and this will help to express sums of two separate functions as single functions.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Expand the target, not the question:</strong> write out the addition formula for the form you have been asked for, then compare it with the expression you were given.</li>
               <li><strong>Match the right terms:</strong> line the <InlineMath math="\cos x" /> terms up with the <InlineMath math="\cos x" /> terms. Comparing them the wrong way round swaps your <InlineMath math="a" /> and <InlineMath math="b" />.</li>
@@ -6038,7 +6038,7 @@ id: "integration-of-brackets",
         title: "Wave Function",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3163",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We can combine everything learned so far to rewrite trigonometric sums as a single wave function.</p>
             <p>The point is this: an expression like <InlineMath math="a\sin x^\circ + b\cos x^\circ" /> is the sum of <em>two</em> waves, which is awkward to work with. It can always be rewritten as a <strong>single</strong> wave — and once it is, the maximum, the minimum and the solutions of equations can all be read off almost immediately.</p>
             <p>There are four possible target forms, and the question will always tell you which one to use:</p>
@@ -6054,8 +6054,8 @@ id: "integration-of-brackets",
             <BlockMath math="\frac{k\sin\alpha^\circ}{k\cos\alpha^\circ} = \tan\alpha^\circ = \frac{b}{a}" />
             <p>On its own <InlineMath math="\tan^{-1}" /> cannot tell you which angle you want — it only ever returns one of two possibilities. The quadrant is decided by the <strong>signs</strong> of <InlineMath math="k\sin\alpha^\circ" /> and <InlineMath math="k\cos\alpha^\circ" />; since <InlineMath math="k" /> is positive, those are simply the signs of <InlineMath math="b" /> and <InlineMath math="a" />. Both positive puts <InlineMath math="\alpha" /> in the first quadrant, and so on round the CAST diagram.</p>
             <p><strong>The Golden Rule:</strong> find <InlineMath math="k" /> by squaring and adding, find <InlineMath math="\alpha" /> by dividing — then let the <em>signs</em> of the two equations, not your calculator, decide the quadrant.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The quadrant is the marks:</strong> <InlineMath math="\tan^{-1}" /> returns only one of two possible angles. Read the <em>signs</em> of <InlineMath math="k\cos\alpha" /> and <InlineMath math="k\sin\alpha" /> and use CAST — taking the calculator value on trust is the most common error in the topic.</li>
                 <li><strong>Match the form you were asked for:</strong> <InlineMath math="k\cos(x-\alpha)" /> and <InlineMath math="k\sin(x+\alpha)" /> give different values of <InlineMath math="\alpha" />. Expand the form the question specifies, not the one you find easiest.</li>
@@ -6132,10 +6132,10 @@ id: "integration-of-brackets",
         title: "Multiple Angles",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3658",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The wave function method works exactly the same if there are multiple angles inside the trigonometric functions, as long as both terms have the same multiple angle.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The method is unchanged:</strong> treat <InlineMath math="2x" /> exactly as you would treat <InlineMath math="x" /> — compare coefficients and find <InlineMath math="k" /> and <InlineMath math="\alpha" /> in the usual way.</li>
               <li><strong><InlineMath math="\alpha" /> belongs to the whole bracket:</strong> the answer is <InlineMath math="k\cos(2x - \alpha)" />, not <InlineMath math="k\cos 2(x - \alpha)" />, unless you deliberately factorise.</li>
@@ -6172,7 +6172,7 @@ id: "integration-of-brackets",
         title: "Minimum and Maximum Values",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=3674",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>By expressing <InlineMath math="f(x) = p\cos x + q\sin x" /> as a single trigonometric function, we can find the minimum and maximum values of the function and the corresponding angles at which these values occur.</p>
             <p>It is useful to remember the minimum and maximum values of <InlineMath math="f(x) = \sin x" /> and <InlineMath math="f(x) = \cos x" />.</p>
             
@@ -6187,8 +6187,8 @@ id: "integration-of-brackets",
               <li><InlineMath math="\sin x" /> reaches its maximum of 1 at <InlineMath math="90^\circ (\pi/2)" /> and its minimum of -1 at <InlineMath math="270^\circ (3\pi/2)" />.</li>
               <li><InlineMath math="\cos x" /> reaches its maximum of 1 at <InlineMath math="0^\circ" /> or <InlineMath math="360^\circ (2\pi)" /> and its minimum of -1 at <InlineMath math="180^\circ (\pi)" />.</li>
             </ul>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Read them straight off:</strong> once in the form <InlineMath math="k\cos(x-\alpha)" />, the maximum is <InlineMath math="k" /> and the minimum is <InlineMath math="-k" />. No calculus is needed, and using calculus here wastes time.</li>
               <li><strong>Give the value <em>and</em> where it happens if asked:</strong> the maximum occurs when the bracket is zero, so <InlineMath math="x = \alpha" />. Read whether the question wants the value, the angle, or both.</li>
@@ -6226,10 +6226,10 @@ id: "integration-of-brackets",
         title: "Sketching Graphs",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=4067",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Once you have converted <InlineMath math="a\sin x + b\cos x" /> into a single wave form, such as <InlineMath math="k\cos(x - \alpha)" />, sketch it by applying the phase shift <InlineMath math="\alpha" /> to the <InlineMath math="\cos" /> or <InlineMath math="\sin" /> curve multiplied by amplitude <InlineMath math="k" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>This is one of the lowest-scoring questions in the course.</strong> <em>Most</em> candidates gain no marks at all on the sketching part. The three points below are exactly what goes wrong.</li>
                 <li><strong>Translate the right way:</strong> shifting the graph in the wrong direction is the most common error. In <InlineMath math="k\cos(x - \alpha)" /> the graph moves <strong>right</strong> by <InlineMath math="\alpha" />; a <InlineMath math="+\alpha" /> moves it left.</li>
@@ -6268,10 +6268,10 @@ id: "integration-of-brackets",
         title: "Solving Equations",
         videoUrl: "https://www.youtube.com/embed/AvgXvkloPps?start=4311",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
              <p>A composite trigonometric equation can be solved using the wave function format. Once compiled as <InlineMath math="k\cos(x - \alpha) = c" />, it acts like solving standard basic trigonometric equations.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Convert first, then solve:</strong> you cannot solve <InlineMath math="a\sin x + b\cos x = c" /> directly. Rewrite it as a single wave, then treat it as a basic equation.</li>
               <li><strong>Adjust the domain for the bracket:</strong> if you are solving for <InlineMath math="x - \alpha" />, shift the domain by <InlineMath math="\alpha" /> before finding solutions, then shift back.</li>
@@ -6328,10 +6328,10 @@ id: "integration-of-brackets",
         title: "Properties of Logarithmic Functions",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=551",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>A logarithmic function is a function of the form <InlineMath math="f(x) = \log_a x" /> where <InlineMath math="a>0" /> and <InlineMath math="x>0" />.</p>
             <p>The relationship between exponential functions and logarithmic functions can be expressed as:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="y = \log_a x \iff a^y = x" />
             </div>
             <p>If we sum logarithmic functions with the same base numbers then the terms can be combined by multiplying the arguments:</p>
@@ -6340,8 +6340,8 @@ id: "integration-of-brackets",
             <BlockMath math="\log_a x - \log_a y = \log_a \left(\frac{x}{y}\right)" />
             <p>If the argument of a logarithmic function is raised to a power, then this equates to the product of the exponent and the logarithmic function:</p>
             <BlockMath math="\log_a (x^n) = n \log_a x" />
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The bases must match:</strong> the log laws only apply to logarithms of the same base. Terms with different bases cannot be combined at all.</li>
               <li><strong><InlineMath math="\log(a+b)" /> is not <InlineMath math="\log a + \log b" />:</strong> the addition law works the other way — a <em>sum of logs</em> becomes a log of a <em>product</em>.</li>
@@ -6374,10 +6374,10 @@ id: "integration-of-brackets",
         title: "Working with Logarithmic Functions",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=1222",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>If we have the sum of several terms involving logarithmic functions then we can combine the terms in one step.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Clear coefficients first:</strong> <InlineMath math="2\log_a 3" /> must become <InlineMath math="\log_a 9" /> before it can be combined with anything. Trying to add while a coefficient sits out in front is the usual error.</li>
               <li><strong>Then add and subtract the arguments:</strong> sums become products, differences become quotients.</li>
@@ -6405,11 +6405,11 @@ id: "integration-of-brackets",
         title: "Further Logarithmic Equations",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=1728",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Many mathematical models of real-life situations use exponential and logarithmic functions.</p>
             <p>We have previously studied basic logarithmic equations and can now solve equations using the properties of logarithmic functions we have now become familiar with.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Condense to a single log, then switch form:</strong> combine everything into one logarithm, then rewrite it as an exponential equation to solve.</li>
               <li><strong>Check every solution in the original:</strong> the algebra can produce values that make a logarithm undefined. Those must be rejected explicitly, not silently dropped.</li>
@@ -6450,7 +6450,7 @@ id: "integration-of-brackets",
                  <BlockMath math="\begin{aligned} (2p+1)(3p-10) &= 11p \\ 6p^2 - 20p + 3p - 10 &= 11p \\ 6p^2 - 17p - 10 &= 11p \\ 6p^2 - 28p - 10 &= 0 \\ \end{aligned}" />
                  <p>Divide by 2:</p>
                  <BlockMath math="\begin{aligned} 3p^2 - 14p - 5 &= 0 \\ (3p+1)(p-5) &= 0 \end{aligned}" />
-                 <p>So <InlineMath math="p = -\frac{1}{3}" /> or <InlineMath math="p = 5" />. Since we are given <InlineMath math="p > 4" />, then <strong className="text-white">p = 5</strong>.</p>
+                 <p>So <InlineMath math="p = -\frac{1}{3}" /> or <InlineMath math="p = 5" />. Since we are given <InlineMath math="p > 4" />, then <strong className="text-foreground">p = 5</strong>.</p>
                </div>
              )
           },
@@ -6472,7 +6472,7 @@ id: "integration-of-brackets",
         title: "Exponentials & Logarithms to the Base e",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2104",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><InlineMath math="\log_e x" /> is a logarithm to the base <InlineMath math="e" />. This is also known as the natural logarithm of <InlineMath math="x" />, and is often written as <InlineMath math="\ln x" />.</p>
             <BlockMath math="\ln x = \log_e x" />
             <p>Usual properties of logarithms can be applied to the natural logarithm function.</p>
@@ -6480,7 +6480,7 @@ id: "integration-of-brackets",
               <li><InlineMath math="e^0 = 1" /></li>
               <li><InlineMath math="\ln e = 1" /></li>
             </ul>
-            <p className="mt-4 font-bold text-white">Without using a calculator, value of:</p>
+            <p className="mt-4 font-bold text-foreground">Without using a calculator, value of:</p>
             <ul className="list-disc list-inside ml-4 space-y-1">
               <li><InlineMath math="\ln(e^2) = 2" /></li>
               <li><InlineMath math="\ln(e^5) = 5" /></li>
@@ -6490,8 +6490,8 @@ id: "integration-of-brackets",
               <li><InlineMath math="\ln(13e) = \ln 13 + \ln e = \ln 13 + 1" /></li>
               <li><InlineMath math="\ln 0" /> cannot be found because <InlineMath math="e^x = 0" /> has no real solution (the graph of <InlineMath math="e^x" /> never crosses the x-axis).</li>
             </ul>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong><InlineMath math="\ln" /> means <InlineMath math="\log_e" />:</strong> it is not a different kind of operation, so every log law applies to it unchanged.</li>
               <li><strong><InlineMath math="\ln e = 1" /> and <InlineMath math="\ln 1 = 0" />:</strong> these shortcut most base-<InlineMath math="e" /> calculations.</li>
@@ -6523,11 +6523,11 @@ id: "integration-of-brackets",
         title: "Solving Equations with Unknown Exponents",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2388",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>If an unknown value is the exponent of a term (e.g. <InlineMath math="10^x" /> or <InlineMath math="e^x" />), we can solve for <InlineMath math="x" /> by taking the logarithm of both sides of the equation.</p>
             <p>The same solution will be obtained using any base, but generally calculators only work in base 10 or base <InlineMath math="e" /> (natural logarithm).</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Converting between the two forms:</strong> this is the single most repeated failure in logarithms — candidates cannot move between <em>exponential form and logarithmic form</em>, in one direction or the other. Practise both directions: <InlineMath math="a^y = x \iff \log_a x = y" />.</li>
                 <li><strong>Consistent lines of working:</strong> logarithms and exponentials are a place where each line must follow from the one before, and conversions are where working most often becomes inconsistent.</li>
@@ -6584,11 +6584,11 @@ id: "integration-of-brackets",
         title: "Exponential Growth & Decay",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=2841",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We previously learned that exponential functions are sometimes known as growth or decay functions. These often occur in models of real-life situations.</p>
             <p>For example, radioactive decay can be modelled using an exponential function. An important measurement is the half-life of radioactive substance, which is the time taken for the mass of the radioactive substance to halve.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Decay needs a negative exponent:</strong> or a base below 1. Getting the sign wrong turns decay into growth and the answer becomes nonsense.</li>
               <li><strong>Take logs to find the time:</strong> when the unknown is in the exponent, logarithms are the only route.</li>
@@ -6636,7 +6636,7 @@ id: "integration-of-brackets",
                  <BlockMath math="P = 2.54e^0 = 2.54 \text{ billion}" />
                  <p><strong>Time to double:</strong> We want to find <InlineMath math="t" /> when <InlineMath math="P = 2.54 \times 2 = 5.08" />.</p>
                  <BlockMath math="\begin{aligned} 5.08 &= 2.54e^{0.0178t} \\ 2 &= e^{0.0178t} \\ \ln 2 &= 0.0178t \\ t &= \frac{\ln 2}{0.0178} \approx 38.94 \end{aligned}" />
-                 <p>To the nearest year, this is <strong className="text-white">39 years</strong>.</p>
+                 <p>To the nearest year, this is <strong className="text-foreground">39 years</strong>.</p>
                </div>
              )
           }
@@ -6647,19 +6647,19 @@ id: "integration-of-brackets",
         title: "Experimental Data & Linear Models",
         videoUrl: "https://www.youtube.com/embed/oNAzh9QKThQ?start=3163",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The results of an experiment may show that there is an exponential relationship between the variables. However, the rapid rise/decrease can often make it difficult to interpret the results.</p>
             <p>We can use logarithms to convert these exponential graphs to linear graphs which makes it easier to find the relationship between the variables.</p>
             
-            <p className="font-bold text-white mt-6">Polynomials equations of the form <InlineMath math="y = ax^b" />:</p>
+            <p className="font-bold text-foreground mt-6">Polynomials equations of the form <InlineMath math="y = ax^b" />:</p>
             <BlockMath math="\begin{aligned} y &= ax^b \\ \log_{10} y &= \log_{10}(ax^b) \\ \log_{10} y &= \log_{10} a + \log_{10}(x^b) \\ \log_{10} y &= \log_{10} a + b\log_{10} x \\ \log_{10} y &= b\log_{10} x + \log_{10} a \end{aligned}" />
             <p>The equation is now in the linear form <InlineMath math="Y = mX + c" /> where <InlineMath math="Y = \log_{10} y" />, <InlineMath math="m = b" />, <InlineMath math="X = \log_{10} x" /> and <InlineMath math="c = \log_{10} a" />.</p>
 
-            <p className="font-bold text-white mt-6">Exponential equations of the form <InlineMath math="y = ab^x" />:</p>
+            <p className="font-bold text-foreground mt-6">Exponential equations of the form <InlineMath math="y = ab^x" />:</p>
             <BlockMath math="\begin{aligned} y &= ab^x \\ \log_{10} y &= \log_{10}(ab^x) \\ \log_{10} y &= \log_{10} a + \log_{10}(b^x) \\ \log_{10} y &= \log_{10} a + x\log_{10} b \\ \log_{10} y &= (\log_{10} b)x + \log_{10} a \end{aligned}" />
             <p>The equation is now in the linear form <InlineMath math="Y = mX + c" /> where <InlineMath math="Y = \log_{10} y" />, <InlineMath math="m = \log_{10} b" />, <InlineMath math="X = x" /> and <InlineMath math="c = \log_{10} a" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Pick the right model.</strong> Using a relationship of the wrong form is the usual reason this question is not attempted successfully. Read the <em>axes</em>: if both are logarithmic it is <InlineMath math="y = ax^b" />; if only the vertical axis is, it is <InlineMath math="y = ab^x" />.</li>
                 <li><strong>The gradient is not the constant you want:</strong> for <InlineMath math="y = ax^b" /> the gradient is <InlineMath math="b" /> and the intercept is <InlineMath math="\log a" />, so you must undo the log to recover <InlineMath math="a" />.</li>
@@ -6676,22 +6676,22 @@ id: "integration-of-brackets",
                <div className="space-y-4">
                  <p>The results from an experiment were noted as follows:</p>
                  <div className="overflow-x-auto">
-                   <table className="min-w-full border border-slate-700 text-center">
+                   <table className="min-w-full border border-muted text-center">
                      <thead>
-                       <tr className="border-b border-slate-700 bg-slate-800">
-                         <th className="p-2 border-r border-slate-700"><InlineMath math="\log_{10} x" /></th>
-                         <td className="p-2 border-r border-slate-700">1.70</td>
-                         <td className="p-2 border-r border-slate-700">2.29</td>
-                         <td className="p-2 border-r border-slate-700">2.70</td>
+                       <tr className="border-b border-muted bg-muted">
+                         <th className="p-2 border-r border-muted"><InlineMath math="\log_{10} x" /></th>
+                         <td className="p-2 border-r border-muted">1.70</td>
+                         <td className="p-2 border-r border-muted">2.29</td>
+                         <td className="p-2 border-r border-muted">2.70</td>
                          <td className="p-2">2.85</td>
                        </tr>
                      </thead>
                      <tbody>
                        <tr>
-                         <th className="p-2 border-r border-slate-700"><InlineMath math="\log_{10} y" /></th>
-                         <td className="p-2 border-r border-slate-700">1.33</td>
-                         <td className="p-2 border-r border-slate-700">1.67</td>
-                         <td className="p-2 border-r border-slate-700">1.92</td>
+                         <th className="p-2 border-r border-muted"><InlineMath math="\log_{10} y" /></th>
+                         <td className="p-2 border-r border-muted">1.33</td>
+                         <td className="p-2 border-r border-muted">1.67</td>
+                         <td className="p-2 border-r border-muted">1.92</td>
                          <td className="p-2">2.01</td>
                        </tr>
                      </tbody>
@@ -6709,7 +6709,7 @@ id: "integration-of-brackets",
                  <BlockMath math="\begin{aligned} c &= 1.33 - (0.591)(1.70) \\ c &\approx 1.33 - 1.0047 = 0.325 \end{aligned}" />
                  <p>Since <InlineMath math="c = \log_{10} a" />:</p>
                  <BlockMath math="a = 10^{0.325} \approx 2.11" />
-                 <p className="text-emerald-300">Formula: <strong className="text-white"><InlineMath math="y = 2.11 x^{0.591}" /></strong></p>
+                 <p className="text-emerald-300">Formula: <strong className="text-foreground"><InlineMath math="y = 2.11 x^{0.591}" /></strong></p>
                </div>
              )
           },
@@ -6719,22 +6719,22 @@ id: "integration-of-brackets",
                <div className="space-y-4">
                  <p>The results from an experiment were noted as follows:</p>
                  <div className="overflow-x-auto">
-                   <table className="min-w-full border border-slate-700 text-center">
+                   <table className="min-w-full border border-muted text-center">
                      <thead>
-                       <tr className="border-b border-slate-700 bg-slate-800">
-                         <th className="p-2 border-r border-slate-700">x</th>
-                         <td className="p-2 border-r border-slate-700">1.30</td>
-                         <td className="p-2 border-r border-slate-700">2.00</td>
-                         <td className="p-2 border-r border-slate-700">2.30</td>
+                       <tr className="border-b border-muted bg-muted">
+                         <th className="p-2 border-r border-muted">x</th>
+                         <td className="p-2 border-r border-muted">1.30</td>
+                         <td className="p-2 border-r border-muted">2.00</td>
+                         <td className="p-2 border-r border-muted">2.30</td>
                          <td className="p-2">2.80</td>
                        </tr>
                      </thead>
                      <tbody>
                        <tr>
-                         <th className="p-2 border-r border-slate-700"><InlineMath math="\log_{10} y" /></th>
-                         <td className="p-2 border-r border-slate-700">0.886</td>
-                         <td className="p-2 border-r border-slate-700">1.112</td>
-                         <td className="p-2 border-r border-slate-700">1.207</td>
+                         <th className="p-2 border-r border-muted"><InlineMath math="\log_{10} y" /></th>
+                         <td className="p-2 border-r border-muted">0.886</td>
+                         <td className="p-2 border-r border-muted">1.112</td>
+                         <td className="p-2 border-r border-muted">1.207</td>
                          <td className="p-2">1.363</td>
                        </tr>
                      </tbody>
@@ -6753,7 +6753,7 @@ id: "integration-of-brackets",
                  <BlockMath math="\begin{aligned} c &= Y - mX \\ c &= 0.886 - (0.323)(1.30) \\ c &\approx 0.886 - 0.420 = 0.466 \end{aligned}" />
                  <p>Since <InlineMath math="c = \log_{10} a" />:</p>
                  <BlockMath math="a = 10^{0.466} \approx 2.92" />
-                 <p className="text-emerald-300">Formula: <strong className="text-white"><InlineMath math="y = 2.92 (2.10)^x" /></strong></p>
+                 <p className="text-emerald-300">Formula: <strong className="text-foreground"><InlineMath math="y = 2.92 (2.10)^x" /></strong></p>
                </div>
              )
           }
@@ -6770,42 +6770,42 @@ id: "integration-of-brackets",
         title: "Revision of N5 Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=13",
         theory: (
-          <div className="space-y-4 text-slate-300">
-            <h3 className="text-xl font-bold text-white">Magnitude</h3>
+          <div className="space-y-4 text-foreground">
+            <h3 className="text-xl font-bold text-foreground">Magnitude</h3>
             <p>A vector is a quantity with both magnitude and direction. As a result, we can describe vectors as having 'directional growth'.</p>
             <p>A vector can be named in one of the following ways:</p>
             <ul className="list-disc list-inside ml-4">
               <li>Using the letters at the ends of a directed line segment: <InlineMath math="\vec{AB}" /></li>
-              <li>Using a lowercase letter underlined (sometimes in bold if typed): <InlineMath math="\vec{u}" /> or <strong className="text-white">u</strong></li>
+              <li>Using a lowercase letter underlined (sometimes in bold if typed): <InlineMath math="\vec{u}" /> or <strong className="text-foreground">u</strong></li>
             </ul>
 
-            <h3 className="text-xl font-bold text-white mt-6">Components</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Components</h3>
             <p>A vector can be written in component form:</p>
             <BlockMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix}" />
             <p>e.g. <InlineMath math="\begin{pmatrix} 2 \\ 7 \end{pmatrix}" /> means move 2 units in the x-direction and 7 units in the y-direction.</p>
             <p>e.g. <InlineMath math="\begin{pmatrix} 2 \\ 7 \\ 3 \end{pmatrix}" /> means move 2 units in the x-direction, 7 units in the y-direction and 3 units in the z-direction.</p>
 
-            <h3 className="text-xl font-bold text-white mt-6">Magnitude</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Magnitude</h3>
             <p>The magnitude or length of a 2-dimensional vector is found in a similar way we would find the distance between two points.</p>
             <p>Let <InlineMath math="\vec{u} = \begin{pmatrix} a \\ b \end{pmatrix}" />, then <InlineMath math="|\vec{u}| = \sqrt{a^2+b^2}" /></p>
             <p>In 3-dimensions:</p>
             <p>Let <InlineMath math="\vec{u} = \begin{pmatrix} a \\ b \\ c \end{pmatrix}" />, then <InlineMath math="|\vec{u}| = \sqrt{a^2+b^2+c^2}" /></p>
 
-            <h3 className="text-xl font-bold text-white mt-6">Equal Vectors</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Equal Vectors</h3>
             <p>Vectors are equal if they have the same magnitude and direction (directional growth) i.e. all of their components are equal.</p>
             <p>Conversely, if all components of vectors are equal then the vectors have the same magnitude and direction.</p>
             <p>If <InlineMath math="\begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix} p \\ q \\ r \end{pmatrix}" /> then <InlineMath math="a=p" />, <InlineMath math="b=q" /> and <InlineMath math="c=r" />.</p>
 
-            <h3 className="text-xl font-bold text-white mt-6">Additive Properties of Vectors</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Additive Properties of Vectors</h3>
             <p>Since vectors have directional growth, adding vectors means we are accumulating the growth contained in several vectors.</p>
             <p>If <InlineMath math="\vec{u} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix}" /> and <InlineMath math="\vec{v} = \begin{pmatrix} 4 \\ 6 \\ -3 \end{pmatrix}" />, then <InlineMath math="\vec{u} + \vec{v} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix} + \begin{pmatrix} 4 \\ 6 \\ -3 \end{pmatrix} = \begin{pmatrix} 12 \\ 4 \\ -3 \end{pmatrix}" />.</p>
             <p>If <InlineMath math="\vec{u} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix}" /> and <InlineMath math="\vec{v} = \begin{pmatrix} 4 \\ 6 \\ -3 \end{pmatrix}" />, then <InlineMath math="\vec{u} - \vec{v} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix} - \begin{pmatrix} 4 \\ 6 \\ -3 \end{pmatrix} = \begin{pmatrix} 4 \\ -8 \\ 3 \end{pmatrix}" />.</p>
 
-            <h3 className="text-xl font-bold text-white mt-6">Multiplying by a Scalar</h3>
+            <h3 className="text-xl font-bold text-foreground mt-6">Multiplying by a Scalar</h3>
             <p>Since vectors have directional growth, multiplying an existing vector by a scalar means we are making this existing vector stronger (in the same direction). If you multiply by a negative, then the direction of the vector will change.</p>
             <p>If <InlineMath math="\vec{u} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix}" />, then <InlineMath math="3\vec{u} = 3\begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix} = \begin{pmatrix} 24 \\ -6 \\ 0 \end{pmatrix}" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Pathways are where marks are lost.</strong> Vector pathway questions are among the lowest scoring in the course — <em>many candidates gain no marks at all</em>. Travel with the arrows: <InlineMath math="\vec{AB} = \vec{AO} + \vec{OB} = -\vec{OA} + \vec{OB}" />.</li>
                 <li><strong>Reversing a vector flips every component:</strong> <InlineMath math="\vec{BA} = -\vec{AB}" />, so all three signs change, not just the first.</li>
@@ -6822,14 +6822,14 @@ id: "integration-of-brackets",
         title: "Revision of Position Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=13",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The vector from origin <InlineMath math="O" /> to point <InlineMath math="A" /> is called the position vector of point A: <InlineMath math="\vec{OA}" /> or <InlineMath math="\vec{a}" />.</p>
             <p>The vector <InlineMath math="\vec{AB}" /> is the vector which originates at A and ends at B. <InlineMath math="\vec{AB}" /> is the position vector of B relative to A.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{AB} = \vec{b} - \vec{a}" />
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong><InlineMath math="\vec{AB} = \mathbf{b} - \mathbf{a}" />:</strong> end point minus start point. Doing it the other way round reverses the vector and every sign with it.</li>
               <li><strong>A position vector starts at the origin:</strong> the point <InlineMath math="P(3,-1,2)" /> has position vector with those components — no subtraction needed.</li>
@@ -6867,15 +6867,15 @@ id: "integration-of-brackets",
         title: "Collinearity",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=717",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Points A, B and C are collinear if <InlineMath math="\vec{AB}" /> and <InlineMath math="\vec{BC}" /> are parallel, with B a common point.</p>
             <p><strong>NB:</strong> vectors are parallel if they are scalar multiples of the same vector:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li>e.g. <InlineMath math="\vec{u} = \begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix}" />, <InlineMath math="\vec{v} = \begin{pmatrix} 16 \\ -4 \\ 0 \end{pmatrix} = 2\begin{pmatrix} 8 \\ -2 \\ 0 \end{pmatrix} = 2\vec{u} \implies \vec{u}" /> and <InlineMath math="\vec{v}" /> are parallel.</li>
               <li>e.g. <InlineMath math="\vec{a} = \begin{pmatrix} 12 \\ -3 \\ 9 \end{pmatrix} = 3\begin{pmatrix} 4 \\ -1 \\ 3 \end{pmatrix}" />, <InlineMath math="\vec{b} = \begin{pmatrix} 20 \\ -5 \\ 15 \end{pmatrix} = 5\begin{pmatrix} 4 \\ -1 \\ 3 \end{pmatrix} \implies \vec{a}" /> and <InlineMath math="\vec{b}" /> are parallel.</li>
             </ul>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Parallel is not enough:</strong> you must also state that the two vectors share a common point. Without that, they could be parallel lines that never meet.</li>
               <li><strong>Show one is a multiple of the other:</strong> <InlineMath math="\vec{AB} = k\vec{BC}" />. State the value of <InlineMath math="k" /> explicitly.</li>
@@ -6935,11 +6935,11 @@ id: "integration-of-brackets",
         title: "Dividing Lines in a Given Ratio",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1570",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>If a point T divides a line segment PR in the ratio <InlineMath math="m:n" />, we can use position vectors to find the coordinates of T.</p>
             <p>From the ratio, <InlineMath math="\vec{PT} = \frac{m}{m+n} \vec{PR}" /> or we can use the ratio of parts: <InlineMath math="n\vec{PT} = m\vec{TR}" />.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Expect this in three dimensions:</strong> finding an internal division point in 3D is a known weak spot, and it is where this topic is usually examined.</li>
                 <li><strong>Ratio parts, not the ratio itself:</strong> for <InlineMath math="m:n" /> the fraction along the line is <InlineMath math="\frac{m}{m+n}" />. Using <InlineMath math="\frac{m}{n}" /> is the standard error.</li>
@@ -6959,7 +6959,7 @@ id: "integration-of-brackets",
                  <BlockMath math="\begin{aligned} 3(\vec{t} - \vec{p}) &= 2(\vec{r} - \vec{t}) \\ 3\vec{t} - 3\vec{p} &= 2\vec{r} - 2\vec{t} \\ 5\vec{t} &= 2\vec{r} + 3\vec{p} \end{aligned}" />
                  <BlockMath math="\begin{aligned} 5\vec{t} &= 2\begin{pmatrix} 8 \\ -1 \\ 19 \end{pmatrix} + 3\begin{pmatrix} -2 \\ 4 \\ -1 \end{pmatrix} \\ &= \begin{pmatrix} 16 \\ -2 \\ 38 \end{pmatrix} + \begin{pmatrix} -6 \\ 12 \\ -3 \end{pmatrix} \\ &= \begin{pmatrix} 10 \\ 10 \\ 35 \end{pmatrix} \end{aligned}" />
                  <BlockMath math="\vec{t} = \begin{pmatrix} 2 \\ 2 \\ 7 \end{pmatrix}" />
-                 <p>The coordinates of T are <strong className="text-white">(2, 2, 7)</strong>.</p>
+                 <p>The coordinates of T are <strong className="text-foreground">(2, 2, 7)</strong>.</p>
                </div>
              )
           }
@@ -6970,14 +6970,14 @@ id: "integration-of-brackets",
         title: "Unit Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1716",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Any vector with a magnitude of 1 is called a unit vector.</p>
             <p>e.g. Let <InlineMath math="\vec{u} = \begin{pmatrix} \sqrt{3}/2 \\ 0 \\ 1/2 \end{pmatrix}" />, then</p>
             <BlockMath math="|\vec{u}| = \sqrt{\left(\frac{\sqrt{3}}{2}\right)^2 + 0^2 + \left(\frac{1}{2}\right)^2} = \sqrt{\frac{3}{4} + 0 + \frac{1}{4}} = \sqrt{1} = 1" />
             <p>Therefore <InlineMath math="\vec{u}" /> is a unit vector.</p>
             <p>To find a unit vector parallel to vector <InlineMath math="\vec{v}" />, we divide <InlineMath math="\vec{v}" /> by its magnitude: <InlineMath math="\frac{1}{|\vec{v}|}\vec{v}" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Divide by the magnitude:</strong> a unit vector is <InlineMath math="\frac{1}{|\vec{u}|}\vec{u}" />. Dividing by a single component instead is a common error.</li>
               <li><strong>Its magnitude must be 1:</strong> that is the definition, and squaring your components and adding is a quick check.</li>
@@ -7007,11 +7007,11 @@ id: "integration-of-brackets",
         title: "Unit Vector Form",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=1839",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>We can express a vector in terms of the standard basis vectors <InlineMath math="\mathbf{i}" />, <InlineMath math="\mathbf{j}" />, and <InlineMath math="\mathbf{k}" /> (which have length 1 and point along the x, y, and z axes respectively).</p>
             <BlockMath math="\begin{pmatrix} x \\ y \\ z \end{pmatrix} = x\mathbf{i} + y\mathbf{j} + z\mathbf{k}" />
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong><InlineMath math="i" />, <InlineMath math="j" /> and <InlineMath math="k" /> are just the axes:</strong> the coefficients are exactly the components of the column vector. Converting between the two forms is purely notation.</li>
               <li><strong>Include zero components carefully:</strong> a missing <InlineMath math="j" /> term means that component is zero — do not shuffle the others up.</li>
@@ -7051,7 +7051,7 @@ id: "integration-of-brackets",
         title: "Scalar/Dot Product (1)",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2188",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The dot product can be thought of as directional multiplication. Multiplying two vectors means we are applying the directional growth of one vector to another. The result is how much stronger we have made the original vector.</p>
             <p>The final result of the dot product process can be:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
@@ -7060,12 +7060,12 @@ id: "integration-of-brackets",
               <li><strong>Negative</strong> – negative/reverse growth in the original direction</li>
             </ul>
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Rectangular perspective):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = a_1b_1 + a_2b_2 + a_3b_3" />
             </div>
             <p className="text-center">where <InlineMath math="\vec{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}" /> and <InlineMath math="\vec{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}" /></p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>The result is a number, not a vector:</strong> the scalar product produces a scalar. An answer written as a column vector shows the method was misunderstood.</li>
               <li><strong>Multiply matching components, then add:</strong> <InlineMath math="a_1b_1 + a_2b_2 + a_3b_3" /> — it is not component-by-component multiplication kept as a vector.</li>
@@ -7101,14 +7101,14 @@ id: "integration-of-brackets",
         title: "Scalar/Dot Product (2)",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2318",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>The dot product (scalar product), denoted <InlineMath math="\vec{a} \cdot \vec{b}" />, can be calculated as follows (Polar perspective):</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />
             </div>
             <p className="text-center">where <InlineMath math="\theta" /> is the angle between the vectors <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" />. The vectors must both be pointing away from the vertex.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Use the magnitudes, not the components:</strong> the geometric form is <InlineMath math="|\vec{a}||\vec{b}|\cos\theta" />. Mixing the two forms in one line is a frequent error.</li>
               <li><strong>The angle is between the vectors:</strong> both must point <em>away</em> from the common vertex. If one points towards it, reverse it first or the angle will be wrong.</li>
@@ -7135,15 +7135,15 @@ id: "integration-of-brackets",
         title: "Perpendicular Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2551",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then the angle between them is <InlineMath math="90^\circ" />.</p>
             <p>Since <InlineMath math="\cos 90^\circ = 0" />, <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos 90^\circ = 0" />.</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-300">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full text-emerald-300">
               <p>If <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular then <InlineMath math="\vec{a} \cdot \vec{b} = 0" />.</p>
               <p>Conversely, if <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> then <InlineMath math="\vec{a}" /> and <InlineMath math="\vec{b}" /> are perpendicular.</p>
             </div>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Perpendicular means the scalar product is zero:</strong> this is both the test and the equation you solve for an unknown.</li>
               <li><strong>Set it equal to zero, then solve:</strong> for a question with an unknown component, form <InlineMath math="\vec{a} \cdot \vec{b} = 0" /> and solve for it.</li>
@@ -7181,14 +7181,14 @@ id: "integration-of-brackets",
         title: "Angle Between Vectors",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=2741",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>From the dot product formula <InlineMath math="\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta" />, we can rearrange this to find the angle between two vectors:</p>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/10 items-center justify-center flex flex-col [&>*]:max-w-full">
+            <div className="bg-black/20 p-4 rounded-xl border border-foreground/10 items-center justify-center flex flex-col [&>*]:max-w-full">
               <BlockMath math="\cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}" />
             </div>
             <p className="text-center">Remember to calculate <InlineMath math="\vec{a} \cdot \vec{b}" /> using <InlineMath math="a_1b_1 + a_2b_2 + a_3b_3" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong>Rearranged, not memorised separately:</strong> <InlineMath math="\cos\theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}" /> is just the geometric form rearranged.</li>
               <li><strong>Both vectors point away from the vertex:</strong> to find the angle at <InlineMath math="B" /> in a triangle, use <InlineMath math="\vec{BA}" /> and <InlineMath math="\vec{BC}" /> — not <InlineMath math="\vec{AB}" />.</li>
@@ -7237,13 +7237,13 @@ id: "integration-of-brackets",
         title: "Properties of the Scalar Product",
         videoUrl: "https://www.youtube.com/embed/yNetkoIj1aY?start=3224",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>1. The scalar product is commutative i.e. <InlineMath math="\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}" /></p>
             <p>2. The scalar product is distributive i.e. <InlineMath math="\vec{a} \cdot (\vec{b} + \vec{c}) = \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}" /></p>
             <p>3. The scalar product of a vector and itself is a positive real number if <InlineMath math="\vec{a} \neq 0" /> i.e. <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}|^2" />.</p>
             <p className="ml-4">Proof: <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}| |\vec{a}| \cos \theta" />. Since the angle is 0, <InlineMath math="\cos 0^\circ = 1" />. <InlineMath math="\vec{a} \cdot \vec{a} = |\vec{a}| |\vec{a}| \times 1 = |\vec{a}|^2" />.</p>
-          <div className="bg-slate-800 p-4 rounded-lg mt-4">
-            <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+          <div className="bg-muted p-4 rounded-lg mt-4">
+            <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li><strong><InlineMath math="\vec{a}\cdot\vec{a} = |\vec{a}|^2" />:</strong> the scalar product of a vector with itself is the square of its magnitude, which is often the quickest route into a proof.</li>
               <li><strong>It distributes over addition:</strong> <InlineMath math="\vec{a}\cdot(\vec{b}+\vec{c}) = \vec{a}\cdot\vec{b} + \vec{a}\cdot\vec{c}" />, which lets you expand exactly like ordinary algebra.</li>

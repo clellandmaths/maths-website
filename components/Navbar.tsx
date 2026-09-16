@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles, Mail } from 'lucide-react';
 
+
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   // One name everywhere. The footer, the home hero and the page's own <h1>
@@ -56,7 +57,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setCoursesOpen(o => !o)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-slate-300 hover:text-signal-magenta hover:bg-slate-800/50 transition-all duration-200"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-foreground hover:text-accent hover:bg-muted/50 transition-all duration-200"
                 aria-expanded={coursesOpen}
               >
                 <span>Courses</span>
@@ -71,7 +72,7 @@ export default function Navbar() {
                         key={course.id}
                         href={`/course/${course.id}`}
                         onClick={() => setCoursesOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:text-foreground hover:bg-white/5 transition-colors"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:text-foreground hover:bg-foreground/5 transition-colors"
                       >
                         <span className={`h-2 w-2 rounded-full ${course.dot} shrink-0`} />
                         {course.name}
@@ -88,10 +89,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-800/50 transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
                     link.highlight
-                      ? 'text-signal-magenta font-semibold hover:brightness-110'
-                      : 'text-slate-300 hover:text-signal-magenta'
+                      ? 'text-accent font-semibold hover:brightness-110'
+                      : 'text-foreground hover:text-accent'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -101,10 +102,59 @@ export default function Navbar() {
             })}
           </div>
 
+          {/* **The theme toggle goes here, and deliberately not yet.**
+
+              `components/ThemeToggle.tsx` is written and works. Mounting it
+              today would offer a reader a light mode that is 665 colour
+              literals away from finished — they would press it and land in a
+              half-converted site, which is worse than having no toggle at all.
+
+              It goes in as part of the same change that drops the hard
+              `data-theme="dark"` from `app/layout.tsx`. `check:theme` ties the
+              two together, so the toggle cannot appear before the site is ready
+              for it and the site cannot go theme-aware without it. When it
+              lands it belongs beside the menu button rather than inside the
+              menu: someone who needs the other theme needs it on arrival, not
+              three taps in. See docs/light-mode.md. */}
+
+          {/* **Light or dark, with no React state at all.**
+
+              Which icon shows is a fact about the theme, and the theme already
+              lives on `<html data-theme>` — so CSS reads it directly and both
+              icons ship in the markup with one hidden. State here would only
+              mirror something the document already knows, and mirroring it is
+              what made the old component need an effect to avoid a hydration
+              mismatch.
+
+              Storage before the attribute: the pre-paint script in
+              `app/layout.tsx` watches `data-theme` and restores whatever
+              storage says, so the other order makes the guard undo the press.
+
+              Beside the menu button rather than inside it — a reader who needs
+              the other theme needs it on arrival, not three taps in. */}
+          <button
+            type="button"
+            onClick={() => {
+              /* An unstamped reader is on whatever their system says, so read
+                 that rather than the absent attribute — otherwise the first
+                 press on a dark-OS machine "sets" dark and looks broken. */
+              const el = document.documentElement;
+              const now = el.getAttribute('data-theme')
+                ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+              const next = now === 'dark' ? 'light' : 'dark';
+              try { localStorage.setItem('theme', next); } catch { /* private window */ }
+              el.setAttribute('data-theme', next);
+            }}
+            aria-label="Switch between light and dark mode"
+            className="p-2 rounded-lg text-foreground hover:text-accent hover:bg-muted/50 transition-colors"
+          >
+            <span className="theme-icon" aria-hidden="true" />
+          </button>
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-300 hover:text-signal-magenta hover:bg-slate-800/50 transition-colors"
+            className="md:hidden p-2 rounded-lg text-foreground hover:text-accent hover:bg-muted/50 transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -114,7 +164,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden glass border-t border-slate-800/50 max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="md:hidden glass border-t border-border/50 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -123,8 +173,8 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800/50 transition-all duration-200 ${
-                    link.highlight ? 'text-signal-magenta' : 'text-slate-300 hover:text-signal-magenta'
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
+                    link.highlight ? 'text-accent' : 'text-foreground hover:text-accent'
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -141,7 +191,7 @@ export default function Navbar() {
                 key={course.id}
                 href={`/course/${course.id}`}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:text-foreground hover:bg-slate-800/50 transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
               >
                 <span className={`h-2 w-2 rounded-full ${course.dot} shrink-0`} />
                 <span className="font-medium">{course.name}</span>

@@ -1,14 +1,154 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
-/* Brand theme — grounded in the Clelland Maths logo (true black + signal magenta/mint) */
+/* **Tailwind's `dark:` keys off our attribute, not the OS.**
+
+   Tailwind 4 defaults `dark:` to `prefers-color-scheme`, which would ignore a
+   reader who has chosen a theme against their system setting. The palette below
+   honours both — the attribute wins where present, the OS decides where it is
+   not — and the variant has to follow the same rule, or a `dark:` utility and
+   the token underneath it would disagree about which theme is showing. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Brand theme — grounded in the Clelland Maths logo (true black + signal magenta/mint)
+ *
+ * ## Three blocks, and all three are needed
+ *
+ * `:root` is the LIGHT palette. Dark is applied twice: once behind
+ * `prefers-color-scheme` for a reader who has expressed no preference of their
+ * own, and once behind `[data-theme="dark"]` so an explicit choice beats the OS
+ * in both directions. A reader is in one of three states, not two — chose
+ * light, chose dark, or said nothing — and the un-stamped state is the common
+ * one.
+ *
+ * **The two dark blocks must stay identical.** They are duplicated because CSS
+ * cannot share a declaration block between two selectors without a
+ * preprocessor, and letting them drift would make the toggle and the OS produce
+ * different sites. `check:theme` compares them declaration by declaration.
+ *
+ * ## The site stays dark by default until the literal colours are converted
+ *
+ * 665 colour literals across 45 files still name slate directly and never reach
+ * these tokens, so a page resolving to light today would be half converted.
+ * `app/layout.tsx` therefore stamps `data-theme="dark"` unless the reader asks
+ * otherwise. The last step of the light-mode work removes that stamp and lets
+ * the preference decide. See docs/light-mode.md.
+ */
 :root {
+  color-scheme: light;
+  /* Page and card sit 1.098:1 apart, which is the separation the dark theme
+     already has between #0a0a0c and #16161a. Matched deliberately: a card
+     should lift off the page by the same amount in both themes. */
+  --background: #f4f4f7;    /* paper — off-white, faintly cool to match the ink */
+  --foreground: #16161a;    /* ink. 16.86:1 on the page, 18.04:1 on a card */
+  --card: #ffffff;
+  --card-foreground: #16161a;
+  --border: #e2e2e8;
+  --muted: #ececf1;
+  /**
+   * The control surface's hover, one step up from `--muted`.
+   *
+   * New with the light mode. 40 controls were `bg-slate-800 hover:bg-slate-700`
+   * and the base had a token to move to while the hover did not.
+   */
+  --muted-hover: #dedee6;
+  /**
+   * The quietest tier, and **decorative only**.
+   *
+   * Empty-state icons at 48-64px, the separator between two counts, a disabled
+   * chevron. `text-slate-600` and `-700` were doing this job at 1.9:1 on a dark
+   * card, which is below AA for text and fine for a 64px glyph nobody reads.
+   * Judged against the 3:1 non-text guide instead: 3.29:1 on the light page.
+   * **Anything a reader has to read takes `--muted-dim`**, which is AA in both
+   * themes; two call sites were moved there rather than dimmed to here.
+   */
+  --muted-faint: #86868f;
+  /**
+   * The navigation bar's frosted ground.
+   *
+   * Was a hard-coded `rgba(2, 6, 23, 0.8)` inside `.glass`, which is a dark
+   * blue — so in light mode the bar stayed dark while its text turned into the
+   * light theme's ink. 84 nodes, every page on the site: the single largest
+   * light-mode failure there was.
+   */
+  --glass: rgba(255, 255, 255, 0.82);
+  --glass-line: rgba(22, 22, 26, 0.10);
+  /**
+   * The brand mint where it is used as **text** rather than as the motif.
+   *
+   * `--signal-mint` is the exact logo hex and stays that in both themes for
+   * `LogoAnimation`. On a white page it is 1.05:1, so the two label call sites
+   * take this instead. 4.99:1 on the page, 5.47:1 on a card.
+   */
+  --mint-ink: #0f766e;
+  --muted-foreground: #5a5a66;  /* 6.35:1 on the page, 6.80:1 on a card */
+  /* The quietest tier, holding the cool bias its dark counterpart has.
+     5.09:1 on the page and 5.44:1 on a card — the same "recedes but is still
+     AA" band as the dark value, which is 5.77 and 5.26. */
+  --muted-dim: #5b6b80;
+  /* **The brand magenta cannot be this token on a light ground.** #ff00ed is
+     3.03:1 on the page — large text only, and `text-accent` is body text in
+     nine places. Darkened until it clears AA in every role this token plays:
+     6.33:1 as text on the page, 6.94:1 on a card, 6.33:1 the other way round
+     when it is the surface carrying `text-background` — and **5.29:1 on its
+     own 10% tint**, which is the one that decided the value. `bg-accent/10
+     text-accent` is the Academy pill on two pages, and at #b800ab it sat at
+     4.41. A token has to clear AA in the worst place it is used, not the
+     commonest. The dark theme's pairing is the mirror of this — bright magenta
+     under dark text. The exact brand hex is kept below, for the logo. */
+  --accent: #a3009a;
+  --accent-hover: #8a0082;
+  --signal-magenta: #ff00ed; /* exact brand hex, sampled from logo — reserved use only */
+  --signal-mint: #ccffed;    /* exact brand hex, sampled from logo — geometric motif only */
+}
+
+/* Dark, for a reader who has expressed no preference of their own. Guarded
+   against [data-theme="light"] so an explicit light choice beats a dark OS. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #0a0a0c;    /* ink — near-true-black, softened for full-page use */
+    --foreground: #f5f5f7;    /* paper */
+    --card: #16161a;          /* surface */
+    --card-foreground: #f5f5f7;
+    --border: #232328;
+    --muted: #333338;
+    --muted-hover: #43434a;
+    --muted-faint: #616169;
+    --glass: rgba(2, 6, 23, 0.8);
+    --glass-line: rgba(30, 41, 59, 0.5);
+    --mint-ink: #ccffed;
+    --muted-foreground: #9a9aa2;
+    /* The quietest tier of text — paper counts, worksheet captions, filter
+       headings, "no video yet" markers. Tailwind's slate-500 used to do this job
+       and sits at 3.75:1 on a card, under the 4.5:1 AA asks for text this size.
+       slate-400 passes at 6.96:1 but is too loud for a tier meant to recede.
+       This is between them: 5.20:1 on a card, 5.77:1 on the page background. */
+    --muted-dim: #7b8ca3;
+    /* Site-level action colour = the brand magenta from the wordmark.
+       Pair with DARK text (text-background) — white on this magenta fails
+       contrast (3.2:1), dark passes (6.6:1), and dark-on-magenta is the
+       logo's own pattern. Course-scoped UI uses lib/course-theme.ts instead. */
+    --accent: #ff00ed;
+    --accent-hover: #d600c8;
+  }
+}
+
+/* Dark, chosen. Identical to the block above, declaration for declaration —
+   `check:theme` fails if it is not. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
   --background: #0a0a0c;    /* ink — near-true-black, softened for full-page use */
   --foreground: #f5f5f7;    /* paper */
   --card: #16161a;          /* surface */
   --card-foreground: #f5f5f7;
   --border: #232328;
   --muted: #333338;
+  --muted-hover: #43434a;
+  --muted-faint: #616169;
+  --glass: rgba(2, 6, 23, 0.8);
+  --glass-line: rgba(30, 41, 59, 0.5);
+  --mint-ink: #ccffed;
   --muted-foreground: #9a9aa2;
   /* The quietest tier of text — paper counts, worksheet captions, filter
      headings, "no video yet" markers. Tailwind's slate-500 used to do this job
@@ -22,8 +162,6 @@
      logo's own pattern. Course-scoped UI uses lib/course-theme.ts instead. */
   --accent: #ff00ed;
   --accent-hover: #d600c8;
-  --signal-magenta: #ff00ed; /* exact brand hex, sampled from logo — reserved use only */
-  --signal-mint: #ccffed;    /* exact brand hex, sampled from logo — geometric motif only */
 }
 
 @theme inline {
@@ -32,6 +170,9 @@
   --color-card: var(--card);
   --color-border: var(--border);
   --color-muted: var(--muted);
+  --color-muted-hover: var(--muted-hover);
+  --color-muted-faint: var(--muted-faint);
+  --color-mint-ink: var(--mint-ink);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted-dim: var(--muted-dim);
   --color-accent: var(--accent);
@@ -69,12 +210,75 @@ body {
   background: var(--muted-foreground);
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism utility.
+   Both colours are tokens: the bar is on every page, and hard-coded they kept
+   it dark under a light theme with the light theme's ink on top of it. The dark
+   values below are exactly what was inlined here before. */
 .glass {
-  background: rgba(2, 6, 23, 0.8);
+  background: var(--glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  border-bottom: 1px solid var(--glass-line);
+}
+
+/* The logo, swapped rather than filtered.
+ *
+ * **The motif is the brand mint `#ccffed`, which is 1.05:1 on a light page.**
+ * On white the geometric shape behind the wordmark simply vanishes and the mark
+ * loses half of itself. No filter recolours one ink and leaves the others, so
+ * this swaps the whole asset for a variant whose motif is a deep teal —
+ * `#0b5d57`, chosen to hold the relationships the original has in dark: bold
+ * against the page (7.04:1 where the mint is 17.99:1) and clearly separated
+ * from the magenta wordmark (2.38:1 where the mint is 2.95:1). Every other ink
+ * in the file is untouched, and the letters' "white outline" is transparency,
+ * so it needs nothing.
+ *
+ * `content` on an `<img>` rather than two elements toggled by CSS, because the
+ * footer also renders this logo and the footer is not this branch's to edit.
+ * One rule covers every use of the mark, present and future, and costs no JS.
+ *
+ * Three blocks, mirroring the palette: light is the default, and the two dark
+ * cases put the element's own `src` back.
+ */
+img[src$="/clelland-maths-logo.png"] {
+  content: url("/img/logo/clelland-maths-logo-light.png");
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) img[src$="/clelland-maths-logo.png"] {
+    content: normal;
+  }
+}
+:root[data-theme="dark"] img[src$="/clelland-maths-logo.png"] {
+  content: normal;
+}
+
+/* The theme button's glyph, drawn in CSS rather than shipped as markup.
+ *
+ * **518 bytes decided this.** Two lucide SVGs cost about a kilobyte of eager
+ * JavaScript once they were inline in the navbar, and five `course/*` templates
+ * had only 10 KB of budget headroom with 9.4 KB already spent. A half-filled
+ * disc is the conventional contrast glyph and it is two CSS declarations, so it
+ * costs the JS budget nothing at all.
+ *
+ * It rotates in dark, which is free state feedback: the filled half is on the
+ * right in light and the left in dark. The button's accessible name says what
+ * pressing it does, which is the part that has to be unambiguous.
+ */
+.theme-icon {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid currentColor;
+  border-radius: 9999px;
+  background: linear-gradient(to right, transparent 50%, currentColor 50%);
+  transition: transform 200ms;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon { transform: rotate(180deg); }
+}
+:root[data-theme="dark"] .theme-icon { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon { transition: none; }
 }
 
 /* Question container fixes */

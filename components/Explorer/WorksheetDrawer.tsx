@@ -63,9 +63,9 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-card border-l border-border z-50 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-800">
+        <div className="flex items-center justify-between p-4 border-b border-border">
           <div className="flex items-center gap-2">
             <FileText className={`h-5 w-5 ${theme.text}`} />
             <h2 className="text-lg font-semibold">My Worksheet</h2>
@@ -75,7 +75,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-300 rounded-lg hover:bg-slate-800"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted"
           >
             <X className="h-5 w-5" />
           </button>
@@ -85,8 +85,8 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
         <div className="flex-1 overflow-y-auto p-4">
           {items.length === 0 ? (
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 mx-auto text-slate-600 mb-4" />
-              <p className="text-slate-400">No questions added yet</p>
+              <FileText className="h-12 w-12 mx-auto text-muted-faint mb-4" />
+              <p className="text-muted-foreground">No questions added yet</p>
               <p className="text-muted-dim text-sm mt-1">
                 Click &quot;+ Add&quot; on questions to build your worksheet
               </p>
@@ -98,13 +98,13 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                 return (
                   <div
                     key={`${item.year}-${item.paperNumber}-${item.questionIndex}`}
-                    className={`bg-slate-800 rounded-lg p-3 group${index === lastMovedIndex ? ' card-just-moved' : ''}`}
+                    className={`bg-muted rounded-lg p-3 group${index === lastMovedIndex ? ' card-just-moved' : ''}`}
                   >
                     <div className="flex items-center gap-2">
                       {/* Question info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-medium text-slate-300">
+                          <span className="text-sm font-medium text-foreground">
                             Q{index + 1}
                           </span>
                           <span className="text-xs text-muted-dim">
@@ -112,7 +112,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                           </span>
                         </div>
                         {mainTopic && (
-                          <span className="inline-block px-2 py-0.5 bg-slate-700 text-slate-400 text-xs rounded">
+                          <span className="inline-block px-2 py-0.5 bg-muted-hover text-muted-foreground text-xs rounded">
                             {mainTopic}
                           </span>
                         )}
@@ -128,7 +128,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                         <button
                           onClick={() => handleReorder(index, 0)}
                           disabled={index === 0}
-                          className="hidden lg:block p-0.5 text-slate-600 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          className="hidden lg:block p-0.5 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                           title="Move to top"
                         >
                           <ChevronsUp className="h-3.5 w-3.5" />
@@ -136,7 +136,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                         <button
                           onClick={() => moveUp(index)}
                           disabled={index === 0}
-                          className="p-2 lg:p-0.5 text-muted-dim hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          className="p-2 lg:p-0.5 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                           title="Move up"
                         >
                           <ChevronUp className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -144,7 +144,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                         <button
                           onClick={() => moveDown(index)}
                           disabled={index === items.length - 1}
-                          className="p-2 lg:p-0.5 text-muted-dim hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          className="p-2 lg:p-0.5 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                           title="Move down"
                         >
                           <ChevronDown className="h-5 w-5 lg:h-3.5 lg:w-3.5" />
@@ -152,7 +152,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                         <button
                           onClick={() => handleReorder(index, items.length - 1)}
                           disabled={index === items.length - 1}
-                          className="hidden lg:block p-0.5 text-slate-600 hover:text-slate-300 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          className="hidden lg:block p-0.5 text-muted-dim hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                           title="Move to bottom"
                         >
                           <ChevronsDown className="h-3.5 w-3.5" />
@@ -176,7 +176,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-slate-800 p-4 space-y-3">
+          <div className="border-t border-border p-4 space-y-3">
             <div className="flex flex-col gap-2">
               {onViewOnWeb && (
                 <button

@@ -52,7 +52,14 @@ export const metadata: Metadata = {
 // silently dropped, and the Android browser chrome stays white above a dark
 // page.
 export const viewport: Viewport = {
-  themeColor: "#0a0e17",
+  /* One per theme. A single dark value painted the Android browser chrome
+     near-black above a light page, which is the same class of bug as the
+     navigation bar keeping `rgba(2, 6, 23, 0.8)` under a light theme — a
+     colour hard-coded when there was only one theme to hard-code for. */
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f4f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+  ],
 };
 
 export default function RootLayout({
@@ -61,8 +68,79 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    /* **`data-theme`, not `className="dark"` — and React must not render it.**
+
+       The class was Tailwind's dark-variant switch and nothing read it: there
+       was not one `dark:` utility in the codebase, and `:root` simply WAS the
+       dark palette. The attribute below is what `globals.css` and its
+       `@custom-variant` key off now.
+
+       **It is set by the script, never by JSX, and that is not a style
+       preference.** It was `<html data-theme="dark">` here for one commit and
+       `check:contrast` caught what that does: on `/explorer?c=n5` a reader who
+       had chosen light got dark, deterministically, while `/explorer` with no
+       query was fine. The Explorer reads its own `?c=` in a lazy `useState`
+       initialiser, so that URL makes the client's first render disagree with the
+       built HTML; React discards the server DOM, re-renders the tree from
+       scratch — and re-asserts every attribute in this JSX, including the theme
+       the script had already set from the reader's choice.
+
+       Any hydration mismatch anywhere would do the same. So the attribute has no
+       JSX to be restored from: the script owns it outright, and React has
+       nothing to put back. `suppressHydrationWarning` is the other half — React
+       must not complain about an attribute it can now see but never wrote.
+
+       There is no server-rendered default any more: a reader who has chosen
+       nothing gets no stamp, and the palette's `prefers-color-scheme` block
+       answers for them. `check:theme` ties that to the toggle being mounted, so
+       the two halves of the switch cannot move apart. See docs/light-mode.md. */
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen`}>
+        {/* **Before anything paints, and deliberately not in a component.**
+
+            A reader's chosen theme lives in `localStorage`, which no server can
+            see — and this is a static export, so the HTML was built once, with
+            no reader in existence. Applying the choice in an effect would paint
+            the built theme and correct it a frame later, which is the flash
+            every themed site is judged on.
+
+            First child of `<body>`, synchronous: it runs before the markup below
+            it is parsed. It touches no React state — the attribute sits on
+            `<html>`, outside the tree React hydrates, so it cannot produce a
+            hydration mismatch. That is the trap `PracticeModes` documents for
+            reading `location` in a render path.
+
+            The CSP allows `'unsafe-inline'` for scripts, which is what makes
+            this legal here. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{`
+              + `var pick=function(){`
+              + `var c=localStorage.getItem('theme');`
+              // **Null, not 'dark'.** This returned 'dark' for the whole of the
+              // light-mode work, so that a half-converted light theme could not
+              // reach anyone. Both themes now measure zero nodes below AA, so a
+              // reader who has expressed no preference gets no stamp at all and
+              // the stylesheet's `prefers-color-scheme` block answers for them.
+              + `return (c==='light'||c==='dark')?c:null;};`
+              + `var el=document.documentElement;`
+              + `var apply=function(){var t=pick();`
+              // No stored choice means no attribute: an attribute would pin the
+              // theme and silently override the reader's own system setting.
+              + `if(t===null){el.removeAttribute('data-theme');return;}`
+              + `if(el.getAttribute('data-theme')!==t)el.setAttribute('data-theme',t);};`
+              + `apply();`
+              // **And defend it.** See the comment above the <html> tag: a
+              // hydration mismatch makes React re-render the tree and wipe
+              // attributes it did not author. Re-applying costs nothing until
+              // that happens and cannot loop — `apply` only writes when the
+              // value differs, so restoring our own value fires the observer
+              // once more and then agrees with itself.
+              + `new MutationObserver(apply).observe(el,`
+              + `{attributes:true,attributeFilter:['data-theme']});`
+              + `}catch(e){}})()`,
+          }}
+        />
         {/* The video thumbnails on every course page come from YouTube, which
             is a third origin: without a hint, the first one pays a full DNS +
             TCP + TLS handshake before a byte arrives, and on a course page that

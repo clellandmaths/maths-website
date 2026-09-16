@@ -12,17 +12,17 @@ export const national5AppsData: Section[] = [
         title: "Basic Operations & Estimation",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> candidates frequently lose valuable marks in Paper 1 (the non-calculator paper) by not demonstrating solid basic number skills. It is essential to maintain and practise these non-calculator arithmetic skills to secure your marks.</p>
 
-            <h4 className="text-white font-semibold">1. Decimals: Addition & Subtraction</h4>
+            <h4 className="text-foreground font-semibold">1. Decimals: Addition & Subtraction</h4>
             <p>You are expected to add and subtract numbers with up to two or three decimal places.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>The Rule:</strong> You must line up the decimal points directly below one another in your working.</li>
               <li><strong>Trailing Zeroes:</strong> It is highly recommended to add "trailing zeroes" to the end of your numbers so that they all have the exact same number of decimal places before you begin the calculation (e.g., change 34.7 to 34.70).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Multiplying and Dividing by Multiples of 10, 100, and 1000</h4>
+            <h4 className="text-foreground font-semibold">2. Multiplying and Dividing by Multiples of 10, 100, and 1000</h4>
             <p>To multiply or divide a decimal by a multiple of 10, 100, or 1000, you must split the calculation into two easier steps:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step A:</strong> Multiply or divide by the single digit.</li>
@@ -30,7 +30,7 @@ export const national5AppsData: Section[] = [
             </ul>
             <p><em>Example:</em> To calculate <InlineMath math="3.5 \times 400" />, you calculate <InlineMath math="(3.5 \times 4) \times 100" />.</p>
 
-            <h4 className="text-white font-semibold">3. Order of Operations (BODMAS/BIDMAS)</h4>
+            <h4 className="text-foreground font-semibold">3. Order of Operations (BODMAS/BIDMAS)</h4>
             <p>Calculations must be performed in a specific mathematical order:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>B</strong>rackets</li>
@@ -40,11 +40,11 @@ export const national5AppsData: Section[] = [
             </ul>
             <p>Operations within brackets must always be dealt with first, followed by multiplication and division, before you attempt any addition or subtraction.</p>
 
-            <h4 className="text-white font-semibold">4. Estimation & Checking Answers</h4>
+            <h4 className="text-foreground font-semibold">4. Estimation & Checking Answers</h4>
             <p>You are expected to use your knowledge of rounding and estimation to check if your final answer makes logical sense in the context of the question. Always stop and ask yourself: "Does this answer seem sensible?"</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The Left-to-Right BODMAS Trap:</strong> calculations are frequently set that look tempting to read simply from left to right (e.g., <InlineMath math="27.2 - 4.6 \times 3 + 4.7" />). Candidates lose marks by ignoring the rule that multiplication must happen before addition and subtraction.</li>
                 <li><strong>The Decimal Alignment Trap:</strong> When subtracting a decimal from a whole number (e.g., <InlineMath math="30 - 14.26" />), candidates often forget to write the whole number as 30.00 to allow them to borrow correctly.</li>
@@ -115,10 +115,10 @@ export const national5AppsData: Section[] = [
         title: "Fractions",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> Fractions in National 5 Applications often involve adding and subtracting parts of a whole to find a missing amount, or calculating leftover amounts from multiple wholes (such as multiple cakes or pizzas). Always ensure you have a common denominator before doing any addition or subtraction!</p>
 
-            <h4 className="text-white font-semibold">1. Adding & Subtracting Fractions</h4>
+            <h4 className="text-foreground font-semibold">1. Adding & Subtracting Fractions</h4>
             <p>You cannot add or subtract fractions unless the bottom numbers (denominators) are the same.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Find a common denominator (the lowest common multiple of the bottom numbers).</li>
@@ -126,7 +126,7 @@ export const national5AppsData: Section[] = [
               <li><strong>Step 3:</strong> Add or subtract the numerators. The denominator stays the same.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Finding "The Rest" (Fractions of a Whole)</h4>
+            <h4 className="text-foreground font-semibold">2. Finding "The Rest" (Fractions of a Whole)</h4>
             <p>If a question gives you several fractions of a group and asks for "the rest" or "the remaining", you must:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Add the given fractions together.</li>
@@ -134,18 +134,18 @@ export const national5AppsData: Section[] = [
             </ul>
             <p><em>Tip:</em> The number 1 can be written as any fraction where the top and bottom numbers are identical (e.g., <InlineMath math="1 = \frac{15}{15}" /> or <InlineMath math="1 = \frac{24}{24}" />).</p>
 
-            <h4 className="text-white font-semibold">3. Top-Heavy (Improper) Fractions & Mixed Numbers</h4>
+            <h4 className="text-foreground font-semibold">3. Top-Heavy (Improper) Fractions & Mixed Numbers</h4>
             <p>You are expected to be able to work with and convert between mixed numbers (e.g., <InlineMath math="3 \frac{1}{2}" />) and top-heavy fractions (e.g., <InlineMath math="\frac{7}{2}" />).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Converting to Top-Heavy:</strong> Multiply the whole number by the denominator, then add the numerator (e.g., for <InlineMath math="2 \frac{3}{4}" />, calculate <InlineMath math="2 \times 4 + 3 = 11" />, so the fraction is <InlineMath math="\frac{11}{4}" />).</li>
               <li>Always convert mixed numbers into top-heavy fractions before trying to add or subtract them.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Simplifying</h4>
+            <h4 className="text-foreground font-semibold">4. Simplifying</h4>
             <p>Always check your final answer to see if the top and bottom numbers can be divided by a common factor.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Adding Denominators" Trap:</strong> A classic error under exam pressure is adding both the numerators AND the denominators together (e.g., deciding that <InlineMath math="\frac{1}{3} + \frac{1}{4} = \frac{2}{7}" />). You must find a common denominator first!</li>
                 <li><strong>The "Multiple Wholes" Trap:</strong> When a question states that someone bought 2 identical cakes or pizzas and gives you the fractions eaten from each, candidates frequently just add the fractions together and subtract from 1, completely forgetting that there were 2 wholes to begin with.</li>
@@ -228,10 +228,10 @@ export const national5AppsData: Section[] = [
         title: "Percentages",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> understanding the interrelationships between fractions, decimals, and percentages lets you choose the most efficient route to a solution, saving you vital time in the non-calculator paper.</p>
             
-            <h4 className="text-white font-semibold">1. Equivalences (Fractions, Decimals, and Percentages)</h4>
+            <h4 className="text-foreground font-semibold">1. Equivalences (Fractions, Decimals, and Percentages)</h4>
             <p>You must be able to convert equivalences between fractions, decimals, and percentages seamlessly. For example, you are expected to know that calculating 75% of an amount is exactly the same as finding <InlineMath math="\frac{3}{4}" /> of it. You must commit the following standard equivalences to memory:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><InlineMath math="50\% = \frac{1}{2}" /></li>
@@ -243,7 +243,7 @@ export const national5AppsData: Section[] = [
               <li><InlineMath math="66 \frac{2}{3}\% = \frac{2}{3}" /></li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Calculating Percentages of a Quantity (Non-Calculator)</h4>
+            <h4 className="text-foreground font-semibold">2. Calculating Percentages of a Quantity (Non-Calculator)</h4>
             <p>More complex percentages can be worked out without a calculator by finding 10% or 1% first as "building blocks".</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>To find 10%, divide the amount by 10.</li>
@@ -252,13 +252,13 @@ export const national5AppsData: Section[] = [
             </ul>
             <p>By combining these blocks, you can find any amount. For example, to find 7.5%, you can calculate 5% (half of 10%) and 2.5% (half of 5%), and then add them together.</p>
 
-            <h4 className="text-white font-semibold">3. Expressing a Quantity as a Percentage</h4>
+            <h4 className="text-foreground font-semibold">3. Expressing a Quantity as a Percentage</h4>
             <p>You will frequently need to express one quantity as a percentage of another. To find the percentage, there are three steps: write the quantities as a fraction, change it to a decimal by dividing, and then change it to a percentage by multiplying by 100.</p>
             <p><strong>Formula:</strong> <InlineMath math="\frac{\text{Amount}}{\text{Total}} \times 100" /></p>
             <p><strong>Without a calculator:</strong> Try to simplify the fraction or use equivalent fractions to multiply/divide the top and bottom until you obtain the number 100 on the bottom. The number left on the top is your percentage.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Original Value" Trap:</strong> In questions asking for percentage increase, decrease, profit, or loss, you always have to work out the percentage based on the original amount. Candidates frequently drop marks by successfully finding the difference in price, but then mistakenly dividing it by the new/selling price.</li>
                 <li><strong>The "Inefficient Route" Trap:</strong> In Paper 1, if you are asked to calculate <InlineMath math="33 \frac{1}{3}\%" /> or <InlineMath math="66 \frac{2}{3}\%" /> of an amount, do NOT attempt to find 1% and multiply. You are expected to spot the equivalence and simply divide the amount by 3 (and multiply by 2 for the latter).</li>
@@ -330,26 +330,26 @@ export const national5AppsData: Section[] = [
         title: "Compound Percentages (Appreciation & Depreciation)",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> use the most efficient strategy available when answering compound percentage questions — calculate them with a decimal multiplier and a power, rather than a slow, step-by-step, year-by-year approach.</p>
-            <h4 className="text-white font-semibold">1. Finding the Decimal Multiplier</h4>
+            <h4 className="text-foreground font-semibold">1. Finding the Decimal Multiplier</h4>
             <p>Before doing any calculations, you must convert the percentage change into a decimal multiplier.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Appreciation (Increase):</strong> Add the percentage to 100%, then divide by 100. <br/><em>Example:</em> A 4% increase <InlineMath math="\rightarrow 100\%. + 4\%. = 104\%. \rightarrow 1.04" /> multiplier.</li>
               <li><strong>Depreciation (Decrease):</strong> Subtract the percentage from 100%, then divide by 100. <br/><em>Example:</em> A 15% decrease <InlineMath math="\rightarrow 100\%. - 15\%. = 85\%. \rightarrow 0.85" /> multiplier.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. The Compound Formula</h4>
+            <h4 className="text-foreground font-semibold">2. The Compound Formula</h4>
             <p>Once you have your multiplier, use the following formula to find the final amount in a single calculation on your calculator:</p>
             <BlockMath math="\text{Original Amount} \times \text{Multiplier}^{\text{Time}}" />
             <p>Time is usually the number of years (or months/days), which you input using the power button (e.g., <InlineMath math="x^y" /> or <InlineMath math="y^x" />) on your calculator.</p>
 
-            <h4 className="text-white font-semibold">3. Mixed Fluctuations</h4>
+            <h4 className="text-foreground font-semibold">3. Mixed Fluctuations</h4>
             <p>If an amount increases one year and decreases the next, you do not need to do separate calculations. You can simply chain the multipliers together.</p>
             <BlockMath math="\text{Original} \times \text{Multiplier}_1 \times {\text{Multiplier}_2}^{\text{Time}}" />
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The Year-by-Year Trap:</strong> Do not calculate the percentage for year 1, add it on, then calculate year 2, add it on, etc. This is best avoided because it consumes far too much exam time and frequently leads to arithmetic and premature rounding errors. Use a multiplier and a power!</li>
                 <li><strong>The Significant Figures Trap:</strong> Compound percentage questions almost always feature an instruction to round your final answer to a specific number of significant figures. You will lose the final mark if you ignore this. Always write down your unrounded answer from the calculator display first, then write your rounded answer underneath.</li>
@@ -432,13 +432,13 @@ export const national5AppsData: Section[] = [
         title: "Ratio & Proportion",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> The most critical step in any proportion question is stopping to ask yourself: "Is this Direct or Inverse proportion?" If you apply the wrong rule, you will lose almost all the marks for that question.</p>
 
-            <h4 className="text-white font-semibold">1. Simplifying Ratios</h4>
+            <h4 className="text-foreground font-semibold">1. Simplifying Ratios</h4>
             <p>Ratios must often be written in their simplest form. Just like fractions, you must find the highest common factor and divide both (or all) sides of the ratio by the same number.</p>
 
-            <h4 className="text-white font-semibold">2. Sharing in a Ratio (When given the TOTAL amount)</h4>
+            <h4 className="text-foreground font-semibold">2. Sharing in a Ratio (When given the TOTAL amount)</h4>
             <p>To split a total quantity into a given ratio:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Add the numbers in the ratio together to find the total number of parts.</li>
@@ -446,23 +446,23 @@ export const national5AppsData: Section[] = [
               <li><strong>Step 3:</strong> Multiply the value of one part by each specific number in the ratio.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Sharing in a Ratio (When given ONE PERSON'S share)</h4>
+            <h4 className="text-foreground font-semibold">3. Sharing in a Ratio (When given ONE PERSON'S share)</h4>
             <p>Sometimes you are given the amount one person received, rather than the total.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Divide their monetary amount by their specific number of ratio parts to find the value of 1 part.</li>
               <li><strong>Step 2:</strong> Multiply this value by the total number of parts to find the overall total.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Direct Proportion</h4>
+            <h4 className="text-foreground font-semibold">4. Direct Proportion</h4>
             <p>In direct proportion, as one quantity increases, the other increases at the exact same rate. (For example, buying 5 apples costs more than buying 1 apple).</p>
             <p><strong>The Method:</strong> Divide to find the value of ONE unit, then multiply by the number of units you need. Ensure your units are consistent before calculating.</p>
 
-            <h4 className="text-white font-semibold">5. Inverse (Indirect) Proportion</h4>
+            <h4 className="text-foreground font-semibold">5. Inverse (Indirect) Proportion</h4>
             <p>In inverse proportion, as one quantity increases, the other decreases. (For example, if you hire more painters, the time it takes to paint a room decreases).</p>
             <p><strong>The Method:</strong> Multiply the two given numbers together to find the "total effort" (e.g., worker-hours). Then, divide this total by the new number of workers/machines to find the new time.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Direct vs. Inverse" Trap:</strong> Candidates frequently read an inverse proportion question (like workers building a wall) and treat it as direct proportion. If your calculation results in 6 workers taking longer to build a wall than 3 workers, you have fallen into the trap.</li>
                 <li><strong>The "Extra Workers" Trap:</strong> a common question states that a company sent "2 extra workers" to help with a job. Candidates frequently divide the total worker-hours by 2, completely forgetting that they must add the 2 extra workers to the original team first.</li>
@@ -537,10 +537,10 @@ export const national5AppsData: Section[] = [
         title: "Rounding",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> If a question requires you to round your answer, you must write down your unrounded answer from your calculator display first before you write your rounded answer. If you do not write down your unrounded answer first, you will risk losing multiple marks, even if your final rounded answer is completely correct.</p>
 
-            <h4 className="text-white font-semibold">1. Decimal Places (d.p.)</h4>
+            <h4 className="text-foreground font-semibold">1. Decimal Places (d.p.)</h4>
             <p>When rounding to a specified number of decimal places (you are expected to be able to round to three decimal places), you only consider the number immediately to the right of your cut-off point.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>If the digit is 5 or more, round up.</li>
@@ -548,7 +548,7 @@ export const national5AppsData: Section[] = [
               <li><em>Example:</em> 8.4996 rounded to 3 d.p. is 8.500.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Significant Figures (s.f.)</h4>
+            <h4 className="text-foreground font-semibold">2. Significant Figures (s.f.)</h4>
             <p>Significant figures begin at the first non-zero digit in a number, reading from left to right.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Once you find your first significant figure, count along to find the required number of figures, then round.</li>
@@ -557,18 +557,18 @@ export const national5AppsData: Section[] = [
               <li><em>Example:</em> 59,208 rounded to 2 s.f. is 59,000.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Money Formatting</h4>
+            <h4 className="text-foreground font-semibold">3. Money Formatting</h4>
             <p>Decimal answers for financial calculations must always be given to exactly two decimal places, even if the question does not explicitly tell you to round. Writing an answer as £2.5 rather than £2.50 will cost you a mark.</p>
 
-            <h4 className="text-white font-semibold">4. Contextual Rounding (Real-Life Situations)</h4>
+            <h4 className="text-foreground font-semibold">4. Contextual Rounding (Real-Life Situations)</h4>
             <p>In some real-life situations, a decimal answer makes no logical sense, and you must decide whether to round up or down to the nearest whole number based on the context.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Rounding Up:</strong> If you are calculating how many buses are needed for a trip, or how many packets of seeds are required to cover a lawn, you must round up (e.g., 19.6 buses means you must order 20 buses, because 19 isn't enough).</li>
               <li><strong>Rounding Down:</strong> When calculating how many objects fit into a container, you must truncate (round down) to a whole number, because you cannot pack a fraction of an object.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Hidden Unrounded" Trap:</strong> This is one of the most common ways candidates drop marks across the entire paper. In multi-mark questions (like compound percentages), one mark is awarded for the unrounded answer, and the final mark is for the rounding. Skipping straight to the rounded answer loses both marks.</li>
                 <li><strong>The "Trailing Zero" Trap:</strong> When rounding to significant figures, candidates often incorrectly add .0 or .00 to the end of a whole number. For example, rounding 446.586 to 1 s.f. is 400, not 400.0.</li>
@@ -645,35 +645,35 @@ export const national5AppsData: Section[] = [
         title: "Income (Gross/Net, Overtime, Bonus, Commission & Allowances)",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> income questions constantly test your ability to read the fine print. Before calculating commission, you must always check if the percentage is applied to total sales or only on sales over a certain amount.</p>
 
-            <h4 className="text-white font-semibold">1. Gross Pay vs. Net Pay</h4>
+            <h4 className="text-foreground font-semibold">1. Gross Pay vs. Net Pay</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Gross Pay:</strong> The total amount of money a person earns before any taxes or deductions are taken away. This includes their basic salary, plus any overtime, commission, bonuses, or allowances.</li>
               <li><strong>Net Pay:</strong> The amount of money a person actually "takes home" after all deductions (like Income Tax, National Insurance, and pensions) have been subtracted from their Gross Pay.</li>
             </ul>
             <p>Formula: <InlineMath math="\text{Net Pay} = \text{Gross Pay} - \text{Total Deductions}" /></p>
 
-            <h4 className="text-white font-semibold">2. Overtime</h4>
+            <h4 className="text-foreground font-semibold">2. Overtime</h4>
             <p>When employees work more than their contracted hours, they are often paid at a higher "overtime" rate for those extra hours.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Time-and-a-half:</strong> Multiply their basic hourly rate by 1.5.</li>
               <li><strong>Double time:</strong> Multiply their basic hourly rate by 2.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Commission</h4>
+            <h4 className="text-foreground font-semibold">3. Commission</h4>
             <p>Commission is a bonus paid to sales staff based on the value of the goods they sell.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>To calculate it, you must find a percentage of their sales.</li>
               <li>If they are paid commission on sales "over a certain amount", you must subtract that threshold from their total sales before calculating the percentage.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Bonuses & Allowances</h4>
+            <h4 className="text-foreground font-semibold">4. Bonuses & Allowances</h4>
             <p>A bonus is an extra payment given for meeting targets. An allowance is a fixed amount of extra money given for a specific purpose (e.g., a uniform allowance or travel allowance). These simply get added to the Gross Pay.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Commission Threshold" Trap:</strong> a common question states an employee is paid a basic salary plus a percentage commission on sales over a specific amount (e.g., over £50,000). Candidates lose marks by calculating the percentage on the entire sales total instead of finding the difference first.</li>
                 <li><strong>The "Time Calculation" Trap:</strong> when working out overtime, a question will often give you a start time and a finish time, but hide a lunch break in the text. Candidates frequently forget to subtract the unpaid lunch break when calculating the total hours worked.</li>
@@ -759,10 +759,10 @@ export const national5AppsData: Section[] = [
         title: "Deductions & Tax (Income Tax, National Insurance, Pensions)",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> deductions questions test your ability to follow the exact sequence. You must remember that National Insurance is always calculated on a person’s salary before deductions such as pension contributions.</p>
 
-            <h4 className="text-white font-semibold">1. National Insurance & Tax Bands</h4>
+            <h4 className="text-foreground font-semibold">1. National Insurance & Tax Bands</h4>
             <p>Income Tax and National Insurance are rarely calculated as a simple, single percentage. Instead, you are given tables with thresholds or "bands".</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Up to the first threshold:</strong> You pay 0%.</li>
@@ -770,18 +770,18 @@ export const national5AppsData: Section[] = [
               <li><strong>The upper band (e.g., 2%):</strong> You only pay this percentage on the amount of your salary that is strictly over the final threshold.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Pensions</h4>
+            <h4 className="text-foreground font-semibold">2. Pensions</h4>
             <p>A workplace pension is a retirement fund. In the exam, you will usually be asked to calculate a pension contribution as a flat percentage of the gross annual salary.</p>
 
-            <h4 className="text-white font-semibold">3. Calculating Net Pay (Weekly/Monthly Conversions)</h4>
+            <h4 className="text-foreground font-semibold">3. Calculating Net Pay (Weekly/Monthly Conversions)</h4>
             <p>To find a person's Net Pay, you must subtract all three major deductions (Income Tax, National Insurance, and Pension) from their Gross Pay.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Exam questions often give you annual figures but ask for the weekly net pay.</li>
               <li>You must calculate the total annual net pay first, and then divide by 52 to find the weekly amount.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Pre-Deduction" Trap:</strong> a question will often list the pension deduction first in the text, baiting you into subtracting it from the gross pay before calculating National Insurance. National Insurance is always calculated on the gross pay before pension deductions are taken.</li>
                 <li><strong>The "Whole Salary" Trap:</strong> When calculating tax or National Insurance using bands, candidates often lose marks by applying the 12% rate to their entire salary, rather than just the slice of money that falls within that specific band.</li>
@@ -847,17 +847,17 @@ export const national5AppsData: Section[] = [
         title: "Budgeting & Best Deals",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When an exam question asks you to determine the "best deal" or the "lowest price" across three different shops, you MUST show the full calculation and final price for all three options. If you only calculate two options and guess the third, you will lose the final justification marks.</p>
 
-            <h4 className="text-white font-semibold">1. Balancing Outgoings & Saving Up</h4>
+            <h4 className="text-foreground font-semibold">1. Balancing Outgoings & Saving Up</h4>
             <p>You will often be asked to balance a person's income against their outgoings (rent, bills, food) to find out how much they can save.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Calculating Minimum Weeks:</strong> If you are asked how many weeks it takes to save for an item, divide the total target amount by their weekly savings.</li>
               <li><strong>The Rounding Rule:</strong> You must always round UP to the next whole week. If your calculation gives 14.1 weeks, it means 14 weeks is not quite enough, so it will take 15 weeks to reach the target.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Profit & Loss</h4>
+            <h4 className="text-foreground font-semibold">2. Profit & Loss</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Profit:</strong> Made when total Income is greater than total Expenditure.</li>
               <li><strong>Loss:</strong> Made when total Expenditure is greater than total Income.</li>
@@ -867,7 +867,7 @@ export const national5AppsData: Section[] = [
             <ul className="list-disc list-inside space-y-1 ml-4">
             </ul>
 
-            <h4 className="text-white font-semibold">3. Best Deals & Comparing Offers</h4>
+            <h4 className="text-foreground font-semibold">3. Best Deals & Comparing Offers</h4>
             <p>You must confidently navigate complex promotional offers to find the cheapest overall price for a set quantity of items.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>"Buy X, Get Y Free":</strong> Group the items. If an offer is "Buy 3, get 1 free", they are sold in groups of 4, but you only pay for 3. Divide your total required amount by the group size (4) to find out how many groups you need.</li>
@@ -875,8 +875,8 @@ export const national5AppsData: Section[] = [
               <li><strong>Comparing Sizes:</strong> If comparing different sizes of the same product, always scale them to match (e.g., find the price per 100g, or price per kilogram).</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Incomplete Comparison" Trap:</strong> a common way to lose justification marks is by only calculating the price for Shop A and Shop B, completely ignoring Shop C because it "looks" more expensive. You must write down a final total for all three.</li>
                 <li><strong>The "Rounding Down" Savings Trap:</strong> When finding the number of weeks required to save up, candidates often round using normal mathematical rules (e.g., rounding 12.3 down to 12). If you need 12.3 weeks of savings to afford a holiday, 12 weeks of saving will leave you short of money. You must round up!</li>
@@ -966,10 +966,10 @@ export const national5AppsData: Section[] = [
         title: "Foreign Exchange",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When converting between two different foreign currencies, you must almost always use British Pounds (£) as a "middle bridge" unless a direct exchange rate is explicitly given. Because you are dealing with money, ensure your final answers are always rounded to exactly two decimal places where appropriate.</p>
 
-            <h4 className="text-white font-semibold">1. The Basic Conversions</h4>
+            <h4 className="text-foreground font-semibold">1. The Basic Conversions</h4>
             <p>Every currency question comes down to one pair of rules — <strong>multiply</strong> going out of pounds, <strong>divide</strong> coming back:</p>
             <BlockMath math="\text{Foreign} = \text{Pounds} \times \text{Rate}" />
             <BlockMath math="\text{Pounds} = \frac{\text{Foreign}}{\text{Rate}}" />
@@ -979,14 +979,14 @@ export const national5AppsData: Section[] = [
               <li><strong>Foreign Currency to Pounds:</strong> You divide the foreign amount by the exchange rate. (Example: $130 ÷ 1.30 = £100).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Foreign to Foreign (The Bridge Method)</h4>
+            <h4 className="text-foreground font-semibold">2. Foreign to Foreign (The Bridge Method)</h4>
             <p>If a question asks you to convert Dollars into Euros, you generally cannot do this in one step.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Divide the Dollars by the Dollar exchange rate to convert the money back into Pounds.</li>
               <li><strong>Step 2:</strong> Multiply that Pound value by the Euro exchange rate to find the final amount.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Multi-stage Trip Calculations</h4>
+            <h4 className="text-foreground font-semibold">3. Multi-stage Trip Calculations</h4>
             <p>A classic 4-mark question involves a person travelling to Country A, spending some of their money over several days, and then converting the leftover money for a trip to Country B.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Convert the original budget into Currency A.</li>
@@ -995,8 +995,8 @@ export const national5AppsData: Section[] = [
               <li>Convert those Pounds into Currency B (Multiply).</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Wrong Operation" Trap:</strong> The most common error in exam conditions is dividing when you should multiply, or vice versa. Always do a quick logic check: if £1 gets you more than 1 unit of foreign currency (e.g. 150 Yen), your foreign amount should always be a much bigger number than your pounds.</li>
                 <li><strong>The "Forgetting to Subtract" Trap:</strong> In multi-stage holiday questions, candidates frequently convert the entire original amount into the second currency, completely forgetting to subtract the money the person actually spent on their first holiday.</li>
@@ -1087,15 +1087,15 @@ export const national5AppsData: Section[] = [
         title: "Saving & Borrowing",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When an exam question asks you to determine which of two investment or savings options is best, you must clearly calculate the final total value for both options to make a valid comparison.</p>
 
-            <h4 className="text-white font-semibold">1. Simple Interest</h4>
+            <h4 className="text-foreground font-semibold">1. Simple Interest</h4>
             <p>Simple interest is calculated purely on the original amount invested or borrowed. To calculate it, you find one year's interest using basic percentages, and then multiply that amount by the total number of years:</p>
             <BlockMath math="\text{Simple Interest} = \frac{P \times R \times T}{100}" />
             <p>where <InlineMath math="P" /> is the amount invested or borrowed, <InlineMath math="R" /> is the percentage rate per year, and <InlineMath math="T" /> is the number of years.</p>
 
-            <h4 className="text-white font-semibold">2. Compound Interest (Appreciation)</h4>
+            <h4 className="text-foreground font-semibold">2. Compound Interest (Appreciation)</h4>
             <p>Compound interest is a form of appreciation where the amount in the account is always going up, so the interest you earn grows each year.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>You should always use the "quicker method" involving a decimal multiplier and a power.</li>
@@ -1103,7 +1103,7 @@ export const national5AppsData: Section[] = [
               <li>Using the "longer method" of calculating year-by-year becomes totally impractical over long time periods.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Loans & Repayments</h4>
+            <h4 className="text-foreground font-semibold">3. Loans & Repayments</h4>
             <p>When taking out a loan, you must pay back the original amount borrowed plus an additional interest charge or administration fee.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Calculate the total interest and fees.</li>
@@ -1111,23 +1111,23 @@ export const national5AppsData: Section[] = [
               <li><strong>Step 3:</strong> Divide this new total by the number of months to find the equal monthly repayments.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Annual Percentage Rate (APR) & Credit</h4>
+            <h4 className="text-foreground font-semibold">4. Annual Percentage Rate (APR) & Credit</h4>
             <p>APR is a standardised calculation used to compare different loans and credit cards. Because it includes both the interest rate and any mandatory fees, looking for the lowest APRs is the most accurate way to find the true, overall cost of borrowing.</p>
 
-            <h4 className="text-white font-semibold">5. Hire Purchase</h4>
+            <h4 className="text-foreground font-semibold">5. Hire Purchase</h4>
             <p><strong>Hire purchase</strong> lets you have an item straight away and pay for it in instalments, instead of saving up the full cash price. The convenience almost always costs more overall.</p>
             <p>A plan is usually made of a <strong>deposit</strong> (often a percentage of the cash price), a number of <strong>monthly instalments</strong>, and sometimes a <strong>final payment</strong>. Total them all, then compare with the cash price:</p>
             <BlockMath math="\text{Total HP Cost} = \text{Deposit} + (\text{Number of Instalments} \times \text{Instalment}) + \text{Final Payment}" />
             <BlockMath math="\text{Extra Cost} = \text{Total HP Cost} - \text{Cash Price}" />
 
-            <h4 className="text-white font-semibold">6. Shares</h4>
+            <h4 className="text-foreground font-semibold">6. Shares</h4>
             <p>A company can raise money by selling <strong>shares</strong>. Buying one makes you a shareholder, owning a small piece of the company. Share values rise and fall with the company's fortunes, so buying shares can produce a profit or a loss — it is not a guaranteed return like a savings rate.</p>
             <p>The calculation is always the same: total what was paid, total what was received, and compare.</p>
             <BlockMath math="\text{Profit or Loss} = (\text{Number} \times \text{Selling Price}) - (\text{Number} \times \text{Buying Price})" />
             <p>If the shares were bought and sold at a single price each, the percentage profit can be found from one share alone, since the proportion is the same however many were held.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Interest vs Balance" Trap:</strong> When comparing a compound interest savings account with a fixed-interest bond, candidates frequently calculate the total balance for one option but only the interest gained for the other. Ensure you add the interest to the original investment for OptionB so you are comparing total value against total value.</li>
                 <li><strong>The "Year-by-Year" Trap:</strong> For compound interest over multiple years (e.g., 15 years), doing 15 lines of calculations is a massive trap that wastes time and causes rounding errors. Always use a multiplier and a power.</li>
@@ -1242,26 +1242,26 @@ export const national5AppsData: Section[] = [
         title: "Converting Units of Measurement",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> decide first whether the unit you are moving to is <em>smaller</em> or <em>larger</em>. Moving to a <strong>smaller</strong> unit means more of them, so you <strong>multiply</strong>; moving to a <strong>larger</strong> unit means fewer of them, so you <strong>divide</strong>. Checking this before you calculate stops the most common error of all.</p>
 
-            <h4 className="text-white font-semibold">1. Metric Length, Weight and Volume</h4>
+            <h4 className="text-foreground font-semibold">1. Metric Length, Weight and Volume</h4>
             <p>The metric system works entirely in powers of 10:</p>
             <BlockMath math="\text{km} \xrightarrow{\times 1000} \text{m} \xrightarrow{\times 100} \text{cm} \xrightarrow{\times 10} \text{mm}" />
             <BlockMath math="\text{tonnes} \xrightarrow{\times 1000} \text{kg} \xrightarrow{\times 1000} \text{g} \qquad \text{litres} \xrightarrow{\times 1000} \text{ml}" />
             <p>Reverse each arrow (divide instead) when moving to the larger unit.</p>
 
-            <h4 className="text-white font-semibold">2. Units of Area and Volume</h4>
+            <h4 className="text-foreground font-semibold">2. Units of Area and Volume</h4>
             <p>This is the part most often got wrong. Because area is two dimensions, the conversion factor is <strong>squared</strong>; for volume it is <strong>cubed</strong>:</p>
             <BlockMath math="1\ \text{m}^2 = 100 \times 100 = 10{,}000\ \text{cm}^2" />
             <BlockMath math="1\ \text{m}^3 = 100 \times 100 \times 100 = 1{,}000{,}000\ \text{cm}^3" />
             <p>Also worth knowing: <InlineMath math="1\ \text{cm}^3 = 1\ \text{ml}" />, so <InlineMath math="1000\ \text{cm}^3 = 1" /> litre.</p>
 
-            <h4 className="text-white font-semibold">3. Non-Metric Conversions</h4>
+            <h4 className="text-foreground font-semibold">3. Non-Metric Conversions</h4>
             <p>You are never expected to memorise conversions such as miles to kilometres — the rate is always given in the question. Simply multiply or divide by the rate given, then check whether your answer is sensible in size.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Area and volume factors:</strong> converting <InlineMath math="\text{m}^2" /> to <InlineMath math="\text{cm}^2" /> uses <InlineMath math="10{,}000" />, not <InlineMath math="100" />. This is the single most common conversion error.</li>
                 <li><strong>Multiplying when you should divide:</strong> always ask whether the new unit is smaller (multiply) or larger (divide) before touching the calculator.</li>
@@ -1333,10 +1333,10 @@ export const national5AppsData: Section[] = [
         title: "Reading Scales & Tolerance",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When reading a scale, you must always count the gaps between the numbers, not the physical lines. When dealing with tolerance, always calculate and write down your explicit maximum and minimum limits before attempting to make any decisions.</p>
 
-            <h4 className="text-white font-semibold">1. Reading Minor Unnumbered Divisions</h4>
+            <h4 className="text-foreground font-semibold">1. Reading Minor Unnumbered Divisions</h4>
             <p>You will frequently be asked to read from dials, thermometers, or measuring jugs that have unnumbered markings.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Find the difference between two printed numbers on the scale.</li>
@@ -1345,7 +1345,7 @@ export const national5AppsData: Section[] = [
             </ul>
             <p>Note: If a dial has two different scales (e.g., mph on the outside and km/h on the inside), ensure you are reading the correct one.</p>
 
-            <h4 className="text-white font-semibold">2. Calculating Tolerance Limits</h4>
+            <h4 className="text-foreground font-semibold">2. Calculating Tolerance Limits</h4>
             <p>Tolerance is the amount by which a measurement is allowed to vary while still being acceptable. It is written using the plus-minus symbol (±), and gives two limits:</p>
             <BlockMath math="\text{Maximum} = \text{Target} + \text{Tolerance}" />
             <BlockMath math="\text{Minimum} = \text{Target} - \text{Tolerance}" />
@@ -1356,15 +1356,15 @@ export const national5AppsData: Section[] = [
             </ul>
             <p><strong>Percentage Tolerance:</strong> If the tolerance is given as a percentage (e.g., 400g ± 3%), you must calculate that percentage of the target weight first, and then add/subtract it to find your limits.</p>
 
-            <h4 className="text-white font-semibold">3. Decision Making & Compatibility</h4>
+            <h4 className="text-foreground font-semibold">3. Decision Making & Compatibility</h4>
             <p>Once you have your upper and lower limits, you will often need to evaluate a list of items to see if they are accepted or rejected.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>An item is only accepted if its measurement falls strictly between or exactly on your calculated limits.</li>
               <li><strong>Implications for compatibility:</strong> You may be asked to consider if a manufactured part will fit safely into another component based on their respective tolerance limits.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Counting the Lines" Trap:</strong> When finding what a scale goes up in, candidates frequently count the physical dashes on the page instead of the "jumps" (gaps) between them, resulting in the wrong scale.</li>
                 <li><strong>The "Percentage of the Sample" Trap:</strong> In percentage tolerance questions, candidates occasionally calculate the percentage based on the measured sample weight rather than the target weight. Always calculate the percentage of the main target number.</li>
@@ -1451,13 +1451,13 @@ export const national5AppsData: Section[] = [
         title: "Using Formulae",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> The most critical step when using any formula is checking the units before you substitute your numbers. Questions frequently give you a measurement in centimetres when the formula explicitly requires metres. If you plug the raw numbers in without converting first, you will lose the majority of the marks.</p>
 
-            <h4 className="text-white font-semibold">1. Given Formulae</h4>
+            <h4 className="text-foreground font-semibold">1. Given Formulae</h4>
             <p>In the exam, you will often be asked to calculate a quantity based on two related pieces of information. For these questions, you will be given the specific formula in the text of the question (e.g., calculating Density or Body Mass Index). You do not need to memorise these specific scientific formulae; you simply need to substitute the correct numbers into them.</p>
 
-            <h4 className="text-white font-semibold">2. Formula Triangles & Rearranging</h4>
+            <h4 className="text-foreground font-semibold">2. Formula Triangles & Rearranging</h4>
             <p>Many of the formulae you will be given involve three variables (e.g., <InlineMath math="\text{Density} = \frac{\text{Volume}}{\text{Mass}}" />).</p>
             <p>You can use a "formula triangle" to help you rearrange the equation.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
@@ -1465,14 +1465,14 @@ export const national5AppsData: Section[] = [
               <li>Cover up the value you are trying to find: if the remaining two are next to each other, you multiply. If one is above the other, you divide.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Unit Consistency</h4>
+            <h4 className="text-foreground font-semibold">3. Unit Consistency</h4>
             <p>You must ensure the units of the numbers you are substituting match the units required by the formula. For example, if a formula calculates density in grams per cubic centimetre (g/cm³), your mass must be in grams and your volume must be in cubic centimetres before you calculate.</p>
 
-            <h4 className="text-white font-semibold">4. BODMAS in Formulae</h4>
+            <h4 className="text-foreground font-semibold">4. BODMAS in Formulae</h4>
             <p>When using formulae like <InlineMath math="\text{BMI} = \frac{\text{Mass}}{\text{Height}^2}" />, you must remember your order of operations. The height must be squared before you divide the mass by it.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Unit Mismatch" Trap:</strong> This is the most common trick in formula questions. For example, giving a patient's height in centimetres (e.g., 182 cm) but asking you to use a BMI formula that requires the height to be in metres. You must convert 182 cm to 1.82 m before substituting it in.</li>
                 <li><strong>The "Wrong Subject" Trap:</strong> A question gives you the Density and the Mass, but asks you to calculate the Volume. Candidates often just divide the first number by the second number blindly. Use your formula triangle to ensure you are doing the correct operation!</li>
@@ -1554,10 +1554,10 @@ export const national5AppsData: Section[] = [
         title: "Speed, Distance & Time",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> The most common mistake candidates make in this entire course is misinterpreting decimal time. You must remember that there are 60 minutes in an hour, not 100. Therefore, a time of 4.3 hours is not 4 hours and 3 minutes.</p>
 
-            <h4 className="text-white font-semibold">1. The Formula Triangle</h4>
+            <h4 className="text-foreground font-semibold">1. The Formula Triangle</h4>
             <p>You must know how to calculate Speed, Distance, and Time. All three come from one relationship:</p>
             <BlockMath math="D = S \times T" />
             <p>which rearranges to give the other two:</p>
@@ -1569,21 +1569,21 @@ export const national5AppsData: Section[] = [
               <li>Time = Distance ÷ Speed</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Decimal Time Conversions</h4>
+            <h4 className="text-foreground font-semibold">2. Decimal Time Conversions</h4>
             <p>You cannot multiply or divide using a time like "2 hours 15 minutes" on a calculator. You must convert it into a decimal first.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Minutes to Decimal:</strong> Divide the minutes by 60. (Example: 15 mins ÷ 60 = 0.25, so 2 hours 15 mins is 2.25 hours).</li>
               <li><strong>Decimal to Minutes:</strong> Multiply the decimal part by 60. (Example: for 4.3 hours, calculate 0.3 × 60 = 18 mins, so the time is 4 hours 18 mins).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Multi-stage Journeys & Timetables</h4>
+            <h4 className="text-foreground font-semibold">3. Multi-stage Journeys & Timetables</h4>
             <p>Exam questions frequently involve journeys with stops or breaks. You must add the driving time to the break time to find the total journey time before working backwards or forwards to find departure or arrival times.</p>
 
-            <h4 className="text-white font-semibold">4. Unit Consistency</h4>
+            <h4 className="text-foreground font-semibold">4. Unit Consistency</h4>
             <p>Make sure your units match perfectly. If a question asks for a speed in kilometres per hour (km/h) but gives you the distance in miles, you must use a conversion factor (e.g., 1 mile = 1.609 km) to convert the distance before calculating the speed.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Decimal Time" Trap:</strong> Candidates frequently lose marks by writing 3 ½ hours as 3.30 hours in their calculator. It must be written as 3.5 hours.</li>
                 <li><strong>The "Hidden Stop" Trap:</strong> A question will describe a journey and provide the speed and distance, but embed a phrase like "she stopped for 50 minutes for breakfast" in the text. Candidates eagerly calculate the drive time but forget to include the break when calculating the final arrival/departure time.</li>
@@ -1660,17 +1660,17 @@ export const national5AppsData: Section[] = [
         title: "Perimeter, Circumference & Area",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When calculating the perimeter of a shape that includes a fraction of a circle (like a semi-circle), candidates constantly calculate the curved arc length and stop. To find the true perimeter, you must always add the straight, flat edges back onto your curved answer.</p>
 
-            <h4 className="text-white font-semibold">1. Basic Area Formulae</h4>
+            <h4 className="text-foreground font-semibold">1. Basic Area Formulae</h4>
             <p>You must confidently calculate the area of basic 2D shapes:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Rectangle:</strong> Area = Length × Breadth</li>
               <li><strong>Triangle:</strong> Area = <InlineMath math="\frac{1}{2} \times \text{Base} \times \text{Height}" />. Ensure you use the strict perpendicular (vertical) height, not the slanted sides.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Circles (Circumference & Area)</h4>
+            <h4 className="text-foreground font-semibold">2. Circles (Circumference & Area)</h4>
             <p>You must know the difference between the radius (middle to edge) and diameter (edge to edge, through the middle).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Circumference (Curved Length):</strong> <InlineMath math="C = \pi d" />.</li>
@@ -1678,13 +1678,13 @@ export const national5AppsData: Section[] = [
             </ul>
             <p><strong>Non-Calculator Rule:</strong> In Paper 1, you must manually use <InlineMath math="\pi = 3.14" />.</p>
 
-            <h4 className="text-white font-semibold">3. Fractions of a Circle</h4>
+            <h4 className="text-foreground font-semibold">3. Fractions of a Circle</h4>
             <p>At National 5 level, you are frequently asked to find the area or curved length of a fraction of a circle (e.g., a semi-circle or a quarter-circle).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Simply write out the full circle formula, and divide it by the fraction required (e.g., for a semi-circle, calculate <InlineMath math="\pi d" /> and divide by 2).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Composite Shapes (Adding and Subtracting)</h4>
+            <h4 className="text-foreground font-semibold">4. Composite Shapes (Adding and Subtracting)</h4>
             <p>Composite shapes are made by joining standard shapes together.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Adding Area:</strong> If a shape is made of a triangle sitting on top of a rectangle, calculate both areas separately and add them together.</li>
@@ -1692,8 +1692,8 @@ export const national5AppsData: Section[] = [
               <li><strong>Perimeter:</strong> Trace your finger around the outside of the shape. Add the curved arc lengths and any straight outer edges together.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Forgotten Straight Edges" Trap:</strong> When finding the perimeter of a semi-circle, candidates often calculate the curve (<InlineMath math="\frac{1}{2}\pi d" />) and declare that the final answer, completely forgetting to add the straight diameter line closing the shape at the bottom.</li>
                 <li><strong>The "Internal Line" Trap:</strong> When finding the perimeter of two joined shapes (like a rectangle and a semi-circle), candidates often add up every single number on the diagram. You must ignore the internal lines where the shapes join; perimeter is strictly the outside border.</li>
@@ -1786,10 +1786,10 @@ export const national5AppsData: Section[] = [
         title: "Volume of Solids",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> If a volume question asks you to round your final answer to a specific number of significant figures, you must write down your unrounded answer from your calculator display first. Failing to show the unrounded calculation will cost you vital process marks, even if the rounded answer is correct.</p>
 
-            <h4 className="text-white font-semibold">1. Using Given Formulae</h4>
+            <h4 className="text-foreground font-semibold">1. Using Given Formulae</h4>
             <p>You do not need to memorise complex volume formulae, as they are provided on the exam paper. You simply need to substitute the correct values into the given equations:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Prism:</strong> <InlineMath math="V = Ah" /> (Area of the base shape × height).</li>
@@ -1798,10 +1798,10 @@ export const national5AppsData: Section[] = [
               <li><strong>Cone:</strong> <InlineMath math="V = \frac{1}{3} \pi r^2 h" />.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Hemispheres</h4>
+            <h4 className="text-foreground font-semibold">2. Hemispheres</h4>
             <p>To calculate the volume of a hemisphere (half a sphere), simply use the sphere formula provided on the formula sheet and divide your final answer by 2.</p>
 
-            <h4 className="text-white font-semibold">3. Composite Solids</h4>
+            <h4 className="text-foreground font-semibold">3. Composite Solids</h4>
             <p>Composite solids are made from two or more standard shapes joined together.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Identify the basic 3D shapes that make up the solid.</li>
@@ -1809,15 +1809,15 @@ export const national5AppsData: Section[] = [
               <li>Add the volumes together for the total.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Converting to Litres</h4>
+            <h4 className="text-foreground font-semibold">4. Converting to Litres</h4>
             <p>Volume is often calculated in cubic centimetres (<InlineMath math="\text{cm}^3" />), but questions frequently ask for the final answer in litres.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>1 litre = 1000 <InlineMath math="\text{cm}^3" />.</li>
               <li>To convert <InlineMath math="\text{cm}^3" /> into litres, divide your answer by 1000.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Radius vs Diameter" Mix-Up:</strong> Candidates frequently substitute the full width (diameter) of a circular base directly into the formula. You must always halve the diameter to find the radius (r) before calculating the volume of a cylinder, cone, or sphere.</li>
                 <li><strong>The "Hidden Height" Trap:</strong> In composite solids (like a cone sitting on top of a hemisphere), a question will often give you the total height of the object rather than the specific height of the cone. You must subtract the radius of the hemisphere from the total height to find the true height of the cone before using the formula.</li>
@@ -1913,25 +1913,25 @@ export const national5AppsData: Section[] = [
         title: "Costs from a Calculated Value",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>Many Applications questions are two jobs in one: first <strong>calculate a quantity</strong> (an area, a volume, a distance or a number of items), then use it to work out a <strong>cost</strong>. The marks are split across both stages, so the measurement work matters as much as the money.</p>
 
-            <h4 className="text-white font-semibold">1. The Two-Stage Method</h4>
+            <h4 className="text-foreground font-semibold">1. The Two-Stage Method</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Stage 1:</strong> work out the quantity needed — area of a floor, volume of a tank, litres of fuel, number of packs.</li>
               <li><strong>Stage 2:</strong> multiply by the price per unit, or divide to find how many units are needed and then cost them.</li>
             </ul>
             <BlockMath math="\text{Total Cost} = \text{Quantity} \times \text{Cost per Unit}" />
 
-            <h4 className="text-white font-semibold">2. Buying in Whole Units</h4>
+            <h4 className="text-foreground font-semibold">2. Buying in Whole Units</h4>
             <p>Materials are usually sold in whole packs, tins or rolls. If the calculation gives 7.2 tins, you cannot buy 0.2 of a tin — you must <strong>round up</strong> to 8 and cost 8. This is the opposite of normal rounding, and it is where most marks are lost.</p>
 
-            <h4 className="text-white font-semibold">3. Comparing Options</h4>
+            <h4 className="text-foreground font-semibold">3. Comparing Options</h4>
             <p>If asked whether a job comes in under budget, or which supplier is cheaper, calculate the full cost of each and finish with a written comparison against the figure given.</p>
 
             <p><strong>The Golden Rule:</strong> check the units match the price <em>before</em> costing. If covering is priced per square metre, the area must be in m² — not cm². Then, if the item is sold in whole units, always round <em>up</em>.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Rounding down:</strong> 7.2 tins of paint means <em>8</em> tins must be bought. Rounding to 7 leaves the job unfinished.</li>
                 <li><strong>Mismatched units:</strong> an area worked out in cm² cannot be costed at a price per m² — convert first (<InlineMath math="1\ \text{m}^2 = 10{,}000\ \text{cm}^2" />).</li>
@@ -2007,19 +2007,19 @@ export const national5AppsData: Section[] = [
         title: "Pythagoras' Theorem",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> In National 5 Applications of Mathematics, Pythagoras questions are strictly designed to be two-stage calculations. If you calculate a single missing side using <InlineMath math="a^2 = b^2 + c^2" /> and stop, you have only completed half the problem. You must always use your new measurement to complete a second step, such as finding a second missing side, calculating a total perimeter, or finding the depth of a liquid.</p>
 
-            <h4 className="text-white font-semibold">1. The Standard Formulae</h4>
+            <h4 className="text-foreground font-semibold">1. The Standard Formulae</h4>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Finding the hypotenuse (the longest side):</strong> Square the two shorter sides and add them together, then find the square root (<InlineMath math="c^2 = a^2 + b^2" />).</li>
               <li><strong>Finding a shorter side:</strong> Square the hypotenuse and the other shorter side and subtract the smaller from the larger, then find the square root (<InlineMath math="a^2 = c^2 - b^2" />).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Two-Stage Triangles</h4>
+            <h4 className="text-foreground font-semibold">2. Two-Stage Triangles</h4>
             <p>You will frequently be presented with two right-angled triangles joined together. You must use Pythagoras in the first triangle to find the length of the shared "hidden" side. You then use that newly calculated length as a dimension in the second triangle to find the final missing side.</p>
 
-            <h4 className="text-white font-semibold">3. Pythagoras in a Circle (Chords & Depths)</h4>
+            <h4 className="text-foreground font-semibold">3. Pythagoras in a Circle (Chords & Depths)</h4>
             <p>This is a classic context. You will be given a circular cross-section (like an oil tank or a pipe) and asked to find the depth of a liquid or the width of a table.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Draw a straight vertical line down from the centre of the circle to the chord (the liquid surface), creating a right-angled triangle.</li>
@@ -2028,11 +2028,11 @@ export const national5AppsData: Section[] = [
               <li><strong>Step 4:</strong> Calculate the missing vertical height. Finally, add or subtract this height from the full radius to find the final depth.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Significant Figures & Unrounded Answers</h4>
+            <h4 className="text-foreground font-semibold">4. Significant Figures & Unrounded Answers</h4>
             <p>Pythagoras questions almost always feature an instruction to round your final answer to a specific number of significant figures. You must write down the full, unrounded decimal from your calculator display before you write your rounded answer.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Wrong Dimensions" Trap:</strong> a common way to lose marks is knowing to use Pythagoras but failing to identify the correct dimensions from the diagram. When a boat sails from A to B, you must add the distances together to find the full length of the new triangle's base before calculating the hypotenuse.</li>
                 <li><strong>The "Premature Rounding" Trap:</strong> When finding a shared side between two triangles, do not round the length of the shared side to 1 or 2 decimal places. Keep the exact square root in your calculator for the second stage to prevent compounding rounding errors.</li>
@@ -2125,29 +2125,29 @@ export const national5AppsData: Section[] = [
         title: "Gradient",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> the two most common ways to lose marks in gradient questions are failing to ensure the dimensions are in consistent units, and failing to express the final gradient as a fraction in its simplest form. Always check your units before doing any calculation!</p>
 
-            <h4 className="text-white font-semibold">1. The Gradient Formula</h4>
+            <h4 className="text-foreground font-semibold">1. The Gradient Formula</h4>
             <p>The gradient of a slope is a measure of its steepness. You must use the formula:</p>
             <BlockMath math="\text{Gradient} = \frac{\text{Vertical Height}}{\text{Horizontal Distance}}" />
             <p>This formula is provided on your formula sheet, so you do not need to memorise it, but you must know how to apply it correctly.</p>
 
-            <h4 className="text-white font-semibold">2. Calculating the True Vertical Height</h4>
+            <h4 className="text-foreground font-semibold">2. Calculating the True Vertical Height</h4>
             <p>In real-life contexts (like hills or roads), you are rarely given the vertical height directly. Instead, you are given the starting height above sea level and the ending height above sea level. You must subtract the starting height from the ending height to find the actual vertical height of the triangle before using the formula.</p>
 
-            <h4 className="text-white font-semibold">3. Format of the Final Answer</h4>
+            <h4 className="text-foreground font-semibold">3. Format of the Final Answer</h4>
             <p>You must read the bold text in the question carefully to see how the examiner wants the final answer presented:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Fractions:</strong> If asked for a fraction in its simplest form, you must use your Numeracy skills to divide the top and bottom by the highest common factor. A decimal answer will score zero marks for that step.</li>
               <li><strong>Percentages:</strong> To convert a decimal gradient into a percentage (e.g., a 20% slope), simply multiply your decimal answer by 100.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Comparing Gradients</h4>
+            <h4 className="text-foreground font-semibold">4. Comparing Gradients</h4>
             <p>When asked to determine which slope is steeper, calculate the gradient for both. The slope with the larger numerical value is the steeper slope.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Unit Mismatch" Trap:</strong> This is the most prevalent trap in the entire course. A question will give the vertical height in millimetres (e.g., 850 mm) and the horizontal base in centimetres (e.g., 165 cm). If you divide 850 by 165 without converting the units to match first, you will lose the majority of the marks.</li>
                 <li><strong>The "Sloping Edge" Trap:</strong> a question will occasionally label the diagonal, slanted length of the slope on the diagram instead of the horizontal base. You must use Pythagoras' Theorem first to calculate the horizontal distance across the bottom before you can calculate the gradient.</li>
@@ -2240,28 +2240,28 @@ export const national5AppsData: Section[] = [
         title: "Time Management & Time Zones",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When calculating flight arrival times across different time zones, always complete the entire journey using the departure country's time zone first, and only add or subtract the time difference at the very final step.</p>
 
-            <h4 className="text-white font-semibold">1. Decimal Time Conversions</h4>
+            <h4 className="text-foreground font-semibold">1. Decimal Time Conversions</h4>
             <p>You must be completely comfortable converting decimal time to minutes and vice versa.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>To convert a decimal to minutes, multiply the decimal part by 60.</li>
               <li>(For example, if a flight takes 2.7 hours, <InlineMath math="0.7 \times 60 = 42" />, so the time is 2 hours 42 minutes).</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Time Zones (GMT and UTC)</h4>
+            <h4 className="text-foreground font-semibold">2. Time Zones (GMT and UTC)</h4>
             <p>Countries operate in different time zones depending on their location. A country's time may be given in relation to the UK (e.g., 5 hours behind Edinburgh) or as GMT/UTC (e.g., UTC+2 means 2 hours ahead of the UK).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Ahead:</strong> Add the hours on.</li>
               <li><strong>Behind:</strong> Subtract the hours.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Planning Meetings and Overlaps</h4>
+            <h4 className="text-foreground font-semibold">3. Planning Meetings and Overlaps</h4>
             <p>If you need to find a suitable time for a phone call between two different time zones, draw a timeline for both countries to find the overlapping hours where both people are awake and available.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Double Conversion" Trap:</strong> Candidates frequently try to change the time zone of the departure time, then add the flight time, then get confused about which time zone they are currently in. Always stick to the starting location's time for the whole journey, and apply the time zone shift right at the end.</li>
                 <li><strong>The "AM/PM" Trap:</strong> you will be penalised for omitting "am" or "pm" from 12-hour times. If you use a 24-hour clock (e.g., 14:15), you do not need am/pm, but 12-hour times must include it.</li>
@@ -2319,17 +2319,17 @@ export const national5AppsData: Section[] = [
         title: "Scale Drawing & Navigation",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> Bearings must always be measured clockwise from North, and they must always be written using exactly three digits (e.g., 045°, not 45°). When plotting a multi-stage journey, you must draw a completely new, perfectly vertical North line at every single checkpoint before measuring your next angle.</p>
 
-            <h4 className="text-white font-semibold">1. Using a Scale</h4>
+            <h4 className="text-foreground font-semibold">1. Using a Scale</h4>
             <p>A scale drawing is a proportional reduction of a real-life space.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Real-life to the Page:</strong> To find out how long a line should be on your page, convert the real-life distance to match the scale's units, then divide by the scale factor. (Example: For a scale of 1 cm:10 km, a 60 km flight is drawn as <InlineMath math="60 \div 10 = 6 \text{ cm}" />).</li>
               <li><strong>Page to Real-life:</strong> To find a real-life distance, measure the line on the page in centimetres and multiply by the scale factor.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Constructing the Diagram</h4>
+            <h4 className="text-foreground font-semibold">2. Constructing the Diagram</h4>
             <p>You must use a ruler to draw lines accurately to the nearest millimetre (±2 mm tolerance) and a protractor to draw angles accurately to the nearest degree (<InlineMath math="\pm 2^\circ" /> tolerance).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Start at the given point.</li>
@@ -2338,7 +2338,7 @@ export const national5AppsData: Section[] = [
               <li>Draw the scaled length through that mark using your ruler.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. The Return Journey</h4>
+            <h4 className="text-foreground font-semibold">3. The Return Journey</h4>
             <p>You will frequently be asked to find the bearing of the return journey (e.g., heading back to the start from the final location).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>You must draw a new North line at your final location.</li>
@@ -2346,8 +2346,8 @@ export const national5AppsData: Section[] = [
               <li>(Tip: If the return line points towards the bottom-left, the bearing will be greater than <InlineMath math="180^\circ" />, so you may need to measure the angle past <InlineMath math="180^\circ" /> and add it on).</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Return Journey Bearing" Trap:</strong> a common mistake on the return journey is not measuring its bearing at all, or measuring it but not stating the angle as a three-figure bearing. You must ensure your final answer has three digits!</li>
                 <li><strong>The "Incomplete Diagram" Trap:</strong> a common mistake is to calculate the scaled lengths in centimetres correctly but then fail to construct a diagram of the entire course. You must follow through and actually draw every single leg of the journey with a ruler and protractor to secure the marks.</li>
@@ -2418,21 +2418,21 @@ export const national5AppsData: Section[] = [
         title: "3D Container Packing",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> Never calculate the total volume of the large container and divide it by the total volume of the small box. This assumes the items can be melted down like liquid! You must divide the Length by Length, Breadth by Breadth, and Height by Height.</p>
 
-            <h4 className="text-white font-semibold">1. The Packing Strategy</h4>
+            <h4 className="text-foreground font-semibold">1. The Packing Strategy</h4>
             <p>To find how many small boxes fit into a large container, you must assign items systematically to minimise unused space.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Find how many boxes fit along the length, breadth, and height independently.</li>
               <li>Multiply these three numbers together to find the total for that orientation.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Orientations and Restrictions</h4>
+            <h4 className="text-foreground font-semibold">2. Orientations and Restrictions</h4>
             <p>If the question allows the boxes to be rotated, you must test at least two different arrangements (orientations) of the length and breadth to see which one fits more boxes inside. However, if a box has a "THIS WAY UP" symbol or must be placed with a "label facing upwards", the height of the small box is permanently locked and cannot be rotated.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "One Orientation Only" Trap:</strong> If there are no restrictions on how a box is packed, you must calculate multiple orientations. Many candidates lose marks by only attempting to find the number of boxes for a single orientation.</li>
                 <li><strong>The "Unit Mismatch" Trap:</strong> The internal dimensions of a shipping crate are often given in metres (e.g., 4.10 m), while the small boxes are given in centimetres (e.g., 60 cm). You must convert the metres into centimetres before dividing.</li>
@@ -2504,13 +2504,13 @@ export const national5AppsData: Section[] = [
         title: "Precedence Tables & Critical Path",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> The "minimum time" to complete a massive project is always the longest path through the activity network. This is called the Critical Path. If any job on this path is delayed, the entire project is delayed.</p>
 
-            <h4 className="text-white font-semibold">1. Constructing the Network Diagram</h4>
+            <h4 className="text-foreground font-semibold">1. Constructing the Network Diagram</h4>
             <p>A precedence table shows which tasks must be completed before another task can begin. When drawing the diagram, ensure that every preceding task connects with an arrow to its following task.</p>
 
-            <h4 className="text-white font-semibold">2. Calculating the Critical Path (Minimum Time)</h4>
+            <h4 className="text-foreground font-semibold">2. Calculating the Critical Path (Minimum Time)</h4>
             <p>To find the minimum time for the whole project to be completed:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>Trace every single possible path from start to finish through your diagram.</li>
@@ -2518,8 +2518,8 @@ export const national5AppsData: Section[] = [
               <li>The path that takes the most time is your minimum project completion time.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Adding Everything" Trap:</strong> a frequent error is to simply take the column of times in the table and add them all together to calculate a total time. Because many tasks are done simultaneously (at the same time by different people), adding all numbers together is completely wrong. You must only sum the paths!</li>
                 <li><strong>The "Missing Node" Trap:</strong> When building the diagram, candidates often miss tasks that have multiple prerequisites (e.g., Task G relies on both C and F). Make sure your box for G has arrows coming from both C and F.</li>
@@ -2534,25 +2534,25 @@ export const national5AppsData: Section[] = [
               <div className="space-y-2">
                 <p>Rab modernised a house. The work done is shown in the table.</p>
                 <div className="overflow-x-auto my-2">
-                  <table className="w-full text-left border-collapse border border-slate-700">
+                  <table className="w-full text-left border-collapse border border-muted">
                     <thead>
                       <tr>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">Activity</th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">Description</th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">Preceding task</th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">Time in days</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">Activity</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">Description</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">Preceding task</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">Time in days</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td className="border border-slate-700 px-4 py-2">A</td><td className="border border-slate-700 px-4 py-2">clear rubbish</td><td className="border border-slate-700 px-4 py-2">none</td><td className="border border-slate-700 px-4 py-2">7</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">B</td><td className="border border-slate-700 px-4 py-2">landscape garden</td><td className="border border-slate-700 px-4 py-2">A</td><td className="border border-slate-700 px-4 py-2">10</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">C</td><td className="border border-slate-700 px-4 py-2">plaster walls</td><td className="border border-slate-700 px-4 py-2">E, G</td><td className="border border-slate-700 px-4 py-2">9</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">D</td><td className="border border-slate-700 px-4 py-2">decorate house</td><td className="border border-slate-700 px-4 py-2">C</td><td className="border border-slate-700 px-4 py-2">8</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">E</td><td className="border border-slate-700 px-4 py-2">rewire house</td><td className="border border-slate-700 px-4 py-2">F</td><td className="border border-slate-700 px-4 py-2">15</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">F</td><td className="border border-slate-700 px-4 py-2">fix roof</td><td className="border border-slate-700 px-4 py-2">A</td><td className="border border-slate-700 px-4 py-2">18</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">G</td><td className="border border-slate-700 px-4 py-2">re-plumb house</td><td className="border border-slate-700 px-4 py-2">F</td><td className="border border-slate-700 px-4 py-2">11</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">H</td><td className="border border-slate-700 px-4 py-2">lay flooring</td><td className="border border-slate-700 px-4 py-2">C</td><td className="border border-slate-700 px-4 py-2">6</td></tr>
-                      <tr><td className="border border-slate-700 px-4 py-2">I</td><td className="border border-slate-700 px-4 py-2">advertise for sale</td><td className="border border-slate-700 px-4 py-2">B, D, H</td><td className="border border-slate-700 px-4 py-2">1</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">A</td><td className="border border-muted px-4 py-2">clear rubbish</td><td className="border border-muted px-4 py-2">none</td><td className="border border-muted px-4 py-2">7</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">B</td><td className="border border-muted px-4 py-2">landscape garden</td><td className="border border-muted px-4 py-2">A</td><td className="border border-muted px-4 py-2">10</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">C</td><td className="border border-muted px-4 py-2">plaster walls</td><td className="border border-muted px-4 py-2">E, G</td><td className="border border-muted px-4 py-2">9</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">D</td><td className="border border-muted px-4 py-2">decorate house</td><td className="border border-muted px-4 py-2">C</td><td className="border border-muted px-4 py-2">8</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">E</td><td className="border border-muted px-4 py-2">rewire house</td><td className="border border-muted px-4 py-2">F</td><td className="border border-muted px-4 py-2">15</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">F</td><td className="border border-muted px-4 py-2">fix roof</td><td className="border border-muted px-4 py-2">A</td><td className="border border-muted px-4 py-2">18</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">G</td><td className="border border-muted px-4 py-2">re-plumb house</td><td className="border border-muted px-4 py-2">F</td><td className="border border-muted px-4 py-2">11</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">H</td><td className="border border-muted px-4 py-2">lay flooring</td><td className="border border-muted px-4 py-2">C</td><td className="border border-muted px-4 py-2">6</td></tr>
+                      <tr><td className="border border-muted px-4 py-2">I</td><td className="border border-muted px-4 py-2">advertise for sale</td><td className="border border-muted px-4 py-2">B, D, H</td><td className="border border-muted px-4 py-2">1</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -2617,10 +2617,10 @@ export const national5AppsData: Section[] = [
         title: "Averages & Spread",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> Before finding the median or quartiles, you must always rewrite your list of numbers in ascending order. When comparing the interquartile range or standard deviation, you must never use the phrase "on average," as these are measures of spread, not averages.</p>
 
-            <h4 className="text-white font-semibold">1. Mean, Mode, Median and Range</h4>
+            <h4 className="text-foreground font-semibold">1. Mean, Mode, Median and Range</h4>
             <p>Three of these are measures of <strong>average</strong>; the range is a measure of <strong>spread</strong>.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Mean</strong> — add all the values and divide by how many there are.</li>
@@ -2630,7 +2630,7 @@ export const national5AppsData: Section[] = [
             </ul>
             <BlockMath math="\text{Mean} = \frac{\text{total of the values}}{\text{number of values}} \qquad \text{Range} = \text{Highest} - \text{Lowest}" />
 
-            <h4 className="text-white font-semibold">2. The Five-Figure Summary</h4>
+            <h4 className="text-foreground font-semibold">2. The Five-Figure Summary</h4>
             <p>A five-figure summary is used to describe the spread of a dataset and consists of five specific values: the Lowest value (L), the Lower Quartile (Q1), the Median (Q2), the Upper Quartile (Q3), and the Highest value (H).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Rewrite the raw list of numbers in order from lowest to highest.</li>
@@ -2638,14 +2638,14 @@ export const national5AppsData: Section[] = [
               <li><strong>Step 3:</strong> Find the middle of the lower half of the data to find the lower quartile, and the middle of the upper half to find the upper quartile.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Interquartile Range (IQR) & Semi-Interquartile Range (SIQR)</h4>
+            <h4 className="text-foreground font-semibold">3. Interquartile Range (IQR) & Semi-Interquartile Range (SIQR)</h4>
             <p>The Interquartile Range is calculated by subtracting the lower quartile from the upper quartile:</p>
             <BlockMath math="\text{IQR} = Q_3 - Q_1" />
             <p>The Semi-Interquartile Range is simply the IQR divided by 2:</p>
             <BlockMath math="\text{SIQR} = \frac{Q_3 - Q_1}{2}" />
             <p>where <InlineMath math="Q_1" /> is the lower quartile and <InlineMath math="Q_3" /> is the upper quartile.</p>
 
-            <h4 className="text-white font-semibold">4. Box Plots</h4>
+            <h4 className="text-foreground font-semibold">4. Box Plots</h4>
             <p>A box plot is a visual drawing of the five-figure summary.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The lowest and highest values form the ends of the "whiskers".</li>
@@ -2653,7 +2653,7 @@ export const national5AppsData: Section[] = [
               <li>A vertical line is drawn inside the box to represent the median.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">5. Standard Deviation</h4>
+            <h4 className="text-foreground font-semibold">5. Standard Deviation</h4>
             <p>The standard deviation of a list of numbers is a measure of how spread out the numbers are from the mean.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>A lower standard deviation indicates that the numbers are more consistent.</li>
@@ -2665,8 +2665,8 @@ export const national5AppsData: Section[] = [
             <BlockMath math="s = \sqrt{\frac{\sum x^2 - \dfrac{(\sum x)^2}{n}}{n - 1}}" />
             <p>Here <InlineMath math="x" /> is each value, <InlineMath math="\bar{x}" /> is the mean, and <InlineMath math="n" /> is how many values there are. Either form gives the same answer — the first is easier to follow, the second is quicker when the mean is not a whole number.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "On Average Spread" Trap:</strong> a very common lost mark is writing "on average" when comparing interquartile ranges or standard deviations. You must completely avoid the phrase "on average" when making your second comment about standard deviation or the IQR, because these measure <em>spread</em>, not average.</li>
                 <li><strong>The "Unordered Data" Trap:</strong> Candidates frequently rush to find the middle number of the list exactly as it is printed on the exam paper. If you do not rearrange the raw data into ascending order first, your median and quartiles will be completely wrong.</li>
@@ -2754,10 +2754,10 @@ export const national5AppsData: Section[] = [
         title: "Statistical Diagrams",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When constructing a pie chart, you must remember to multiply your fraction by 360 to find the angle. A very common lost mark is calculating percentages (multiplying by 100) instead of angle sizes.</p>
 
-            <h4 className="text-white font-semibold">1. Pie Charts</h4>
+            <h4 className="text-foreground font-semibold">1. Pie Charts</h4>
             <p>A pie chart represents data as slices of a full <InlineMath math="360^\circ" /> circle.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Constructing:</strong> Add up all the values to find the total. For each category, write the value as a fraction of the total, then multiply by <InlineMath math="360^\circ" /> to find the exact angle for the slice.</li>
@@ -2765,7 +2765,7 @@ export const national5AppsData: Section[] = [
               <li><strong>Interpreting:</strong> If you know the angle of a slice, its fraction of the whole is simply <InlineMath math="\frac{\text{Angle}}{360^\circ}" />.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Scatter Graphs & Lines of Best Fit</h4>
+            <h4 className="text-foreground font-semibold">2. Scatter Graphs & Lines of Best Fit</h4>
             <p>A scatter graph plots two different variables to see if there is a relationship (correlation) between them.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Positive correlation:</strong> As one value goes up, the other goes up (e.g., temperature and ice cream sales).</li>
@@ -2774,7 +2774,7 @@ export const national5AppsData: Section[] = [
               <li><strong>Estimating:</strong> Draw a line from the given value on one axis to your line of best fit, and then across to the other axis. Your estimate must match your specific line, even if your line is slightly different from someone else's.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">3. Stem-and-Leaf Diagrams</h4>
+            <h4 className="text-foreground font-semibold">3. Stem-and-Leaf Diagrams</h4>
             <p>A stem-and-leaf diagram displays quantitative data split into a "stem" (the first digits) and "leaves" (the last digit).</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The data must be ordered sequentially.</li>
@@ -2782,11 +2782,11 @@ export const national5AppsData: Section[] = [
               <li>You must always include or check the Key (e.g., <InlineMath math="3 | 0 = 30" />) to understand what the numbers represent.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Compound Bar Graphs</h4>
+            <h4 className="text-foreground font-semibold">4. Compound Bar Graphs</h4>
             <p>Compound (or comparative) bar graphs allow you to compare like-for-like data side-by-side using two or more sets of bars on the same axes.</p>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Percentages instead of Angles" Trap:</strong> When asked to construct a pie chart, candidates frequently divide the amount by the total and multiply by 100. This calculates a percentage, not an angle! You cannot draw a 25% slice with a protractor; you must multiply by 360 to find the <InlineMath math="90^\circ" /> angle.</li>
                 <li><strong>The "Dot-to-Dot" Trap:</strong> When asked to draw a line of best fit, candidates sometimes join all the individual points together in a zig-zag pattern using their ruler. A line of best fit must be a single, continuous, straight line that slices through the middle of the data.</li>
@@ -2874,10 +2874,10 @@ export const national5AppsData: Section[] = [
         title: "Interpreting Graphs & Tables",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p>This skill is about <em>reading</em> data that is given to you — in graphs and tables — and using it to answer questions and make decisions. It is the reverse of the &ldquo;Statistical Diagrams&rdquo; topic, which is about <em>constructing</em> them.</p>
 
-            <h4 className="text-white font-semibold">1. Reading a Graph</h4>
+            <h4 className="text-foreground font-semibold">1. Reading a Graph</h4>
             <p>Before extracting anything, check four things: the <strong>title/text</strong> (what the graph is about), the <strong>scale</strong> on each axis, the <strong>key</strong> (for compound or comparative charts), and the overall <strong>trend</strong>. Typical questions ask you to:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>state a specific total, or the most / least popular option;</li>
@@ -2886,15 +2886,15 @@ export const national5AppsData: Section[] = [
               <li>make a fair comparison and choose the best or worst option.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">2. Reading a Table</h4>
+            <h4 className="text-foreground font-semibold">2. Reading a Table</h4>
             <p>Tables (price lists, timetables, tax bands, exchange rates) pack a lot of information into rows and columns. Find the correct cell, combine the values the question needs, and watch for conditions written in the small print (e.g. &ldquo;a stay crossing into a second month is charged at the higher rate&rdquo;).</p>
 
-            <h4 className="text-white font-semibold">3. Justifying a Decision</h4>
+            <h4 className="text-foreground font-semibold">3. Justifying a Decision</h4>
             <p>Applications questions often ask you to <strong>choose</strong> the better option and <strong>justify</strong> it with the numbers. A choice without a supporting calculation earns no marks — always show the comparison.</p>
 
             <p><strong>The Golden Rule:</strong> compare <em>like for like</em>. If one figure is a percentage, convert the others to percentages too; if amounts cover different time periods or group sizes, put them on the same footing before you compare. And read the scale and key <em>first</em> — two graphs drawn the same size can use very different scales.</p>
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>Different scales:</strong> when comparing two graphs, a taller bar does not always mean a bigger value — check the axis scale on each.</li>
                 <li><strong>Raw number vs proportion:</strong> &ldquo;most visitors&rdquo; and &ldquo;highest proportion of visitors&rdquo; are different questions — decide which is being asked.</li>
@@ -2976,39 +2976,39 @@ export const national5AppsData: Section[] = [
         title: "Probability & Risk",
         videoUrl: "",
         theory: (
-          <div className="space-y-4 text-slate-300">
+          <div className="space-y-4 text-foreground">
             <p><strong>The Golden Rule:</strong> When a question involves two events (like rolling two dice or spinning two spinners), do not try to calculate the combinations in your head. You must draw a two-way grid/table to accurately count the total number of possible outcomes and the number of successful outcomes.</p>
 
-            <h4 className="text-white font-semibold">1. Simple Probability</h4>
+            <h4 className="text-foreground font-semibold">1. Simple Probability</h4>
             <p>Probability is a measure of how likely an event is to happen. It is calculated using the formula:</p>
             <BlockMath math="\text{Probability} = \frac{\text{Number of successful outcomes}}{\text{Total number of possible outcomes}}" />
             <p>You can leave your answer as a fraction (simplified if possible), a decimal, or a percentage.</p>
 
-            <h4 className="text-white font-semibold">2. Dependent Events (Without Replacement)</h4>
+            <h4 className="text-foreground font-semibold">2. Dependent Events (Without Replacement)</h4>
             <p>If a question states that an object is drawn and "not replaced", the total number of items available for the next draw permanently decreases. You must also check if the specific "successful" items you are looking for were among those removed.</p>
 
-            <h4 className="text-white font-semibold">3. Expected Outcomes</h4>
+            <h4 className="text-foreground font-semibold">3. Expected Outcomes</h4>
             <p>You will frequently be asked to calculate how many times an event is expected to happen, and then compare it to the actual result.</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Step 1:</strong> Multiply the given probability by the total number of trials (e.g., if the probability is 0.05 and there are 400 trials, calculate <InlineMath math="0.05 \times 400" />).</li>
               <li><strong>Step 2:</strong> Compare your calculated "expected" value to the "actual" value given in the text, and clearly state whether the actual value is more or less than expected.</li>
             </ul>
 
-            <h4 className="text-white font-semibold">4. Comparing Probabilities</h4>
+            <h4 className="text-foreground font-semibold">4. Comparing Probabilities</h4>
             <p>If asked to determine which of two different games offers a higher chance of winning, you must calculate the probability for both. Because fractions with different denominators (e.g., <InlineMath math="\frac{18}{150}" /> and <InlineMath math="\frac{5}{36}" />) are hard to compare directly, you should convert both fractions into decimals or percentages to make a valid, justified conclusion.</p>
 
-            <h4 className="text-white font-semibold">5. Combined Probability (in succession)</h4>
+            <h4 className="text-foreground font-semibold">5. Combined Probability (in succession)</h4>
             <p>The probability of several <em>independent</em> events all happening is found by <strong>multiplying</strong> their probabilities. For example, if the probability of a train being on time is 0.7, the probability of three trains in a row all being on time is <InlineMath math="0.7 \times 0.7 \times 0.7" />.</p>
 
-            <h4 className="text-white font-semibold">6. Bias &amp; Reliability</h4>
+            <h4 className="text-foreground font-semibold">6. Bias &amp; Reliability</h4>
             <p>A probability found from a survey or experiment is only trustworthy if it was gathered fairly. Two things can undermine it:</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li><strong>Bias:</strong> the sample is not representative — surveying only one type of person skews the result (e.g. asking only cyclists whether a town needs a cycle lane).</li>
               <li><strong>Small sample size:</strong> a small experiment may not reflect the true probability. The larger the sample, the closer the experimental probability gets to the theoretical one.</li>
             </ul>
 
-            <div className="bg-slate-800 p-4 rounded-lg mt-4">
-              <h4 className="text-white font-semibold mb-2">⚠️ Common Examiner Traps</h4>
+            <div className="bg-muted p-4 rounded-lg mt-4">
+              <h4 className="text-foreground font-semibold mb-2">⚠️ Common Examiner Traps</h4>
               <ul className="list-disc list-inside space-y-2 ml-2">
                 <li><strong>The "Lottery Bonus Ball" Trap:</strong> In a lottery draw where balls are not replaced, candidates frequently forget to subtract the drawn balls from the total. If 6 balls have been drawn from a machine of 49, the denominator for the 7th ball is 43, not 49. Furthermore, you must actively check if any of the balls already drawn fit the criteria for your next draw, as this reduces your numerator!</li>
                 <li><strong>The "Expected vs Actual" Mix-Up:</strong> When asked if an event happened "more or less than expected", candidates sometimes perform the calculation but fail to write the final conclusion sentence. If your expected value is 16.1, and the actual value was 15, you must write "Less than expected because 15 &lt; 16.1" to secure the final mark.</li>
@@ -3053,37 +3053,37 @@ export const national5AppsData: Section[] = [
               <div className="space-y-2">
                 <p><strong>Step 1:</strong> Draw a two-way grid to find all possible outcomes.</p>
                 <div className="overflow-x-auto my-2">
-                  <table className="w-full text-left border-collapse border border-slate-700">
+                  <table className="w-full text-left border-collapse border border-muted">
                     <thead>
                       <tr>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800"><InlineMath math="\times" /></th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">1</th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">3</th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">5</th>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">7</th>
+                        <th className="border border-muted px-4 py-2 bg-muted"><InlineMath math="\times" /></th>
+                        <th className="border border-muted px-4 py-2 bg-muted">1</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">3</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">5</th>
+                        <th className="border border-muted px-4 py-2 bg-muted">7</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">2</th>
-                        <td className="border border-slate-700 px-4 py-2">2</td>
-                        <td className="border border-slate-700 px-4 py-2">6</td>
-                        <td className="border border-slate-700 px-4 py-2">10</td>
-                        <td className="border border-slate-700 px-4 py-2">14</td>
+                        <th className="border border-muted px-4 py-2 bg-muted">2</th>
+                        <td className="border border-muted px-4 py-2">2</td>
+                        <td className="border border-muted px-4 py-2">6</td>
+                        <td className="border border-muted px-4 py-2">10</td>
+                        <td className="border border-muted px-4 py-2">14</td>
                       </tr>
                       <tr>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">4</th>
-                        <td className="border border-slate-700 px-4 py-2">4</td>
-                        <td className="border border-slate-700 px-4 py-2">12</td>
-                        <td className="border border-slate-700 px-4 py-2">20</td>
-                        <td className="border border-slate-700 px-4 py-2">28</td>
+                        <th className="border border-muted px-4 py-2 bg-muted">4</th>
+                        <td className="border border-muted px-4 py-2">4</td>
+                        <td className="border border-muted px-4 py-2">12</td>
+                        <td className="border border-muted px-4 py-2">20</td>
+                        <td className="border border-muted px-4 py-2">28</td>
                       </tr>
                       <tr>
-                        <th className="border border-slate-700 px-4 py-2 bg-slate-800">6</th>
-                        <td className="border border-slate-700 px-4 py-2">6</td>
-                        <td className="border border-slate-700 px-4 py-2">18</td>
-                        <td className="border border-slate-700 px-4 py-2">30</td>
-                        <td className="border border-slate-700 px-4 py-2">42</td>
+                        <th className="border border-muted px-4 py-2 bg-muted">6</th>
+                        <td className="border border-muted px-4 py-2">6</td>
+                        <td className="border border-muted px-4 py-2">18</td>
+                        <td className="border border-muted px-4 py-2">30</td>
+                        <td className="border border-muted px-4 py-2">42</td>
                       </tr>
                     </tbody>
                   </table>
