@@ -1,0 +1,211 @@
+{
+  "recorded": "2026-09-16",
+  "theme": "dark",
+  "totals": {
+    "total": 6236,
+    "measured": 4886,
+    "script": 390,
+    "hidden": 262,
+    "zeroBox": 696,
+    "faded": 2,
+    "onBitmap": 0,
+    "unreadableColour": 0
+  },
+  "pairs": [
+    {
+      "fg": "#ffebcc",
+      "bg": "#fe9a00",
+      "ratio": 1.83,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "One-off support for the free resources."
+    },
+    {
+      "fg": "#fff5e6",
+      "bg": "#fe9a00",
+      "ratio": 1.98,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "home"
+      ],
+      "text": "S4/S5 · National 5"
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#fe9a00",
+      "ratio": 2.13,
+      "need": 4.5,
+      "n": 2,
+      "where": [
+        "exam hall",
+        "connect"
+      ],
+      "text": "Enter Exam Hall"
+    },
+    {
+      "fg": "#f6e7cc",
+      "bg": "#d08700",
+      "ratio": 2.41,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "Members-only content on YouTube."
+    },
+    {
+      "fg": "#ccedd8",
+      "bg": "#00a63e",
+      "ratio": 2.56,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "T-shirts and hoodies."
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#d08700",
+      "ratio": 2.94,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "Channel membership"
+    },
+    {
+      "fg": "#feede6",
+      "bg": "#f54a00",
+      "ratio": 3.15,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "home"
+      ],
+      "text": "S5/S6 · Higher"
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#e17100",
+      "ratio": 3.2,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "academy"
+      ],
+      "text": "Secure N5 Applications Seat"
+    },
+    {
+      "fg": "#e6f4f8",
+      "bg": "#0092b8",
+      "ratio": 3.22,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "home"
+      ],
+      "text": "S4/S5 · National 5"
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#00a63e",
+      "ratio": 3.22,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "Merch store"
+    },
+    {
+      "fg": "#e6f5f0",
+      "bg": "#009966",
+      "ratio": 3.25,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "home"
+      ],
+      "text": "S6 · Advanced Higher"
+    },
+    {
+      "fg": "#faccce",
+      "bg": "#e7000b",
+      "ratio": 3.31,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "Every past paper worked through, plus the live e"
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#f54a00",
+      "ratio": 3.58,
+      "need": 4.5,
+      "n": 2,
+      "where": [
+        "exam hall",
+        "academy"
+      ],
+      "text": "Enter Exam Hall"
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#0092b8",
+      "ratio": 3.62,
+      "need": 4.5,
+      "n": 29,
+      "where": [
+        "exam hall",
+        "academy",
+        "course",
+        "generate",
+        "full screen",
+        "hint overlay"
+      ],
+      "text": "Enter Exam Hall"
+    },
+    {
+      "fg": "#ffffff",
+      "bg": "#009966",
+      "ratio": 3.65,
+      "need": 4.5,
+      "n": 2,
+      "where": [
+        "exam hall",
+        "academy"
+      ],
+      "text": "Enter Exam Hall"
+    },
+    {
+      "fg": "#d0dffe",
+      "bg": "#155dfc",
+      "ratio": 3.91,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "The mobile app — past papers and video solutions"
+    },
+    {
+      "fg": "#eacffe",
+      "bg": "#9810fa",
+      "ratio": 3.92,
+      "need": 4.5,
+      "n": 1,
+      "where": [
+        "connect"
+      ],
+      "text": "A personalised video message."
+    }
+  ]
+}
