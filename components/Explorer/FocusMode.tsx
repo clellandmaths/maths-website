@@ -9,6 +9,7 @@ import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
+import NoHintNote from '@/components/NoHintNote';
 import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
@@ -295,6 +296,16 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   {doneSet.has(index) ? 'Done' : 'Mark as Done'}
                 </button>
               </div>
+
+              {/* Why this row has no Hint button when the ones above and below
+                  it do. Rarely more than one per topic, so it explains an
+                  oddity rather than repeating itself down the page. */}
+              <NoHintNote
+                courseId={courseId}
+                question={q}
+                solutionUrl={q.solutionUrl}
+                className="mt-3"
+              />
 
               {/* Answer section */}
               {revealedAnswers.has(index) && (

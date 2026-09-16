@@ -14,7 +14,7 @@ import MathRenderer from '@/components/MathRenderer';
  * question. It also keeps Hints off the static graph that reaches the engine.
  */
 const HintPanel = dynamic(() => import('@/components/HintPanel'), { ssr: false });
-import { paperLabelOf, courseHasHints } from '@/lib/similar-questions';
+import { ladderLabel, courseHasHints } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -148,8 +148,16 @@ export default function Hints({
    * A generated question's `label` is the skill it tests rather than a paper
    * reference, and `paperLabelOf` rejects anything that is not `YYYY P# Q#`, so
    * this cannot mistake one for the other.
+   *
+   * **`ladderLabel`, not `paperLabelOf`.** Being a past paper question is not
+   * the same as having a ladder: we hold 22 questions from 2021 and no
+   * transcribed marking instructions for that year, so `PLAN_OF` has nothing
+   * for any of them. Asking the looser question rendered the button, found
+   * nothing on the press, and left the overlay empty with a `More help` footer
+   * that never delivered any. The note under the card says where the help
+   * actually is, and it reads the same function.
    */
-  const label = paperLabelOf(given ?? question.label, question.question);
+  const label = ladderLabel(given ?? question.label, question.question);
   // A generated question brings its own; a paper one needs the table.
   const own = question.skill && question.method;
   const possible = courseHasHints(courseId) && (own || label !== null);

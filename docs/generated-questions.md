@@ -107,6 +107,7 @@ In `build`, reading source:
 |---|---|
 | `check:gensync` | `lib/generator/` is an unedited copy — 95 files, 0 stale |
 | `check:reach` | 328/328 questions cited, 57/57 subtopics covered |
+| `check:hintgap` | **349/349 rendered paper labels** have a ladder or a declared absence, and no declaration outlives its cause |
 | `check:topicmaps` | every practice topic mapped; **33 of 34 can generate** (not Rounding) |
 | `check:callsites` | one door, no engine on a client component, no concurrent draws |
 
@@ -152,6 +153,7 @@ none. Run them after a build when the work touches what they cover.
 | `check:explorerfilters` | changing a filter puts you back at the top of the list, not at the end of a shorter one |
 | `check:byskill` | a sheet can be built by topic without meeting 174 skills, and the skills still work underneath |
 | `check:roundtrip` | a course and the Topic Explorer link both ways, under one name, without overflowing a phone |
+| `check:nomarkscheme` | a question we hold no marking instructions for offers no Hint button, and says where the help is instead — on the card, in Focus and in full screen |
 
 They share `scripts/browser-drive.mjs`, which serves `out/` and drives it.
 **Clicks go through CDP, not `element.click()`**, which does not register on
@@ -375,6 +377,46 @@ It is also the one topic `check:topicmaps` records as unable to generate.
 National 5 practice page, and neither on the other four courses, where no
 question has a ladder and the absence is the norm.
 
+### 2021 is the second kind of absence, and it used to be a dead button
+
+Added 2026-09-16, reported from practice mode. The note above was gated on
+`paperLabelOf`, which answers "is this a past paper question" — and that was
+being read as "does this have a ladder". For one year the two came apart.
+
+`reference/N5_Markschemes/` holds `mi_N5_Mathematics_all_2021.pdf` and **no
+transcription of it**. Every other year has a `.md` beside its PDF. So
+`readSchemes` has never seen a row of 2021 and `PLAN_OF` has no entry for any of
+the **22 questions we hold from it** — but they are past paper questions, so the
+button rendered. Pressing it looked the label up, got nothing, and left `staged`
+null: the overlay opened with the question at the top, nothing under it, and a
+footer reading `More help (2 left)` that could be pressed for ever and never
+produce a word. Measured on the broken build — three presses, still
+`More help (2 left)`, still empty. On the card, in Focus and in full screen.
+
+The fix is one predicate. `ladderLabel` is `paperLabelOf` with the papers we
+hold no marking instructions for taken out, and **both the button and the note
+now read it**, so they cannot disagree. All 22 carry a `solutionUrl`, so the
+sentence they get is true of every one.
+
+Two checks, because the interesting failure is the *stale* suppression:
+
+- `check:hintgap` (in `build`) — every rendered paper label has a plan or sits
+  on a declared paper; **nothing declared has a plan behind it**; a declaration
+  that suppresses nothing fails too; every suppressed question carries the
+  solution the note promises.
+- `check:nomarkscheme` (browser) — 10 buttons and 9 notes on Fractions, on all
+  three surfaces, never both and never neither, with `2021 P1 Q2` named. It
+  opens a neighbour's ladder and reads it, so "hints are broken everywhere"
+  cannot pass an absence check.
+
+**The way out is sitting in the reference folder.** Transcribe the 2021 PDF the
+way every other year was transcribed, re-emit `paper-plan.ts`, and `check:hintgap`
+will *fail* until the two strings come out of `NO_MARKSCHEME` — it treats a
+suppression that has stopped being true as hard as a gap that was never
+declared. That is the whole reason it is a set of **papers** rather than a list
+of the 21 labels: the gap belongs to the paper, so a twenty-second 2021 question
+added to a topic tomorrow is covered without anybody remembering to.
+
 **This is a signpost, not a fix.** The 205 still have no hints. What would close
 that is mapping each one to the variation it matches — which buys presses 1 and
 2 from `skill` and `method` strings that are already written, with no new prose
@@ -392,6 +434,11 @@ that is mapping each one to the variation it matches — which buys presses 1 an
   immediately before any merge.
 - **CLS is 0.84 on a practice page**, where 0.1 is good. Cause: 443 question
   images declare no dimensions, so nothing reserves their space. Not scheduled.
+- **The 2021 marking instructions have never been transcribed.** The PDF is in
+  `reference/N5_Markschemes/`; every other year has a `.md` beside it. Until it
+  is done, 22 questions are suppressed rather than helped — see the section
+  above. Doing it buys 21 ladders for no new prose, and `check:hintgap` will
+  insist the suppression is removed the moment it lands.
 - **Lessons for the next course** are written up in
   `worksheet_generator/docs/new-course.md`.
 - The findings in [navigation.md](navigation.md), recorded and not acted on.

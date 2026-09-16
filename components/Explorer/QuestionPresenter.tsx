@@ -11,6 +11,7 @@ import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
 import { isWholePaper, lastQuestionNumber } from '@/lib/question-number.mjs';
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
+import NoHintNote from '@/components/NoHintNote';
 import Marks from '@/components/Marks';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
@@ -420,6 +421,20 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 />
               )}
             </div>
+
+            {/* Why there is no Hint button in that row.
+
+                Full screen is the surface a stuck pupil reaches for, so an
+                unexplained gap where the help usually sits is worse here than
+                on the card. `shown` rather than `question`: a drawn twin is a
+                generated question and carries its own ladder, so the note must
+                follow what is actually on screen. */}
+            <NoHintNote
+              courseId={courseId}
+              question={shown}
+              solutionUrl={shown.solutionUrl}
+              className="mt-3"
+            />
 
             {/* Answer Section */}
             {allowAnswers && showAnswer && (

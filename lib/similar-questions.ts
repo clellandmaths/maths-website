@@ -80,6 +80,73 @@ export function courseHasHints(courseId: string | undefined): boolean {
   return courseId === 'n5';
 }
 
+/**
+ * Papers we hold questions from but hold no marking instructions for.
+ *
+ * **2021 is the only one, and it is the whole year.** Every other year in
+ * `reference/N5_Markschemes/` has a transcribed `.md` beside its PDF; 2021 has
+ * `mi_N5_Mathematics_all_2021.pdf` and nothing else, so `readSchemes` has never
+ * seen a row of it and `PLAN_OF` has no entry for any of its 21 questions.
+ *
+ * **Why this is a set of papers rather than a list of the 21 labels.** The gap
+ * is a property of the paper, not of the questions we happen to have typed up
+ * so far. A list of labels would go stale the moment a twenty-second 2021
+ * question was added to a practice topic — and it would go stale *silently*,
+ * putting the dead button straight back. Two strings cannot.
+ *
+ * **What went wrong without it.** `paperLabelOf` answers "is this a National 5
+ * past paper question", and that was being read as "does this have a ladder".
+ * For 2021 the two came apart: the button rendered, `reveal()` looked
+ * `PLAN_OF["2021 P1 Q2"]` up, got nothing, and left `staged` null — so the
+ * overlay opened empty, under a footer offering `More help (2 left)` that could
+ * be pressed for ever and never produce a word. An absent button is honest; a
+ * button that opens nothing is not.
+ *
+ * This is an absence with a way out: the PDF is sitting in the reference
+ * folder. Transcribe it, re-emit `paper-plan.ts`, and `check:hintgap` will
+ * insist these strings are deleted — it fails on a suppression that has stopped
+ * being true as hard as on a gap that is not suppressed.
+ */
+const NO_MARKSCHEME: ReadonlySet<string> = new Set(['2021 P1', '2021 P2']);
+
+/** The papers with no marking instructions, for the check that polices them. */
+export const NO_MARKSCHEME_PAPERS: readonly string[] = [...NO_MARKSCHEME];
+
+/**
+ * The label to ask the hint table about, or null where no ladder can exist.
+ *
+ * `paperLabelOf` with the papers we hold no marking instructions for taken out.
+ * Everything that decides whether to offer help goes through here, so the
+ * button and the note explaining its absence cannot disagree.
+ */
+export function ladderLabel(
+  explicit: string | null | undefined,
+  questionHtml?: string,
+): string | null {
+  const label = paperLabelOf(explicit, questionHtml);
+  if (label === null) return null;
+  // "2021 P1 Q2" -> "2021 P1". The label shape is fixed by N5_PAPER_LABEL.
+  return NO_MARKSCHEME.has(label.slice(0, 7)) ? null : label;
+}
+
+/**
+ * Does this question have a hint ladder behind it at all?
+ *
+ * The one test, so that `Hints` and the note explaining why `Hints` rendered
+ * nothing cannot drift apart. A generated question carries its own worked
+ * solution and needs no table; a past paper question needs a transcribed
+ * marking instruction, which is what `ladderLabel` is checking for.
+ */
+export function hasHintLadder(
+  courseId: string | undefined,
+  question: { skill?: string; method?: string; label?: string | null; question?: string },
+  given?: string | null,
+): boolean {
+  if (!courseHasHints(courseId)) return false;
+  if (question.skill && question.method) return true;
+  return ladderLabel(given ?? question.label, question.question) !== null;
+}
+
 export function canAddVariation(
   courseId: string | undefined,
   questionHtml: string | undefined,
