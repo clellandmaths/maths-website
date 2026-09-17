@@ -2,13 +2,23 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Loader2, Printer, Share2, Dices, ArrowLeft } from 'lucide-react';
+import { Loader2, Printer, Share2, Dices, ArrowLeft, ClipboardCheck } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 import { printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
+import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
+
+/**
+ * The marking instructions, as their own printed document.
+ *
+ * Behind a boundary because nobody who only prints the paper should pay for
+ * it, and because this page is on the course templates' JS budget.
+ */
+const MarkschemeSheet = dynamic(() => import('@/components/Explorer/MarkschemeSheet'), { ssr: false });
 
 interface PlanRow { label: string | null; number: string; marks: number }
 
@@ -79,6 +89,50 @@ export default function PracticePaperClient({
       label: `${year} Paper ${paperNumber}`,
     });
   }, [courseId, year, paperNumber]);
+  /**
+   * The markscheme, printed exactly the way the Explorer's checkout prints it.
+   *
+   * **A separate document, on purpose.** One press, one dialog, one file — so
+   * the paper can be handed to a class without the answers stapled behind it.
+   * That is the checkout's reasoning and it applies here unchanged.
+   *
+   * `MarkschemeSheet` already reads both sources: the published instructions
+   * for a past paper question, and a generated question's own worked steps and
+   * their mark values. Every question on this page is generated, so it is the
+   * second branch that does the work — the answers are for the numbers actually
+   * printed, which regenerate from the seed in the sheet.
+   *
+   * `PAPER_MARKSCHEME` is loaded anyway rather than passing an empty table. It
+   * is 189KB, and on a page of nothing but generated questions it will not be
+   * read — but it is imported at the press, never on load, and a page that
+   * silently lacked a scheme if a real question ever appeared here would be a
+   * worse trade than one lazy fetch a teacher asked for.
+   */
+  const [schemes, setSchemes] = useState<Record<string, PaperScheme> | null>(null);
+  const [markschemeBusy, setMarkschemeBusy] = useState(false);
+
+  const printMarkscheme = async () => {
+    if (markschemeBusy || !drawn.length) return;
+    setMarkschemeBusy(true);
+    try {
+      const { PAPER_MARKSCHEME } = await import('@/lib/generator/generators/paper-markscheme');
+      setSchemes(PAPER_MARKSCHEME);
+      document.body.dataset.print = 'markscheme';
+      // One frame for the portal to mount before the dialog reads the page.
+      // Raced, never awaited alone: a backgrounded tab fires no frame, and the
+      // same unguarded wait once turned a Print button into one that did
+      // nothing at all.
+      await Promise.race([
+        new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))),
+        new Promise<void>(r => setTimeout(r, 300)),
+      ]);
+      await printWorksheet();
+    } finally {
+      delete document.body.dataset.print;
+      setMarkschemeBusy(false);
+    }
+  };
+
   /** Bumped to draw the whole paper again, with new numbers throughout. */
   const [round, setRound] = useState(0);
   const again = () => { setMade([]); setDone(0); setFailed(false); setRound(n => n + 1); };
@@ -206,6 +260,19 @@ export default function PracticePaperClient({
               <Printer className="h-3.5 w-3.5" />
               Print / Save PDF
             </button>
+            {/* **Its own document, and its own press.** Same reasoning as the
+                Explorer's checkout, and the same word on the button: one
+                click, one dialog, one file, so the paper goes to a class
+                without the answers behind it. */}
+            <button
+              onClick={printMarkscheme}
+              disabled={markschemeBusy}
+              title="Print the marking instructions for this paper"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 disabled:opacity-60 transition-colors"
+            >
+              <ClipboardCheck className="h-3.5 w-3.5" />
+              {markschemeBusy ? 'Preparing…' : 'Markscheme'}
+            </button>
             <button
               onClick={share}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
@@ -234,6 +301,18 @@ export default function PracticePaperClient({
           </div>
         )}
       </div>
+
+      {/* Portaled to the body, so it is a second document rather than part of
+          the paper's print job — never in it. */}
+      {schemes && (
+        <MarkschemeSheet
+          courseId={courseId}
+          courseLabel={courseName}
+          questions={drawn}
+          schemes={schemes}
+          totalMarks={newMarks}
+        />
+      )}
 
       <div ref={sheetRef} className="worksheet-container space-y-6">
         {made.map((q, i) => (
