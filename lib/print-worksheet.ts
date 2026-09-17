@@ -21,8 +21,41 @@
 // warming errors, or the network hangs, print still fires and the result is
 // exactly today's behaviour. Nothing here can regress what already works.
 
-/** Worksheet question images. Deliberately not `.question-card` — see above. */
+/**
+ * **Background warming: worksheet questions only.** Deliberately not
+ * `.question-card` — see above. Browsing must not pay for this.
+ */
 const SELECTOR = '.worksheet-container img';
+
+/**
+ * **Print time: whatever is about to print.**
+ *
+ * The warming above is keyed to a container class, and that quietly became a
+ * rule somebody had to remember: build a new printable surface, add its class
+ * here, or its diagrams print blank. Nothing enforced it, and the failure is
+ * invisible where it would be noticed — Chromium force-loads lazy images when
+ * printing, WebKit does not, so it breaks only on iPhone and iPad, only for
+ * whoever built the surface, and only on the paper.
+ *
+ * Three surfaces print today and only one was covered: the worksheet, the
+ * markscheme portaled to the body as `.markscheme-doc`, and the formula sheet.
+ * Neither of the other two carries an image at present, so nothing was
+ * actually broken — but "not broken yet" is not a guarantee, and the next
+ * printable thing someone adds inherits the trap.
+ *
+ * So the click asks a different question: not "is it in a container I listed"
+ * but "will it reach the paper". Everything the print stylesheet hides is
+ * excluded, and the rest is waited on. Costs nothing extra in practice — the
+ * page is already loaded — and `BUDGET_MS` still caps the wait, so a slow
+ * image cannot turn Print into a button that does nothing.
+ */
+const HIDDEN_IN_PRINT = '.no-print, .glass';
+
+/** Every image that would actually reach the paper, in document order. */
+function printableImages(root: ParentNode): HTMLImageElement[] {
+  return Array.from(root.querySelectorAll<HTMLImageElement>('img'))
+    .filter(img => !img.closest(HIDDEN_IN_PRINT));
+}
 
 /** Sources already pulled this session, so revisiting a sheet costs nothing. */
 const warmed = new Set<string>();
@@ -128,7 +161,9 @@ const BUDGET_MS = 3500;
  * this does not wait at all.
  */
 export async function printWorksheet(root: ParentNode = document): Promise<void> {
-  const imgs = Array.from(root.querySelectorAll<HTMLImageElement>(SELECTOR));
+  // Everything that will reach the paper, not merely the worksheet's own —
+  // see `printableImages`.
+  const imgs = printableImages(root);
 
   // Release anything the browser is still holding back. Honoured from Chrome
   // 77 / Safari 15.4; older WebKit ignores it and decode() below covers it.
@@ -174,8 +209,8 @@ export async function printWorksheet(root: ParentNode = document): Promise<void>
 export function watchSystemPrint(): () => void {
   if (typeof window === 'undefined') return () => {};
   const onBeforePrint = () => {
-    document.querySelectorAll<HTMLImageElement>(SELECTOR)
-      .forEach(img => { img.loading = 'eager'; });
+    // Same scope as the button: a Cmd-P print puts the same page on paper.
+    printableImages(document).forEach(img => { img.loading = 'eager'; });
     warmNow(document);
   };
   window.addEventListener('beforeprint', onBeforePrint);

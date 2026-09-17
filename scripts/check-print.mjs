@@ -195,4 +195,60 @@ if (dark && light) {
   }
 }
 
+/**
+ * **Everything that will reach the paper is released before the dialog opens.**
+ *
+ * Question diagrams carry `loading="lazy"`, which is right for browsing and
+ * wrong for printing: an image that never scrolled into view was never
+ * fetched. Chromium force-loads them when printing; WebKit does not, so on an
+ * iPhone they print blank.
+ *
+ * The helper used to look for them by container class — `.worksheet-container
+ * img` — which made it a rule somebody had to remember when they built the
+ * next printable surface, and the failure only ever showed up on someone
+ * else's iPad. Now it asks what will actually print.
+ *
+ * This holds that: press Print, and no image that would reach the paper may
+ * still be marked lazy. `window.print` is replaced first, because a real print
+ * dialog cannot be dismissed from here.
+ */
+await withPage({ port: 8191, cdp: 9291, width: 1280, height: 900 },
+  async ({ evaluate, click, go, sleep }) => {
+    await go(SHEET_FROM, 2500);
+    for (let i = 0; i < 40; i++) {
+      if (!(await evaluate('/Drawing question/.test(document.body.innerText)'))) break;
+      await sleep(1000);
+    }
+    await click(`[...document.querySelectorAll('button')]
+      .find(x => /open as a worksheet/i.test(x.textContent || ''))`);
+    await sleep(7000);
+
+    const on = await evaluate("location.pathname === '/worksheet'");
+    t.check(on, 'a sheet to print was built');
+    if (!on) return;
+
+    await evaluate('window.__printed = 0; window.print = () => { window.__printed++; };');
+    await click(`[...document.querySelectorAll('button')]
+      .find(x => /print/i.test(x.textContent || ''))`);
+    await sleep(4000);
+
+    const r = JSON.parse(await evaluate(`(() => {
+      const printable = [...document.querySelectorAll('img')]
+        .filter(i => !i.closest('.no-print, .glass'));
+      return JSON.stringify({
+        printed: window.__printed || 0,
+        printable: printable.length,
+        stillLazy: printable.filter(i => i.loading === 'lazy').length,
+        notLoaded: printable.filter(i => !(i.complete && i.naturalWidth > 0)).length,
+      });
+    })()`));
+
+    t.check(r.printed > 0, `the print path ran (${r.printed})`);
+    t.check(r.printable > 0, `the sheet has images to lose (${r.printable})`);
+    t.check(r.stillLazy === 0,
+      `no image that will print is still lazy (${r.stillLazy} of ${r.printable})`);
+    t.check(r.notLoaded === 0,
+      `and every one of them has actually loaded (${r.notLoaded} outstanding)`);
+  });
+
 t.done('what the printer is handed is the same in both themes');
