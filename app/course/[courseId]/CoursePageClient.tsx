@@ -311,7 +311,9 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                   variations. */}
                               {courseId === 'n5' && (
                                 <Link
-                                  href={`/course/${courseId}/generate/paper/${paper.year}/paper-${paper.paperNumber}`}
+                                  // `from` so the generated paper can offer a way back to here, rather
+                                  // than to the paper page nobody visited.
+                                  href={`/course/${courseId}/generate/paper/${paper.year}/paper-${paper.paperNumber}?from=course`}
                                   title={`Build a new practice paper modelled question by question on the ${paper.year} Paper ${paper.paperNumber} — same topics, same marks, numbers you have not seen`}
                                   className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 text-sm font-medium rounded-lg transition-colors"
                                 >

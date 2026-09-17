@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Loader2, Printer, Share2, Dices } from 'lucide-react';
+import { Loader2, Printer, Share2, Dices, ArrowLeft } from 'lucide-react';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 import { printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
@@ -47,6 +47,38 @@ export default function PracticePaperClient({
   const [done, setDone] = useState(0);
   const [failed, setFailed] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Where the reader came from, and a way back to it.
+   *
+   * **The breadcrumb is not a way back, and reading it as one is what went
+   * wrong.** It says where this paper *sits* — National 5 Maths / 2024 Paper 1
+   * / Practice paper — which is true and useful. But most people arrive from
+   * the archive on the course page, never having opened 2024 Paper 1, and the
+   * nearest crumb to hand sends them to exactly that unvisited page. The one
+   * crumb that does go back is faint grey monospace at the top of the screen.
+   *
+   * So the two links in carry `?from=`, and this turns it into a control. Read
+   * after mount rather than in a lazy initialiser: this is a static export, the
+   * page is built with no query string in existence, and deciding during the
+   * first render is the hydration mismatch `/explorer` was just fixed for.
+   *
+   * No `from` means a shared link or a bookmark, and the course archive is the
+   * right place to send those: it is where the paper came from and where
+   * another one can be had.
+   */
+  const [backTo, setBackTo] = useState<{ href: string; label: string }>({
+    href: `/course/${courseId}`, label: courseName,
+  });
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('from') !== 'paper') return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setBackTo({
+      href: `/course/${courseId}/papers/${year}/paper-${paperNumber}`,
+      label: `${year} Paper ${paperNumber}`,
+    });
+  }, [courseId, year, paperNumber]);
   /** Bumped to draw the whole paper again, with new numbers throughout. */
   const [round, setRound] = useState(0);
   const again = () => { setMade([]); setDone(0); setFailed(false); setRound(n => n + 1); };
@@ -152,6 +184,18 @@ export default function PracticePaperClient({
             Something went wrong drawing this paper. Reload to try again.
           </p>
         )}
+
+        {/* **A way back, in the row where the other actions are.**
+            Not in the breadcrumb: that describes where the paper sits, and the
+            crumb nearest to hand is the original paper, which most readers
+            never opened. This one names the place they actually left. */}
+        <Link
+          href={backTo.href}
+          className="inline-flex items-center gap-2 mt-5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Back to {backTo.label}
+        </Link>
 
         {!drawing && drawn.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 mt-5">

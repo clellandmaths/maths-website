@@ -248,6 +248,25 @@ function solveWithFractions(): Q {
 
 const lcm = (a: number, b: number) => Math.abs(a * b) / (gcd(Math.abs(a), Math.abs(b)) || 1);
 
+/**
+ * Is this fraction already in its lowest terms?
+ *
+ * **A paper never sets a fraction a pupil can cancel before starting.** Hand in
+ * every whole number of the numerator and then the denominator: the coefficient
+ * of the x term, the constant, the bottom line. A variable term with no number
+ * in front of it counts as 1, which is why (x + 8)/2 is fine and (3x - 6)/3 is
+ * not.
+ *
+ * Reported from the site against 2025 P2 Q3 and its siblings: the draw could
+ * offer -4x/2 or (3x - 6)/3, and a pupil's first move was to cancel it. That
+ * turns a three-mark question about lowest common multiples into an easier one
+ * the paper never set. All 197 exam variations were swept for the same fault
+ * and this was the only one — see `__checks__/unsimplified.ts`, which now holds
+ * every one of them to it.
+ */
+const lowestTerms = (...parts: number[]) =>
+  parts.map(Math.abs).reduce((a, b) => gcd(a, b)) === 1;
+
 function clearDenominators(): Q {
   for (let tries = 0; tries < 2000; tries++) {
     const v = pick(VARS);
@@ -261,6 +280,8 @@ function clearDenominators(): Q {
     if (shape === 1) {
       // p·v/m - q/n = k·v          the 2016 shape
       const p = getRandomInt(1, 5), q = getRandomInt(1, 9), k = nonZeroInt(-3, 3);
+      // Neither fraction may be cancellable before the pupil starts.
+      if (!lowestTerms(p, m) || !lowestTerms(q, n)) continue;
       question = `\\frac{${term(p, v)}}{${m}} - \\frac{${q}}{${n}} = ${term(k, v)}`;
       cleared = `${term(L / m * p, v)} - ${L / n * q} = ${term(L * k, v)}`;
       a = L / m * p - L * k;
@@ -268,6 +289,8 @@ function clearDenominators(): Q {
     } else if (shape === 2) {
       // v/m + c = (r·v + s)/n      the 2019 shape
       const c = nonZeroInt(-6, 6), r = nonZeroInt(-3, 3), s = nonZeroInt(-9, 9);
+      // v/m carries an implied 1 and is always in lowest terms; the other is not.
+      if (!lowestTerms(r, s, n)) continue;
       question = `\\frac{${v}}{${m}} ${c < 0 ? '-' : '+'} ${Math.abs(c)} = \\frac{${lin(r, s, v)}}{${n}}`;
       cleared = `${lin(L / m, L * c, v)} = ${lin(L / n * r, L / n * s, v)}`;
       a = L / m - L / n * r;
@@ -276,6 +299,7 @@ function clearDenominators(): Q {
       // (p·v + q)/m = r·v/n + c    the 2025 shape
       const p = getRandomInt(2, 6), q = nonZeroInt(-6, 6);
       const r = nonZeroInt(-5, 5), c = nonZeroInt(-4, 4);
+      if (!lowestTerms(p, q, m) || !lowestTerms(r, n)) continue;
       question = `\\frac{${lin(p, q, v)}}{${m}} = \\frac{${term(r, v)}}{${n}} ${c < 0 ? '-' : '+'} ${Math.abs(c)}`;
       cleared = `${lin(L / m * p, L / m * q, v)} = ${lin(L / n * r, L * c, v)}`;
       a = L / m * p - L / n * r;

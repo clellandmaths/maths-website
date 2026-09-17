@@ -204,7 +204,7 @@ export default async function PaperPage(
             National 5 only — it is the only course with audited variations. */}
         {courseId === 'n5' && (
           <Link
-            href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}`}
+            href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}?from=paper`}
             className={`inline-flex items-center gap-1.5 mt-4 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}
           >
             Generate a practice paper like this one
