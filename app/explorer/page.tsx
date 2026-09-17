@@ -1389,7 +1389,15 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             className="text-xs text-muted-dim hover:text-foreground-2 transition-colors"
                           >
                             <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
-                            Full screen from here
+                            {/* Short at the floor, full where there is room.
+                                Four words competing with Formulae and Watch
+                                Solution on one row broke one word per line at
+                                320px — four lines for a secondary link beside a
+                                two-line question. Adding words as the screen
+                                allows is the right way round; see the trap in
+                                docs/responsive.md about hiding them instead. */}
+                            <span className="sm:hidden">Full screen</span>
+                            <span className="hidden sm:inline">Full screen from here</span>
                           </button>
                           <div className="flex items-center gap-2">
                             {config.hasDataBooklet && (
