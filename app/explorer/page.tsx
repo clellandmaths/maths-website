@@ -1205,7 +1205,26 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
 
                             Identity above, description below — the same order
                             the browse card uses. */}
-                        <div className="flex items-start gap-3 mb-4">
+                        {/* **The topics and the marks get a line of their own.**
+
+                            The reorder pair is `p-3` at this width so it can be
+                            hit with a thumb, and with the re-roll, the bin and
+                            any QR the control cluster is about 150px of the
+                            326px inside the card. The number and the paper
+                            reference fit beside it; the chips underneath did
+                            not, because that column is then ~175px and `pl-11`
+                            takes 44 more of it aligning them under the label.
+                            A 150px chip like "Expanding brackets" could not
+                            share a line with anything, so each took one of its
+                            own, indented as though nested, and a generated
+                            question ran to nine lines before its maths started.
+
+                            So the chips come out of that column and sit on the
+                            header's own second line, where they have the whole
+                            card. `basis-full` on a wrapping row, which leaves
+                            the first line — number, reference, controls —
+                            exactly as it was at every width. */}
+                        <div className="flex flex-wrap items-start gap-3 mb-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 flex-wrap">
                               <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
@@ -1236,20 +1255,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             {/* An explicit boolean. `a?.length || b?.length` is
                                 `0` when both are empty arrays, and React renders
                                 a literal 0 rather than nothing. */}
-                            {Boolean(q.topics?.length || q.marks?.length) && (
-                              <div className="flex items-center gap-2 flex-wrap mt-2 pl-11">
-                                {q.topics?.slice(0, 2).map((topic) => (
-                                  <span
-                                    key={topic}
-                                    className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
-                                  >
-                                    {topic}
-                                  </span>
-                                ))}
-                                <Marks marks={q.marks} theme={theme} className="q-marks" />
-                              </div>
-                            )}
-                          </div>
+                                                      </div>
                           {/* Reorder buttons — compact horizontal */}
                           <div className="no-print flex items-center gap-0.5 shrink-0">
                             <button
@@ -1323,6 +1329,19 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 size={64}
                                 className="rounded"
                               />
+                            </div>
+                          )}
+                        {Boolean(q.topics?.length || q.marks?.length) && (
+                            <div className="basis-full flex items-center gap-2 flex-wrap mt-2 pl-11">
+                              {q.topics?.slice(0, 2).map((topic) => (
+                                <span
+                                  key={topic}
+                                  className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
+                                >
+                                  {topic}
+                                </span>
+                              ))}
+                              <Marks marks={q.marks} theme={theme} className="q-marks" />
                             </div>
                           )}
                         </div>
@@ -1399,7 +1418,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                               >
                                 <Play className="h-4 w-4" />
-                                {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
+                                <span className="sm:hidden">
+                                  {q.videoOf ? 'Worked example' : 'Solution'}
+                                </span>
+                                <span className="hidden sm:inline">
+                                  {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
+                                </span>
                               </button>
                             ) : hasMarkscheme(q.year, q.paperNumber) && (
                               <button

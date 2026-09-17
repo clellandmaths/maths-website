@@ -213,9 +213,28 @@ export default function QuestionCard({
           ? `${theme.border} ring-1 ring-foreground/10`
           : 'border-border hover:border-foreground/20'
       }`}>
-        {/* Header */}
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <div>
+        {/* **The topics and the marks get a line of their own.**
+
+            A card header is an identity column beside a `shrink-0` control
+            cluster, so the cluster takes its width first and the identity gets
+            the remainder. At 390px that remainder was about 140px, and the
+            chips underneath could not sit two abreast in it: "Fractions" took a
+            line, "2 Marks" took another, and the header stacked four rows deep
+            above a question worth two marks.
+
+            It is not a phone problem. At 1440px the same card offers 496px and
+            hands its chip row 344px, so a question tagged with two long topics
+            wrapped there too, with 150px of the card going spare beside it.
+
+            So the chips come out of that column and sit on the header's own
+            second line, where they have the whole card: `basis-full` on a
+            wrapping row. The first line — identity and controls — is what it
+            always was, at every width. The checkout card in
+            `app/explorer/page.tsx` grew the same fault and carries the same
+            fix, and `scripts/check-card-header.mjs` holds both to it at
+            320 / 390 / 768 / 1440. */}
+        <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
+          <div className="min-w-0">
             {variant ? (
               <p className="flex flex-wrap items-center gap-1.5 text-sm font-semibold">
                 <span className={`px-1.5 py-0.5 rounded text-[11px] ${theme.tint} ${theme.text}`}>
@@ -234,17 +253,6 @@ export default function QuestionCard({
                 {year} Paper {paperNumber} Q{fullQuestion.questionNumber}
               </p>
             )}
-            <div className="flex flex-wrap items-center gap-1.5 mt-1">
-              {mainTopics.slice(0, 2).map((topic) => (
-                <span
-                  key={topic}
-                  className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded"
-                >
-                  {topic}
-                </span>
-              ))}
-              <Marks marks={shown.marks} theme={theme} />
-            </div>
           </div>
           <div className="shrink-0 flex items-center gap-1">
             {/* Adding means different things on the two faces, so the control
@@ -304,6 +312,17 @@ export default function QuestionCard({
                 </button>
               )
             )}
+          </div>
+          <div className="basis-full flex flex-wrap items-center gap-1.5">
+            {mainTopics.slice(0, 2).map((topic) => (
+              <span
+                key={topic}
+                className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded"
+              >
+                {topic}
+              </span>
+            ))}
+            <Marks marks={shown.marks} theme={theme} />
           </div>
         </div>
 
