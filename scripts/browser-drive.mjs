@@ -8,19 +8,70 @@
  * not register on the React controls on this site, which cost an afternoon to
  * work out the first time.
  *
- * Not used by `check-responsive.mjs`, which had its own copy first and measures
- * 518 pages at four viewports — it has different needs and moving it is a
- * bigger change than it is worth.
+ * `check-responsive.mjs` does not use `withPage` — it had its own copy first
+ * and measures 518 pages at four viewports, so it has different needs and
+ * moving it is a bigger change than it is worth. It does import `ownProfile`
+ * and `sweepStaleProfiles` from here, because a profile leak fixed in one
+ * driver and not the other is not fixed.
  */
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdtempSync, rmSync, readdirSync, statSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, extname, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'out');
+
+/**
+ * **Every run gets its own profile directory, and takes it away again.**
+ *
+ * Chrome launched without `--user-data-dir` makes a temp profile of its own and
+ * removes it when it exits cleanly. This driver does not let it exit cleanly —
+ * it calls `kill()` — so every launch abandoned about 29MB under the system
+ * temp directory, named `HeadlessChrome<pid><nonce>`.
+ *
+ * Nobody noticed because one is nothing. But an 18-check suite is 18 of them,
+ * `check:contrast --all` is more, and they never expire: on 2026-09-17 there
+ * were **1,296 of them holding 36.4GB**, which filled the disk and stopped all
+ * work — including, for a while, every shell command, since each one writes its
+ * output to a file before it can be read.
+ *
+ * So the directory is ours: made here, passed to Chrome, and removed in the
+ * `finally` alongside the socket and the server. `rmSync` with `force` because
+ * tidying up must never be the thing that fails a check.
+ */
+export function ownProfile() {
+  return mkdtempSync(join(tmpdir(), 'cm-check-'));
+}
+
+/**
+ * Sweep profiles a killed run left behind, ours and Chrome's own.
+ *
+ * A check that crashes hard skips its `finally`, so self-healing matters more
+ * than tidiness here: without it the leak returns the first time something
+ * throws. Only touches directories this project or headless Chrome created, and
+ * only those over an hour old, so a concurrent run is never disturbed.
+ */
+export function sweepStaleProfiles() {
+  const dir = tmpdir();
+  const hourAgo = Date.now() - 60 * 60 * 1000;
+  let freed = 0;
+  try {
+    for (const name of readdirSync(dir)) {
+      if (!/^(cm-check-|HeadlessChrome|scoped_dir)/.test(name)) continue;
+      const path = join(dir, name);
+      try {
+        if (statSync(path).mtimeMs > hourAgo) continue;
+        rmSync(path, { recursive: true, force: true });
+        freed++;
+      } catch { /* in use, or gone already */ }
+    }
+  } catch { /* no temp dir listing — nothing to sweep */ }
+  return freed;
+}
 
 const TYPES = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
@@ -70,8 +121,17 @@ export async function withPage(opts, fn) {
     server.close();
     process.exit(1);
   }
+  // Ours, so it can be taken away again — see `ownProfile`. The sweep runs
+  // first so a previously killed run does not leave its profile for ever.
+  sweepStaleProfiles();
+  const profile = ownProfile();
+
   const chrome = spawn(CHROME, ['--headless=new', '--disable-gpu', '--no-sandbox',
-    '--hide-scrollbars', `--remote-debugging-port=${cdp}`, 'about:blank'], { stdio: 'ignore' });
+    '--hide-scrollbars', `--user-data-dir=${profile}`,
+    // The disk cache is the bulk of an abandoned profile, and a check has no
+    // use for one: every run starts cold against a freshly built `out/`.
+    '--disk-cache-size=1', '--media-cache-size=1',
+    `--remote-debugging-port=${cdp}`, 'about:blank'], { stdio: 'ignore' });
 
   let target = null;
   for (let i = 0; i < 60 && !target; i++) {
@@ -84,6 +144,7 @@ export async function withPage(opts, fn) {
   if (!target) {
     console.error('\n  Chrome never offered a page to drive. Nothing was checked.\n');
     chrome.kill(); server.close();
+    rmSync(profile, { recursive: true, force: true });
     process.exit(1);
   }
 
@@ -180,6 +241,11 @@ export async function withPage(opts, fn) {
     ws.close();
     chrome.kill();
     server.close();
+    // Chrome is killed rather than asked to leave, so it never tidies its own
+    // profile. Give it a moment to release its file handles, then remove it —
+    // `force` so a locked file can never turn a passing check into a failure.
+    await sleep(250);
+    rmSync(profile, { recursive: true, force: true });
   }
 }
 

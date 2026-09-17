@@ -31,7 +31,8 @@
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { readFile, writeFile, stat, readdir } from 'node:fs/promises';
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, rmSync } from 'node:fs';
+import { ownProfile, sweepStaleProfiles } from './browser-drive.mjs';
 import { join, extname, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -253,8 +254,21 @@ if (!existsSync(CHROME)) {
   server.close();
   process.exit(1);
 }
+// **Its own profile directory, removed when this exits.**
+//
+// Chrome makes one anyway when it is not given one, and never removes it here
+// because this script kills the process rather than asking it to leave. That
+// leak reached 1,296 abandoned profiles holding 36.4GB and filled the disk —
+// see `makeProfile` in browser-drive.mjs, which this borrows rather than
+// growing a third copy of the same fix.
+sweepStaleProfiles();
+const profile = ownProfile();
+
 const chrome = spawn(CHROME, ['--headless=new', '--disable-gpu', '--no-sandbox',
-  '--hide-scrollbars', `--remote-debugging-port=${CDP}`, 'about:blank'], { stdio: 'ignore' });
+  '--hide-scrollbars', `--user-data-dir=${profile}`,
+  // 518 pages at four viewports is a lot of cache nobody will ever read again.
+  '--disk-cache-size=1', '--media-cache-size=1',
+  `--remote-debugging-port=${CDP}`, 'about:blank'], { stdio: 'ignore' });
 
 let ws, id = 0;
 const pending = new Map();
@@ -528,11 +542,15 @@ try {
   try { ws?.close(); } catch { /* gone */ }
   chrome.kill();
   server.close();
+  rmSync(profile, { recursive: true, force: true });
   process.exit(1);
 } finally {
   try { ws?.close(); } catch { /* gone */ }
   chrome.kill();
   server.close();
+  // A moment for Chrome to drop its file handles, then take the profile away.
+  await new Promise(r => setTimeout(r, 250));
+  rmSync(profile, { recursive: true, force: true });
 }
 
 // ── compare with the baseline ──────────────────────────────────────────────
