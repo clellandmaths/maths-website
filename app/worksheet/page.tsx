@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip } from 'lucide-react';
+import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip, ArrowLeft } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
@@ -135,6 +135,33 @@ function SharedWorksheet() {
             {missing} question{missing === 1 ? '' : 's'} in this link could not be found and
             {missing === 1 ? ' has' : ' have'} been left out.
           </p>
+        )}
+
+        {/* **A way off this page, which it did not have.**
+
+            Reported: "open as a worksheet gets you all the normal options but
+            no way back". True — the two links here were an invalid-link
+            fallback and a footer offering to build your own. Neither is a way
+            back, so whoever arrived was stranded with the browser button.
+
+            **To the course, not to where you came from.** The obvious answer is
+            the page that opened this one, and it is the wrong one: a generated
+            paper redraws on every visit, so going "back" to it hands you a
+            different paper than the one you are holding. The course is the
+            honest destination — it is where this sheet's questions live and
+            where another paper can be had.
+
+            No plumbing, and it works for everyone. The sheet already names its
+            own course, so a pupil who was sent this link gets the same way on
+            as the teacher who made it. */}
+        {courseId && (
+          <Link
+            href={`/course/${courseId}`}
+            className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            {COURSE_NAMES[courseId] ?? 'All courses'}
+          </Link>
         )}
       </div>
 
