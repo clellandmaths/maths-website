@@ -1,11 +1,26 @@
 'use client';
 
-import { ArrowLeft } from 'lucide-react';
 import AnotherLikeThis from '@/components/AnotherLikeThis';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 
 /**
- * Full screen's two twin controls: draw another, and go back to yours.
+ * Full screen's draw-another control.
+ *
+ * **It used to hold the way back as well, and that is why the row moved.** The
+ * action row is centred, so adding a second button re-centred everything in it:
+ * the draw button slid 182px left, *Show Answer*, *Formulae* and *Watch
+ * Solution* went with it, and "Back to the question" landed 5px from where the
+ * draw button had been. Press *another* twice in the same place and the second
+ * press undid the first.
+ *
+ * The label made it worse — "Another like this one" became "Another one" once a
+ * twin was showing, 63px narrower, re-centring the row a second time. So
+ * `showing` is no longer passed: one label, one width, whatever is on the card.
+ * It stays true either way, because the draw is always modelled on the paper
+ * question rather than on the twin.
+ *
+ * The way back now sits in the header beside the words *New question*, which is
+ * where the twin announces itself.
  *
  * **Why they are not written inline in `QuestionPresenter`.** That component is
  * on the course templates and the Explorer, all of which sit inside 10 KB of JS
@@ -25,37 +40,25 @@ interface Props {
   courseId?: string;
   /** The paper question, never the twin — three presses stay anchored to it. */
   question: QuestionWithMetadata;
-  /** True while a twin is on the card. */
-  showing: boolean;
   alsoExclude: readonly QuestionWithMetadata[];
   onDrawn: (q: QuestionWithMetadata) => void;
-  onBack: () => void;
 }
 
 const BUTTON =
   'w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors disabled:opacity-60';
 
 export default function TwinControls({
-  courseId, question, showing, alsoExclude, onDrawn, onBack,
+  courseId, question, alsoExclude, onDrawn,
 }: Props) {
   return (
-    <>
-      <AnotherLikeThis
-        courseId={courseId}
-        question={question}
-        label={question.label}
-        showing={showing}
-        alsoExclude={alsoExclude}
-        onDrawn={onDrawn}
-        className={BUTTON}
-        noticeClassName="w-full text-center text-sm text-muted-foreground"
-      />
-      {showing && (
-        <button onClick={onBack} className={BUTTON}>
-          <ArrowLeft className="h-5 w-5" />
-          Back to the question
-        </button>
-      )}
-    </>
+    <AnotherLikeThis
+      courseId={courseId}
+      question={question}
+      label={question.label}
+      alsoExclude={alsoExclude}
+      onDrawn={onDrawn}
+      className={BUTTON}
+      noticeClassName="w-full text-center text-sm text-muted-foreground"
+    />
   );
 }

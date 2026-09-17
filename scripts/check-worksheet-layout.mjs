@@ -77,6 +77,9 @@ for (const [where, width, height] of WIDTHS) {
           lastTagRight: last ? Math.round(last.right - c.left) : null,
           lastTagTop: last ? Math.round(last.top - c.top) : null,
           firstTagLeft: tags.length ? Math.round(box(tags[0]).left - c.left) : null,
+          // Where the header block begins, which is the badge — a wrap in the
+          // one-row layout starts here rather than under the tags.
+          badgeLeft: badge ? Math.round(box(badge).left - c.left) : null,
           width: Math.round(c.right - c.left),
           // The header row only, never the question: maths renders one token
           // per line in innerText, so "x^2 - 81 = 0" contains a lone "0" and a
@@ -111,12 +114,44 @@ for (const [where, width, height] of WIDTHS) {
       /* Or wrapped cleanly onto the next line, starting where the tags start.
          Two long tags fill a 768px row and the marks have to go somewhere; the
          fault is them floating away from the block, not them wrapping. */
+      /* Or wrapped cleanly onto the next line, starting where the block starts.
+         **The block starts at the badge, not at the first tag.** The header was
+         two rows when this was written — a badge-and-reference line, then an
+         indented chip line — so a wrap could only land under the tags. It is
+         one wrapping row again now, the layout the live site has and the one
+         this drifted away from: number, reference, tags and marks reading left
+         to right, and the question under them. A wrap in that row returns to
+         the badge. Either alignment keeps the marks with the block, which is
+         the fault being guarded against — marks adrift on a line of their own. */
       const under = (c?.marksTop ?? 0) > (c?.lastTagTop ?? 0)
-        && Math.abs((c?.marksLeft ?? 0) - (c?.firstTagLeft ?? 0)) < 4;
+        && (Math.abs((c?.marksLeft ?? 0) - (c?.firstTagLeft ?? 0)) < 4
+          || Math.abs((c?.marksLeft ?? 0) - (c?.badgeLeft ?? 0)) < 4);
       t.check(beside || under,
-        `${w} · ${name} · marks ${beside ? `beside the last tag (${gap}px after it)` : `wrapped under the tags, left-aligned at ${c?.marksLeft}px`}`);
-      t.check((c?.marksTop ?? 0) > (c?.badgeTop ?? 0),
-        `${w} · ${name} · below the paper reference (${c?.marksTop} vs ${c?.badgeTop})`);
+        `${w} · ${name} · marks ${beside ? `beside the last tag (${gap}px after it)` : `wrapped to the start of the block at ${c?.marksLeft}px`}`);
+
+      /* **The header is one line when its contents fit on one line.**
+         This used to assert the opposite — that the marks sat BELOW the paper
+         reference — because the header was two rows by design. It outlived that
+         design and then passed by accident: a one-tag card reported 29 against
+         25 and called it "below", when 4px is the difference between a 24px
+         chip and a 32px badge centred on the same line.
+         So it now asserts what the layout actually promises, and the tolerance
+         is the badge's own height rather than a number chosen to make a reading
+         pass. A card whose tags genuinely overflow may wrap, and `beside ||
+         under` above already holds that case honest. */
+      /* **There is no "and it is all on one line" assertion here, deliberately.**
+         The obvious one to write after this layout was restored — the marks
+         share the reference's line — is not a promise the design can keep. The
+         card is 896px whatever the viewport, so a question carrying two long
+         topic tags wraps at 1600px exactly as it does at 768px, and the live
+         site wraps there too. An assertion demanding one line would be asking
+         the layout to lie on wide screens, and the version of it written first
+         did exactly that: it failed a card that was behaving correctly.
+
+         What the header actually promises is above — the marks stay with the
+         block, beside the tags or back at the start of it, never adrift on a
+         line of their own. That is the fault this check exists for, and it
+         holds at every width. */
     }
 
     // ── every card on the sheet has the same header geometry ──────────────

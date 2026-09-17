@@ -232,11 +232,33 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             {/* A twin says what it is and where it came from. Leaving the paper
                 question's own label up there would credit this question to a
                 paper it is not in. */}
-            <p className="text-muted-dim text-xs mt-0.5">
-              {twin
-                ? `New question${twin.basedOn?.[twin.parentIndex ?? 0]
-                    ? ` · based on ${twin.basedOn[twin.parentIndex ?? 0]}` : ''}`
-                : questionLabel(question)}
+            {/* **The way back belongs to the twin, not to the action row.**
+
+                It was a second button in that row, and the row is centred:
+                adding it slid the draw button 182px left and put "Back to the
+                question" within 5px of where that button had been, so pressing
+                *another* twice in the same place undid it. Every other control
+                in the row moved with it.
+
+                Here it costs the row nothing and it sits with the words that
+                say why it exists — this line is where the twin announces it is
+                not the paper question. */}
+            <p className="text-muted-dim text-xs mt-0.5 flex items-center justify-end gap-2">
+              <span>
+                {twin
+                  ? `New question${twin.basedOn?.[twin.parentIndex ?? 0]
+                      ? ` · based on ${twin.basedOn[twin.parentIndex ?? 0]}` : ''}`
+                  : questionLabel(question)}
+              </span>
+              {twin && (
+                <button
+                  onClick={() => { setTwin(null); setShowAnswer(false); }}
+                  className={`inline-flex items-center gap-1 whitespace-nowrap rounded px-2 py-1 font-medium ${theme.text} hover:bg-foreground/10 transition-colors`}
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" />
+                  Back to the question
+                </button>
+              )}
             </p>
             <Marks marks={shown.marks} theme={theme} className="justify-end mt-1" />
           </div>
@@ -410,14 +432,12 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 <TwinControls
                   courseId={courseId}
                   question={question}
-                  showing={!!twin}
                   alsoExclude={drawn}
                   onDrawn={(made) => {
                     setTwin(made);
                     setDrawn(d => [...d, made]);
                     setShowAnswer(false);
                   }}
-                  onBack={() => { setTwin(null); setShowAnswer(false); }}
                 />
               )}
             </div>

@@ -1,140 +1,140 @@
 {
-  "recorded": "2026-09-14",
+  "recorded": "2026-09-17",
   "headroomBytes": 10240,
   "note": "Sum of unique /_next/static/chunks/*.js referenced by the worst page of each template.",
   "templates": {
     "404.html": {
-      "bytes": 568782,
+      "bytes": 569251,
       "worst": "404.html",
       "pages": 1
     },
     "_not-found.html": {
-      "bytes": 568782,
+      "bytes": 569251,
       "worst": "_not-found.html",
       "pages": 1
     },
     "academy.html": {
-      "bytes": 568782,
+      "bytes": 569251,
       "worst": "academy.html",
       "pages": 1
     },
     "connect.html": {
-      "bytes": 568782,
+      "bytes": 569251,
       "worst": "connect.html",
       "pages": 1
     },
     "course/*.html": {
-      "bytes": 899944,
+      "bytes": 907434,
       "worst": "course\\ah.html",
       "pages": 5
     },
     "course/*/*.html": {
-      "bytes": 845673,
+      "bytes": 848431,
       "worst": "course\\n5\\generate.html",
       "pages": 11
     },
     "course/ah/*/*.html": {
-      "bytes": 893503,
+      "bytes": 903581,
       "worst": "course\\ah\\practice\\binomial-theorem.html",
       "pages": 14
     },
     "course/ah/notes/*/*.html": {
-      "bytes": 849200,
+      "bytes": 850204,
       "worst": "course\\ah\\notes\\binomial-theorem\\binomial-approximation.html",
       "pages": 59
     },
     "course/ah/papers/*/*.html": {
-      "bytes": 846267,
+      "bytes": 850338,
       "worst": "course\\ah\\papers\\2016\\paper-1.html",
       "pages": 16
     },
     "course/higher-apps/*/*.html": {
-      "bytes": 893503,
+      "bytes": 903581,
       "worst": "course\\higher-apps\\practice\\accumulation-with-irregular-payments.html",
       "pages": 52
     },
     "course/higher-apps/notes/*/*.html": {
-      "bytes": 849200,
+      "bytes": 850204,
       "worst": "course\\higher-apps\\notes\\finance\\accumulation-calculations.html",
       "pages": 54
     },
     "course/higher-apps/papers/*/*.html": {
-      "bytes": 846267,
+      "bytes": 850338,
       "worst": "course\\higher-apps\\papers\\2022\\paper-1.html",
       "pages": 6
     },
     "course/higher/*/*.html": {
-      "bytes": 893503,
+      "bytes": 903581,
       "worst": "course\\higher\\practice\\circle.html",
       "pages": 10
     },
     "course/higher/notes/*/*.html": {
-      "bytes": 849200,
+      "bytes": 850204,
       "worst": "course\\higher\\notes\\circles\\circles-eq.html",
       "pages": 101
     },
     "course/higher/papers/*/*.html": {
-      "bytes": 846267,
+      "bytes": 850338,
       "worst": "course\\higher\\papers\\2015\\paper-1.html",
       "pages": 20
     },
     "course/n5-apps/*/*.html": {
-      "bytes": 893503,
+      "bytes": 903581,
       "worst": "course\\n5-apps\\practice\\3d-container-packing.html",
       "pages": 28
     },
     "course/n5-apps/notes/*/*.html": {
-      "bytes": 849200,
+      "bytes": 850204,
       "worst": "course\\n5-apps\\notes\\finance\\budgeting-best-deals.html",
       "pages": 28
     },
     "course/n5-apps/papers/*/*.html": {
-      "bytes": 846267,
+      "bytes": 850338,
       "worst": "course\\n5-apps\\papers\\2018\\paper-1.html",
       "pages": 16
     },
     "course/n5/*/*.html": {
-      "bytes": 893503,
+      "bytes": 903581,
       "worst": "course\\n5\\practice\\3d-coordinates.html",
       "pages": 34
     },
     "course/n5/generate/paper/*/*.html": {
-      "bytes": 846092,
+      "bytes": 845823,
       "worst": "course\\n5\\generate\\paper\\2014\\paper-1.html",
       "pages": 22
     },
     "course/n5/notes/*/*.html": {
-      "bytes": 849200,
+      "bytes": 850204,
       "worst": "course\\n5\\notes\\algebra\\algebraic-fractions.html",
       "pages": 35
     },
     "course/n5/papers/*/*.html": {
-      "bytes": 846267,
+      "bytes": 850338,
       "worst": "course\\n5\\papers\\2014\\paper-1.html",
       "pages": 22
     },
     "exam-hall.html": {
-      "bytes": 918144,
+      "bytes": 925370,
       "worst": "exam-hall.html",
       "pages": 1
     },
     "explorer.html": {
-      "bytes": 1020622,
+      "bytes": 1010474,
       "worst": "explorer.html",
       "pages": 1
     },
     "index.html": {
-      "bytes": 843438,
+      "bytes": 843911,
       "worst": "index.html",
       "pages": 1
     },
     "privacy.html": {
-      "bytes": 568782,
+      "bytes": 569251,
       "worst": "privacy.html",
       "pages": 1
     },
     "worksheet.html": {
-      "bytes": 943813,
+      "bytes": 925970,
       "worst": "worksheet.html",
       "pages": 1
     }
