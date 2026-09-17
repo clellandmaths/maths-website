@@ -1195,67 +1195,62 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         key={`ws-${q.year}-${q.paperNumber}-${q.questionIndex}`}
                         className={`worksheet-question bg-card border border-border rounded-xl p-4 sm:p-6${index === lastMovedIndex ? ' card-just-moved' : ''}`}
                       >
-                        {/* **Two rows, and the controls pinned to the top.**
-                            One wrapping row put the reorder buttons at the
-                            vertical middle of however tall the chips happened to
-                            be, and left the marks stranded alone on a third line
-                            looking centred. Which of those happened depended on
-                            how many topic tags a question carried, so the header
-                            changed shape down the sheet.
+                        {/* **One wrapping row, and the controls pinned to the top.**
 
-                            Identity above, description below — the same order
-                            the browse card uses. */}
-                        {/* **The topics and the marks get a line of their own.**
+                            This is the layout that is live, and it is right:
+                            number, reference, topics and marks read left to
+                            right on one line, and the question starts under
+                            them. It wraps only when the words genuinely do not
+                            fit.
 
-                            The reorder pair is `p-3` at this width so it can be
-                            hit with a thumb, and with the re-roll, the bin and
-                            any QR the control cluster is about 150px of the
-                            326px inside the card. The number and the paper
-                            reference fit beside it; the chips underneath did
-                            not, because that column is then ~175px and `pl-11`
-                            takes 44 more of it aligning them under the label.
-                            A 150px chip like "Expanding brackets" could not
-                            share a line with anything, so each took one of its
-                            own, indented as though nested, and a generated
-                            question ran to nine lines before its maths started.
+                            It had drifted twice. First into two rows, to stop
+                            the reorder buttons sitting at the vertical middle
+                            of however tall the chips were — but `items-start`
+                            pins them to the top without costing a line, which
+                            is what it does here. Then the chip row was given
+                            `basis-full` to fix a phone, which forced the second
+                            line at **every** width and on paper: a printed
+                            sheet pushed every question down by a row it did not
+                            need.
 
-                            So the chips come out of that column and sit on the
-                            header's own second line, where they have the whole
-                            card. `basis-full` on a wrapping row, which leaves
-                            the first line — number, reference, controls —
-                            exactly as it was at every width. */}
-                        <div className="flex flex-wrap items-start gap-3 mb-4">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-3 flex-wrap">
-                              <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
-                                {index + 1}
+                            `flex-wrap` is the whole responsive story. At 320px
+                            the chips fall to a second line because they do not
+                            fit, which is honest; at any width that holds them
+                            they stay on the first, which is what print gets.
+                            No breakpoint, no indent, nothing to keep in step
+                            with a device. */}
+                        <div className="flex items-start gap-3 mb-4">
+                          <div className="flex flex-1 flex-wrap items-center gap-3 min-w-0">
+                            <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
+                              {index + 1}
+                            </span>
+                            {/* A generated question has no paper, so building
+                                the caption from year and paper number reads
+                                " Paper 0 Q1". `label` is what it carries
+                                instead — the skill it practises. */}
+                            <span className="text-sm text-muted-dim">
+                              {isGenerated(q)
+                                ? q.label
+                                : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`}
+                            </span>
+                            {isGenerated(q) && (
+                              <span className={`q-source px-2 py-1 ${theme.tint} ${theme.text} text-xs font-medium rounded`}>
+                                New question
                               </span>
-                              {/* A generated question has no paper, so building
-                                   the caption from year and paper number reads
-                                   " Paper 0 Q1". `label` is what it carries
-                                   instead — the skill it practises. */}
-                              <span className="text-sm text-muted-dim">
-                                {isGenerated(q)
-                                  ? q.label
-                                  : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`}
+                            )}
+                            {q.topics?.slice(0, 2).map((topic) => (
+                              <span
+                                key={topic}
+                                className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
+                              >
+                                {topic}
                               </span>
-                              {isGenerated(q) && (
-                                <span className={`q-source px-2 py-1 ${theme.tint} ${theme.text} text-xs font-medium rounded`}>
-                                  New question
-                                </span>
-                              )}
-                            </div>
-
-                            {/* What it is about, and what it is worth. Reading
-                                left to right in one line rather than the marks
-                                being flung to the far edge — `@media print`
-                                still sets `margin-left: auto` on `.q-marks`, so
-                                a printed sheet keeps the exam paper's own
-                                convention of marks hard right. */}
-                            {/* An explicit boolean. `a?.length || b?.length` is
-                                `0` when both are empty arrays, and React renders
-                                a literal 0 rather than nothing. */}
-                                                      </div>
+                            ))}
+                            {/* `@media print` sets `margin-left: auto` on
+                                `.q-marks`, so a printed sheet keeps the exam
+                                paper's own convention of marks hard right. */}
+                            <Marks marks={q.marks} theme={theme} className="q-marks" />
+                          </div>
                           {/* Reorder buttons — compact horizontal */}
                           <div className="no-print flex items-center gap-0.5 shrink-0">
                             <button
@@ -1329,19 +1324,6 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                                 size={64}
                                 className="rounded"
                               />
-                            </div>
-                          )}
-                        {Boolean(q.topics?.length || q.marks?.length) && (
-                            <div className="basis-full flex items-center gap-2 flex-wrap mt-2 pl-11">
-                              {q.topics?.slice(0, 2).map((topic) => (
-                                <span
-                                  key={topic}
-                                  className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
-                                >
-                                  {topic}
-                                </span>
-                              ))}
-                              <Marks marks={q.marks} theme={theme} className="q-marks" />
                             </div>
                           )}
                         </div>
