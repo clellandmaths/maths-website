@@ -51,6 +51,7 @@
     "check:cardheader": "node scripts/check-card-header.mjs",
     "check:hydration": "node scripts/check-hydration.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
+    "check:nontext": "node scripts/check-nontext-contrast.mjs",
     "audit:contrast": "node scripts/check-contrast.mjs --all",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },

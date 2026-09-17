@@ -135,7 +135,7 @@ export default function FilterSidebar({
                 type="checkbox"
                 checked={selectedYears.includes(year)}
                 onChange={() => toggleYear(year)}
-                className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
+                className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
               />
               <span className="text-foreground-2 group-hover:text-foreground text-sm">
                 {year}
@@ -157,7 +157,7 @@ export default function FilterSidebar({
               type="checkbox"
               checked={selectedPapers.includes(1)}
               onChange={() => togglePaper(1)}
-              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
+              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
             />
             <span className="text-foreground-2 group-hover:text-foreground text-sm">
               Paper 1 (Non-Calculator)
@@ -168,7 +168,7 @@ export default function FilterSidebar({
               type="checkbox"
               checked={selectedPapers.includes(2)}
               onChange={() => togglePaper(2)}
-              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
+              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
             />
             <span className="text-foreground-2 group-hover:text-foreground text-sm">
               Paper 2 (Calculator)
@@ -249,7 +249,7 @@ export default function FilterSidebar({
                           type="checkbox"
                           checked={selectedSubtopics.includes(subtopics[0])}
                           onChange={() => toggleSubtopic(subtopics[0])}
-                          className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
+                          className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
                         />
                         <span className="text-foreground-2 group-hover:text-foreground font-medium text-sm">
                           {mainTopic}
@@ -281,7 +281,7 @@ export default function FilterSidebar({
                             if (el) el.indeterminate = someSelected;
                           }}
                           onChange={() => selectAllInTopic(mainTopic)}
-                          className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
+                          className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
                         />
                         <span className="text-foreground-2 group-hover:text-foreground font-medium text-sm">
                           {mainTopic}
@@ -304,7 +304,7 @@ export default function FilterSidebar({
                               type="checkbox"
                               checked={selectedSubtopics.includes(subtopic)}
                               onChange={() => toggleSubtopic(subtopic)}
-                              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-slate-900`}
+                              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
                             />
                             <span className="text-muted-foreground group-hover:text-foreground-2 text-sm">
                               {subtopic}
