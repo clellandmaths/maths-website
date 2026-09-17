@@ -1723,16 +1723,52 @@ function CourseSelector({ onSelect }: { onSelect: (course: Course) => void }) {
 }
 
 export default function ExplorerPage() {
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(() => {
-    if (typeof window === 'undefined') return null;
+  /**
+   * Which course the Explorer is showing — decided **after** mount.
+   *
+   * **This was a lazy `useState` initialiser reading `location` and
+   * `localStorage`, and it was the hydration mismatch `PracticeModes`
+   * documents by name.** This is a static export: `/explorer` is built once,
+   * with no query string in existence, so the initialiser returned null at
+   * build time and the shipped HTML is the course chooser. In a browser the
+   * same initialiser found `?c=n5` and returned National 5, so React's first
+   * client render disagreed with the HTML it was hydrating — and React does
+   * not patch a mismatch, it discards the server-rendered tree and rebuilds
+   * the whole page. On the heaviest page on the site, for every shared link
+   * and every returning visitor.
+   *
+   * It had already cost more than that. The teardown also wiped the
+   * `data-theme` attribute off `<html>`, which is why `app/layout.tsx` carries
+   * a `MutationObserver` to put it back; that file names this mismatch.
+   *
+   * **The visible sequence does not change.** The chooser was already being
+   * shown and then replaced — that was the teardown. Now it is an ordinary
+   * state update, and the built HTML is kept and enhanced rather than thrown
+   * away.
+   *
+   * The lint rule against `setState` in an effect is right about state that
+   * can be derived while rendering. This is the exception it names: reading
+   * from an external system — the URL and storage — neither of which exists
+   * when this page is built.
+   */
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
+  useEffect(() => {
     // A shared worksheet names its own course, and it wins: a recipient whose
     // last course was Higher must still land in National 5 to see a National 5
     // sheet, rather than meeting the chooser or an empty worksheet.
     const shared = new URLSearchParams(window.location.search).get('c');
-    if (COURSE_IDS.includes(shared as Course)) return shared as Course;
+    if (COURSE_IDS.includes(shared as Course)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedCourse(shared as Course);
+      return;
+    }
     const saved = localStorage.getItem('preferredCourse');
-    return COURSE_IDS.includes(saved as Course) ? (saved as Course) : null;
-  });
+    if (COURSE_IDS.includes(saved as Course)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedCourse(saved as Course);
+    }
+  }, []);
 
   const handleSelectCourse = (course: Course) => {
     localStorage.setItem('preferredCourse', course);
