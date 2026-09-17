@@ -52,6 +52,7 @@
     "check:hydration": "node scripts/check-hydration.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:nontext": "node scripts/check-nontext-contrast.mjs",
+    "check:print": "node scripts/check-print.mjs",
     "audit:contrast": "node scripts/check-contrast.mjs --all",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },
