@@ -261,6 +261,75 @@ export interface ToWorksheetOptions {
   parentIndex?: number;
 }
 
+/** A lettered part opens a question line. `(a + b)` is algebra, not a part. */
+const QUESTION_PART = /(?:^|<br>\s*)\(([a-h])\)/g;
+
+/**
+ * A step names the part it belongs to in a leading `<strong>`, sometimes
+ * numbered within it: `<strong>(c) 2.</strong>`.
+ */
+const STEP_PART = /^\s*<strong>\(([a-h])\)/;
+
+/**
+ * What each lettered part is worth, or null if the question has no parts.
+ *
+ * **Three different facts wear the word "marks" here, and conflating any two of
+ * them is the bug this exists to prevent.** The *total* is what the question is
+ * worth. The *step* marks are what each line of the worked solution earns —
+ * six of them on a question with three parts. The *part* marks are what the
+ * paper prints beside `(a)`, `(b)`, `(c)`, and they are what the website's
+ * `Marks` renders as a breakdown.
+ *
+ * Only the total used to travel, which was right for the 187 single-part
+ * variations and wrong for the ten that ask lettered parts: those printed
+ * `6 Marks` where the paper they clone prints `(1, 1, 4) 6 Marks`, so a pupil
+ * budgeting time could not see that part (c) carried four of the six.
+ *
+ * **Derived, not authored.** Every worked step already opens by naming its
+ * part, because the solution is written to be read against the question, so
+ * grouping the step marks by that label *is* the per-part split. Ten
+ * hand-written arrays would be ten more things to keep in step with a
+ * markscheme; this cannot fall out of step with the steps it is made from.
+ *
+ * The derivation is checked against a fact written independently of it: each
+ * variation's `route` records the markscheme's own split in prose, and for all
+ * ten this reproduces it exactly — `2 + 1`, `1 + 2`, `1 + 1 + 4`, `3 + 2`,
+ * `4 + 2`, `1 + 3`. `multipart.ts` is where that comparison lives.
+ *
+ * Returns null rather than guessing, and every condition below is a way the
+ * split could be wrong rather than merely absent: an unlabelled step means
+ * marks would silently vanish from whichever part it belonged to; a part with
+ * nothing against it means the labels and the question disagree about how many
+ * parts there are; a sum that misses the total means the two disagree about the
+ * size of the question. In each case the total alone is the honest answer, and
+ * that is what the caller falls back to.
+ */
+export function partMarks(q: GeneratedQuestion): number[] | null {
+  const steps = q.solutionSteps ?? [];
+  const stepMarks = q.stepMarks;
+  if (!steps.length || !stepMarks?.length || steps.length !== stepMarks.length) return null;
+
+  const asked = [...new Set(
+    [...q.questionLines.join('<br>').matchAll(QUESTION_PART)].map(m => m[1]),
+  )];
+  if (asked.length < 2) return null;
+
+  const byPart = new Map<string, number>();
+  for (const [i, step] of steps.entries()) {
+    const letter = step.match(STEP_PART)?.[1];
+    if (!letter) return null;                       // a step belonging to nothing
+    byPart.set(letter, (byPart.get(letter) ?? 0) + stepMarks[i]);
+  }
+
+  const split = asked.map(letter => byPart.get(letter) ?? 0);
+  if (split.some(n => n <= 0)) return null;         // a part nothing was awarded for
+  if (byPart.size !== asked.length) return null;    // a step labelled for a part never asked
+  const total = stepMarks.reduce((a, b) => a + b, 0);
+  if (split.reduce((a, b) => a + b, 0) !== total) return null;
+
+  return split;
+}
+
 /**
  * `GeneratedQuestion` → the website's question shape.
  *
@@ -306,21 +375,17 @@ export function toWorksheetQuestion(
   // step, which is what a hint shows.
   const question = toSiteMaths(q.questionLines.join('<br><br>'));
 
-  // The total, as one part — not the per-step split.
-  //
-  // The website's `Marks` prints `marks` as a per-*part* breakdown whenever
-  // there is more than one entry. A generated question handing it [1, 1, 1]
-  // would read "(1, 1, 1) 3 Marks", as though the pupil were answering three
-  // lettered parts; a paper question worth three marks in one part reads
-  // "3 Marks". The per-step split is a different fact and travels as one.
+  // The per-part split where the question has parts, the total where it does
+  // not. Never the per-step split, which is a third thing — see `partMarks`.
   const total = q.stepMarks?.reduce((a, b) => a + b, 0);
+  const parts = partMarks(q);
 
   return {
     question,
     answer: toSiteMaths(q.finalAnswer),
     steps: q.solutionSteps?.map(toSiteMaths),
     stepMarks: q.stepMarks,
-    ...(total ? { marks: [total] } : {}),
+    ...(parts ? { marks: parts } : total ? { marks: [total] } : {}),
     topics: q.webTopics ?? [],
     // No video stands behind a generated question and none ever will — the
     // worked steps are what it has instead. Every surface on the site already
