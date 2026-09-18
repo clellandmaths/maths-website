@@ -157,6 +157,20 @@ interface OpOpts {
   maxDen?: number;
   /** Mixed numbers, or plain proper fractions. */
   useMixed: boolean;
+  /**
+   * **One of the two is a plain proper fraction**, as the paper writes it.
+   *
+   * 2025 P1 Q1 is `2 4/5 x 2/7`, 2014 P1 Q1 is `5/12 x 2 2/9` and 2019 P1 Q2
+   * is `3/8 x 1 5/7` - three papers, one mixed number and one proper fraction
+   * every time, and the mixed one on either side. `useMixed` alone makes both
+   * terms mixed, which is a different question: two conversions before the
+   * multiplication rather than one, and the scheme's first row shows one
+   * (`14/5 x 2/7`).
+   *
+   * Set only where the papers have been read. The other topics `operation`
+   * serves keep their own shape until their own questions are reviewed.
+   */
+  oneProper?: true;
   subTopic: string;
   variationId: string;
   /**
@@ -241,10 +255,20 @@ export const MAX_COMMON = 21;
 const MAX_DIVIDE_MIXED_DEN = 20;
 const MAX_BRACKET_DEN = 40;
 
-function operation({ op, useMixed, subTopic, variationId, stepMarks, maxDen }: OpOpts): Q {
+function operation(
+  { op, useMixed, oneProper, subTopic, variationId, stepMarks, maxDen }: OpOpts,
+): Q {
   for (let tries = 0; tries < 1200; tries++) {
-    const x = useMixed ? mixedTerm(op === 'subtract' ? 2 : 1, 5) : properTerm(PROPER_DEN(op));
-    const y = useMixed ? mixedTerm(1, op === 'add' || op === 'subtract' ? 3 : 2) : properTerm(PROPER_DEN(op));
+    // Which side carries the whole number, where only one of them does. Both
+    // orders are in the papers: 2025 P1 Q1 leads with the mixed number, 2014
+    // P1 Q1 and 2019 P1 Q2 lead with the proper fraction.
+    const mixedFirst = getRandomInt(0, 1) === 0;
+    const x = !useMixed || (oneProper && !mixedFirst)
+      ? properTerm(PROPER_DEN(op))
+      : mixedTerm(op === 'subtract' ? 2 : 1, 5);
+    const y = !useMixed || (oneProper && mixedFirst)
+      ? properTerm(PROPER_DEN(op))
+      : mixedTerm(1, op === 'add' || op === 'subtract' ? 3 : 2);
 
     // add and subtract need different denominators, or there is no skill in it
     if ((op === 'add' || op === 'subtract') && x.d === y.d) continue;
@@ -280,6 +304,10 @@ function operation({ op, useMixed, subTopic, variationId, stepMarks, maxDen }: O
     const a = value(x), b = value(y);
     const r = COMBINE[op](a, b);
     if (r.n <= 0) continue;                       // no N5 question wants a negative
+    // **"Give your answer in its simplest form" has to have something to do.**
+    // 2 2/3 x 1 1/2 is 4, and a whole number answers that instruction before
+    // the pupil reads it. The three papers answer 4/5, 25/27 and 9/14.
+    if (oneProper && r.n % r.d === 0) continue;   // r is unreduced here
     if (r.n > (useMixed ? 300 : 120)) continue;   // hold to the scale the papers use
 
     // Does it need simplifying *as the pupil arrives at it*?
@@ -517,7 +545,7 @@ const N5_GENERATORS: Record<string, () => Q> = {
     subTopic: 'Multiplying Fractions', variationId: 'fractions.multiply',
   }),
   'Multiplying Mixed Numbers': () => operation({
-    op: 'multiply', useMixed: true,
+    op: 'multiply', useMixed: true, oneProper: true,
     subTopic: 'Multiplying Mixed Numbers', variationId: 'fractions.multiply-mixed',
     stepMarks: [1, 1],   // 2025 P1 Q1, 2014 P1 Q1, 2019 P1 Q2
   }),

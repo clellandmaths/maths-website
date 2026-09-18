@@ -205,6 +205,22 @@ export type Element =
   | {
       kind: 'label'; text: string; anchor: Pt; away: Pt; small?: boolean;
       /**
+       * Sit **on** the anchor rather than being pushed off it.
+       *
+       * Every other label names a line or a point and has to stand clear of
+       * it. A letter naming a **region** — the "A" and "B" inside the two
+       * halves of 2017 P2 Q7's joined triangle — is the opposite: it belongs
+       * in the middle of the space it names, and any push moves it towards an
+       * edge. On a shallow triangle that push put the letter exactly on the
+       * base.
+       *
+       * The clearance rules still apply. A region label earns its place by the
+       * region being big enough to hold it, which is why the routines using
+       * this seat it at the **incentre** — the point furthest from all three
+       * sides — rather than the centroid.
+       */
+      centred?: boolean;
+      /**
        * `tick` marks a number printed against an axis as part of its *scale*.
        *
        * A scale is read by comparing one number with the next, so two of them

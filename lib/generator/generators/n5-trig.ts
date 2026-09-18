@@ -47,18 +47,37 @@ const times = (k: number, tex: string): string =>
 const dp1 = (v: number): string => v.toFixed(1);
 
 // ── solve a trigonometric equation ───────────────────────────────────────
-//    2014 P2 Q12, 2016 P2 Q14, 2018 P2 Q8, 2019 P2 Q14, 2022 P2 Q9, 2024 P2 Q11
+//    sin  2018 P2 Q8, 2022 P2 Q9, 2024 P2 Q11
+//    cos  2014 P2 Q12, 2019 P2 Q14
+//    tan  2016 P2 Q14, 2026 P2 Q8
 
-function solveEquation(): Q {
+/**
+ * **The ratio is the question, so the clone takes it from the paper.**
+ *
+ * Seven papers ask this and all seven are the same three marks with the same
+ * scheme wording — rearrange, find one value, find the other. What differs is
+ * which ratio, and that is not a number: the second solution comes from a
+ * different quadrant rule for each, which is where the third mark goes.
+ *
+ *   sin   2018 P2 Q8, 2022 P2 Q9, 2024 P2 Q11     second value 180 - x
+ *   cos   2014 P2 Q12, 2019 P2 Q14                second value 360 - x
+ *   tan   2016 P2 Q14, 2026 P2 Q8                 second value 180 + x
+ *
+ * This drew the ratio at random, so pressing Variation on a cos paper returned
+ * a sin question two times in five. Within each ratio the papers really are the
+ * same question with different numbers — including the sign, which follows from
+ * them — so each ratio gets one variation and no more.
+ */
+function solveEquation(fn: 'sin' | 'cos' | 'tan'): Q {
   for (let tries = 0; tries < 400; tries++) {
-    const fn = pick(['sin', 'sin', 'cos', 'cos', 'tan'] as const);
     const a = getRandomInt(2, 20);
     const b = getRandomInt(-9, 9);
     const c = getRandomInt(-9, 12);
     if (b === c) continue;                          // the ratio would be zero
     const r = (c - b) / a;
-    // a fifth of the time the ratio is negative, which the papers have not yet
-    // used but the specification allows and pupils get wrong
+    // A fifth of the time the ratio is negative, which two of the seven papers
+    // are — 2016's tan x = -9/2 and 2019's cos x = -1/5. (This used to say the
+    // papers had not used one.)
     if (r > 0 === (getRandomInt(1, 5) === 1)) continue;
     if (fn !== 'tan' && Math.abs(r) >= 0.98) continue;
     if (Math.abs(r) < 0.06) continue;
@@ -84,29 +103,38 @@ function solveEquation(): Q {
     const g = gcd(Math.abs(c - b), a) || 1;
     const ratioTex = a / g === 1 ? `${(c - b) / g}` : `\\frac{${(c - b) / g}}{${a / g}}`;
     const lhs = `${times(a, tex)} ${b < 0 ? '-' : '+'} ${Math.abs(b)}`;
+    // **The domain as the papers write it, both ways.** Five of the nine
+    // trigonometric equations in the corpus close the range - 2016 P2 Q14's
+    // `0 <= x <= 360` - and four leave it open, 2026 P2 Q8 among them with
+    // `0 <= x < 360`. This printed the closed form always, so a clone of 2026
+    // stated a domain its paper does not. Nothing turns on it here: the guard
+    // above rejects a reference angle within 0.04 of a whole number, so no
+    // solution can land on 0 or on 360 and the two forms admit the same pair.
+    const domain = getRandomInt(0, 1) === 0 ? '0 \\le x \\le 360' : '0 \\le x \\lt 360';
 
     return {
       subTopic: 'Solving Trigonometric Equations',
       difficulty: 'skill',
-      variationId: 'trig-equations.solve',
+      variationId: fn === 'sin' ? 'trig-equations.solve'
+        : fn === 'cos' ? 'trig-equations.solve-cos' : 'trig-equations.solve-tan',
       questionLines: [
-        `Solve the equation $${lhs} = ${c}$, for $0 \\le x \\le 360$.`,
+        `Solve the equation $${lhs} = ${c}$, for $${domain}$.`,
       ],
-      boardQuestionLines: [`Solve $${lhs} = ${c}$, $0 \\le x \\le 360$`],
+      boardQuestionLines: [`Solve $${lhs} = ${c}$, $${domain}$`],
       // •¹ rearrange, •² find one value of x, •³ find another. The two values
       // are separate marks, so they are separate steps — printing both at once
       // meant the withheld hint carried both, and a pupil who took every hint
       // was left to produce two answers rather than one.
       solutionSteps: [
         `<strong>1.</strong> Get the ${fn} on its own:<br><br>$${times(a, tex)} = ${c - b}$, so $${tex} = ${ratioTex}$`,
-        `<strong>2.</strong> Take the inverse of the <strong>positive</strong> ratio to find the reference angle, $${dp1(base)}$. ${r < 0 ? `The ratio is <strong>negative</strong>, so both answers come from the quadrants where $\\${fn}$ is negative` : `The ratio is positive`}, and the two solutions in $0 \\le x \\le 360$ are ${rule}. The first is:<br><br>$x = ${dp1(x1)}$`,
+        `<strong>2.</strong> Take the inverse of the <strong>positive</strong> ratio to find the reference angle, $${dp1(base)}$. ${r < 0 ? `The ratio is <strong>negative</strong>, so both answers come from the quadrants where $\\${fn}$ is negative` : `The ratio is positive`}, and the two solutions in $${domain}$ are ${rule}. The first is:<br><br>$x = ${dp1(x1)}$`,
         `<strong>3.</strong> And the second:<br><br>$x = ${dp1(x2)}$`,
       ],
       stepMarks: [1, 1, 1],
       finalAnswer: `$x = ${dp1(x1)}$ or $x = ${dp1(x2)}$`,
     };
   }
-  throw new Error('trig-equations.solve: no valid question found');
+  throw new Error(`trig-equations.solve (${fn}): no valid question found`);
 }
 
 // ── a height that follows a cosine — 2017 P2 Q15, 2023 P2 Q11, 2025 P2 Q14 ─
@@ -185,53 +213,123 @@ function inFormula(): Q {
   throw new Error('trig-equations.in-formula: no valid question found');
 }
 
-// ── simplify using tan = sin/cos, or a common factor ─────────────────────
-//    2016 P1 Q11, 2018 P1 Q18, 2023 P2 Q13
+// ── substitute tan and cancel — 2016 P1 Q11, 2018 P1 Q18 ────────────────
+//
+// The two papers are the same move: write `tan x` as `sin x / cos x`, then
+// cancel the cosine against one already in the expression. 2016 sets it as a
+// pair of squares, `tan^2 x cos^2 x`; 2018 as a three-way product,
+// `sin x cos x tan x`. Different powers, one move — so one variation, and the
+// powers are the numbers that vary.
+//
+// **The pool had exactly those two expressions in it and nothing else**, so
+// each paper could only ever be offered itself: `similar.ts` calls that a dead
+// "more like this" link and is right to. What a National 5 pupil can be asked
+// with `tan x = sin x / cos x` is wider than two, and every entry below is a
+// product or a quotient a paper could set:
+//
+//   sin^p x cos^q x tan^r x  =  sin^(p+r) x cos^(q-r) x     needs q >= r
+//   sin^n x  /  tan^n x      =  cos^n x                     divide by flipping
+//
+// The quotient form leans on dividing by a fraction, which is National 5
+// algebraic fractions — padding the trigonometry with a skill the pupil
+// already has, rather than inventing a trigonometric one.
 
-function simplify(): Q {
-  const shape = pick(['tan-squared', 'tan-product', 'common-factor'] as const);
+/** A product `sin^p cos^q tan^r`, with the powers it cancels down to. */
+interface TanProduct { p: number; q: number; r: number }
 
-  if (shape === 'tan-squared') {
-    // tan^2 x cos^2 x = (sin^2/cos^2)(cos^2) = sin^2
+/**
+ * The pool, every entry a legal National 5 expression.
+ *
+ * `q >= r` throughout: the cosine the tangent brings down has to have one to
+ * cancel against, or the answer is a fraction and the question is a different
+ * one. (0,2,2) is 2016 P1 Q11 and (1,1,1) is 2018 P1 Q18.
+ */
+const TAN_PRODUCTS: TanProduct[] = [
+  { p: 0, q: 1, r: 1 },   // tan x cos x            -> sin x
+  { p: 0, q: 2, r: 2 },   // tan^2 x cos^2 x        -> sin^2 x     2016 P1 Q11
+  { p: 1, q: 1, r: 1 },   // sin x cos x tan x      -> sin^2 x     2018 P1 Q18
+  { p: 0, q: 2, r: 1 },   // tan x cos^2 x          -> sin x cos x
+  { p: 1, q: 2, r: 1 },   // sin x cos^2 x tan x    -> sin^2 x cos x
+  { p: 0, q: 3, r: 2 },   // tan^2 x cos^3 x        -> sin^2 x cos x
+  { p: 1, q: 2, r: 2 },   // sin x cos^2 x tan^2 x  -> sin^3 x
+  { p: 2, q: 2, r: 2 },   // sin^2 x cos^2 x tan^2 x -> sin^4 x
+];
+
+/** `\\sin^{2}x^{\\circ}`, or `\\sin x^{\\circ}` at the first power, or nothing. */
+function power(fn: 's' | 'c' | 't', n: number): string {
+  if (n <= 0) return '';
+  const base = fn === 's' ? '\\sin' : fn === 'c' ? '\\cos' : '\\tan';
+  return n === 1 ? `${base} x^{\\circ}` : `${base}^{${n}}x^{\\circ}`;
+}
+
+function substituteTan(): Q {
+  // A quotient one time in four: it is the same identity read the other way,
+  // and the papers have not set one, so it stays the minority.
+  const quotient = getRandomInt(1, 4) === 1;
+
+  if (quotient) {
+    const n = pick([1, 2]);
+    const top = power('s', n), bot = power('t', n), ans = power('c', n);
+    const expr = `\\frac{${top}}{${bot}}`;
     return {
       subTopic: 'Simplifying Trigonometric Expressions',
       difficulty: 'exam',
       variationId: 'trig-identities.simplify',
-      questionLines: [`Simplify $\\tan^{2}x^{\\circ}${C2}$.`, WORKING],
-      boardQuestionLines: [`Simplify $\\tan^{2}x^{\\circ}${C2}$`],
+      questionLines: [`Simplify $${expr}$.`, WORKING],
+      boardQuestionLines: [`Simplify $${expr}$`],
       solutionSteps: [
-        `<strong>1.</strong> Replace the tangent using $\\tan x^{\\circ} = \\frac{${S}}{${C}}$:<br><br>$\\frac{${S2}}{${C2}} \\times ${C2}$`,
-        `<strong>2.</strong> The $${C2}$ cancels:<br><br>$${S2}$`,
+        `<strong>1.</strong> Replace the tangent using $\\tan x^{\\circ} = \\frac{${S}}{${C}}$, and divide by flipping:<br><br>$${top} \\div \\frac{${top}}{${ans}} = ${top} \\times \\frac{${ans}}{${top}}$`,
+        `<strong>2.</strong> The $${top}$ cancels:<br><br>$${ans}$`,
       ],
       stepMarks: [1, 1],
-      finalAnswer: `$${S2}$`,
+      finalAnswer: `$${ans}$`,
     };
   }
 
-  if (shape === 'tan-product') {
-    // sin x cos x tan x = sin x cos x (sin x / cos x) = sin^2 x
-    return {
-      subTopic: 'Simplifying Trigonometric Expressions',
-      difficulty: 'exam',
-      variationId: 'trig-identities.simplify',
-      questionLines: [`Express $${S}${C}${T}$ in its simplest form.`, WORKING],
-      boardQuestionLines: [`Simplify $${S}${C}${T}$`],
-      solutionSteps: [
-        `<strong>1.</strong> Replace the tangent using $\\tan x^{\\circ} = \\frac{${S}}{${C}}$:<br><br>$${S}${C} \\times \\frac{${S}}{${C}}$`,
-        `<strong>2.</strong> The $${C}$ cancels:<br><br>$${S2}$`,
-      ],
-      stepMarks: [1, 1],
-      finalAnswer: `$${S2}$`,
-    };
-  }
+  const { p, q, r } = pick(TAN_PRODUCTS);
+  // Written tangent-first where there is no sine in front of it, as 2016 does,
+  // and sine-cosine-tangent otherwise, as 2018 does.
+  const expr = p === 0
+    ? `${power('t', r)}${power('c', q)}`
+    : `${power('s', p)}${power('c', q)}${power('t', r)}`;
+  const ans = `${power('s', p + r)}${power('c', q - r)}`;
+  // What the substitution leaves before anything cancels.
+  const substituted = `${power('s', p)}${power('c', q)} \\times \\frac{${power('s', r)}}{${power('c', r)}}`;
+  const cancelled = q === r ? power('c', r) : `${power('c', r)}`;
 
-  // sin^2 x cos^2 x + cos^4 x = cos^2 x (sin^2 x + cos^2 x) = cos^2 x, and the
-  // same at first power: cos x sin^2 x + cos^3 x = cos x. 2026 P2 Q12 sets the
-  // odd one, and it is the harder read — the common factor is a bare cos x
-  // sitting beside a squared term, so it does not announce itself the way a
-  // matched pair of squares does.
+  return {
+    subTopic: 'Simplifying Trigonometric Expressions',
+    difficulty: 'exam',
+    variationId: 'trig-identities.simplify',
+    questionLines: [
+      p === 0 ? `Simplify $${expr}$.` : `Express $${expr}$ in its simplest form.`,
+      WORKING,
+    ],
+    boardQuestionLines: [`Simplify $${expr}$`],
+    solutionSteps: [
+      `<strong>1.</strong> Replace the tangent using $\\tan x^{\\circ} = \\frac{${S}}{${C}}$:<br><br>$${substituted}$`,
+      `<strong>2.</strong> The $${cancelled}$ cancels:<br><br>$${ans}$`,
+    ],
+    stepMarks: [1, 1],
+    finalAnswer: `$${ans}$`,
+  };
+}
+
+// ── a common factor, then sin^2 + cos^2 = 1 — 2023 P2 Q13, 2026 P2 Q12 ───
+//
+// Both papers take a factor out of two terms and find the bracket is the
+// identity. 2023 sets a matched pair of squares, `sin^2 x cos^2 x + cos^4 x`;
+// 2026 the harder read, `cos x sin^2 x + cos^3 x`, where the common factor is a
+// bare cosine beside a squared term and does not announce itself.
+//
+// A whole-number coefficient widens it without changing the move: it comes
+// straight back out at the end, and taking a numerical factor out alongside an
+// algebraic one is National 5 factorising.
+
+function commonFactor(): Q {
   const sinFirst = getRandomInt(0, 1) === 0;
   const odd = getRandomInt(0, 1) === 0;
+  const k = pick([1, 1, 2, 3, 4, 5]);          // 1 twice: the papers' own form
   const [keep, other] = sinFirst
     ? [odd ? C : C2, S2]
     : [odd ? S : S2, C2];
@@ -240,19 +338,32 @@ function simplify(): Q {
     : (odd ? '\\sin^{3}x^{\\circ}' : '\\sin^{4}x^{\\circ}');
   // "cos x sin^2 x", not "sin^2 x cos x" — the paper leads with the factor
   const product = odd ? `${keep}${other}` : `${other}${keep}`;
+  const co = k === 1 ? '' : `${k}`;
+  const factored = k === 1 ? keep : `${k}${keep}`;
 
   return {
     subTopic: 'Simplifying Trigonometric Expressions',
     difficulty: 'exam',
-    variationId: 'trig-identities.simplify',
-    questionLines: [`Simplify $${product} + ${cubed}$.`, WORKING],
-    boardQuestionLines: [`Simplify $${product} + ${cubed}$`],
+    variationId: 'trig-identities.common-factor',
+    // **Both papers' instructions, because they do not use the same one.**
+    // 2023 P2 Q13 says "Simplify ... Show your working."; 2026 P2 Q12 says
+    // "Express the following in its simplest form:" and asks for no working.
+    // The header above already said the line is printed "most of the time" -
+    // it was printed every time, so one of the two papers never got its own
+    // wording. The marks are the same either way: the first is for factorising
+    // or substituting, which a bare answer cannot earn whether the paper asks
+    // for working or not.
+    questionLines: getRandomInt(0, 1) === 0
+      ? [`Simplify $${co}${product} + ${co}${cubed}$.`, WORKING]
+      : ['Express the following in its simplest form:',
+         `$${co}${product} + ${co}${cubed}$`],
+    boardQuestionLines: [`Simplify $${co}${product} + ${co}${cubed}$`],
     solutionSteps: [
-      `<strong>1.</strong> Take out the common factor $${keep}$:<br><br>$${keep}\\left(${other} + ${odd ? (sinFirst ? C2 : S2) : keep}\\right)$`,
-      `<strong>2.</strong> The bracket is $${S2} + ${C2} = 1$:<br><br>$${keep} \\times 1 = ${keep}$`,
+      `<strong>1.</strong> Take out the common factor $${factored}$:<br><br>$${factored}\\left(${other} + ${odd ? (sinFirst ? C2 : S2) : keep}\\right)$`,
+      `<strong>2.</strong> The bracket is $${S2} + ${C2} = 1$:<br><br>$${factored} \\times 1 = ${factored}$`,
     ],
     stepMarks: [1, 1],
-    finalAnswer: `$${keep}$`,
+    finalAnswer: `$${factored}$`,
   };
 }
 
@@ -525,9 +636,13 @@ function orderBySize(): Q {
 export const TRIG_GENERATORS: Record<string, () => Q> = {
   'The Value at a Related Angle': relatedAngle,
   'Ordering Trigonometric Values': orderBySize,
-  'Solving Trigonometric Equations': solveEquation,
+  // All three ratios are reachable from the topic, each with its own id, so
+  // `variationsBasedOn` can send each paper to the one it asks for.
+  'Solving Trigonometric Equations': () => solveEquation(pick(['sin', 'cos', 'tan'] as const)),
   'Trigonometric Equations in a Formula': inFormula,
-  'Simplifying Trigonometric Expressions': simplify,
+  // Two moves, two variations, both reachable from the topic.
+  'Simplifying Trigonometric Expressions': () =>
+    getRandomInt(0, 1) === 0 ? substituteTan() : commonFactor(),
   'Expanding Trigonometric Brackets': expandBracket,
   'Trigonometric Fractions': splitFraction,
   'Writing in a Given Trigonometric Form': givenForm,

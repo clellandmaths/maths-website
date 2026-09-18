@@ -317,7 +317,15 @@ function clearDenominators(): Q {
       subTopic: 'Clearing Denominators in an Equation',
       difficulty: 'exam',
       variationId: 'linear-equations.clear-denominators',
-      questionLines: [`Solve the equation $${question}$`, 'Give your answer in its simplest form.'],
+      // One of the three papers asks for the simplest form and two do not:
+      // 2016 P1 Q8 prints it, 2019 P1 Q14 and 2025 P2 Q13 do not. This printed
+      // it on every draw, so two of its three papers never got their own
+      // wording. The answer is in lowest terms either way - the guard above
+      // holds the denominator down after cancelling - so the line asks for
+      // nothing the question does not already expect.
+      questionLines: getRandomInt(0, 2) === 0
+        ? [`Solve the equation $${question}$`, 'Give your answer in its simplest form.']
+        : [`Solve the equation $${question}$`],
       boardQuestionLines: [`Solve $${question}$`],
       solutionSteps: [
         `<strong>1.</strong> The denominators are $${m}$ and $${n}$, so multiply <strong>every</strong> term by $${L}$:<br><br>$${cleared}$`,

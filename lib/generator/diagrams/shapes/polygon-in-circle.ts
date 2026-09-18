@@ -40,9 +40,15 @@ export function polygonInCircle(spec: PolygonInCircleSpec): Figure | null {
     // the shaded piece first, so every line is drawn over it
     { kind: 'shadedSegment', centre: O, r, from: start, to: start + step },
     { kind: 'circle', centre: O, r },
+    // 2026 P2 Q10 marks its centre with a filled dot, so this does too.
+    { kind: 'dot', at: O },
     { kind: 'polygon', points: V },
-    { kind: 'segment', from: O, to: V[0] },
-    { kind: 'segment', from: O, to: V[1] },
+    // **A radius to every vertex, dashed, as 2026 P2 Q10 draws them.** The
+    // paper rules a dashed spoke from the centre to each of A, B, C, D and E,
+    // which is what shows the pupil that the five angles at the centre are
+    // equal - the step the whole question turns on. Two solid ones read as
+    // part of the shape and left the other three unexplained.
+    ...V.map((p): Element => ({ kind: 'segment', from: O, to: p, dashed: true })),
     // the centre's name goes away from the shaded piece, which is where the
     // two radii and the arc all crowd together
     { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start + step / 2), r * 0.4) },
@@ -58,7 +64,8 @@ export function polygonInCircle(spec: PolygonInCircleSpec): Figure | null {
     scene: { elements },
     claims: [
       { kind: 'length', from: O, to: V[0], value: r, shown: /\d/.test(spec.radiusLabel) },
-      { kind: 'length', from: O, to: V[1], value: r, shown: false },
+      // every other spoke is the same radius, and now every one of them is drawn
+      ...V.slice(1).map(p => ({ kind: 'length' as const, from: O, to: p, value: r, shown: false })),
       // Every side equal is what makes it regular, and the equal angles at the
       // centre follow from that — which is the step the question turns on.
       ...V.map((p, i) => ({

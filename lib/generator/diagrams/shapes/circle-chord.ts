@@ -3,25 +3,39 @@ import {
 } from '../scene';
 
 /**
- * A circular segment: an arc, its chord, and the perpendicular from the centre.
+ * A circle and a chord, drawn the way the paper draws it.
  *
- * This is the shape behind every one of the eight National 5 Pythagoras
- * questions — a tunnel cross-section, a paving slab, a perfume label, a door
- * sign. The thing that makes them four-mark questions is that **the
- * right-angled triangle is not part of the object**: the pupil has to produce
- * it by dropping a perpendicular from the centre to the chord, which bisects
- * it. That is the first markscheme line, "marshal facts and recognise
- * right-angled triangle".
+ * This is the shape behind the National 5 Pythagoras-in-a-circle questions —
+ * a milk tank, a perfume label, a train tunnel, a paving slab. What makes them
+ * four-mark questions is that **the right-angled triangle is not part of the
+ * object**: the pupil has to produce it by dropping a perpendicular from the
+ * centre to the chord, which bisects it. That is the first markscheme line,
+ * "marshal facts and recognise right-angled triangle".
  *
- * So the diagram draws what the paper draws — the shape, the chord, the centre
- * — with the construction dashed, because a solid line would give away the step
- * the marks are for. The half-chord is deliberately *not* labelled: working out
- * that it is half of the chord is part of the question.
+ * **So this draws what is given, and nothing else.** An earlier version drew
+ * the perpendicular dashed, on the reasoning that dashed does not give the
+ * step away. Every paper's answer is that it is not drawn at all — nor is the
+ * right angle marked, in any of the seven. The clone review of 2026-09-17
+ * found the construction drawn in on all five papers this served, and the
+ * verdict is recorded in `docs/clone-verdicts.md`.
+ *
+ * A line is drawn here when the paper draws it, which is when its length is a
+ * given on the figure:
+ *
+ *   the radius to a chord end       solid in 2016 and 2022, dashed in 2023,
+ *                                   absent in 2014, 2015, 2018, 2026
+ *   centre to the chord's midpoint  solid in 2026, where OB = 9 is the given
+ *   midpoint to the far arc         solid in 2014, where AB = 27 is the given
+ *
+ * And the rest of the circle — the part that is not the shape — is drawn
+ * solid where the paper draws the whole circle (2014, 2015, 2018, 2026),
+ * dashed where the paper shows the cut-off piece as removed (2023), and not
+ * at all where the object simply *is* a segment (2016, 2022).
  *
  *   major   the chord sits below the centre and the shape is the larger piece,
- *           so its height is r + d          (2016 P2 Q15, 2018 P2 Q12, 2022 P2 Q8)
+ *           so its height is r + d
  *   minor   the chord sits above the centre and the shape is the smaller piece,
- *           so its height is r - d          (2023 P1 Q10)
+ *           so its height is r - d
  */
 
 export interface CircleChordSpec {
@@ -29,24 +43,37 @@ export interface CircleChordSpec {
   chord: number;
   /** The larger piece of the circle, or the smaller one. */
   major: boolean;
-  /** Names for the chord's ends and the centre. */
-  names: { a: string; b: string; centre: string };
   /**
-   * What to write on the radius, the chord, the height, and the
-   * perpendicular from the centre. 2026 P2 Q5 gives that last one and asks
-   * for the radius, so it has to be labellable; the others leave it blank
-   * because working out that it bisects the chord is the question.
+   * Names for the chord's ends and the centre — and the midpoint, where the
+   * paper names it. 2026 P2 Q5 calls it B and states "B is the midpoint of
+   * AC"; a figure that leaves it unlettered contradicts its own prose.
+   */
+  names: { a: string; b: string; centre: string; mid?: string };
+  /**
+   * What to write on the radius, the chord, the height, and the perpendicular
+   * from the centre. **A label on the height or the perpendicular draws that
+   * line, solid** — it is only ever labelled when it is a given.
    */
   labels: { radius: string; chord: string; height: string; centreToChord?: string };
-  /** Draw the rest of the circle faintly, as some diets do. */
-  showWholeCircle?: boolean;
+  /**
+   * The part of the circle that is not the shape. `none` for an object that
+   * is a segment (a tunnel, a label); `solid` where the paper draws the whole
+   * circle; `dashed` where it shows the removed piece as removed.
+   */
+  rest?: 'none' | 'solid' | 'dashed';
+  /**
+   * The radius from the centre to a chord end. Drawn only when the paper draws
+   * it; its label goes on the line when it is drawn and in the prose when it
+   * is not.
+   */
+  radiusLine?: 'solid' | 'dashed' | 'none';
+  /** Fill the piece being asked about — the milk in the tank. */
+  shade?: boolean;
   /**
    * Put the piece being asked about **below** the chord instead of above it.
    *
    * 2015 P2 Q12 is a container of liquid: the surface is the chord, the liquid
-   * is shaded underneath it, and the depth is bracketed down the side. Until
-   * this existed the shape could only be drawn the other way up, so that paper
-   * was cited and not cloned.
+   * is shaded underneath it, and the depth is bracketed down the side.
    *
    * It is a mirror in the x-axis and nothing more. Every claim the figure makes
    * is a length or an angle, and reflection changes neither, so the checks
@@ -61,6 +88,8 @@ export function circleChord(spec: CircleChordSpec): Figure {
   const d = Math.sqrt(r * r - half * half);      // centre to chord
   const k = spec.major ? -d : d;                 // where the chord sits
   const m = spec.flip ? -1 : 1;                  // mirrored in the x-axis
+  const rest = spec.rest ?? 'none';
+  const radiusLine = spec.radiusLine ?? 'none';
 
   const O = pt(0, 0);
   const A = pt(-half, k * m);
@@ -76,45 +105,41 @@ export function circleChord(spec: CircleChordSpec): Figure {
     : [bearing(O, B), bearing(O, A)];
 
   const elements: Element[] = [
-    ...(spec.showWholeCircle ? [{ kind: 'circle' as const, centre: O, r, dashed: true }] : []),
+    ...(spec.shade ? [{ kind: 'shadedSegment' as const, centre: O, r, from, to }] : []),
     { kind: 'arc', centre: O, r, from, to },
+    // the other arc, from A back round to B, where the paper draws it
+    ...(rest !== 'none'
+      ? [{ kind: 'arc' as const, centre: O, r, from: to, to: from, dashed: rest === 'dashed' }]
+      : []),
     { kind: 'segment', from: A, to: B },
-    // the construction the pupil has to supply, so it is dashed
-    { kind: 'segment', from: O, to: B, dashed: true },
-    { kind: 'segment', from: O, to: M, dashed: true },
-    { kind: 'segment', from: M, to: T, dashed: true },
-    { kind: 'rightAngle', at: M, arms: [O, B] },
+    ...(radiusLine !== 'none'
+      ? [{ kind: 'segment' as const, from: O, to: B, dashed: radiusLine === 'dashed' }]
+      : []),
+    // Solid, because a labelled line is a given. Never drawn otherwise — the
+    // perpendicular is the construction the first mark pays for.
+    ...(spec.labels.centreToChord ? [{ kind: 'segment' as const, from: O, to: M }] : []),
+    ...(spec.labels.height ? [{ kind: 'segment' as const, from: M, to: T }] : []),
     { kind: 'label', text: spec.names.a, anchor: A, away: O },
     { kind: 'label', text: spec.names.b, anchor: B, away: O },
-    { kind: 'label', text: spec.names.centre, anchor: O, away: T },
+    // Pushed away from B, so it sits up and to the left of the centre: clear
+    // of the radius to B, and clear of the vertical through the centre that
+    // 2014 and 2026 draw. Pushed away from T, as it used to be, it landed on
+    // that vertical every time.
+    { kind: 'label', text: spec.names.centre, anchor: O, away: B },
+    ...(spec.names.mid ? [{ kind: 'label' as const, text: spec.names.mid, anchor: M, away: T }] : []),
   ];
 
-  // The radius is labelled along O-B, and the chord along A-B, each pushed
-  // clear of the figure. The half-chord is left unlabelled on purpose.
-  //
-  // The two vertical measurements are pushed *sideways*, not "away from B".
-  // `sideLabel` shoves a label from the point it is given towards the middle of
-  // the side, so a reference point that is not square-on to a vertical line
-  // sends the label sliding up that line instead of off it. Both of these sit
-  // on the same vertical — M-T contains O-M — and with B as the reference the
-  // height label landed on the line every single time: 2000 layouts, not one
-  // legible, so the shape behind 2014 P1 Q12 never produced a question at all.
-  // Nothing failed, because the id was shared with the branch that does work.
+  // Each measurement sits beside the line it measures, pushed *sideways* off
+  // the vertical rather than "away from B" — `sideLabel` shoves a label from
+  // its reference point towards the middle of the side, and a reference that
+  // is not square-on to a vertical line sends the label sliding up it.
   const rightOf = (y: number) => pt(Math.max(half, r * 0.5), y);
-  if (spec.labels.radius) elements.push(sideLabel(O, B, spec.labels.radius, pt(0, k * m)));
-  // The chord's own label goes a quarter along it, not at its midpoint.
-  //
-  // The midpoint is where the whole construction meets: the perpendicular foot
-  // M, its right-angle mark, and the dashed line down to the centre. A label
-  // anchored there and pushed off the chord "away from the arc" lands on the
-  // centre's side exactly when the centre is on that side — which is every
-  // *minor* segment, and it sat on top of the right angle in all of them. The
-  // major ones looked fine only because their centre is on the other side, so
-  // half the questions were illegible and half were evidence that they were
-  // not.
-  //
-  // The papers place it off-centre for the same reason: 2023 P1 Q10 puts its
-  // "60 cm" well clear of the construction rather than in the middle of it.
+  if (radiusLine !== 'none' && spec.labels.radius) {
+    elements.push(sideLabel(O, B, spec.labels.radius, pt(0, k * m)));
+  }
+  // The chord's own label goes a quarter along it, not at its midpoint, which
+  // is where the perpendicular would meet it if the pupil draws one in. The
+  // papers place it off-centre for the same reason.
   const quarter = pt(A.x + (B.x - A.x) * 0.28, A.y + (B.y - A.y) * 0.28);
   if (spec.labels.chord) {
     elements.push({ kind: 'label', text: spec.labels.chord, anchor: quarter, away: T });
@@ -128,11 +153,13 @@ export function circleChord(spec: CircleChordSpec): Figure {
     scene: { elements },
     claims: [
       // the perpendicular from the centre really is perpendicular, and really
-      // does land on the midpoint — the two facts the question turns on
+      // does land on the midpoint — the two facts the question turns on. Asserted
+      // geometrically and never drawn: no paper marks the right angle.
       { kind: 'angle', at: M, arms: [O, B], value: 90, shown: false },
       { kind: 'length', from: A, to: M, value: spec.chord / 2, shown: false },
       { kind: 'length', from: M, to: B, value: spec.chord / 2, shown: false },
-      { kind: 'length', from: O, to: B, value: r, shown: printed(spec.labels.radius) },
+      { kind: 'length', from: O, to: B, value: r,
+        shown: radiusLine !== 'none' && printed(spec.labels.radius) },
       { kind: 'length', from: A, to: B, value: spec.chord, shown: printed(spec.labels.chord) },
       { kind: 'length', from: M, to: T, value: spec.major ? r + d : r - d,
         shown: printed(spec.labels.height) },

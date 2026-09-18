@@ -63,11 +63,21 @@ const br = (s: string) => (/^[a-z]$/.test(s) ? s : `(${s})`);
 // case where the x term vanishes.
 
 function addSubtract(minus: boolean): Q {
-  const powers = getRandomInt(1, 6) === 1;      // the 2017 shape, 1 in 7 papers
-    // x:6, a:1 across the seven papers - and the split is exactly this
-    // branch: six ordinary questions in x, and the one 2017 powers question
-    // in a. `b`, `n` and `y` appear in none of them.
-    const v = powers ? 'a' : 'x';
+  // One draw in three, not the one in six that matches how often the papers
+  // ask it.
+  //
+  // The rate used to mirror the papers — x:6, a:1 across the seven — which was
+  // the right call while both shapes were one variation and the rate decided
+  // only how often a pupil met each. They are two variations now, each
+  // declared in the registry and each a question in its own right, and at one
+  // in six `mix.ts` reads the powers shape as a buried branch. Paper fidelity
+  // is unaffected: `similarTo` redraws until it gets the variation the paper
+  // cites, so this governs browsing and worksheets only.
+  const powers = getRandomInt(1, 3) === 1;
+  // x:6, a:1 across the seven papers — and the split is exactly this branch:
+  // six ordinary questions in x, and the one 2017 powers question in a. `b`,
+  // `n` and `y` appear in none of them.
+  const v = powers ? 'a' : 'x';
   const op = minus ? '-' : '+';
 
   if (powers) {
@@ -77,7 +87,20 @@ function addSubtract(minus: boolean): Q {
     return {
       subTopic: minus ? 'Subtracting Algebraic Fractions' : 'Adding Algebraic Fractions',
       difficulty: 'skill',
-      variationId: minus ? 'alg-fractions.subtract' : 'alg-fractions.add',
+      // Its own variation, because it is its own question. 2017 P1 Q11 is two
+      // marks where every bracket question is three, and the scheme says why:
+      //
+      //   •¹ valid common denominator     a² or a³ or a × a
+      //   •² answer in simplest form      (3 - 2a)/a²
+      //
+      // There is no expanding to pay for. A bracket question spends a mark
+      // removing brackets from the numerator and collecting like terms; here
+      // the numerator is finished as soon as the fractions are combined. So
+      // combining and tidying are one step, not two, and this pays two marks.
+      //
+      // Only the subtraction has a paper behind it. The addition is the same
+      // shape with no exam question asking for it, so it stays a skill.
+      variationId: minus ? 'alg-fractions.subtract-powers' : 'alg-fractions.add-powers',
       questionLines: [
         `Express $${frac(`${p}`, `${v}^{2}`)} ${op} ${frac(`${q}`, v)}$, $${v} \\neq 0$,`,
         `as a single fraction in its simplest form.`,
@@ -85,11 +108,16 @@ function addSubtract(minus: boolean): Q {
       boardQuestionLines: [`$${frac(`${p}`, `${v}^{2}`)} ${op} ${frac(`${q}`, v)}$ as a single fraction`],
       solutionSteps: [
         `<strong>1.</strong> The lowest common denominator is $${v}^{2}$, so multiply the second fraction top and bottom by $${v}$:<br><br>$${frac(`${p}`, `${v}^{2}`)} ${op} ${frac(`${q}${v}`, `${v}^{2}`)}$`,
-        `<strong>2.</strong> Combine over the one denominator:<br><br>$${frac(`${p} ${op} ${q}${v}`, `${v}^{2}`)}$`,
-        `<strong>3.</strong> Tidy the numerator:<br><br>$${frac(num, `${v}^{2}`)}$`,
+        // Subtracting, the combined numerator is already the marker's form —
+        // "3 - 2a" — so printing both sides of an equals sign puts the same
+        // fraction down twice. Adding, it is not: `8 + 3a` is written `3a + 8`.
+        `<strong>2.</strong> Combine over the one denominator, and the numerator is already in its simplest form:<br><br>$${
+          `${p} ${op} ${q}${v}` === num
+            ? frac(num, `${v}^{2}`)
+            : `${frac(`${p} ${op} ${q}${v}`, `${v}^{2}`)} = ${frac(num, `${v}^{2}`)}`}$`,
       ],
-      // •¹ correct denominator, •² correct numerator, •³ simplest form
-      stepMarks: [1, 1, 1],
+      // •¹ valid common denominator, •² answer in simplest form
+      stepMarks: [1, 1],
       finalAnswer: `$${frac(num, `${v}^{2}`)}$`,
     };
   }
@@ -104,6 +132,11 @@ function addSubtract(minus: boolean): Q {
     if (n === m) continue;
     const coef = minus ? p - q : p + q;
     if (coef === 0) continue;                   // would collapse to a constant
+    // **Positive, as all four subtraction papers are**: 7 - 3, 4 - 3, 7 - 2 and
+    // 5 - 4 leave 4x, x, 5x and x on the numerator. With the smaller numerator
+    // first it came out `90 - x` and `-x - 12`, which is a sign to carry that
+    // none of the four papers asks for and reads like a slip in the answer.
+    if (minus && coef < 0) continue;
     const cons = minus ? p * n - q * m : p * n + q * m;
 
     const d1 = lin(v, m), d2 = lin(v, n);
@@ -243,8 +276,16 @@ function simplifyFraction(): Q {
 // coefficient in the denominator, which is the harder trinomial.
 
 function factoriseHence(): Q {
+  // **Chosen once, outside the loop.** The non-monic branch rejects more often
+  // than the monic one — coprime k and c, a non-zero middle term — and choosing
+  // inside the loop sent every rejected attempt back into the lottery, so what
+  // reached the page was proportional to (chosen x survived): 100 monic against
+  // 45 non-monic in 400 draws, where the two should be even. `mix.ts` reads
+  // anything under 35% of a fair share as a buried branch and it was at 34%.
+  // This is the shape `diagram-questions.md` §2 sets out, and the same fault it
+  // records for the cuboid that was picked half the time and drawn 9%.
+  const hard = getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 400; tries++) {
-    const hard = getRandomInt(0, 1) === 0;
     // Simplifying: x:6 y:2 in the papers, and no n at all.
     const v = pick(['x', 'x', 'x', 'y']);
 
@@ -262,7 +303,21 @@ function factoriseHence(): Q {
       return {
         subTopic: 'Simplifying Algebraic Fractions',
         difficulty: 'exam',
-        variationId: 'alg-fractions.factorise-simplify',
+        // Its own variation, and four marks rather than three. 2017 P2 Q9's
+        // denominator carries a leading coefficient, and the scheme pays for
+        // factorising it twice over:
+        //
+        //   (a) •¹ factorise                (2x - 5)(2x + 5)
+        //   (b) •¹ start to factorise       (2x   5)(x   2)
+        //       •² complete factorising     (2x - 5)(x + 2)
+        //       •³ simplify                 (2x + 5)/(x + 2)
+        //
+        // 2024 P2 Q6's denominator is monic and factorises in one mark, which
+        // is the other branch of this function. The registry used to carry the
+        // difference as `marksDiffer` with a note saying this was "a shape this
+        // variation does not produce" — it does produce it, and always did; it
+        // just paid three marks for it.
+        variationId: 'alg-fractions.factorise-simplify-nonmonic',
         questionLines: [
           `(a) Factorise $${numTex}$.`,
           `(b) Hence simplify $${frac(numTex, fmt(den, v))}$.`,
@@ -270,12 +325,14 @@ function factoriseHence(): Q {
         boardQuestionLines: [`Factorise $${numTex}$, then simplify $${frac(numTex, fmt(den, v))}$`],
         solutionSteps: [
           `<strong>(a)</strong> This is a difference of two squares:<br><br>$${numTex} = ${numFactors}$`,
-          `<strong>(b)</strong> Factorise the denominator:<br><br>$${fmt(den, v)} = ${denFactors}$`,
+          // The scheme's own illustrative for "start to factorise" leaves the
+          // signs undecided — `(2x  5)(x  2)` — so the two marks are visibly
+          // different moves: getting the brackets, then getting the signs.
+          `<strong>(b)</strong> Start factorising the denominator. The ${v} terms must multiply to $${k}${v}^{2}$ and the numbers to $${-c * m}$:<br><br>$${fmt(den, v)} = (${k === 1 ? v : `${k}${v}`}\\ \\ ${c})(${v}\\ \\ ${Math.abs(m)})$`,
+          `<strong>(b)</strong> Fix the signs so the middle term comes out as $${lin(v, 0, k * m - c)}$:<br><br>$${fmt(den, v)} = ${denFactors}$`,
           `<strong>(b)</strong> Cancel the common factor $(${lin(v, -c, k)})$:<br><br>$${frac(`${lin(v, c, k)}`, `${lin(v, m)}`)}$`,
         ],
-        // 2024 P2 Q6 is 1 + 2: •¹ factorise, •² factorise the denominator,
-        // •³ simplify
-        stepMarks: [1, 1, 1],
+        stepMarks: [1, 1, 1, 1],
         finalAnswer: `(a) $${numFactors}$, (b) $${frac(lin(v, c, k), lin(v, m))}$`,
       };
     }

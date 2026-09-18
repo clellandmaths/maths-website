@@ -62,9 +62,32 @@ export interface TriangleSidesSpec {
     at: number;
     /** The length the question states for the cevian itself. */
     length: number;
+    /**
+     * The letter on the foot. Empty where the paper does not letter it: 2017
+     * P2 Q7's joined figure carries no vertex letters at all.
+     */
     name: string;
     labels: { left: string; right: string; line: string };
+    /**
+     * Letters for the two parts the cevian cuts the triangle into, placed at
+     * their middles. 2017 P2 Q7 marks its halves "A" and "B", and its prose
+     * refers to them by those letters, so they are structure rather than
+     * decoration.
+     */
+    partNames?: [string, string];
   };
+  /**
+   * A letter for the triangle itself, seated in the middle of it.
+   *
+   * 2017 P2 Q7 shows two triangles marked "A" and "B" before joining them, and
+   * its prose refers to them by those letters — structure, not decoration.
+   *
+   * Seated at the **incentre**, the point equidistant from all three sides, and
+   * `centred` so it is not pushed off it: every direction out of the middle of
+   * a triangle is towards an edge, and on a shallow one the centroid plus a
+   * push landed the letter exactly on the base.
+   */
+  inside?: string;
   /** Turn the whole thing, so the longest side is not always at the bottom. */
   turn?: 0 | 1 | 2 | 3;
 }
@@ -109,12 +132,29 @@ export function triangleFromSides(spec: TriangleSidesSpec): Figure | null {
   const inside = centroid([P, Q, R]);
   const [nA, nB, nC] = spec.vertices;
 
+  // A vertex letter is drawn only where the caller gives one. Passing '' is how
+  // a figure says the paper letters no corners — 2017 P2 Q7's joined triangle —
+  // and an empty label still takes a seat and still has to clear other ink, so
+  // it has to be left out rather than drawn blank.
   const elements: Element[] = [
     { kind: 'polygon', points: [P, Q, R] },
-    { kind: 'label', text: nA, anchor: P, away: inside },
-    { kind: 'label', text: nB, anchor: Q, away: inside },
-    { kind: 'label', text: nC, anchor: R, away: inside },
+    ...(nA ? [{ kind: 'label' as const, text: nA, anchor: P, away: inside }] : []),
+    ...(nB ? [{ kind: 'label' as const, text: nB, anchor: Q, away: inside }] : []),
+    ...(nC ? [{ kind: 'label' as const, text: nC, anchor: R, away: inside }] : []),
   ];
+  if (spec.inside) {
+    // Weighted by the side opposite each vertex: P is opposite QR, Q opposite
+    // RP, R opposite PQ. That point is the incentre.
+    const [wP, wQ, wR] = [bc, ca, ab];
+    const s = wP + wQ + wR;
+    elements.push({
+      kind: 'label',
+      text: spec.inside,
+      anchor: pt((P.x * wP + Q.x * wQ + R.x * wR) / s, (P.y * wP + Q.y * wQ + R.y * wR) / s),
+      away: R,
+      centred: true,
+    });
+  }
   if (spec.labels.ab) elements.push(sideLabel(P, Q, spec.labels.ab, inside));
   if (spec.labels.bc) elements.push(sideLabel(Q, R, spec.labels.bc, inside));
   if (spec.labels.ca) elements.push(sideLabel(R, P, spec.labels.ca, inside));
@@ -141,9 +181,22 @@ export function triangleFromSides(spec: TriangleSidesSpec): Figure | null {
      * base is the only thing to clear - and away-from-the-centroid crosses the
      * base at a shallow angle, which is what left it short.
      */
-    elements.push({
-      kind: 'label', text: cev.name, anchor: F, away: R, alternatives: [inside],
-    });
+    if (cev.name) {
+      elements.push({
+        kind: 'label', text: cev.name, anchor: F, away: R, alternatives: [inside],
+      });
+    }
+
+    // The two parts, named at their middles. Pushed away from the apex, which
+    // seats each low in its own half — where 2017 P2 Q7 puts them.
+    if (cev.partNames) {
+      elements.push({
+        kind: 'label', text: cev.partNames[0], anchor: centroid([P, F, R]), away: R,
+      });
+      elements.push({
+        kind: 'label', text: cev.partNames[1], anchor: centroid([F, Q, R]), away: R,
+      });
+    }
 
     /**
      * **Push a measurement perpendicular to the line it measures, not away from

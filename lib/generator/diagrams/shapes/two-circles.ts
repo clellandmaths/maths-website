@@ -29,7 +29,12 @@ export interface TwoCirclesSpec {
   radius: number;
   /** The chord given in the question — for the snowman this is the diameter. */
   chord: number;
-  names: { a: string; b: string; centre: string; centre2?: string };
+  /**
+   * `top` and `bottom` letter the far ends of the snowman's axis — the top of
+   * the head and the foot of the body. 2019 P2 Q18 letters them C and D and
+   * asks for "CD", so they are the two points its question is about.
+   */
+  names: { a: string; b: string; centre: string; centre2?: string; top?: string; bottom?: string };
   labels: { radius: string; chord: string };
 }
 
@@ -94,7 +99,10 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
       upper,
       { kind: 'segment', from: A, to: M },
       { kind: 'segment', from: M, to: B },
-      { kind: 'segment', from: C2, to: B, dashed: true },
+      // The radius to B, only where the paper draws it. 2017 P2 Q13 draws no
+      // radius at all — it states the 14 cm in prose — and this drew one on
+      // every badge, which is the construction the first mark pays for.
+      ...(spec.labels.radius ? [{ kind: 'segment' as const, from: C2, to: B, dashed: true }] : []),
       { kind: 'label', text: NA, anchor: A, away: M },
       { kind: 'label', text: NB, anchor: B, away: M },
       { kind: 'label', text: NC, anchor: C1, away: pt(0, 0) },
@@ -116,17 +124,25 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
   const T = pt(0, -r);
   const bodyR = Math.hypot(r, r);
   const A = pt(-r, 0), B = pt(r, 0);
+  // The far ends of the axis: the top of the head and the foot of the body.
+  const C = pt(0, r), D = pt(0, -r - bodyR);
   elements.push(
     { kind: 'circle', centre: S, r },
     { kind: 'circle', centre: T, r: bodyR },
     { kind: 'segment', from: A, to: B, dashed: true },
-    { kind: 'segment', from: S, to: T, dashed: true },
+    // **One solid line the whole way down, C through S and T to D** — which is
+    // how 2019 P2 Q18 draws it, and CD is what its question asks for. This drew
+    // a short dashed S-to-T instead, with no C and no D, so the figure did not
+    // contain the segment the question names.
+    { kind: 'segment', from: C, to: D },
     // S and T sit one above the other on the axis, so their labels are pushed
     // sideways in opposite directions rather than up and down into each other
     { kind: 'label', text: NC, anchor: S, away: pt(-r, 0) },
     { kind: 'label', text: NC2 ?? 'T', anchor: T, away: pt(r, -r) },
     { kind: 'label', text: NA, anchor: A, away: S },
     { kind: 'label', text: NB, anchor: B, away: S },
+    ...(spec.names.top ? [{ kind: 'label' as const, text: spec.names.top, anchor: C, away: S }] : []),
+    ...(spec.names.bottom ? [{ kind: 'label' as const, text: spec.names.bottom, anchor: D, away: T }] : []),
   );
   // The diameter is not drawn on the paper's diagram, and cannot be: its
   // midpoint is S, so the measurement would sit on top of the centre's label.

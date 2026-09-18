@@ -285,8 +285,16 @@ export function sectorQuestion(kinds: Kind[]): Q {
   // already here; only the gate was wrong.
   const paper1 = (kind === 'area-angle' || kind === 'arc-angle')
     && getRandomInt(0, 2) === 0;
+  // **The area questions are minor sectors, because both their papers are.**
+  // 2025 P2 Q6 is 170 degrees and 2016 P1 Q3 is 45; the owner's family ruling
+  // puts major against minor among the pairs a variation may not toss a coin
+  // between, and this drew a reflex sector in 38% of area draws. The arc
+  // questions keep both, since 2018 P2 Q2's is 320 degrees and 2017 P2 Q14
+  // asks about a major arc by name.
+  const minorOnly = kind === 'area-angle';
   for (let tries = 0; tries < 3000; tries++) {
-    const c = pick(CONTEXTS);
+    const c = pick(minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major') : CONTEXTS);
+    const sweep = minorOnly ? 'minor' as const : c.sweep;
     const [nO, nA, nB] = c.letters;
     const r = getRandomInt(c.band[0], c.band[1]);
     const start = getRandomInt(0, 11) * 30;
@@ -303,11 +311,11 @@ export function sectorQuestion(kinds: Kind[]): Q {
       // Here the angle is a given too, printed in whole degrees, so it is
       // fixed first and the radius falls out of the two printed numbers. The
       // radius is the unknown, so it never has to be a round number itself.
-      angle = drawAngle(c.sweep);
+      angle = drawAngle(sweep);
       arc = Math.round(angle / 360 * 2 * Math.PI * r * 10) / 10;
       if (arc <= 0) continue;
     } else if (arcGiven) {
-      const rough = drawAngle(c.sweep) / 360 * 2 * Math.PI * r;
+      const rough = drawAngle(sweep) / 360 * 2 * Math.PI * r;
       arc = kind === 'area-arc' ? Math.round(rough) : Math.round(rough * 10) / 10;
       if (arc <= 0) continue;
       angle = arc * 360 / (2 * Math.PI * r);
@@ -328,12 +336,12 @@ export function sectorQuestion(kinds: Kind[]): Q {
          two thirds of 60 is 40 and `240/360*60` is 40.000000000000006.
 
          Failing the test re-draws both, which is what the 3000 tries are for. */
-      angle = drawP1Angle(c.sweep);
+      angle = drawP1Angle(sweep);
       const share = kind === 'area-angle' ? angle * r * r : angle * 2 * r;
       if (share % 360 !== 0) continue;
       arc = angle / 360 * 2 * Math.PI * r;
     } else {
-      angle = drawAngle(c.sweep);
+      angle = drawAngle(sweep);
       arc = angle / 360 * 2 * Math.PI * r;
     }
     const area = angle / 360 * Math.PI * r * r;

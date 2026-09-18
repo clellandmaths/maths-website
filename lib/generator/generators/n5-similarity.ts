@@ -341,16 +341,21 @@ const SOLID_PAIRS: SolidPair[] = [
     volumeUnit: 'cubic centimetres', short: 'cm$^{3}$' },
   { story: 'A pet shop sells two mathematically similar fish tanks.',
     noun: 'tank', measure: 'length', unit: 'centimetres',
-    volumeUnit: 'litres', short: 'litres' },
+    volumeUnit: 'cubic centimetres', short: 'cm$^{3}$' },
   { story: 'A hardware shop sells paint in two mathematically similar tins.',
     noun: 'tin', measure: 'height', unit: 'centimetres',
     volumeUnit: 'millilitres', short: 'millilitres' },
   { story: 'A bakery bakes loaves in two mathematically similar tins.',
     noun: 'loaf tin', measure: 'length', unit: 'centimetres',
     volumeUnit: 'cubic centimetres', short: 'cm$^{3}$' },
+  // **Not litres.** A length in centimetres and a whole number of litres cannot
+  // both be plausible here: the volume is `k` times a cube and the height is a
+  // multiple of the same ratio, so a can 12 centimetres tall came out holding
+  // 136 litres. Millilitres is the unit the paper uses for exactly this object
+  // - 2026 P2 Q3's bottle is 12 centimetres and 540 millilitres.
   { story: 'A company makes two mathematically similar watering cans.',
     noun: 'can', measure: 'height', unit: 'centimetres',
-    volumeUnit: 'litres', short: 'litres' },
+    volumeUnit: 'millilitres', short: 'millilitres' },
   { story: 'A shop sells two mathematically similar glass vases.',
     noun: 'vase', measure: 'height', unit: 'centimetres',
     volumeUnit: 'cubic centimetres', short: 'cm$^{3}$' },
@@ -380,7 +385,19 @@ const SCALE_RATIOS: [number, number][] = [
 const ratiosBetween = (lo: number, hi: number): [number, number][] =>
   SCALE_RATIOS.filter(([a, b]) => b / a >= lo && b / a <= hi);
 
-export function similarVolumeQuestion(): Q {
+/**
+ * **Which way it scales is the paper's, not a coin's.**
+ *
+ * 2014 P2 Q5 gives the smaller jar and asks for the larger; 2026 P2 Q3 gives
+ * the larger bottle and asks for the tester. The owner's family ruling names
+ * "scaling up against scaling down" among the pairs a variation may not toss a
+ * coin between, and this tossed one - so half the clones of each paper scaled
+ * the other way. The arithmetic differs too: scaling up multiplies by the cube
+ * of a fraction bigger than one, scaling down by the cube of a fraction smaller
+ * than one, and 2026's scheme allows either multiplying by (8/12)^3 or dividing
+ * by (12/8)^3, a choice 2014's scheme never mentions.
+ */
+export function similarVolumeQuestion(up: boolean): Q {
   for (let tries = 0; tries < 3000; tries++) {
     const c = pick(SOLID_PAIRS);
     const [a, b] = pick(ratiosBetween(1.3, 2.5));
@@ -391,9 +408,16 @@ export function similarVolumeQuestion(): Q {
     const vSmall = k * a ** 3, vLarge = k * b ** 3;
     if (vSmall < 40 || vLarge > 12000) continue;
 
-    // Which one the question hands over, and which it asks for. 2014 gives the
-    // small and asks for the large; 2026 gives the large and asks for the small.
-    const up = getRandomInt(0, 1) === 0;
+    // **The solid has to be able to hold what it is said to hold.** Volume
+    // against the cube of the height is the same number for both solids, since
+    // they are similar, and the papers put it at 0.22 (2014's jar, 750 cubic
+    // centimetres at 15 centimetres) and 0.31 (2026's bottle, 540 millilitres
+    // at 12). Outside that band the object stops being a jar: the same
+    // construction offered a tin 10 centimetres tall holding 8 litres.
+    const perCm3 = c.volumeUnit === 'litres' ? 1000 : 1;
+    const fill = vSmall * perCm3 / hSmall ** 3;
+    if (fill < 0.1 || fill > 0.6) continue;
+
     const [hGiven, vGiven, hWanted, answer] = up
       ? [hSmall, vSmall, hLarge, vLarge]
       : [hLarge, vLarge, hSmall, vSmall];
@@ -404,7 +428,7 @@ export function similarVolumeQuestion(): Q {
     return {
       subTopic: 'Volumes of Similar Solids',
       difficulty: 'exam',
-      variationId: 'similarity.volume-scale',
+      variationId: up ? 'similarity.volume-scale' : 'similarity.volume-scale-down',
       questionLines: [
         c.story,
         '',
@@ -426,7 +450,7 @@ export function similarVolumeQuestion(): Q {
       finalAnswer: `$${answer}$ ${c.short}`,
     };
   }
-  throw new Error('similarity.volume-scale: no valid question found');
+  throw new Error(`similarity.volume-scale${up ? '' : '-down'}: no valid question found`);
 }
 
 // ── two similar figures, one area known — 2025 P2 Q11 ────────────────────
@@ -445,9 +469,11 @@ const AREA_PAIRS: AreaPair[] = [
   { story: 'Two flags flown outside a hotel are mathematically similar.',
     noun: 'flag', measure: 'wide', part: 'the red panel', unit: 'cm' },
   { story: 'A photograph is enlarged so that the two prints are mathematically similar.',
-    noun: 'print', measure: 'wide', part: 'the sky in the picture', unit: 'cm' },
+    noun: 'print', measure: 'wide', part: 'the sky', unit: 'cm' },
   { story: 'Two sails on a model yacht are mathematically similar.',
-    noun: 'sail', measure: 'tall', part: 'the sail', unit: 'cm' },
+    // The part must not repeat the noun: this printed "the area of the sail
+    // on the large sail".
+    noun: 'sail', measure: 'tall', part: 'the red section', unit: 'cm' },
   { story: 'A company makes two mathematically similar kites.',
     noun: 'kite', measure: 'long', part: 'the fabric', unit: 'cm' },
   { story: 'Two road signs of the same design are mathematically similar.',
@@ -457,11 +483,14 @@ const AREA_PAIRS: AreaPair[] = [
   { story: 'Two stained-glass panels in a door are mathematically similar.',
     noun: 'panel', measure: 'tall', part: 'the amber glass', unit: 'cm' },
   { story: 'A theatre prints two mathematically similar posters.',
-    noun: 'poster', measure: 'tall', part: 'the photograph on it', unit: 'cm' },
+    // "the photograph on it", inside "Calculate the area of ___ on the small
+    // poster", printed "the photograph on it on the small poster".
+    noun: 'poster', measure: 'tall', part: 'the photograph', unit: 'cm' },
   { story: 'Two mathematically similar sails are cut for a dinghy.',
     noun: 'sail', measure: 'long', part: 'the grey cloth', unit: 'm' },
   { story: 'A school orders two mathematically similar banners.',
-    noun: 'banner', measure: 'wide', part: 'the printed area', unit: 'm' },
+    // Not "the printed area": the sentence around it already says "the area of".
+    noun: 'banner', measure: 'wide', part: 'the printed panel', unit: 'm' },
   { story: 'Two mathematically similar rugs are woven to the same design.',
     noun: 'rug', measure: 'long', part: 'the patterned centre', unit: 'm' },
 ];
@@ -482,12 +511,16 @@ export function similarAreaQuestion(): Q {
     if (!Number.isInteger(areaSmall * 10) || !Number.isInteger(areaLarge * 10)) continue;
     if (areaSmall < 8 || areaLarge > 3000) continue;
 
-    const up = getRandomInt(0, 1) === 0;
-    const [lGiven, aGiven, lWanted, answer] = up
-      ? [lSmall, areaSmall, lLarge, areaLarge]
-      : [lLarge, areaLarge, lSmall, areaSmall];
-    const [givenWord, wantedWord] = up ? ['small', 'large'] : ['large', 'small'];
-    const [sfTop, sfBottom] = up ? [b, a] : [a, b];
+    // **Small given, large wanted.** 2025 P2 Q11 is this variation's only paper
+    // and it scales up: a 14 cm model with a 24 cm wing, a 31.5 cm model, find
+    // its wing. This tossed a coin, and scaling up against scaling down is
+    // named in the owner's family ruling - the same fault `similarity.
+    // volume-scale` had, where two papers went opposite ways and the routine
+    // chose at random between them. Here there is only one paper and one
+    // direction.
+    const [lGiven, aGiven, lWanted, answer] = [lSmall, areaSmall, lLarge, areaLarge];
+    const [givenWord, wantedWord] = ['small', 'large'];
+    const [sfTop, sfBottom] = [b, a];
 
     return {
       subTopic: 'Areas of Similar Figures',
@@ -694,7 +727,7 @@ export const SIMILARITY_GENERATORS: Record<string, () => Q> = {
   'A Side of a Similar Triangle': similarTrianglePartQuestion,
   'The Rest of a Similar Triangle': similarTriangleRestQuestion,
   'The Area Left by a Similar Triangle': similarTriangleAreaQuestion,
-  'Volumes of Similar Solids': similarVolumeQuestion,
+  'Volumes of Similar Solids': () => similarVolumeQuestion(getRandomInt(0, 1) === 0),
   'Areas of Similar Figures': similarAreaQuestion,
   'Cost of a Similar Figure': similarCostQuestion,
   'Showing Two Solids Are Not Similar': notSimilarQuestion,

@@ -91,9 +91,17 @@ export type Dim =
   /** A vertical extent, on a line standing clear to one side. */
   | { along: 'height'; from: number; to: number; side: 'left' | 'right';
       rank?: number; cx?: number; value: number; text: string }
-  /** A horizontal extent, on a line clear above or below everything. */
+  /**
+   * A horizontal extent, on a line clear above or below everything.
+   *
+   * `arrow` draws it the way 2018 P2 Q7 and 2025 P2 Q2 draw the diameter of
+   * their ball: a solid line with a barb at each end, rather than the dashed
+   * line with no ends that every dimension here defaults to. Per dimension
+   * rather than for all of them, because the papers behind the other solids
+   * have not been read yet and each gets looked at when its own question does.
+   */
   | { along: 'width'; halfWidth: number; side: 'above' | 'below';
-      rank?: number; cx?: number; value: number; text: string }
+      rank?: number; cx?: number; value: number; text: string; arrow?: true }
   /**
    * A line pointing at a feature, with the number at its far end.
    *
@@ -339,7 +347,22 @@ export function solidFigure(spec: SolidSpec): Figure {
       inward = pt(cx, y + (d.side === 'below' ? 1 : -1));
     }
     const mid = pt((a.x + b.x) / 2, (a.y + b.y) / 2);
-    elements.push({ kind: 'segment', from: a, to: b, dashed: true });
+    const arrow = d.along === 'width' && d.arrow === true;
+    elements.push({ kind: 'segment', from: a, to: b, dashed: !arrow });
+    if (arrow) {
+      // Barbs are decoration strokes, so the minimum-length rule does not reach
+      // them — an arrowhead grown until it could carry a measurement would only
+      // be a wrong arrowhead.
+      const len = Math.min(Math.abs(b.x - a.x) * 0.1, 5);
+      for (const [end, dir] of [[a, 1], [b, -1]] as [Pt, number][]) {
+        for (const up of [1, -1]) {
+          elements.push({
+            kind: 'segment', decoration: true, from: end,
+            to: pt(end.x + dir * len, end.y + up * len * 0.45),
+          });
+        }
+      }
+    }
     elements.push({ kind: 'label', text: d.text, anchor: mid, away: inward });
     claims.push({ kind: 'length', from: a, to: b, value: d.value });
   }

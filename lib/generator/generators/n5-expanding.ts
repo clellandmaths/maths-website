@@ -32,6 +32,10 @@ const pick = <T,>(xs: T[]): T => xs[getRandomInt(0, xs.length - 1)];
  * See `__checks__/variables.ts`.
  */
 const VARS = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'y'];
+
+/** Highest common factor, taking absolute values, so gcd(-6, 4) is 2. */
+const gcd = (m: number, n: number): number =>
+  n ? gcd(Math.abs(n), Math.abs(m) % Math.abs(n)) : Math.abs(m);
 type Q = Omit<GeneratedQuestion, 'topic'>;
 
 // ── polynomials as coefficients, index = power ─────────────────────────────
@@ -179,11 +183,28 @@ function twoBinomials(): Q {
   throw new Error('expanding.two-binomials: no valid question found');
 }
 
-// ── shape: binomial times trinomial — 2022 P2 Q1, 2024 P1 Q3, 2026 P1 Q1 ─
+// ── shape: binomial times trinomial ─────────────────────────────────────
+//
+// Six papers, one question: 2015 P1 Q4, 2017 P1 Q4, 2019 P1 Q3, 2022 P2 Q1,
+// 2024 P1 Q3, 2026 P1 Q1. A linear bracket times a three-term quadratic, three
+// marks, and the same three scheme rows in all six — the only differences are
+// the numbers and the word ("multiply out the brackets" in 2015).
 //
 // The third mark requires the collected terms to include a term in x^3, and in
 // 2017 and 2022 additionally a negative coefficient. So the parameters cannot
 // all be positive.
+//
+// **Neither bracket may have a common factor.** None of the six does: the
+// linear brackets are (3x-2), (x+1), (x-4), (2x+3), (x+5), (y+4) and the
+// trinomials 2x^2+5x-1, x^2-4x+5, x^2+x-2, x^2-4x+1, 2x^2-7x-3, y^2-3y+2. Drawn
+// freely this produced (2x-6)(x^2-5x-5) and (x-1)(3x^2-6x+3), and a pupil who
+// takes the 2 or the 3 outside is doing a shorter and different piece of work
+// from the one the scheme pays three marks for.
+//
+// **And every term survives into the answer.** If the x^2 or x terms cancel,
+// the third mark — collect like terms — is partly handed over, and all six
+// papers collect to four terms. `twoBinomials` above already guards its middle
+// term for the same reason.
 
 function binomialTrinomial(): Q {
   for (let tries = 0; tries < 400; tries++) {
@@ -194,6 +215,8 @@ function binomialTrinomial(): Q {
     if (!result[3]) continue;                             // must have the cubic term
     if (!result.some(k => k < 0)) continue;               // and a negative coefficient
     if (result.some(k => Math.abs(k) > 60)) continue;     // keep it to paper scale
+    if (gcd(a, b) > 1 || gcd(gcd(c, d), e) > 1) continue; // no bracket factorises out
+    if (!result[1] || !result[2]) continue;               // four terms, as all six have
     return {
       subTopic: 'Expanding a Trinomial',
       difficulty: 'exam',
@@ -223,12 +246,26 @@ function productPlusBracket(): Q {
     const b = nonZeroInt(-9, 9);
     const c = squared ? a : nonZeroInt(1, 3);
     const d = squared ? b : nonZeroInt(-9, 9);
-    const k = nonZeroInt(-7, 7);
+    // **Added, not subtracted.** 2018 P1 Q2 is `+ 2(x^2 - 5)`, 2023 P1 Q2 is
+    // `+ 6(x^2 - 10)` and 2025 P1 Q2 is `+ 4(x - 2)`: three of three join the
+    // two parts with a plus. A minus in front of the multiplier is a fair
+    // enough piece of algebra and it is not one of these three questions - it
+    // puts a sign to distribute where the paper puts none.
+    // At least two: a multiplier of 1 prints no multiplier at all, and "expand
+    // the single bracket" becomes copying it out. The papers use 2, 6 and 4.
+    const k = getRandomInt(2, 7);
     const quadratic = getRandomInt(0, 1) === 1;  // 2018/2023 add k(x^2 + m)
     const second: Poly = quadratic ? [nonZeroInt(-10, 10), 0, 1] : [nonZeroInt(-9, 9), nonZeroInt(1, 4)];
     const result = addP(mulP([b, a], [d, c]), scaleP(second, k));
     if (!result[2] || !result[1] || !result[0]) continue;   // every term should survive
     if (result.some(x => Math.abs(x) > 60)) continue;
+    // **No bracket may factorise out**, as none of the three papers' do:
+    // (3x + 1), (x - 1), (x + 7), (x + 3), (x + 5), (x^2 - 5), (x^2 - 10),
+    // (x - 2). Drawn freely this printed (3x - 3)(x + 6) and - 6(4x + 6), where
+    // a pupil can take the 3 or the 2 outside and is then doing a shorter and
+    // different piece of work from the one the three marks pay for.
+    if (gcd(a, b) > 1 || gcd(c, d) > 1) continue;
+    if (!quadratic && gcd(second[0], second[1] ?? 0) > 1) continue;
 
     const first = squared
       ? `${bracket([b, a], v)}^{2}`

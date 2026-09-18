@@ -291,6 +291,12 @@ export function place(scene: Scene): Placed {
 
     /** Where the label lands when pushed away from a given point. */
     const seat = (from: Pt) => {
+      // A region label sits on its anchor. Pushing it is what a line label
+      // needs and what a region label must not have — see `centred` in
+      // scene.ts.
+      if (e.centred) {
+        return { at: a, away: from, box: { x: a.x - w / 2, y: a.y - h / 2, w, h } };
+      }
       // push directly away from the point the routine named, by enough to clear
       // the line or vertex being labelled
       const dir = unit(sub(a, from));

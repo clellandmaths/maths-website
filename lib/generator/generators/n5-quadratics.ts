@@ -69,14 +69,19 @@ function sigFigs(v: number, n: number): number {
 
 // ── skill: completing the square — 2014 P1 Q3, 2016 P2 Q9, 2019 P2 Q10 ───
 //
-// x^2 + bx + c = (x + b/2)^2 + (c - b^2/4). The specification allows p and q to
-// be rational, so an odd b is in scope; the papers mostly use an even one.
+// x^2 + bx + c = (x + b/2)^2 + (c - b^2/4).
+//
+// **The middle coefficient is even.** All four cited papers use one - x^2 - 14x
+// + 44, x^2 + 8x - 7, x^2 + 10x - 15, x^2 + 10x + 19 - so a and b come out
+// whole. The course specification allows them to be rational and this drew an
+// odd coefficient one time in four, giving `(y - 5/2)^2 - 57/4`: correct, in
+// scope, and not a question any of these four papers sets. What the
+// specification permits is not what the paper asked.
 
 function completeSquare(): Q {
-  const evenB = getRandomInt(1, 4) !== 1;
   const { p: pName, q: qName, v } = squareForm();
   const half = nonZeroInt(-8, 8);
-  const b = evenB ? 2 * half : 2 * half + (half > 0 ? 1 : -1);
+  const b = 2 * half;
   const c = nonZeroInt(-40, 40);
   const expr: Poly = [c, b, 1];
 
@@ -159,7 +164,12 @@ function turningPoint(): Q {
 
 function discriminant(): Q {
   for (let tries = 0; tries < 400; tries++) {
-    const asFunction = getRandomInt(1, 4) !== 1;   // the papers always use this form
+  // **Always the function form.** All four cited papers word it identically -
+  // "Determine the nature of the roots of the function f(x) = ..." - and this
+  // drew the equation form one time in four, under a comment saying the papers
+  // always use the other one. There is no separate drill variation to carry the
+  // plainer wording: this id is what `2025 P1 Q11` and its three siblings get
+  // when a pupil presses Variation, so it says what they say.
     // All four discriminant questions in the papers are f:4, x:4 - the same
     // function letter and the same variable, every time. `g`, `h`, `p` and `y`
     // reached 68% of draws between them and appear in none of them.
@@ -190,11 +200,9 @@ function discriminant(): Q {
       variationId: 'quadratics.discriminant',
       // All four cited papers word it identically — "Determine the nature of the
       // roots of the function f(x)=…", with no prompt to use the discriminant and
-      // nothing set equal to zero. The equation form is kept as the plainer drill.
+      // nothing set equal to zero.
       questionLines: [
-        asFunction
-          ? `Determine the nature of the roots of the function $${fname}(${v}) = ${fmt([c, b, a], v)}$.`
-          : `Determine the nature of the roots of the equation $${fmt([c, b, a], v)} = 0$.`,
+        `Determine the nature of the roots of the function $${fname}(${v}) = ${fmt([c, b, a], v)}$.`,
       ],
       boardQuestionLines: [`Nature of the roots of $${fmt([c, b, a], v)}$?`],
       // Two marks in all four papers: •¹ calculate the discriminant, •² state
@@ -240,24 +248,45 @@ function quadraticFormula(): Q {
       ? x.toFixed(rounding.dp)
       : `${sigFigs(x, rounding.sf)}`;
 
+    // ── two papers, two mark structures ─────────────────────────────────────
+    //
+    // 2022 P2 Q7 asks for two significant figures and is four marks; the other
+    // three ask for one or two decimal places and are three. The scheme splits
+    // the last mark in two for the significant-figure question — •³ the roots
+    // before rounding, •⁴ the roots rounded — because rounding to significant
+    // figures is a skill of its own in a way that rounding to a decimal place
+    // is not.
+    //
+    // Scheme note 2: *"•⁴ is only available when both roots require rounding."*
+    // Both always do here: the discriminant is never a perfect square (a
+    // perfect square would factorise and is rejected above), so `r` is
+    // irrational and so is every root. Nothing to guard — but it is the
+    // condition the fourth mark rests on, so it is written down.
+    const bySigFigs = !('dp' in rounding);
+
     return {
       subTopic: 'The Quadratic Formula',
       difficulty: 'skill',
-      variationId: 'quadratics.formula',
+      variationId: bySigFigs ? 'quadratics.formula-sigfigs' : 'quadratics.formula',
       questionLines: [
         `Solve the equation $${fmt([c, b, a], v)} = 0$ using the quadratic formula.`,
         rounding.phrase,
       ],
       boardQuestionLines: [`Solve $${fmt([c, b, a], v)} = 0$ by formula. ${rounding.phrase}`],
       // •¹ correct substitution into the formula, •² evaluate the discriminant,
-      // •³ both roots at the stated accuracy. Naming the coefficients is not a
-      // mark of its own; it opens the substitution.
+      // •³ both roots at the stated accuracy — and for the significant-figure
+      // question, •³ the roots before rounding and •⁴ the roots rounded.
+      // Naming the coefficients is not a mark of its own; it opens the
+      // substitution.
       solutionSteps: [
         `<strong>1.</strong> With $a = ${a}$, $b = ${b}$ and $c = ${c}$, substitute into $${v} = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$:<br><br>$${v} = \\frac{${-b} \\pm \\sqrt{(${b})^{2} - 4 \\times ${a} \\times (${c})}}{2 \\times ${a}}$`,
         `<strong>2.</strong> Evaluate the discriminant:<br><br>$b^{2}-4ac = ${d}$`,
-        `<strong>3.</strong> Work out both roots and round:<br><br>$${v} = ${show(x1)}$ or $${v} = ${show(x2)}$`,
+        ...(bySigFigs
+          ? [`<strong>3.</strong> Work out both roots, before any rounding:<br><br>$${v} = ${x1.toFixed(4)}\\ldots$ or $${v} = ${x2.toFixed(4)}\\ldots$`,
+             `<strong>4.</strong> Round each to two significant figures:<br><br>$${v} = ${show(x1)}$ or $${v} = ${show(x2)}$`]
+          : [`<strong>3.</strong> Work out both roots and round:<br><br>$${v} = ${show(x1)}$ or $${v} = ${show(x2)}$`]),
       ],
-      stepMarks: [1, 1, 1],
+      stepMarks: bySigFigs ? [1, 1, 1, 1] : [1, 1, 1],
       finalAnswer: `$${v} = ${show(x1)}$ and $${v} = ${show(x2)}$`,
     };
   }

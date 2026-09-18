@@ -87,24 +87,34 @@ function assemble(
   };
 }
 
-// ── y = ax^2 through a marked point — 2014 P1 Q7, 2026 P1 Q9 ─────────────
+// ── y = ax^2 through a marked point — 2014 P1 Q7 and 2026 P1 Q9 ──────────
 //
 // The only one of the six whose parabola has its turning point at the origin,
 // and the only one asking for a stretch rather than a shift.
+//
+// **Two papers, two variations, because they differ in more than numbers.**
+// 2014 P1 Q7 calls the stretch `a` and names the point in its prose - "The
+// point (-3, 45) lies on the graph". 2026 P1 Q9 calls it `k` and prints the
+// point on the diagram and nowhere else: its whole prose is "The diagram shows
+// part of the graph of y = kx^2. Find the value of k." One routine served both
+// and always drew 2014's - the letter `a` and the point restated - so pressing
+// Variation on 2026 P1 Q9 gave a question that read like the other paper and
+// handed over a given 2026 makes you read off the graph.
+//
+// The marks and the working are identical, which is why it is one routine; the
+// letter and where the given lives are what make it two ids.
 
-function parabolaScale(): Q | null {
-  // `a` in six of the seven *Parabola Equation from Graph* papers, `k` in none.
-  const letter = 'a';
+function parabolaScale(stated: boolean): Q | null {
+  const letter = stated ? 'a' : 'k';
   const a = getRandomInt(2, 9);
   const x = nonZeroInt(-4, 4);
   if (Math.abs(x) < 2) return null;               // x = ±1 makes a readable off the dot
   const y = a * x * x;
 
-  const prose = [
-    `The diagram shows part of the graph of $y = ${letter}x^{2}$.`,
-    `The point $${coord(x, y)}$ lies on the graph.`,
-    `Find the value of $${letter}$.`,
-  ];
+  const lead = `The diagram shows part of the graph of $y = ${letter}x^{2}$.`;
+  const prose = stated
+    ? [lead, `The point $${coord(x, y)}$ lies on the graph.`, `Find the value of $${letter}$.`]
+    : [lead, `Find the value of $${letter}$.`];
   const steps = [
     `<strong>1.</strong> The point is on the curve, so its coordinates fit the equation. Put $x = ${x}$ and $y = ${y}$ into $y = ${letter}x^{2}$:<br><br>$${y} = ${letter} \\times (${x})^{2} = ${x * x}${letter}$`,
     `<strong>2.</strong> Divide to find $${letter}$:<br><br>$${letter} = \\frac{${y}}{${x * x}} = ${a}$`,
@@ -114,7 +124,8 @@ function parabolaScale(): Q | null {
     plot: { kind: 'parabola', a, h: 0, k: 0 },
     points: [{ x, y, text: plainCoord(x, y), side: x > 0 ? 'right' : 'left' }],
     curveLabel: `y = ${letter}x²`,
-  }, 'A Parabola Through a Point', 'quadratics.parabola-scale', prose,
+  }, 'A Parabola Through a Point',
+    stated ? 'quadratics.parabola-scale' : 'quadratics.parabola-scale-k', prose,
     `$y = ${letter}x^{2}$ passes through $${coord(x, y)}$. Find $${letter}$.`,
     steps, [1, 1], `$${letter} = ${a}$`);
 }
@@ -379,7 +390,9 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
 };
 
 export const PARABOLA_GRAPH_GENERATORS: Record<string, () => Q> = {
-  'A Parabola Through a Point': tried('quadratics.parabola-scale', parabolaScale),
+  'A Parabola Through a Point': () => (getRandomInt(0, 1) === 0
+    ? tried('quadratics.parabola-scale', () => parabolaScale(true))
+    : tried('quadratics.parabola-scale-k', () => parabolaScale(false)))(),
   'A Parabola from its Turning Point':
     tried('quadratics.parabola-from-turning-point', () => parabolaFromTurningPoint('plain')),
   'A Parabola and its Axis of Symmetry':

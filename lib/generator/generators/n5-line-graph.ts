@@ -121,7 +121,13 @@ const CONTEXTS: LineContext[] = [
     y: { letter: 'F', caption: 'Final mark' },
     point: (l, x, y) => `Point $${l}$ represents a pupil who scored ${x} in the prelim exam and ${y} in the final exam.`,
     estimate: x => `A pupil scored ${x} marks in the prelim exam. Estimate their mark in the final exam.`,
-    band: [20, 76], base: [16, 28], slope: [1, 1], cap: 100 },
+    // **2026 P1 Q6 is this context, and its gradient is 2/3** - F = 2/3 P + 34,
+    // from 30 -> 54 and 90 -> 94. Pinned at exactly 1 this context could never
+    // draw it: a denominator of 2 or 3 gives a numerator of 2 or 3, which
+    // shares a factor and is thrown away, so every clone of that paper came out
+    // with a gradient of 1. From a half the numerators are 1 and 3 over 2, and
+    // 2, 4 and 5 over 3.
+    band: [20, 76], base: [16, 28], slope: [0.5, 1.5], cap: 100 },
   { story: "The cost of a journey with Tom's Taxis depends on the distance travelled. The graph shows the cost, $P$ pounds, of a journey against the distance travelled, $D$ miles.",
     scatter: false, money: true,
     x: { letter: 'D', caption: 'Distance (miles)' },
@@ -451,15 +457,30 @@ function bestFitOnGridQuestion(): Q | null {
 // ── the equation of a line of best fit, then an estimate ─────────────────
 
 export function bestFitQuestion(): Q | null {
-  const ctx = pick(CONTEXTS);
-
   // The gradient, as a fraction in lowest terms. Mostly whole, because most of
   // the papers are — but 2018 is 3/2 and 2026 is 2/3, and the 2018 scheme
   // refuses the last mark for a gradient turned into a decimal, so the
   // fractional case has to be generated and carried as a fraction.
   const q = pick([1, 1, 1, 2, 3]);
+
+  // **The denominator is chosen before the context, because it decides which
+  // contexts can carry it.** `p` is drawn across the context's own slope band,
+  // and the cap below throws away anything over 8 — so a context sloping at 15
+  // to 20 calories per gram could never survive a denominator of 2 or 3, and
+  // asking for one was simply a wasted draw. Two of the five papers have a
+  // fractional gradient; one clone in twenty did, because the fractional
+  // attempts nearly all landed on a context that could not hold one. Picking
+  // the context from those that can makes the rate the papers' rate.
+  const pool = q === 1 ? CONTEXTS : CONTEXTS.filter(c =>
+    Math.min(Math.abs(c.slope[0]), Math.abs(c.slope[1])) * q <= 8);
+  if (!pool.length) return null;
+  const ctx = pick(pool);
+
   const [lo, hi] = ctx.slope;
-  const p = getRandomInt(Math.min(lo, hi) * q, Math.max(lo, hi) * q);
+  // Rounded inwards, so a band bound that is not a whole number still gives a
+  // whole numerator: the exam-marks band runs from a half, which is what lets
+  // 2026 P1 Q6's own gradient of 2/3 be drawn at all.
+  const p = getRandomInt(Math.ceil(Math.min(lo, hi) * q), Math.floor(Math.max(lo, hi) * q));
   if (p === 0 || gcd(Math.abs(p), q) !== 1) return null;
   // A fractional gradient only where the papers put one: at a small magnitude.
   //

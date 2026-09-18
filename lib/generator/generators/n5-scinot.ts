@@ -145,16 +145,32 @@ function calculate(): Q {
   //
   // A tidy answer is constructible rather than lucky: a two-figure mantissa
   // times a single significant digit (times a power of ten) never exceeds three
-  // figures — 4.5 x 700 = 3150 — while a three-figure mantissa, a percentage or
-  // a division almost never lands. So the two-mark shape multiplies.
+  // figures — 4.5 x 700 = 3150.
+  //
+  // **It was also filtered to multiplication only, and that was wrong.** The
+  // reason given was that a percentage or a division "almost never lands"
+  // exactly; measured over 200,000 draws of this routine's own ranges, a
+  // percentage lands at three significant figures 10.7% of the time and a
+  // division 8.5%, and the loop below has six hundred tries. Meanwhile two of
+  // the four two-mark papers are neither a multiplication nor a rounding: 2016
+  // P2 Q2 divides 12 grams by 1.5 x 10^9 pollen grains and 2019 P2 Q4 takes 8%
+  // of 3.6 x 10^-6 kilograms, and both come out exact. Every clone of those two
+  // multiplied instead.
+  //
+  // The operation is chosen once, outside the loop, so the mix is the papers'
+  // and not a by-product of how often each survives — the rule in
+  // docs/diagram-questions.md section 2.
   //
   // One in three rather than the papers' one in five: at one in five the
   // three-mark shape lands just under mix.ts's floor and reports as suppressed,
   // and a guard against a variation going unreachable is worth more than
   // matching a five-paper sample exactly.
   const wantRounding = getRandomInt(1, 3) === 1;
+  // One each in the exact papers: 2016 P2 Q2 divides, 2019 P2 Q4 takes a
+  // percentage, 2024 P2 Q2 multiplies.
+  const exactOp = pick(['multiply', 'percent', 'divide'] as const);
   for (let tries = 0; tries < 600; tries++) {
-    const ctx = pick(wantRounding ? SCI_CONTEXTS : SCI_CONTEXTS.filter(c => c.op === 'multiply'));
+    const ctx = pick(wantRounding ? SCI_CONTEXTS : SCI_CONTEXTS.filter(c => c.op === exactOp));
     const m = wantRounding
       ? Number((getRandomInt(101, 989) / 100).toFixed(2))
       : Number((getRandomInt(11, 98) / 10).toFixed(1));

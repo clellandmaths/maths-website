@@ -55,6 +55,10 @@ function quartiles(sorted: number[]) {
 /** Written as the paper writes it: "£155" or "23". */
 const show = (v: number, ctx: DataContext): string => `${ctx.prefix}${num(v)}`;
 
+/** The same value written as prose writes it, with the unit on the end. */
+const amount = (v: number, ctx: DataContext): string =>
+  `${show(v, ctx)}${ctx.unit ? ` ${unitFor(v, ctx.unit)}` : ''}`;
+
 /** The values as a spaced row, sorted or not as the papers do both. */
 const row = (vals: number[], ctx: DataContext): string =>
   vals.map(v => show(v, ctx)).join('&nbsp;&nbsp;&nbsp;');
@@ -90,7 +94,34 @@ function sampleWithWholeMean(ctx: DataContext, n: number): number[] | null {
 }
 
 /** "the magazine readers" -> "the magazine readers'"; "class 4A" -> "class 4A's". */
-const owns = (group: string): string => (/s$/i.test(group) ? `${group}'` : `${group}'s`);
+/**
+ * The two sentences part (b) pays for.
+ *
+ * `bHigher` and `bWider` are statements about the **second** group, the one
+ * whose figures the question states. Both sentences therefore have to name
+ * whichever group is actually the higher or the wider one - saying "A's are
+ * lower than B's" is the same claim as "B's are higher than A's", so flipping
+ * the adjective *and* the subject together leaves the claim unchanged. It did:
+ * every draw asserted the second group was the higher one, and half of them
+ * were wrong against their own data, medians of 102 and 96 reported as "the
+ * adults' times are lower than the children's".
+ *
+ * The phrasing is "the <quantity> of <group>", which is 2019 P1 Q5's own - "the
+ * midday temperatures of Grantford and Endoch". The possessive it replaces read
+ * "the bicycles in the shop's prices" on the contexts whose group name does not
+ * end in a noun.
+ */
+function comparison(
+  ctx: DataContext, bHigher: boolean, bWider: boolean,
+): string[] {
+  const [a, b] = [ctx.groupA, ctx.groupB];
+  const of = (g: string) => `the ${ctx.quantity} of ${g}`;
+  const cap = (t: string) => `${t[0].toUpperCase()}${t.slice(1)}`;
+  return [
+    `On average, ${of(bHigher ? b : a)} are higher than ${of(bHigher ? a : b)}.`,
+    `${cap(of(bWider ? b : a))} are more varied than ${of(bWider ? a : b)}.`,
+  ];
+}
 
 /**
  * The comparison sentences, worded the way the markscheme demands.
@@ -99,23 +130,30 @@ const owns = (group: string): string => (/s$/i.test(group) ? `${group}'` : `${gr
  * readers' ages" — and it is the only phrasing that stays readable across every
  * context. "The numbers of eggs of the second flock" is grammatical and awful.
  */
-function comparison(
-  ctx: DataContext, mineHigher: boolean, mineWider: boolean,
-): string[] {
-  const [a, b] = [ctx.groupA, ctx.groupB];
-  return [
-    `On average, ${owns(mineHigher ? b : a)} ${ctx.quantity} are ${mineHigher ? 'higher' : 'lower'} than ${owns(mineHigher ? a : b)}.`,
-    `${owns(mineWider ? b : a)[0].toUpperCase()}${owns(mineWider ? b : a).slice(1)} ${ctx.quantity} are more varied than ${owns(mineWider ? a : b)}.`,
-  ];
-}
 
 // ── skill: quartiles and the interquartile range ─────────────────────────
 //    2017 P1 Q2 (semi-interquartile range), 2025 P1 Q3 (interquartile range)
 
-function quartilesOnly(): Q {
+/**
+ * **The statistic is the question, so it is chosen once and named in the id.**
+ *
+ * 2017 P1 Q2 asks for the semi-interquartile range; 2025 P1 Q3 asks for the
+ * interquartile range. One variation served both and tossed a coin, so half
+ * the clones of each paper asked the other paper's statistic — and 2025's own
+ * scheme scores 0/2 for the wrong one. Two papers, two unknowns, two
+ * variations: a clone may only stand in for a second paper when that paper is
+ * the same question with different numbers.
+ *
+ * Both papers print their ten values **already in ascending order**, and
+ * neither pays a mark for sorting — the first mark is "find quartiles". So the
+ * list is printed sorted and the working does not pretend otherwise.
+ */
+function quartilesOnly(semi: boolean): Q {
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(DATA_CONTEXTS);
-    const n = pick([6, 7, 9, 10]);
+    // Ten, as both papers use. The values vary; the count is part of the
+    // question's shape rather than one of its numbers.
+    const n = 10;
     const [lo, hi] = ctx.band;
     if (hi - lo < n) continue;
     const vals: number[] = [];
@@ -127,7 +165,6 @@ function quartilesOnly(): Q {
     const { q1, q2, q3 } = quartiles(sorted);
     const iqr = q3 - q1;
     if (iqr <= 0) continue;
-    const semi = getRandomInt(0, 1) === 0;
     if (semi && (iqr / 2) % 0.5 !== 0) continue;        // keep the halving tidy
     if (!Number.isInteger(iqr) && !semi) continue;
 
@@ -137,18 +174,18 @@ function quartilesOnly(): Q {
     return {
       subTopic: 'Quartiles and Interquartile Range',
       difficulty: 'skill',
-      variationId: 'data.quartiles',
+      variationId: semi ? 'data.quartiles-semi' : 'data.quartiles',
       questionLines: [
         ctx.lead(n),
-        row(vals, ctx),
+        row(sorted, ctx),
         `Calculate the ${name} of these ${ctx.quantity}.`,
       ],
       boardQuestionLines: [`${name} of ${row(sorted, ctx)}?`],
       // Two marks in both papers: •¹ find the quartiles, •² calculate the range.
-      // Ordering the list and locating the median are how the quartiles are
-      // found, not marks of their own, so they open the first step.
+      // Locating the median is how the quartiles are found, not a mark of its
+      // own, so it opens the first step.
       solutionSteps: [
-        `<strong>1.</strong> Put the ${ctx.quantity} in order, then find the quartiles. The median splits the list${n % 2 ? ' and is not counted in either half' : ''}, and $Q_{1}$ and $Q_{3}$ are the middles of the two halves:<br><br>${row(sorted, ctx)}<br><br>$Q_{1} = ${num(q1)}$, $Q_{2} = ${num(q2)}$, $Q_{3} = ${num(q3)}$`,
+        `<strong>1.</strong> The ${ctx.quantity} are already in order, so find the quartiles. The median splits the list${n % 2 ? ' and is not counted in either half' : ''}, and $Q_{1}$ and $Q_{3}$ are the middles of the two halves:<br><br>${row(sorted, ctx)}<br><br>$Q_{1} = ${num(q1)}$, $Q_{2} = ${num(q2)}$, $Q_{3} = ${num(q3)}$`,
         semi
           ? `<strong>2.</strong> The semi-interquartile range is half of $Q_{3} - Q_{1}$:<br><br>$\\frac{${num(q3)} - ${num(q1)}}{2} = ${num(wanted)}$`
           : `<strong>2.</strong> The interquartile range is $Q_{3} - Q_{1}$:<br><br>$${num(q3)} - ${num(q1)} = ${num(wanted)}$`,
@@ -161,16 +198,38 @@ function quartilesOnly(): Q {
       finalAnswer: `${show(wanted, ctx)}${ctx.unit ? ` ${unitFor(wanted, ctx.unit)}` : ''}`,
     };
   }
-  throw new Error('data.quartiles: no valid question found');
+  throw new Error(`data.quartiles${semi ? '-semi' : ''}: no valid question found`);
 }
 
-// ── median and IQR, then compare — 2015 P1 Q10, 2019 P1 Q5, ─────────────
-//    2023 P1 Q9, 2024 P1 Q5
+// ── median and IQR or semi-IQR, then compare ────────────────────────────
+//    IQR:  2023 P1 Q9, 2024 P1 Q5, 2026 P1 Q3
+//    SIQR: 2015 P1 Q10, 2019 P1 Q5
 
-function medianCompare(): Q {
+/**
+ * **Five papers, two questions.**
+ *
+ * 2015 P1 Q10 and 2019 P1 Q5 ask for the median and the **semi**-interquartile
+ * range; 2023 P1 Q9, 2024 P1 Q5 and 2026 P1 Q3 ask for the median and the
+ * **interquartile** range. Within each group the papers are the same question
+ * with different numbers — a list, the two statistics, then two comparisons
+ * against a stated pair — so each group gets one variation and no more.
+ *
+ * This offered only the interquartile form, so the two semi papers had no
+ * clone that asked what they ask. Their schemes pay a mark for the semi form
+ * specifically, and 2019's notes refuse it to a candidate who halves the range
+ * instead.
+ */
+function medianCompare(semi: boolean): Q {
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(DATA_CONTEXTS);
-    const n = pick([6, 7, 9, 10]);
+    // **How many values is part of the question.** With an odd count the median
+    // is one of the listed values and each quartile is a single value too; with
+    // an even count the median is the mean of the two middles, which is what
+    // the first mark is for - 39.5, 200, 7, 19.5. The interquartile papers are
+    // ten, six and ten, all even; the semi papers are ten and nine, and 2019's
+    // quartiles of 3.5 and 8 come out of that odd split. So each variation
+    // takes the counts its own papers use, rather than all four.
+    const n = pick(semi ? [9, 10] : [6, 10]);
     const [lo, hi] = ctx.band;
     if (hi - lo < n + 4) continue;
     const vals: number[] = [];
@@ -178,28 +237,50 @@ function medianCompare(): Q {
     const sorted = [...vals].sort((a, b) => a - b);
     const { q1, q2, q3 } = quartiles(sorted);
     const iqr = q3 - q1;
-    if (!Number.isInteger(iqr) || iqr < 2) continue;
+    // The semi form halves it, so the papers' quartiles land on halves —
+    // 2019's are 3.5 and 8, giving 2.25. Whole quartiles otherwise.
+    if (semi ? (iqr % 0.5 !== 0) : !Number.isInteger(iqr)) continue;
+    if (iqr < 2) continue;
     if (!Number.isInteger(q2)) continue;
 
-    // the second group's figures are stated, as the papers state them
+    const spread = semi ? iqr / 2 : iqr;
+    const name = semi ? 'semi-interquartile range' : 'interquartile range';
+
+    // The second group's figures are stated, as the papers state them - and
+    // **near the first group's**, as the papers also do: 7 against 9, 70
+    // against 73, 11 against 12, 4.5 against 2.5, 2.25 against 1.5. A spread of
+    // 1 stated against a sample whose spread is 13 is not a comparison a paper
+    // would set, and it makes part (b) answerable without reading part (a).
     const higher = getRandomInt(0, 1) === 0;
     const wider = getRandomInt(0, 1) === 0;
-    const otherMed = q2 + (higher ? getRandomInt(2, 8) : -getRandomInt(2, 8));
-    const otherIqr = wider ? iqr + getRandomInt(2, 6) : Math.max(1, iqr - getRandomInt(1, Math.max(1, iqr - 1)));
-    if (otherMed < lo || otherMed > hi || otherIqr === iqr) continue;
+    // A whole number, as every paper states: 2023 P1 Q9 puts 41 beside a
+    // median of 39.5.
+    const otherMed = Math.round(q2) + (higher ? getRandomInt(2, 8) : -getRandomInt(2, 8));
+    const grain = semi ? 0.5 : 1;
+    const step = grain * getRandomInt(1, Math.max(1, Math.round(spread * 0.4 / grain)));
+    const otherSpread = wider ? spread + step : spread - step;
+    if (otherMed < lo || otherMed > hi) continue;
+    if (otherSpread < grain || otherSpread === spread) continue;
 
     return {
       subTopic: 'Comparing Median and Interquartile Range',
       difficulty: 'exam',
-      variationId: 'data.median-iqr-compare',
+      variationId: semi ? 'data.median-siqr-compare' : 'data.median-iqr-compare',
       questionLines: [
         ctx.lead(n),
         row(vals, ctx),
-        `(a) Calculate the median and the interquartile range of these ${ctx.quantity}.`,
-        `A sample taken from ${ctx.groupB} has a median of ${show(otherMed, ctx)} and an interquartile range of ${show(otherIqr, ctx)}.`,
-        `(b) Make two valid comparisons between the two samples.`,
+        `(a) Calculate the median and the ${name} of these ${ctx.quantity}.`,
+        // The unit goes on both figures, as 2019 P1 Q5 puts it on both: "The
+        // median temperature was 8 °C, and the semi-interquartile range was
+        // 1.5 °C." And "a interquartile range" was printing in every draw.
+        `A sample taken from ${ctx.groupB} has a median of ${amount(otherMed, ctx)} and ${semi ? 'a' : 'an'} ${name} of ${amount(otherSpread, ctx)}.`,
+        // Both groups are named, as all five papers name them - "comparing the
+        // midday temperatures of Grantford and Endoch". The scheme refuses a
+        // comment that does not say whose values are whose, so a question that
+        // never names them is asking for something it has not set up.
+        `(b) Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`,
       ],
-      boardQuestionLines: [`Median and IQR of ${row(sorted, ctx)}, then compare with ${show(otherMed, ctx)} and ${show(otherIqr, ctx)}`],
+      boardQuestionLines: [`Median and ${semi ? 'SIQR' : 'IQR'} of ${row(sorted, ctx)}, then compare with ${show(otherMed, ctx)} and ${show(otherSpread, ctx)}`],
       // Five marks, 3 + 2: •¹ the median, •² the quartiles, •³ the IQR, then
       // •⁴ a valid comparison of the medians and •⁵ of the IQRs. Both parts had
       // been compressed — part (a)'s three marks into two steps and part (b)'s
@@ -208,16 +289,18 @@ function medianCompare(): Q {
       solutionSteps: [
         `<strong>(a)</strong> Put them in order and find the median:<br><br>${row(sorted, ctx)}<br><br>$Q_{2} = ${num(q2)}$`,
         `<strong>(a)</strong> $Q_{1}$ is the middle of the lower half and $Q_{3}$ the middle of the upper half:<br><br>$Q_{1} = ${num(q1)}$, $Q_{3} = ${num(q3)}$`,
-        `<strong>(a)</strong> The interquartile range is $Q_{3} - Q_{1}$:<br><br>$${num(q3)} - ${num(q1)} = ${num(iqr)}$`,
+        semi
+          ? `<strong>(a)</strong> The semi-interquartile range is half of $Q_{3} - Q_{1}$:<br><br>$\\frac{${num(q3)} - ${num(q1)}}{2} = ${num(spread)}$`
+          : `<strong>(a)</strong> The interquartile range is $Q_{3} - Q_{1}$:<br><br>$${num(q3)} - ${num(q1)} = ${num(spread)}$`,
         `<strong>(b)</strong> Compare the averages. The comparison must name <strong>the quantity and the group</strong> — "on average the ${ctx.quantity} are higher" scores nothing without saying whose:<br><br>${comparison(ctx, higher, wider)[0]}`,
         `<strong>(b)</strong> Now compare the spreads, naming the quantity and the group again:<br><br>${comparison(ctx, higher, wider)[1]}`,
       ],
       stepMarks: [1, 1, 1, 1, 1],
-      finalAnswer: `(a) median ${show(q2, ctx)}, interquartile range ${show(iqr, ctx)}. (b) ` +
+      finalAnswer: `(a) median ${amount(q2, ctx)}, ${name} ${amount(spread, ctx)}. (b) ` +
         comparison(ctx, higher, wider).join(' '),
     };
   }
-  throw new Error('data.median-iqr-compare: no valid question found');
+  throw new Error(`data.median-${semi ? 'siqr' : 'iqr'}-compare: no valid question found`);
 }
 
 // ── skill: mean and standard deviation — 2014 P2 Q4(a) ──────────────────
@@ -371,8 +454,16 @@ function meanStdevCompare(): Q {
         ctx.lead(n),
         row(vals, ctx),
         `(a) Calculate the mean and standard deviation of these ${ctx.quantity}.`,
-        `A sample taken from ${ctx.groupB} has a mean of ${show(otherMean, ctx)} and a standard deviation of ${otherS}.`,
-        `(b) Make two valid comparisons between the two samples.`,
+        // The unit goes on both figures, as 2025 P2 Q4 puts it on both: "a mean
+        // weight of 105 kilograms and a standard deviation of 5.9 kilograms".
+        `A sample taken from ${ctx.groupB} has a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`,
+        // Both groups named, as all four papers name them - 2025 P2 Q4 asks for
+        // comments "comparing the weights of the rugby players in the samples
+        // from Scotland and France". The scheme refuses a comment that does not
+        // say whose values are whose, so a question that never names them is
+        // asking for something it has not set up. Same fault, and same fix, as
+        // `data.median-iqr-compare` above.
+        `(b) Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`,
       ],
       boardQuestionLines: [`Mean and s.d. of ${row(vals, ctx)}, then compare with ${show(otherMean, ctx)} and ${otherS}`],
       // Six marks, 4 + 2, in all four papers that ask it this way: •¹ the mean,
@@ -388,7 +479,7 @@ function meanStdevCompare(): Q {
         `<strong>(b)</strong> Now compare the standard deviations, naming the quantity and the group again:<br><br>${comparison(ctx, higher, wider)[1]}`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1],
-      finalAnswer: `(a) mean ${show(mean, ctx)}, standard deviation ${s.toFixed(1)}. (b) ` +
+      finalAnswer: `(a) mean ${amount(mean, ctx)}, standard deviation ${ctx.prefix}${s.toFixed(1)}${ctx.unit ? ` ${unitFor(Number(s.toFixed(1)), ctx.unit)}` : ''}. (b) ` +
         comparison(ctx, higher, wider).join(' '),
     };
   }
@@ -510,8 +601,10 @@ function stdevFindA(): Q {
 }
 
 export const DATA_GENERATORS: Record<string, () => Q> = {
-  'Quartiles and Interquartile Range': quartilesOnly,
-  'Comparing Median and Interquartile Range': medianCompare,
+  // Both statistics are reachable from the topic; each carries its own id, so
+  // `variationsBasedOn` can send a paper to the one that asks what it asks.
+  'Quartiles and Interquartile Range': () => quartilesOnly(getRandomInt(0, 1) === 0),
+  'Comparing Median and Interquartile Range': () => medianCompare(getRandomInt(0, 1) === 0),
   'Mean and Standard Deviation': meanStdev,
   'Comparing Mean and Standard Deviation': meanStdevCompare,
   'Judging Consistency from the Standard Deviation': meanStdevConsistency,

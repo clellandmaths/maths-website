@@ -356,6 +356,10 @@ function rectangleAgainstSquare(): Q | null {
     shapePair(
       { kind: 'rectangle', w: 96, h: 54, labels: { w: `2x + ${q}`, h: `x + ${r}` } },
       { kind: 'square', s: 68, label: `x + ${s}` },
+      // 2025 P1 Q15 prints no "not drawn to scale" on its two shapes, so
+      // neither does this. Nothing else turns on it: the figure claims no
+      // lengths, since every side is an expression.
+      { notToScale: false },
     ),
     'A Rectangle Against a Square', 'form-equation.rectangle-square', prose,
     `Rectangle $(2x + ${q})(x + ${r})$ equals square $(x + ${s})^{2}$. Find its sides.`,

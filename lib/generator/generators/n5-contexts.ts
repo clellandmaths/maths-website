@@ -919,14 +919,23 @@ export const PYTHAGORAS_CONTEXTS: PythagorasContext[] = [
 // tunnel cross-section, a paving slab, a perfume label, a door sign. The word
 // the question uses for the answer changes with the object — height for a
 // tunnel, width for a slab — so the context carries it.
+//
+// **All eight are the major piece, so there is no flag for it.** The answer is
+// the radius PLUS the distance to the chord in every paper: 1.2 + 0.79 for the
+// milk tank, 13 + 8.3 for 2018's shape, 50 + 40 for the paving slab, 6.6 + 4.8
+// for the perfume label. There used to be a `major: boolean` here and eight of
+// the rows said `false`, which under the owner's family ruling is a different
+// question — a render showed a bridge arch answering 3.6 beside a paper
+// answering 5, and a doorstep answering 24 beside a slab answering 90. A minor
+// segment is a fair National 5 question; it is not one of these eight, and it
+// needs a paper of its own before it can have a variation of its own. Keeping
+// the field would only preserve the chance of disagreeing with the papers.
 
 export interface ChordContext {
   /** The scene, given the centre and the two ends of the chord. */
   scene: (o: string, a: string, b: string) => string;
   /** "the height of the tunnel", "the width of the paving slab". */
   asks: string;
-  /** The larger piece of the circle, or the smaller. */
-  major: boolean;
   /**
    * Draw the piece **below** the chord rather than above it.
    *
@@ -939,49 +948,68 @@ export interface ChordContext {
   unit: string;
   /** Plausible radius, in the unit above. */
   band: [number, number];
+  /**
+   * Which of the papers' three figure families this context draws as.
+   *
+   * The five chord papers ask one question and draw it three ways, and the
+   * clone review of 2026-09-17 found the generator drawing all five as one:
+   *
+   *   segment   the object *is* part of a circle, drawn as an open arc on its
+   *             chord, the radius drawn solid to a chord end and labelled
+   *             — 2016 P2 Q15 (a label), 2022 P2 Q8 (a tunnel)
+   *   whole     the whole circle drawn, the chord across it, the radius given
+   *             in the prose and not drawn, the piece asked about shaded when
+   *             it is a liquid — 2015 P2 Q12 (milk), 2018 P2 Q12
+   *   cut       the whole circle with the removed piece's arc dashed and the
+   *             radius dashed — 2023 P1 Q10 (a slab cut from a circle)
+   *
+   * Something that is *made as* a segment is `segment`; something *cut from*
+   * a disc is `cut`; a container seen end-on is `whole`.
+   */
+  family: 'segment' | 'whole' | 'cut';
 }
 
 export const CHORD_CONTEXTS: ChordContext[] = [
   { scene: (o, a, b) => `A road culvert has a circular cross-section with a flat concrete base. The centre of the circle is ${o} and the base is the chord ${a}${b}.`,
-    asks: 'the height of the culvert', major: true, unit: 'metres', band: [3, 9] },
-  // 2015 P2 Q12's shape: the piece being asked about hangs *below* its chord.
+    asks: 'the height of the culvert', unit: 'metres', band: [3, 9], family: 'segment' },
+  // 2015 P2 Q12's shape: a container end-on, the liquid hanging *below* its
+  // surface, the whole circle drawn and the liquid shaded.
   { scene: (o, a, b) => `A cylindrical tank lies on its side. On the circular end, centre ${o}, the surface of the oil inside is the chord ${a}${b}.`,
-    asks: 'the depth of the oil', major: true, flip: true, unit: 'metres', band: [2, 6] },
+    asks: 'the depth of the oil', flip: true, unit: 'metres', band: [2, 6], family: 'whole' },
   { scene: (o, a, b) => `A water trough has a circular cross-section with centre ${o}. The surface of the water is the chord ${a}${b}.`,
-    asks: 'the depth of the water', major: false, flip: true, unit: 'centimetres', band: [30, 80] },
-  { scene: (o, a, b) => `A stone doorstep is part of a circle with centre ${o}. The straight edge of the step is the chord ${a}${b}.`,
-    asks: 'the width of the doorstep', major: false, unit: 'centimetres', band: [30, 90] },
+    asks: 'the depth of the water', flip: true, unit: 'centimetres', band: [30, 80], family: 'whole' },
+  // The `cut` bands sit where the Pythagorean triples land: this is the
+  // non-calculator family, so its numbers have to come out whole.
+  { scene: (o, a, b) => `A stone doorstep is cut from a circle with centre ${o}. The straight edge of the step is the chord ${a}${b}.`,
+    asks: 'the width of the doorstep', unit: 'centimetres', band: [30, 90], family: 'cut' },
+  { scene: (o, a, b) => `A wooden tabletop is cut from a circular board with centre ${o}, leaving one straight edge ${a}${b}.`,
+    asks: 'the width of the tabletop', unit: 'centimetres', band: [30, 90], family: 'cut' },
+  { scene: (o, a, b) => `A cheese round has a slice taken off it along the straight cut ${a}${b}. The centre of the round is ${o}.`,
+    asks: 'the width of what is left', unit: 'centimetres', band: [10, 40], family: 'cut' },
+  { scene: (o, a, b) => `A clock face is cut from a circular sheet with centre ${o}, with a flat edge ${a}${b} along the bottom.`,
+    asks: 'the height of the clock face', unit: 'centimetres', band: [12, 40], family: 'cut' },
   { scene: (o, a, b) => `A jam jar has a sticker in the shape of part of a circle, centre ${o}, with straight edge ${a}${b}.`,
-    asks: 'the height of the sticker', major: true, unit: 'centimetres', band: [5, 14] },
+    asks: 'the height of the sticker', unit: 'centimetres', band: [5, 14], family: 'segment' },
   { scene: (o, a, b) => `A window is made from part of a circle with centre ${o}, resting on a horizontal sill ${a}${b}.`,
-    asks: 'the height of the window', major: true, unit: 'metres', band: [1, 4] },
-  { scene: (o, a, b) => `A wooden shelf bracket is cut as part of a circle with centre ${o}. Its straight edge is ${a}${b}.`,
-    asks: 'the depth of the bracket', major: false, unit: 'centimetres', band: [12, 40] },
+    asks: 'the height of the window', unit: 'metres', band: [1, 4], family: 'segment' },
+  { scene: (o, a, b) => `A wooden shelf bracket is cut from a circle with centre ${o}. Its straight edge is ${a}${b}.`,
+    asks: 'the depth of the bracket', unit: 'centimetres', band: [12, 40], family: 'cut' },
   { scene: (o, a, b) => `A stone archway over a doorway is part of a circle with centre ${o}. The doorway is the chord ${a}${b}.`,
-    asks: 'the height of the archway', major: true, unit: 'metres', band: [1, 5] },
+    asks: 'the height of the archway', unit: 'metres', band: [1, 5], family: 'segment' },
   { scene: (o, a, b) => `A logo is part of a circle with centre ${o}, sitting on the line ${a}${b}.`,
-    asks: 'the height of the logo', major: true, unit: 'centimetres', band: [8, 30] },
-  // Deliberately not a liquid. `circleChord` always draws the segment of
-  // interest *above* the chord, and a liquid fills from the bottom — so "a
-  // channel filled to the level MN, calculate the depth of the water" drew the
-  // water sitting on top of its own surface. The maths was right and the
-  // picture was upside down.
-  //
-  // 2015 P2 Q12 is that exact question, and the paper draws it the other way
-  // up: a full circle, the milk level ML near the top, the milk shaded below
-  // it, the depth bracketed down the right-hand side. Cloning that shape needs
-  // `circleChord` to be able to flip, which it cannot yet — recorded in
-  // docs/PLAN.md rather than bodged here.
+    asks: 'the height of the logo', unit: 'centimetres', band: [8, 30], family: 'segment' },
+  // 2018 P2 Q12's shape, near enough: "the shape below is part of a circle",
+  // the whole circle drawn, nothing else on it.
   { scene: (o, a, b) => `A speed bump has a cross-section that is part of a circle with centre ${o}, sitting on the road ${a}${b}.`,
-    asks: 'the height of the speed bump', major: false, unit: 'centimetres', band: [15, 60] },
+    asks: 'the height of the speed bump', unit: 'centimetres', band: [15, 60], family: 'whole' },
   { scene: (o, a, b) => `A biscuit is cut from a circular sheet of dough, centre ${o}, along the straight edge ${a}${b}.`,
-    asks: 'the width of the biscuit', major: false, unit: 'centimetres', band: [4, 12] },
+    asks: 'the width of the biscuit', unit: 'centimetres', band: [4, 12], family: 'cut' },
   { scene: (o, a, b) => `The end of a fuel tank is part of a circle with centre ${o}, welded to a flat base ${a}${b}.`,
-    asks: 'the height of the tank end', major: true, unit: 'metres', band: [1, 4] },
+    asks: 'the height of the tank end', unit: 'metres', band: [1, 4], family: 'segment' },
   { scene: (o, a, b) => `A bridge arch is part of a circle with centre ${o}, spanning the river along ${a}${b}.`,
-    asks: 'the height of the arch', major: false, unit: 'metres', band: [8, 30] },
+    asks: 'the height of the arch', unit: 'metres', band: [8, 30], family: 'segment' },
   { scene: (o, a, b) => `A name badge is part of a circle with centre ${o}, with a straight bottom edge ${a}${b}.`,
-    asks: 'the height of the badge', major: false, unit: 'centimetres', band: [4, 14] },
+    asks: 'the height of the badge', unit: 'centimetres', band: [4, 14], family: 'segment' },
 ];
 
 // ── three distances, and is the corner square? — the converse ────────────

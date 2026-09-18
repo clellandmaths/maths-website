@@ -294,20 +294,28 @@ function shiftAndRaise(): Q | null {
 function turningPoint(): Q | null {
   const fn = pick(['sin', 'cos'] as const);
   const a = getRandomInt(2, 6);
-  const shift = pick([30, 45, 60, 90]);
+  // **Both directions**, because the two papers go opposite ways: 2025 P1 Q8
+  // is `2sin(x - 30)` and 2019 P1 Q13 is `3cos(x + 45)`. The shift was drawn
+  // positive and always printed as `(x - shift)`, so 2019's own form - the
+  // graph moved *left* - could not be produced at all.
+  const shift = pick([30, 45, 60, 90]) * pick([1, -1]);
+  const d = Math.abs(shift);
+  const left = shift < 0;
   const wantMax = getRandomInt(0, 1) === 0;
-  const sign = shift < 0 ? `- ${-shift}` : `+ ${shift}`;
-  void sign;
-  // y = a fn(x - shift). A sine peaks a quarter turn after its crossing; a
-  // cosine peaks at its own shift.
-  const peak = fn === 'cos' ? shift : shift + 90;
-  const trough = peak + 180;
-  const at = wantMax ? peak : trough;
-  if (at > 360 || at < 0) return null;
+
+  // Where the unshifted graph has the turning point being asked for, then the
+  // shift applied to it.
+  const base = fn === 'cos' ? (wantMax ? 0 : 180) : (wantMax ? 90 : 270);
+  const at = left ? base - d : base + d;
+  // **Clear of both ends of the drawn domain.** The papers put theirs at 120
+  // and 135, in the middle of the picture; this used to accept 360, which sits
+  // exactly on the right-hand edge where there is no turning point to see.
+  // Rejecting rather than adding a full turn also keeps step 1's arithmetic
+  // honest: it prints one addition or subtraction and the answer it gives.
+  if (at < 30 || at > 330) return null;
   const y = wantMax ? a : -a;
 
-  // printed as (x - shift) since a positive shift moves the graph right
-  const eq = `y = ${a}\\${fn}(x - ${shift})^{\\circ}`;
+  const eq = `y = ${a}\\${fn}(x ${left ? '+' : '-'} ${d})^{\\circ}`;
   const prose = [
     `Part of the graph of $${eq}$ is shown in the diagram.`,
     '',
@@ -315,7 +323,7 @@ function turningPoint(): Q | null {
     'State the coordinates of $A$.',
   ];
   const steps = [
-    `<strong>1.</strong> The graph is $y = ${a}\\${fn} x^{\\circ}$ moved ${shift} to the right. An unshifted $\\${fn}$ graph has its ${wantMax ? 'maximum' : 'minimum'} at $x = ${fn === 'cos' ? (wantMax ? 0 : 180) : (wantMax ? 90 : 270)}^{\\circ}$, so this one has it ${shift} further on:<br><br>$x = ${fn === 'cos' ? (wantMax ? 0 : 180) : (wantMax ? 90 : 270)} + ${shift} = ${at}$`,
+    `<strong>1.</strong> The graph is $y = ${a}\\${fn} x^{\\circ}$ moved ${d} to the ${left ? 'left' : 'right'}. An unshifted $\\${fn}$ graph has its ${wantMax ? 'maximum' : 'minimum'} at $x = ${base}^{\\circ}$, so this one has it ${d} ${left ? 'earlier' : 'further on'}:<br><br>$x = ${base} ${left ? '-' : '+'} ${d} = ${at}$`,
     `<strong>2.</strong> The amplitude is ${a}, so the ${wantMax ? 'maximum' : 'minimum'} value is $${y}$:<br><br>$A(${at}, ${y})$`,
   ];
   return assemble({

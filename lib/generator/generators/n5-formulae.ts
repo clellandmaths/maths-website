@@ -291,11 +291,27 @@ function inequalityBrackets(): Q {
     const inner = nonZeroInt(-9, 9);            // constant inside the bracket
     const innerCoef = pick([1, 1, 2, 3]);       // coefficient of v inside
     const outside = nonZeroInt(-12, 12);        // constant beside the bracket
-    const otherCoef = nonZeroInt(-6, 6);        // v coefficient on the other side
+    // Positive, as it is in every paper that has one: 19 + x, 3x, x + 8. A
+    // negative there opened the question on a negative variable term, '-x - 8',
+    // and put two sign reversals in a three-mark question.
+    const otherCoef = getRandomInt(1, 6);       // v coefficient on the other side
     const otherConst = nonZeroInt(-20, 20);
 
-    const bracketTex = `${k === 1 ? '' : k === -1 ? '-' : k}(${term(innerCoef, v)}${tail(inner)})`;
-    const withBracket = `${bracketTex}${tail(outside)}`;
+    // **The bracket has a multiplier.** The five papers use 2, 3, 5, 6 and 3;
+    // a multiplier of 1 prints "(x - 4) - 3", where the first mark - "multiply
+    // out bracket" - is for removing a pair of brackets that do nothing, and a
+    // pupil scores it by copying the line out.
+    if (Math.abs(k) < 2) continue;
+    // A negative multiplier is 2015 P1 Q2, and it writes it the way a paper
+    // does: the constant first and the bracket subtracted, `11 - 2(1 + 3x)`.
+    // Written the other way round the question opened on a negative bracket,
+    // `-3(x - 5) - 3`, which none of the five does.
+    if (k < 0 && outside < 0) continue;
+
+    const bracketTex = `${Math.abs(k)}(${term(innerCoef, v)}${tail(inner)})`;
+    const withBracket = k < 0
+      ? `${outside} - ${bracketTex}`
+      : `${bracketTex}${tail(outside)}`;
     const plain = `${term(otherCoef, v)}${tail(otherConst)}`;
 
     // bracket side: k·innerCoef·v + (k·inner + outside)

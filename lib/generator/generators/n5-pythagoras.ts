@@ -8,6 +8,8 @@ import { solidOnAxes } from '../diagrams/shapes/solid-on-axes';
 import { twoCircles } from '../diagrams/shapes/two-circles';
 import { renderScene } from '../diagrams/render';
 import { verifyFigure } from '../diagrams/verify';
+import { twoTrianglesApart } from '../diagrams/shapes/two-triangles-apart';
+import type { Figure } from '../diagrams/scene';
 import {
   PYTHAGORAS_CONTEXTS, CHORD_CONTEXTS, CONVERSE_CONTEXTS, BOX_CONTEXTS, abbrev,
   withUnit,
@@ -218,24 +220,78 @@ export function pythagorasFindSide(): Q {
 // from the centre follows, and the height is r + d or r - d depending on which
 // piece of the circle the object is.
 
-export function pythagorasChord(): Q {
+/**
+ * **One variation per figure family, because the family is the paper's.**
+ *
+ * The five papers draw three different pictures of the one question:
+ *
+ *   segment  2016 P2 Q15, 2022 P2 Q8   an open arc on its chord, radius solid
+ *   whole    2015 P2 Q12, 2018 P2 Q12  the whole circle, radius in the prose
+ *   cut      2023 P1 Q10               the whole circle, removed arc dashed
+ *
+ * The routine learned to draw all three earlier today, but the context — and so
+ * the family — was still drawn at random, which the owner's family ruling does
+ * not allow: press Variation on the tunnel and you could get the milk tank's
+ * picture. Within each family the papers are the same question with different
+ * numbers, so each family gets one variation and no more.
+ *
+ * **And `cut` is Paper 1, so its numbers have to come out whole.** 2023 P1 Q10
+ * is non-calculator: radius 50, chord 60, half-chord 30, and 30-40-50 is a
+ * scaled 3-4-5, so the distance from the centre is exactly 40 and the width
+ * exactly 90. Drawn freely the answer is irrational and the clone asked a
+ * pupil with no calculator to round it to a decimal place — twelve draws out of
+ * twelve, caught by `__checks__/paper-one.ts`. So this branch takes a triple
+ * first and builds the circle from it, exactly as `chord-reverse` has done for
+ * 2014 P1 Q12 since it was written.
+ */
+export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
+  const exact = family === 'cut';
   for (let tries = 0; tries < 400; tries++) {
-    const ctx = pick(CHORD_CONTEXTS);
+    const ctx = pick(CHORD_CONTEXTS.filter(c => c.family === family));
     const [lo, hi] = ctx.band;
-    const r = Number((getRandomInt(lo * 10, hi * 10) / 10).toFixed(1));
-    // Every paper puts the chord between 0.6 and 0.8 of the diameter — 4 across
-    // a 5.8 m tunnel, 20 across a 26 cm circle, 60 across a 100 cm slab. Wider
-    // than that and the segment is a sliver; narrower and the "shape" is nearly
-    // the whole circle, which gave a fuel tank 5.8 m tall on a 2 m base.
-    const chord = Number((2 * r * (getRandomInt(55, 85) / 100)).toFixed(1));
-    if (chord >= 2 * r * 0.95) continue;
-    const d = Math.sqrt(r * r - (chord / 2) ** 2);
-    const height = ctx.major ? r + d : r - d;
+    let r: number, chord: number, d: number;
+    if (exact) {
+      // The triple comes first and the figure is built from it, so the distance
+      // from the centre — and therefore the answer — is a whole number.
+      // The same proportion the free branch keeps and every paper draws: the
+      // chord between 0.55 and 0.85 of the diameter, which against the radius
+      // is the same ratio for the half-chord. Without it the pool offers
+      // (24, 7, 25) — a chord a quarter of the width — and (7, 24, 25), a chord
+      // all but the diameter. Neither is a shape a paper sets.
+      const fits = CHORD_TRIPLES.flatMap(([legD, legH, hyp]) =>
+        CHORD_SCALES.map(k => ({ d: legD * k, half: legH * k, r: hyp * k })))
+        .filter(t => t.r >= lo && t.r <= hi
+          && t.half >= t.r * 0.55 && t.half <= t.r * 0.85);
+      if (!fits.length) continue;
+      const t = pick(fits);
+      [r, chord, d] = [t.r, t.half * 2, t.d];
+    } else {
+      r = Number((getRandomInt(lo * 10, hi * 10) / 10).toFixed(1));
+      // Every paper puts the chord between 0.6 and 0.8 of the diameter — 4
+      // across a 5.8 m tunnel, 20 across a 26 cm circle, 60 across a 100 cm
+      // slab. Wider than that and the segment is a sliver; narrower and the
+      // "shape" is nearly the whole circle, which gave a fuel tank 5.8 m tall
+      // on a 2 m base.
+      chord = Number((2 * r * (getRandomInt(55, 85) / 100)).toFixed(1));
+      if (chord >= 2 * r * 0.95) continue;
+      d = Math.sqrt(r * r - (chord / 2) ** 2);
+    }
+    // Always the larger piece — all eight papers are. See `ChordContext`.
+    const height = r + d;
     if (height < 0.4) continue;
 
     const [O, A, B] = pick([['O', 'A', 'B'], ['C', 'P', 'Q'], ['O', 'M', 'N']]);
+    // Three figure families for one question — see `ChordContext.family`.
+    // The radius is on the figure only where the paper puts it there; the
+    // prose states it in every case, as every paper does.
+    const drawn = {
+      segment: { rest: 'none', radiusLine: 'solid', shade: false },
+      whole: { rest: 'solid', radiusLine: 'none', shade: !!ctx.flip },
+      cut: { rest: 'dashed', radiusLine: 'dashed', shade: false },
+    } as const;
     const fig = circleChord({
-      radius: r, chord, major: ctx.major, flip: ctx.flip,
+      radius: r, chord, major: true, flip: ctx.flip,
+      ...drawn[ctx.family],
       names: { a: A, b: B, centre: O },
       labels: {
         radius: `${num(r)} ${abbrev(ctx.unit)}`,
@@ -248,15 +304,16 @@ export function pythagorasChord(): Q {
       ctx.scene(O, A, B),
       `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}`,
       `&bull;&nbsp; The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}`,
-      `Calculate ${ctx.asks}. Give your answer correct to one decimal place.`,
+      // No rounding instruction on the Paper 1 branch: the triple makes the
+      // answer exact, and not one of the 160 Paper 1 questions in the corpus
+      // asks for a rounded answer.
+      `Calculate ${ctx.asks}.${exact ? '' : ' Give your answer correct to one decimal place.'}`,
     ];
     const steps = [
       `<strong>1.</strong> The perpendicular from the centre to a chord bisects it, so drop it from $${O}$ to the midpoint $M$ of $${A}${B}$. That makes a right-angled triangle $${O}M${B}$, with $${O}${B}$ as its hypotenuse.`,
       `<strong>2.</strong> Half the chord is $${num(chord)} \\div 2 = ${num(chord / 2)}$ ${ctx.unit}. Now use Pythagoras to find $${O}M$:<br><br>$${O}M^{2} = ${num(r)}^{2} - ${num(chord / 2)}^{2} = ${num(Number((r * r - (chord / 2) ** 2).toFixed(4)))}$`,
-      `<strong>3.</strong> So $${O}M = ${d.toFixed(3)}$ ${ctx.unit}.`,
-      ctx.major
-        ? `<strong>4.</strong> The shape is the larger piece, so its height is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${d.toFixed(3)} = ${height.toFixed(1)}$ ${ctx.unit}`
-        : `<strong>4.</strong> The shape is the smaller piece, so its height is the radius <strong>minus</strong> $${O}M$:<br><br>$${num(r)} - ${d.toFixed(3)} = ${height.toFixed(1)}$ ${ctx.unit}`,
+      `<strong>3.</strong> So $${O}M = ${exact ? num(d) : d.toFixed(3)}$ ${ctx.unit}.`,
+      `<strong>4.</strong> The shape is the larger piece, so its height is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
     ];
 
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
@@ -264,7 +321,8 @@ export function pythagorasChord(): Q {
     return {
       subTopic: 'Pythagoras in a Circle',
       difficulty: 'exam',
-      variationId: 'pythagoras.chord',
+      variationId: family === 'segment' ? 'pythagoras.chord'
+        : family === 'whole' ? 'pythagoras.chord-whole' : 'pythagoras.chord-cut',
       questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
       boardQuestionLines: [
         `Circle radius ${num(r)}, chord ${num(chord)}. Find ${ctx.asks}.`,
@@ -275,11 +333,11 @@ export function pythagorasChord(): Q {
       // Pythagoras statement, •³ calculate the third side, •⁴ calculate the
       // length asked for.
       stepMarks: [1, 1, 1, 1],
-      finalAnswer: `$${height.toFixed(1)}$ ${ctx.unit}`,
+      finalAnswer: `$${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
       figure: fig,
     };
   }
-  throw new Error('pythagoras.chord: no valid question found');
+  throw new Error(`pythagoras.chord (${family}): no valid question found`);
 }
 
 
@@ -350,6 +408,92 @@ export function pythagorasConverse(): Q {
     const corner = names[1];
 
     /**
+     * 2026 P2 Q7 has no context and no diagram at all.
+     *
+     *   "A triangle has sides of length 88 metres, 105 metres and 137 metres.
+     *    Determine whether the triangle is right-angled. Justify your answer."
+     *
+     * Every other converse paper sets the test inside something — three towns,
+     * a beam against a wall — and draws it. That difference is what the marks
+     * are about: the contextual papers pay four, with the comparison and the
+     * conclusion bought separately, and 2026 pays three, merging them.
+     *
+     *   •¹ start a valid strategy                       88² + 105² and 137²
+     *   •² carry that strategy through and evaluate      both 18769
+     *   •³ compare explicitly, then state the conclusion
+     *
+     * Until now this generator only ever produced the contextual shape, so
+     * 2026 P2 Q7 had no clone that matched it: pressing Variation on a bare
+     * three-sides question returned a towns-and-distances diagram worth four
+     * marks. The registry carried the gap as `marksDiffer`.
+     */
+    // All three shapes chosen in one draw, so adding the third did not quietly
+    // halve the second. Nesting two independent one-in-three tests left
+    // `converse-from-total` on two draws in nine, which `mix.ts` reads as
+    // suppressed about half the time — a flaky check being the symptom, not
+    // the fault.
+    const shape = pick(['bare', 'from-total', 'context'] as const);
+
+    if (shape === 'bare') {
+      const sumSq = p * p + q * q;
+      const longSq = r * r;
+      const verdict = right
+        ? 'Yes — the triangle is right-angled'
+        : 'No — the triangle is not right-angled';
+      // The paper lists its three sides shortest first — "88 metres, 105
+      // metres and 137 metres" — and `r` is the longest by construction, so
+      // only the two shorter ones need putting in order.
+      const [shorter, longer] = p <= q ? [p, q] : [q, p];
+      const prose = [
+        `A triangle has sides of length ${shorter} ${ctx.unit}, ${longer} ${ctx.unit} and ${r} ${ctx.unit}.`,
+        `Determine whether the triangle is right-angled.`,
+        `Justify your answer.`,
+      ];
+      // The scheme buys writing the strategy down and evaluating it as two
+      // separate marks, which is a finer split than the contextual papers use —
+      // so the steps follow the scheme rather than mirroring the other branch.
+      const steps = [
+        `<strong>1.</strong> The longest side is ${r} ${ctx.unit}, so test the other two against it:<br><br>$${p}^{2} + ${q}^{2}$ and $${r}^{2}$`,
+        `<strong>2.</strong> Work both out:<br><br>$${p}^{2} + ${q}^{2} = ${p * p} + ${q * q} = ${sumSq}$ and $${r}^{2} = ${longSq}$`,
+        right
+          ? `<strong>3.</strong> Compare them, and conclude:<br><br>$${sumSq} = ${longSq}$, so $${p}^{2} + ${q}^{2} = ${r}^{2}$. Pythagoras holds, so <strong>${verdict.toLowerCase()}</strong>.`
+          : `<strong>3.</strong> Compare them, and conclude:<br><br>$${sumSq} \\neq ${longSq}$, so $${p}^{2} + ${q}^{2} \\neq ${r}^{2}$. Pythagoras does not hold, so <strong>${verdict.toLowerCase()}</strong>.`,
+      ];
+      // **The paper draws the triangle.** No vertex letters, the three lengths
+      // on the three sides, tilted rather than sitting on a flat base.
+      //
+      // This variation shipped with no figure at all, because its prose — "a
+      // triangle has sides of length…" — was read instead of its picture.
+      // `diagram-questions.md` §2 warns against exactly that in its second
+      // paragraph. The lengths are the only givens, so the figure carries them
+      // and nothing else.
+      const bareFig = triangleFromSides({
+        sides: { ab: r, bc: q, ca: p },
+        vertices: ['', '', ''],
+        labels: {
+          ab: `${r} ${abbrev(ctx.unit)}`,
+          bc: `${q} ${abbrev(ctx.unit)}`,
+          ca: `${p} ${abbrev(ctx.unit)}`,
+        },
+        turn: pick([0, 1, 2, 3] as const),
+      });
+      if (!bareFig) continue;
+      if (verifyFigure(bareFig, [...prose, ...steps].join(' ')).length) continue;
+
+      return {
+        subTopic: 'The Converse of Pythagoras',
+        difficulty: 'exam',
+        variationId: 'pythagoras.converse-sides',
+        questionLines: [prose[0], renderScene(bareFig.scene), ...prose.slice(1)],
+        boardQuestionLines: [`Sides ${p}, ${q}, ${r}. Right-angled?`],
+        solutionSteps: steps,
+        stepMarks: [1, 1, 1],
+        finalAnswer: `${verdict}, since $${p}^{2} + ${q}^{2} = ${sumSq}$ and $${r}^{2} = ${longSq}$`,
+        figure: bareFig,
+      };
+    }
+
+    /**
      * 2019 P2 Q11 gives the **total** and two of the three, so the third has to
      * be found before the converse can be used at all.
      *
@@ -364,7 +508,7 @@ export function pythagorasConverse(): Q {
      * arithmetic that identifies it, which is a different question again and
      * not one any paper asks.
      */
-    const fromTotal = getRandomInt(0, 2) === 0;
+    const fromTotal = shape === 'from-total';
     const total = p + q + r;
     // whichever of the two shorter sides is left out
     const missing = pick([0, 1] as const);
@@ -521,30 +665,18 @@ export function pythagorasConverseJoined(): Q {
     const u = abbrev(unit);
     const [nA, nB, nC, nF] = pick(JOINED_NAMES);
 
-    const fig = triangleFromSides({
-      sides: { ab: base, bc: Y, ca: X },
-      vertices: [nA, nB, nC],
-      // The base is labelled in its two parts, never as a whole: adding them is
-      // the first mark.
-      labels: { ab: '', bc: `${Y} ${u}`, ca: `${X} ${u}` },
-      cevian: {
-        at: z1, length: d, name: nF,
-        labels: { left: `${z1} ${u}`, right: `${z2} ${u}`, line: `${d} ${u}` },
-      },
-      turn: pick([0, 1, 2, 3] as const),
-    });
-    if (!fig) continue;
-
     const sumSq = X * X + Y * Y;
     const longSq = base * base;
+    // The joined figure carries no vertex letters, so nothing here may name
+    // one. 2017 P2 Q7's own scheme answers "8² + 19² ≠ 22²; No".
     const verdict = right
-      ? `Yes — triangle $${nA}${nB}${nC}$ is right-angled, at $${nC}$`
-      : `No — triangle $${nA}${nB}${nC}$ is not right-angled`;
+      ? 'Yes — the larger triangle is right-angled'
+      : 'No — the larger triangle is not right-angled';
 
     const prose = [
-      `Two triangles are placed together along their common edge $${nC}${nF}$ to `
-      + `form triangle $${nA}${nB}${nC}$, as shown.`,
-      `Determine whether triangle $${nA}${nB}${nC}$ is right-angled. Justify your answer.`,
+      `Triangles $A$ and $B$ are shown below.`,
+      `The triangles are placed together to form the larger triangle shown below.`,
+      `Is this larger triangle right-angled? Justify your answer.`,
     ];
 
     // 2017 P2 Q7 is THREE marks where the other converse papers are four: •¹ a
@@ -552,25 +684,104 @@ export function pythagorasConverseJoined(): Q {
     // together. So the comparison does not get a step of its own here, and the
     // last step is still the one that states the answer.
     const steps = [
-      `<strong>1.</strong> The two parts make the whole base:<br><br>$${nA}${nB} = ${z1} + ${z2} = ${base}$ ${unit}<br><br>That is the longest side, so if there is a right angle it is at $${nC}$.`,
+      `<strong>1.</strong> Placing the two together makes a triangle whose base is the two bases added, and whose other two sides are the outer sides of $A$ and $B$. The shared edge, ${d} ${unit}, ends up inside the new triangle and is not one of its sides:<br><br>base $= ${z1} + ${z2} = ${base}$ ${unit}, with sides ${X} ${unit} and ${Y} ${unit}<br><br>The base is the longest side, so if there is a right angle it is opposite it.`,
       `<strong>2.</strong> Square the two shorter sides and add, then square the longest:<br><br>$${X}^{2} + ${Y}^{2} = ${X * X} + ${Y * Y} = ${sumSq}$ and $${base}^{2} = ${longSq}$`,
       right
         ? `<strong>3.</strong> $${sumSq} = ${longSq}$, so Pythagoras holds:<br><br>${verdict}`
         : `<strong>3.</strong> $${sumSq} \\neq ${longSq}$, so Pythagoras does not hold:<br><br>${verdict}`,
     ];
 
-    if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    const text = [...prose, ...steps].join(' ');
+
+    // ── three figures, as the paper prints three ─────────────────────────────
+    //
+    // 2017 P2 Q7 shows triangle A with its own three sides, triangle B with
+    // its own three, and only then the pair joined, **bare**. Carrying the
+    // lengths across is the first mark: the new base is z1 + z2 and the outer
+    // sides are X and Y, and none of that is written on the joined figure.
+    //
+    // This drew only the joined figure with every length already on it — the
+    // same maths, a different question, because the clone had done the step it
+    // was asking for. Recorded in `docs/clone-verdicts.md`.
+    //
+    // Each part is its own figure rather than two triangles in one scene: one
+    // scene means one viewBox scaled to a fixed width, so each triangle comes
+    // out half-size and the shared edge's two labels — the same number, facing
+    // each other — collided in eleven of fourteen sampled layouts.
+    //
+    // **The turn is searched, not guessed.** These parts are often slivers, and
+    // a sliver has one or two poses in which its three side labels clear each
+    // other. Taking a random turn and rejecting the whole draw left only 40 of
+    // 352 tuple-and-turn combinations usable, and `converse-joined` threw once
+    // in ten whole draws — which failed the topic, not just this variation.
+    // **Base down first, and only turned if it has to be.** The three figures
+    // are read together — these two make that one — and that reading is lost
+    // when each is posed independently: one draw had both parts sitting on
+    // their bases and the join standing on end. The paper draws all three the
+    // same way up. Turning is kept as the fallback for a sliver whose labels
+    // will not clear in the natural pose.
+    const firstTurn = (build: (t: 0 | 1 | 2 | 3) => Figure | null): Figure | null => {
+      for (const t of [0, 1, 2, 3] as const) {
+        const f = build(t);
+        if (f && !verifyFigure(f, text).length) return f;
+      }
+      return null;
+    };
+
+    // **One figure holding both parts, so they share a scale.** Drawn as two
+    // figures they each fill their own box, and a 6-7-8 triangle comes out the
+    // same size as a 16-19-7 one. The paper draws A visibly smaller than B, and
+    // that relative size is the cue that the two fit together — a pupil reads
+    // "these make that" off the picture before reading a number.
+    //
+    // The cost is that each is half as wide, so its labels are relatively
+    // bigger and the shared edge's length is written twice facing across the
+    // gap. Both turns are searched, sixteen pairs, and 30 of the 88 tuples have
+    // a pair that clears. A wider gap does not help: it shrinks the triangles
+    // in the same breath, and at 1.8x the usable tuples fall to 14.
+    let parts: Figure | null = null;
+    outer: for (const ta of [0, 1, 2, 3] as const) {
+      for (const tb of [0, 1, 2, 3] as const) {
+        const f = twoTrianglesApart({
+          left: { sides: [z1, d, X], labels: [`${z1} ${u}`, `${d} ${u}`, `${X} ${u}`], name: 'A', turn: ta },
+          right: { sides: [z2, Y, d], labels: [`${z2} ${u}`, `${Y} ${u}`, `${d} ${u}`], name: 'B', turn: tb },
+        });
+        if (f && !verifyFigure(f, text).length) { parts = f; break outer; }
+      }
+    }
+    // No vertex letters and no letter on the foot: the paper's joined figure
+    // carries none. Only the two parts are named, and the prose names them.
+    const fig = firstTurn(turn => triangleFromSides({
+      sides: { ab: base, bc: Y, ca: X },
+      vertices: ['', '', ''],
+      labels: { ab: '', bc: '', ca: '' },
+      cevian: {
+        at: z1, length: d, name: '',
+        labels: { left: '', right: '', line: '' },
+        partNames: ['A', 'B'],
+      },
+      turn,
+    }));
+    if (!parts || !fig) continue;
 
     return {
       subTopic: 'The Converse of Pythagoras',
       difficulty: 'exam',
       variationId: 'pythagoras.converse-joined',
-      questionLines: [prose[0], renderScene(fig.scene), prose[1]],
+      // Three figures, as the paper prints three: each part with its own
+      // lengths, then the join with none.
+      questionLines: [
+        prose[0], renderScene(parts.scene),
+        prose[1], renderScene(fig.scene),
+        prose[2],
+      ],
       boardQuestionLines: [`Base ${z1} + ${z2}, sides ${X} and ${Y}. Right-angled?`],
       solutionSteps: steps,
       stepMarks: [1, 1, 1],
       finalAnswer: `${verdict}, since $${X}^{2} + ${Y}^{2} = ${sumSq}$ and $${base}^{2} = ${longSq}$`,
-      figure: fig,
+      // The parts figure carries the claims: every length the question gives is
+      // on it, and the joined figure is bare by design. Both are verified above.
+      figure: parts,
     };
   }
   throw new Error('pythagoras.converse-joined: no valid question found');
@@ -589,7 +800,7 @@ export function pythagorasConverseJoined(): Q {
 
 export function pythagorasChordReverse(findChord: boolean): Q {
   for (let tries = 0; tries < 400; tries++) {
-    const ctx = pick(CHORD_CONTEXTS.filter(c => c.major));
+    const ctx = pick(CHORD_CONTEXTS);
     const [lo, hi] = ctx.band;
     const r = Number((getRandomInt(lo * 10, hi * 10) / 10).toFixed(1));
     const chord = Number((2 * r * (getRandomInt(55, 85) / 100)).toFixed(1));
@@ -628,17 +839,22 @@ export function pythagorasChordReverse(findChord: boolean): Q {
       const answer = chord;
       if (answer < r * 0.4) continue;
 
+      // 2014 P1 Q12 draws the whole circle and the line from the chord's
+      // midpoint through the centre to the far side — solid, because AB = 27 is
+      // the given. No radius to P or Q is drawn; it is in the prose.
       const fig = circleChord({
-        radius: r, chord, major: true,
+        radius: r, chord, major: true, rest: 'solid', radiusLine: 'none',
         names: { a: A, b: B, centre: O },
-        labels: { radius: `${num(r)} ${abbrev(ctx.unit)}`, chord: '',
+        labels: { radius: '', chord: '',
                   height: `${num(height)} ${abbrev(ctx.unit)}` },
       });
       // Prose nobody had ever read, because this branch has never once reached
       // the page. "A shape is part of a circle" says nothing, and a radius of
       // one printed as "1 metres".
       const prose = [
-        `The diagram shows part of a circle with centre $${O}$, cut off by the chord $${A}${B}$.`,
+        // 2014 P1 Q12: "The diagram below shows a circle, centre C." The whole
+        // circle is drawn, so it is a circle, not part of one.
+        `The diagram shows a circle with centre $${O}$ and chord $${A}${B}$.`,
         `&bull;&nbsp; The radius of the circle is ${withUnit(r, ctx.unit)}`,
         `&bull;&nbsp; The height from the middle of $${A}${B}$ to the top of the arc is ${withUnit(height, ctx.unit)}`,
         // No rounding instruction: the triple makes the answer exact, and
@@ -673,13 +889,28 @@ export function pythagorasChordReverse(findChord: boolean): Q {
     // chord and the perpendicular given; the radius is unknown
     const dShown = Number(d.toFixed(1));
     const answer = Math.hypot(chord / 2, dShown);
+    // 2026 P2 Q5 draws the whole circle, letters the midpoint, and draws the
+    // centre-to-midpoint segment solid with its length on it — that is the
+    // given. No radius to a chord end; no right angle.
+    const M = 'M';
+    // **Drawn from the numbers the question prints, not the ones it was built
+    // from.** The chord and OM are given to one decimal place, so the circle
+    // those two describe has radius hypot(chord/2, OM) - not the r this loop
+    // started with, whose own distance to the chord was 1.52 where the question
+    // says 1.5. `circleChord` derives the claim from the radius it is handed,
+    // so the figure claimed a number the question did not carry and
+    // `verifyFigure` threw the attempt away: **11,078 of 11,277 attempts, 98%,
+    // and 88% of those for this one reason.** The loop survived on the one try
+    // in fifty where d landed on a tenth already, and `diagrams.ts` caught the
+    // tail where four hundred tries all missed. Handing it the radius the
+    // question describes makes the picture agree with the text and the retry
+    // budget a formality.
     const fig = circleChord({
-      radius: r, chord, major: true,
-      names: { a: A, b: B, centre: O },
+      radius: answer, chord, major: true, rest: 'solid', radiusLine: 'none',
+      names: { a: A, b: B, centre: O, mid: M },
       labels: { radius: '', chord: `${num(chord)} ${abbrev(ctx.unit)}`, height: '',
                 centreToChord: `${num(dShown)} ${abbrev(ctx.unit)}` },
     });
-    const M = 'M';
     const prose = [
       `The diagram shows a circle with centre $${O}$ and chord $${A}${B}$.`,
       `&bull;&nbsp; $${A}${B}$ is ${withUnit(chord, ctx.unit)}`,
@@ -737,14 +968,46 @@ export function pythagorasSpaceDiagonal(): Q {
     const exact = Number.isInteger(space);
     const asksFit = ctx.fits !== null && getRandomInt(0, 1) === 0;
 
+    // ── the two papers draw two different boxes ──────────────────────────────
+    //
+    // 2022 P2 Q11 letters **all eight** corners, draws the space diagonal EC as
+    // a real line, and asks for "EC" by name. 2018 P2 Q16 letters **only the
+    // two** its umbrella runs between, P and M, and draws **no diagonal at
+    // all** — seeing that the umbrella lies along the space diagonal is the
+    // question.
+    //
+    // This drew one box for both: no letters anywhere, and both the space
+    // diagonal *and the face diagonal* dashed in. The face diagonal is the
+    // first markscheme line — "start valid strategy for face diagonal" — so it
+    // was handing over the mark it pays for, in both papers.
+    //
+    // `asksFit` is the 2018 shape; the other is 2022's.
+    // Corner order is front face first, anticlockwise from the bottom-left,
+    // then the back face the same way: F0 F1 F2 F3 K0 K1 K2 K3. So F0 and K2
+    // are opposite ends of a space diagonal, and so are F1 and K3.
+    type Corners = [string, string, string, string, string, string, string, string];
+    const [twoLetters, eightLetters] = [
+      // 2018 P2 Q16: only the two corners the umbrella runs between — M at the
+      // front-bottom-right, P at the back-top-left.
+      ['', 'M', '', '', '', '', '', 'P'] as Corners,
+      pick([
+        ['E', 'H', 'D', 'A', 'F', 'G', 'C', 'B'],
+        ['P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'],
+        ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+      ] as Corners[]),
+    ];
+    const corners = asksFit ? twoLetters : eightLetters;
+    // The two ends of the diagonal the question is about.
+    const [from, to] = asksFit ? [corners[1], corners[7]] : [corners[0], corners[6]];
     const fig = cuboid({
       length: L, breadth: B, height: H,
+      names: corners,
       labels: {
         length: `${L} ${abbrev(ctx.unit)}`,
         breadth: `${B} ${abbrev(ctx.unit)}`,
         height: `${H} ${abbrev(ctx.unit)}`,
       },
-      showDiagonals: true,
+      diagonal: asksFit ? 'none' : 'solid',
     });
 
     // an object that fits about half the time, and never within a whisker
@@ -754,11 +1017,26 @@ export function pythagorasSpaceDiagonal(): Q {
     if (asksFit && Math.abs(objectLen - space) < 1.5) continue;
     const fitsInside = objectLen < space;
 
+    // 2022 P2 Q11 has **no context at all**: a lettered cuboid, its three edges
+    // named by their letters, and "Calculate the length of EC, the space
+    // diagonal of the cuboid." 2018 P2 Q16 is the contextual one — a locker,
+    // an umbrella, and only P and M lettered. So the box contexts dress the
+    // fits branch and the other is bare, as the papers are.
     const prose = asksFit && ctx.fits
       ? [ctx.scene(`${L} ${ctx.unit}`, `${B} ${ctx.unit}`, `${H} ${ctx.unit}`),
-         ctx.fits.asks(`${objectLen} ${ctx.unit}`)]
-      : [ctx.scene(`${L} ${ctx.unit}`, `${B} ${ctx.unit}`, `${H} ${ctx.unit}`),
-         `Calculate ${ctx.asks}.`,
+         // The paper routes its question through the two lettered corners —
+         // "He thinks it will fit into the locker from corner P to corner M" —
+         // so the letters do work rather than decorate. Naming them gives
+         // nothing away: that the object lies along the space diagonal is what
+         // the first mark is for either way.
+         ctx.fits.asks(`${objectLen} ${ctx.unit}`).replace(
+           ' Justify your answer.',
+           ` It would have to lie from corner $${from}$ to corner $${to}$. Justify your answer.`)]
+      : [`The diagram shows a cuboid, $${corners.join('')}$.`,
+         `&bull;&nbsp; The length of the cuboid, $${corners[0]}${corners[1]}$, is ${L} ${ctx.unit}`,
+         `&bull;&nbsp; The breadth of the cuboid, $${corners[1]}${corners[5]}$, is ${B} ${ctx.unit}`,
+         `&bull;&nbsp; The height of the cuboid, $${corners[1]}${corners[2]}$, is ${H} ${ctx.unit}`,
+         `Calculate the length of $${from}${to}$, the space diagonal of the cuboid.`,
          exact ? '' : 'Give your answer correct to one decimal place.'].filter(Boolean);
 
     const steps = [
@@ -788,7 +1066,7 @@ export function pythagorasSpaceDiagonal(): Q {
       // one total.
       variationId: asksFit && ctx.fits ? 'pythagoras.space-diagonal-fits' : 'pythagoras.space-diagonal',
       questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
-      boardQuestionLines: [`Cuboid ${L} x ${B} x ${H}. Space diagonal?`],
+      boardQuestionLines: [`Cuboid ${L} x ${B} x ${H}. Space diagonal ${from}${to}?`],
       solutionSteps: steps,
       stepMarks: steps.map(() => 1),
       finalAnswer: asksFit && ctx.fits
@@ -842,14 +1120,23 @@ export function pythagorasCoordinates(): Q {
     // PYRAMID_QUADRUPLES holds (a, b, c) with a² + b² + c² square, and the base
     // is 2a by 2b so the apex still lands on integer coordinates.
     //
-    // The cuboid branch clones 2025 P2 Q8, a calculator paper, and keeps its
-    // free choice — its `exact` flag already handles the occasional whole
-    // answer.
-    const quad = isCuboid ? null : pick(PYRAMID_QUADRUPLES);
-    const X = quad ? quad[0] * 2 : getRandomInt(3, 12);
-    const Y = quad ? quad[1] * 2 : getRandomInt(2, 10);
-    const Z = quad ? quad[2] : getRandomInt(4, 16);
+    // **The cuboid takes a quadruple too.** It used to draw its three edges
+    // freely, on the grounds that 2025 P2 Q8 is a calculator paper — but that
+    // paper's edges are 4, 3 and 12, which is one of the entries below, and its
+    // space diagonal is exactly 13. Drawn freely the answer was irrational, so
+    // the clone printed "give your answer correct to one decimal place", an
+    // instruction 2025 P2 Q8 does not carry and does not need. A scale keeps
+    // the pool up: any multiple of a quadruple is a quadruple.
+    //
+    // The pyramid doubles a and b because its apex sits over the centre of the
+    // base; the cuboid uses the three numbers as its three edges.
+    const quad = pick(PYRAMID_QUADRUPLES);
+    const k = isCuboid ? pick([1, 1, 2, 3]) : 1;
+    const X = isCuboid ? quad[0] * k : quad[0] * 2;
+    const Y = isCuboid ? quad[1] * k : quad[1] * 2;
+    const Z = quad[2] * k;
     if (Math.max(X, Y, Z) / Math.min(X, Y, Z) > 5) continue;
+    if (isCuboid && Math.max(X, Y, Z) > 24) continue;
 
     if (isCuboid) {
       // named as 2025 P2 Q8 names them: top face K L M N, bottom O P Q R
@@ -912,7 +1199,15 @@ export function pythagorasCoordinates(): Q {
       A: sA, B: sB, V: sV,
     };
     const fig = solidOnAxes({
-      parts: [{ kind: 'pyramid', at: { x: 0, y: 0, z: 0 }, size: { x: X, y: Y, z: Z }, construction: true }],
+      // **Drawn where its letters say it is.** This built the pyramid at the
+      // origin while every name was shifted along x, so all three dots sat
+      // `shift` units to the right of the corners they marked: V's beside the
+      // apex, B's out in space past the base. The letters were right and the
+      // solid was in the wrong place.
+      parts: [{
+        kind: 'pyramid', at: { x: shift, y: 0, z: 0 },
+        size: { x: X, y: Y, z: Z }, construction: true,
+      }],
       names, showCoords: ['A', 'V'],
     });
 
@@ -976,7 +1271,7 @@ export function pythagorasTwoCircles(): Q {
       const height = r + r + bodyR;
       const fig = twoCircles({
         kind, radius: r, chord: diameter,
-        names: { a: 'A', b: 'B', centre: 'S', centre2: 'T' },
+        names: { a: 'A', b: 'B', centre: 'S', centre2: 'T', top: 'C', bottom: 'D' },
         labels: { radius: '', chord: '' },
       });
       if (!fig) continue;
@@ -985,7 +1280,10 @@ export function pythagorasTwoCircles(): Q {
         `&bull;&nbsp; The head is a circle, centre $S$, with diameter ${num(diameter)} centimetres`,
         `&bull;&nbsp; The body is a larger circle, centre $T$`,
         `&bull;&nbsp; $T$ lies on the circumference of the head, and $AB$ is a chord of the body`,
-        `Calculate the total height of the snowman. Give your answer correct to one decimal place.`,
+        `&bull;&nbsp; $C$ is the top of the head and $D$ is the foot of the body`,
+        // 2019 P2 Q18 asks for "CD, the height of the snowman" — by the letters
+        // it puts on the figure, not for "the total height".
+        `Calculate $CD$, the height of the snowman. Give your answer correct to one decimal place.`,
       ];
       // Four marks, as every Pythagoras-in-context question in these papers is:
       // •¹ marshal the facts and recognise the right-angled triangle, •² a
@@ -995,7 +1293,7 @@ export function pythagorasTwoCircles(): Q {
         `<strong>1.</strong> $AB$ passes through $S$, so it is a <strong>diameter</strong> of the head, and $T$ lies on the head's circumference:<br><br>$AB = ${num(diameter)}$ cm, $SA = SB = ${num(r)}$ cm and $ST = ${num(r)}$ cm`,
         `<strong>2.</strong> $AB$ is horizontal and $ST$ vertical, so triangle $STB$ is right-angled at $S$, with the body's radius $TB$ as its hypotenuse:<br><br>$TB^{2} = ${num(r)}^{2} + ${num(r)}^{2}$`,
         `<strong>3.</strong> Work that out and take the square root:<br><br>$TB^{2} = ${num(2 * r * r)}$, so $TB = ${bodyR.toFixed(3)}$ cm`,
-        `<strong>4.</strong> The height runs from the top of the head down to the bottom of the body — the head's radius, then $ST$, then the body's radius:<br><br>$${num(r)} + ${num(r)} + ${bodyR.toFixed(3)} = ${height.toFixed(1)}$ cm`,
+        `<strong>4.</strong> $CD$ runs from the top of the head down to the foot of the body — the head's radius, then $ST$, then the body's radius:<br><br>$CD = ${num(r)} + ${num(r)} + ${bodyR.toFixed(3)} = ${height.toFixed(1)}$ cm`,
       ];
       if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
       return {
@@ -1029,7 +1327,13 @@ export function pythagorasTwoCircles(): Q {
         // Unicode, not LaTeX: these are drawn into SVG <text>, which has no
         // renderer behind it. The prose keeps $C_{1}$ because MathJax does.
         : { a: 'A', b: 'B', centre: 'C₁', centre2: 'C₂' },
-      labels: { radius: `${num(r)} cm`, chord: `${num(chord)} cm` },
+      // 2024 P2 Q10 draws the radius AC dashed and labels it; 2017 P2 Q13 draws
+      // no radius and states the 14 cm in prose only. An empty label means the
+      // line is not drawn either.
+      labels: {
+        radius: kind === 'overlap' ? `${num(r)} cm` : '',
+        chord: `${num(chord)} cm`,
+      },
     });
     if (!fig) continue;
 
@@ -1088,5 +1392,6 @@ export const PYTHAGORAS_GENERATORS: Record<string, () => Q> = {
   'The Converse of Pythagoras': () =>
     getRandomInt(1, 3) === 1 ? pythagorasConverseJoined() : pythagorasConverse(),
   'Pythagoras in a Right-Angled Triangle': pythagorasFindSide,
-  'Pythagoras in a Circle': pythagorasChord,
+  // All three families reachable from the topic, each with its own id.
+  'Pythagoras in a Circle': () => pythagorasChord(pick(['segment', 'whole', 'cut'] as const)),
 };

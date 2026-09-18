@@ -412,7 +412,12 @@ function runningOn(): Q | null {
   ];
   return assemble({
     points,
-    edges: [[D, G], [G, E], [D, E], [E, F]],
+    // **GF is on the diagram, because 2025 P2 Q15 draws it.** Its figure has
+    // four lines: D to G, G to E, the run D through E to F, and G to F running
+    // alongside GE. That last one is the vector the question asks for, and the
+    // clone left it out - so a pupil was asked to express a journey the picture
+    // did not show.
+    edges: [[D, G], [G, E], [D, E], [E, F], [G, F]],
     arrows: [{ from: D, to: G, label: nr }, { from: G, to: E, label: ns }],
   }, 'A Pathway Running On', 'vectors.pathway-running-on', prose,
     `$${ray(D, G)} = ${vec(nr)}$, $${ray(G, E)} = ${vec(ns)}$, $${ray(D, E)} = ${k}${ray(E, F)}$. Find $${ray(G, F)}$.`,

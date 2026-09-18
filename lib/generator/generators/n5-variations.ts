@@ -138,10 +138,18 @@ export interface VariationMeta {
    * marks are the one thing from a markscheme that can be carried in the open:
    * a count is not the copyright, and everything else stays reference-only.
    *
-   * `marksInferred` says the split was reconstructed rather than read. 2026 has
-   * no published markscheme, so a 2026 question's marks are our reading of the
-   * pattern the other years set, and are to be corrected when the real one
-   * appears rather than quietly kept as fact.
+   * `marksInferred` says the split was reconstructed rather than read, for a
+   * paper whose marking instructions are not out yet.
+   *
+   * **Nothing carries it now, and that is the point.** Fourteen 2026 questions
+   * did, written when 2026 had no published scheme. The schemes have since been
+   * transcribed - `mi_N5_Mathematics_Paper-1_2026.md` and its Paper 2 - and the
+   * flag stayed, which mattered because `markschemes.ts` reads it as "do not
+   * compare": those fourteen reported INFERRED and their totals went unchecked
+   * against the instructions sitting in the folder. Cleared, all fourteen agree
+   * with the published totals, so nothing was wrong except that nothing was
+   * looking. **Set it only while the scheme genuinely does not exist, and
+   * clear it the day it does.**
    */
   marks?: number;
   marksInferred?: true;
@@ -431,12 +439,12 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'paper',
     basedOn: ['2026 P1 Q5'],
-    marks: 2, marksInferred: true,
-    route: 'inferred, no published 2026 scheme: start the addition with a common denominator, then complete it and state the units. Every mixed-number addition in the transcribed years splits exactly this way, and none of them asks for simplest form',
+    marks: 2,
+    route: 'the 2026 scheme pays for identifying the strategy and finding a common denominator, then for a consistent answer in simplest form - so the two amounts must have different denominators, and the answer is always reduced',
     method: 'Decide from the words which operation it is, put both fractions over a common denominator, then work it out and give the answer with its units',
     plan: [
       'Pull the two amounts out of the words and write each one as a top-heavy fraction over a bottom line they share',
-      'Look at whether the question wants the two amounts brought together or one taken away from the other, carry that out on the numerators, then write the answer as a mixed number with the units it is measured in',
+      'Add the numerators over that shared bottom line, then write the answer as a mixed number in its simplest form with the units it is measured in',
     ],
     planMarks: [1, 1],
     answerShape: 'fraction',
@@ -705,7 +713,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'paper',
     basedOn: ['2026 P2 Q11'],
-    marks: 3, marksInferred: true,
+    marks: 3,
     route: 'inferred, no published 2026 scheme: take the power to both parts of the denominator, divide the powers of the variable, then assemble the answer over the coefficient',
     plan: [
       'Raise both parts inside the bottom bracket to the outside power, so the number at the front gets it too, not just the letter',
@@ -802,14 +810,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2022 P2 Q2', '2024 P2 Q1', '2026 P2 Q1',
+    basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2022 P2 Q2', '2024 P2 Q1',
               '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'],
     marks: 3,
-    // Seven of the eight are three marks; 2026 P2 Q1 is four for what reads as
-    // the same question, and with no 2026 scheme published there is no way to
-    // say which move earns the fourth. Recorded rather than guessed at, and to
-    // be resolved when Qualifications Scotland publish.
-    marksDiffer: { '2026 P2 Q1': 4 },
     route: 'know how to change by the rate, then know how to carry it across the years, then evaluate to the stated accuracy',
     plan: [
       'Turn the percentage change into a multiplier',
@@ -817,10 +820,42 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
       'Work it out, rounding to whatever accuracy the question asks for',
     ],
     planMarks: [1, 1, 1],
-    planMarksDiffer: { '2026 P2 Q1': [1, 1, 2] },
     answerShape: 'rounded',
     webTopics: ['Appreciation and Depreciation'],
     skill: 'Apply a multiplier once per year, then round as the question asks',
+  },
+
+  // The same compound change, asked to three significant figures — which the
+  // scheme pays a mark for in its own right.
+  //
+  // This was `percentages.compound` carrying `marksDiffer: { '2026 P2 Q1': 4 }`
+  // with a note that, no 2026 scheme having been published, there was no way to
+  // say which move earned the fourth mark. The scheme is published now, and it
+  // is `•⁴ answer correct to 3 significant figures`. The other seven papers
+  // round to the penny or to the nearest pound and fold that into evaluating,
+  // because rounding to the penny is not a separate skill.
+  //
+  // Split rather than annotated, because one id covering two mark structures is
+  // precisely what `mix.ts` cannot see — it checks what the registry names.
+  // Pressing Variation on a four-mark paper now gives a four-mark clone.
+  'percentages.compound-3sf': {
+    topic: 'Compound Appreciation & Depreciation',
+    difficulty: 'exam',
+    strategy: 'input-first',
+    source: 'paper',
+    basedOn: ['2026 P2 Q1'],
+    marks: 4,
+    route: 'know how to change by the rate, know how to carry it across the years, evaluate, then round to three significant figures',
+    plan: [
+      'Turn the percentage change into a multiplier',
+      'Raise that multiplier to the number of years, and multiply the starting amount by it',
+      'Work it out, keeping the figure unrounded',
+      'Round that to three significant figures',
+    ],
+    planMarks: [1, 1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Appreciation and Depreciation'],
+    skill: 'Apply a multiplier once per year, then round to three significant figures',
   },
   // The years are dates rather than a count, so a pupil has to subtract them
   // before anything else. Same maths and the same three marks as the one above
@@ -849,7 +884,13 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'answer-first',
     source: 'zeta+paper',
-    basedOn: ['2022 P1 Q10', '2023 P2 Q6', '2018 P2 Q11',
+    // 2018 P2 Q11 was here and has moved to `percentages.part-of-whole`.
+    // Its percentage is handed over - "This is 85% of the volume of Earth" -
+    // where every paper left here describes a change and makes the pupil work
+    // the percentage out: "reduced by 20%", "an increase of 16%", "15% more
+    // than last year". That first step is inside the first mark, and no clone
+    // here ever produced the handed-over wording.
+    basedOn: ['2022 P1 Q10', '2023 P2 Q6',
               '2015 P2 Q8', '2017 P2 Q5', '2024 P2 Q5', '2025 P1 Q4'],
     marks: 3,
     route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
@@ -872,7 +913,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'answer-first',
     source: 'paper',
-    basedOn: ['2014 P1 Q9', '2026 P1 Q2'],
+    basedOn: ['2014 P1 Q9', '2026 P1 Q2', '2018 P2 Q11'],
     marks: 3,
     route: 'know that r% is the figure given, find 1%, multiply by 100 — both are Paper 1, so it divides by hand',
     method: 'The amount you are given is that percentage of the total, so divide to find 1%, then multiply by 100',
@@ -1094,7 +1135,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'factorising.solve-non-unitary': {
     topic: 'Solving by Factorising',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2026 P1 Q14'], marks: 3, marksInferred: true,
+    basedOn: ['2026 P1 Q14'], marks: 3,
     route: 'inferred, no published 2026 scheme: split the leading coefficient, complete the factorisation, then solve. The extra mark over the unitary form buys the first of those, which is the move that form does not need',
     plan: [
       'Start from the $x^{2}$ term: pick a pair of factors of its coefficient and open two brackets with those sitting in front of the $x$',
@@ -1373,7 +1414,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.parabola-scale': {
     topic: 'A Parabola Through a Point',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2014 P1 Q7', '2026 P1 Q9'],
+    basedOn: ['2014 P1 Q7'],
     marks: 2,
     route: 'know to substitute the marked point into $y = ax^2$, then solve for $a$',
     plan: [
@@ -1384,6 +1425,26 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'integer',
     webTopics: ['Parabola Equation from Graph'],
     skill: 'Substitute a point on a parabola to find its stretch',
+  },
+  // The same two marks and the same working as the entry above, and its own id
+  // because 2026 P1 Q9 is not 2014 P1 Q7 with different numbers. It calls the
+  // stretch `k`, and it prints the point on the diagram only - the prose is two
+  // sentences long and neither of them is the coordinates. A clone that states
+  // the point has answered the reading-off for the pupil.
+  'quadratics.parabola-scale-k': {
+    topic: 'A Parabola Through a Point',
+    difficulty: 'exam', strategy: 'answer-first', source: 'paper',
+    basedOn: ['2026 P1 Q9'],
+    marks: 2,
+    route: 'know to substitute the point marked on the graph into $y = kx^2$, then solve for $k$',
+    plan: [
+      'Read the marked point\'s coordinates off the diagram and put them in place of $x$ and $y$ in $y = kx^{2}$, since the point lies on the curve',
+      'Work out the square, then divide to leave $k$ on its own',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Parabola Equation from Graph'],
+    skill: 'Read a point off a parabola and substitute it to find the stretch',
   },
   'quadratics.parabola-from-turning-point': {
     topic: 'A Parabola from its Turning Point',
@@ -1520,10 +1581,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.formula': {
     topic: 'The Quadratic Formula',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2017 P2 Q4', '2019 P2 Q6', '2022 P2 Q7', '2024 P2 Q8'],
+    basedOn: ['2017 P2 Q4', '2019 P2 Q6', '2024 P2 Q8'],
     marks: 3,
-    marksDiffer: { '2022 P2 Q7': 4 },
-    route: 'correct substitution into the quadratic formula, then evaluate the discriminant, then both roots at the stated accuracy. 2022 P2 Q7 is worth four, splitting the last mark into unrounded then rounded to two significant figures; the other three papers are three',
+    route: 'correct substitution into the quadratic formula, then evaluate the discriminant, then both roots at the stated accuracy',
     method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, then give both roots rounded as the question asks',
     plan: [
       'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
@@ -1531,10 +1591,42 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
       'Work out both roots, taking the plus and then the minus, and round each to the accuracy the question asks for',
     ],
     planMarks: [1, 1, 1],
-    planMarksDiffer: { '2022 P2 Q7': [1, 1, 2] },
     answerShape: 'rounded',
     webTopics: ['Quadratic formula'],
     skill: 'Substitute into the formula and round as the question asks',
+  },
+
+  // The same formula, asked to two significant figures — which the scheme pays
+  // a mark for in its own right.
+  //
+  // This was `quadratics.formula` carrying `marksDiffer: { '2022 P2 Q7': 4 }`.
+  // The three-mark papers ask for one or two decimal places and pay a single
+  // mark for both roots; 2022 P2 Q7 asks for two significant figures and splits
+  // that in two — •³ the roots before rounding, •⁴ the roots rounded — because
+  // rounding to significant figures is a skill in a way that rounding to a
+  // decimal place is not.
+  //
+  // Scheme note 2 attaches a condition: *"•⁴ is only available when both roots
+  // require rounding."* Both always do, because a perfect-square discriminant
+  // is rejected by the generator (it would factorise), so every root here is
+  // irrational.
+  'quadratics.formula-sigfigs': {
+    topic: 'The Quadratic Formula',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2022 P2 Q7'],
+    marks: 4,
+    route: 'correct substitution into the quadratic formula, evaluate the discriminant, both roots before rounding, then both roots to two significant figures',
+    method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, write both roots out unrounded, then round each to two significant figures',
+    plan: [
+      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
+      'Work out the discriminant under the root on its own first, so the rest of the arithmetic stays manageable',
+      'Work out both roots, taking the plus and then the minus, and keep the figures unrounded for now',
+      'Round each root to two significant figures',
+    ],
+    planMarks: [1, 1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Quadratic formula'],
+    skill: 'Substitute into the formula, then round both roots to two significant figures',
   },
 
   // ── Algebraic Fractions — 16 paper questions, the largest Tier 1 topic ───
@@ -1559,27 +1651,58 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'alg-fractions.factorise-simplify': {
     topic: 'Simplifying Algebraic Fractions',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2017 P2 Q9', '2024 P2 Q6'],
+    basedOn: ['2024 P2 Q6'],
     marks: 3,
-    marksDiffer: { '2017 P2 Q9': 4 },
-    route: '1 + 2 - factorise for part (a), then factorise the denominator and simplify for part (b). 2017 P2 Q9 is worth four because its part (b) needs a second factorising mark, a shape this variation does not produce',
+    route: '1 + 2 - factorise for part (a), then factorise the denominator and simplify for part (b)',
     plan: [
       'Factorise the expression in part (a) fully — check for a factor common to both terms, and for a difference of two squares',
       'Carry that factorised form into part (b) as the top, then factorise the denominator into brackets',
       'Cancel the bracket the top and the bottom share, and leave the rest as one fraction in its simplest form',
     ],
     planMarks: [1, 1, 1],
-    planMarksDiffer: { '2017 P2 Q9': [1, 2, 1] },
     answerShape: 'expression',
     webTopics: ['Factorising', 'Simplifying algebraic fraction'],
     skill: 'Factorise, then hence simplify — the scaffolded two-part form',
+  },
+
+  // The same scaffold over a denominator with a leading coefficient, which the
+  // scheme pays to factorise twice.
+  //
+  //   2024 P2 Q6   y² - 6y over y² - 3y - 18     monic, 1 + 2 = 3 marks
+  //   2017 P2 Q9   4x² - 25 over 2x² - x - 10    non-monic, 1 + 3 = 4 marks
+  //
+  // A monic trinomial factorises in one mark. A non-monic one is paid in two —
+  // `•¹ start to factorise (2x  5)(x  2)`, with the signs still undecided,
+  // then `•² complete factorising (2x - 5)(x + 2)`.
+  //
+  // This was `alg-fractions.factorise-simplify` carrying `marksDiffer` and a
+  // note saying the four-mark shape was "a shape this variation does not
+  // produce". It always did produce it — one draw in two — and paid three
+  // marks for it, so 2017 P2 Q9 had no clone that matched its own scheme.
+  'alg-fractions.factorise-simplify-nonmonic': {
+    topic: 'Simplifying Algebraic Fractions',
+    difficulty: 'exam', strategy: 'answer-first', source: 'paper',
+    basedOn: ['2017 P2 Q9'],
+    marks: 4,
+    route: '1 + 3 - factorise the difference of two squares for part (a); then start factorising the denominator, complete it, and simplify for part (b)',
+    method: 'Factorise the top as a difference of two squares, then factorise the bottom into two brackets — get the brackets first and settle the signs after — and cancel the bracket they share',
+    plan: [
+      'Factorise part (a) as a difference of two squares, taking the square root of each term',
+      'Start the denominator: find the terms that multiply to give the squared term and the number, leaving the signs until you have the brackets',
+      'Fix the signs so the middle term comes out right, which completes the factorising',
+      'Cancel the bracket the top and the bottom share, and leave the rest as one fraction',
+    ],
+    planMarks: [1, 1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Factorising', 'Simplifying algebraic fraction'],
+    skill: 'Factorise, then hence simplify where the denominator has a leading coefficient',
   },
   'alg-fractions.add': {
     topic: 'Adding Algebraic Fractions',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
     basedOn: ['2016 P2 Q13', '2024 P2 Q12'],
     marks: 3,
-    route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms. 2017 P1 Q11 is the two-mark version of the same thing, where nothing needs expanding',
+    route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
       'Multiply the two denominators together to make the denominator both fractions can sit over, and leave it in brackets',
       'Multiply each numerator by the denominator it is missing, so both sit over that single bottom line',
@@ -1593,20 +1716,61 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'alg-fractions.subtract': {
     topic: 'Subtracting Algebraic Fractions',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2014 P2 Q9', '2017 P1 Q11', '2019 P2 Q15', '2023 P2 Q10', '2025 P1 Q14'],
+    basedOn: ['2014 P2 Q9', '2019 P2 Q15', '2023 P2 Q10', '2025 P1 Q14'],
     marks: 3,
-    marksDiffer: { '2017 P1 Q11': 2 },
-    route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms. 2017 P1 Q11 is the two-mark version of the same thing, where nothing needs expanding',
+    route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
       'Find the lowest denominator both fractions can sit over — multiply the two denominators, unless one already fits inside the other',
       'Multiply each numerator by whatever its denominator was short of, keeping the minus sign in front of the second bracket',
       'Expand the top, letting that minus sign flip the sign of every term inside the second bracket, then collect like terms',
     ],
     planMarks: [1, 1, 1],
-    planMarksDiffer: { '2017 P1 Q11': [0, 1, 1] },
     answerShape: 'expression',
     webTopics: ['Add or subtract Algebraic Fractions'],
     skill: 'Common denominator, expand the numerator watching the sign, collect like terms',
+  },
+
+  // Denominators that are powers of the same letter, not two brackets — and
+  // two marks rather than three.
+  //
+  // 2017 P1 Q11 is `3/a² - 2/a`, where the common denominator is a power and
+  // the numerator is finished the moment the fractions are combined. Every
+  // other paper in this family is `p/(x+m) - q/(x+n)`, where a mark is spent
+  // removing brackets from the numerator and collecting like terms. The scheme
+  // pays for what there is to do:
+  //
+  //   •¹ valid common denominator     a² or a³ or a × a
+  //   •² answer in simplest form      (3 - 2a)/a²
+  //
+  // This was `alg-fractions.subtract` carrying `marksDiffer` and a `planMarks`
+  // override that paid the first step nothing. The generator already drew the
+  // shape — one draw in six — and printed three marks for it.
+  'alg-fractions.subtract-powers': {
+    topic: 'Subtracting Algebraic Fractions',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2017 P1 Q11'],
+    marks: 2,
+    route: 'a valid common denominator, then the answer in its simplest form — there is no expanding to pay for',
+    method: 'Use the higher power as the bottom line, multiply the other fraction top and bottom by whatever it is short of, then write the two numerators over that single denominator',
+    plan: [
+      'Use the higher power as the common denominator, and multiply the second fraction top and bottom by whatever it is short of',
+      'Combine the two over that denominator; the numerator is already in its simplest form',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'expression',
+    webTopics: ['Add or subtract Algebraic Fractions'],
+    skill: 'Common denominator from a power, then combine',
+  },
+
+  // The same shape added rather than subtracted. No paper has asked for it, so
+  // it carries no citation and no marks — a skill, like `fractions.add`.
+  'alg-fractions.add-powers': {
+    topic: 'Adding Algebraic Fractions',
+    difficulty: 'skill', strategy: 'input-first', source: 'zeta',
+    basedOn: [],
+    answerShape: 'expression',
+    webTopics: ['Add or subtract Algebraic Fractions'],
+    skill: 'Common denominator from a power, then combine',
   },
   // The difference of two squares on top rather than underneath. 2018 P2 Q15 is
   // the same three moves the other way up, and cancels to a bracket in the
@@ -1615,7 +1779,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Dividing with a Difference of Squares',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2026 P2 Q9'],
-    marks: 3, marksInferred: true,
+    marks: 3,
     route: 'inferred, no published 2026 scheme, patterned on 2018 P2 Q15: start to divide by taking the reciprocal, factorise the difference of two squares, then cancel and state',
     plan: [
       'Flip the second fraction upside down and multiply by it, since dividing by a fraction is multiplying by its reciprocal',
@@ -1749,7 +1913,6 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2026 P1 Q8'],
     marks: 2,
-    marksInferred: true,
     route: 'square, then add — one mark per operation, which is what every published change-of-subject scheme in the set does',
     method: 'Square both sides to clear the root, then add the remaining term to the other side',
     plan: [
@@ -1861,7 +2024,11 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'simeq.construct-solve': {
     topic: 'Constructing Simultaneous Equations',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2014 P2 Q3', '2016 P1 Q4', '2019 P1 Q8', '2022 P2 Q4', '2025 P2 Q10'],
+    // 2025 P2 Q10 was here and has moved to `simeq.construct-combine`. Its
+    // part (c) asks for the total weight of six stacks of slabs and five of
+    // blocks - a quantity neither equation mentions - where all four papers
+    // left here stop at the two values themselves.
+    basedOn: ['2014 P2 Q3', '2016 P1 Q4', '2019 P1 Q8', '2022 P2 Q4'],
     marks: 6,
     route: '1 + 1 + 4 - construct an equation for each situation, then correct scaling, a value, the other value, and the answer communicated in its units',
     method: 'Write an equation for each situation, multiply one of them so a letter matches, eliminate that letter for the first value, substitute back for the second, then give both answers in their units',
@@ -1883,9 +2050,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'simeq.construct-combine': {
     topic: 'Simultaneous Equations Used Again',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2026 P2 Q4'],
+    basedOn: ['2026 P2 Q4', '2025 P2 Q10'],
     marks: 6,
-    marksInferred: true,
     route: '1 + 1 + 4 as the question data gives, mapping onto the other five papers exactly except that the last mark applies the two values rather than stating them',
     plan: [
       'Give each of the two unknown amounts a letter and say what it stands for, then turn the first sentence into an equation: how many of each, multiplied by its letter, adding up to the total that sentence gives',
@@ -1960,7 +2126,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Evaluating a Trigonometric Function',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
     basedOn: ['2026 P1 Q13'],
-    marks: 2, marksInferred: true,
+    marks: 2,
     route: 'inferred, no published 2026 scheme: substitute the value and work out the angle inside, then apply the exact value and multiply. Every other function evaluation in the papers splits the same way',
     plan: [
       'Replace $x$ with the number in the brackets, then work out the angle sitting inside the $\\sin$ or $\\cos$ before you touch anything else',
@@ -1980,24 +2146,48 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'data.quartiles': {
     topic: 'Quartiles and Interquartile Range',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2017 P1 Q2', '2025 P1 Q3'],
+    basedOn: ['2025 P1 Q3'],
     marks: 2,
-    route: 'find the quartiles, then calculate the range. Ordering the list and locating the median are how the quartiles are found, not marks of their own',
+    route: 'find the quartiles, then subtract them. Both papers print the list already in order, so ordering is not a mark and locating the median is how the quartiles are found',
     plan: [
-      'Write the values out smallest to largest, since nothing below works on an unordered list',
       'Mark the median to split the list into a lower and an upper half, then take the middle value of each half for the lower and upper quartiles',
-      'Subtract the lower quartile from the upper one for the interquartile range, then halve that if the question asks for the semi-interquartile range',
+      'Subtract the lower quartile from the upper one',
     ],
-    planMarks: [0, 1, 1],
+    planMarks: [1, 1],
     answerShape: 'integer',
     webTopics: ['Median/Quartiles/Interquartile Range'],
-    skill: 'Order the data, find the quartiles, then the (semi-)interquartile range',
+    skill: 'Find the quartiles, then the interquartile range',
+  },
+
+  // The same two marks, asked for the **semi**-interquartile range.
+  //
+  // This shared `data.quartiles` with 2025 P1 Q3 and the generator tossed a
+  // coin between the two statistics, so half the clones of each paper asked
+  // the other paper's question — and 2025's scheme scores 0/2 for the wrong
+  // one. Two unknowns is two questions, whatever the mark count says.
+  'data.quartiles-semi': {
+    topic: 'Quartiles and Interquartile Range',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2017 P1 Q2'],
+    marks: 2,
+    route: 'find the quartiles, then halve their difference. The paper prints the list already in order, so ordering is not a mark',
+    plan: [
+      'Mark the median to split the list into a lower and an upper half, then take the middle value of each half for the lower and upper quartiles',
+      'Subtract the lower quartile from the upper one, then halve it',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Median/Quartiles/Interquartile Range'],
+    skill: 'Find the quartiles, then the semi-interquartile range',
   },
   'data.median-iqr-compare': {
     topic: 'Comparing Median and Interquartile Range',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2015 P1 Q10', '2019 P1 Q5', '2023 P1 Q9', '2024 P1 Q5',
-              '2026 P1 Q3'],
+    // Three papers, one question with different numbers. The other two the
+    // entry used to claim — 2015 P1 Q10 and 2019 P1 Q5 — ask for the **semi**
+    // form and are `data.median-siqr-compare`, which this generator did not
+    // produce at all.
+    basedOn: ['2023 P1 Q9', '2024 P1 Q5', '2026 P1 Q3'],
     marks: 5,
     route: '3 + 2 - the median, the quartiles, the interquartile range, then a valid comparison of the medians and one of the interquartile ranges. Each comparison must name the quantity and the group: 2023 P1 Q9 accepts "on average the newspaper readers\' ages are higher" and rejects "on average the ages are higher"',
     method: 'Find the median and the two quartiles, subtract them for the interquartile range, then write one sentence comparing the medians and another comparing the spreads',
@@ -2011,6 +2201,32 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'text',
     webTopics: ['Median/Quartiles/Interquartile Range', 'Comparing Calculated Statistics'],
     skill: 'Median and IQR, then one comparison of average and one of spread',
+  },
+
+  // The same five marks, asked for the **semi**-interquartile range.
+  //
+  // 2015 P1 Q10 and 2019 P1 Q5 both ask for the median and the semi form, and
+  // both schemes pay a mark for it by name — 2019's notes refuse that mark to a
+  // candidate who halves the *range* instead. They were cited on the
+  // interquartile variation, which never produced the semi form, so neither
+  // paper had a clone that asked what it asks.
+  'data.median-siqr-compare': {
+    topic: 'Comparing Median and Interquartile Range',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2015 P1 Q10', '2019 P1 Q5'],
+    marks: 5,
+    route: '3 + 2 - the median, the quartiles, the semi-interquartile range, then a valid comparison of the medians and one of the semi-interquartile ranges. Each comparison must name the quantity and the group',
+    method: 'Find the median and the two quartiles, halve their difference for the semi-interquartile range, then write one sentence comparing the medians and another comparing the spreads',
+    plan: [
+      'Write the values out in order and pick the middle one for the median',
+      'Take the middle of the lower half and the middle of the upper half for the quartiles, subtract the lower from the upper, then halve it',
+      'Write one sentence comparing the two medians and name both data sets inside it, because a sentence that does not say whose values are whose scores nothing',
+      'Write a second sentence comparing the two spreads, naming both sets again, since the average and the spread carry separate marks',
+    ],
+    planMarks: [1, 2, 1, 1],
+    answerShape: 'text',
+    webTopics: ['Median/Quartiles/Interquartile Range', 'Comparing Calculated Statistics'],
+    skill: 'Median and semi-IQR, then one comparison of average and one of spread',
   },
   // 2014 P2 Q4 was filed under the comparison variation and is not a comparison
   // question: its part (b) is a one-mark judgement — "no, with valid
@@ -2107,8 +2323,12 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-equations.solve': {
     topic: 'Solving Trigonometric Equations',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2014 P2 Q12', '2016 P2 Q14', '2018 P2 Q8', '2019 P2 Q14',
-              '2022 P2 Q9', '2024 P2 Q11', '2026 P2 Q8'],
+    // Seven papers ask this and all seven are the same three marks. What
+    // differs is the ratio, and the ratio is not a number: each has its own
+    // quadrant rule for the second solution, which is the third mark. So one
+    // variation per ratio, and within each the papers are the same question
+    // with different numbers — the sign included, since it follows from them.
+    basedOn: ['2018 P2 Q8', '2022 P2 Q9', '2024 P2 Q11'],
     marks: 3,
     route: 'rearrange the equation, find one value of x, then find the other. The two values are separate marks',
     plan: [
@@ -2120,6 +2340,42 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'rounded',
     webTopics: ['Trigonometric equation'],
     skill: 'Isolate the ratio, take the inverse, then find both angles in the range',
+  },
+
+  // The same three marks with the cosine's quadrant rule — second value 360 - x.
+  'trig-equations.solve-cos': {
+    topic: 'Solving Trigonometric Equations',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2014 P2 Q12', '2019 P2 Q14'],
+    marks: 3,
+    route: 'rearrange the equation, find one value of x, then find the other. The two values are separate marks',
+    plan: [
+      'Strip everything away from the trig ratio until it stands on its own — shift the added or subtracted number across first, then divide by whatever multiplies it',
+      'Put that ratio through the inverse on your calculator, dropping any minus sign for the moment, to get the reference angle in the first quadrant',
+      'Your calculator only ever hands back one angle, so mark the reference angle on a CAST diagram and find the other quadrant where cosine carries the sign yours has, then write down both angles',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Trigonometric equation'],
+    skill: 'Isolate the cosine, take the inverse, then find both angles in the range',
+  },
+
+  // The same three marks with the tangent's quadrant rule — second value 180 + x.
+  'trig-equations.solve-tan': {
+    topic: 'Solving Trigonometric Equations',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2016 P2 Q14', '2026 P2 Q8'],
+    marks: 3,
+    route: 'rearrange the equation, find one value of x, then find the other. The two values are separate marks',
+    plan: [
+      'Strip everything away from the trig ratio until it stands on its own — shift the added or subtracted number across first, then divide by whatever multiplies it',
+      'Put that ratio through the inverse on your calculator, dropping any minus sign for the moment, to get the reference angle in the first quadrant',
+      'Your calculator only ever hands back one angle, so mark the reference angle on a CAST diagram and find the other quadrant where tangent carries the sign yours has, then write down both angles',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Trigonometric equation'],
+    skill: 'Isolate the tangent, take the inverse, then find both angles in the range',
   },
   // 2017 P2 Q15 is 1 + 1 + 4 and the other two are a flat 4. Its part (c) is
   // the solving shape exactly — substitute, rearrange, one value, the second —
@@ -2164,7 +2420,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-identities.simplify': {
     topic: 'Simplifying Trigonometric Expressions',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
-    basedOn: ['2016 P1 Q11', '2018 P1 Q18', '2023 P2 Q13', '2026 P2 Q12'],
+    // Both papers substitute tan and cancel — 2016 as a pair of squares, 2018
+    // as a three-way product. One move, so one variation; the powers are the
+    // numbers that vary. The factorising pair is `-common-factor`.
+    basedOn: ['2016 P1 Q11', '2018 P1 Q18'],
     marks: 2,
     route: 'identify and substitute the correct identity, then express the result in simplest form',
     method: 'Swap $\\tan x$ for $\\dfrac{\\sin x}{\\cos x}$, or take out a common factor, then use $\\sin^2 x + \\cos^2 x = 1$ to simplify what is left',
@@ -2177,6 +2436,30 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Trigonometric identities'],
     skill: 'Replace $\\tan x$ with $\\dfrac{\\sin x}{\\cos x}$, or take out a common factor, then use $\\sin^2 x + \\cos^2 x = 1$',
   },
+  // Take a factor out of two terms and the bracket is the identity.
+  //
+  // 2023 P2 Q13 sets a matched pair of squares, 2026 P2 Q12 the harder read
+  // where the common factor is a bare cosine beside a squared term. Same move,
+  // different powers, so one variation. A whole-number coefficient widens the
+  // pool without changing it: taking a numerical factor out alongside an
+  // algebraic one is National 5 factorising, and it comes straight back out.
+  'trig-identities.common-factor': {
+    topic: 'Simplifying Trigonometric Expressions',
+    difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
+    basedOn: ['2023 P2 Q13', '2026 P2 Q12'],
+    marks: 2,
+    route: 'take out the common factor, then use the identity to simplify what is left',
+    method: 'Take the common factor out in front of a bracket, then use $\\sin^2 x + \\cos^2 x = 1$',
+    plan: [
+      'Scan the two terms for the factor they share — a power of sine or cosine, and any number in front of both — and pull it out before a bracket',
+      'Read what is left inside the bracket against $\\sin^{2} x^{\\circ} + \\cos^{2} x^{\\circ} = 1$: swapping that pair for $1$ leaves the factor on its own',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'expression',
+    webTopics: ['Trigonometric identities'],
+    skill: 'Take out the common factor, then use the square identity',
+  },
+
   'trig-identities.expand': {
     topic: 'Expanding Trigonometric Brackets',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
@@ -2269,7 +2552,11 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'vectors.components': {
     topic: 'Vector Components',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2014 P1 Q4', '2016 P1 Q1', '2018 P1 Q4', '2024 P1 Q4'],
+    // 2018 P1 Q4 belongs to `vectors.missing`, which is the only variation that
+    // clones it: its scheme is "Vectors (subtraction) — evidence of
+    // subtraction", where u and u + v are given and v is wanted. Cited here as
+    // well, it made two presses on that paper differ in kind.
+    basedOn: ['2014 P1 Q4', '2016 P1 Q1', '2024 P1 Q4'],
     marks: 2,
     route: 'calculate the scalar multiple, then the solution in component form. The second mark is withheld if the brackets are dropped or the answer is written as a coordinate',
     method: 'Multiply each component by its scalar, then add the two vectors one component at a time',
@@ -2664,7 +2951,6 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Volume - simple shape'],
     skill: 'Find the height of a cone with the same volume as a given sphere',
     marks: 5,
-    marksInferred: true,
     route: '2 for the sphere, 3 for the cone — read off the pattern the other years set',
     method: 'Work out the sphere\'s volume first, then substitute it into the volume of a cone and solve for the height',
     plan: [
@@ -2871,7 +3157,6 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2026 P2 Q13'],
     marks: 7,
-    marksInferred: true,
     route: 'the 1 + 2 + 4 the question data gives, split as 2015 P2 Q14 splits its identical parts',
     plan: [
       'Trace round the plan and mark which sides have a wall against them, since only those sides push the measurement outwards — count how many times $x$ gets added to each dimension, then write an expression for each',
@@ -2991,7 +3276,6 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2026 P1 Q7'],
     marks: 3,
-    marksInferred: true,
     route: 'square and add, take the root, simplify the surd — one mark per skill the answer needs',
     plan: [
       'Square each component and add the squares to get the number that will sit under the root',
@@ -3126,7 +3410,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Lettered Cuboid and a Midpoint',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2026 P1 Q11'],
-    marks: 2, marksInferred: true,
+    marks: 2,
     route: '1 + 1 - state G, then state the midpoint of CD. The only one of the five where a coordinate is computed rather than read off, and the only one that letters every vertex: eleven labels on a projected box, which is what the label-placement work in place() was for',
     plan: [
       'Work out from the vertices that already carry coordinates which direction along the cuboid each of $x$, $y$ and $z$ runs',
@@ -3281,9 +3565,26 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'pythagoras.chord': {
     topic: 'Pythagoras in a Circle',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2014 P1 Q12', '2015 P2 Q12', '2016 P2 Q15', '2017 P2 Q13',
-              '2018 P2 Q12', '2019 P2 Q18', '2022 P2 Q8', '2023 P1 Q10',
-              '2024 P2 Q10'],
+    // Five papers, not nine.
+    //
+    // Four of the nine it used to claim are cloned properly somewhere else, and
+    // claiming them here is what produced the reported bug — pressing Variation
+    // on the door-number sign returned a coin toss between its own clone and a
+    // generic chord question, because `variationsBasedOn` found two variations
+    // citing that paper and picked one.
+    //
+    //   2014 P1 Q12   pythagoras.chord-reverse          radius and height given
+    //   2017 P2 Q13   pythagoras.two-circles-half-turn  the logo
+    //   2019 P2 Q18   pythagoras.two-circles-snowman    the snowman
+    //   2024 P2 Q10   pythagoras.two-circles-overlap    the door sign
+    //
+    // What is left is one circle with a chord and a radius given, and a height
+    // or a width wanted: a milk tank, a perfume label, a train tunnel, a paving
+    // slab, and a shape that is part of a circle. Same question throughout, and
+    // the context is free to change.
+    // Two papers, one family: an open arc standing on its chord, with the
+    // radius drawn solid. `-whole` and `-cut` are the other two.
+    basedOn: ['2016 P2 Q15', '2022 P2 Q8'],
     marks: 4,
     route: 'marshal the facts and recognise the right-angled triangle, then a consistent Pythagoras statement, then calculate the third side, then the length asked for',
     method: 'Drop a perpendicular from the centre to the chord to make a right-angled triangle, write Pythagoras down for it, work out the third side, then add or subtract the radius',
@@ -3304,25 +3605,54 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'pythagoras.converse': {
     topic: 'The Converse of Pythagoras',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2014 P2 Q6', '2023 P2 Q8', '2026 P2 Q7'],
+    basedOn: ['2014 P2 Q6', '2023 P2 Q8'],
     marks: 4,
-    marksDiffer: { '2026 P2 Q7': 3 },
-    route: 'valid strategy, then evaluation, then an explicit comparison, then a conclusion with a valid reason. 2026 P2 Q7 is three marks, merging the comparison and the conclusion; the schemes all accept the cosine rule instead',
+    route: 'valid strategy, then evaluation, then an explicit comparison, then a conclusion with a valid reason; the schemes all accept the cosine rule instead',
     method: 'Square the two shorter sides and add them, square the longest side, compare the two numbers, then say whether it is right-angled and why',
     plan: [
       'Square the two shorter sides and add them together',
       'Square the longest side on its own',
       'Compare the two totals, then say whether the triangle is right-angled and give that comparison as your reason',
     ],
-    // The shape holds across all three papers; only the money moves. 2026 P2 Q7
-    // merges the comparison with the conclusion, so the last move is worth one
-    // there and two everywhere else — which is exactly what a plan of moves can
-    // carry and a rung-per-mark ladder could not.
     planMarks: [1, 1, 2],
-    planMarksDiffer: { '2026 P2 Q7': [1, 1, 1] },
     answerShape: 'text',
     webTopics: ['Pythagoras converse'],
     skill: 'Compare the two shorter sides squared with the longest squared, and conclude',
+  },
+
+  // The same test with no context and no diagram — three side lengths and a
+  // question, which is three marks rather than four.
+  //
+  //   2014 P2 Q6   three towns, drawn          4 marks
+  //   2023 P2 Q8   a beam against a wall, drawn 4 marks
+  //   2026 P2 Q7   "A triangle has sides of length 88 metres, 105 metres and
+  //                137 metres."                3 marks
+  //
+  // The contextual papers buy the comparison and the conclusion separately.
+  // 2026 merges them, and splits the front of the question more finely instead:
+  // •¹ writes the strategy down, •² evaluates it. So the steps follow that
+  // scheme rather than mirroring the four-mark branch.
+  //
+  // This was `pythagoras.converse` carrying `marksDiffer` and a `planMarks`
+  // override. The generator only ever produced the contextual shape, so
+  // pressing Variation on 2026 P2 Q7 returned a towns-and-distances diagram
+  // worth four marks — no clone of it existed at all.
+  'pythagoras.converse-sides': {
+    topic: 'The Converse of Pythagoras',
+    difficulty: 'exam', strategy: 'answer-first', source: 'paper',
+    basedOn: ['2026 P2 Q7'],
+    marks: 3,
+    route: 'start a valid strategy, carry it through and evaluate, then compare explicitly and state the conclusion',
+    method: 'Square the two shorter sides and add them, square the longest side, then compare the two numbers and say whether it is right-angled in the same breath',
+    plan: [
+      'Pick out the longest side, and write down the other two squared and added beside that one squared',
+      'Work both of those out',
+      'Compare the two totals, then say whether the triangle is right-angled and give that comparison as your reason',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'text',
+    webTopics: ['Pythagoras converse'],
+    skill: 'Test three given sides against Pythagoras, and conclude',
   },
   // 2017 P2 Q7 moved OUT of the entry above and into its own.
   //
@@ -3375,6 +3705,52 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // The same circle-and-chord figure with a different piece missing: 2014 gives
   // the radius and the height and wants the chord; 2026 gives the chord and the
   // perpendicular and wants the radius.
+  // The whole circle drawn, the radius given in the prose rather than on the
+  // figure. 2015 shades the liquid below its chord; 2018 draws the bare disc.
+  'pythagoras.chord-whole': {
+    topic: 'Pythagoras in a Circle',
+    difficulty: 'exam', strategy: 'answer-first', source: 'paper',
+    basedOn: ['2015 P2 Q12', '2018 P2 Q12'],
+    marks: 4,
+    route: 'marshal the facts and recognise the right-angled triangle, then a consistent Pythagoras statement, then calculate the third side, then the length asked for',
+    method: 'Drop a perpendicular from the centre to the chord to make a right-angled triangle, write Pythagoras down for it, work out the third side, then add or subtract the radius',
+    plan: [
+      'Drop a perpendicular from the centre to the chord: it bisects the chord, so you have a right-angled triangle whose hypotenuse is the radius',
+      'Halve the chord, then use Pythagoras to find the distance from the centre down to it',
+      'Add that distance to the radius, or take it away, depending on which piece of the circle the shape is',
+    ],
+    planMarks: [1, 1, 2],
+    answerShape: 'rounded',
+    webTopics: ['Pythagoras in circle diagrams'],
+    skill: 'Bisect the chord, use Pythagoras, then add or subtract the radius',
+  },
+
+  // The whole circle with the removed arc dashed, and the radius dashed.
+  //
+  // **Paper 1, so the numbers have to come out whole.** The paper is
+  // non-calculator: radius 50, chord 60, half-chord 30, and 30-40-50 is a
+  // scaled 3-4-5, so the distance from the centre is exactly 40 and the
+  // width exactly 90. Sharing a variation with the four Paper 2 papers, the
+  // clone drew freely and asked a pupil with no calculator to round to one
+  // decimal place — every draw. `__checks__/paper-one.ts` now refuses that.
+  'pythagoras.chord-cut': {
+    topic: 'Pythagoras in a Circle',
+    difficulty: 'exam', strategy: 'answer-first', source: 'paper',
+    basedOn: ['2023 P1 Q10'],
+    marks: 4,
+    route: 'marshal the facts and recognise the right-angled triangle, then a consistent Pythagoras statement, then calculate the third side, then the length asked for',
+    method: 'Drop a perpendicular from the centre to the chord to make a right-angled triangle, write Pythagoras down for it, work out the third side, then add or subtract the radius',
+    plan: [
+      'Drop a perpendicular from the centre to the chord: it bisects the chord, so you have a right-angled triangle whose hypotenuse is the radius',
+      'Halve the chord, then use Pythagoras to find the distance from the centre down to it',
+      'Add that distance to the radius, or take it away, depending on which piece of the circle the shape is',
+    ],
+    planMarks: [1, 1, 2],
+    answerShape: 'rounded',
+    webTopics: ['Pythagoras in circle diagrams'],
+    skill: 'Bisect the chord, use Pythagoras, then add or subtract the radius',
+  },
+
   'pythagoras.chord-reverse': {
     topic: 'Finding a Chord or Radius in a Circle',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
@@ -3397,7 +3773,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Finding the Radius from a Chord',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2026 P2 Q5'],
-    marks: 3, marksInferred: true,
+    marks: 3,
     route: 'inferred, no published 2026 scheme: halve the chord, state Pythagoras with the radius as the hypotenuse, then evaluate and take the root. Three rather than four because the perpendicular is given outright',
     plan: [
       'Halve the chord, since the perpendicular from the centre meets it at its midpoint',
@@ -3999,20 +4375,22 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Area of a Triangle', 'Sector area'],
     skill: 'The whole circle less the sector-minus-triangle',
   },
+  // No paper asks for the minor segment on its own.
+  //
+  // This cited 2014 P2 Q13 alongside `sector.segment-major`, so two presses on
+  // the tunnel gave two different shapes and one of them was wrong. The scheme
+  // settles which: "Area of a composite shape (**major sector** + triangle)",
+  // illustrated with 310/360. It does accept 50/360 at •², but that is the
+  // minor sector appearing *inside* a route to the major segment — a step, not
+  // the question.
+  //
+  // The shape stays, because sector-less-triangle is worth practising and the
+  // shading is what distinguishes the two. It is a skill rather than a clone.
   'sector.segment-minor': {
     topic: 'Area of a Segment of a Circle',
-    difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2014 P2 Q13'],
-    marks: 5,
-    route: 'know that the segment is the sector less the triangle, know to express the sector as a fraction of the circle, find the sector\'s area, find the triangle\'s area, then carry out the calculations',
+    difficulty: 'skill', strategy: 'input-first', source: 'zeta',
+    basedOn: [],
     method: 'A segment is the sector with the triangle taken out of it, so write the angle as a fraction of 360, find the sector, find the triangle, then subtract',
-    plan: [
-      'Write the angle at the centre over 360, the share of the circle the sector takes',
-      'Multiply that share by the whole circle\'s area, $\\pi$ times the radius squared, to get the sector',
-      'Find the triangle at the centre with $\\frac{1}{2}ab\\sin C$, using the two radii and the angle between them',
-      'Subtract the triangle from the sector — what is left is the shaded segment',
-    ],
-    planMarks: [1, 1, 1, 2],
     answerShape: 'rounded',
     webTopics: ['Area of a Triangle', 'Sector area'],
     skill: 'The sector less the triangle inside it',
@@ -4056,7 +4434,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Polygon Inside a Circle',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2026 P2 Q10'],
-    marks: 5, marksInferred: true,
+    marks: 5,
     route: 'inferred, no published 2026 scheme, patterned on 2014 P2 Q13 which pays five for the same segment with the angle given: the angle from the number of vertices, express the sector as a fraction of the circle, evaluate it, the triangle, then subtract',
     plan: [
       'Count the vertices, then divide 360 by that count — they sit equally spaced round the circle, so that gives the angle at the centre',
@@ -4175,7 +4553,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Reflex Angle at the Centre',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2026 P1 Q10'],
-    marks: 3, marksInferred: true,
+    marks: 3,
     route: 'no published scheme: two isosceles triangles from the radii, one reached through the right angle at the tangent, then their sum',
     plan: [
       'Start on the side where a base angle is given: the two radii make that triangle isosceles, so double the angle and take it off 180 for its angle at the centre',
@@ -4225,21 +4603,43 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // figure, because their photographs of cookie jars and model aircraft are
   // context and every measurement is in the prose; 2016 P2 Q11 is the one whose
   // numbers are printed only on the diagram, and it is drawn.
+  // **Two ids, because the two papers scale opposite ways.** The route here used
+  // to read "2014 scales up and 2026 scales down, which the scheme treats
+  // identically, so both directions are drawn under this one id" - written
+  // before the owner's family ruling, which names scaling up against scaling
+  // down among the pairs a variation may not toss a coin between. It was
+  // tossing one, so half the clones of each paper scaled the other way.
   'similarity.volume-scale': {
     topic: 'Volumes of Similar Solids',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2014 P2 Q5', '2026 P2 Q3'],
+    basedOn: ['2014 P2 Q5'],
     marks: 3,
-    route: 'state the linear scale factor, state the volume scale factor, then calculate the volume and state its units. 2014 scales up and 2026 scales down, which the scheme treats identically, so both directions are drawn under this one id',
+    route: 'state the linear scale factor, state the volume scale factor, then calculate the volume and state its units. The smaller solid is given and the larger is asked for, so the factor is bigger than one',
     plan: [
-      'Write the linear scale factor as the height of the solid you want over the matching height of the one you are given, so it scales in the right direction',
+      'Write the linear scale factor as the height of the larger solid over the height of the smaller one you are given, so it scales upwards',
       'Cube that scale factor, because a volume is three-dimensional and scales by the cube of the linear one, then multiply the volume you are given by it',
       'Work that out, and write the volume units beside your answer',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'integer',
     webTopics: ['Similar areas/volumes'],
-    skill: 'Cube the linear scale factor to scale a volume',
+    skill: 'Cube the linear scale factor to scale a volume up',
+  },
+  'similarity.volume-scale-down': {
+    topic: 'Volumes of Similar Solids',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2026 P2 Q3'],
+    marks: 3,
+    route: 'find the linear scale factor, then the volume - the scheme allows multiplying by the cube of the small-over-large fraction or dividing by the cube of the large-over-small one, and pays the third mark only where a power of a linear scale factor was used',
+    plan: [
+      'Write the linear scale factor as the height of the smaller solid over the height of the larger one you are given, so it scales downwards',
+      'Cube that scale factor, because a volume is three-dimensional and scales by the cube of the linear one, then multiply the volume you are given by it',
+      'Work that out, and write the volume units beside your answer',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'integer',
+    webTopics: ['Similar areas/volumes'],
+    skill: 'Cube the linear scale factor to scale a volume down',
   },
   'similarity.area-scale': {
     topic: 'Areas of Similar Figures',

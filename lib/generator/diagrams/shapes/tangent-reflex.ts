@@ -67,6 +67,8 @@ export function tangentReflex(spec: TangentReflexSpec): Figure | null {
 
   const elements: Element[] = [
     { kind: 'circle', centre: O, r },
+    // 2026 P1 Q10 marks its centre with a filled dot, so this does too.
+    { kind: 'dot', at: O },
     { kind: 'segment', from: D, to: B },
     { kind: 'segment', from: B, to: E },
     { kind: 'segment', from: O, to: B },

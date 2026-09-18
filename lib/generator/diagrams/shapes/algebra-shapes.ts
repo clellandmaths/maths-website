@@ -151,7 +151,18 @@ function drawShape(s: PlaneShape, at: Pt, side: 'left' | 'right'): Element[] {
  * hence bottoms aligned rather than centres, which is how a pupil reads them as
  * two separate things.
  */
-export function shapePair(left: PlaneShape, right: PlaneShape): Figure {
+export function shapePair(
+  left: PlaneShape, right: PlaneShape,
+  /**
+   * Whether to print "not drawn to scale" in the corner.
+   *
+   * On by default, and off where the paper being cloned does not print it -
+   * 2025 P1 Q15 draws its rectangle and square with no such note. The flag is
+   * only ever the caption here: this figure claims no lengths, because every
+   * side is an expression, so there is no length-ratio check for it to waive.
+   */
+  opts: { notToScale?: boolean } = {},
+): Figure {
   const gap = Math.max(shapeWidth(left), shapeWidth(right)) * PAIR_GAP;
   const elements = [
     ...drawShape(left, pt(0, 0), 'left'),
@@ -167,7 +178,7 @@ export function shapePair(left: PlaneShape, right: PlaneShape): Figure {
       value: 90, shown: false,
     });
   }
-  return { scene: { elements, notToScale: true }, claims };
+  return { scene: { elements, notToScale: opts.notToScale ?? true }, claims };
 }
 
 // ── a cuboid whose edges are expressions ──────────────────────────────────

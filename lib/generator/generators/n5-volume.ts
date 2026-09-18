@@ -117,7 +117,8 @@ function sphere(): Q | null {
   ];
   return assemble({
     stack: [{ kind: 'sphere', r }],
-    dims: [{ along: 'width', halfWidth: r, side: 'below', value: dia, text: `${num(dia)} ${c.short}` }],
+    // Both papers draw the diameter as a double-headed arrow across the ball.
+    dims: [{ along: 'width', halfWidth: r, side: 'below', value: dia, text: `${num(dia)} ${c.short}`, arrow: true }],
   }, 'Volume of a Sphere', 'volume.sphere', prose,
     `Sphere, diameter ${num(dia)} ${c.short}. Volume to ${sf} s.f.?`,
     steps, [1, 1, 1], `$${toSigFigs(exact, sf)}$ ${cubic(c.short)}`);

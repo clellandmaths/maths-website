@@ -107,19 +107,54 @@ function drawRate(up: boolean): { rate: number; multiplier: number } {
 }
 
 function compound(): Q {
-  const ctx = pick(ASSET_CONTEXTS);
+  // Pick the shape, then a context that fits it — not a context and whatever
+  // shape it implies.
+  //
+  // Which question this is depends on how it is rounded, and rounding belongs
+  // to the context: a van is valued to three significant figures, a savings
+  // account to the penny. Only six of the forty-odd contexts round to three
+  // figures, so drawing the context first left the four-mark question at 14%
+  // of its own topic and `mix.ts` called it suppressed. This is the pattern
+  // `diagram-questions.md` §2 sets out — choose the branch once, outside the
+  // draw — and the reason it exists.
+  const threeSf = getRandomInt(0, 1) === 0;
+  const ctx = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf));
   const up = ctx.appreciates;
-  const { rate, multiplier } = drawRate(up);
-  const years = getRandomInt(2, 4);
-  const start = ctx.unit === '£'
-    ? getRandomInt(4, 60) * 500
-    : getRandomInt(20, 260) * 500;
-  const value = start * Math.pow(multiplier, years);
+  let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
+  // **The fourth mark is for the rounding, so there has to be something to
+  // round.** 20000 at 30% off for two years is 9800 exactly, and a pupil
+  // collects `•⁴ answer correct to 3 significant figures` by copying the line
+  // above it. The three-mark contexts fold rounding into evaluating, so an
+  // exact answer costs nothing there.
+  for (let tries = 0; tries < 200; tries++) {
+    ({ rate, multiplier } = drawRate(up));
+    years = getRandomInt(2, 4);
+    start = ctx.unit === '£'
+      ? getRandomInt(4, 60) * 500
+      : getRandomInt(20, 260) * 500;
+    value = start * Math.pow(multiplier, years);
+    if (!threeSf || toSigFigs(value, 3) !== value) break;
+  }
+
+  // ── two papers, two mark structures ──────────────────────────────────────
+  //
+  // 2026 P2 Q1 is four marks where the other seven are three, and the official
+  // scheme — published after this was first written, which is why the registry
+  // carried a note saying the fourth mark could not be explained — says what it
+  // is for: `•⁴ answer correct to 3 significant figures`. The other papers fold
+  // evaluating and rounding into one mark, because rounding to the penny or to
+  // the nearest pound is not a separate skill.
+  //
+  // So a context asking for three significant figures *is* the 2026 question
+  // and pays four marks; every other context is the three-mark question. This
+  // was one variation carrying `marksDiffer`, which is one id covering two
+  // shapes — the thing `diagram-questions.md` §6 says to split rather than
+  // annotate, because `mix.ts` can only see what the registry names.
 
   return {
     subTopic: 'Compound Appreciation & Depreciation',
     difficulty: 'skill',
-    variationId: 'percentages.compound',
+    variationId: threeSf ? 'percentages.compound-3sf' : 'percentages.compound',
     questionLines: [
       ctx.opening(ctx.format(start)),
       `It is expected to ${up ? 'increase' : 'decrease'} by ${rate}% each year.`,
@@ -132,11 +167,18 @@ function compound(): Q {
     solutionSteps: [
       `<strong>1.</strong> Find the multiplier for ${up ? 'an increase' : 'a decrease'} of ${rate}%:<br><br>$100\\% ${up ? '+' : '-'} ${rate}\\% = ${up ? 100 + rate : 100 - rate}\\% = ${multiplier}$`,
       `<strong>2.</strong> Apply it once for each of the ${years} years:<br><br>$${ctx.unit === '£' ? money(start, 0) : plain(start)} \\times ${multiplier}^{${years}}$`,
-      `<strong>3.</strong> Evaluate and round:<br><br>${roundedStep(value, ctx.rounding, ctx)}`,
+      ...(threeSf
+        // The scheme's own illustrative keeps the unrounded figure in front of
+        // the rounding — `8435(·4048)` for •³, then `(£) 8440` for •⁴ — so the
+        // two marks are visibly different moves rather than one move written
+        // twice.
+        ? [`<strong>3.</strong> Evaluate:<br><br>$= £${money(value, 2)}$`,
+           `<strong>4.</strong> Round to 3 significant figures:<br><br>${roundedStep(value, ctx.rounding, ctx)}`]
+        : [`<strong>3.</strong> Evaluate and round:<br><br>${roundedStep(value, ctx.rounding, ctx)}`]),
     ],
     // •¹ know how to change by the rate, •² know how to carry it over the years,
-    // •³ evaluate — the same three marks in all four papers
-    stepMarks: [1, 1, 1],
+    // •³ evaluate — and for the three-significant-figure question, •⁴ round.
+    stepMarks: threeSf ? [1, 1, 1, 1] : [1, 1, 1],
     finalAnswer: applyRounding(value, ctx.rounding, ctx),
   };
 }
@@ -204,13 +246,24 @@ function reverse(): Q {
 
 function compoundBetweenYears(): Q {
   const ctx = pick(BETWEEN_YEARS_CONTEXTS);
-  const { rate, multiplier } = drawRate(true);
-  const years = getRandomInt(2, 4);
-  const from = getRandomInt(2014, 2025);
   const [lo, hi] = ctx.band;
   const step = hi > 200000 ? 10000 : hi > 40000 ? 2500 : 500;
-  const start = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;
-  const value = Math.round(start * Math.pow(multiplier, years));
+  let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
+  // **A whole number of visitors, meals or packages.** Both papers come out
+  // exact - 80 000 x 1.15^3 is 121 670 and 118 750 x 1.04^2 is 128 440 - and
+  // neither asks for any rounding, because neither needs to. Drawn freely this
+  // gave 62 500 x 1.05^2 = 68 906.25, printed as "68,906 meals" while the
+  // pupil's calculator says something else and nothing in the question tells
+  // them what to do about it.
+  for (let tries = 0; tries < 400; tries++) {
+    ({ rate, multiplier } = drawRate(true));
+    years = getRandomInt(2, 4);
+    start = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;
+    value = start * Math.pow(multiplier, years);
+    if (Math.abs(value - Math.round(value)) < 1e-6) break;
+  }
+  value = Math.round(value);
+  const from = getRandomInt(2014, 2025);
 
   return {
     subTopic: 'Appreciation Between Two Years',

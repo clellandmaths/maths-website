@@ -34,11 +34,27 @@ export interface CuboidSpec {
   length: number;
   breadth: number;
   height: number;
-  /** Eight vertex names, front face first then back, or none. */
+  /**
+   * Eight vertex names, front face first then back, or none.
+   *
+   * An empty string leaves that corner unlettered. 2018 P2 Q16 letters only the
+   * two corners its question runs between, P and M, and eight letters where the
+   * paper prints two is as wrong as none where it prints eight.
+   */
   names?: [string, string, string, string, string, string, string, string];
   labels: { length: string; breadth: string; height: string };
-  /** Draw the face diagonal and the space diagonal, dashed. */
-  showDiagonals?: boolean;
+  /**
+   * The space diagonal, from the front-bottom-left corner to the far top one.
+   *
+   * `none` where the paper does not draw it — 2018 P2 Q16 leaves the pupil to
+   * see it. `solid` where the paper draws it as a real line, which 2022 P2 Q11
+   * does because that line **is** what its question names.
+   *
+   * **The face diagonal is never drawn.** This used to draw both, dashed, and
+   * the base diagonal is the first markscheme line — "start valid strategy for
+   * face diagonal". Drawing it hands over the mark it pays for.
+   */
+  diagonal?: 'none' | 'solid';
   /** Draw x, y and z axes from the front-bottom-left corner. */
   showAxes?: boolean;
 }
@@ -74,17 +90,17 @@ export function cuboid(spec: CuboidSpec): Figure {
     { kind: 'segment', from: K0, to: K3, dashed: true },
   ];
 
-  if (spec.showDiagonals) {
-    // the face diagonal across the base, then up to the far top corner
-    elements.push({ kind: 'segment', from: F0, to: K1, dashed: true });
-    elements.push({ kind: 'segment', from: F0, to: K2, dashed: true });
+  // The space diagonal only, and only where the paper draws it. The face
+  // diagonal across the base is the pupil's first move and is never drawn.
+  if (spec.diagonal === 'solid') {
+    elements.push({ kind: 'segment', from: F0, to: K2 });
   }
 
   if (spec.names) {
     const n = spec.names;
     const centre = scale(add(add(F0, K2), pt(0, 0)), 0.5);
     for (const [i, p] of [F0, F1, F2, F3, K0, K1, K2, K3].entries()) {
-      elements.push({ kind: 'label', text: n[i], anchor: p, away: centre });
+      if (n[i]) elements.push({ kind: 'label', text: n[i], anchor: p, away: centre });
     }
   }
 

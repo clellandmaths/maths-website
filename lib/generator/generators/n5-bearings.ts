@@ -296,7 +296,16 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
 function twoSides(c: BearingContext, side: number): Q | null {
   const [nA, nB, nC] = c.letters;
   const [rA, rB, rC] = c.refer;
-  const base = pick([0, 90, 180, 270]);
+  // **East or west, because 2025 P2 Q12 is east.** "B is 250 metres east of A",
+  // and the owner's family ruling puts a north-south baseline against an
+  // east-west one among the pairs a variation may not choose between. It was
+  // choosing from all four, and south alone took half the draws.
+  //
+  // A north baseline also empties the first step: the angle at A is the
+  // difference between the printed bearing and the baseline's own, and against
+  // north that difference is the bearing itself, so the working would print a
+  // subtraction of nothing.
+  const base = pick([90, 270]);
   const ab = getRandomInt(c.band[0], c.band[1]);
   const alpha = getRandomInt(28, 72);
   const bcLen = Math.round(ab * (getRandomInt(70, 145) / 100));
