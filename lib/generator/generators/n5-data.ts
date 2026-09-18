@@ -241,7 +241,14 @@ function medianCompare(semi: boolean): Q {
     // 2019's are 3.5 and 8, giving 2.25. Whole quartiles otherwise.
     if (semi ? (iqr % 0.5 !== 0) : !Number.isInteger(iqr)) continue;
     if (iqr < 2) continue;
-    if (!Number.isInteger(q2)) continue;
+    // **A median of 39.5 is the question, not a defect.** This used to require
+    // a whole median, which contradicted the note above it by three lines: with
+    // an even count the median is the mean of the two middle values, and
+    // "39.5, 200, 7, 19.5" are the four the papers actually answer. 2023 P1 Q9
+    // answers 39.5 and 2019 P1 Q5 answers 19.5, so the guard made two of the
+    // five papers' own first marks unreachable - 0 half medians in 120 draws.
+    // Integer data on an even count can only ever give a whole or a half, so
+    // there is nothing here to reject.
 
     const spread = semi ? iqr / 2 : iqr;
     const name = semi ? 'semi-interquartile range' : 'interquartile range';

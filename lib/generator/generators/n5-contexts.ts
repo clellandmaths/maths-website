@@ -40,6 +40,13 @@ export type Rounding = 'money' | 'nearest-pound' | '3sf' | 'whole';
 // ── things whose value grows or shrinks year on year ──────────────────────
 
 export interface AssetContext {
+  /**
+   * What the question asks for, as it goes after "Calculate".
+   *
+   * Money is asked for its *value*; anything counted or measured is asked for
+   * itself. See the note on COUNTED.
+   */
+  asks: string;
   /** eg "A van was valued at £22,600." */
   opening: (start: string) => string;
   /** eg "the van" — used in "the value of the van after 3 years" */
@@ -85,33 +92,65 @@ const APPRECIATING: [string, string, Rounding][] = [
 ];
 
 /** Countable things, where the answer is a whole number of somethings. */
-const COUNTED: [string, string, string, boolean][] = [
-  ['A town has a population of %.', 'the town', 'people', true],
-  ['Households in a city produced % tonnes of waste last year.', 'the waste produced', 'tonnes', false],
-  ['A colony of puffins on an island numbers %.', 'the colony', 'puffins', false],
-  ['A red squirrel population in a forest is estimated at %.', 'the population', 'squirrels', true],
-  ['A reservoir holds % million litres of water.', 'the reservoir', 'million litres', false],
-  ['A leisure centre has % members.', 'the membership', 'members', true],
-  ['A wind farm generated % megawatt hours last year.', 'the output', 'megawatt hours', true],
-  ['A glacier covers an area of % hectares.', 'the glacier', 'hectares', false],
-  ['A deer herd on an estate numbers %.', 'the herd', 'deer', true],
-  ['A library lent out % books last year.', 'the number of loans', 'books', false],
-  ['A hospital had % patients on its waiting list.', 'the waiting list', 'patients', false],
-  ['A bee colony contains % bees.', 'the colony', 'bees', true],
+/**
+ * **A colony does not have a value.**
+ *
+ * The fifth entry is what the question asks for, and it exists because the
+ * question line was `Calculate the expected value of ${subject}` for every
+ * context — so a puffin colony, a glacier and a hospital waiting list were all
+ * asked for their *value*. The papers only say "value" of things that are
+ * priced:
+ *
+ *   2017 P2 Q2   "Calculate the expected value of the necklace"
+ *   2024 P2 Q1   "Calculate the expected value of Dougie's laptop"
+ *
+ * and name the quantity itself whenever it is counted or measured:
+ *
+ *   2014 P2 Q1   "What will be the expected roll after 3 years?"
+ *   2016 P2 Q1   "Calculate the sugar content of a standard can after 3 years."
+ *   2018 P2 Q1   "Calculate the total amount of waste ... in 2020."
+ */
+const COUNTED: [string, string, string, boolean, string][] = [
+  ['A town has a population of %.', 'the town', 'people', true,
+   'the expected population of the town'],
+  ['Households in a city produced % tonnes of waste last year.', 'the waste produced', 'tonnes', false,
+   'the total amount of waste expected'],
+  ['A colony of puffins on an island numbers %.', 'the colony', 'puffins', false,
+   'the expected size of the colony'],
+  ['A red squirrel population in a forest is estimated at %.', 'the population', 'squirrels', true,
+   'the expected size of the population'],
+  ['A reservoir holds % million litres of water.', 'the reservoir', 'million litres', false,
+   'the expected volume of water in the reservoir'],
+  ['A leisure centre has % members.', 'the membership', 'members', true,
+   'the expected membership'],
+  ['A wind farm generated % megawatt hours last year.', 'the output', 'megawatt hours', true,
+   'the expected output'],
+  ['A glacier covers an area of % hectares.', 'the glacier', 'hectares', false,
+   'the expected area of the glacier'],
+  ['A deer herd on an estate numbers %.', 'the herd', 'deer', true,
+   'the expected size of the herd'],
+  ['A library lent out % books last year.', 'the number of loans', 'books', false,
+   'the expected number of loans'],
+  ['A hospital had % patients on its waiting list.', 'the waiting list', 'patients', false,
+   'the expected number of patients on the waiting list'],
+  ['A bee colony contains % bees.', 'the colony', 'bees', true,
+   'the expected number of bees in the colony'],
 ];
 
 export const ASSET_CONTEXTS: AssetContext[] = [
   ...DEPRECIATING.map(([opening, subject, rounding]): AssetContext => ({
     opening: s => opening.replace('%', s), subject, format: gbp,
+    asks: `the expected value of ${subject}`,
     unit: '£', rounding, appreciates: false,
   })),
   ...APPRECIATING.map(([opening, subject, rounding]): AssetContext => ({
     opening: s => opening.replace('%', s), subject, format: gbp,
+    asks: `the expected value of ${subject}`,
     unit: '£', rounding, appreciates: true,
   })),
-  ...COUNTED.map(([opening, subject, unit, appreciates]): AssetContext => ({
+  ...COUNTED.map(([opening, subject, unit, appreciates, asks]): AssetContext => ({
     opening: s => opening.replace('%', s), subject, format: plain,
-    unit, rounding: 'whole', appreciates,
+    asks, unit, rounding: 'whole', appreciates,
   })),
 ];
 

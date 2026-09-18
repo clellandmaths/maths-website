@@ -57,7 +57,7 @@ function frac(n: number, d: number): string {
   return a < 0 ? `-\\frac{${-a}}{${b}}` : `\\frac{${a}}{${b}}`;
 }
 
-// ── combine two vectors — 2014 P1 Q4, 2016 P1 Q1, 2024 P1 Q4 and six more ─
+// ── combine two vectors — 2014 P1 Q4, 2016 P1 Q1, 2024 P1 Q4 ─────────────
 
 function components(): Q {
   for (let tries = 0; tries < 200; tries++) {
@@ -66,9 +66,21 @@ function components(): Q {
     // across seven questions, so the variety here is theirs. `s`/`t` is not a
     // pair any of them uses.
     const [n1, n2] = pick([['p', 'q'], ['p', 'q'], ['p', 'q'], ['u', 'v'], ['u', 'v'], ['a', 'b']]);
+    // **One scalar, on the first vector.** All three papers are that shape:
+    //
+    //   2014 P1 Q4   2u - v      3D, integer scalar
+    //   2016 P1 Q1   1/2 p + q   2D, a half
+    //   2024 P1 Q4   3a + b      3D, integer scalar
+    //
+    // and all three schemes pay their first mark for exactly one multiple -
+    // "calculate 2u", "calculate 1/2 p", "calculate 3a". Drawing k1 and k2
+    // independently scaled both vectors in about half of all draws, which asks
+    // for two multiplications where the scheme pays for one, and `3u + 3v` is
+    // not a question any paper sets at all. k1 = 1 was reachable too, which
+    // leaves no multiple to calculate and no first mark to earn.
     const half = getRandomInt(1, 5) === 1;            // the 2016 P1 Q1 shape
-    const k1 = half ? 0.5 : getRandomInt(1, 4);
-    const k2 = getRandomInt(1, 3);
+    const k1 = half ? 0.5 : getRandomInt(2, 4);
+    const k2 = 1;
     const minus = getRandomInt(0, 1) === 0;
 
     // a half scalar needs even components, or the answer is not whole
@@ -93,7 +105,7 @@ function components(): Q {
       ],
       boardQuestionLines: [`$${expr}$ where $${bold(n1)} = ${col(A)}$, $${bold(n2)} = ${col(B)}$`],
       solutionSteps: [
-        `<strong>1.</strong> Multiply each vector by its number:<br><br>$${scaled(k1, n1)} = ${col(A.map(v => k1 * v))}$ and $${scaled(k2, n2)} = ${col(B.map(v => k2 * v))}$`,
+        `<strong>1.</strong> Multiply $${bold(n1)}$ by its number. This is the first mark, and it is the only multiplication there is:<br><br>$${scaled(k1, n1)} = ${col(A.map(v => k1 * v))}$`,
         `<strong>2.</strong> ${minus ? 'Subtract' : 'Add'} the matching components:<br><br>$${col(R)}$`,
       ],
       // 2024 P1 Q4: •¹ calculate the scalar multiple, •² the solution. The
@@ -145,16 +157,31 @@ function missingVector(): Q {
 
 function lineFromEquation(wantIntercept: boolean): Q {
   for (let tries = 0; tries < 200; tries++) {
-    const a = nonZeroInt(-9, 9);
-    const b = nonZeroInt(-9, 9);
+    // **All three papers are `ax + by + c` with a positive and |b| at least 2.**
+    //
+    //   2017 P2 Q11   3x - 5y - 10 = 0    gradient
+    //   2024 P1 Q11   x + 4y - 24 = 0     gradient
+    //   2018 P2 Q14   2x - 5y = 20        intercept
+    //
+    // A leading minus is not a form any of them uses, and b = 1 leaves the y
+    // term already isolated, which is the whole of the first mark - "isolate
+    // term in y **or divide throughout by 5**". a = 1 stays: 2024 P1 Q11 is a
+    // bare x.
+    const a = getRandomInt(1, 9);
+    const b = getRandomInt(2, 9) * (getRandomInt(0, 1) === 0 ? 1 : -1);
     const c = nonZeroInt(-30, 30);
-    if (Math.abs(b) === 1 && Math.abs(a) === 1) continue;   // too easy to be worth asking
+    // and none of them can be divided through, so neither may these
+    if (gcd(gcd(a, Math.abs(b)), Math.abs(c)) !== 1) continue;
     const m = -a / b;
     const yInt = -c / b;
     if (wantIntercept && !Number.isInteger(yInt)) continue;
     if (Math.abs(yInt) > 20) continue;
 
-    const zeroForm = getRandomInt(0, 1) === 0;
+    // **The form goes with the question, and is not a coin toss.** Both
+    // gradient papers write `... = 0`; the intercept paper writes `2x - 5y =
+    // 20`. Drawing it randomly gave each of them the other's presentation half
+    // the time.
+    const zeroForm = !wantIntercept;
     const lhs = `${a === 1 ? '' : a === -1 ? '-' : a}x ${b < 0 ? '-' : '+'} ${Math.abs(b) === 1 ? '' : Math.abs(b)}y`;
     const equation = zeroForm
       ? `${lhs} ${c < 0 ? '-' : '+'} ${Math.abs(c)} = 0`

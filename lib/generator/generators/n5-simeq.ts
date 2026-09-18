@@ -49,13 +49,34 @@ const num = (x: number): string => `${Math.round(x * 1000) / 1000}`;
  */
 function buildPair(x0: number, y0: number) {
   for (let tries = 0; tries < 400; tries++) {
-    const a1 = nonZeroInt(-7, 7), b1 = nonZeroInt(-7, 7);
-    const a2 = nonZeroInt(-7, 7), b2 = nonZeroInt(-7, 7);
+    // **The first variable's coefficient is positive in both equations, and it
+    // is never 1.** All four papers are that shape:
+    //
+    //   2015 P1 Q11   3x + 2y = 17    2x + 5y = 4
+    //   2018 P1 Q3    4x + 5y = -3    6x - 2y = 5
+    //   2023 P1 Q3    2x + 3y = 8     5x + 2y = -2
+    //   2024 P1 Q7    2p - 7r = 11    3p + 2r = 4
+    //
+    // Drawing a1 and a2 across the negatives too led an equation with a minus
+    // in 118 of 300, which no paper does, and a leading 1 turns the first mark
+    // - "evidence of scaling (match x or y coefficients)" - into a
+    // substitution the scheme does not describe. The *second* coefficient is
+    // free either way: 2018 and 2024 both carry a negative there.
+    const a1 = getRandomInt(2, 7), b1 = nonZeroInt(-7, 7);
+    const a2 = getRandomInt(2, 7), b2 = nonZeroInt(-7, 7);
     if (a1 * b2 - a2 * b1 === 0) continue;                 // no unique solution
     if (Math.abs(a1) === Math.abs(a2) || Math.abs(b1) === Math.abs(b2)) continue;
     const c1 = a1 * x0 + b1 * y0, c2 = a2 * x0 + b2 * y0;
     if (!Number.isInteger(c1) || !Number.isInteger(c2)) continue;
     if (Math.abs(c1) > 60 || Math.abs(c2) > 60) continue;
+    // **Neither equation may be divisible through.** `6x - 6y = -30` is
+    // `x - y = -5` written the long way: a pupil who notices solves a much
+    // easier pair than the one set, and the scaling the first mark pays for is
+    // not the scaling they did. Every equation in all four papers has no
+    // common factor across its three numbers.
+    const whole = (a: number, b: number, c: number) =>
+      gcd(gcd(Math.abs(a), Math.abs(b)), Math.abs(c)) === 1;
+    if (!whole(a1, b1, c1) || !whole(a2, b2, c2)) continue;
     return { a1, b1, c1, a2, b2, c2 };
   }
   return null;

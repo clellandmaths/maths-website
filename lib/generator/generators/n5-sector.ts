@@ -291,7 +291,13 @@ export function sectorQuestion(kinds: Kind[]): Q {
   // between, and this drew a reflex sector in 38% of area draws. The arc
   // questions keep both, since 2018 P2 Q2's is 320 degrees and 2017 P2 Q14
   // asks about a major arc by name.
-  const minorOnly = kind === 'area-angle';
+  //
+  // **`area-arc` belongs here too and was left out.** It is an area question
+  // by the same reasoning - 2024 P2 Q15 is its only paper, radius 12 and arc
+  // 15, which is 71.6 degrees - and it was drawing major arcs of 238 degrees
+  // and calling them "major arc AB". The note above already said "the area
+  // questions" in the plural; only one of them was named.
+  const minorOnly = kind === 'area-angle' || kind === 'area-arc';
   for (let tries = 0; tries < 3000; tries++) {
     const c = pick(minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major') : CONTEXTS);
     const sweep = minorOnly ? 'minor' as const : c.sweep;
@@ -420,9 +426,17 @@ export function sectorQuestion(kinds: Kind[]): Q {
         subTopic: 'Area of a Sector',
         difficulty: 'exam',
         variationId: 'sector.area-arc',
+        /**
+         * **No rounding line, and it was a vacuous one.** 2024 P2 Q15 asks
+         * "Calculate the area of the sector." and stops, answering 90 cm^2.
+         * This added "correct to one decimal place" to every draw - and the
+         * area here is half the arc times the radius, both of them whole
+         * numbers on the page, so every answer came out exact and the
+         * instruction asked the pupil to round something already round. Every
+         * finalAnswer ended in .0.
+         */
         questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.arc,
-          'Calculate the area of the sector.',
-          'Give your answer correct to one decimal place.'],
+          'Calculate the area of the sector.'],
         boardQuestionLines: [`Radius ${r}, arc ${trim(arc)}. Sector area?`],
         // 2024 P2 Q15: •¹ the correct fraction, or start the strategy for
         // finding the angle, •² know how to calculate the sector's area,
@@ -430,10 +444,14 @@ export function sectorQuestion(kinds: Kind[]): Q {
         solutionSteps: [
           `<strong>1.</strong> The arc is a known fraction of the circumference, and that fraction gives the angle:<br><br>$\\frac{${trim(arc)}}{\\pi \\times ${2 * r}} \\times 360 = ${Math.round(angle)}^{\\circ}$`,
           `<strong>2.</strong> The area of a sector is half its arc times its radius:<br><br>$\\text{Area} = \\frac{1}{2} \\times ${trim(arc)} \\times ${r}$`,
-          `<strong>3.</strong> Work that out:<br><br>$\\text{Area} = ${dp1(arc * r / 2)}$ ${c.short}$^{2}$`,
+          `<strong>3.</strong> Work that out:<br><br>$\\text{Area} = ${trim(arc * r / 2)}$ ${c.short}$^{2}$`,
         ],
         stepMarks: [1, 1, 1],
-        finalAnswer: `$${dp1(arc * r / 2)}$ ${c.short}$^{2}$`,
+        // Half the arc times the radius, both whole on the page, so the area
+        // is exact to a half - and with the rounding line gone, `dp1` was
+        // printing a decimal place the question no longer asks for. 2024 P2
+        // Q15 answers 90, not 90.0.
+        finalAnswer: `$${trim(arc * r / 2)}$ ${c.short}$^{2}$`,
         figure: built({ radius: shown.radius, angle: '', arc: shown.arc }),
       };
     } else if (kind === 'angle-arc') {

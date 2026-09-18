@@ -139,7 +139,17 @@ function addSubtract(add: boolean): Q {
     const r = pick([2, 3, 5, 6, 7, 10, 11]);
     const k1 = getRandomInt(2, 5), k2 = getRandomInt(1, 4);
     if (k1 === k2) continue;
-    const c1 = getRandomInt(1, 3), c2 = getRandomInt(1, 3);
+    // **The subtraction has one paper and it carries no coefficients.**
+    // 2024 P1 Q6 is a bare `sqrt(75) - sqrt(3)`, and its first mark is for
+    // simplifying *a* surd because the second is already in its simplest form.
+    // Drawing c1 and c2 uniformly from 1..3 put that shape on 1 draw in 9, so
+    // nine pressings in ten handed back a harder question than the only paper
+    // this clones - two surds to reduce, or a coefficient to carry through.
+    // Weighted to 1 here, it is the plurality shape instead. The addition half
+    // keeps the wider range: it is skill-tier practice with no paper behind it,
+    // and `2sqrt(20) + 6sqrt(45)` is the point of it.
+    const coeff = () => (add ? getRandomInt(1, 3) : pick([1, 1, 1, 2, 3]));
+    const c1 = coeff(), c2 = coeff();
     const n1 = k1 * k1 * r, n2 = k2 * k2 * r;
     if (n1 > MAX_RADICAND || n2 > MAX_RADICAND) continue;
 

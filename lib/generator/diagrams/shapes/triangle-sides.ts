@@ -1,6 +1,6 @@
 import {
   type Element, type Figure, type Pt, angleAt, angleMark, centroid, dist, mid, pt,
-  sideLabel,
+  shadeAngle, sideLabel,
 } from '../scene';
 
 /**
@@ -40,6 +40,20 @@ export interface TriangleSidesSpec {
    * obtuse and a 25 degree one looks sharp.
    */
   angles?: { at: 'a' | 'b' | 'c'; label: string }[];
+  /**
+   * A vertex whose angle is filled in, which is how a question points at one
+   * without naming a size.
+   *
+   * 2024 P2 Q3 gives three sides and asks for "the shaded angle at A", with a
+   * solid wedge at A and no arc or number anywhere. Without it the prose has
+   * to name the vertex twice over and the figure says nothing about which
+   * angle is wanted - which is the whole job the shading does.
+   *
+   * 2019 P2 Q7 is the same three-sides-find-an-angle question and shades
+   * nothing, because it asks for "the smallest angle" and leaves the pupil to
+   * work out which that is. So this is set for one form and not the other.
+   */
+  shadeAt?: 'a' | 'b' | 'c';
   /**
    * A line from the apex C down to a point on AB, cutting the triangle in two.
    *
@@ -137,6 +151,12 @@ export function triangleFromSides(spec: TriangleSidesSpec): Figure | null {
   // and an empty label still takes a seat and still has to clear other ink, so
   // it has to be left out rather than drawn blank.
   const elements: Element[] = [
+    // Shaded first, so the outline and the letters are drawn over it.
+    ...(spec.shadeAt
+      ? [shadeAngle(
+          { a: P, b: Q, c: R }[spec.shadeAt],
+          spec.shadeAt === 'a' ? [Q, R] : spec.shadeAt === 'b' ? [P, R] : [P, Q])]
+      : []),
     { kind: 'polygon', points: [P, Q, R] },
     ...(nA ? [{ kind: 'label' as const, text: nA, anchor: P, away: inside }] : []),
     ...(nB ? [{ kind: 'label' as const, text: nB, anchor: Q, away: inside }] : []),

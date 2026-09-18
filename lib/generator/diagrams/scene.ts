@@ -382,6 +382,61 @@ export function parallelMark(from: Pt, to: Pt, count = 1): Element[] {
 }
 
 /**
+ * A measurement drawn beside a line, as a double-headed arrow.
+ *
+ * **What it is for.** A length label put straight onto a line says which line
+ * and not which *part* of it. 2024 P1 Q14 is the case: AD is the whole ray and
+ * B sits on it, so "10.5 cm" written beside the line could be AB, BD or AD.
+ * The paper settles it with an arrow set off to the side, running exactly from
+ * A to D with a head at each end, and the number beside the arrow rather than
+ * beside the line.
+ *
+ * Built from decoration strokes, like `parallelMark`, so the shaft and the
+ * four barbs are exempt from the minimum-length rule: an arrowhead carries no
+ * measurement and growing one until it could would only make it wrong.
+ *
+ * `away` is any point on the side the arrow should sit; the arrow is offset
+ * square off the line, on that side, by `gap`.
+ */
+export function dimensionArrow(
+  from: Pt, to: Pt, away: Pt, gap: number, text?: string,
+): Element[] {
+  const u = unit(sub(to, from));
+  const n = pt(-u.y, u.x);
+  const toward = sub(away, mid(from, to));
+  const sign = toward.x * n.x + toward.y * n.y > 0 ? 1 : -1;
+  const shift = scale(n, sign * gap);
+  const a = add(from, shift);
+  const b = add(to, shift);
+
+  const head = Math.min(dist(a, b) * 0.12, gap * 1.1);
+  const out: Element[] = [{ kind: 'segment', from: a, to: b, decoration: true }];
+  for (const [tip, dir] of [[a, u], [b, scale(u, -1)]] as [Pt, Pt][]) {
+    const back = add(tip, scale(dir, head));
+    for (const side of [1, -1]) {
+      out.push({
+        kind: 'segment',
+        from: add(back, scale(n, head * 0.42 * side)),
+        to: tip,
+        decoration: true,
+      });
+    }
+  }
+  // **Beside the arrow, on the far side from the figure.**
+  //
+  // `away` on a label is the point to move *away from*, not toward. Read the
+  // other way round it pushes the number back onto its own shaft, and every
+  // draw then failed verifyFigure with "0.0px from ink it does not label" -
+  // widening the offset did nothing, because the label moved out with the
+  // arrow and back in by the same step. Pushing away from the line the arrow
+  // measures puts it outside, which is where the paper prints it.
+  if (text) {
+    out.push({ kind: 'label', text, anchor: mid(a, b), away: mid(from, to) });
+  }
+  return out;
+}
+
+/**
  * The shaded wedge at a vertex, sized the way an angle mark is.
  *
  * Slightly wider than the arc `angleMark` draws, so that where a question both

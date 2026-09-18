@@ -104,4 +104,7 @@ await withPage({ port: 8177, cdp: 9277, width: 1400, height: 1100 }, async ({
   }
 });
 
-t.done('hints and markschemes hold on 2025 and 2026');
+// The years actually driven, not the two this was first written for -
+// it reported 'hold on 2025 and 2026' after checking 2024.
+const drove = YEARS.length ? YEARS : ['2026', '2025'];
+t.done(`hints and markschemes hold on ${drove.join(' and ')}`);

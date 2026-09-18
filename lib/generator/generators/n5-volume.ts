@@ -1,7 +1,7 @@
 import { GeneratedQuestion } from './types';
 import { getRandomInt } from './utils';
 import { toSigFigs } from './n5-rounding';
-import { withUnit } from './n5-contexts';
+import { article, withUnit } from './n5-contexts';
 import { solidFigure, type SolidSpec } from '../diagrams/shapes/solid';
 import { renderScene } from '../diagrams/render';
 import { verifyFigure } from '../diagrams/verify';
@@ -702,17 +702,35 @@ function pyramidMinusPyramid(): Q | null {
     steps, [1, 1, 1, 1], `$${big - small}$ ${cubic('cm')}`);
 }
 
+/**
+ * **`inner` is a material, not a thing.**
+ *
+ * The sentence is 2024 P2 Q7's own: *"It consists of a hemisphere of red glass
+ * surrounded by clear glass."* So what follows "a hemisphere of" has to be a
+ * substance. Half of these were noun phrases carrying their own article, and
+ * the page then read "a hemisphere of a steel core surrounded by solid
+ * acrylic" — and twice it was not a substance at all: "a hemisphere of a
+ * hollow" and "a hemisphere of a cut-out for a ball", which is a hole, so
+ * there was nothing for the hemisphere to be made of.
+ *
+ * `outer` is the material the question asks for the volume of, and it reads
+ * back in "Calculate the volume of X in the Y" — so the two are kept distinct
+ * enough that the sentence does not say "the volume of foam in the foam
+ * insert".
+ */
+const cap = (w: string): string => w[0].toUpperCase() + w.slice(1);
+
 const WEIGHTS = [
-  { thing: 'desk weight', inner: 'a steel core', outer: 'solid acrylic' },
-  { thing: 'display block', inner: 'blue resin', outer: 'poured resin' },
-  { thing: 'soap bar', inner: 'a scented core', outer: 'plain soap' },
-  { thing: 'candle', inner: 'a coloured core', outer: 'white wax' },
-  { thing: 'ice block', inner: 'a fruit centre', outer: 'plain ice' },
-  { thing: 'jelly mould', inner: 'a cream centre', outer: 'set jelly' },
-  { thing: 'chocolate bar', inner: 'a caramel centre', outer: 'dark chocolate' },
-  { thing: 'concrete slab', inner: 'a hollow', outer: 'concrete' },
-  { thing: 'foam insert', inner: 'a cut-out for a ball', outer: 'foam' },
-  { thing: 'butter block', inner: 'a herb centre', outer: 'plain butter' },
+  { thing: 'desk weight', inner: 'steel', outer: 'solid acrylic' },
+  { thing: 'display block', inner: 'blue resin', outer: 'clear resin' },
+  { thing: 'soap bar', inner: 'scented soap', outer: 'plain soap' },
+  { thing: 'candle', inner: 'coloured wax', outer: 'white wax' },
+  { thing: 'ice lolly', inner: 'fruit puree', outer: 'plain ice' },
+  { thing: 'jelly mould', inner: 'cream', outer: 'set jelly' },
+  { thing: 'chocolate bar', inner: 'caramel', outer: 'dark chocolate' },
+  { thing: 'paving slab', inner: 'red resin', outer: 'grey concrete' },
+  { thing: 'packing block', inner: 'dense foam', outer: 'light foam' },
+  { thing: 'butter block', inner: 'herb butter', outer: 'plain butter' },
 ];
 
 /** 2024 P2 Q7 — a hemisphere set into a box. */
@@ -729,7 +747,9 @@ function boxMinusHemisphere(): Q | null {
   if (Number(toSigFigs(exact, sf)) === Math.round(exact)) return null;   // •⁴ needs rounding to happen
 
   const prose = [
-    `A ${c.thing} is in the shape of a cuboid. It consists of a hemisphere of ${c.inner} surrounded by ${c.outer}.`,
+    // "An ice lolly", not "A ice lolly". The article was hardcoded, and the
+    // list has always had a vowel in it.
+    `${cap(article(c.thing))} ${c.thing} is in the shape of a cuboid. It consists of a hemisphere of ${c.inner} surrounded by ${c.outer}.`,
     `The cuboid has height ${h} centimetres and a square base of length ${w} centimetres. The hemisphere has diameter ${dia} centimetres.`,
     `Calculate the volume of ${c.outer} in the ${c.thing}.`,
     `Give your answer correct to ${sf} significant figures.`,

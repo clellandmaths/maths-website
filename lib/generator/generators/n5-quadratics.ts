@@ -269,7 +269,21 @@ function quadraticFormula(): Q {
       difficulty: 'skill',
       variationId: bySigFigs ? 'quadratics.formula-sigfigs' : 'quadratics.formula',
       questionLines: [
-        `Solve the equation $${fmt([c, b, a], v)} = 0$ using the quadratic formula.`,
+        /**
+         * **The paper does not name the method.** All three say only "Solve
+         * the equation ... = 0", and leave the pupil to notice that it does
+         * not factorise:
+         *
+         *   2017 P2 Q4   2x^2 + 5x - 4 = 0,  to one decimal place
+         *   2019 P2 Q6   3x^2 + 9x - 2 = 0,  to 1 decimal place
+         *   2024 P2 Q8   3x^2 + 8x + 1 = 0,  to 2 decimal places
+         *
+         * and the first mark is "correct substitution into quadratic formula",
+         * so saying which formula to use hands over the decision that mark is
+         * for. The discriminant is never a perfect square here, so the choice
+         * is forced either way - the pupil just has to make it.
+         */
+        `Solve the equation $${fmt([c, b, a], v)} = 0$.`,
         rounding.phrase,
       ],
       boardQuestionLines: [`Solve $${fmt([c, b, a], v)} = 0$ by formula. ${rounding.phrase}`],

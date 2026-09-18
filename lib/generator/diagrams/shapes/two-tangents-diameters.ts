@@ -83,6 +83,12 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
     // shaded first, so every line is drawn over it
     shadeAngle(C, [B, D]),
     { kind: 'circle', centre: O, r },
+    // **The centre is marked.** 2024 P1 Q10 puts a filled dot at O, and four
+    // lines leave it, so without one the letter O floats in the middle of a
+    // crossing with nothing saying which crossing it names. The same ruling
+    // that put dots on `polygon-point`, `polygon-in-circle` and
+    // `tangent-reflex`; this figure was missed at the time.
+    { kind: 'dot', at: O },
     // each tangent in two pieces, so its point of contact is an endpoint
     { kind: 'segment', from: A, to: B },
     { kind: 'segment', from: B, to: C },

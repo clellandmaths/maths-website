@@ -366,7 +366,7 @@ export const PLAN_OF: Record<string, PlanOf> = {
   "2017 P2 Q12": {"v":"indices.root-as-power","marks":[1,1],"shows":[null,null]},
   "2017 P2 Q13": {"v":"pythagoras.two-circles-half-turn","marks":[1,1,1,1],"shows":["\\(14, 12, x\\)","\\(x^2 = 14^2 - 12^2\\)","\\(7.2\\)",null]},
   "2017 P2 Q14": {"v":"sector.angle-arc","marks":[1,1,1],"shows":["\\(\\frac{\\text{angle}}{360} \\times \\pi \\times 12.8\\)","\\(\\frac{31.5 \\times 360}{\\pi \\times 12.8}\\)",null]},
-  "2017 P2 Q15": {"v":"trig-equations.in-formula","marks":[1,1,1,1],"shows":[null,null,"\\(61 = 40 + 23 \\cos x\\)","\\(\\cos x = \\frac{21}{23}\\)"]},
+  "2017 P2 Q15": {"v":"trig-equations.in-formula","marks":[1,1,1,1],"shows":["\\(61 = 40 + 23 \\cos x\\)","\\(\\cos x = \\frac{21}{23}\\)","\\(24(.07...)\\)",null]},
   "2018 P1 Q1": {"v":"fractions.add-mixed","marks":[1,1],"shows":["\\(\\frac{\\dots}{15} + \\frac{\\dots}{15}\\) or \\(2\\frac{\\dots}{15} + \\frac{\\dots}{15}\\)",null]},
   "2018 P1 Q2": {"v":"expanding.product-plus","marks":[1,1,1],"shows":["\\(3x^2 - 3x + x - 1\\) or \\(2x^2 - 10\\)","\\(3x^2 - 3x + x - 1 + 2x^2 - 10\\)",null]},
   "2018 P1 Q3": {"v":"simeq.solve-given","marks":[1,1,1],"shows":["\\(8x + 10y = -6\\) or \\(30x - 10y = 25\\)","values for \\(x\\) and \\(y\\)",null]},

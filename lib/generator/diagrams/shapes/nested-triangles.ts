@@ -1,4 +1,4 @@
-import { type Element, type Figure, type Pt, add, centroid, mid, parallelMark,
+import { type Element, type Figure, type Pt, add, centroid, mid, dimensionArrow, parallelMark,
          pt, scale, sideLabel, sub } from '../scene';
 
 /**
@@ -144,6 +144,22 @@ export function nestedTriangles(spec: NestedTrianglesSpec): Figure | null {
   for (const r of spec.rayLabels ?? []) {
     const [from, to] = r.part === 'inner' ? [A, B]
                      : r.part === 'outer' ? [B, L] : [A, L];
+    // **The whole ray gets an arrow; a part gets a label.**
+    //
+    // B sits on AL, so a number written beside that line names AB, BL or AL
+    // and the reader picks. Worse, the label went at the midpoint of AL and
+    // the cut runs from 0.3 to 0.7 of it, so whenever the ratio is near a half
+    // the number landed on B itself. 2024 P1 Q14 answers this the way the
+    // papers always do - "10.5 cm" on a double-headed arrow set off beside AD,
+    // spanning exactly the piece it measures.
+    //
+    // A part is unambiguous already: AB and BL each end at a lettered point
+    // with nothing else on them, so those keep the plain label.
+    if (r.part === 'whole') {
+      elements.push(...dimensionArrow(from, to, offLine(from, to, 0.5, false),
+        base * 0.22, r.text));
+      continue;
+    }
     // square off the ray it measures, like everything else that sits on a line
     elements.push({ kind: 'label', text: r.text, anchor: mid(from, to),
                     away: offLine(from, to, 0.5) });

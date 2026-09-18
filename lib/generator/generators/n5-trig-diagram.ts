@@ -187,13 +187,30 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
         labels: {
           ab: `${whole.ab} ${u}`, bc: `${whole.bc} ${u}`, ca: `${whole.ca} ${u}`,
         },
+        // 2024 P2 Q3 fills in the angle it wants; 2019 P2 Q7 asks for the
+        // smallest and marks nothing, leaving the pupil to find it.
+        ...(smallest ? {} : { shadeAt: at }),
       });
       if (!fig) continue;
       const prose = [
         `The diagram shows triangle $${A}${B}${C}$.`,
+        /**
+         * **Neither paper asks for a decimal place, and neither shades
+         * nothing.**
+         *
+         *   2019 P2 Q7   "Calculate the size of the smallest angle in
+         *                triangle XYZ."      no shading, no rounding line
+         *   2024 P2 Q3   "Calculate the size of the shaded angle at A."
+         *                a solid wedge at A, no rounding line
+         *
+         * This printed "Give your answer correct to one decimal place" on
+         * every draw, which neither paper does - their schemes take
+         * 46.406... and 103(.29...) as they come - and asked for "the angle
+         * at K" with nothing on the figure to say which angle that was.
+         */
         smallest
-          ? `Calculate the size of the smallest angle in triangle $${A}${B}${C}$. Give your answer correct to one decimal place.`
-          : `Calculate the size of the angle at $${name}$. Give your answer correct to one decimal place.`,
+          ? `Calculate the size of the smallest angle in triangle $${A}${B}${C}$.`
+          : `Calculate the size of the shaded angle at $${name}$.`,
       ];
       // •¹ correct substitution into the cosine rule, •² evaluate cos, •³ the
       // angle. Identifying which angle is wanted earns nothing, so it opens the

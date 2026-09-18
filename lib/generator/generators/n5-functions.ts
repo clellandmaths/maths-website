@@ -73,6 +73,13 @@ function evaluate(): Q {
     const input = getRandomInt(1, 4) === 1 ? getRandomInt(2, 8) : -getRandomInt(2, 6);
     const out = s.at(input);
     if (!Number.isInteger(out) || Math.abs(out) > 400) continue;
+    // **Never zero.** The four papers answer 10, -40, -29 and 100. Zero is
+    // reachable three ways here - x^2 + bx at x = -b, (x + c)^2 at x = -c, and
+    // x^3 + 8 at x = -2 - and it came up twice in twelve draws. The second mark
+    // is for evaluating, and an answer of 0 is the one value that can be
+    // reached by more than one wrong route as easily as by the right one, so it
+    // tells a pupil least about whether their substitution was sound.
+    if (out === 0) continue;
 
     const sub = input < 0 ? `(${input})` : `${input}`;
     return {

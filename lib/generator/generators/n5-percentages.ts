@@ -158,8 +158,21 @@ function compound(): Q {
     questionLines: [
       ctx.opening(ctx.format(start)),
       `It is expected to ${up ? 'increase' : 'decrease'} by ${rate}% each year.`,
-      `Calculate the expected value of ${ctx.subject} after ${years} years.`,
-      roundingPhrase(ctx.rounding),
+      `Calculate ${ctx.asks} after ${years} years.`,
+      /**
+       * **To the penny needs no telling.** Four of the seven papers give no
+       * rounding instruction at all - 2015 P2 Q1, 2016 P2 Q1, 2018 P2 Q1 and
+       * 2024 P2 Q1 - and the three that do are the ones asking for something a
+       * pupil would not assume: the nearest ten (2014), the nearest pound
+       * (2017), the nearest thousand pounds (2022). This printed one on every
+       * draw, so the four papers that say nothing had no clone that said
+       * nothing either.
+       *
+       * Money rounded to the penny is the assumption, so it goes unsaid, which
+       * is exactly what 2024 P2 Q1 does on its way to (£) 186.40. Everything
+       * else still says so.
+       */
+      ...(ctx.rounding === 'money' ? [] : [roundingPhrase(ctx.rounding)]),
     ],
     boardQuestionLines: [
       `${ctx.format(start)}, ${up ? 'up' : 'down'} ${rate}% each year for ${years} years. Find the value.`,
