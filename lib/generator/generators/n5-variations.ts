@@ -85,6 +85,24 @@ export interface VariationMeta {
   source: Source;
   /** Paper labels this was modelled on. Empty for a warm-up. */
   basedOn: string[];
+  /**
+   * The variation this one is an alias of - same code, different name,
+   * different papers.
+   *
+   * Set only through `ALIASES` at the bottom of this file, and written there
+   * by `scripts/lock-year.ts`. When a year is signed off, any of its
+   * generators still serving an *unreviewed* paper has those papers moved onto
+   * an alias, so that **a signed-off variation cites only signed-off papers**.
+   * The alias inherits every field but `basedOn`; `generateQuestion` satisfies
+   * a request for it with the target's output, stamped with the alias id. The
+   * routine never learns the alias exists, so seeded output is identical for
+   * the two - which is what `__checks__/frozen.ts` relies on.
+   *
+   * When an aliased paper later needs a change, the alias is *materialised*:
+   * the routine gets a branch keyed on the alias id, chosen above its loop like
+   * every other split here, and `aliasOf` is removed. The target is untouched.
+   */
+  aliasOf?: string;
   answerShape: AnswerShape;
   /** One line on what the pupil is being asked to do. */
   skill: string;
@@ -5166,6 +5184,52 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     skill: 'The square of the linear scale factor, then a subtraction',
   },
 };
+
+/**
+ * Aliases: same code, a new name, and only the papers that are not yet signed
+ * off. See `aliasOf` on `VariationMeta` for what they are for.
+ *
+ * **Written by `scripts/lock-year.ts`, between the two markers.** An alias is
+ * named `<target>-pre<year>`, for the year whose lock created it; the review
+ * runs newest to oldest with one lock per year, so the name is unique by
+ * construction. Nothing here is typed by hand, which is the point: every field
+ * but `basedOn` is the target's own, so there is no copy to get wrong.
+ */
+const ALIASES: Record<string, {
+  aliasOf: string;
+  basedOn: string[];
+  /**
+   * A moved paper's mark overrides travel with it. The target's own
+   * `marksDiffer` is narrowed to the papers it keeps, so these are the entries
+   * for the papers that left - and the alias takes *only* these, never the
+   * target's, so neither side names a paper it does not cite.
+   */
+  marksDiffer?: VariationMeta['marksDiffer'];
+  planMarksDiffer?: VariationMeta['planMarksDiffer'];
+}> = {
+  // lock-year: aliases begin
+  // lock-year: aliases end
+};
+
+for (const [id, a] of Object.entries(ALIASES)) {
+  const target = N5_VARIATIONS[a.aliasOf];
+  if (!target) throw new Error(`alias ${id} points at ${a.aliasOf}, which is not a variation`);
+  if (target.aliasOf) throw new Error(`alias ${id} points at ${a.aliasOf}, which is itself an alias`);
+  N5_VARIATIONS[id] = {
+    ...target, basedOn: a.basedOn, source: 'paper', aliasOf: a.aliasOf,
+    marksDiffer: a.marksDiffer, planMarksDiffer: a.planMarksDiffer,
+  };
+}
+
+/** Whether an id is an alias - one that generates through another's routine. */
+export function isAlias(id: string): boolean {
+  return Boolean(N5_VARIATIONS[id]?.aliasOf);
+}
+
+/** The id whose routine actually runs: the target of an alias, else the id itself. */
+export function aliasTarget(id: string): string {
+  return N5_VARIATIONS[id]?.aliasOf ?? id;
+}
 
 /** Which variations were modelled on a paper question — the reverse lookup. */
 export function variationsBasedOn(paperLabel: string): string[] {

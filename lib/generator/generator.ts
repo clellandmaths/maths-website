@@ -1,6 +1,6 @@
 import { Topic, TOPIC_GROUPS, ALL_TOPICS, GeneratedQuestion, COURSES } from './generators/types';
 import { questionKey } from './question-key';
-import { N5_VARIATIONS, variationsBasedOn, topicsBasedOn } from './generators/n5-variations';
+import { N5_VARIATIONS, variationsBasedOn, topicsBasedOn, aliasTarget } from './generators/n5-variations';
 import { VARIATION_CODES } from './generators/variation-codes';
 import { mulberry32, random, seedFrom, setRandomStream } from './generators/utils';
 
@@ -64,9 +64,27 @@ export async function generateQuestion(
     if (!topics.length) {
       throw new Error(`generateQuestion: no topic holds any of ${[...wanted].join(', ')}`);
     }
+    /**
+     * **An alias is satisfied by its target's output, then stamped.**
+     *
+     * `<id>-pre<year>` runs the same routine as `<id>`; it exists so that a
+     * signed-off variation cites only signed-off papers (see `aliasOf` in
+     * n5-variations.ts). The routine emits the target's id, so a request for
+     * the alias would never match on its own. Map each wanted alias back to
+     * the id its routine will actually emit, and stamp the alias on the way
+     * out. The stamped question is otherwise byte-identical, including under
+     * `withSeed`, which is what `frozen.ts` measures.
+     */
+    const stampAs = new Map<string, string>();
+    for (const id of wanted) {
+      const target = aliasTarget(id);
+      if (target !== id && !wanted.has(target)) stampAs.set(target, id);
+    }
     for (let draw = 0; draw < DRAW_LIMIT; draw++) {
       const q = await generateQuestion(topics);
       if (q.variationId && wanted.has(q.variationId)) return q;
+      const alias = q.variationId && stampAs.get(q.variationId);
+      if (alias) return { ...q, variationId: alias };
     }
     throw new Error(
       `generateQuestion: none of ${[...wanted].join(', ')} came up in ${DRAW_LIMIT} draws`,

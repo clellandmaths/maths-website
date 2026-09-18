@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "eb1e86bd011730c772954a4257609e3bb5b3504f",
+  "sourceCommit": "09f62c81fa91e0d99dc21dcca477acb21cca7577",
   "sourceDirty": false,
   "count": 96,
   "files": {
@@ -39,7 +39,7 @@
     "diagrams/shapes/vector-figure.ts": "af12b230a3d133e1",
     "diagrams/shapes/vector-grid.ts": "f172ca16f9bc344e",
     "diagrams/verify.ts": "ce69a0bc126f0855",
-    "generator.ts": "c4211766d7b75711",
+    "generator.ts": "6739424dd5d09be9",
     "generators/apps.ts": "86479fd7c8a3132f",
     "generators/circle.ts": "b810b6204e5b2541",
     "generators/differentiation.ts": "246fdc8a7311ce93",
@@ -80,7 +80,7 @@
     "generators/n5-trig-diagram.ts": "3d74c959222a36ea",
     "generators/n5-trig-graph.ts": "4166f0ca39c07021",
     "generators/n5-trig.ts": "e9908fd25cf5a8ea",
-    "generators/n5-variations.ts": "b080a4f6980bc3ce",
+    "generators/n5-variations.ts": "3de22b28ea59d825",
     "generators/n5-vector-pathway.ts": "66156155a9febfa5",
     "generators/n5-vectors.ts": "b330db3b6804911c",
     "generators/n5-volume.ts": "e2addfcfed3baab1",
