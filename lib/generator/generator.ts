@@ -84,7 +84,10 @@ export async function generateQuestion(
       const q = await generateQuestion(topics);
       if (q.variationId && wanted.has(q.variationId)) return q;
       const alias = q.variationId && stampAs.get(q.variationId);
-      if (alias) return { ...q, variationId: alias };
+      // The code travels with the id: the website builds a question's uid from
+      // `code`, and `adapter.ts` proved that a stamped id over the target's
+      // code gives every alias the wrong uid.
+      if (alias) return { ...q, variationId: alias, code: VARIATION_CODES[alias] };
     }
     throw new Error(
       `generateQuestion: none of ${[...wanted].join(', ')} came up in ${DRAW_LIMIT} draws`,

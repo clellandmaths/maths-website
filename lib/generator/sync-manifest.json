@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "09f62c81fa91e0d99dc21dcca477acb21cca7577",
+  "sourceCommit": "e15db4b88e85697e7e7bbe8181c106aa18866f5b",
   "sourceDirty": false,
   "count": 96,
   "files": {
@@ -39,7 +39,7 @@
     "diagrams/shapes/vector-figure.ts": "af12b230a3d133e1",
     "diagrams/shapes/vector-grid.ts": "f172ca16f9bc344e",
     "diagrams/verify.ts": "ce69a0bc126f0855",
-    "generator.ts": "6739424dd5d09be9",
+    "generator.ts": "5be08101fc086604",
     "generators/apps.ts": "86479fd7c8a3132f",
     "generators/circle.ts": "b810b6204e5b2541",
     "generators/differentiation.ts": "246fdc8a7311ce93",
