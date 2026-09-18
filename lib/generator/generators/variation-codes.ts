@@ -128,6 +128,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'quadratics.reaches-height':              'ckqnd',
   'quadratics.lands-below':                 'pu5ky',
   'quadratics.discriminant':                '8ujo9',
+  'quadratics.discriminant-capped':         'mdxxx',
   'quadratics.formula':                     '36o1u',
   'quadratics.formula-sigfigs':             '7kvnt',
   'quadratics.formula-2dp':                 '5i0k1',

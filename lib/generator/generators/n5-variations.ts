@@ -1691,10 +1691,54 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.discriminant': {
     topic: 'The Discriminant',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2016 P1 Q6', '2018 P1 Q8', '2023 P1 Q5', '2025 P1 Q11'],
+    basedOn: ['2016 P1 Q6', '2018 P1 Q8', '2023 P1 Q5'],
     marks: 2,
     route: 'calculate the discriminant, then state the nature of the roots. Naming the coefficients earns nothing',
     plan: [
+      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then put them into $b^{2} - 4ac$',
+      'Look at whether that number comes out positive, zero or negative, and say what that tells you about the roots',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'text',
+    webTopics: ['Discriminant'],
+    skill: 'Calculate $b^2-4ac$ and state the nature of the roots',
+  },
+
+  /**
+   * The same two marks with the arithmetic held to the size the papers work at
+   * — 2025 P1 Q11, and only that paper.
+   *
+   * The owner asked for the cap on that question: *"Ensure arithmetic doesn't
+   * get too big"*. The papers run
+   *
+   *   2025 P1 Q11   3x^2 + 2x + 1     4 - 12  = -8
+   *   2018 P1 Q8    2x^2 + 4x + 5    16 - 40  = -24
+   *   2023 P1 Q5    4x^2 + 6x - 1    36 + 16  = 52
+   *   2016 P1 Q6    7x^2 + 5x - 1    25 + 28  = 53
+   *
+   * and the clone reached 193. Sixty clears every paper without reaching for a
+   * number none of them sets.
+   *
+   * **It is a separate id because 2023 P1 Q5 was already signed off.** Capping
+   * the shared generator changed an approved question that nobody had asked to
+   * change, which is the one thing the review cannot allow — see
+   * `docs/clone-fidelity.md`, "A signed-off question is frozen", and
+   * `__checks__/frozen.ts`, which now fails when it happens. The other three
+   * papers keep the generator they were reviewed with until the review reaches
+   * them.
+   */
+  'quadratics.discriminant-capped': {
+    topic: 'The Discriminant',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2025 P1 Q11'],
+    marks: 2,
+    route: 'calculate the discriminant, then state the nature of the roots. Naming the coefficients earns nothing',
+    plan: [
+      // Word for word with `quadratics.discriminant` above, and deliberately.
+      // These are the same question and the same two marks; only the size of
+      // the arithmetic differs. Spelling the three outcomes out instead - "a
+      // negative one means no real roots" - printed 2025 P1 Q11's own answer in
+      // its own hint, which `plans.ts` caught as PLAN GIVES IT AWAY.
       'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then put them into $b^{2} - 4ac$',
       'Look at whether that number comes out positive, zero or negative, and say what that tells you about the roots',
     ],

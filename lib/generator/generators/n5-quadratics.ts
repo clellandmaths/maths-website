@@ -163,6 +163,23 @@ function turningPoint(): Q {
 // expected answers.
 
 function discriminant(): Q {
+  /**
+   * **The cap belongs to 2025 P1 Q11 alone.**
+   *
+   * The owner asked for it on that question - *"Ensure arithmetic doesn't get
+   * too big"* - and applying it to the shared generator moved **2023 P1 Q5**,
+   * which he had already signed off and had not asked to change. His rule:
+   * *"Once a question has been flagged as done nothing else should change it
+   * except me saying so."*
+   *
+   * So it splits. 2025 P1 Q11 gets the capped id; 2023 P1 Q5 goes back to
+   * exactly what was approved, and 2016 P1 Q6 and 2018 P1 Q8 stay with it until
+   * the review reaches them and the owner says what those should be.
+   *
+   * Chosen once, above the loop, so a rejected draw cannot skew which of the
+   * two ids comes out - `docs/diagram-questions.md` section 2.
+   */
+  const capped = getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 400; tries++) {
   // **Always the function form.** All four cited papers word it identically -
   // "Determine the nature of the roots of the function f(x) = ..." - and this
@@ -205,7 +222,7 @@ function discriminant(): Q {
      *
      * Sixty, which clears 53 without reaching for a number no paper sets.
      */
-    if (Math.abs(d) > 60) continue;
+    if (capped && Math.abs(d) > 60) continue;
     const nature = d > 0 ? 'two real and distinct roots'
       : d === 0 ? 'one repeated real root (two equal real roots)'
       : 'no real roots';
@@ -214,7 +231,7 @@ function discriminant(): Q {
     return {
       subTopic: 'The Discriminant',
       difficulty: 'skill',
-      variationId: 'quadratics.discriminant',
+      variationId: capped ? 'quadratics.discriminant-capped' : 'quadratics.discriminant',
       // All four cited papers word it identically — "Determine the nature of the
       // roots of the function f(x)=…", with no prompt to use the discriminant and
       // nothing set equal to zero.
