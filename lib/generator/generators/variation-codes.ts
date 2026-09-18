@@ -129,6 +129,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'quadratics.discriminant':                '8ujo9',
   'quadratics.formula':                     '36o1u',
   'quadratics.formula-sigfigs':             '7kvnt',
+  'quadratics.formula-2dp':                 '5i0k1',
 
   'alg-fractions.simplify':                 'cc9m4',
   'alg-fractions.factorise-simplify':       '51w4p',

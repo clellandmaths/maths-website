@@ -283,7 +283,7 @@ export const PAPER_HINTS: Record<string, PaperHint> = {
   "2024 P2 Q5": { skill: "Divide by the multiplier to recover the original quantity", method: "The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through" },
   "2024 P2 Q6": { skill: "Factorise, then hence simplify — the scaffolded two-part form", method: "Factorise for part (a), then factorise the denominator and simplify for part (b)" },
   "2024 P2 Q7": { skill: "Subtract a hemisphere from a cuboid", method: "Hemisphere, cuboid and subtract, calculate, round" },
-  "2024 P2 Q8": { skill: "Substitute into the formula and round as the question asks", method: "Substitute \\(a\\), \\(b\\) and \\(c\\) into the quadratic formula, work out the discriminant under the root, then give both roots rounded as the question asks" },
+  "2024 P2 Q8": { skill: "Substitute into the formula and round both roots to two decimal places", method: "Substitute \\(a\\), \\(b\\) and \\(c\\) into the quadratic formula, work out the discriminant under the root, then give both roots to two decimal places" },
   "2024 P2 Q9": { skill: "Multiply up, subtract, divide — the subject sits in a numerator", method: "Multiply by the denominator, subtract the constant term, divide by the coefficient" },
   "2024 P2 Q10": { skill: "Two equal circles overlapping, each centre on the other circle", method: "Find the right-angled triangle joining the two centres, write Pythagoras down for it, work out the third side, then use it to reach the width" },
   "2024 P2 Q11": { skill: "Isolate the ratio, take the inverse, then find both angles in the range", method: "Rearrange the equation, find one value of x, then find the other" },

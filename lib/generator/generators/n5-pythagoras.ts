@@ -827,10 +827,6 @@ export function pythagorasChordReverse(findChord: boolean): Q {
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(CHORD_CONTEXTS);
     const [lo, hi] = ctx.band;
-    const r = Number((getRandomInt(lo * 10, hi * 10) / 10).toFixed(1));
-    const chord = Number((2 * r * (getRandomInt(55, 85) / 100)).toFixed(1));
-    if (chord >= 2 * r * 0.95) continue;
-    const d = Math.sqrt(r * r - (chord / 2) ** 2);
     const [O, A, B] = pick([['O', 'A', 'B'], ['C', 'P', 'Q'], ['O', 'A', 'C']]);
 
     if (findChord) {
@@ -912,8 +908,37 @@ export function pythagorasChordReverse(findChord: boolean): Q {
     }
 
     // chord and the perpendicular given; the radius is unknown
-    const dShown = Number(d.toFixed(1));
+    //
+    /**
+     * **Both given lengths are whole numbers.** The owner, twice on the
+     * 2026-2023 sign-off sheet: *"I'd keep the numbers given whole on these
+     * like the question based on"*, and *"Keep lengths given whole"*.
+     *
+     * 2026 P2 Q5 gives a chord of **25** and a perpendicular of **9**, and
+     * answers 15.4(02...). The irrational number is the one being asked for -
+     * that is what the rounding instruction is for - and the two handed over
+     * are whole. The generator had it the other way round: it drew the radius
+     * free to one decimal place and derived the chord and the perpendicular
+     * from it, so the question printed "AC is 3 metres, OM is 1.2 metres" and
+     * a pupil squared 1.2 to get at a radius that was round all along.
+     *
+     * So the draw runs the way the paper reads. The chord and the
+     * perpendicular are whole; the radius is whatever they make it, and is
+     * rejected if it lands near a whole number, because "15.0" is not an
+     * answer that wants rounding to one decimal place.
+     *
+     * The proportion is the one every paper draws and the free branch kept -
+     * chord between 0.55 and 0.85 of the diameter - which in terms of the two
+     * numbers actually drawn puts the perpendicular between 0.31 and 0.76 of
+     * the chord. Enforced by construction now rather than by a reject.
+     */
+    const chord = getRandomInt(Math.ceil(lo * 1.1), Math.floor(hi * 1.7));
+    const dLo = Math.ceil(chord * 0.31), dHi = Math.floor(chord * 0.76);
+    if (dHi < dLo) continue;
+    const dShown = getRandomInt(dLo, dHi);
     const answer = Math.hypot(chord / 2, dShown);
+    if (answer < lo || answer > hi) continue;
+    if (Math.abs(answer - Math.round(answer)) < 0.05) continue;
     // 2026 P2 Q5 draws the whole circle, letters the midpoint, and draws the
     // centre-to-midpoint segment solid with its length on it — that is the
     // given. No radius to a chord end; no right angle.
@@ -1334,16 +1359,35 @@ export function pythagorasTwoCircles(): Q {
       };
     }
 
-    const r = Number((getRandomInt(50, 300) / 10).toFixed(1));
+    /**
+     * **The radius and the chord are whole numbers.** The owner, on the
+     * 2026-2023 sign-off sheet against the door-number sign: *"Keep lengths
+     * given whole"*.
+     *
+     * 2024 P2 Q10 gives a chord of **15** and a radius of **10**, and answers
+     * 33.2(...). Both numbers handed over are whole and the one asked for is
+     * not - which is what the rounding instruction is for. Drawn to one decimal
+     * place, the clone was printing "a chord of 17.3 centimetres, the radius AC
+     * is 12.9 centimetres", so a pupil squared 12.9 and 8.65 before reaching
+     * the part the marks are for.
+     *
+     * The proportion is unchanged - the chord between 0.55 and 0.88 of the
+     * diameter of the circle it is a chord of - only now it is drawn in whole
+     * units. For the half-turn badge the whole `AB` spans two of those edges,
+     * so it is drawn as twice a whole number and both it and each half stay
+     * whole.
+     */
+    const r = getRandomInt(5, 30);
+    const eachDraw = getRandomInt(Math.ceil(r * 1.1), Math.floor(r * 1.76));
     // AB is the shared chord for the overlap, and both edges together for the
     // half-turn, so the constraint differs
-    const chord = kind === 'overlap'
-      ? Number((2 * r * (getRandomInt(55, 88) / 100)).toFixed(1))
-      : Number((2 * 2 * r * (getRandomInt(55, 88) / 100)).toFixed(1));
+    const chord = kind === 'overlap' ? eachDraw : 2 * eachDraw;
     const each = kind === 'overlap' ? chord : chord / 2;
     if (each >= 2 * r * 0.95) continue;
     const d = Math.sqrt(r * r - (each / 2) ** 2);
     const answer = 2 * (r + d);
+    // "33.0" is not an answer that wants rounding to one decimal place
+    if (Math.abs(answer - Math.round(answer)) < 0.05) continue;
 
     const fig = twoCircles({
       kind, radius: r, chord,

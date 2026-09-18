@@ -267,7 +267,8 @@ function quadraticFormula(): Q {
     return {
       subTopic: 'The Quadratic Formula',
       difficulty: 'skill',
-      variationId: bySigFigs ? 'quadratics.formula-sigfigs' : 'quadratics.formula',
+      variationId: bySigFigs ? 'quadratics.formula-sigfigs'
+        : rounding.dp === 2 ? 'quadratics.formula-2dp' : 'quadratics.formula',
       questionLines: [
         /**
          * **The paper does not name the method.** All three say only "Solve

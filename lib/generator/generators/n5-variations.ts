@@ -1670,7 +1670,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.formula': {
     topic: 'The Quadratic Formula',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2017 P2 Q4', '2019 P2 Q6', '2024 P2 Q8'],
+    basedOn: ['2017 P2 Q4', '2019 P2 Q6'],
     marks: 3,
     route: 'correct substitution into the quadratic formula, then evaluate the discriminant, then both roots at the stated accuracy',
     method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, then give both roots rounded as the question asks',
@@ -1683,6 +1683,44 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'rounded',
     webTopics: ['Quadratic formula'],
     skill: 'Substitute into the formula and round as the question asks',
+  },
+
+  /**
+   * The same formula, asked to **two decimal places** — 2024 P2 Q8, and only
+   * that paper.
+   *
+   * The owner, on the 2026-2023 sign-off sheet: *"Meant to be one decimal place
+   * why 2 for this variation?"*. The accuracy was drawn at random from one, two
+   * and two-significant-figures, so a pupil asking for a paper met that paper's
+   * own instruction about a third of the time:
+   *
+   *   2017 P2 Q4   one decimal place
+   *   2019 P2 Q6   1 decimal place
+   *   2024 P2 Q8   2 decimal places
+   *
+   * Three marks either way and the same three scheme rows, so this is not the
+   * `-sigfigs` case, where the fourth mark made it a different question. It is
+   * the owner's ruling of 2026-09-18 instead: **the form is part of the
+   * question**. What a pupil writes down differs — -0.13 and -2.54, not -0.1
+   * and -2.5 — and a click on 2024 P2 Q8 has to ask for the pair that paper
+   * marks.
+   */
+  'quadratics.formula-2dp': {
+    topic: 'The Quadratic Formula',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2024 P2 Q8'],
+    marks: 3,
+    route: 'correct substitution into the quadratic formula, then evaluate the discriminant, then both roots to two decimal places',
+    method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, then give both roots to two decimal places',
+    plan: [
+      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
+      'Work out the discriminant under the root on its own first, so the rest of the arithmetic stays manageable',
+      'Work out both roots, taking the plus and then the minus, and round each to two decimal places',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Quadratic formula'],
+    skill: 'Substitute into the formula and round both roots to two decimal places',
   },
 
   // The same formula, asked to two significant figures — which the scheme pays

@@ -62,7 +62,23 @@ function frac(n: number, d: number): string {
 function components(): Q {
   const half = getRandomInt(0, 1) === 0;             // the 2016 P1 Q1 shape
   for (let tries = 0; tries < 200; tries++) {
-    const dim = getRandomInt(0, 1) === 0 ? 2 : 3;
+    /**
+     * **Three rows for a multiple, two for a half.** The owner, on the
+     * 2026-2023 sign-off sheet against 2024 P1 Q4: *"Needs to be 3 numbers in
+     * the vector not 2"*.
+     *
+     * It was a coin toss, and the three papers do not toss:
+     *
+     *   2014 P1 Q4   2u - v      three rows   -> `vectors.components`
+     *   2024 P1 Q4   3a + b      three rows   -> `vectors.components`
+     *   2016 P1 Q1   1/2 p + q   two rows     -> `vectors.components-half`
+     *
+     * so a pupil asking for 2024 P1 Q4 met a two-row vector half the time. The
+     * split that separates the two ids already carries which paper is being
+     * cloned - `half` is chosen once, above the loop - and the row count simply
+     * had to be read off it rather than drawn again.
+     */
+    const dim = half ? 2 : 3;
     // The papers name their vectors p/q (3), u/v (2) and a/b (1) - three pairs
     // across seven questions, so the variety here is theirs. `s`/`t` is not a
     // pair any of them uses.
@@ -127,7 +143,9 @@ function components(): Q {
 //    "u and u + v are given. Find v."
 
 function missingVector(): Q {
-  const dim = getRandomInt(0, 1) === 0 ? 2 : 3;
+  // 2018 P1 Q4 is its only paper and prints three rows - u = (1, 5, 1). One
+  // paper, one form, so there is nothing here to toss for either.
+  const dim = 3;
   const [n1, n2] = pick([['u', 'v'], ['p', 'q'], ['a', 'b']]);
   const A = Array.from({ length: dim }, () => nonZeroInt(-9, 9));
   const V = Array.from({ length: dim }, () => nonZeroInt(-9, 9));

@@ -533,21 +533,35 @@ function givenForm(): Q {
 // angle lands in and what that does to the sign. The value is handed over
 // precisely so that arithmetic cannot be the difficulty.
 
-/** Angles whose sine, cosine and tangent a pupil can be handed. */
-const KNOWN: { deg: number; sin: string; cos: string; tan: string }[] = [
-  { deg: 30, sin: '0.5', cos: '0.866', tan: '0.577' },
-  { deg: 45, sin: '0.707', cos: '0.707', tan: '1' },
-  { deg: 60, sin: '0.866', cos: '0.5', tan: '1.732' },
-  { deg: 20, sin: '0.342', cos: '0.940', tan: '0.364' },
-  { deg: 25, sin: '0.423', cos: '0.906', tan: '0.466' },
-  { deg: 40, sin: '0.643', cos: '0.766', tan: '0.839' },
-  { deg: 70, sin: '0.940', cos: '0.342', tan: '2.747' },
-  { deg: 80, sin: '0.985', cos: '0.174', tan: '5.671' },
+/**
+ * **The value handed over is exact: 0.5, or 1.**
+ *
+ * The owner, on the 2026-2023 sign-off sheet: *"Use angles that give 0.5 only /
+ * Or can be 1 and you can vary quadrant they ask about"*. Both papers do
+ * exactly that and neither does anything else -
+ *
+ *   2018 P1 Q12   cos 60 = 0.5,  state cos 240
+ *   2023 P1 Q11   sin 30 = 0.5,  state sin 330
+ *
+ * - and the table used to hold 25, 40, 70 and 80 degrees as well, so the clone
+ * offered "given that tan 25 = 0.466". That is a rounded calculator value in a
+ * non-calculator paper: nothing a pupil can check, and nothing either paper
+ * hands over. The value is given precisely so that arithmetic cannot be the
+ * difficulty, and 0.466 puts it back.
+ *
+ * Only three pairs reach an exact value at an acute angle, and both papers sit
+ * inside them. The variety is the quadrant asked about, which is what the one
+ * mark is for.
+ */
+const KNOWN: { deg: number; fn: 'sin' | 'cos' | 'tan'; value: string }[] = [
+  { deg: 30, fn: 'sin', value: '0.5' },
+  { deg: 60, fn: 'cos', value: '0.5' },
+  { deg: 45, fn: 'tan', value: '1' },
 ];
 
 function relatedAngle(): Q {
   const base = pick(KNOWN);
-  const fn = pick(['sin', 'cos', 'tan'] as const);
+  const fn = base.fn;
   // the second, third or fourth quadrant — the first would be the same angle
   const quadrant = getRandomInt(2, 4);
   const angle = quadrant === 2 ? 180 - base.deg
@@ -558,7 +572,7 @@ function relatedAngle(): Q {
   const positive = quadrant === 2 ? fn === 'sin'
     : quadrant === 3 ? fn === 'tan'
     : fn === 'cos';
-  const value = base[fn];
+  const value = base.value;
   const where = quadrant === 2 ? `$180^{\\circ} - ${base.deg}^{\\circ}$`
     : quadrant === 3 ? `$180^{\\circ} + ${base.deg}^{\\circ}$`
     : `$360^{\\circ} - ${base.deg}^{\\circ}$`;

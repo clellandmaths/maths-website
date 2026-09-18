@@ -86,11 +86,22 @@ const timesWord = (n: number): string =>
 // 2016 P2 Q1, 2018 P2 Q1, 2022 P2 Q2, 2024 P2 Q1, 2026 P2 Q1
 
 /**
- * A rate, whole or to one decimal place, with the multiplier it means.
+ * A rate, with the multiplier it means.
  *
- * Two of the five paper questions here use a decimal rate — 2.8% per annum on a
- * house, 4.5% on a necklace — and every generated one was a whole number, so a
- * pupil practising for those never met the sum they actually get.
+ * **A decimal rate goes up, never down.** The owner, on the 2026-2023 sign-off
+ * sheet against a boat depreciating by 13.3%: *"Whole number for percentage"*.
+ * Read against all seven papers this variation clones, that is not a ban on
+ * decimals - it is a ban on decimals in the direction no paper puts them:
+ *
+ *   up     2015 P2 Q1  2.8%     2017 P2 Q2  4.5%     2022 P2 Q2  3%
+ *   down   2018 P2 Q1  2%       2016 P2 Q1  8%       2014 P2 Q1  15%
+ *                              2024 P2 Q1  26%
+ *
+ * Every decimal in the papers appreciates something, and every depreciation is
+ * a whole number. The old draw ran the decimal branch in both directions, and
+ * the down band was tenths of 4.5 to 18.0 - so 13.3%, 17.9%, 16.1%, none of
+ * them a figure any paper sets. Dropping decimals altogether would have cost
+ * 2015 P2 Q1 and 2017 P2 Q2 the sum they actually ask for.
  *
  * The multiplier is rounded to four places and then *used*, so what the working
  * shows is what the answer came from. `1 + 2.8/100` is 1.0279999999999998 in
@@ -99,9 +110,9 @@ const timesWord = (n: number): string =>
  * last place.
  */
 function drawRate(up: boolean): { rate: number; multiplier: number } {
-  const rate = getRandomInt(0, 2) === 0
-    ? (up ? getRandomInt(15, 90) : getRandomInt(45, 180)) / 10
-    : (up ? getRandomInt(2, 8) : getRandomInt(8, 30));
+  const rate = up && getRandomInt(0, 2) === 0
+    ? getRandomInt(15, 90) / 10          // 1.5 - 9.0, the band 2.8 and 4.5 sit in
+    : (up ? getRandomInt(2, 8) : getRandomInt(2, 30));
   const raw = up ? 1 + rate / 100 : 1 - rate / 100;
   return { rate, multiplier: Math.round(raw * 10000) / 10000 };
 }
