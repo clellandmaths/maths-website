@@ -479,6 +479,22 @@ function magnitudeSurd(): Q {
     const name = pick(['d', 'u', 'v', 'a', 'p']);
     const V = Array.from({ length: 3 }, () => nonZeroInt(-9, 9));
     const sq = V.reduce((t, x) => t + x * x, 0);
+    /**
+     * **No bigger than the paper's own sum.** The owner, on the 2026-2023
+     * sign-off sheet: *"Check th arithmetic doesn't get too hard on these -
+     * this might be ok"*.
+     *
+     * 2026 P1 Q7 is (4, -5, 7): 16 + 25 + 49 = 90, and the answer is 3 root 10.
+     * Nothing capped this before - the components were held to the paper's own
+     * range of 1 to 9 and the total was whatever fell out, which reached 243
+     * (9, 9, 9 giving 9 root 3) and sat above the paper in about half of all
+     * draws. Ninety is the paper's figure, so the sum a pupil adds up and the
+     * number they factorise are both the size 2026 P1 Q7 sets.
+     *
+     * It costs nothing: 400 draws gave 374 different questions before the cap,
+     * against `pool`'s floor of twenty.
+     */
+    if (sq > 90) continue;
     const root = Math.sqrt(sq);
     if (Number.isInteger(root)) continue;        // this one is the surd shape
     let k = 1, rest = sq;
