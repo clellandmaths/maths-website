@@ -115,7 +115,19 @@ export type Dim =
    * have not been read yet and each gets looked at when its own question does.
    */
   | { along: 'width'; halfWidth: number; side: 'above' | 'below';
-      rank?: number; cx?: number; value: number; text: string; arrow?: true }
+      rank?: number; cx?: number; value: number; text: string; arrow?: true;
+      /**
+       * Draw it *at this height inside the figure* rather than on a line clear
+       * of everything.
+       *
+       * 2024 P2 Q7 measures the hemisphere's diameter across the flat face
+       * itself, on the ellipse, not on a line under the box - and it has to be
+       * there, because under the box it would be a second horizontal
+       * measurement below the first with nothing saying which of them spans
+       * the dome. The hemisphere sits flat side down on the base, so its flat
+       * face is at 0.
+       */
+      at?: number }
   /**
    * A line pointing at a feature, with the number at its far end.
    *
@@ -363,7 +375,8 @@ export function solidFigure(spec: SolidSpec): Figure {
       [a, b] = [pt(x, d.from), pt(x, d.to)];
       inward = pt(x + (d.side === 'left' ? 1 : -1), (d.from + d.to) / 2);
     } else {
-      const y = d.side === 'below' ? box.y0 - step : box.y1 + step;
+      const y = d.at !== undefined ? d.at
+        : d.side === 'below' ? box.y0 - step : box.y1 + step;
       [a, b] = [pt(cx - d.halfWidth, y), pt(cx + d.halfWidth, y)];
       inward = pt(cx, y + (d.side === 'below' ? 1 : -1));
     }

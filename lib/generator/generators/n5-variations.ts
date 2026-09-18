@@ -2122,10 +2122,15 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // ── Functions — 7 questions, five of them two-mark evaluations ───────────
   // 2016 P1 Q9 is also a function evaluation, but its answer is a surd and it
   // is already built as surds.in-function.
+  // **Four papers, four functions, four ids.** The marks and the two scheme
+  // rows are identical throughout - substitute, evaluate - which is why this
+  // was one id for a long time. The function itself is not identical, and a
+  // pupil asking for another question like 2024 P1 Q2 was getting 2019's three
+  // times in four. See the note above `evaluate` in n5-functions.ts.
   'functions.evaluate': {
     topic: 'Evaluating a Function',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2017 P1 Q1', '2019 P1 Q1', '2022 P1 Q2', '2024 P1 Q2'],
+    basedOn: ['2017 P1 Q1'],
     marks: 2,
     route: 'substitute the value into f(x), then evaluate',
     plan: [
@@ -2136,6 +2141,54 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'integer',
     webTopics: ['Function notation'],
     skill: 'Substitute a value, usually negative, into f(x)',
+  },
+  // `a x^3` - 2019 P1 Q1.
+  'functions.evaluate-cube-multiple': {
+    topic: 'Evaluating a Function',
+    difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
+    basedOn: ['2019 P1 Q1'],
+    marks: 2,
+    route: 'substitute the value into f(x), then evaluate',
+    plan: [
+      'Replace every $x$ in the formula with the number written in the brackets after $f$, wrapping it in brackets of its own so a minus sign is carried into the power',
+      'Cube the number first, keeping its sign, then multiply by the number in front',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Function notation'],
+    skill: 'Substitute a value into a multiple of a cube',
+  },
+  // `x^3 + c` - 2022 P1 Q2.
+  'functions.evaluate-cube-plus': {
+    topic: 'Evaluating a Function',
+    difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
+    basedOn: ['2022 P1 Q2'],
+    marks: 2,
+    route: 'substitute the value into f(x), then evaluate',
+    plan: [
+      'Replace every $x$ in the formula with the number written in the brackets after $f$, wrapping it in brackets of its own so a minus sign is carried into the power',
+      'Cube the number first, keeping its sign, then add or subtract the constant',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Function notation'],
+    skill: 'Substitute a value into a cube with a constant',
+  },
+  // `(x + c)^2` - 2024 P1 Q2.
+  'functions.evaluate-square': {
+    topic: 'Evaluating a Function',
+    difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
+    basedOn: ['2024 P1 Q2'],
+    marks: 2,
+    route: 'substitute the value into f(x), then evaluate',
+    plan: [
+      'Replace every $x$ in the formula with the number written in the brackets after $f$, wrapping it in brackets of its own so a minus sign is carried into the power',
+      'Work out what is inside the bracket first, then square it - squaring makes the answer positive whatever the sign inside',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Function notation'],
+    skill: 'Substitute a value into a squared bracket',
   },
   'functions.find-unknown': {
     topic: 'Finding an Unknown in a Function',
@@ -2610,7 +2663,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // clones it: its scheme is "Vectors (subtraction) — evidence of
     // subtraction", where u and u + v are given and v is wanted. Cited here as
     // well, it made two presses on that paper differ in kind.
-    basedOn: ['2014 P1 Q4', '2016 P1 Q1', '2024 P1 Q4'],
+    basedOn: ['2014 P1 Q4', '2024 P1 Q4'],
     marks: 2,
     route: 'calculate the scalar multiple, then the solution in component form. The second mark is withheld if the brackets are dropped or the answer is written as a coordinate',
     method: 'Multiply each component by its scalar, then add the two vectors one component at a time',
@@ -2622,6 +2675,25 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'expression',
     webTopics: ['Adding and Subtracting vector components'],
     skill: 'Scale two vectors and combine them, answering in component form',
+  },
+  // `1/2 p + q` - 2016 P1 Q1, the one paper that scales by a fraction rather
+  // than by a whole number. Same two marks and the same scheme rows as
+  // `vectors.components`; halving a column vector is not the same move as
+  // trebling one, and a pupil asking for 2024 P1 Q4 again should not meet it.
+  'vectors.components-half': {
+    topic: 'Vector Components',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2016 P1 Q1'],
+    marks: 2,
+    route: 'halve the first vector, then add or subtract the second component by component',
+    plan: [
+      'Halve every component of the first vector, which is the multiplication the first mark is for',
+      'Add or subtract the matching components of the second vector, and write the answer as a column vector with its brackets',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'expression',
+    webTopics: ['Adding and Subtracting vector components'],
+    skill: 'Halve a column vector, then add or subtract another',
   },
   'vectors.missing': {
     topic: 'Finding a Missing Vector',
@@ -4053,7 +4125,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-diagram.cosine-angle': {
     topic: 'Cosine Rule from a Diagram',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2019 P2 Q7', '2024 P2 Q3'],
+    basedOn: ['2024 P2 Q3'],
     marks: 3,
     route: 'correct substitution into the cosine rule, evaluate the cosine, then calculate the angle. Identifying which angle is wanted earns nothing',
     method: 'Substitute the three sides into the cosine rule rearranged for $\\cos A$, work out the cosine, then take the inverse to get the angle',
@@ -4066,6 +4138,27 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'rounded',
     webTopics: ['Cosine rule: calculate angle'],
     skill: 'Three sides, find an angle — often the smallest',
+  },
+  // **The same three sides, and a different first move.** 2019 P2 Q7 asks for
+  // "the smallest angle in triangle XYZ" and marks nothing on its figure, so
+  // the pupil has to know the smallest angle faces the shortest side before
+  // the cosine rule is any use. 2024 P2 Q3 fills its angle in and names the
+  // vertex, so that step is done for them. Same three marks either way.
+  'trig-diagram.cosine-angle-smallest': {
+    topic: 'Cosine Rule from a Diagram',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2019 P2 Q7'],
+    marks: 3,
+    route: 'identify the smallest angle, substitute into the cosine rule, evaluate the cosine, then the angle',
+    plan: [
+      'The smallest angle faces the shortest side, so find the shortest side and name the angle opposite it',
+      'Write the cosine rule with that angle as the subject, putting the two sides that meet at it on top and the side opposite it in the subtraction',
+      'Work out that fraction, then take the inverse cosine of it to reach the angle',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Cosine rule: calculate angle'],
+    skill: 'Find the smallest angle of a triangle from its three sides',
   },
   'trig-diagram.sine-angle': {
     topic: 'Sine Rule from a Diagram',

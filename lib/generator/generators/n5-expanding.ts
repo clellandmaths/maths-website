@@ -208,7 +208,11 @@ function twoBinomials(): Q {
 
 function binomialTrinomial(): Q {
   for (let tries = 0; tries < 400; tries++) {
-    const v = pick(VARS);
+    // **x, always.** Five of the six papers here use x and only 2026 P1 Q1
+    // uses y; the owner's ruling on 2024 P1 Q3 is to keep the variable to x.
+    // A letter is not a reason to split a variation - it is a reason not to
+    // vary one.
+    const v = 'x';
     const a = nonZeroInt(1, 3), b = nonZeroInt(-6, 6);
     const c = nonZeroInt(1, 3), d = nonZeroInt(-6, 6), e = nonZeroInt(-6, 6);
     const result = mulP([b, a], [e, d, c]);

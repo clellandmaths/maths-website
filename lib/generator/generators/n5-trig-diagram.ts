@@ -73,6 +73,17 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
   // instead of silently substituting its neighbour, which is how a figure once
   // went missing entirely without a single check noticing.
   const kind = pick(kinds);
+  /**
+   * **Which angle the question points at, chosen once.**
+   *
+   * 2024 P2 Q3 fills in the angle at A and asks for "the shaded angle at A".
+   * 2019 P2 Q7 shades nothing and asks for "the smallest angle in triangle
+   * XYZ", leaving the pupil to work out which that is - a different first move
+   * on the same three sides. Drawn inside the loop this was a coin toss, so
+   * half the presses on 2024 P2 Q3 returned 2019's question with no shading,
+   * which the owner read off the contact sheet.
+   */
+  const smallestAngle = getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 4000; tries++) {
     const [A, B, C] = pick(TRIANGLES);
     const unit = pick(UNITS);
@@ -172,7 +183,7 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
       // 2019 P2 Q7, 2024 P2 Q3: three sides, find an angle
       const whole = { ab: q, bc: Math.round(bc), ca: p };
       if (!drawable(whole.ab, whole.bc, whole.ca)) continue;
-      const smallest = getRandomInt(0, 1) === 0;
+      const smallest = smallestAngle;
       const at = smallest
         ? (['a', 'b', 'c'] as const).reduce((m, v) =>
             trueAngle(v, whole.ab, whole.bc, whole.ca) < trueAngle(m, whole.ab, whole.bc, whole.ca) ? v : m, 'a' as const)
@@ -227,7 +238,8 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
       return {
         subTopic: 'Cosine Rule from a Diagram',
         difficulty: 'exam',
-        variationId: 'trig-diagram.cosine-angle',
+        variationId: smallest ? 'trig-diagram.cosine-angle-smallest'
+          : 'trig-diagram.cosine-angle',
         questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
         boardQuestionLines: [`Sides ${whole.ab}, ${whole.bc}, ${whole.ca}. Angle at ${name}?`],
         solutionSteps: steps,

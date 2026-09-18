@@ -41,6 +41,11 @@ const FN = ['f'];
 /** The four function shapes the papers use, as printed form plus evaluator. */
 type Shape = { tex: (v: string) => string; at: (x: number) => number; how: string };
 
+/**
+ * The four shapes, **in the order `evaluate`'s id list expects them**. An
+ * entry moved here without moving there gives a paper another paper's function
+ * under its own name, which is the fault this split exists to end.
+ */
 function shapes(): Shape[] {
   const b = nonZeroInt(2, 6), c = nonZeroInt(2, 9), a = nonZeroInt(2, 5);
   return [
@@ -65,9 +70,33 @@ function shapes(): Shape[] {
 
 // ── evaluate — 2017 P1 Q1, 2019 P1 Q1, 2022 P1 Q2, 2024 P1 Q2 ────────────
 
+/**
+ * **One shape per variation, because the shape is the question.**
+ *
+ * The four papers set four different functions, and this used to pick between
+ * them on every draw. Press Variation on 2024 P1 Q2 - which is `(x + 3)^2` -
+ * and three times in four you were handed 2019's `5x^3`, 2022's `x^3 - 2` or
+ * 2017's `x^2 + 3x`. Same marks, same two scheme rows, and not the question
+ * you asked for; the owner read it off the contact sheet as "using more than
+ * one generator", which is exactly what it looked like.
+ *
+ * So each shape has its own id and its own paper:
+ *
+ *   functions.evaluate                 x^2 + bx      2017 P1 Q1
+ *   functions.evaluate-cube-multiple   a x^3         2019 P1 Q1
+ *   functions.evaluate-cube-plus       x^3 + c       2022 P1 Q2
+ *   functions.evaluate-square          (x + c)^2     2024 P1 Q2
+ *
+ * The shape is drawn **once, before the retry loop** - the rule in
+ * `docs/diagram-questions.md` section 2 - so the mix is even rather than
+ * whatever survives the guards below.
+ */
 function evaluate(): Q {
+  const which = getRandomInt(0, 3);
+  const ids = ['functions.evaluate', 'functions.evaluate-cube-multiple',
+               'functions.evaluate-cube-plus', 'functions.evaluate-square'];
   for (let tries = 0; tries < 200; tries++) {
-    const s = pick(shapes());
+    const s = shapes()[which];
     const fn = pick(FN);
     // three of the four papers substitute a negative
     const input = getRandomInt(1, 4) === 1 ? getRandomInt(2, 8) : -getRandomInt(2, 6);
@@ -85,7 +114,7 @@ function evaluate(): Q {
     return {
       subTopic: 'Evaluating a Function',
       difficulty: 'skill',
-      variationId: 'functions.evaluate',
+      variationId: ids[which],
       questionLines: [`Given that $${fn}(x) = ${s.tex('x')}$, evaluate $${fn}(${input})$.`],
       boardQuestionLines: [`$${fn}(x) = ${s.tex('x')}$. Find $${fn}(${input})$`],
       solutionSteps: [

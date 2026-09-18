@@ -765,10 +765,25 @@ function boxMinusHemisphere(): Q | null {
   return assemble({
     stack: [{ kind: 'box', w, h }],
     ghosts: [{ piece: { kind: 'hemisphere', r: dia / 2 }, on: 'base' }],
+    /**
+     * **Arrows, and the diameter drawn across the hemisphere itself.**
+     *
+     * 2024 P2 Q7 measures every length with a solid line barbed at both ends
+     * - the 4 cm height and the 7 cm base outside the box, the 6 cm diameter
+     * *inside*, lying on the hemisphere's flat face. This drew all three as
+     * dashed lines with no ends, stacked below and beside the box, so the
+     * diameter sat under the cuboid looking like a second base measurement.
+     *
+     * The note on `arrow` in solid.ts says each solid gets its arrows when its
+     * own question is read. This is that question.
+     */
     dims: [
-      { along: 'width', halfWidth: dia / 2, side: 'below', rank: 0, value: dia, text: `${dia} cm` },
-      { along: 'width', halfWidth: w / 2, side: 'below', rank: 1, value: w, text: `${w} cm` },
-      { along: 'height', from: 0, to: h, side: 'left', value: h, text: `${h} cm` },
+      { along: 'width', halfWidth: dia / 2, side: 'below', at: 0, arrow: true,
+        value: dia, text: `${dia} cm` },
+      { along: 'width', halfWidth: w / 2, side: 'below', rank: 0, arrow: true,
+        value: w, text: `${w} cm` },
+      { along: 'height', from: 0, to: h, side: 'left', arrow: true,
+        value: h, text: `${h} cm` },
     ],
   }, 'A Hemisphere Set into a Box', 'volume.box-minus-hemisphere', prose,
     `Cuboid ${w} by ${w} by ${h}, hemisphere of diameter ${dia} removed. Volume?`,

@@ -60,6 +60,7 @@ function frac(n: number, d: number): string {
 // ── combine two vectors — 2014 P1 Q4, 2016 P1 Q1, 2024 P1 Q4 ─────────────
 
 function components(): Q {
+  const half = getRandomInt(0, 1) === 0;             // the 2016 P1 Q1 shape
   for (let tries = 0; tries < 200; tries++) {
     const dim = getRandomInt(0, 1) === 0 ? 2 : 3;
     // The papers name their vectors p/q (3), u/v (2) and a/b (1) - three pairs
@@ -78,7 +79,11 @@ function components(): Q {
     // for two multiplications where the scheme pays for one, and `3u + 3v` is
     // not a question any paper sets at all. k1 = 1 was reachable too, which
     // leaves no multiple to calculate and no first mark to earn.
-    const half = getRandomInt(1, 5) === 1;            // the 2016 P1 Q1 shape
+    // **A half is a different question from a multiple, so it is its own id.**
+    // 2014 P1 Q4 and 2024 P1 Q4 scale by a whole number; 2016 P1 Q1 scales by
+    // a half. Drawing between them handed 2024 P1 Q4 a fraction one press in
+    // five, which the owner read off the contact sheet. `half` is chosen once
+    // before the loop, so the mix is even rather than whatever survives.
     const k1 = half ? 0.5 : getRandomInt(2, 4);
     const k2 = 1;
     const minus = getRandomInt(0, 1) === 0;
@@ -97,7 +102,7 @@ function components(): Q {
     return {
       subTopic: 'Vector Components',
       difficulty: 'skill',
-      variationId: 'vectors.components',
+      variationId: half ? 'vectors.components-half' : 'vectors.components',
       questionLines: [
         `Given $${bold(n1)} = ${col(A)}$ and $${bold(n2)} = ${col(B)}$,`,
         `find the resultant vector $${expr}$.`,
