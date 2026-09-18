@@ -1,0 +1,7 @@
+{
+  "recorded": "2026-09-18",
+  "headroomBytes": 65536,
+  "note": "Total bytes of every out/_next/static/chunks/*.js carrying a variation id. Lazy — on no page — but it is what the first press of Variation fetches.",
+  "chunks": 6,
+  "bytes": 954337
+}

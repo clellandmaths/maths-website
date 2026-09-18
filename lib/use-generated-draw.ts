@@ -11,9 +11,12 @@ import type { QuestionWithMetadata } from '@/lib/data-loader';
  * of them is a trap that has already been paid for once:
  *
  *   **The engine is loaded at the click.** `await import()`, never a top-level
- *   import. It is ~33,000 lines in 645 KB of lazy chunks, and it is on 0 of 520
- *   pages — `scripts/check-engine-isolation.mjs` fails the build if that stops
- *   being true.
+ *   import. It is ~33,000 lines in 932 KB of lazy chunks, and it is on 0 of 542
+ *   pages — `scripts/check-engine-isolation.mjs` fails the build if either
+ *   stops being true. That figure was 645 KB in this comment for months while
+ *   the real one climbed to 932: the check printed the size and compared it to
+ *   nothing. It is ratcheted now, against `scripts/engine-size-baseline.json`,
+ *   so read the baseline rather than this line.
  *
  *   **Draws are sequential.** The generator's random stream is module-level, so
  *   concurrent draws steal each other's numbers: a measured ten-question

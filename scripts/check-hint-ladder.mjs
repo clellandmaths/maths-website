@@ -181,7 +181,7 @@ await withPage({ port: 8191, cdp: 9291, width: 1280, height: 1000 }, async (page
     })()`);
     t.check(false, `the worked-example button could not be clicked. Buttons: ${JSON.stringify(buttons)}`);
   }
-  // The engine is fetched on this press — 645 KB and a draw. Give it room, and
+  // The engine is fetched on this press — nearly a megabyte and a draw. Give it room, and
   // stop as soon as it has landed rather than always waiting the worst case.
   let twin = { opened: false, body: '', state: '' };
   for (let i = 0; i < 25; i++) {

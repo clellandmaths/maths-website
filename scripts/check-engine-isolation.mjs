@@ -2,6 +2,22 @@
  * The generator engine must not be on any page.
  *
  *   npm run build && node scripts/check-engine-isolation.mjs
+ *   node scripts/check-engine-isolation.mjs --baseline   record, don't compare
+ *
+ * **Two things, and the second was missing for months.** The engine must be on
+ * no page — that is what this was written for — and it must not grow without
+ * anyone deciding to let it. This printed its size and compared it to nothing,
+ * so it drifted from the 645 KB quoted in three separate source comments to
+ * 932 KB with nothing to notice. Lazy is not free: it is what a pupil waits
+ * for on the first press of Variation, on a phone, on schools' wifi.
+ *
+ * So the size is now ratcheted against `scripts/engine-size-baseline.json`,
+ * the way `check-js-budget.mjs` ratchets the eager chunks, with 64 KB of
+ * headroom — room for the registry to keep gaining variations as the
+ * question-by-question review goes on, and not room for a library to be
+ * pulled in unnoticed. Re-record with `--baseline` when the growth is one
+ * somebody chose; the recording refuses if it would make the baseline worse
+ * than the one on disk by more than the headroom.
  *
  * The engine is about 33,000 lines. It is loaded only through
  * `await import('@/lib/generated-question')` inside event handlers, so it lands
@@ -36,6 +52,15 @@ import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(root, 'out');
 const CHUNKS = path.join(OUT, '_next', 'static', 'chunks');
+
+const BASELINE = path.join(root, 'scripts', 'engine-size-baseline.json');
+/**
+ * 64 KB, about 7%. A registry entry is one to two KB minified, so the review
+ * can add its remaining variations without anyone re-recording; a static
+ * import of something real moves the total by far more than this.
+ */
+const HEADROOM = 64 * 1024;
+const recording = process.argv.includes('--baseline');
 
 /**
  * Variation ids, which appear as object keys in the registry and nowhere else
@@ -124,4 +149,59 @@ if (offenders.length) {
 }
 
 console.log(`  0 of ${pages.length} pages reference any of them\n`);
-console.log('  the engine is built, and it is on no page\n');
+
+// ── and it has not grown behind anyone's back ──────────────────────────────
+const kb = b => `${Math.round(b / 1024)} KB`;
+const current = { chunks: engine.size, bytes: engineBytes };
+
+if (recording) {
+  if (fs.existsSync(BASELINE)) {
+    const old = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
+    if (current.bytes > old.bytes + HEADROOM) {
+      console.error(`\n  REFUSING to record — the engine is ${kb(old.bytes)} in the ` +
+        `baseline and ${kb(current.bytes)} now.\n  A baseline may only be replaced ` +
+        `by one that is no worse. Find the growth first.\n`);
+      process.exit(1);
+    }
+  }
+  fs.writeFileSync(BASELINE, `${JSON.stringify({
+    recorded: new Date().toISOString().slice(0, 10),
+    headroomBytes: HEADROOM,
+    note: 'Total bytes of every out/_next/static/chunks/*.js carrying a variation id. '
+        + 'Lazy — on no page — but it is what the first press of Variation fetches.',
+    ...current,
+  }, null, 2)}\n`);
+  console.log(`  baseline recorded: ${kb(current.bytes)} in ${current.chunks} chunks` +
+              ` → scripts/engine-size-baseline.json\n`);
+  process.exit(0);
+}
+
+if (!fs.existsSync(BASELINE)) {
+  console.error('\n  no scripts/engine-size-baseline.json — record one with --baseline.' +
+                '\n  The engine size was printed and compared to nothing.\n');
+  process.exit(1);
+}
+
+const base = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
+const delta = current.bytes - base.bytes;
+
+if (delta > HEADROOM) {
+  console.error(`  ENGINE GREW  ${kb(base.bytes)} on ${base.recorded} → ` +
+    `${kb(current.bytes)} now. That is ${kb(delta)} more, against ${kb(HEADROOM)} ` +
+    `of headroom.\n`);
+  console.error(`  This is the download a pupil waits through on the first press of` +
+    `\n  Variation. Either something was imported that need not be, or the registry` +
+    `\n  has genuinely earned the weight — in which case record it deliberately:` +
+    `\n\n    node scripts/check-engine-isolation.mjs --baseline\n`);
+  process.exit(1);
+}
+
+if (delta < -HEADROOM) {
+  console.log(`  smaller than the baseline of ${base.recorded}: ${kb(base.bytes)} → ` +
+    `${kb(current.bytes)}. Record it with --baseline so the ratchet holds the gain.`);
+} else {
+  console.log(`  ${kb(current.bytes)} against the baseline of ${base.recorded} ` +
+    `(${kb(base.bytes)}, headroom ${kb(HEADROOM)})`);
+}
+
+console.log('\n  the engine is built, it is on no page, and it has not grown\n');

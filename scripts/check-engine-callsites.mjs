@@ -13,8 +13,9 @@
  * to force.
  *
  * **2. A client component may not import the engine statically.** It is ~33,000
- * lines in 645 KB of lazy chunks, on 0 of 542 pages, and one top-level import in
- * a shared component undoes that silently. A *server* component may import it
+ * lines in 932 KB of lazy chunks (the ratcheted figure is in
+ * `scripts/engine-size-baseline.json`), on 0 of 542 pages, and one top-level
+ * import in a shared component undoes that silently. A *server* component may import it
  * freely: `app/course/[courseId]/generate/page.tsx` calls
  * `offeredTopicGroups()` at build time and ships the result as about 170
  * strings, which is exactly the right thing to do and costs the browser
@@ -145,7 +146,7 @@ for (const file of files) {
     if (/^\s*type\s/.test(what)) continue;                 // `import type { … }`
     if (isClient) {
       fail(`${name} is a client component and imports ${from} at the top level. ` +
-           `The engine is 645 KB and must be reached with await import() inside a handler.`);
+           `The engine is nearly a megabyte and must be reached with await import() inside a handler.`);
     }
   }
 

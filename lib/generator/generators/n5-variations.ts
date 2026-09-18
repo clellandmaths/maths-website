@@ -3168,7 +3168,13 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'linear-equations.clear-denominators': {
     topic: 'Clearing Denominators in an Equation',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2016 P1 Q8', '2019 P1 Q14', '2025 P2 Q13'],
+    // 2019 P1 Q14 and 2025 P2 Q13 have their own ids below. Narrowing this
+    // list is half of that split, and the half that was lost: a patch meant to
+    // do it threw on a bad anchor after writing a different file, so for a
+    // while both questions were claimed by two generators at once and
+    // `variationsBasedOn` had a coin to toss. `__checks__/one-generator.ts`
+    // exists because nothing in the suite noticed.
+    basedOn: ['2016 P1 Q8'],
     marks: 3,
     route: 'eliminate the denominators, rearrange into ax = b, solve. 2016 P1 Q8 note 2 requires a non-integer answer, so one is guaranteed',
     plan: [
