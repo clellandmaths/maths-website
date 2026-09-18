@@ -1249,9 +1249,12 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'straight-line.best-fit': {
     topic: 'The Equation of a Line of Best Fit',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2014 P1 Q6', '2016 P1 Q5', '2018 P1 Q7', '2024 P1 Q9', '2026 P1 Q6'],
+    // 2018 P1 Q7 has moved to `straight-line.exact-line`: it draws one exact
+    // line with no cloud of points round it and never says "best fit", where
+    // these four draw a scattergraph and do. The figure is the difference.
+    basedOn: ['2014 P1 Q6', '2016 P1 Q5', '2024 P1 Q9', '2026 P1 Q6'],
     marks: 4,
-    route: '3 + 1 - find the gradient, substitute it with one of the points, state the equation in the question own letters and in simplest form, then evaluate it at a given value. 2018 P1 Q7 withholds the third mark for a gradient turned into a decimal, so a fractional gradient is carried as a fraction throughout',
+    route: '3 + 1 - find the gradient, substitute it with one of the points, state the equation in the question own letters and in simplest form, then evaluate it at a given value. A fractional gradient is carried as a fraction throughout, since 2018 P1 Q7 withholds the third mark for one turned into a decimal and the same scheme wording is used across this family',
     method: 'Read two points off your line and find the gradient, substitute it with one of the points to get the intercept, write the equation in the letters the question uses, then put the given value into it',
     plan: [
       'Pick the two marked points on the line of best fit and work out the change up divided by the change across, which gives you the gradient',
@@ -1261,8 +1264,34 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     ],
     planMarks: [1, 1, 1, 1],
     answerShape: 'expression',
-    webTopics: ['Straight Line Equation'],
+    // All four papers behind this one are scattergraphs now that 2018 P1 Q7
+    // has moved, so the website's own tagging derives the scatter topic too.
+    webTopics: ['Scatter Graph', 'Straight Line Equation'],
     skill: 'Read two points off a graph, find the equation, then use it',
+  },
+  // **One exact line, not a line of best fit.** 2018 P1 Q7 graphs the cost of a
+  // taxi journey against its distance: every point is on the line because the
+  // fare is a formula, so there is no cloud to fit and the question says "the
+  // line". The other four papers in this family draw a scattergraph. Same four
+  // marks and the same scheme rows; different picture, and the picture is the
+  // half a pupil reads first.
+  'straight-line.exact-line': {
+    topic: 'The Equation of a Line from a Graph',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2018 P1 Q7'],
+    marks: 4,
+    route: '3 + 1 - find the gradient, substitute it with one of the points, state the equation in the question own letters and in simplest form, then evaluate it at a given value. The scheme withholds the third mark for a gradient turned into a decimal, so a fractional gradient is carried as a fraction throughout',
+    method: 'Read two marked points off the line and find the gradient, substitute one of them to get the intercept, write the equation in the letters the question uses, then put the given value into it',
+    plan: [
+      'Take the two marked points and work out the change up divided by the change across, which gives you the gradient',
+      'Put that gradient and one of those two points into $y = mx + c$, so that $c$ is the only thing left unknown',
+      'Work $c$ out, then write the equation using the question\'s own letters instead of $x$ and $y$',
+      'Put the value given in the second part into your equation to get the quantity it asks for',
+    ],
+    planMarks: [1, 1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Straight Line Equation'],
+    skill: 'Read two points off an exact line, find the equation, then use it',
   },
   'straight-line.best-fit-grid': {
     topic: 'A Line of Best Fit on a Grid',
@@ -1716,7 +1745,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'alg-fractions.subtract': {
     topic: 'Subtracting Algebraic Fractions',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2014 P2 Q9', '2019 P2 Q15', '2023 P2 Q10', '2025 P1 Q14'],
+    // 2019 P2 Q15 has moved to `alg-fractions.subtract-binomials`: it is the
+    // one subtraction paper with no bare variable on a denominator.
+    basedOn: ['2014 P2 Q9', '2023 P2 Q10', '2025 P1 Q14'],
     marks: 3,
     route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
@@ -1728,6 +1759,29 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'expression',
     webTopics: ['Add or subtract Algebraic Fractions'],
     skill: 'Common denominator, expand the numerator watching the sign, collect like terms',
+  },
+  // **The same subtraction with two binomials on the bottom.** 2019 P2 Q15 is
+  // 4/(x-2) - 3/(x+5); the three papers left on `alg-fractions.subtract` all
+  // put the bare variable on one denominator - 3/x, 2/x, 4/x - which makes the
+  // common denominator x(x-1) rather than a product of two brackets, and takes
+  // one bracket out of the numerator. Same three marks and the same rows, and
+  // a pupil who has only ever met one of the two forms has met half the
+  // question.
+  'alg-fractions.subtract-binomials': {
+    topic: 'Subtracting Algebraic Fractions',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2019 P2 Q15'],
+    marks: 3,
+    route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
+    plan: [
+      'Find the lowest denominator both fractions can sit over — multiply the two brackets together',
+      'Multiply each numerator by the other fraction\'s denominator, keeping the minus sign in front of the second bracket',
+      'Expand the top, letting that minus sign flip the sign of every term inside the second bracket, then collect like terms',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Add or subtract Algebraic Fractions'],
+    skill: 'Common denominator from two brackets, expand watching the sign, collect',
   },
 
   // Denominators that are powers of the same letter, not two brackets — and
@@ -3126,6 +3180,43 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'fraction',
     webTopics: ['Linear equations and inequations'],
     skill: 'Multiply every term by the lowest common multiple, then solve',
+  },
+  // `x/m + c = (ax + b)/n` - a fraction each side, the constant on the left.
+  // 2019 P1 Q14 is `x/2 - 1 = (3 - x)/5`, and unlike 2016 P1 Q8 it asks for no
+  // simplest form.
+  'linear-equations.clear-denominators-each-side': {
+    topic: 'Clearing Denominators in an Equation',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2019 P1 Q14'],
+    marks: 3,
+    route: 'eliminate the denominators, rearrange into ax = b, then solve - the same three rows as the other two arrangements',
+    plan: [
+      'Work out the smallest number both bottom lines divide into, then multiply every term on both sides by it so the fractions clear away',
+      'Multiply out the bracket this leaves you with, then gather the terms in the letter on one side and the plain numbers on the other',
+      'Divide both sides by the number in front of the letter, leaving the answer as a fraction in its lowest terms',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'fraction',
+    webTopics: ['Linear equations and inequations'],
+    skill: 'Clear a fraction on each side, then solve',
+  },
+  // `(ax + b)/m = cx/n + d` - a linear numerator on one side, a multiple of the
+  // letter on the other. 2025 P2 Q13 is `(5x + 1)/2 = 4x/3 + 1`.
+  'linear-equations.clear-denominators-linear-top': {
+    topic: 'Clearing Denominators in an Equation',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2025 P2 Q13'],
+    marks: 3,
+    route: 'eliminate the denominators, rearrange into ax = b, then solve - the same three rows as the other two arrangements',
+    plan: [
+      'Work out the smallest number both bottom lines divide into, then multiply every term on both sides by it so the fractions clear away',
+      'Multiply out the bracket the top of the first fraction leaves you with, then gather the terms in the letter on one side and the plain numbers on the other',
+      'Divide both sides by the number in front of the letter, leaving the answer as a fraction in its lowest terms',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'fraction',
+    webTopics: ['Linear equations and inequations'],
+    skill: 'Clear a linear numerator against a fraction, then solve',
   },
 
   // ── forming an equation out of a shape — the five with figures ──────────

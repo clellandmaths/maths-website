@@ -62,7 +62,7 @@ const br = (s: string) => (/^[a-z]$/.test(s) ? s : `(${s})`);
 // which is already excluded — so the only rejection needed is the degenerate
 // case where the x term vanishes.
 
-function addSubtract(minus: boolean): Q {
+function addSubtract(minus: boolean, bare = false): Q {
   // One draw in three, not the one in six that matches how often the papers
   // ask it.
   //
@@ -124,11 +124,21 @@ function addSubtract(minus: boolean): Q {
 
   for (let tries = 0; tries < 400; tries++) {
     const p = nonZeroInt(2, 9), q = nonZeroInt(2, 9);
-    // one denominator is the bare variable in 3 of the 6 papers
-    // Only m can be zero, and it is printed first, so the bare variable always
-    // leads — SQA writes x(x+5), never (x+5)x.
-    const m = getRandomInt(1, 3) === 1 ? 0 : nonZeroInt(-6, 6);
-    const n = nonZeroInt(-6, 6);
+    // **Whether one denominator is the bare variable is the question, not a
+    // toss.** Subtraction: 2014 P2 Q9 is 7/(x+5) - 3/x, 2023 P2 Q10 is
+    // 7/(x-3) - 2/x and 2025 P1 Q14 is 5/(x-1) - 4/x, three of four with a bare
+    // x; 2019 P2 Q15 is 4/(x-2) - 3/(x+5) and has none. Addition: 2016 P2 Q13
+    // and 2024 P2 Q12 are both two binomials, and neither has one. This drew
+    // `m = 0` one time in three whatever was being asked, so the addition
+    // papers got a form they never use and 2025 P1 Q14 got one it always does
+    // only a third of the time.
+    //
+    // **The bare variable is the second fraction, as all three papers write
+    // it**: 7/(x+5) - 3/x, 7/(x-3) - 2/x, 5/(x-1) - 4/x. It used to be the
+    // first, which is the same arithmetic and not the same question to read -
+    // and the scheme's own numerator, `5x - 4(x-1)`, is in that order.
+    const m = nonZeroInt(-6, 6);
+    const n = bare ? 0 : nonZeroInt(-6, 6);
     if (n === m) continue;
     const coef = minus ? p - q : p + q;
     if (coef === 0) continue;                   // would collapse to a constant
@@ -140,14 +150,18 @@ function addSubtract(minus: boolean): Q {
     const cons = minus ? p * n - q * m : p * n + q * m;
 
     const d1 = lin(v, m), d2 = lin(v, n);
-    const denom = `${br(d1)}${br(d2)}`;
+    // The papers write the bare variable first in the product - x(x - 1),
+    // never (x - 1)x - even where it is the second fraction on the page.
+    const denom = bare ? `${br(d2)}${br(d1)}` : `${br(d1)}${br(d2)}`;
     const num = linTex(v, coef, cons);
     const excluded = [m, n].map(k => `$${v} \\neq ${-k}$`).join(', ');
 
     return {
       subTopic: minus ? 'Subtracting Algebraic Fractions' : 'Adding Algebraic Fractions',
       difficulty: 'skill',
-      variationId: minus ? 'alg-fractions.subtract' : 'alg-fractions.add',
+      variationId: minus
+        ? (bare ? 'alg-fractions.subtract' : 'alg-fractions.subtract-binomials')
+        : 'alg-fractions.add',
       questionLines: [
         `Express $${frac(`${p}`, d1)} ${op} ${frac(`${q}`, d2)}$, ${excluded},`,
         `as a single fraction in its simplest form.`,
@@ -599,7 +613,9 @@ export const ALG_FRACTION_GENERATORS: Record<string, () => Q> = {
   'Simplifying Algebraic Fractions': () =>
     (getRandomInt(1, 5) <= 3 ? simplifyFraction() : factoriseHence()),
   'Adding Algebraic Fractions': () => addSubtract(false),
-  'Subtracting Algebraic Fractions': () => addSubtract(true),
+  // Two questions under one topic: the one with a bare variable on a
+  // denominator, and the one with two binomials.
+  'Subtracting Algebraic Fractions': () => addSubtract(true, getRandomInt(0, 1) === 0),
   'Multiplying Algebraic Fractions': multiply,
   'Dividing Algebraic Fractions': divide,
   'Dividing with a Difference of Squares': divideFactoriseNumerator,

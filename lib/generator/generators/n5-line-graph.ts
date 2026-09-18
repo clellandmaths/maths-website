@@ -456,7 +456,22 @@ function bestFitOnGridQuestion(): Q | null {
 
 // ── the equation of a line of best fit, then an estimate ─────────────────
 
-export function bestFitQuestion(): Q | null {
+/**
+ * **A scattergraph with a line of best fit, or an exact line. Not both.**
+ *
+ * Four of the five papers draw a cloud of points with a ruled line through it
+ * and call it a line of best fit: 2014 P1 Q6, 2016 P1 Q5, 2024 P1 Q9 and 2026
+ * P1 Q6. 2018 P1 Q7 draws neither - "the graph below shows the cost of a
+ * journey against the distance travelled" is one exact line, no cloud, and it
+ * never says "best fit".
+ *
+ * One routine served both and picked its context freely, so a clone of 2026 P1
+ * Q6 - a scattergraph - could come out as a bare cost line with no points
+ * scattered round it. The figure is the difference, and the wording follows it:
+ * the prose already says "line of best fit" or "the line" according to the
+ * context's own `scatter`.
+ */
+export function bestFitQuestion(scatter: boolean): Q | null {
   // The gradient, as a fraction in lowest terms. Mostly whole, because most of
   // the papers are — but 2018 is 3/2 and 2026 is 2/3, and the 2018 scheme
   // refuses the last mark for a gradient turned into a decimal, so the
@@ -471,7 +486,8 @@ export function bestFitQuestion(): Q | null {
   // fractional gradient; one clone in twenty did, because the fractional
   // attempts nearly all landed on a context that could not hold one. Picking
   // the context from those that can makes the rate the papers' rate.
-  const pool = q === 1 ? CONTEXTS : CONTEXTS.filter(c =>
+  const kind = CONTEXTS.filter(c => c.scatter === scatter);
+  const pool = q === 1 ? kind : kind.filter(c =>
     Math.min(Math.abs(c.slope[0]), Math.abs(c.slope[1])) * q <= 8);
   if (!pool.length) return null;
   const ctx = pick(pool);
@@ -580,9 +596,10 @@ export function bestFitQuestion(): Q | null {
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
   return {
-    subTopic: 'The Equation of a Line of Best Fit',
+    subTopic: scatter ? 'The Equation of a Line of Best Fit'
+      : 'The Equation of a Line from a Graph',
     difficulty: 'exam',
-    variationId: 'straight-line.best-fit',
+    variationId: scatter ? 'straight-line.best-fit' : 'straight-line.exact-line',
     questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
     boardQuestionLines: [
       `A line through (${x1}, ${y1}) and (${x2}, ${y2}). Find its equation in $${ctx.y.letter}$ and $${ctx.x.letter}$, then its value at ${x3}.`,
@@ -671,7 +688,10 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
 };
 
 export const LINE_GRAPH_GENERATORS: Record<string, () => Q> = {
-  'The Equation of a Line of Best Fit': tried('straight-line.best-fit', bestFitQuestion),
+  'The Equation of a Line of Best Fit':
+    tried('straight-line.best-fit', () => bestFitQuestion(true)),
+  'The Equation of a Line from a Graph':
+    tried('straight-line.exact-line', () => bestFitQuestion(false)),
   'A Line of Best Fit on a Grid': tried('straight-line.best-fit-grid', bestFitOnGridQuestion),
   'The Equation of a Line Through Two Marked Points':
     tried('straight-line.from-marked-points', lineThroughMarkedPointsQuestion),

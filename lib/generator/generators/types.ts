@@ -172,6 +172,7 @@ export type Topic =
   | "A Raised Trigonometric Graph"
   | "A Turning Point on a Trigonometric Graph"
   | "The Equation of a Line of Best Fit"
+  | "The Equation of a Line from a Graph"
   | "A Line of Best Fit on a Grid"
   | "The Equation of a Line Through Two Marked Points"
   | "The Discriminant"
@@ -617,6 +618,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Adding Two Vectors Drawn on a Grid",
     "Drawing the Resultant of Two Vectors",
     "The Equation of a Line of Best Fit",
+    "The Equation of a Line from a Graph",
     "A Line of Best Fit on a Grid",
     "The Equation of a Line Through Two Marked Points",
   ],

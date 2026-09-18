@@ -294,7 +294,11 @@ function sphereConeEqual(): Q | null {
   if (rc === r) return null;
   const v = 4 / 3 * Math.PI * r ** 3;
   const h = v / (Math.PI * rc * rc / 3);
-  if (h < rc * 0.8 || h > rc * 6) return null;         // a drawable cone
+  // A cone that looks like a cone. Equal volumes put the height at 4r^3/rc^2,
+  // so a sphere wider than the cone's base sends it up fast: radius 8 against a
+  // base radius of 7 draws 14 across and 41.8 tall, a spike. 2026 P2 Q6 is 12
+  // across and 13.9 tall, a shade over twice its base radius.
+  if (h < rc * 0.8 || h > rc * 4) return null;
 
   const prose = [
     `A sphere has radius ${r} centimetres.`,
@@ -312,20 +316,55 @@ function sphereConeEqual(): Q | null {
     `<strong>4.</strong> Rearrange for the height:<br><br>$h = \\frac{3 \\times ${v.toFixed(1)}}{\\pi \\times ${rc}^{2}}$`,
     `<strong>5.</strong> Evaluate:<br><br>$h = ${h.toFixed(1)}$ cm`,
   ];
-  // The picture is the cone alone. The paper prints two figures, one per part,
-  // and a scene is one stack — but drawing the sphere *inside* the cone, which
-  // is the only place a vertical stack could put it, would say the two solids
-  // are nested when the whole question is that they are separate and equal.
-  // The sphere is a radius and a word, and the prose carries it.
-  return assemble({
+  // **Two figures, one per part, as 2026 P2 Q6 prints them.**
+  //
+  // This drew the cone alone, on the grounds that a scene is one stack and the
+  // only place a vertical stack could put the sphere is inside the cone — which
+  // would say the two solids are nested when the whole question is that they
+  // are separate and equal. True, and the conclusion did not follow: they are
+  // two scenes, not one, and the prose has a place for each. As it stood the
+  // cone sat directly under "a sphere has radius 7 centimetres" and read as an
+  // illustration of the sphere.
+  //
+  // The paper's ink, both times: the ball carries a dot at its centre and a
+  // dashed radius with the measurement on it; the cone carries a double-headed
+  // arrow across its base and another up its side labelled "height", which is
+  // the unknown and so is a word rather than a number.
+  const sphereFig = solidFigure({
+    stack: [{ kind: 'sphere', r, radius: `${r} cm` }],
+    // The radius is marked on the piece itself, so there is no dimension line.
+    dims: [],
+  });
+  const coneFig = solidFigure({
     stack: [{ kind: 'cone', r: rc, h }],
     dims: [
-      { along: 'width', halfWidth: rc, side: 'below', value: 2 * rc, text: `${2 * rc} cm` },
+      { along: 'width', halfWidth: rc, side: 'below', value: 2 * rc,
+        text: `${2 * rc} cm`, arrow: true },
+      { along: 'height', from: 0, to: h, side: 'left', value: h,
+        text: 'height', arrow: true, unknown: true },
     ],
-  }, 'A Cone Matching a Sphere', 'volume.sphere-cone-equal', prose,
-    `Sphere radius ${r}. A cone of base diameter ${2 * rc} has the same volume. Height?`,
-    steps, [1, 1, 1, 1, 1],
-    `(a) $${v.toFixed(1)}$ ${cubic('cm')} &nbsp;&nbsp; (b) $${h.toFixed(1)}$ cm`);
+  });
+  const text = [...prose, ...steps].join(' ');
+  if (verifyFigure(sphereFig, text).length) return null;
+  if (verifyFigure(coneFig, text).length) return null;
+
+  return {
+    subTopic: 'A Cone Matching a Sphere',
+    difficulty: 'exam',
+    variationId: 'volume.sphere-cone-equal',
+    questionLines: [
+      prose[0], renderScene(sphereFig.scene), prose[1],
+      prose[2], renderScene(coneFig.scene), prose[3],
+      prose[4],
+    ],
+    boardQuestionLines: [
+      `Sphere radius ${r}. A cone of base diameter ${2 * rc} has the same volume. Height?`,
+    ],
+    solutionSteps: steps,
+    stepMarks: [1, 1, 1, 1, 1],
+    finalAnswer: `(a) $${v.toFixed(1)}$ ${cubic('cm')} &nbsp;&nbsp; (b) $${h.toFixed(1)}$ cm`,
+    figure: coneFig,
+  };
 }
 
 // ── two pieces, added or taken away ───────────────────────────────────────

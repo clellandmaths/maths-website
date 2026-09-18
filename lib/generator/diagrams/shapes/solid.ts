@@ -59,7 +59,13 @@ export type Piece =
   | { kind: 'frustum'; r: number; rTop: number; h: number }
   /** Flat face down and dome up, unless `flat` says otherwise. */
   | { kind: 'hemisphere'; r: number; flat?: 'down' | 'up' }
-  | { kind: 'sphere'; r: number }
+  /**
+   * `radius` marks it the way 2026 P2 Q6 marks its ball: a dot at the centre
+   * and a dashed line out to the rim with the measurement on it. Without it a
+   * sphere is a circle and a word, which is what this drew while the paper
+   * printed a figure for each part of the question.
+   */
+  | { kind: 'sphere'; r: number; radius?: string }
   /** Square base of side `w`. */
   | { kind: 'box'; w: number; h: number }
   | { kind: 'pyramid'; w: number; h: number }
@@ -90,7 +96,15 @@ const pieceWidth = (p: Piece): number =>
 export type Dim =
   /** A vertical extent, on a line standing clear to one side. */
   | { along: 'height'; from: number; to: number; side: 'left' | 'right';
-      rank?: number; cx?: number; value: number; text: string }
+      rank?: number; cx?: number; value: number; text: string; arrow?: true;
+      /**
+       * The measurement is the thing being asked for, so the figure names it
+       * with a word - 2026 P2 Q6 writes "height" up the side of its cone - and
+       * the question never prints the number. The line is still claimed, so the
+       * drawing has to be in proportion; it is just not required to appear in
+       * the text, which is what `shown` on a length claim means.
+       */
+      unknown?: true }
   /**
    * A horizontal extent, on a line clear above or below everything.
    *
@@ -201,6 +215,13 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
       return [
         { kind: 'circle', centre, r: p.r, dashed },
         ...(dashed ? [] : rim(centre, p.r, false, dashed)),
+        ...(p.radius && !dashed ? [
+          { kind: 'dot' as const, at: centre },
+          { kind: 'segment' as const, from: centre,
+            to: at(p.r, p.r), dashed: true },
+          { kind: 'label' as const, text: p.radius,
+            anchor: at(p.r * 0.55, p.r), away: at(p.r * 0.55, p.r * 2.2) },
+        ] : []),
       ];
     }
     case 'box': {
@@ -347,24 +368,29 @@ export function solidFigure(spec: SolidSpec): Figure {
       inward = pt(cx, y + (d.side === 'below' ? 1 : -1));
     }
     const mid = pt((a.x + b.x) / 2, (a.y + b.y) / 2);
-    const arrow = d.along === 'width' && d.arrow === true;
+    const arrow = d.arrow === true;   // leaders return earlier
     elements.push({ kind: 'segment', from: a, to: b, dashed: !arrow });
     if (arrow) {
       // Barbs are decoration strokes, so the minimum-length rule does not reach
       // them — an arrowhead grown until it could carry a measurement would only
       // be a wrong arrowhead.
-      const len = Math.min(Math.abs(b.x - a.x) * 0.1, 5);
+      const span = Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+      const len = Math.min(span * 0.1, 5);
+      const along = d.along === 'width';
       for (const [end, dir] of [[a, 1], [b, -1]] as [Pt, number][]) {
-        for (const up of [1, -1]) {
+        for (const off of [1, -1]) {
           elements.push({
             kind: 'segment', decoration: true, from: end,
-            to: pt(end.x + dir * len, end.y + up * len * 0.45),
+            to: along
+              ? pt(end.x + dir * len, end.y + off * len * 0.45)
+              : pt(end.x + off * len * 0.45, end.y + dir * len),
           });
         }
       }
     }
     elements.push({ kind: 'label', text: d.text, anchor: mid, away: inward });
-    claims.push({ kind: 'length', from: a, to: b, value: d.value });
+    claims.push({ kind: 'length', from: a, to: b, value: d.value,
+      shown: d.along === 'height' && d.unknown ? false : undefined });
   }
 
   // A projected face is not in proportion in any direction, so a figure holding

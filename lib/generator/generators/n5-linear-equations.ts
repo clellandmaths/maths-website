@@ -267,10 +267,26 @@ const lcm = (a: number, b: number) => Math.abs(a * b) / (gcd(Math.abs(a), Math.a
 const lowestTerms = (...parts: number[]) =>
   parts.map(Math.abs).reduce((a, b) => gcd(a, b)) === 1;
 
-function clearDenominators(): Q {
+/**
+ * **Three papers, three arrangements, three variations.**
+ *
+ *   2016 P1 Q8   2x/3 - 5/6 = 2x          two fractions, a multiple of x alone
+ *   2019 P1 Q14  x/2 - 1 = (3 - x)/5      a fraction each side, a constant left
+ *   2025 P2 Q13  (5x+1)/2 = 4x/3 + 1      a linear numerator, a constant right
+ *
+ * The three scheme rows are identical - eliminate the denominators, rearrange
+ * into ax = b, solve - which is why this was one id for a long time. The
+ * arrangements are not identical to read or to start, and one id meant two
+ * draws in three of any of these three papers showed one of the other two.
+ *
+ * The shape was also drawn *inside* the retry loop, so the mix was not even
+ * thirds but whatever survived: 2016's form 20%, 2019's 57%, 2025's 22%. That
+ * is the trap `docs/diagram-questions.md` section 2 sets out, and it is why
+ * the owner saw the wrong arrangement twice in a row on the contact sheet.
+ */
+function clearDenominators(shape: 1 | 2 | 3): Q {
   for (let tries = 0; tries < 2000; tries++) {
     const v = pick(VARS);
-    const shape = getRandomInt(1, 3);
     const [m, n] = [getRandomInt(2, 6), getRandomInt(2, 8)];
     if (m === n) continue;
     const L = lcm(m, n);
@@ -316,14 +332,13 @@ function clearDenominators(): Q {
     return {
       subTopic: 'Clearing Denominators in an Equation',
       difficulty: 'exam',
-      variationId: 'linear-equations.clear-denominators',
-      // One of the three papers asks for the simplest form and two do not:
-      // 2016 P1 Q8 prints it, 2019 P1 Q14 and 2025 P2 Q13 do not. This printed
-      // it on every draw, so two of its three papers never got their own
-      // wording. The answer is in lowest terms either way - the guard above
-      // holds the denominator down after cancelling - so the line asks for
-      // nothing the question does not already expect.
-      questionLines: getRandomInt(0, 2) === 0
+      variationId: shape === 1 ? 'linear-equations.clear-denominators'
+        : shape === 2 ? 'linear-equations.clear-denominators-each-side'
+        : 'linear-equations.clear-denominators-linear-top',
+      // 2016 P1 Q8 asks for the simplest form; 2019 P1 Q14 and 2025 P2 Q13 do
+      // not. Now that each paper has its own id, that is exact rather than one
+      // draw in three.
+      questionLines: shape === 1
         ? [`Solve the equation $${question}$`, 'Give your answer in its simplest form.']
         : [`Solve the equation $${question}$`],
       boardQuestionLines: [`Solve $${question}$`],
@@ -345,5 +360,9 @@ export const LINEAR_EQUATION_GENERATORS: Record<string, () => Q> = {
   'Solving Linear Equations': solveLinear,
   'Equations with Brackets': solveWithBracket,
   'Equations with Fractions': solveWithFractions,
-  'Clearing Denominators in an Equation': clearDenominators,
+  // Chosen once, outside the routine's retry loop, so the three arrangements
+  // come out in equal thirds rather than in proportion to how often each
+  // survives its guards.
+  'Clearing Denominators in an Equation': () =>
+    clearDenominators(getRandomInt(1, 3) as 1 | 2 | 3),
 };

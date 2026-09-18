@@ -48,8 +48,17 @@ export function polygonPoint(spec: PolygonPointSpec): Figure | null {
   const last = V[n - 1];
   const side = 2 * r * Math.sin(Math.PI / n);
 
+  const O = pt(0, 0);
   const elements: Element[] = [
     { kind: 'polygon', points: V },
+    // **The centre, and a dashed spoke to every vertex** — 2025 P2 Q7 rules
+    // them and marks the centre with a filled dot. They are what show the
+    // polygon to be regular, and the interior angle the working needs comes
+    // out of the equal angles they make at the centre: 360 over the number of
+    // sides. Drawn without them the figure asserts "regular" in the prose and
+    // shows nothing of it.
+    { kind: 'dot', at: O },
+    ...V.map((v): Element => ({ kind: 'segment', from: O, to: v, dashed: true })),
     { kind: 'segment', from: V[0], to: P },
     { kind: 'segment', from: P, to: last },
     ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: pt(0, 0) })),
@@ -65,6 +74,8 @@ export function polygonPoint(spec: PolygonPointSpec): Figure | null {
       ...V.map((p, i) => ({
         kind: 'length' as const, from: p, to: V[(i + 1) % n], value: side, shown: false,
       })),
+      // and every spoke is the same radius, now that each one is drawn
+      ...V.map(v => ({ kind: 'length' as const, from: O, to: v, value: r, shown: false })),
       // The produced side really is straight. That is the whole question — the
       // angle inside the triangle at V[0] is the exterior angle, not the
       // interior one — and no length or angle above would notice if the point
