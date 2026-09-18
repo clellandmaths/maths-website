@@ -1,5 +1,5 @@
 import {
-  type Element, type Figure, type Pt, bearing, mid, pt, sideLabel,
+  type Element, type Figure, type Pt, bearing, dimensionArrow, mid, pt, sideLabel,
 } from '../scene';
 
 /**
@@ -158,28 +158,37 @@ export function circleChord(spec: CircleChordSpec): Figure {
      */
     elements.push(sideLabel(O, B, spec.labels.radius, A));
   }
-  // The chord's own label goes a quarter along it, not at its midpoint, which
-  // is where the perpendicular would meet it if the pupil draws one in. The
-  // papers place it off-centre for the same reason.
-  const quarter = pt(A.x + (B.x - A.x) * 0.28, A.y + (B.y - A.y) * 0.28);
   if (spec.labels.chord) {
-    // **Which side of the chord the number goes.**
-    //
-    // Away from T puts it outside the chord, on the side the cut removes. That
-    // is right while the removed piece is big, and wrong as it thins: the
-    // dashed arc closes in on the chord and the label lands on it. 2023 P1
-    // Q10 is the thin case - radius 50, chord 60, so the chord sits 40 out of
-    // 50 from the centre - and verifyFigure rejected every draw of it with
-    // "4.0px from ink it does not label", which left the generator able to
-    // draw only the shapes where the chord is far from the edge. Those are
-    // exactly the ones whose answer equals the chord.
-    //
-    // The paper prints that measurement on an arrow outside the whole figure.
-    // Short of that, the major piece is the side with room in it, so on a thin
-    // cut the number goes inward instead.
-    const thin = spec.rest === 'dashed' && Math.abs(k) > r * 0.7;
-    const side = thin ? pt(2 * quarter.x - T.x, 2 * quarter.y - T.y) : T;
-    elements.push({ kind: 'label', text: spec.labels.chord, anchor: quarter, away: side });
+    /**
+     * **On an arrow outside the circle, which is what the paper draws.**
+     *
+     * The owner, on the 2026-2023 sign-off sheet: *"Have 3m drawn more centre
+     * or use arrows like the question it's based on"*. 2026 P2 Q5 does the
+     * second: the chord's 25 cm is a double-headed arrow standing clear to the
+     * right of the whole circle, with the chord's ends carried out to it, while
+     * the 9 cm sits on the segment from the centre. Nothing is written along
+     * the chord itself.
+     *
+     * The old placement put the number a quarter of the way along the chord -
+     * off-centre deliberately, to leave the midpoint free for the perpendicular
+     * a pupil draws in - and then had to choose a side, which is where it came
+     * unstuck. Away from T is outside the chord, on the side the cut removes,
+     * and that side thins as the cut deepens until the arc closes in and the
+     * label lands on it. At 2023 P1 Q10's proportions - radius 50, chord 60 -
+     * `verifyFigure` rejected every draw with "4.0px from ink it does not
+     * label", leaving only the shapes whose answer equals the chord, so the
+     * clone gave its answer away in the question. The note above this block
+     * already said what the fix was: *the paper prints that measurement on an
+     * arrow outside the whole figure*.
+     *
+     * The gap clears the arc rather than guessing at one: the far edge of the
+     * circle on the side away from T sits `|k + r|` from the chord, so the
+     * arrow stands that far out and a little more. No side to choose and no
+     * depth of cut it stops working at.
+     */
+    const clearArc = Math.abs(k + r) + r * 0.16;
+    const outward = pt(M.x, M.y - m * 2 * r);
+    elements.push(...dimensionArrow(A, B, outward, clearArc, spec.labels.chord));
   }
   if (spec.labels.height) elements.push(sideLabel(M, T, spec.labels.height, rightOf((k + r) * m / 2)));
   if (spec.labels.centreToChord) elements.push(sideLabel(O, M, spec.labels.centreToChord, rightOf(k * m / 2)));

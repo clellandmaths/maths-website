@@ -189,6 +189,23 @@ function discriminant(): Q {
       if (kind === 'none' && d >= 0) continue;
     }
     const d = b * b - 4 * a * c;
+    /**
+     * **Held to the size the papers work at.** The owner, on the 2026-2023
+     * sign-off sheet: *"Ensure arithmetic doesn't get too big"*.
+     *
+     *   2025 P1 Q11   3x^2 + 2x + 1     4 - 12    = -8
+     *   2018 P1 Q8    2x^2 + 4x + 5    16 - 40    = -24
+     *   2023 P1 Q5    4x^2 + 6x - 1    36 + 16    = 52
+     *   2016 P1 Q6    7x^2 + 5x - 1    25 + 28    = 53
+     *
+     * Nothing above 53, and three of the four keep `c` at 1 so that `4ac` stays
+     * small. Drawn freely from a, b, c the clone reached 193 and sat above
+     * every paper four draws in five - the same two marks, and a pupil doing
+     * 81 - 288 in their head for the first of them.
+     *
+     * Sixty, which clears 53 without reaching for a number no paper sets.
+     */
+    if (Math.abs(d) > 60) continue;
     const nature = d > 0 ? 'two real and distinct roots'
       : d === 0 ? 'one repeated real root (two equal real roots)'
       : 'no real roots';

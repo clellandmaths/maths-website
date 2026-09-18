@@ -222,6 +222,21 @@ function solveByFactorising(): Q {
     if (!b || !c) continue;
     if (gcd(gcd(a, Math.abs(b)), Math.abs(c)) !== 1) continue;
     if (Math.abs(b) > 40 || Math.abs(c) > 40) continue;
+    /**
+     * **`ac` is the number a pupil actually searches.** The owner, on the
+     * 2026-2023 sign-off sheet: *"Ok but just ensure the ac doesn't get too
+     * big"*.
+     *
+     * Factorising a non-unitary quadratic means finding the pair that
+     * multiplies to `ac` and adds to `b`. 2026 P1 Q14 - the only paper this
+     * clones - is `10x^2 + 11x - 6`, so `ac` is 60 and the pair is 15 and -4.
+     * Drawn freely `a` reaches 20 and `|c|` 36, and `|ac|` reached 300: the
+     * same three marks, with a pupil listing factor pairs of 300.
+     *
+     * Ninety-six: comfortably above the paper without being a different task.
+     * The unitary form has `a` of 1 and is unaffected.
+     */
+    if (Math.abs(a * c) > 96) continue;
     const expanded: Poly = [c, b, a];
     const rootA = root(-p, m), rootB = root(-q, n);
     if (rootA === rootB) continue;                // two equal roots is a different question

@@ -330,6 +330,22 @@ function rectangleAgainstSquare(): Q | null {
   if (2 * m + q === m + r) return null;
   // and it must not simply be the square with a side renamed
   if (r === s || q === 2 * s) return null;
+  /**
+   * **The long side must not have a common factor.** The owner, on the
+   * 2026-2023 sign-off sheet: *"Don't pick side lengths with a common factor ie
+   * 2x + 10"*.
+   *
+   * 2025 P1 Q15 is a rectangle `2x + 3` by `x + 1` against a square of side
+   * `x + 3`, so a coefficient of 2 is the paper's own - what it never does is
+   * pair it with an even constant. `2x + 10` is `2(x + 5)`, and a pupil who
+   * spots that is looking at a different question from the one the six marks
+   * describe: the area becomes `2(x + 5)(x + 4)` and part (b)'s "show that"
+   * no longer lands on the equation it names.
+   *
+   * Only this side can offend. The other two are `x + r` and `x + s`, whose
+   * coefficient is 1.
+   */
+  if (q % 2 === 0) return null;
   // Equal and opposite roots give x^2 - 25 = 0, a difference of two squares
   // rather than the trinomial 2025 P1 Q15 prints, and its •⁴ "factorise" mark
   // becomes trivial. It had been reaching the page as "x^2 + 0x - 25 = 0".

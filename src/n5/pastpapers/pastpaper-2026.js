@@ -122,8 +122,8 @@ export const pastpaper2026 = {
             paperNumber: 2,
             questions: [
                 {
-                    question: `<small><strong><span style="white-space: nowrap;">2026 P2 Q1</span></strong></small><p>A van was valued at \\(\\pounds 22600.\\)<br>Its value depreciated by 28% each year for the next three years.<br>Calculate the value of the van after three years.<br>Give your answer correct to 3 significant figures.</p>`,
-                    answer: `\\(\\pounds 8440\\)`,
+                    question: `<small><strong><span style="white-space: nowrap;">2026 P2 Q1</span></strong></small><p>A van was valued at £22600.<br>Its value depreciated by 28% each year for the next three years.<br>Calculate the value of the van after three years.<br>Give your answer correct to 3 significant figures.</p>`,
+                    answer: `£8440`,
                     videoId: "RrKuIpUh5NU",
                     timestamp: "43s",
                     marks: [4],

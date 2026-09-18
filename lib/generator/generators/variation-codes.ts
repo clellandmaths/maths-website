@@ -112,6 +112,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'straight-line.from-marked-points':       'qp96z',
 
   'trig-graphs.amplitude-cycles':           'dh68k',
+  'trig-graphs.amplitude-period':           '6pamm',
   'trig-graphs.shift':                      'e84j9',
   'trig-graphs.shift-and-raise':            'j6f1w',
   'trig-graphs.turning-point':              'n9ay3',

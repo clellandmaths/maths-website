@@ -704,7 +704,22 @@ function pyramidMinusPyramid(): Q | null {
     dims: [
       { along: 'width', halfWidth: bigW / 2, side: 'below', arrow: true,
         value: bigW, text: `${bigW} cm` },
-      { along: 'height', from: 0, to: blockH, side: 'left', arrow: true,
+      /**
+       * **Both heights stack on the right, sharing the line between them.**
+       *
+       * The owner, on the 2026-2023 sign-off sheet: *"It is not clear 18 is
+       * height looks like it starts too low"*. The block's height was drawn on
+       * the left and the tip's on the right, one on each side of the solid, so
+       * nothing showed where one ended and the other began - the 18 appeared to
+       * start somewhere in mid-air.
+       *
+       * 2023 P2 Q9 stacks them: 48 from the apex down to the top face, 60 from
+       * the top face down to the base, both to the right of the solid and both
+       * ending on the same horizontal line at the top face. That line is what
+       * makes each arrow's extent readable, and it only exists if the two are
+       * on the same side.
+       */
+      { along: 'height', from: 0, to: blockH, side: 'right', arrow: true,
         value: blockH, text: `${blockH} cm` },
       { along: 'height', from: blockH, to: bigH, side: 'right', arrow: true,
         value: smallH, text: `${smallH} cm` },

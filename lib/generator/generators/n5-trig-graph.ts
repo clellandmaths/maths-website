@@ -64,8 +64,28 @@ function assemble(
 // ── y = a sin bx, y = a cos bx — 2015 P1 Q6, 2018 P1 Q6, 2022, 2024 ──────
 
 function amplitudeAndCycles(): Q | null {
+  /**
+   * **Which of the two presentations — and it is two questions, not one.**
+   *
+   *   2015 P1 Q6, 2024 P1 Q8   nothing on the x-axis but 360 — count the waves
+   *   2018 P1 Q6               90 and 180 labelled — read the period, divide
+   *   2022 P1 Q8               45 labelled — same
+   *
+   * `b` is the same number either way, but *how it is got* is the whole second
+   * mark, and counting six waves is a different task from dividing 360 by 45.
+   * That was already written down here; what was missing is that it makes them
+   * **two variations**. The owner, on the 2026-2023 sign-off sheet against a
+   * card headed 2024 P1 Q8: *"Drop the 45 only need end angle"* — 2024 P1 Q8
+   * runs 0 to 360 and labels 360 alone, and the clone had drawn it with a
+   * period axis reading 45 and 90.
+   *
+   * Chosen before anything else, because it decides which `b` are legal:
+   * counting six or eight waves is what does not work, and a period tick needs
+   * a period of 90 or more to have room under it, which is `b` of 4 or less.
+   */
+  const scaled = getRandomInt(0, 1) === 0;
   const a = getRandomInt(2, 8);
-  const b = pick([2, 3, 4, 5, 6, 8]);
+  const b = scaled ? pick([2, 3, 4, 6, 8]) : pick([2, 3, 4, 5]);
   const period = 360 / b;
 
   /**
@@ -92,20 +112,6 @@ function amplitudeAndCycles(): Q | null {
    * gate below: six or eight waves must take the period route, because counting
    * them is what does not work.
    */
-  const dense = b >= 6;
-
-  /**
-   * **Which of the two presentations.** The four papers do not ask this the
-   * same way, and the clone used to know only one of them:
-   *
-   *   2015 P1 Q6, 2024 P1 Q8   nothing on the x-axis but 360 — count the waves
-   *   2018 P1 Q6               90 and 180 labelled — read the period, divide
-   *   2022 P1 Q8               45 labelled — same
-   *
-   * `b` is the same number either way, but *how it is got* is the whole second
-   * mark, and counting six waves is a different task from dividing 360 by 45.
-   */
-  const scaled = dense || (period >= 90 && getRandomInt(0, 1) === 0);
 
   /**
    * On a scaled axis the choice of sine or cosine is **not free**, and this is
@@ -176,7 +182,8 @@ function amplitudeAndCycles(): Q | null {
       x: !scaled ? [360] : span === period * 2 ? [period, period * 2] : [period],
       y: [a, 0, -a],
     },
-  }, 'Amplitude and Period of a Trigonometric Graph', 'trig-graphs.amplitude-cycles',
+  }, 'Amplitude and Period of a Trigonometric Graph',
+    scaled ? 'trig-graphs.amplitude-period' : 'trig-graphs.amplitude-cycles',
     prose, `$${shown}$ shown. Find $a$ and $b$.`,
     // •¹ a, •² b — one mark each in all four papers
     steps, [1, 1], split ? `(a) $a = ${a}$<br>(b) $b = ${b}$` : `$a = ${a}$, $b = ${b}$`);
@@ -253,24 +260,25 @@ function shiftAndRaise(): Q | null {
   // paper sets - the owner's ruling of 2026-09-18, that the form is part of
   // the question.
   const fn = 'cos' as const;
-  // Only shifts a pupil can actually read off this axis.
-  //
-  // The figure ticks the x-axis at 0, 90, 180, 270, 360 and marks no point on
-  // the curve, so the only positions that can be *read* are a tick itself or
-  // the exact midpoint between two. 30 and 60 were in this list and are
-  // neither — they sit a third and two thirds through the first interval, and
-  // nobody can tell those apart by eye. Half the questions this made could not
-  // be answered from the information given.
-  //
-  // **The paper's own answer is -30, and it is deliberately not drawn.**
-  // 2023 P1 Q13 marks its axis at 90 degree intervals and puts the maximum at
-  // x = 30, a third of the way through the first one; its scheme takes "-30 or
-  // 330". Read off a printed page that is a judgement of the eye, and a
-  // generated figure has no scan of the original to be checked against - so
-  // this keeps to the offsets the axis can actually show, the ticks and their
-  // midpoints. It is the one place here where the clone is deliberately easier
-  // to read than the paper.
-  const shift = pick([45, 90, 135, 180]);
+  /**
+   * Only shifts a pupil can actually read off this axis - **and the axis has
+   * more on it than this once believed.**
+   *
+   * The note here used to say that 2023 P1 Q13 marks its axis at 90 degree
+   * intervals, so only a numbered tick or the exact midpoint between two could
+   * be read; that ruled out the paper's own answer, a maximum at x = 30, and
+   * the clone was recorded as deliberately easier to read than the paper.
+   *
+   * The owner: *"The original paper has vertical lines on x axis between the
+   * given numbers"*. Counted off the scan: **thirteen tick marks, one every 30
+   * degrees**, numbered only every 90. The paper's 30 sits on the third mark,
+   * which is precisely how it is read, and the compromise was never needed -
+   * it came from reading the numbers on that axis and not the marks.
+   *
+   * So the axis carries the marks it carries, and the shift lands on one.
+   * Six offsets where there were four, the paper's own -30 among them.
+   */
+  const shift = pick([30, 60, 90, 120, 150, 180]);
   const a = -shift;
   const b = getRandomInt(1, 4);                  // lifted so the minimum sits at b - 1
 
@@ -288,6 +296,8 @@ function shiftAndRaise(): Q | null {
     view: view(1, b - 1, b + 1), domain: DEGREES,
     plot: { kind: 'trig', fn, a: 1, b: 1, h: shift, k: b },
     ticks: { x: [0, 90, 180, 270, 360], y: [b - 1, b, b + 1].filter(v => v !== 0) },
+    // numbered every 90, marked every 30 - 2023 P1 Q13's own axis
+    minorTicks: 30,
     xTickSuffix: '°',
   }, 'A Raised Trigonometric Graph', 'trig-graphs.shift-and-raise',
     prose, `$y = \\${fn}(x + a)^{\\circ} + b$ shown. Find $a$ and $b$.`,

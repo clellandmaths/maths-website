@@ -107,11 +107,36 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
     { kind: 'segment', from: B, to: D },
     { kind: 'label', text: n.touchB, anchor: B, away: O },
     { kind: 'label', text: n.touchD, anchor: D, away: O },
-    // Each of these sits on its own line with a tangent running close past it,
-    // so its letter is pushed square away from that tangent — off the line it
-    // is on, and away from the one it is not.
-    { kind: 'label', text: n.oppB, anchor: F, away: mid(D, E) },
-    { kind: 'label', text: n.oppD, anchor: G, away: mid(B, A) },
+    /**
+     * **Outside the circle, like every other point on it.**
+     *
+     * The owner, twice on the 2026-2023 sign-off sheet: *"G and F labels
+     * unreadable move to outside of circle"*, and *"Move f and g to outside of
+     * circle, original question had labels outside"*. Measured off the clone's
+     * own SVG, F and G sat 73.3 from a centre of radius 76.3 - a hair *inside*
+     * the arc and on top of it - while B and D sat outside at 91. On 2024 P1
+     * Q10's figure all four are outside.
+     *
+     * They were pushed square off the nearby tangent, which reads as the
+     * careful thing to do and sends them inward, because the tangent is the
+     * side away from the circle.
+     *
+     * **Away from the centre is the obvious repair and it is the wrong one.**
+     * F is the far end of B's diameter, so O, F and E lie very nearly on one
+     * line; pushing F away from O carries its letter straight along FE, and
+     * across 96 layouts *not one* verified. The pool fell from over twenty
+     * questions to four, and it took `pool` to notice - drawing forty and
+     * finding no failures says nothing, because the generator simply retries
+     * until it lands on one of the four that work.
+     *
+     * Away from the **other tangent point** instead: F away from D, G away from
+     * B. That is outward, because the far end of one diameter is on the
+     * opposite side of the circle from the other's foot, and it is across the
+     * line rather than along it. 80 of the same 96 layouts verify - better than
+     * the 52 this figure managed before - and all 160 letters land outside.
+     */
+    { kind: 'label', text: n.oppB, anchor: F, away: D },
+    { kind: 'label', text: n.oppD, anchor: G, away: B },
     { kind: 'label', text: n.endA, anchor: A, away: mid(O, B) },
     { kind: 'label', text: n.endE, anchor: E, away: mid(O, D) },
     { kind: 'label', text: n.outside, anchor: C, away: O },

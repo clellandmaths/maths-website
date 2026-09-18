@@ -1404,7 +1404,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-graphs.amplitude-cycles': {
     topic: 'Amplitude and Period of a Trigonometric Graph',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2015 P1 Q6', '2018 P1 Q6', '2022 P1 Q8', '2024 P1 Q8'],
+    basedOn: ['2015 P1 Q6', '2024 P1 Q8'],
     marks: 2,
     route: 'state a, the amplitude read off the y-axis, then state b, the number of complete waves between 0 and 360. Two of the four ask it in two parts and two in one, and it is a mark each either way',
     plan: [
@@ -1415,6 +1415,42 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'integer',
     webTopics: ['Identify equation of trigonometric graph'],
     skill: 'Read the amplitude off the axis and count the cycles for b',
+  },
+  /**
+   * The same two marks, read off a **period** instead of counted — 2018 P1 Q6
+   * and 2022 P1 Q8.
+   *
+   * The owner, on the 2026-2023 sign-off sheet against a card headed 2024 P1
+   * Q8: *"Drop the 45 only need end angle"*. 2024 P1 Q8 runs 0 to 360 and puts
+   * nothing on the x-axis but 360; the clone had drawn it with a period axis
+   * reading 45 and 90, which is 2018 P1 Q6's figure wearing 2022 P1 Q8's
+   * numbers.
+   *
+   * It is a different question, not a different drawing. The second mark is
+   * *how b is got*, and the generator's own steps already branch on it:
+   * counting complete waves in a full turn against taking the period off the
+   * scale and dividing 360 by it. Six or eight waves cannot be counted at all,
+   * which is why they only ever appear here.
+   *
+   * Within this id the two papers are two figures and both are drawn: 2022 P1
+   * Q8 shows one wave and labels the period alone, 2018 P1 Q6 shows two and
+   * labels the half-period as well, which is what makes its 90 and 180 read as
+   * a scale rather than as one stray number.
+   */
+  'trig-graphs.amplitude-period': {
+    topic: 'Amplitude and Period of a Trigonometric Graph',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2018 P1 Q6', '2022 P1 Q8'],
+    marks: 2,
+    route: 'state a, the amplitude read off the y-axis, then state b by reading one complete wave off the x-axis and dividing 360 by it. One asks in two parts and one in one, and it is a mark each either way',
+    plan: [
+      'Look at how far the curve climbs above the $x$-axis at its highest point, reading that distance off the scale on the $y$-axis — the wave drops the same amount below, and that distance is $a$',
+      'Read off the $x$-axis how many degrees one complete wave takes, which is the period, then divide $360$ by it to get $b$',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Identify equation of trigonometric graph'],
+    skill: 'Read the amplitude off the axis and get b from the period',
   },
   // Departs from the paper's figure and says so in the generator: 2014 P1 Q10
   // prints eighteen degree labels standing on end, which cannot be laid out

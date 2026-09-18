@@ -1,4 +1,5 @@
-import { type Element, type Figure, type Pt, angleMark, pt, scale, sub, unit } from '../scene';
+import { type Element, type Figure, type Pt, angleAt, angleMark, dist, pt, scale, sub, unit } from '../scene';
+import { textWidth } from '../render';
 
 /**
  * A regular polygon with one side extended to a point outside it.
@@ -61,10 +62,77 @@ export function polygonPoint(spec: PolygonPointSpec): Figure | null {
     ...V.map((v): Element => ({ kind: 'segment', from: O, to: v, dashed: true })),
     { kind: 'segment', from: V[0], to: P },
     { kind: 'segment', from: P, to: last },
-    ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: pt(0, 0) })),
+    /**
+     * Every vertex pushes its letter straight out from the centre — **except
+     * the one the triangle reaches back to.**
+     *
+     * The owner, on the 2026-2023 sign-off sheet: *"H vertex should be
+     * readable"*. Measured off the clone's own SVG, H sat at (95.97, 160.08)
+     * and the segment from the outside point J passed through (95.8, 160.0):
+     * the letter was sitting on that line. It happens because the line P-last
+     * and the radius O-last run in nearly the same direction — the outside
+     * point is produced from the far side of the polygon — so pushing the
+     * letter outward pushes it along the line rather than off it.
+     *
+     * `verifyFigure` allows it, and is right to: the segment ends at that
+     * vertex, so it is ink the label belongs to. Allowed is not readable.
+     *
+     * Pushed square off that line instead, on the side away from the centre,
+     * which is where 2018 P1 Q9 prints the same letter.
+     */
+    ...V.map((p, i): Element => {
+      if (i !== n - 1) return { kind: 'label', text: spec.names[i], anchor: p, away: O };
+      const alongLine = unit(sub(p, P));
+      const outward = sub(p, O);
+      const dot = outward.x * alongLine.x + outward.y * alongLine.y;
+      const square = sub(outward, scale(alongLine, dot));
+      /**
+       * Dead collinear - the outside point produced straight back through the
+       * centre - leaves no square component to push along, and falling back to
+       * the radius puts the letter on the line again, which is the fault. A
+       * true perpendicular to the line, turned to the side the centre is not
+       * on, is off it either way round.
+       */
+      const perp = pt(-alongLine.y, alongLine.x);
+      const side = perp.x * outward.x + perp.y * outward.y >= 0 ? 1 : -1;
+      const offLine = Math.hypot(square.x, square.y) < 0.05
+        ? scale(perp, side) : square;
+      return { kind: 'label', text: spec.names[i], anchor: p, away: sub(p, unit(offLine)) };
+    }),
     { kind: 'label', text: spec.point, anchor: P, away: pt(0, 0) },
   ];
-  if (spec.angleLabel) elements.push(...angleMark(P, [V[0], last], spec.angleLabel));
+  /**
+   * **A narrow wedge is marked further back, where it can hold its number.**
+   *
+   * The owner, on the 2026-2023 sign-off sheet against a 22-degree apex: *"22
+   * coming out of triangle"*. The arc was inside the triangle and so was the
+   * label's anchor; what stuck out was the text box. At 22 degrees the wedge is
+   * `2 r sin 11` across - nine pixels at the default radius - and "22°" renders
+   * about twenty-one, so it overhung both edges however well it was centred.
+   *
+   * 2018 P1 Q9 has the same problem, 17 degrees at L, and answers it by drawing
+   * the mark and writing the number **well back from the vertex**, where the
+   * opening has grown wide enough to take them. The radius is computed the same
+   * way here: far enough out that the wedge is wider than the text, never
+   * closer than the default, and capped at seven tenths of the shorter arm so
+   * the mark stays inside the triangle.
+   *
+   * Passed in rather than built into `angleMark`, which every figure in the
+   * course shares. Widening it there broke `tangent semicircle` outright - its
+   * label landed on other ink, `verifyFigure` threw every attempt away and the
+   * generator ran out of tries. A narrow apex is this figure's problem, so the
+   * fix lives with this figure.
+   */
+  if (spec.angleLabel) {
+    const span = Math.abs(angleAt(P, V[0], last));
+    const arm = Math.min(dist(P, V[0]), dist(P, last));
+    const half = Math.sin(span / 2 * Math.PI / 180);
+    // the renderer's own per-character estimate, at the small label size
+    const need = textWidth(spec.angleLabel, 11);
+    const fits = half > 0.01 ? need / (2 * half) : arm * 0.22;
+    const radius = Math.max(arm * 0.22, Math.min(fits, arm * 0.7));
+    elements.push(...angleMark(P, [V[0], last], spec.angleLabel, radius));
+  }
 
   return {
     scene: { elements },

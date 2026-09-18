@@ -36,8 +36,17 @@ export function polygonAngleQuestion(): Q {
     const n = pick([5, 6, 7, 8, 9, 10]);
     const interior = 180 * (n - 2) / n;
     if (!Number.isInteger(interior)) continue;      // 7 and 9 are not whole
-    // the angle given at the outside point, leaving a sensible answer
-    const given = getRandomInt(12, interior - 20);
+    /**
+     * The angle given at the outside point, leaving a sensible answer.
+     *
+     * **Seventeen at the narrowest, which is the exam's own floor.** 2018 P1
+     * Q9 is the sharper of the two papers at 17 degrees and 2025 P2 Q7 is 65,
+     * so twelve was below anything the exam sets. It is a drawing constraint
+     * as much as a fidelity one: below about 17 degrees the wedge cannot hold
+     * its own number however far back along the bisector `angleMark` writes
+     * it, and at 15 the figure printed a "15" overhanging both sides.
+     */
+    const given = getRandomInt(17, interior - 20);
     const answer = interior - given;
 
     const names = LETTERS.slice(0, n).split('');

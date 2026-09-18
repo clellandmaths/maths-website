@@ -103,6 +103,23 @@ export interface SketchAxesSpec {
    * end. No gridlines anywhere in any of them.
    */
   ticks?: { x?: number[]; y?: number[] };
+  /**
+   * Unlabelled tick marks along the x-axis every this many units, between and
+   * including the numbered ones.
+   *
+   * **2023 P1 Q13 has them and this had missed them.** Its axis is *numbered*
+   * every 90 degrees, and the note in `n5-trig-graph.ts` concluded from that
+   * that only the numbered positions and their midpoints could be read - which
+   * made the paper's own answer, a maximum at x = 30, unreadable, and it was
+   * written off as the paper being harder than the clone could be.
+   *
+   * Counted off the scan: **thirteen marks across the axis, one every 30
+   * degrees.** The maximum at 30 sits on the third of them. The fine scale is
+   * the whole reason the question is answerable as set, exactly as
+   * `xTickRotate` records for 2014 P1 Q10 - the difference is only that 2023
+   * leaves the intermediate marks unnumbered.
+   */
+  minorTicks?: number;
   /** Written after each x tick value. The trig graphs print "90&deg;". */
   xTickSuffix?: string;
   /**
@@ -359,6 +376,19 @@ export function sketchAxes(spec: SketchAxesSpec): Figure {
   // forgiven the curve, so there is nothing left to dodge.
   const uniform: boolean | null = false;
   void belowClear; void aboveClear;
+
+  // The unlabelled marks first, so a numbered tick draws over its own.
+  if (spec.minorTicks) {
+    const [dLo, dHi] = spec.domain ?? [xMin, xMax];
+    for (let v = Math.ceil(dLo / spec.minorTicks) * spec.minorTicks; v <= dHi; v += spec.minorTicks) {
+      if (v < xMin || v > xMax) continue;
+      const at = D(v, 0);
+      elements.push({
+        kind: 'segment', from: pt(at.x, o.y - TICK), to: pt(at.x, o.y + TICK),
+        decoration: true,
+      });
+    }
+  }
 
   for (const v of spec.ticks?.x ?? []) {
     if (v === 0 || v < xMin || v > xMax) continue;
