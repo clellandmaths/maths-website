@@ -117,17 +117,22 @@ export type Dim =
   | { along: 'width'; halfWidth: number; side: 'above' | 'below';
       rank?: number; cx?: number; value: number; text: string; arrow?: true;
       /**
-       * Draw it *at this height inside the figure* rather than on a line clear
-       * of everything.
+       * Draw it across a **ghost piece**, on that piece's own seat, rather
+       * than on a line standing clear of the whole solid.
        *
-       * 2024 P2 Q7 measures the hemisphere's diameter across the flat face
-       * itself, on the ellipse, not on a line under the box - and it has to be
-       * there, because under the box it would be a second horizontal
-       * measurement below the first with nothing saying which of them spans
-       * the dome. The hemisphere sits flat side down on the base, so its flat
-       * face is at 0.
+       * 2024 P2 Q7 measures the hemisphere's diameter on the flat face itself,
+       * inside the dome - and it has to be there, because on a line under the
+       * box it is a second horizontal measurement below the first with nothing
+       * saying which of them spans what.
+       *
+       * **It is not enough to give the height.** A ghost on `base` is seated
+       * at `baseCentreOf`, which on an oblique box is half a depth *behind*
+       * the front edge - the same reason `ghosts` names a face rather than a
+       * height. Placing the line at y = 0 on the axis put it across the front
+       * face of the cuboid instead of across the dome, which is what the owner
+       * saw. So the seat is read from the ghost rather than restated.
        */
-      at?: number }
+      onGhost?: number }
   /**
    * A line pointing at a feature, with the number at its far end.
    *
@@ -375,10 +380,16 @@ export function solidFigure(spec: SolidSpec): Figure {
       [a, b] = [pt(x, d.from), pt(x, d.to)];
       inward = pt(x + (d.side === 'left' ? 1 : -1), (d.from + d.to) / 2);
     } else {
-      const y = d.at !== undefined ? d.at
+      // On a ghost, the line sits on that piece's seat; otherwise it stands
+      // clear of everything, one rank further out for each dimension already
+      // on that side.
+      const g = d.onGhost !== undefined ? spec.ghosts?.[d.onGhost] : undefined;
+      const seat = g ? (g.on === 'top' ? o : foot) : undefined;
+      const y = seat ? seat.y + (g!.lift ?? 0)
         : d.side === 'below' ? box.y0 - step : box.y1 + step;
-      [a, b] = [pt(cx - d.halfWidth, y), pt(cx + d.halfWidth, y)];
-      inward = pt(cx, y + (d.side === 'below' ? 1 : -1));
+      const mx = seat ? seat.x : cx;
+      [a, b] = [pt(mx - d.halfWidth, y), pt(mx + d.halfWidth, y)];
+      inward = pt(mx, y + (d.side === 'below' ? 1 : -1));
     }
     const mid = pt((a.x + b.x) / 2, (a.y + b.y) / 2);
     const arrow = d.arrow === true;   // leaders return earlier
@@ -401,7 +412,23 @@ export function solidFigure(spec: SolidSpec): Figure {
         }
       }
     }
-    elements.push({ kind: 'label', text: d.text, anchor: mid, away: inward });
+    /**
+     * **A measurement drawn across a ghost has its own shaft under the label.**
+     *
+     * Every other dimension here stands clear of the figure, so anchoring the
+     * number on the line and letting the renderer push it off is enough. One
+     * drawn on a ghost is surrounded by the piece it measures, and the push is
+     * a fixed step: "6 cm" came out 1.4px from its own arrow and `verifyFigure`
+     * rejected every draw. The same trap `dimensionArrow` in scene.ts records —
+     * lift the anchor clear first, then let the push carry it further.
+     *
+     * Half the radius, towards the side the dimension names, which for the
+     * hemisphere is up into the dome where there is nothing else drawn.
+     */
+    const labelAt = d.along === 'width' && d.onGhost !== undefined
+      ? pt(mid.x, mid.y + (d.side === 'above' ? 1 : -1) * d.halfWidth * 0.5)
+      : mid;
+    elements.push({ kind: 'label', text: d.text, anchor: labelAt, away: inward });
     claims.push({ kind: 'length', from: a, to: b, value: d.value,
       shown: d.along === 'height' && d.unknown ? false : undefined });
   }

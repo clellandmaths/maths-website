@@ -778,7 +778,7 @@ function boxMinusHemisphere(): Q | null {
      * own question is read. This is that question.
      */
     dims: [
-      { along: 'width', halfWidth: dia / 2, side: 'below', at: 0, arrow: true,
+      { along: 'width', halfWidth: dia / 2, side: 'above', onGhost: 0, arrow: true,
         value: dia, text: `${dia} cm` },
       { along: 'width', halfWidth: w / 2, side: 'below', rank: 0, arrow: true,
         value: w, text: `${w} cm` },

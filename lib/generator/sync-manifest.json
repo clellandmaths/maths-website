@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "f6ef35716b5cd6c266c4f86f5ee513726e86a4d4",
+  "sourceCommit": "d96ad4c82aff71be318209b11f1aa69dec05df68",
   "sourceDirty": false,
   "count": 96,
   "files": {
@@ -25,7 +25,7 @@
     "diagrams/shapes/similar-sectors.ts": "8812a482ca4ed6e8",
     "diagrams/shapes/sketch-axes.ts": "7daae87c4a6fc54c",
     "diagrams/shapes/solid-on-axes.ts": "f9a34b60f0e1ab11",
-    "diagrams/shapes/solid.ts": "1d9ba45320f4591f",
+    "diagrams/shapes/solid.ts": "635a370c5dd96194",
     "diagrams/shapes/split-side.ts": "5f02d970afa71796",
     "diagrams/shapes/tangent-circle.ts": "ffa91f154db429dc",
     "diagrams/shapes/tangent-meets-diameter.ts": "603eb2376f949ce9",
@@ -83,7 +83,7 @@
     "generators/n5-variations.ts": "786bcda7f276d6d5",
     "generators/n5-vector-pathway.ts": "66156155a9febfa5",
     "generators/n5-vectors.ts": "4c2353a0e0f3a517",
-    "generators/n5-volume.ts": "6433ef346aa75993",
+    "generators/n5-volume.ts": "d2593c637256ff2b",
     "generators/n5.ts": "2a59f7373877e0de",
     "generators/paper-hints.ts": "9258771b77ab81bd",
     "generators/paper-markscheme.ts": "bc45858defc787d8",
