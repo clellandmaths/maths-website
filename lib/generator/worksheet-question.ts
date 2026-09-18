@@ -3,7 +3,7 @@ import {
   N5_VARIATIONS, variationsBasedOn, variationsForSubtopic,
 } from './generators/n5-variations';
 import { VARIATION_BY_CODE, VARIATION_CODES } from './generators/variation-codes';
-import { questionKey } from './question-key';
+import { questionKey, storyFreeKey } from './question-key';
 import type { GeneratedQuestion, Topic } from './generators/types';
 
 /**
@@ -543,6 +543,18 @@ export function keyOfQuestion(q: { question: string; answer?: string | null }): 
 }
 
 /**
+ * **Both** identities a sheet dedupes on, for a question the caller holds.
+ *
+ * `drawFrom` rejects a candidate that repeats either the whole question or
+ * merely its sum in a new story, so an exclusion list built from
+ * `keyOfQuestion` alone lets the second kind back in on the next click. That is
+ * what `adapter` means by a pool disagreeing with itself.
+ */
+export function keysOfQuestion(q: { question: string; answer?: string | null }): string[] {
+  return [keyOfQuestion(q), storyFreeKey(q.question, q.answer ?? '')];
+}
+
+/**
  * Staged help for one question, in the order a teacher gives it at a desk.
  *
  * **Why the first two stages exist at all.** A pupil who is stuck has two
@@ -662,7 +674,23 @@ async function drawFrom(
     // a teacher both is handing them the same question twice.
     const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
     if (seen.has(key)) continue;
+    // **And not the same sum wearing a different story.** `questionKey` keeps
+    // the prose, so a brooch and a biscuit tin built on the same nonagon are
+    // two keys and one question; a sheet of ten could be two sums in ten
+    // costumes. See `storyFreeKey`.
+    //
+    // **No variation id in it.** It was `${id}|...` at first, which held inside
+    // one call and vanished between calls: `exclude` carries keys, and a caller
+    // holding a question cannot know which variation made it. `adapter` caught
+    // that as a pool disagreeing with itself - ten questions asked for at once,
+    // fifteen asked for one at a time. Without the id the key is derivable from
+    // the question alone, so `keysOfQuestion` can hand both to the next call.
+    // Two different variations landing on the same numbers *and* the same
+    // answer would now merge; that is rarer than the bug it replaces.
+    const sum = storyFreeKey(made.question, made.answer);
+    if (seen.has(sum)) continue;
     seen.add(key);
+    seen.add(sum);
     out.push(made);
   }
   return out;

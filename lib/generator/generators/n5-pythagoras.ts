@@ -262,8 +262,17 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
         CHORD_SCALES.map(k => ({ d: legD * k, half: legH * k, r: hyp * k })))
         .filter(t => t.r >= lo && t.r <= hi
           && t.half >= t.r * 0.55 && t.half <= t.r * 0.85);
+      // **Every printed number whole, because this is Paper 1.** The branch
+      // above says so in its own words - "cut is Paper 1, so its numbers have
+      // to come out whole" - and CHORD_SCALES carries a 0.5 for the Paper 2
+      // families, which put a radius of 7.5 and 37.5 on the page. Squaring 7.5
+      // by hand is 56.25, which is not a sum this paper sets: 2023 P1 Q10 is
+      // 50, 60 and 90 throughout. Found by scripts/audit-number-scale.mts.
+      const whole = fits.filter(t => Number.isInteger(t.r) && Number.isInteger(t.half)
+        && Number.isInteger(t.d));
+      if (!whole.length) continue;
       if (!fits.length) continue;
-      const t = pick(fits);
+      const t = pick(whole);
       [r, chord, d] = [t.r, t.half * 2, t.d];
     } else {
       r = Number((getRandomInt(lo * 10, hi * 10) / 10).toFixed(1));
@@ -278,6 +287,22 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
     }
     // Always the larger piece — all eight papers are. See `ChordContext`.
     const height = r + d;
+    /**
+     * **The answer may not be a number already printed in the question.**
+     *
+     * The triple pool is all 3-4-5 proportions. In the ones where the
+     * half-chord is the 4, the width is `r + d = 5k + 3k = 8k` and the chord is
+     * `2 x 4k = 8k` — the same number — so radius 30 with a chord of 48 answers
+     * 48, which a pupil can "get" by copying a given.
+     *
+     * That was every draw, and the cause was in the figure rather than here:
+     * 2023 P1 Q10's own shape — radius 50, chord 60, answering 90 — could not
+     * be drawn, because the radius label landed on the chord and `verifyFigure`
+     * rejected it. The giveaway shapes were simply the ones that rendered. Both
+     * halves are fixed now (see the radius label note in circle-chord.ts), so
+     * this guard has a pool to work with.
+     */
+    if (height === chord || height === r) continue;
     if (height < 0.4) continue;
 
     const [O, A, B] = pick([['O', 'A', 'B'], ['C', 'P', 'Q'], ['O', 'M', 'N']]);

@@ -408,8 +408,12 @@ export function sectorQuestion(kinds: Kind[]): Q {
         variationId: paper1 ? 'sector.arc-angle-pi314' : 'sector.arc-angle',
         questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.angle,
           `Calculate the length of ${angle > 180 ? 'major ' : ''}arc $${nA}${nB}$.`,
-          paper1 ? 'Take $\\pi = 3\\cdot 14$.'
-                 : 'Give your answer correct to one decimal place.'],
+          // **Neither arc paper asks for a decimal place.** 2018 P2 Q2 and
+          // 2023 P2 Q3 both stop at "Calculate the length of the arc", and
+          // 2023's scheme takes "16.9(27...) or 17" as it comes. The Paper 1
+          // instruction stays: 2016 P1 Q3 and 2019 P1 Q4 really do say to take
+          // pi as 3.14, which is what makes them non-calculator.
+          ...(paper1 ? ['Take $\\pi = 3\\cdot 14$.'] : [])],
         boardQuestionLines: [`Sector radius ${r}, angle ${Math.round(angle)}°. Arc length?`],
         solutionSteps: [
           share,

@@ -124,6 +124,36 @@ const withoutGeometry = (text: string): string =>
  * that happen to share an answer count as one. For a floor that is the safe
  * direction - it can only make the bar harder to clear, never easier.
  */
+/**
+ * The question **underneath the story**: its numbers and what it comes to.
+ *
+ * `questionKey` deliberately leaves the prose alone, because "a badge has `a`
+ * sides" and "a tile has `a` sides" can be different questions. That is right
+ * for counting. It is wrong for filling one sheet, where it lets the same sum
+ * appear ten times in ten costumes:
+ *
+ *     A silver brooch is designed around a regular nonagon ...   20 degrees
+ *     A biscuit tin lid is designed around a regular nonagon ...  20 degrees
+ *     A garden paving slab is designed around a regular pentagon  36 degrees
+ *     A stained-glass window is designed around a regular pentagon 36 degrees
+ *
+ * Eight questions, five stories, **two sums**. Measured before this existed:
+ * every sheet of ten from `A Polygon and a Diameter` repeated a number across
+ * different stories, and the worst put all ten on one.
+ *
+ * So a sheet also holds the numbers a question prints and the answer it
+ * reaches. Paired with the variation id, because two *different* variations
+ * may land on the same numbers by coincidence and are still two questions.
+ *
+ * Numbers inside a tag are masked the same way `questionKey` masks them: a
+ * figure that jitters is not new work.
+ */
+export function storyFreeKey(question: string, answer: string): string {
+  const bare = withoutGeometry(question);
+  const numbers = (bare.match(/-?\d+(?:\.\d+)?/g) ?? []).join(',');
+  return `${numbers}||${canonicalMaths(answer)}`;
+}
+
 export function questionKey(q: Pick<GeneratedQuestion, 'questionLines' | 'finalAnswer'>): string {
   return canonicalMaths(`${withoutGeometry(q.questionLines.join('|'))}||${q.finalAnswer ?? ''}`);
 }

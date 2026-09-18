@@ -327,7 +327,7 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
     if (!fig) continue;
     const prose = [
       `The diagram shows triangle $${A}${B}${C}$.`,
-      `Calculate the size of acute angle $${A}${B}${C}$. Give your answer correct to one decimal place.`,
+      `Calculate the size of acute angle $${A}${B}${C}$.`,
     ];
     // •¹ correct substitution into the sine rule, •² rearrange it, •³ the angle
     const steps = [

@@ -108,7 +108,12 @@ function cosineRuleSideExact(): Q {
     const unit = pick(UNITS);
     const a = getRandomInt(4, 14), b = getRandomInt(4, 14);
     const den = pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    const numr = getRandomInt(-(den - 1), den - 1);
+    // **A positive cosine, as both papers give.** 2018 P1 Q10 is cos Z = 1/8
+    // and 2023 P1 Q6 is cos C = 1/5. A negative one turns the rule's own
+    // `- 2ab cos C` into an addition, which is a sign trap neither paper sets
+    // and a poor one to set in a non-calculator paper, where the arithmetic is
+    // the whole point of the question sitting there.
+    const numr = getRandomInt(1, den - 1);
     if (numr === 0 || gcd(Math.abs(numr), den) !== 1) continue;
     const twoAbCos = 2 * a * b * numr / den;
     if (!Number.isInteger(twoAbCos)) continue;

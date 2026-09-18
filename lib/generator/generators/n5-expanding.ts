@@ -242,10 +242,27 @@ function binomialTrinomial(): Q {
 
 // ── shape: a product plus a single bracket — 2018 P1 Q2, 2023 P1 Q2, 2025 P1 Q2 ─
 
+/**
+ * **Three papers, three shapes, three ids.**
+ *
+ *   2018 P1 Q2   (3x + 1)(x - 1) + 2(x^2 - 5)   product, then a quadratic
+ *   2023 P1 Q2   (x + 7)^2 + 6(x^2 - 10)        a square, then a quadratic
+ *   2025 P1 Q2   (x + 3)(x + 5) + 4(x - 2)      product, then a linear
+ *
+ * `squared` was already drawn once before the loop, which is the rule; but
+ * `quadratic` was drawn *inside* it, so the two together made four shapes from
+ * three papers - and the fourth, a square plus a multiple of a linear, is a
+ * question none of them sets. Both are now chosen together, from the three
+ * that exist, and each carries its own id so a press on 2023 P1 Q2 cannot
+ * return 2025's.
+ */
 function productPlusBracket(): Q {
-  const squared = getRandomInt(1, 3) === 1;      // 2023 uses (x+7)^2
+  const shape = getRandomInt(0, 2);              // 0 2018, 1 2023, 2 2025
+  const squared = shape === 1;
+  const quadratic = shape !== 2;
   for (let tries = 0; tries < 400; tries++) {
-    const v = pick(VARS);
+    // All three papers use x.
+    const v = 'x';
     const a = squared ? 1 : nonZeroInt(1, 3);
     const b = nonZeroInt(-9, 9);
     const c = squared ? a : nonZeroInt(1, 3);
@@ -258,7 +275,6 @@ function productPlusBracket(): Q {
     // At least two: a multiplier of 1 prints no multiplier at all, and "expand
     // the single bracket" becomes copying it out. The papers use 2, 6 and 4.
     const k = getRandomInt(2, 7);
-    const quadratic = getRandomInt(0, 1) === 1;  // 2018/2023 add k(x^2 + m)
     const second: Poly = quadratic ? [nonZeroInt(-10, 10), 0, 1] : [nonZeroInt(-9, 9), nonZeroInt(1, 4)];
     const result = addP(mulP([b, a], [d, c]), scaleP(second, k));
     if (!result[2] || !result[1] || !result[0]) continue;   // every term should survive
@@ -277,7 +293,9 @@ function productPlusBracket(): Q {
     return {
       subTopic: 'Expanding and Collecting',
       difficulty: 'exam',
-      variationId: 'expanding.product-plus',
+      variationId: shape === 1 ? 'expanding.product-plus-square'
+        : shape === 2 ? 'expanding.product-plus-linear'
+        : 'expanding.product-plus',
       questionLines: [
         `${EXPAND} $${first} ${k < 0 ? '-' : '+'} ${coeffTex(Math.abs(k))}${bracket(second, v)}$`,
       ],

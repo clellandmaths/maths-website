@@ -171,6 +171,17 @@ interface OpOpts {
    * serves keep their own shape until their own questions are reviewed.
    */
   oneProper?: true;
+  /**
+   * The mixed number is the **first** operand, always.
+   *
+   * `oneProper` alone lets either side carry it, which is right for the
+   * multiplication - 2025 P1 Q1 leads with the mixed number and 2014 P1 Q1 and
+   * 2019 P1 Q2 lead with the proper fraction, and multiplication does not care.
+   * Division does. Both of its papers are a mixed number divided by a proper
+   * fraction - `2 1/6 / 8/9` and `1 5/6 / 3/4` - and dividing the other way
+   * round is a different sum with a different answer.
+   */
+  mixedLeads?: true;
   subTopic: string;
   variationId: string;
   /**
@@ -256,13 +267,13 @@ const MAX_DIVIDE_MIXED_DEN = 20;
 const MAX_BRACKET_DEN = 40;
 
 function operation(
-  { op, useMixed, oneProper, subTopic, variationId, stepMarks, maxDen }: OpOpts,
+  { op, useMixed, oneProper, mixedLeads, subTopic, variationId, stepMarks, maxDen }: OpOpts,
 ): Q {
   for (let tries = 0; tries < 1200; tries++) {
     // Which side carries the whole number, where only one of them does. Both
     // orders are in the papers: 2025 P1 Q1 leads with the mixed number, 2014
     // P1 Q1 and 2019 P1 Q2 lead with the proper fraction.
-    const mixedFirst = getRandomInt(0, 1) === 0;
+    const mixedFirst = mixedLeads ? true : getRandomInt(0, 1) === 0;
     const x = !useMixed || (oneProper && !mixedFirst)
       ? properTerm(PROPER_DEN(op))
       : mixedTerm(op === 'subtract' ? 2 : 1, 5);
@@ -553,8 +564,13 @@ const N5_GENERATORS: Record<string, () => Q> = {
     op: 'divide', useMixed: false,
     subTopic: 'Dividing Fractions', variationId: 'fractions.divide',
   }),
+  // **A mixed number divided by a proper fraction**, which is what both papers
+  // are: 2023 P1 Q1 is `2 1/6 / 8/9` and 2017 P1 Q3 is `1 5/6 / 3/4`. This drew
+  // mixed by mixed every time, so neither paper's own question could come out -
+  // and their first mark is "convert to improper fraction and multiply by the
+  // reciprocal", one conversion, not two.
   'Dividing Mixed Numbers': () => operation({
-    op: 'divide', useMixed: true,
+    op: 'divide', useMixed: true, oneProper: true, mixedLeads: true,
     subTopic: 'Dividing Mixed Numbers', variationId: 'fractions.divide-mixed',
     stepMarks: [1, 1],   // 2023 P1 Q1, 2017 P1 Q3
     maxDen: MAX_DIVIDE_MIXED_DEN,   // the papers answer 2 7/16 and 2 4/9

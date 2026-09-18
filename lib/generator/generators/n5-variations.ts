@@ -653,7 +653,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2016 P2 Q10', '2022 P1 Q11', '2023 P1 Q12'],
+    basedOn: ['2016 P2 Q10', '2022 P1 Q11'],
     marks: 3,
     route: 'apply the power of a power, then add the powers, then express the result with a positive power. 2022 and 2023 accept two and three alternative orderings respectively; ours is their Method 1',
     plan: [
@@ -665,6 +665,26 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'expression',
     webTopics: ['Rewriting fraction or negative index in the form ax^n', 'Laws of indices'],
     skill: 'Combine powers to a negative index, then write it with a positive power',
+  },
+  // `5c^-2 / (c^3 x c^4)` - 2023 P1 Q12, the one paper that writes it as a
+  // fraction and carries a coefficient through it.
+  'indices.negative-power-fraction': {
+    topic: 'Negative Indices',
+    difficulty: 'exam',
+    strategy: 'input-first',
+    source: 'zeta+paper',
+    basedOn: ['2023 P1 Q12'],
+    marks: 3,
+    route: 'apply the power of a power, then add the powers, then express the result with a positive power. 2022 and 2023 accept two and three alternative orderings respectively; ours is their Method 1',
+    plan: [
+      'Deal with the bracket first, multiplying the powers together and keeping the minus sign attached to the power it belongs to',
+      'Combine what is left by adding the powers where terms multiply and subtracting them where terms divide',
+      'Rewrite the result so the power is positive, using $a^{-n} = \\frac{1}{a^{n}}$',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Rewriting fraction or negative index in the form ax^n', 'Laws of indices'],
+    skill: 'Simplify a negative power over a product, then write it positively',
   },
   'indices.evaluate': {
     topic: 'Fractional Indices',
@@ -1054,7 +1074,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'paper',
-    basedOn: ['2018 P1 Q2', '2023 P1 Q2', '2025 P1 Q2'],
+    basedOn: ['2018 P1 Q2'],
     marks: 3,
     route: 'start the expansion, then complete it, then collect like terms. The evidence for the second mark must show both brackets expanded, not the single bracket alone',
     method: 'Expand the product two terms at a time, expand the single bracket, then collect the like terms',
@@ -1067,6 +1087,46 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'expression',
     webTopics: ['Expanding brackets'],
     skill: 'Expand a product and a single bracket, then collect like terms',
+  },
+  // `(x + 7)^2 + 6(x^2 - 10)` - a squared bracket, then a multiple of a quadratic.
+  'expanding.product-plus-square': {
+    topic: 'Expanding and Collecting',
+    difficulty: 'exam',
+    strategy: 'input-first',
+    source: 'paper',
+    basedOn: ['2023 P1 Q2'],
+    marks: 3,
+    route: 'start the expansion, then complete it, then collect like terms. The evidence for the second mark must show both brackets expanded, not the single bracket alone',
+    method: 'Expand the product two terms at a time, expand the single bracket, then collect the like terms',
+    plan: [
+      'Deal with the pair of brackets on its own first: take each term of one across both terms of the other and tidy that part up before you look at anything else',
+      'Multiply out the remaining bracket by whatever sits in front of it, watching for a minus there, because it flips both signs inside',
+      'Write the two expansions side by side, then gather the squared terms, the $x$ terms and the plain numbers into one term each',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Expanding brackets'],
+    skill: 'Expand a squared bracket and a multiple of a quadratic, then collect',
+  },
+  // `(x + 3)(x + 5) + 4(x - 2)` - two brackets, then a multiple of a linear.
+  'expanding.product-plus-linear': {
+    topic: 'Expanding and Collecting',
+    difficulty: 'exam',
+    strategy: 'input-first',
+    source: 'paper',
+    basedOn: ['2025 P1 Q2'],
+    marks: 3,
+    route: 'start the expansion, then complete it, then collect like terms. The evidence for the second mark must show both brackets expanded, not the single bracket alone',
+    method: 'Expand the product two terms at a time, expand the single bracket, then collect the like terms',
+    plan: [
+      'Deal with the pair of brackets on its own first: take each term of one across both terms of the other and tidy that part up before you look at anything else',
+      'Multiply out the remaining bracket by whatever sits in front of it, watching for a minus there, because it flips both signs inside',
+      'Write the two expansions side by side, then gather the squared terms, the $x$ terms and the plain numbers into one term each',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Expanding brackets'],
+    skill: 'Expand two brackets and a multiple of a linear, then collect',
   },
 
   // ── Factorising ─────────────────────────────────────────────────────────
@@ -1664,7 +1724,26 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'alg-fractions.simplify': {
     topic: 'Simplifying Algebraic Fractions',
     difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
-    basedOn: ['2015 P1 Q12', '2022 P2 Q12', '2023 P2 Q12'],
+    basedOn: ['2015 P1 Q12'],
+    marks: 3,
+    route: 'factorise the numerator, factorise the denominator, then cancel the brackets correctly',
+    plan: [
+      'Factorise the top on its own, checking for a factor common to both terms and for a difference of two squares',
+      'Factorise the bottom of the fraction the same way, so the denominator is a product of brackets too',
+      'Cancel any bracket that now appears on the top and on the bottom, and leave the rest as a single fraction',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    // 2015 P1 Q12 is tagged on the website under both, and with the other two
+    // papers split off this variation derives from that one alone.
+    webTopics: ['Simplifying algebraic fraction', 'Factorising'],
+    skill: 'Factorise numerator and denominator, then cancel',
+  },
+  // `(x^2 - 16)/(x^2 + x - 20)` - a difference of two squares over a trinomial.
+  'alg-fractions.simplify-squares': {
+    topic: 'Simplifying Algebraic Fractions',
+    difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
+    basedOn: ['2023 P2 Q12'],
     marks: 3,
     route: 'factorise the numerator, factorise the denominator, then cancel the brackets correctly',
     plan: [
@@ -1675,7 +1754,24 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'expression',
     webTopics: ['Simplifying algebraic fraction'],
-    skill: 'Factorise numerator and denominator, then cancel',
+    skill: 'Factorise a difference of two squares over a trinomial, then cancel',
+  },
+  // `(2ab + 6a)/(b^2 - 9)` - a common factor in two letters over two squares.
+  'alg-fractions.simplify-two-letter': {
+    topic: 'Simplifying Algebraic Fractions',
+    difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
+    basedOn: ['2022 P2 Q12'],
+    marks: 3,
+    route: 'factorise the numerator, factorise the denominator, then cancel the brackets correctly',
+    plan: [
+      'Factorise the top on its own, checking for a factor common to both terms and for a difference of two squares',
+      'Factorise the bottom of the fraction the same way, so the denominator is a product of brackets too',
+      'Cancel any bracket that now appears on the top and on the bottom, and leave the rest as a single fraction',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Simplifying algebraic fraction'],
+    skill: 'Take out a common factor in two letters, factorise the squares, then cancel',
   },
   'alg-fractions.factorise-simplify': {
     topic: 'Simplifying Algebraic Fractions',
@@ -1981,7 +2077,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'change-subject.fraction-coefficient': {
     topic: 'Changing the Subject with a Fractional Coefficient',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2014 P2 Q11', '2019 P1 Q7', '2023 P2 Q7', '2025 P2 Q9'],
+    basedOn: ['2014 P2 Q11', '2019 P1 Q7', '2025 P2 Q9'],
     marks: 3,
     route: 'clear the constant term, clear the fractional coefficient, then divide by what is left. 2023 and 2025 accept either order for the first two',
     plan: [
@@ -1993,6 +2089,24 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'expression',
     webTopics: ['Changing the subject of a formula'],
     skill: 'Clear the fraction first, then isolate the subject',
+  },
+  // `P = (1/3)mn - r` - 2023 P2 Q7, the one with no square and a bare
+  // constant. See the note above `plain` in n5-formulae.ts.
+  'change-subject.fraction-coefficient-plain': {
+    topic: 'Changing the Subject with a Fractional Coefficient',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2023 P2 Q7'],
+    marks: 3,
+    route: 'clear the constant term, clear the fractional coefficient, then divide by what is left. 2023 and 2025 accept either order for the first two',
+    plan: [
+      'Read the right-hand side from the outside in and note what has been done to the subject, because you will undo those operations in the reverse order',
+      'Deal with anything added or subtracted outside the fraction first, then multiply both sides by the number sitting under the $1$ so the fraction is gone',
+      'Divide both sides by whatever is still multiplying the subject, and take across any term still sitting beside it',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Changing the subject of a formula'],
+    skill: 'Clear a fractional coefficient and a bare constant, then divide',
   },
 
   // ── Inequalities — 5 questions plus 2026, uniformly 3 marks ──────────────

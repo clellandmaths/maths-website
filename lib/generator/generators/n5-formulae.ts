@@ -213,7 +213,23 @@ function subjectFractionCoefficient(): Q {
   const bracketed = getRandomInt(1, 3) === 1;   // the 2019 shape, 1 of the 4
   const d = pick([2, 3, 4]);
   const [v, subj, mLetter, tLetter] = letters(4, true);
-  const squareM = getRandomInt(0, 1) === 0;
+  /**
+   * **Plain, or squared with a coefficient — two of the papers, two shapes.**
+   *
+   *   2023 P2 Q7   P = (1/3)mn - r       no square, and a bare constant
+   *   2025 P2 Q9   B = (1/4)kc^2 - 3c    a square, and a coefficient on it
+   *
+   * Drawn independently, `squareM` and `tCoef` made four combinations from two
+   * papers, and 2023 P2 Q7 got its own in one draw of four. The owner read the
+   * result off the contact sheet as "seems slightly harder", which is exactly
+   * what it was: `S = (1/3)aw^2 - 2c` where the paper is `P = (1/3)mn - r`.
+   *
+   * 2014 P2 Q11 - `s = ut + (1/2)at^2` - is a third shape again, with a whole
+   * extra term, and is not built here at all; it shares `-squared`'s id as the
+   * nearest of the two. That is a known compromise, not a claim they match.
+   */
+  const plain = getRandomInt(0, 1) === 0;
+  const squareM = !plain;
   const mTex = squareM ? `${mLetter}^{2}` : mLetter;
 
   if (bracketed) {
@@ -240,14 +256,16 @@ function subjectFractionCoefficient(): Q {
 
   // V = (1/d)·S·M ± T, where T may itself carry a coefficient
   const minus = getRandomInt(0, 1) === 0;
-  const tCoef = pick([1, 1, 2, 3]);
+  // 2023 P2 Q7's constant is bare; 2025 P2 Q9's carries a 3.
+  const tCoef = plain ? 1 : pick([2, 3]);
   const tTex = term(tCoef, tLetter);
   const flipped = minus ? '+' : '-';            // the sign after moving T across
 
   return {
     subTopic: 'Changing the Subject with a Fractional Coefficient',
     difficulty: 'exam',
-    variationId: 'change-subject.fraction-coefficient',
+    variationId: plain ? 'change-subject.fraction-coefficient-plain'
+      : 'change-subject.fraction-coefficient',
     questionLines: [
       `Change the subject of the formula $${v} = ${frac('1', `${d}`)}${subj}${mTex} ${minus ? '-' : '+'} ${tTex}$ to $${subj}$.`,
     ],
@@ -375,7 +393,11 @@ function inequalityFractions(): Q {
     const p = pick([2, 3, 4, 5]), r = pick([2, 3, 4, 5]);
     if (p === r) continue;
     const a = nonZeroInt(-8, 8);                // constant inside the numerator
-    const b = nonZeroInt(-6, 6);                // the loose constant
+    // **Subtracted, as the one paper subtracts.** 2023 P1 Q14 is
+    // `(x + 1)/3 - 2 > 3x/5`: the loose constant comes off the left-hand
+    // fraction. Drawn across zero it was added in a quarter of draws, which
+    // puts a question no paper sets under that paper name.
+    const b = getRandomInt(1, 6);                // the loose constant, taken away
     // the paper's right-hand side is 3x/5 — positive, and in lowest terms, so
     // that -4p/2 or -5y/5 can never be printed
     const q = getRandomInt(2, 7);
@@ -406,7 +428,11 @@ function inequalityFractions(): Q {
       subTopic: 'Inequalities with Fractions',
       difficulty: 'exam',
       variationId: 'inequalities.fractions',
-      questionLines: [`${pick(INEQ_LEAD)} ${pick(INEQ_WORD)} $${lhs} ${rel} ${rhs}$`],
+      // **One paper, one wording.** 2023 P1 Q14 is the only question this
+      // clones and it reads "Solve, algebraically, the inequation". The pools
+      // above carry both wordings because `inequalities.brackets` has five
+      // papers that use both; this one does not get to choose.
+      questionLines: [`${INEQ_LEAD[1]} ${INEQ_WORD[1]} $${lhs} ${rel} ${rhs}$`],
       boardQuestionLines: [`Solve $${lhs} ${rel} ${rhs}$`],
       solutionSteps: [
         `<strong>1.</strong> Multiply every term by $${L}$, the lowest common multiple of $${p}$ and $${r}$:<br><br>$${term(lCoef, `(${v}${tail(a)})`)} ${L * b < 0 ? `+ ${-(L * b)}` : `- ${L * b}`} ${rel} ${term(rCoef, v)}$`,

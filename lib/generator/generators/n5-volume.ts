@@ -691,10 +691,38 @@ function pyramidMinusPyramid(): Q | null {
   return assemble({
     stack: [{ kind: 'pyramidFrustum', w: bigW, wTop: smallW, h: blockH }],
     ghosts: [{ piece: { kind: 'pyramid', w: smallW, h: smallH }, on: 'top' }],
+    /**
+     * **Four arrows, and the top face measured across itself.**
+     *
+     * 2023 P2 Q9 draws every length as a solid line barbed at both ends: 90 cm
+     * under the base, 60 cm and 48 cm stacked to the right, and 40 cm *across
+     * the top face*. This drew the three as dashed lines with no ends, and
+     * pointed at the top face with a leader instead of spanning it - so the one
+     * measurement a pupil has to pick out of the middle of the figure was the
+     * one drawn least like a measurement.
+     */
     dims: [
-      { along: 'width', halfWidth: bigW / 2, side: 'below', value: bigW, text: `${bigW} cm` },
-      { along: 'height', from: 0, to: blockH, side: 'left', value: blockH, text: `${blockH} cm` },
-      { along: 'height', from: blockH, to: bigH, side: 'right', value: smallH, text: `${smallH} cm` },
+      { along: 'width', halfWidth: bigW / 2, side: 'below', arrow: true,
+        value: bigW, text: `${bigW} cm` },
+      { along: 'height', from: 0, to: blockH, side: 'left', arrow: true,
+        value: blockH, text: `${blockH} cm` },
+      { along: 'height', from: blockH, to: bigH, side: 'right', arrow: true,
+        value: smallH, text: `${smallH} cm` },
+      /**
+       * **The top face keeps its leader, and that is a compromise.**
+       *
+       * 2023 P2 Q9 spans the top face with an arrow, like the other three.
+       * Drawn that way here the number has the ghost pyramid's dashed edges
+       * above it and the frustum's own top line below, and `verifyFigure`
+       * rejects all but one set of proportions — the pool collapsed from varied
+       * numbers to a single question, every draw answering 392. Three arrows
+       * and one leader is worse than the paper and much better than one
+       * question.
+       *
+       * The fix, when someone takes it: the label needs a placement that
+       * clears both lines, the way `dimensionArrow` solved the same squeeze on
+       * 2024 P1 Q14 by moving along the measured line rather than across it.
+       */
       { along: 'leader', at: { x: smallW / 4, y: blockH * 1.1 }, degrees: 200, text: `${smallW} cm` },
     ],
   }, 'A Pyramid with its Tip Removed', 'volume.pyramid-minus-pyramid', prose,

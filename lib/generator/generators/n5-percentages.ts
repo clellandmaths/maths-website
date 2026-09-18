@@ -311,7 +311,18 @@ function compoundBetweenYears(): Q {
 function partOfWhole(): Q {
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(PART_OF_WHOLE_CONTEXTS);
-    const pct = pick([10, 20, 25, 40, 50, 60, 75, 80, 90]);
+    /**
+     * **Not 10, and not 50.** The owner, on 2026 P1 Q2: a pupil doubles or
+     * multiplies by ten and never meets the method the three marks pay for —
+     * know that r% is the figure given, begin a valid strategy, complete it.
+     *
+     * The three papers use 80, 60 and 85, and none of them goes below 60 or
+     * picks a rate that undoes itself. 20 and 25 stay: multiplying by five or
+     * four is a step a pupil still has to see, where doubling is not. 85 is
+     * added because 2018 P2 Q11 uses it and the pool had no odd multiple of
+     * five at all.
+     */
+    const pct = pick([20, 25, 40, 60, 65, 75, 80, 85, 90]);
     const [lo, hi] = ctx.band;
     const step = hi > 100000 ? 20000 : hi > 10000 ? 1000 : hi > 1000 ? 100 : 20;
     const whole = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;
@@ -423,7 +434,13 @@ function twoStage(): Q {
   const start = getRandomInt(8, 60) * 500;
   const first = getRandomInt(9, 18);
   const rest = getRandomInt(4, 8);
-  const restYears = getRandomInt(2, 3);
+  // **Two, because the one paper is two.** 2023 P2 Q1 depreciates once at 11%
+  // and then at 6% "over the next two years", and asks for the value three
+  // years after buying. Three of them is a question no paper sets - and the
+  // wording and the arithmetic have to move together, which they did not when
+  // only the sentence was changed: the page then said "the next two years" over
+  // a value that had been depreciated three times.
+  const restYears = 2;
   const m1 = 1 - first / 100, m2 = 1 - rest / 100;
   const value = start * m1 * Math.pow(m2, restYears);
 
@@ -434,9 +451,15 @@ function twoStage(): Q {
     questionLines: [
       ctx.opening(`£${money(start, 0)}`),
       `It depreciated by ${first}% in the first year.`,
-      `It then depreciated by a further ${rest}% each year over the next ${restYears === 2 ? 'two' : 'three'} years.`,
+      // **Two, because the one paper is two.** 2023 P2 Q1 depreciates once at
+      // 11% and then at 6% "over the next two years", and asks for the value
+      // three years after buying. A third year is a question no paper sets.
+      `It then depreciated by a further ${rest}% each year over the next two years.`,
       `Calculate the value of ${ctx.subject} after ${restYears + 1} years.`,
-      `Give your answer to two decimal places.`,
+      // **No rounding line.** 2023 P2 Q1 gives none and answers (£) 15,728.08:
+      // money to the penny is the assumption, which is the same ruling made for
+      // percentages.compound on 2024 P2 Q1.
+
     ],
     boardQuestionLines: [
       `£${money(start, 0)}, down ${first}% then ${rest}% for ${restYears} years. Value?`,

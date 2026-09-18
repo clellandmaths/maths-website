@@ -135,14 +135,51 @@ export function circleChord(spec: CircleChordSpec): Figure {
   // is not square-on to a vertical line sends the label sliding up it.
   const rightOf = (y: number) => pt(Math.max(half, r * 0.5), y);
   if (radiusLine !== 'none' && spec.labels.radius) {
-    elements.push(sideLabel(O, B, spec.labels.radius, pt(0, k * m)));
+    /**
+     * **Pushed away from A, the chord's far end.**
+     *
+     * Away from `pt(0, k * m)` — a point on the vertical at the chord's height
+     * — works while the cut is deep, and fails as it shallows: at 2023 P1 Q10's
+     * own proportions, radius 50 and chord 60, the number lands 4.6px off the
+     * chord and `verifyFigure` throws the whole draw away. That mattered more
+     * than it looks. The only shapes that *did* render were the ones whose
+     * answer equals the chord, so every clone of this question gave its answer
+     * away in the question — see the note in n5-pythagoras.ts.
+     *
+     * A is the other end of the chord, so pushing away from it carries the
+     * label along the chord's own direction, into the open part of the major
+     * piece, at every depth of cut.
+     *
+     * Keep the anchor on the midpoint. `verifyFigure` ties a measurement to the
+     * segment it measures by that midpoint; moved even a little along the line,
+     * the label stops being recognised as the radius's own and is then counted
+     * against it — 0.0px from "ink it does not label", which is the radius line
+     * it is sitting on and labelling.
+     */
+    elements.push(sideLabel(O, B, spec.labels.radius, A));
   }
   // The chord's own label goes a quarter along it, not at its midpoint, which
   // is where the perpendicular would meet it if the pupil draws one in. The
   // papers place it off-centre for the same reason.
   const quarter = pt(A.x + (B.x - A.x) * 0.28, A.y + (B.y - A.y) * 0.28);
   if (spec.labels.chord) {
-    elements.push({ kind: 'label', text: spec.labels.chord, anchor: quarter, away: T });
+    // **Which side of the chord the number goes.**
+    //
+    // Away from T puts it outside the chord, on the side the cut removes. That
+    // is right while the removed piece is big, and wrong as it thins: the
+    // dashed arc closes in on the chord and the label lands on it. 2023 P1
+    // Q10 is the thin case - radius 50, chord 60, so the chord sits 40 out of
+    // 50 from the centre - and verifyFigure rejected every draw of it with
+    // "4.0px from ink it does not label", which left the generator able to
+    // draw only the shapes where the chord is far from the edge. Those are
+    // exactly the ones whose answer equals the chord.
+    //
+    // The paper prints that measurement on an arrow outside the whole figure.
+    // Short of that, the major piece is the side with room in it, so on a thin
+    // cut the number goes inward instead.
+    const thin = spec.rest === 'dashed' && Math.abs(k) > r * 0.7;
+    const side = thin ? pt(2 * quarter.x - T.x, 2 * quarter.y - T.y) : T;
+    elements.push({ kind: 'label', text: spec.labels.chord, anchor: quarter, away: side });
   }
   if (spec.labels.height) elements.push(sideLabel(M, T, spec.labels.height, rightOf((k + r) * m / 2)));
   if (spec.labels.centreToChord) elements.push(sideLabel(O, M, spec.labels.centreToChord, rightOf(k * m / 2)));

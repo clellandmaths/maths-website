@@ -124,6 +124,52 @@ function negativePower(): Q {
   throw new Error('indices.negative-power: no valid question found');
 }
 
+// ── skill: a negative index over a product — 2023 P1 Q12 ─────────────────
+//
+// `5c^-2 / (c^3 x c^4)` -> `5c^-9` -> `5/c^9`. The same three marks as the
+// product form above and a different question to look at: the powers come off
+// a fraction rather than a product, and a coefficient rides through the whole
+// thing untouched.
+//
+// **This was cited onto `indices.negative-power` and never built.** That
+// routine's own comment names 2016 P2 Q10 and 2022 P1 Q11 - both of them
+// `(m^-2)^4 x m^-5` - so a pupil asking for 2023 P1 Q12 again got a product of
+// powers with no fraction and no coefficient anywhere. The owner read it off
+// the contact sheet as "not showing the same style of index question".
+
+function negativePowerFraction(): Q {
+  for (let tries = 0; tries < 300; tries++) {
+    const v = pick(VARS);
+    const k = getRandomInt(2, 9);        // the coefficient, which rides through
+    const a = getRandomInt(1, 3);        // the numerator's negative power
+    const b = getRandomInt(2, 5);        // the two the denominator multiplies
+    const c = getRandomInt(2, 5);
+    if (b === c) continue;               // 2023 P1 Q12 is c^3 x c^4, not c^3 x c^3
+    const result = -a - b - c;
+    if (result < -18) continue;
+
+    const numTex = `${k}${v}^{-${a}}`;
+    const denTex = `${pow(v, b)} \\times ${pow(v, c)}`;
+    const expr = `\\frac{${numTex}}{${denTex}}`;
+    return {
+      subTopic: 'Negative Indices',
+      difficulty: 'skill',
+      variationId: 'indices.negative-power-fraction',
+      questionLines: [`Simplify $${expr}$`, POSITIVE_POWER],
+      boardQuestionLines: [`$${expr}$`],
+      solutionSteps: [
+        `<strong>1.</strong> Add the powers on the bottom:<br><br>$${denTex} = ${pow(v, b + c)}$`,
+        `<strong>2.</strong> Dividing subtracts the powers, and the ${k} is along for the ride:<br><br>$\\frac{${numTex}}{${pow(v, b + c)}} = ${k}${v}^{${result}}$`,
+        `<strong>3.</strong> Write it with a positive power using $${v}^{-n} = \\frac{1}{${v}^{n}}$:<br><br>$${k}${v}^{${result}} = \\frac{${k}}{${pow(v, -result)}}$`,
+      ],
+      // •¹ one law applied, •² the simplification completed, •³ a positive power
+      stepMarks: [1, 1, 1],
+      finalAnswer: `$\\frac{${k}}{${pow(v, -result)}}$`,
+    };
+  }
+  throw new Error('indices.negative-power-fraction: no valid question found');
+}
+
 // ── skill: evaluating a fractional index — practice "16^{3/2}", Zeta "27^{2/3}" ─
 
 function evaluateFractional(): Q {
@@ -407,7 +453,10 @@ function rootAsPower(): Q {
 
 export const INDICES_GENERATORS: Record<string, () => Q> = {
   'Laws of Indices': laws,
-  'Negative Indices': negativePower,
+  // Two papers write a product and one writes a fraction; the fraction is
+  // 2023 P1 Q12. Chosen here rather than inside either routine, so each id
+  // draws only its own shape.
+  'Negative Indices': () => (getRandomInt(0, 1) === 0 ? negativePower() : negativePowerFraction()),
   'Fractional Indices': evaluateFractional,
   'Indices with Coefficients': () => withCoefficient(true),
   'Indices in a Quotient': () => withCoefficient(false),

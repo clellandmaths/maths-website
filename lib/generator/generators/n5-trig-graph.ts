@@ -248,7 +248,11 @@ function amplitudeAndShift(): Q | null {
 // figure shows by putting the minimum on the x-axis rather than below it.
 
 function shiftAndRaise(): Q | null {
-  const fn = pick(['sin', 'cos'] as const);
+  // **Cosine, because the one paper is a cosine.** 2023 P1 Q13 is
+  // `y = cos(x + a) + b`, and a sine drawn under its name is a question no
+  // paper sets - the owner's ruling of 2026-09-18, that the form is part of
+  // the question.
+  const fn = 'cos' as const;
   // Only shifts a pupil can actually read off this axis.
   //
   // The figure ticks the x-axis at 0, 90, 180, 270, 360 and marks no point on
@@ -258,8 +262,14 @@ function shiftAndRaise(): Q | null {
   // nobody can tell those apart by eye. Half the questions this made could not
   // be answered from the information given.
   //
-  // The paper is the check on this: 2023 P1 Q13's answer is -45, exactly the
-  // midpoint, which is the only offset under 90 that this axis can show.
+  // **The paper's own answer is -30, and it is deliberately not drawn.**
+  // 2023 P1 Q13 marks its axis at 90 degree intervals and puts the maximum at
+  // x = 30, a third of the way through the first one; its scheme takes "-30 or
+  // 330". Read off a printed page that is a judgement of the eye, and a
+  // generated figure has no scan of the original to be checked against - so
+  // this keeps to the offsets the axis can actually show, the ticks and their
+  // midpoints. It is the one place here where the clone is deliberately easier
+  // to read than the paper.
   const shift = pick([45, 90, 135, 180]);
   const a = -shift;
   const b = getRandomInt(1, 4);                  // lifted so the minimum sits at b - 1

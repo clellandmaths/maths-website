@@ -60,6 +60,15 @@ export function barAndPolygon(spec: BarAndPolygonSpec): Figure | null {
 
   const elements: Element[] = [
     { kind: 'polygon', points: V },
+    // **The centre, and a dashed spoke to every vertex.** 2023 P2 Q5 rules them
+    // and marks the centre with a filled dot. They are what show the polygon to
+    // be regular, and the interior angle the working needs comes out of the
+    // equal angles they make at the centre - 360 over the number of sides.
+    // Drawn without them the figure asserts "regular" in the prose and shows
+    // nothing of it. The same ruling as `polygon-point` and
+    // `polygon-in-circle`; this figure was missed at the time.
+    { kind: 'dot', at: C },
+    ...V.map((v): Element => ({ kind: 'segment', from: C, to: v, dashed: true })),
     // the upright, in the two pieces the polygon's side leaves of it
     { kind: 'segment', from: at(0, lo), to: Q },
     { kind: 'segment', from: top, to: at(0, hi) },

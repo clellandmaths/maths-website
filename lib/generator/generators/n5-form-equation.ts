@@ -409,7 +409,11 @@ function cuboidVolume(): Q | null {
   ];
   return assemble(
     algebraicCuboid({ length: 90, breadth: 40, height: 26,
-      labels: { length: `x + ${k} m`, breadth: 'x m', height: `${hh} m` } }),
+      // **`(x + 7) m`, bracketed, as the paper writes it.** Without them the
+      // figure reads "x + 7 m", which is x plus seven metres rather than the
+      // whole edge in metres - and the prose above already says
+      // "length (x + 7) metres".
+      labels: { length: `(x + ${k}) m`, breadth: 'x m', height: `${hh} m` } }),
     'A Cuboid of Given Volume', 'form-equation.cuboid', prose,
     `Cuboid $(x + ${k})$ by $x$ by ${hh}, volume ${vol}. Find $x$.`,
     steps, [1, 1, 1, 1, 1, 1], `$x = ${x.toFixed(1)}$`);

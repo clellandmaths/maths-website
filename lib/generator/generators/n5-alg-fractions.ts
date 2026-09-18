@@ -260,14 +260,31 @@ function buildSimplify(shape: 'common' | 'squares' | 'two-letter'): Simplified |
   };
 }
 
+/**
+ * **Three papers, three shapes, three ids.**
+ *
+ *   2015 P1 Q12   (x^2 - 4x)/(x^2 + x - 20)   a common factor over a trinomial
+ *   2023 P2 Q12   (x^2 - 16)/(x^2 + x - 20)   two squares over a trinomial
+ *   2022 P2 Q12   (2ab + 6a)/(b^2 - 9)        two letters over two squares
+ *
+ * The three shapes were already written and already named; they were just
+ * drawn from a hat on each attempt, so a pupil asking for 2023 P2 Q12 again
+ * got one of the other two more often than their own. Picked once, before the
+ * loop - the rule in `docs/diagram-questions.md` section 2 - and each carries
+ * its own id.
+ */
 function simplifyFraction(): Q {
+  const shape = pick(['common', 'squares', 'two-letter'] as const);
+  const id = shape === 'squares' ? 'alg-fractions.simplify-squares'
+    : shape === 'two-letter' ? 'alg-fractions.simplify-two-letter'
+    : 'alg-fractions.simplify';
   for (let tries = 0; tries < 400; tries++) {
-    const s = buildSimplify(pick(['common', 'squares', 'two-letter'] as const));
+    const s = buildSimplify(shape);
     if (!s) continue;
     return {
       subTopic: 'Simplifying Algebraic Fractions',
       difficulty: 'exam',
-      variationId: 'alg-fractions.simplify',
+      variationId: id,
       questionLines: [`Simplify $${frac(s.numTex, s.denTex)}$`],
       boardQuestionLines: [`Simplify $${frac(s.numTex, s.denTex)}$`],
       solutionSteps: [

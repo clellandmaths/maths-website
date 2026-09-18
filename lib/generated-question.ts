@@ -5,7 +5,7 @@ import {
   questionFromCode as fromCode,
   similarTo as fromLabel,
   generateForSubtopics as fromSubtopics,
-  keyOfQuestion,
+  keysOfQuestion,
   type ToWorksheetOptions,
 } from './generator/worksheet-question';
 import { SEED_LENGTH } from './worksheet-refs.mjs';
@@ -112,7 +112,10 @@ export async function generateForSubtopics(
 export function worksheetKeys(
   questions: readonly { question: string; answer?: string | null }[],
 ): string[] {
-  return questions.map(keyOfQuestion);
+  // Both keys per question: a sheet rejects a repeat of the whole question and
+  // a repeat of its sum in a new story, and an exclusion list carrying only the
+  // first lets the second back in on the next click.
+  return questions.flatMap(keysOfQuestion);
 }
 
 const BASE36 = '0123456789abcdefghijklmnopqrstuvwxyz';

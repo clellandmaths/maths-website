@@ -73,6 +73,28 @@ const DEPRECIATING: [string, string, Rounding][] = [
   ['A recording studio bought a mixing desk for %.', 'the mixing desk', 'nearest-pound'],
   ['A farmer bought a combine harvester for %.', 'the harvester', '3sf'],
   ['A courier firm bought an electric van for %.', 'the van', 'money'],
+  // **Eight more, and they are here because a fault was propping up a floor.**
+  // `Two-Stage Depreciation` met its floor of 20 contexts only because it drew
+  // both "over the next two years" and "over the next three", and the three is
+  // a question 2023 P2 Q1 does not set. Removing it halved the variety to 12,
+  // which is the honest number this list could supply. Eight real contexts is
+  // the fix; lowering the floor would have been hiding the same fault twice.
+  ['A haulage firm bought a lorry for %.', 'the lorry', 'money'],
+  ['A caravan was bought for %.', 'the caravan', 'nearest-pound'],
+  ['A bakery bought a dough mixer for %.', 'the mixer', 'money'],
+  ['A garage bought a vehicle lift for %.', 'the lift', 'nearest-pound'],
+  ['A gym bought a set of rowing machines for %.', 'the machines', 'money'],
+  ['A photographer bought a camera body for %.', 'the camera', 'money'],
+  ['A landscaper bought a wood chipper for %.', 'the chipper', 'nearest-pound'],
+  ['A brewery bought a bottling line for %.', 'the bottling line', 'money'],
+  // Four more for headroom. Two-Stage Depreciation draws only from the money
+  // ones that lose value, so it sat exactly on its floor of 20 where its peer
+  // topics - which draw the whole asset pool - sit at 44 and 84. A count
+  // balanced on its threshold fails the next time anything moves.
+  ['A quarry bought a rock crusher for %.', 'the crusher', 'nearest-pound'],
+  ['A dairy bought a milking parlour for %.', 'the parlour', 'money'],
+  ['A print shop bought a laser cutter for %.', 'the cutter', 'money'],
+  ['A ferry operator bought a passenger boat for %.', 'the boat', 'nearest-pound'],
 ];
 
 /** Money that gains value. */
@@ -1020,9 +1042,14 @@ export const CHORD_CONTEXTS: ChordContext[] = [
   // The `cut` bands sit where the Pythagorean triples land: this is the
   // non-calculator family, so its numbers have to come out whole.
   { scene: (o, a, b) => `A stone doorstep is cut from a circle with centre ${o}. The straight edge of the step is the chord ${a}${b}.`,
-    asks: 'the width of the doorstep', unit: 'centimetres', band: [30, 90], family: 'cut' },
+    // **Depth, not width.** The straight edge sits against the door, so the
+    // measurement this question asks for - the perpendicular from the chord to
+    // the far arc - is how far the step projects, not how wide it is. 2023 P1
+    // Q10 calls the same measurement the width because its slab's chord is
+    // vertical and the answer runs across it; on a doorstep it does not.
+    asks: 'the depth of the doorstep', unit: 'centimetres', band: [30, 90], family: 'cut' },
   { scene: (o, a, b) => `A wooden tabletop is cut from a circular board with centre ${o}, leaving one straight edge ${a}${b}.`,
-    asks: 'the width of the tabletop', unit: 'centimetres', band: [30, 90], family: 'cut' },
+    asks: 'the depth of the tabletop', unit: 'centimetres', band: [30, 90], family: 'cut' },
   { scene: (o, a, b) => `A cheese round has a slice taken off it along the straight cut ${a}${b}. The centre of the round is ${o}.`,
     asks: 'the width of what is left', unit: 'centimetres', band: [10, 40], family: 'cut' },
   { scene: (o, a, b) => `A clock face is cut from a circular sheet with centre ${o}, with a flat edge ${a}${b} along the bottom.`,

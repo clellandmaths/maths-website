@@ -170,7 +170,12 @@ function calculate(): Q {
   // percentage, 2024 P2 Q2 multiplies.
   const exactOp = pick(['multiply', 'percent', 'divide'] as const);
   for (let tries = 0; tries < 600; tries++) {
-    const ctx = pick(wantRounding ? SCI_CONTEXTS : SCI_CONTEXTS.filter(c => c.op === exactOp));
+    // **The rounded variation has one paper, and it divides.** 2023 P2 Q2 is
+    // 300 grams over 6.64 x 10^-24 grams an atom - a division - and it is the
+    // only question `sci-notation.calculate-3sf` clones. Picking freely across
+    // the operations put percentages and multiplications under its name. The
+    // exact variation keeps all three, because its four papers use all three.
+    const ctx = pick(SCI_CONTEXTS.filter(c => c.op === (wantRounding ? 'divide' : exactOp)));
     const m = wantRounding
       ? Number((getRandomInt(101, 989) / 100).toFixed(2))
       : Number((getRandomInt(11, 98) / 10).toFixed(1));
