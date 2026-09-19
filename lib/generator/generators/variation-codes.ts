@@ -126,6 +126,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'trig-graphs.amplitude-cycles':           'dh68k',
   'trig-graphs.amplitude-cycles-pre2023':  '62c2l',
   'trig-graphs.amplitude-period':           '6pamm',
+  'trig-graphs.amplitude-period-cosine':    '37tv2',
   'trig-graphs.shift':                      'e84j9',
   'trig-graphs.shift-and-raise':            'j6f1w',
   'trig-graphs.turning-point':              'n9ay3',

@@ -184,7 +184,7 @@ function sketchFactorised(): Q | null {
    * points` further down the 2022 P1 review.
    *
    * `sketchCompletedSquare` above has its own `onAxes` and is left alone: it
-   * cites 2026 P1 Q13, which is signed off.
+   * cites 2026 P1 Q12, which is signed off.
    */
   const onAxes = getRandomInt(0, 1) === 0;
 
@@ -237,7 +237,7 @@ function sketchFactorised(): Q | null {
    * Only `quadratics.sketch-factorised-axes` moves: the figure exists only
    * when `onAxes`, and `onAxes` is what names that id. 2018 P1 Q16, which
    * prints no axes, is untouched, and so is `sketchCompletedSquare` above -
-   * it has its own `onAxes` and cites 2026 P1 Q13, which is signed off.
+   * it has its own `onAxes` and cites 2026 P1 Q12, which is signed off.
    */
   const prose = [
     `${onAxes ? 'On the axes below, sketch' : 'Sketch'} the graph of $${equation}$.`,

@@ -136,10 +136,42 @@ function amplitudeAndCycles(): Q | null {
   // 2022 P1 Q8 and 2024 P1 Q8 ask in two parts, the other two in one; both are
   // two marks and the same two, so the wording is what varies.
   const split = getRandomInt(0, 1) === 0;
+
+  /**
+   * **On the scaled axis the two papers are two questions, so they are two
+   * ids.** The owner's rule, said plainly: *"we never do a coin toss. A
+   * question should only be served by 1 generator."*
+   *
+   *   2022 P1 Q8   a SINE, one wave over 0 to 45, the single angle marked
+   *                where the curve comes back down to the axis, asked as
+   *                (a) and (b)
+   *   2018 P1 Q6   a COSINE, two waves over 0 to 180, 90 and 180 both
+   *                marked, asked as one instruction
+   *
+   * The owner, on the 2022 P1 sheet: *"the actual question only has the angle
+   * at the end of the curve on the x axis - read the question it is based
+   * on."* That is what a cosine cannot do: over a whole number of periods it
+   * ends at its maximum, so the tick and its number sit on the axis with the
+   * curve finishing well above them. Right for 2018, which is drawn that way;
+   * wrong for 2022, and it was happening on half of 2022's draws.
+   *
+   * **No new randomness, and none skipped.** `fn` is already decided by `b`
+   * for the scaled presentation - the note above explains why it has to be -
+   * so the form is known without drawing anything, and this only reads it.
+   * `twoTicks` and `split` are still drawn in the same places; the scaled
+   * branch simply stops consulting them, because its two papers each have one
+   * answer. That matters because the unscaled branch of this same routine is
+   * `trig-graphs.amplitude-cycles`, which cites 2024 P1 Q8 - signed off - and
+   * reaches it by drawing and discarding, so a discarded scaled draw that
+   * consumed a different number of randoms would move it.
+   */
+  const cosineForm = scaled && fn === 'cos';
+  const askInParts = scaled ? !cosineForm : split;
+  const showsHalfPeriod = scaled ? cosineForm : twoTicks;
   const eq = `y = ${a}\\${fn} ${b}x^{\\circ}`;
   const shown = `y = a\\${fn} bx^{\\circ}`;
 
-  const prose = split
+  const prose = askInParts
     ? [`Part of the graph of $${shown}$ is shown in the diagram.`, '',
        '<b>(a)</b>&nbsp;&nbsp;State the value of $a$.',
        '<b>(b)</b>&nbsp;&nbsp;State the value of $b$.']
@@ -167,7 +199,7 @@ function amplitudeAndCycles(): Q | null {
    * for a plain tick, so the wider frame and the period bracket under the curve
    * go with it.
    */
-  const span = scaled ? (twoTicks && period * 2 <= 360 ? period * 2 : period) : 360;
+  const span = scaled ? (showsHalfPeriod && period * 2 <= 360 ? period * 2 : period) : 360;
   return assemble({
     view: view(a, -a, a, span), domain: [0, span],
     plot: { kind: 'trig', fn, a, b, h: 0, k: 0 },
@@ -183,10 +215,12 @@ function amplitudeAndCycles(): Q | null {
       y: [a, 0, -a],
     },
   }, 'Amplitude and Period of a Trigonometric Graph',
-    scaled ? 'trig-graphs.amplitude-period' : 'trig-graphs.amplitude-cycles',
+    !scaled ? 'trig-graphs.amplitude-cycles'
+      : cosineForm ? 'trig-graphs.amplitude-period-cosine'   // 2018 P1 Q6
+      : 'trig-graphs.amplitude-period',                      // 2022 P1 Q8
     prose, `$${shown}$ shown. Find $a$ and $b$.`,
     // •¹ a, •² b — one mark each in all four papers
-    steps, [1, 1], split ? `(a) $a = ${a}$<br>(b) $b = ${b}$` : `$a = ${a}$, $b = ${b}$`);
+    steps, [1, 1], askInParts ? `(a) $a = ${a}$<br>(b) $b = ${b}$` : `$a = ${a}$, $b = ${b}$`);
 }
 
 // ── y = a sin(x + b) — 2014 P1 Q10 ──────────────────────────────────────

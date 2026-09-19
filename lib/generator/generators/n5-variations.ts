@@ -1456,7 +1456,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-graphs.amplitude-period': {
     topic: 'Amplitude and Period of a Trigonometric Graph',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2018 P1 Q6', '2022 P1 Q8'],
+    // 2018 P1 Q6 left for `-cosine` below. This one is 2022 P1 Q8's sine: one
+    // wave, ending on the x-axis where its single angle is marked.
+    basedOn: ['2022 P1 Q8'],
     marks: 2,
     route: 'state a, the amplitude read off the y-axis, then state b by reading one complete wave off the x-axis and dividing 360 by it. One asks in two parts and one in one, and it is a mark each either way',
     plan: [
@@ -1468,6 +1470,31 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Identify equation of trigonometric graph'],
     skill: 'Read the amplitude off the axis and get b from the period',
   },
+
+  /**
+   * 2018 P1 Q6 - the same two marks over a cosine drawn for two waves.
+   *
+   * Its own shape, not a coin toss inside its sibling: a cosine over a whole
+   * number of periods finishes at its maximum, so the angles on the axis are
+   * not where the curve ends, and it prints the half-period as well as the
+   * period. Both are true of 2018 and neither is true of 2022.
+   */
+  'trig-graphs.amplitude-period-cosine': {
+    topic: 'Amplitude and Period of a Trigonometric Graph',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2018 P1 Q6'],
+    marks: 2,
+    route: 'state a, the amplitude read off the y-axis, then state b by reading one complete wave off the x-axis and dividing 360 by it. Both are asked in one instruction and it is a mark each',
+    plan: [
+      'Look at how far the curve climbs above the $x$-axis at its highest point, reading that distance off the scale on the $y$-axis — the wave drops the same amount below, and that distance is $a$',
+      'Read off the $x$-axis how many degrees one complete wave takes, which is the period, then divide $360$ by it to get $b$',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Identify equation of trigonometric graph'],
+    skill: 'Read the amplitude off the axis and get b from the period',
+  },
+
   // Departs from the paper's figure and says so in the generator: 2014 P1 Q10
   // prints eighteen degree labels standing on end, which cannot be laid out
   // here at any spacing finer than a whole turn, so the crossing carries its
