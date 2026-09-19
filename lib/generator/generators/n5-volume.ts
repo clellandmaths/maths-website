@@ -720,9 +720,13 @@ function pyramidMinusPyramid(): Q | null {
        * on the same side.
        */
       { along: 'height', from: 0, to: blockH, side: 'right', arrow: true,
-        value: blockH, text: `${blockH} cm` },
+        rules: true, value: blockH, text: `${blockH} cm` },
+      // `onGhost` names the tip this height belongs to, so the arrow can end
+      // where that pyramid's apex is *drawn* rather than at its bare height —
+      // half a depth lower, which is what the owner read as "48cm arrow too
+      // low". See the note in solid.ts's height branch.
       { along: 'height', from: blockH, to: bigH, side: 'right', arrow: true,
-        value: smallH, text: `${smallH} cm` },
+        onGhost: 0, rules: true, value: smallH, text: `${smallH} cm` },
       /**
        * **The top face keeps its leader, and that is a compromise.**
        *

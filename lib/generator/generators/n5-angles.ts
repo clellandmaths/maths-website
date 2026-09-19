@@ -55,7 +55,26 @@ export function polygonAngleQuestion(): Q {
     // the triangle's own sine rule fixes how far out the point sits
     const side = 1;
     const reach = side * Math.sin(answer * Math.PI / 180) / Math.sin(given * Math.PI / 180);
-    if (reach < 0.35 || reach > 4) continue;
+    /**
+     * **How far the outside point stands off, and it may not squat.**
+     *
+     * The owner, on the closure sheet, against a 115-degree apex on an
+     * octagon: *"Looks squished the angle, could it be made better by making
+     * triangle a bit bigger and capping the size of that angle?"*
+     *
+     * `reach` is the triangle's own sine rule, so it says the shape directly:
+     * the bigger the angle at the outside point, the shallower the triangle
+     * and the closer that point sits to the polygon. The papers run
+     *
+     *   2025 P2 Q7   pentagon, 65 degrees   reach 0.75
+     *   2018 P1 Q9   decagon,  17 degrees   reach 2.73
+     *
+     * and the floor of 0.35 let the clone reach 0.38 - half the shallowest
+     * triangle either paper draws. Raising it to 0.7 caps the apex at 99
+     * degrees and keeps about three draws in four, which is the same fix read
+     * from both ends: a bigger triangle *is* a smaller angle.
+     */
+    if (reach < 0.7 || reach > 4) continue;
 
     const r = 1 / (2 * Math.sin(Math.PI / n));      // circumradius for unit side
     const fig = polygonPoint({

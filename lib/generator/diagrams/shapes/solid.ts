@@ -104,7 +104,28 @@ export type Dim =
        * drawing has to be in proportion; it is just not required to appear in
        * the text, which is what `shown` on a length claim means.
        */
-      unknown?: true }
+      unknown?: true;
+      /**
+       * The ghost whose **apex** this height ends at.
+       *
+       * An apex stands over the centre of its base, half a depth back, so it
+       * is drawn higher than its own height - and a height arrow that stops at
+       * the bare height stops short of it. Naming the ghost lets the offset be
+       * computed where the projection is known. Also what carries each end of
+       * the arrow back to the shape with a rule, the way 2023 P2 Q9 draws it.
+       */
+      onGhost?: number;
+      /**
+       * Carry each end of the arrow back to the shape with a thin rule, the
+       * way 2023 P2 Q9 draws its two heights.
+       *
+       * **Opt-in, because this branch is every solid's.** Drawn for all of
+       * them, it changed four signed-off questions when the owner had asked
+       * about one - `frozen` named 2024 P2 Q7 and 2026 P2 Q6, which nobody
+       * had asked to touch. The same trap `angleMark` set earlier in the
+       * week: a shared helper widened for one figure moves every figure.
+       */
+      rules?: true }
   /**
    * A horizontal extent, on a line clear above or below everything.
    *
@@ -376,9 +397,64 @@ export function solidFigure(spec: SolidSpec): Figure {
     const cx = d.cx ?? 0;
     let a: Pt, b: Pt, inward: Pt;
     if (d.along === 'height') {
+      /**
+       * **A height that ends at an apex ends where the apex is *drawn*.**
+       *
+       * The owner, on the closure sheet: *"So 48cm arrow to low. Perhaps do
+       * what paper does and connect the top and bottom of each arrow
+       * horizontally to their place on the shape?"*
+       *
+       * A front-face point at height h is drawn at y = h, which is why every
+       * other height arrow lines up without help. An apex is not on the front
+       * face: it stands over the centre of its base, half a depth back, so it
+       * is drawn `depthOf(w).y / 2` higher than its own height. Measured on
+       * three draws, the top of the upper arrow sat 17.6, 25.3 and 31.3px
+       * below the apex - exactly that offset, and exactly what the owner saw.
+       *
+       * Naming the ghost the height belongs to (`onGhost`, the field a width
+       * already uses to sit on a ghost's seat) is what lets this be computed
+       * here; the generator has no access to the projection.
+       *
+       * The arrow is then longer than its value in proportion - as it is in
+       * 2023 P2 Q9's own figure, and for the same reason. Every solid carrying
+       * an oblique piece already declares `notToScale`, so the drawing claims
+       * nothing metric and this costs no truth.
+       */
+      const gh = d.onGhost !== undefined ? spec.ghosts?.[d.onGhost] : undefined;
+      const ghostW = gh && 'w' in gh.piece ? (gh.piece as { w: number }).w : undefined;
+      const ghostH = gh && 'h' in gh.piece ? (gh.piece as { h: number }).h : undefined;
+      const back = ghostW !== undefined ? depthOf(ghostW) : pt(0, 0);
+      /**
+       * **Read the apex off the seat, not off the height.** It stands on
+       * *two* half-depths, and the first attempt here added only the second:
+       * the ghost sits on the stack's top face, which is itself half the
+       * *base's* depth back, and its own apex is half of *its* depth back
+       * from there. `o` already carries the first, which is the whole reason
+       * `topOf` returns a seat rather than a height — so building from the
+       * seat gets both and re-deriving gets one. Measured: 22px of the
+       * offset still missing until this was taken from `o`.
+       */
+      const seat = gh ? (gh.on === 'top' ? o : foot) : undefined;
+      const apex = seat && ghostH !== undefined
+        ? pt(seat.x + back.x / 2, seat.y + (gh!.lift ?? 0) + back.y / 2 + ghostH)
+        : undefined;
       const x = d.side === 'left' ? box.x0 - step : box.x1 + step;
-      [a, b] = [pt(x, d.from), pt(x, d.to)];
-      inward = pt(x + (d.side === 'left' ? 1 : -1), (d.from + d.to) / 2);
+      [a, b] = [pt(x, d.from), pt(x, apex ? apex.y : d.to)];
+      inward = pt(x + (d.side === 'left' ? 1 : -1), (a.y + b.y) / 2);
+      /**
+       * And the two ends are carried back to the shape, which is what the
+       * owner asked for and what the paper draws: a thin rule at each end,
+       * from the height it marks across to the arrow. Without them an arrow
+       * floating beside the solid names no level in particular.
+       */
+      const edge = d.side === 'left' ? box.x0 : box.x1;
+      if (d.rules) {
+        for (const [from, to] of [[pt(edge, a.y), a], [pt(apex ? apex.x : edge, b.y), b]] as [Pt, Pt][]) {
+          if (Math.abs(to.x - from.x) > 0.01) {
+            elements.push({ kind: 'segment', from, to, dashed: true, decoration: true });
+          }
+        }
+      }
     } else {
       // On a ghost, the line sits on that piece's seat; otherwise it stands
       // clear of everything, one rank further out for each dimension already
