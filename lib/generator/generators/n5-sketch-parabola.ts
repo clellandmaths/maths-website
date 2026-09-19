@@ -221,10 +221,28 @@ function sketchFactorised(): Q | null {
   const blank = onAxes ? figureFor({ view, plot: { kind: 'none' } }) : '';
   if (!partial || !complete || blank === null) return null;
 
+  /**
+   * **The axes go last, under both sentences.**
+   *
+   * The owner, on the 2022 P1 sheet: *"Make sure when we have this in
+   * generator the axes are below."*
+   *
+   * 2022 P1 Q14 prints its instruction and then *"On your sketch, show clearly
+   * the points of intersection with the x-axis and the y-axis, and the
+   * coordinates of the turning point"*, and only then the blank axes - so
+   * everything a pupil has to do is read before the space they do it in. This
+   * had the figure between the two sentences, which splits the instruction in
+   * half and leaves the second line stranded under the drawing.
+   *
+   * Only `quadratics.sketch-factorised-axes` moves: the figure exists only
+   * when `onAxes`, and `onAxes` is what names that id. 2018 P1 Q16, which
+   * prints no axes, is untouched, and so is `sketchCompletedSquare` above -
+   * it has its own `onAxes` and cites 2026 P1 Q13, which is signed off.
+   */
   const prose = [
     `${onAxes ? 'On the axes below, sketch' : 'Sketch'} the graph of $${equation}$.`,
-    ...(onAxes ? [blank] : []),
     'On your sketch, show clearly the points of intersection with the x-axis and the y-axis, and the coordinates of the turning point.',
+    ...(onAxes ? [blank] : []),
   ];
   const steps = [
     `<strong>1.</strong> The curve meets the x-axis where $y = 0$, which is where either bracket is zero:<br><br>$x = ${r1}$ and $x = ${r2}$`,

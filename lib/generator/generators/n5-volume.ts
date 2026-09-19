@@ -207,20 +207,43 @@ const CONES = [
  * in one line.
  *
  * So the multiplier is held to a **multiple of 50** - `3.14 x 50 = 157`
- * exactly, so every answer comes out whole, the way the paper's does - and
- * capped at 3000, a half again on the paper's own 2000. What survives is 39
- * cone shapes across diameters 10, 20, 30 and 40, with the paper's own 20 the
- * commonest. The multiples of five are not a taste: 25 has to divide `r^2 k`
- * for the multiplier to land on 50, and with `k` under 25 only a radius
- * carrying the factor can supply it.
+ * exactly, so every answer comes out whole, the way the paper's does.
+ *
+ * **And both measurements are multiples of ten.** The owner, on the 2022 P1
+ * sheet: *"Given this is non calculator I would go for multiples of 10 on the
+ * diameter and height of the cone."* The diameter already was - the radius has
+ * to carry a factor of five for the multiplier to land on fifty - but the
+ * height was any multiple of three, and the sheet had drawn a cone 20 by 33.
+ *
+ * Twelve cone shapes survive, and the arithmetic is why there are only twelve.
+ * With `d = 10j` and `h = 10i` the multiplier is `250 j^2 i / 3`, so it is a
+ * whole number only when three divides `j^2 i` - either the diameter or the
+ * height has to carry the three that the formula divides by. Add a volume held
+ * near the paper's own 6280 and that is the whole list:
+ *
+ *   d=10: h=30,60            d=30: h=20,30,40,50,60
+ *   d=20: h=30,60,90,120     d=40: h=30
+ *
+ * Every multiplier in it is a round 250, 500, 1000, 1500, 2000, 2250, 3000,
+ * 3750, 4000 or 4500, so the sum is `3.14 x` a round number in one line -
+ * which is the point of the whole constraint. The paper's own 20 by 60 is in
+ * there, at 2000.
+ *
+ * Twelve *numbers*, not twelve questions: `questionKey` keeps the prose, so
+ * the ten cones this is set in make 120 distinct questions and `pool` sees
+ * them. A pupil pressing Variation will still meet a shape twice before the
+ * story repeats, which is the price of the round numbers and worth paying on
+ * a non-calculator paper.
  */
 function conePi(): Q | null {
   const c = pick(CONES);
   const r = pick([5, 10, 15, 20, 25, 30]);
-  const h = getRandomInt(2, 25) * 3;
+  const h = getRandomInt(1, 15) * 10;
   if (h < r) return null;                     // a cone flatter than it is wide
+  if (h > 12 * r) return null;                // and not a spike: h up to 6 x d
+  if ((r * r * h) % 3 !== 0) return null;     // the formula's third must be exact
   const third = r * r * h / 3;
-  if (third % 50 !== 0 || third > 3000) return null;
+  if (third % 50 !== 0 || third > 5000) return null;
   const exact = 3.14 * third;
   if (Math.round(exact * 100) !== exact * 100) return null;
 

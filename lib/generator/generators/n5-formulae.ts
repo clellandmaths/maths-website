@@ -82,7 +82,22 @@ function letters(n: number, upper = false): string[] {
 function subjectInNumerator(): Q {
   const [v, subj, den, other] = letters(4, true);
   const k = pick([1, 1, 2, 3, 4, 5]);           // 1 gives the no-fraction answer
-  const squareDen = getRandomInt(1, 3) === 1;
+  /**
+   * **2022 P1 Q7's denominator is always a square.**
+   *
+   * The owner, on the 2022 P1 sheet: *"Keep the shape same as question, have a
+   * square term in denominator and numerator being variable plus or minus a
+   * number."* The paper is `D = (B + 4)/C^2` - a squared denominator and a
+   * plain number beside the subject - and the sheet had drawn
+   * `G = (n + 15)/w`, which is neither.
+   *
+   * The roll still happens, in the same place and with the same range, so the
+   * k != 1 branch (`change-subject.fraction`, which cites the signed-off 2024
+   * P2 Q9) reads exactly the value it always read. The two-step branch simply
+   * stops consulting it.
+   */
+  const denRoll = getRandomInt(1, 3);
+  const squareDen = k === 1 ? true : denRoll === 1;
   /**
    * **Three choices out of one draw, on the two-step branch only.**
    *
@@ -108,7 +123,11 @@ function subjectInNumerator(): Q {
    * that branch is value-for-value what it always was.
    */
   const flavour = k === 1 ? getRandomInt(0, 7) : getRandomInt(0, 1) * 4;
-  const constTerm = flavour < 4;                // "+ 4" or "+ t^2"
+  // k != 1 keeps the choice it always made. k = 1 always takes a number, per
+  // the owner's note above - but `pick(consts)` must still be called exactly
+  // when `flavour < 4`, or a discarded draw consumes a different number of
+  // randoms and 2024 P2 Q9 moves again. See `numberBeside` below.
+  const constTerm = k === 1 ? true : flavour < 4;
 
   const dTex = squareDen ? `${den}^{2}` : den;
   // "5g + 5" shares a factor a pupil would want to take out; the papers keep the
@@ -141,9 +160,28 @@ function subjectInNumerator(): Q {
   const wide = k === 1;
   const consts = (wide ? [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
                        : [2, 3, 4, 5, 6, 7, 8, 9]).filter(c => gcd(c, k) === 1);
-  const tTex = constTerm ? `${pick(consts)}`
-    : wide && (flavour & 1) !== 0 ? `${other}` : `${other}^{2}`;
-  const minus = wide && (flavour & 2) !== 0;
+  /**
+   * **The draw pattern is fixed; only the value is free.**
+   *
+   * `pick(consts)` is called if and only if `flavour < 4` - which is what the
+   * k != 1 branch has always done, and what it must keep doing, because a
+   * *discarded* k = 1 attempt that calls `pick` a different number of times
+   * shifts every draw after it. `frozen` named 2024 P2 Q9 on exactly this,
+   * twice.
+   *
+   * So the two-step branch takes the picked constant when there is one, and
+   * otherwise builds one out of bits it already has: `flavour` is 4..7 there,
+   * and `denRoll` is 1..3 and no longer used for the denominator, which is
+   * twelve combinations mapped onto the first six constants. Half the draws
+   * reach all fourteen and half reach six, so the shape count is 14 x 2 signs
+   * = 28 - comfortably clear of the floor, and every one of them is the
+   * paper's shape.
+   */
+  const picked = flavour < 4 ? pick(consts) : null;
+  const numberBeside = picked ?? consts[((flavour - 4) * 3 + denRoll - 1) % 6];
+  const tTex = wide ? `${numberBeside}`
+    : constTerm ? `${picked}` : `${other}^{2}`;
+  const minus = wide && (flavour & 1) !== 0;
   const numTex = `${term(k, subj)} ${minus ? '-' : '+'} ${tTex}`;
   const product = `${v}${dTex}`;
   const undo = `${product} ${minus ? '+' : '-'} ${tTex}`;
