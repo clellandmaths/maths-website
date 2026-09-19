@@ -56,6 +56,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'fractions.divide-mixed':                 'r6fs9',
   'fractions.divide-mixed-pre2023':        '7zp4s',
   'fractions.brackets':                     '2cic3',
+  'fractions.brackets-pre2022':             't6u2h',
   'fractions.three-term':                   'fv42v',
   'fractions.context':                      'nfc79',
 
@@ -226,6 +227,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'straight-line.intercept-from-equation':  'k2p9o',
   'straight-line.gradient-two-points':      '9858j',
   'straight-line.equation-two-points':      'jwfst',
+  'straight-line.equation-two-points-pre2022': '62yzn',
   'straight-line.equation-two-points-diagram': 'me045',
 
   'sci-notation.convert':                   'l3u3i',

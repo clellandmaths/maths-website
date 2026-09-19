@@ -271,6 +271,9 @@ function twoPoints(wantEquation: boolean): Q {
     if (wantEquation && den !== 0 && num % den !== 0) continue;   // keep c whole
     const m = num / den;
     const c = y1 - m * x1;
+    // Drawn before the caps because it, and `preLine` below it, choose between
+    // this routine's three ids, and an id has to be known before its bounds.
+    const drawFig = getRandomInt(1, 3) === 1;
     /**
      * **Paper scale, for the equation only.**
      *
@@ -289,7 +292,24 @@ function twoPoints(wantEquation: boolean): Q {
     // divisibility that keeps c whole favours den = 1 - and no paper here uses
     // it: 2, -2 and -4. It also makes the second mark nearly free, since there
     // is nothing to multiply. So the floor matters as much as the ceiling.
-    if (wantEquation && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20)) continue;
+    /**
+     * **The caps are 2022 P1 Q6's; 2015 P1 Q8 keeps the range it had.**
+     *
+     * Capping the gradient was right for 2022 P1 Q6 and moved 2015 P1 Q8 with
+     * it - a paper nobody has reviewed, changed by a fix nobody aimed at it.   *
+   * The owner's rule, 2026-09-19: *"if we have to make a change to a generator
+   * for a question and that generator serves other questions then we need to
+   * branch off. It's really that simple."* The fix was aimed at 2022; this
+   * paper has not been reviewed, so it keeps exactly what it had until its own
+   * turn comes. `frozen` fails on any movement outside the year under review,
+   * which is what named this one.
+     *
+     * `preLine` names the id rather than the presentation, the same shape of
+     * fix as the diagram split below.
+     */
+    const preLine = wantEquation && !drawFig && getRandomInt(0, 1) === 0;
+    if (wantEquation && !preLine
+        && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20)) continue;
 
     if (!wantEquation) {
       return {
@@ -333,7 +353,7 @@ function twoPoints(wantEquation: boolean): Q {
      * one that was asked for. The routine is otherwise identical, which is why
      * this is a split and not a copy.
      */
-    const drawIt = getRandomInt(1, 3) === 1;
+    const drawIt = drawFig;
     const xs = [0, x1, x2], ys = [0, y1, y2];
     const padX = Math.max(1.5, (Math.max(...xs) - Math.min(...xs)) * 0.22);
     const padY = Math.max(2, (Math.max(...ys) - Math.min(...ys)) * 0.22);
@@ -359,7 +379,9 @@ function twoPoints(wantEquation: boolean): Q {
       difficulty: 'skill',
       variationId: drawIt
         ? 'straight-line.equation-two-points-diagram'   // 2017 P1 Q6
-        : 'straight-line.equation-two-points',          // 2015 P1 Q8, 2022 P1 Q6
+        : preLine
+          ? 'straight-line.equation-two-points-pre2022' // 2015 P1 Q8
+          : 'straight-line.equation-two-points',        // 2022 P1 Q6
       questionLines: [
         ask,
         ...(fig ? [renderScene(fig.scene), follow as string] : []),

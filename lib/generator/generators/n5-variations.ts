@@ -428,7 +428,32 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'paper',
-    basedOn: ['2016 P1 Q2', '2022 P1 Q1'],
+    basedOn: ['2022 P1 Q1'],
+    marks: 2,
+    route: 'start the calculation correctly, which is the bracket over a common denominator, then a consistent answer in simplest form. Both schemes accept a second method that multiplies out first; ours takes the bracket first',
+    method: 'Work out the bracket first by putting both fractions over a common denominator, then multiply and tidy the answer up',
+    plan: [
+      'Rewrite the two fractions inside the bracket over a bottom line they both divide into, and combine the numerators so the bracket becomes one single fraction',
+      'Multiply that single fraction by the one sitting outside the bracket, tops together and bottoms together, then cancel the result down to its simplest form',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'fraction',
+    webTopics: ['Fractions and mixed numbers'],
+    skill: 'Evaluate the bracket first, then multiply - two operations',
+  },
+
+  /**
+   * The paper this generator used to share with 2022 P1 Q1, left on what it had.
+   * Identical to its sibling except `basedOn`; the routine branches on the id
+   * so the reviewed paper's fix does not reach this one. It gets looked at
+   * when 2016 is reviewed.
+   */
+  'fractions.brackets-pre2022': {
+    topic: 'Fractions with Brackets',
+    difficulty: 'exam',
+    strategy: 'input-first',
+    source: 'paper',
+    basedOn: ['2016 P1 Q2'],
     marks: 2,
     route: 'start the calculation correctly, which is the bracket over a common denominator, then a consistent answer in simplest form. Both schemes accept a second method that multiplies out first; ours takes the bracket first',
     method: 'Work out the bracket first by putting both fractions over a common denominator, then multiply and tidy the answer up',
@@ -3059,7 +3084,34 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // 2017 P1 Q6 left this entry for `-diagram` below: it is the one of the
     // three that prints axes with A and B on them, and a figure appearing on
     // a third of 2022 P1 Q6's draws was 2017's question under 2022's name.
-    basedOn: ['2015 P1 Q8', '2022 P1 Q6'],
+    basedOn: ['2022 P1 Q6'],
+    marks: 3,
+    route: 'find the gradient, substitute it and a point, then state the equation in its simplest form',
+    method: 'Find the gradient from the two points, substitute it and one point into $y - b = m(x - a)$, then tidy the equation into its simplest form',
+    plan: [
+      'Subtract the $y$-coordinates and divide by the difference of the $x$-coordinates, taking the points in the same order on the top and the bottom, to get the gradient',
+      'Put the gradient and either point into $y - b = m(x - a)$, or into $y = mx + c$ to find $c$',
+      'Multiply out any brackets and gather the numbers so the equation finishes with $y$ on its own',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Straight Line Equation'],
+    skill: 'Find the equation of the line through two given points',
+  },
+
+  /**
+   * The paper this generator used to share with 2022 P1 Q6, left on what it had.
+   * Identical to its sibling except `basedOn`; the routine branches on the id
+   * so the reviewed paper's fix does not reach this one. It gets looked at
+   * when 2015 is reviewed.
+   */
+  'straight-line.equation-two-points-pre2022': {
+    topic: 'Equation of a Line from Two Points',
+    difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
+    // 2017 P1 Q6 left this entry for `-diagram` below: it is the one of the
+    // three that prints axes with A and B on them, and a figure appearing on
+    // a third of 2022 P1 Q6's draws was 2017's question under 2022's name.
+    basedOn: ['2015 P1 Q8'],
     marks: 3,
     route: 'find the gradient, substitute it and a point, then state the equation in its simplest form',
     method: 'Find the gradient from the two points, substitute it and one point into $y - b = m(x - a)$, then tidy the equation into its simplest form',
