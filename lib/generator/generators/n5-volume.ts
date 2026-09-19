@@ -196,16 +196,31 @@ const CONES = [
 /**
  * 2022 P1 Q3 — a cone with pi taken as 3.14.
  *
- * Non-calculator, so the product has to be one a pupil can do: the radius
- * squared times the height is made divisible by three, which turns the formula
- * into 3.14 times a whole number.
+ * Non-calculator, so the product has to be one a pupil can do.
+ *
+ * **A whole number was not enough.** Making `r^2 h / 3` an integer turns the
+ * formula into 3.14 times a whole number, which is what this asked for at
+ * first - and over 200 draws it still reached `3.14 x 1539 = 4832.46`, with
+ * 101 of the 200 answers carrying decimals and one running to 25,120. The
+ * paper does not do that. It picks a cone of diameter 20 and height 60, which
+ * makes the multiplier exactly 2000, and the whole sum is `3.14 x 2000 = 6280`
+ * in one line.
+ *
+ * So the multiplier is held to a **multiple of 50** - `3.14 x 50 = 157`
+ * exactly, so every answer comes out whole, the way the paper's does - and
+ * capped at 3000, a half again on the paper's own 2000. What survives is 39
+ * cone shapes across diameters 10, 20, 30 and 40, with the paper's own 20 the
+ * commonest. The multiples of five are not a taste: 25 has to divide `r^2 k`
+ * for the multiplier to land on 50, and with `k` under 25 only a radius
+ * carrying the factor can supply it.
  */
 function conePi(): Q | null {
   const c = pick(CONES);
-  const r = pick([3, 5, 6, 9, 10, 12, 15, 20]);
-  const h = getRandomInt(2, 20) * 3;
+  const r = pick([5, 10, 15, 20, 25, 30]);
+  const h = getRandomInt(2, 25) * 3;
   if (h < r) return null;                     // a cone flatter than it is wide
   const third = r * r * h / 3;
+  if (third % 50 !== 0 || third > 3000) return null;
   const exact = 3.14 * third;
   if (Math.round(exact * 100) !== exact * 100) return null;
 
@@ -221,9 +236,22 @@ function conePi(): Q | null {
   ];
   return assemble({
     stack: [{ kind: 'cone', r, h }],
+    /**
+     * **Arrows, because the paper draws arrows.** 2022 P1 Q3 measures its
+     * height with a solid double-headed arrow standing to the right of the
+     * cone and its diameter with another under the base. Left to the default
+     * these came out as dashed lines with no ends, the height one floating
+     * clear to the left with a gap between it and the shape, which reads as
+     * two stray dashes rather than two measurements.
+     *
+     * `arrow` is per-dimension exactly so this can be said one figure at a
+     * time - its own comment on `Dim` says the other solids' papers "have not
+     * been read yet and each gets looked at when its own question does". This
+     * is 2022 P1 Q3's turn; nothing else moves.
+     */
     dims: [
-      { along: 'width', halfWidth: r, side: 'below', value: 2 * r, text: `${2 * r} cm` },
-      { along: 'height', from: 0, to: h, side: 'left', value: h, text: `${h} cm` },
+      { along: 'width', halfWidth: r, side: 'below', value: 2 * r, text: `${2 * r} cm`, arrow: true },
+      { along: 'height', from: 0, to: h, side: 'right', value: h, text: `${h} cm`, arrow: true },
     ],
   }, 'Volume of a Cone', 'volume.cone-approx-pi', prose,
     `Cone, diameter ${2 * r} cm, height ${h} cm. Volume, $\\pi = 3\\cdot 14$?`,

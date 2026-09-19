@@ -179,6 +179,25 @@ function cosineRuleAngleExact(): Q {
     // sides named after the vertices they join
     const AB = getRandomInt(4, 14), BC = getRandomInt(3, 13), AC = getRandomInt(3, 14);
     if (!validTriangle(AB, BC, AC)) continue;
+    /**
+     * **Scalene, because an equal pair takes the question apart.**
+     *
+     * 2022 P1 Q9 is 7, 3, 5 - three different lengths - and the two marks are
+     * for substituting three squares into the cosine rule and simplifying what
+     * comes out. Measured over 200 draws this came out isosceles 54% of the
+     * time and equilateral in 4%, and neither is the same question:
+     *
+     *   AB = AC or BC = AC   the opposite square cancels one of the adjacent
+     *                        ones, and cos B collapses to a single ratio -
+     *                        BC/(2 AB) - reachable without the rule at all
+     *   AB = BC = AC         cos B is 1/2 every time, which 18 of the 200
+     *                        draws answered
+     *
+     * The remaining isosceles case, AB = BC, does keep all three squares, but
+     * a figure with two equal sides is not the figure the paper prints, and
+     * with the pool this size there is nothing to be gained by keeping it.
+     */
+    if (AB === BC || BC === AC || AB === AC) continue;
     const numr = AB * AB + BC * BC - AC * AC;
     const den = 2 * AB * BC;
     if (numr === 0) continue;

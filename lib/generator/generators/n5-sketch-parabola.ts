@@ -170,6 +170,22 @@ function sketchFactorised(): Q | null {
 
   const factor = (r: number) => (r < 0 ? `(x + ${-r})` : `(x - ${r})`);
   const equation = `y = ${factor(r1)}${factor(r2)}`;
+  /**
+   * **2022 P1 Q14 prints axes; 2018 P1 Q16 does not - so they are two ids.**
+   *
+   * 2022 says *"Sketch the graph of y = (x + 1)(x - 3) using the axes provided
+   * below"* and prints a blank pair of axes under it. 2018 P1 Q16 says only
+   * *"Sketch the graph of y = (x - 6)(x + 4)"*, with nothing to draw on.
+   *
+   * The toss between them is the same toss as before - it is what keeps both
+   * forms reachable - but it now names the variation, so a pupil who asked for
+   * 2022 P1 Q14 gets axes every time instead of 93 times in 200. The same
+   * reasoning, and the same shape of fix, as `straight-line.equation-two-
+   * points` further down the 2022 P1 review.
+   *
+   * `sketchCompletedSquare` above has its own `onAxes` and is left alone: it
+   * cites 2026 P1 Q13, which is signed off.
+   */
   const onAxes = getRandomInt(0, 1) === 0;
 
   const view = windowFor(h, k, [{ x: r1, y: 0 }, { x: r2, y: 0 }, { x: 0, y: c }]);
@@ -219,7 +235,9 @@ function sketchFactorised(): Q | null {
   return {
     subTopic: 'Sketching a Parabola from Factorised Form',
     difficulty: 'exam',
-    variationId: 'quadratics.sketch-factorised',
+    variationId: onAxes
+      ? 'quadratics.sketch-factorised-axes'   // 2022 P1 Q14
+      : 'quadratics.sketch-factorised',       // 2018 P1 Q16
     questionLines: prose,
     boardQuestionLines: [`Sketch $${equation}$, showing the roots, the turning point and the y-intercept.`],
     solutionSteps: steps,

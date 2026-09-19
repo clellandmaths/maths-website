@@ -46,8 +46,30 @@ type Shape = { tex: (v: string) => string; at: (x: number) => number; how: strin
  * entry moved here without moving there gives a paper another paper's function
  * under its own name, which is the fault this split exists to end.
  */
-function shapes(): Shape[] {
+function shapes(which?: number): Shape[] {
   const b = nonZeroInt(2, 6), c = nonZeroInt(2, 9), a = nonZeroInt(2, 5);
+  /**
+   * **2022 P1 Q2 is `x^3 - 2`, and the minus is the question.**
+   *
+   * `nonZeroInt(2, 9)` only ever returns 2..9, so over 200 draws the constant
+   * came out positive 200 times and the clone could never be its own paper.
+   * The printed form has carried the `c < 0` branch since it was written; the
+   * only thing missing was a constant that ever takes it.
+   *
+   * **The sign is taken from `a`, not drawn.** The same `c` is the offset in
+   * `(x + c)^2`, which is 2024 P1 Q2 - signed off - and `a` is the multiplier
+   * in `a x^3`, which this shape does not use. `a` runs 2..5, so its parity
+   * splits the sign evenly and independently of `c`'s size.   *
+   * **It costs no new random number, and that is not a detail.** `evaluate`
+   * is a rejection sampler: it draws a shape at random and throws the draw
+   * away when it is not the one asked for. A *discarded* draw still moves the
+   * stream on, so an extra `getRandomInt` behind `which === 2` still shifts
+   * every later draw of the other three shapes - `frozen` named 2024 P1 Q2,
+   * which is signed off, on exactly that. Taking the sign off `a`, which is
+   * already drawn and which this shape does not otherwise use, changes the
+   * value and nothing else.
+   */
+  const cube = which === 2 && a % 2 === 0 ? -c : c;
   return [
     // 2017 P1 Q1: f(x) = x^2 + 3x
     { tex: v => `${v}^{2} ${b < 0 ? '-' : '+'} ${Math.abs(b)}${v}`,
@@ -58,9 +80,9 @@ function shapes(): Shape[] {
       at: x => a * x * x * x,
       how: `cube the number, then multiply by ${a}` },
     // 2022 P1 Q2: f(x) = x^3 - 2
-    { tex: v => `${v}^{3} ${c < 0 ? '-' : '+'} ${Math.abs(c)}`,
-      at: x => x * x * x + c,
-      how: `cube the number, then ${c < 0 ? 'subtract' : 'add'} ${Math.abs(c)}` },
+    { tex: v => `${v}^{3} ${cube < 0 ? '-' : '+'} ${Math.abs(cube)}`,
+      at: x => x * x * x + cube,
+      how: `cube the number, then ${cube < 0 ? 'subtract' : 'add'} ${Math.abs(cube)}` },
     // 2024 P1 Q2: f(x) = (x + 3)^2
     { tex: v => `(${v} ${c < 0 ? '-' : '+'} ${Math.abs(c)})^{2}`,
       at: x => (x + c) * (x + c),
@@ -96,7 +118,7 @@ function evaluate(): Q {
   const ids = ['functions.evaluate', 'functions.evaluate-cube-multiple',
                'functions.evaluate-cube-plus', 'functions.evaluate-square'];
   for (let tries = 0; tries < 200; tries++) {
-    const s = shapes()[which];
+    const s = shapes(which)[which];
     const fn = pick(FN);
     // three of the four papers substitute a negative
     const input = getRandomInt(1, 4) === 1 ? getRandomInt(2, 8) : -getRandomInt(2, 6);

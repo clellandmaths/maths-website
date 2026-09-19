@@ -271,6 +271,25 @@ function twoPoints(wantEquation: boolean): Q {
     if (wantEquation && den !== 0 && num % den !== 0) continue;   // keep c whole
     const m = num / den;
     const c = y1 - m * x1;
+    /**
+     * **Paper scale, for the equation only.**
+     *
+     * The three papers set gradients of 2, -2 and -4 and intercepts of 9, 4
+     * and -13. Unbounded, this reached `y = -17x - 127`: over 200 draws the
+     * gradient passed 4 seventy-six times and ran to 18, and the intercept to
+     * 127. A pupil asked for "the equation in its simplest form" can do
+     * -17x - 127; it is just not the question any of the three papers set, and
+     * a line that steep is barely a line on the axes the diagram form draws.
+     *
+     * Only the equation is held. `straight-line.gradient-two-points` is a
+     * skill with no paper behind it and a steep gradient is no harder there,
+     * so it keeps the range it had.
+     */
+    // A gradient of 1 or -1 took 49% of draws once the top was capped - the
+    // divisibility that keeps c whole favours den = 1 - and no paper here uses
+    // it: 2, -2 and -4. It also makes the second mark nearly free, since there
+    // is nothing to multiply. So the floor matters as much as the ceiling.
+    if (wantEquation && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20)) continue;
 
     if (!wantEquation) {
       return {
@@ -293,14 +312,26 @@ function twoPoints(wantEquation: boolean): Q {
     const equation = c === 0 ? `y = ${mPart}` : `y = ${mPart} ${c < 0 ? '-' : '+'} ${Math.abs(c)}`;
 
     /**
-     * **One of the three papers draws the line; two do not.**
+     * **One of the three papers draws the line; two do not - so they are two
+     * variations, not one with a coin toss.**
      *
      * 2017 P1 Q6 prints axes with A and B marked and their coordinates written
      * beside them - *and* states both in the prose, which is what separates it
      * from `straight-line.from-marked-points`, where the coordinates are only on
-     * the picture. 2015 P1 Q8 and 2022 P1 Q6 are pure text. So the figure
-     * appears on roughly a third of draws rather than always or never, which is
-     * the presentation split those three citations actually have.
+     * the picture. 2015 P1 Q8 and 2022 P1 Q6 are pure text.
+     *
+     * This used to draw on a third of draws under a single id, on the argument
+     * that a third of its citations draw. That is the wrong unit. Press
+     * Variation on 2022 P1 Q6 - which is pure text - and one time in three you
+     * were handed 2017's diagram. `functions.evaluate` is split for exactly
+     * this reason and says so above itself: the owner read that coin toss off
+     * a contact sheet as "using more than one generator", because that is what
+     * it looks like.
+     *
+     * So the toss still happens - it is what keeps both forms reachable - but
+     * it now chooses the **id**, and `generateQuestion` draws until it has the
+     * one that was asked for. The routine is otherwise identical, which is why
+     * this is a split and not a copy.
      */
     const drawIt = getRandomInt(1, 3) === 1;
     const xs = [0, x1, x2], ys = [0, y1, y2];
@@ -326,7 +357,9 @@ function twoPoints(wantEquation: boolean): Q {
     return {
       subTopic: 'Equation of a Line from Two Points',
       difficulty: 'skill',
-      variationId: 'straight-line.equation-two-points',
+      variationId: drawIt
+        ? 'straight-line.equation-two-points-diagram'   // 2017 P1 Q6
+        : 'straight-line.equation-two-points',          // 2015 P1 Q8, 2022 P1 Q6
       questionLines: [
         ask,
         ...(fig ? [renderScene(fig.scene), follow as string] : []),

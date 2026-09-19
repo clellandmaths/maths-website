@@ -134,6 +134,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'quadratics.sketch-completed-square':     'nzu4k',
   'quadratics.sketch-completed-square-pre2023': 'buaq5',
   'quadratics.sketch-factorised':           'diz6l',
+  'quadratics.sketch-factorised-axes':      'u36bx',
   'quadratics.parabola-scale':              'vz109',
   'quadratics.parabola-from-turning-point': '92zyq',
   'quadratics.parabola-with-axis':          'xszd1',
@@ -224,6 +225,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'straight-line.intercept-from-equation':  'k2p9o',
   'straight-line.gradient-two-points':      '9858j',
   'straight-line.equation-two-points':      'jwfst',
+  'straight-line.equation-two-points-diagram': 'me045',
 
   'sci-notation.convert':                   'l3u3i',
   'sci-notation.calculate':                 'y7fcp',

@@ -83,16 +83,71 @@ function subjectInNumerator(): Q {
   const [v, subj, den, other] = letters(4, true);
   const k = pick([1, 1, 2, 3, 4, 5]);           // 1 gives the no-fraction answer
   const squareDen = getRandomInt(1, 3) === 1;
-  const constTerm = getRandomInt(0, 1) === 0;   // "+ 4" or "+ t^2"
+  /**
+   * **Three choices out of one draw, on the two-step branch only.**
+   *
+   * `subjectInNumerator` is a rejection sampler - it draws, and the caller
+   * throws the draw away when `k` did not give the id that was asked for - so
+   * a *discarded* k = 1 draw that consumed two extra random numbers still
+   * shifts the stream for the k != 1 draw that follows it. That moved 2024
+   * P2 Q9, which is signed off, and `frozen` named it.
+   *
+   * `getRandomInt` is one `random()` call whatever its range, so a single
+   * `getRandomInt(0, 7)` sits in exactly the place `getRandomInt(0, 1)` sat
+   * and carries three bits instead of one.
+   *
+   * **The same count of draws is not enough - the same decision has to come
+   * out of the same random value.** The first attempt read `constTerm` off the
+   * low bit, so for a given `random()` the old code and the new one disagreed
+   * about it half the time; `constTerm` is what decides whether `pick(consts)`
+   * is called at all, so a *discarded* k = 1 attempt then consumed a different
+   * number of draws and everything after it moved. `frozen` named 2024 P2 Q9
+   * twice over that. Reading it off the **top** bit makes `flavour < 4` mean
+   * exactly what `getRandomInt(0, 1) === 0` meant - both are `random() < 0.5` -
+   * and scaling the other branch's draw by 4 puts it on the same scale, so
+   * that branch is value-for-value what it always was.
+   */
+  const flavour = k === 1 ? getRandomInt(0, 7) : getRandomInt(0, 1) * 4;
+  const constTerm = flavour < 4;                // "+ 4" or "+ t^2"
 
   const dTex = squareDen ? `${den}^{2}` : den;
   // "5g + 5" shares a factor a pupil would want to take out; the papers keep the
   // coefficient and the constant coprime — 2d + 3, t^2 + 4b.
-  const consts = [2, 3, 4, 5, 6, 7, 8, 9].filter(c => gcd(c, k) === 1);
-  const tTex = constTerm ? `${pick(consts)}` : `${other}^{2}`;
-  const numTex = `${term(k, subj)} + ${tTex}`;
+  /**
+   * **Wider, but only on the two-step id.**
+   *
+   * `k === 1` is `change-subject.fraction-two-step`, which clones 2022 P1 Q7
+   * and nothing else. Its whole pool was eight constants and a square, times
+   * a squared or plain denominator: **18 distinct questions**, which is under
+   * the floor and thin for a question a pupil may meet a dozen times.
+   *
+   * Three things widen it, none of which changes what is being asked - it is
+   * still multiply by the denominator, then undo the term beside the subject,
+   * two operations for two marks:
+   *
+   *   constants to 15    "+ 12" is no harder to subtract than "+ 4"
+   *   a bare letter      2017 P1 Q10 already puts a letter there, as t^2
+   *   a minus sign       (B - 4)/C^2 makes the second step an addition
+   *
+   * That is 60 shapes rather than 18.
+   *
+   * **Every extra draw is behind `k === 1`.** The other branch of this routine
+   * is `change-subject.fraction`, which cites 2024 P2 Q9 - signed off. Widening
+   * the shared `consts` array, or drawing the sign before the branch, would
+   * shift the random stream and move a frozen question. `k` is chosen above,
+   * so the branch is known before any of this is drawn, and `pick(consts)`
+   * stays in the same position in the stream either way.
+   */
+  const wide = k === 1;
+  const consts = (wide ? [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                       : [2, 3, 4, 5, 6, 7, 8, 9]).filter(c => gcd(c, k) === 1);
+  const tTex = constTerm ? `${pick(consts)}`
+    : wide && (flavour & 1) !== 0 ? `${other}` : `${other}^{2}`;
+  const minus = wide && (flavour & 2) !== 0;
+  const numTex = `${term(k, subj)} ${minus ? '-' : '+'} ${tTex}`;
   const product = `${v}${dTex}`;
-  const rhs = k === 1 ? `${product} - ${tTex}` : frac(`${product} - ${tTex}`, `${k}`);
+  const undo = `${product} ${minus ? '+' : '-'} ${tTex}`;
+  const rhs = k === 1 ? undo : frac(undo, `${k}`);
 
   // Every mark in these schemes is one operation: •¹ multiply by c, •² subtract
   // t^2, •³ divide by 4. So when k is 1 there is no division to do and the
@@ -100,11 +155,13 @@ function subjectInNumerator(): Q {
   // step here said so out loud ("the subject is already on its own"), earning
   // nothing while being the step the app withholds. A pupil taking every
   // available hint was handed both real steps and left to supply a no-op.
+  const move = minus ? 'Add' : 'Subtract';
+  const toFrom = minus ? 'to' : 'from';
   const steps = [
     `<strong>1.</strong> Multiply both sides by $${dTex}$:<br><br>$${product} = ${numTex}$`,
     k === 1
-      ? `<strong>2.</strong> Subtract $${tTex}$ from both sides, which leaves the subject on its own:<br><br>$${subj} = ${rhs}$`
-      : `<strong>2.</strong> Subtract $${tTex}$ from both sides:<br><br>$${product} - ${tTex} = ${term(k, subj)}$`,
+      ? `<strong>2.</strong> ${move} $${tTex}$ ${toFrom} both sides, which leaves the subject on its own:<br><br>$${subj} = ${rhs}$`
+      : `<strong>2.</strong> ${move} $${tTex}$ ${toFrom} both sides:<br><br>$${undo} = ${term(k, subj)}$`,
     ...(k === 1 ? [] : [`<strong>3.</strong> Divide both sides by $${k}$:<br><br>$${subj} = ${rhs}$`]),
   ];
 

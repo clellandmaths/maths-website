@@ -1538,7 +1538,33 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.sketch-factorised': {
     topic: 'Sketching a Parabola from Factorised Form',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2018 P1 Q16', '2022 P1 Q14'],
+    // 2022 P1 Q14 moved to `-axes` below, which is the half of this question
+    // that prints a blank pair of axes to draw on. 2018 P1 Q16 prints none.
+    basedOn: ['2018 P1 Q16'],
+    marks: 3,
+    route: 'identify the roots, then the turning point or the y-intercept, then both of them on a consistently annotated sketch. The last mark is only available where the roots, the turning point and the y-intercept are all clearly marked',
+    plan: [
+      'Set each bracket equal to zero in turn and solve — those two $x$ values are where the curve crosses the $x$-axis',
+      'Take the value halfway between them for the turning point\'s $x$, since a parabola is symmetrical, then substitute it back for the $y$',
+      'Put $x = 0$ for the $y$-intercept, then draw the parabola with the roots, the turning point and that intercept all annotated',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'text',
+    webTopics: ['Sketch a parabola from equation'],
+    skill: 'Take the roots from the brackets, halve between them, and sketch',
+  },
+
+  /**
+   * 2022 P1 Q14 - the same three marks, with the axes supplied.
+   *
+   * Word for word its sibling above apart from `basedOn`, and the same
+   * routine: only the presence of the blank axes separates them, and that is
+   * what the paper separates them by.
+   */
+  'quadratics.sketch-factorised-axes': {
+    topic: 'Sketching a Parabola from Factorised Form',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2022 P1 Q14'],
     marks: 3,
     route: 'identify the roots, then the turning point or the y-intercept, then both of them on a consistently annotated sketch. The last mark is only available where the roots, the turning point and the y-intercept are all clearly marked',
     plan: [
@@ -3003,7 +3029,35 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'straight-line.equation-two-points': {
     topic: 'Equation of a Line from Two Points',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2015 P1 Q8', '2017 P1 Q6', '2022 P1 Q6'],
+    // 2017 P1 Q6 left this entry for `-diagram` below: it is the one of the
+    // three that prints axes with A and B on them, and a figure appearing on
+    // a third of 2022 P1 Q6's draws was 2017's question under 2022's name.
+    basedOn: ['2015 P1 Q8', '2022 P1 Q6'],
+    marks: 3,
+    route: 'find the gradient, substitute it and a point, then state the equation in its simplest form',
+    method: 'Find the gradient from the two points, substitute it and one point into $y - b = m(x - a)$, then tidy the equation into its simplest form',
+    plan: [
+      'Subtract the $y$-coordinates and divide by the difference of the $x$-coordinates, taking the points in the same order on the top and the bottom, to get the gradient',
+      'Put the gradient and either point into $y - b = m(x - a)$, or into $y = mx + c$ to find $c$',
+      'Multiply out any brackets and gather the numbers so the equation finishes with $y$ on its own',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Straight Line Equation'],
+    skill: 'Find the equation of the line through two given points',
+  },
+
+  /**
+   * 2017 P1 Q6 - the same three marks, asked over a drawn line.
+   *
+   * Everything below is its sibling's word for word except `basedOn`; the
+   * routine is the same routine. The id exists so that the paper that prints
+   * a diagram is the only paper that gets one.
+   */
+  'straight-line.equation-two-points-diagram': {
+    topic: 'Equation of a Line from Two Points',
+    difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
+    basedOn: ['2017 P1 Q6'],
     marks: 3,
     route: 'find the gradient, substitute it and a point, then state the equation in its simplest form',
     method: 'Find the gradient from the two points, substitute it and one point into $y - b = m(x - a)$, then tidy the equation into its simplest form',

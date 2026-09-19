@@ -1,6 +1,6 @@
 import { GeneratedQuestion } from './types';
 import { getRandomInt } from './utils';
-import { article } from './n5-contexts';
+import { abbrev, article } from './n5-contexts';
 import {
   algebraicCuboid, borderedRectangle, shapePair, type PlaneShape,
 } from '../diagrams/shapes/algebra-shapes';
@@ -272,10 +272,26 @@ function triangleAgainstRectangle(): Q | null {
     `<strong>4.</strong> Expand and gather the $x$ terms:<br><br>$${coef(A)} = ${B}$`,
     `<strong>5.</strong> Divide by $${A}$:<br><br>$x = ${x}$`,
   ];
+  /**
+   * **Units on every label, and brackets round every expression** - which is
+   * what 2022 P1 Q15 prints: "3 cm", "(x + 12) cm", "6 cm", "(8 - x) cm".
+   *
+   * This drew them bare - "7", "x + 14", "4", "16 - x" - and the second of
+   * those is the one that matters. Part (a) asks for *an expression for the
+   * area*, so the pupil has to multiply the base by the height and halve it;
+   * a base written `x + 14` with nothing round it invites `1/2 x + 14 x 7`,
+   * and the bracket the paper prints is the thing that stops it. The units
+   * are the other half of the same faithfulness: the prose says metres or
+   * centimetres and the drawing should say m or cm, as every other figure in
+   * this file already does.
+   */
+  const u = abbrev(c.unit);
   return assemble(
     shapePair(
-      { kind: 'triangle', base: 100, height: 44, labels: { base: `x + ${b}`, height: `${hTri}` } },
-      { kind: 'rectangle', w: 52, h: 68, labels: { w: `${k} - x`, h: `${r}` } } as PlaneShape,
+      { kind: 'triangle', base: 100, height: 44,
+        labels: { base: `(x + ${b}) ${u}`, height: `${hTri} ${u}` } },
+      { kind: 'rectangle', w: 52, h: 68,
+        labels: { w: `(${k} - x) ${u}`, h: `${r} ${u}` } } as PlaneShape,
     ),
     'A Triangle Against a Rectangle', 'form-equation.triangle-rectangle', prose,
     `Triangle base $x + ${b}$, height ${hTri}; rectangle ${r} by $${k} - x$. Equal areas — find $x$.`,

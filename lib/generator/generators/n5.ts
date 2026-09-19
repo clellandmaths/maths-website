@@ -426,10 +426,21 @@ function operation(
  * last hint stating the answer.
  */
 function brackets(): Q {
-  const mixedInside = getRandomInt(1, 4) === 1;
   for (let tries = 0; tries < 1200; tries++) {
     const out = properTerm(7), p = properTerm(7);
-    const q = mixedInside ? mixedTerm(1, 2, 5) : properTerm(7);
+    /**
+     * **Three proper fractions, because that is what both papers set.**
+     *
+     * The bracket used to hold a mixed number one draw in four, and over 200
+     * draws one appeared 59 times and *was the answer* 48 times. Neither paper
+     * has one anywhere: 2016 P1 Q2 is 3/4(1/3 + 2/7) and 2022 P1 Q1 is
+     * 2/3(1/5 + 3/4), and neither markscheme pays for converting a mixed
+     * number - both give the first mark for the bracket over a common
+     * denominator and the second for the simplified answer. A mixed number
+     * puts a step in front of the first mark that the scheme does not know
+     * about, which makes it a different question, not a harder one.
+     */
+    const q = properTerm(7);
     if (p.d === q.d) continue;
     // The bracket is an addition, so its two denominators are coprime like
     // every other addition the papers set: 2016 P1 Q2 is ⅓ + 2/7 and 2022 P1 Q1
@@ -440,6 +451,11 @@ function brackets(): Q {
     const inner = addF(value(p), value(q));
     const r = mulF(value(out), inner);
     if (r.n > 400 || !needsSimplifying(r)) continue;
+    // Both papers answer a proper fraction - 13/28 and 19/30 - and with a
+    // proper bracket the product is under 1 most of the time anyway. Holding
+    // it there keeps `mixed()` from printing an answer in a form neither
+    // paper asks for.
+    if (r.n >= r.d) continue;
     // 2016 P1 Q2 answers 13/28 and 2022 P1 Q1 answers 19/30; this reached 70.
     // The PRINTED denominator: `needsSimplifying(r)` just above guarantees
     // `r.d` is not it.
