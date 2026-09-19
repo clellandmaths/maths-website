@@ -942,6 +942,41 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Reversing a percentage change'],
     skill: 'Divide by the multiplier to recover the original quantity',
   },
+
+  /**
+   * 2022 P1 Q10 - reverse percentages on the non-calculator paper.
+   *
+   * Its own subTopic, not just its own id, so that `reverse()` is never
+   * entered on its behalf and the three signed-off papers on that routine
+   * do not move. See `reverseNonCalculator` in n5-percentages.ts.
+   *
+   * `webTopics` is its sibling's, so the site still shows one topic.
+   */
+  'percentages.reverse-non-calculator': {
+    topic: 'Reverse Percentages without a Calculator',
+    difficulty: 'exam',
+    strategy: 'answer-first',
+    source: 'zeta+paper',
+    // 2018 P2 Q11 was here and has moved to `percentages.part-of-whole`.
+    // Its percentage is handed over - "This is 85% of the volume of Earth" -
+    // where every paper left here describes a change and makes the pupil work
+    // the percentage out: "reduced by 20%", "an increase of 16%", "15% more
+    // than last year". That first step is inside the first mark, and no clone
+    // here ever produced the handed-over wording.
+    basedOn: ['2022 P1 Q10'],
+    marks: 3,
+    route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
+    method: 'The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through',
+    plan: [
+      'Decide what percentage of the original the amount you are given is — over 100% after an increase, under it after a decrease',
+      'Divide that amount by the matching multiplier to get back to 100%',
+      'Carry the division through',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'money',
+    webTopics: ['Reversing a percentage change'],
+    skill: 'Divide by the multiplier to recover the original quantity',
+  },
   // Nothing rose or fell: the figure given simply *is* r% of the whole. That
   // moves the first mark — it is for reading "80% = 480 000", and a pupil
   // reaching for 100 + r has misread the question rather than slipped.
@@ -5296,7 +5331,9 @@ const ALIASES: Record<string, {
   'surds.rationalise-pre2023': { aliasOf: 'surds.rationalise', basedOn: ['2018 P1 Q11'] },
   'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2022 P2 Q2', '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'] },
   'percentages.compound-between-years-pre2023': { aliasOf: 'percentages.compound-between-years', basedOn: ['2019 P2 Q1'] },
-  'percentages.reverse-pre2023': { aliasOf: 'percentages.reverse', basedOn: ['2022 P1 Q10', '2015 P2 Q8', '2017 P2 Q5'] },
+  // 2022 P1 Q10 left this alias for `percentages.reverse-non-calculator`:
+  // it is a Paper 1 question and needs a divisor a pupil can divide by.
+  'percentages.reverse-pre2023': { aliasOf: 'percentages.reverse', basedOn: ['2015 P2 Q8', '2017 P2 Q5'] },
   'percentages.part-of-whole-pre2023': { aliasOf: 'percentages.part-of-whole', basedOn: ['2014 P1 Q9', '2018 P2 Q11'] },
   'expanding.binomial-trinomial-pre2023': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2022 P2 Q1', '2015 P1 Q4', '2017 P1 Q4', '2019 P1 Q3'] },
   'quadratics.complete-square-pre2023': { aliasOf: 'quadratics.complete-square', basedOn: ['2014 P1 Q3', '2016 P2 Q9', '2019 P2 Q10'] },

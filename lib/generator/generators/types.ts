@@ -136,6 +136,7 @@ export type Topic =
   | "Writing a Root as a Power"
   | "Compound Appreciation & Depreciation"
   | "Reverse Percentages"
+  | "Reverse Percentages without a Calculator"
   | "Percentage Change"
   | "Two-Stage Depreciation"
   | "Appreciation Between Two Years"
@@ -477,6 +478,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
   "N5 Percentages": [
     "Compound Appreciation & Depreciation",
     "Reverse Percentages",
+    "Reverse Percentages without a Calculator",
     "Percentage Change",
     "Two-Stage Depreciation",
     "Appreciation Between Two Years",

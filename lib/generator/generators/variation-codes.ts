@@ -88,6 +88,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'percentages.compound-between-years':     'frk33',
   'percentages.compound-between-years-pre2023': 'rv336',
   'percentages.reverse':                    'l3vuq',
+  'percentages.reverse-non-calculator': 'dt7nn',
   'percentages.reverse-pre2023':           'kyaff',
   'percentages.part-of-whole':              'df9o3',
   'percentages.part-of-whole-pre2023':     'n7czq',

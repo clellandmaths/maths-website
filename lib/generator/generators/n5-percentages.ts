@@ -487,9 +487,94 @@ function twoStage(): Q {
   };
 }
 
+/** The pound sign, kept out of template literals — see docs/dollar traps. */
+const POUND = '\u00a3';
+/**
+ * **2022 P1 Q10 - the same question, on a paper with no calculator.**
+ *
+ * The owner, having read the sheet: *"Can we check these are ok for non
+ * calculator."* They were not. Over 123 parsed draws of `percentages.reverse`,
+ * **61 landed on a divisor that is not a multiple of ten** - 104, 105, 108,
+ * 112, 115, 85, 75, 125, 65 - leaving a pupil to divide by 108 to find 1% with
+ * nothing to divide with. The worst was 432,000 at 8%.
+ *
+ * Read the four papers that generator serves and the rule is already there:
+ *
+ *   2022 P1 Q10   P1   30% off 16.10      divide by 70    no calculator
+ *   2025 P1 Q4    P1   20% off 720        divide by 80    no calculator
+ *   2023 P2 Q6    P2   8% up, 94,500      divide by 108   calculator
+ *   2024 P2 Q5    P2   16% up, 278.40     divide by 116   calculator
+ *
+ * **Both Paper 1 questions use a divisor that is a multiple of ten**, and 2025
+ * P1 Q4's markscheme spells the route out - *"(10% =) 720/8"*. Both Paper 2
+ * questions use an awkward one, because there a calculator does the work.
+ *
+ * ## Why this is a separate routine under its own subTopic
+ *
+ * A second id inside `reverse()` would have reshuffled which draws that
+ * routine keeps for every other paper on it, and three of them are signed off.
+ * `generateQuestion` narrows to the topics the wanted variations live in, so a
+ * variation under **its own subTopic** gets its own draw loop: `reverse()` is
+ * never entered, never rejects anything, and 2025 P1 Q4, 2023 P2 Q6 and 2024
+ * P2 Q5 do not move at all.
+ *
+ * That distinction was missed once and is worth stating plainly, because the
+ * wrong half of it was briefly written into `frozen.ts` as though it were
+ * general: **a same-topic split moves the sibling; a new-subTopic split does
+ * not.** The first is unavoidable, the second is the tool for exactly this
+ * case - the owner's rule, *"if we fix something that affects a frozen
+ * question we create a new generator"*, working as stated.
+ *
+ * `webTopics` is unchanged, so the website still shows one Reverse Percentages
+ * topic; the split is the generator's, not the site's.
+ *
+ * **2025 P1 Q4 still has the fault**, and is signed off, so it is left exactly
+ * as it is and flagged rather than quietly fixed.
+ */
+function reverseNonCalculator(): Q {
+  for (let tries = 0; tries < 400; tries++) {
+    // A discount, because 2022 P1 Q10 is a discount, and a rate whose divisor
+    // is a multiple of ten so that 10% is one short division away.
+    const rate = pick([10, 20, 30, 40]);
+    const divisor = 100 - rate;                     // 90, 80, 70 or 60
+    // Paper scale: 16.10 in 2022, 720 in 2025, not the 432,000 the calculator
+    // form reaches.
+    const ctx = pick(REVERSE_CONTEXTS.filter(c => !c.up && c.band[1] <= 1200));
+    const [lo, hi] = ctx.band;
+    const step = hi > 400 ? 50 : 10;
+    const original = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;
+    const given = original * (1 - rate / 100);
+    // Exact pence, and the 10% step a pupil actually takes has to be exact
+    // too: 16.10 / 7 = 2.30 is the paper's own line of working.
+    if (Math.abs(given * 100 - Math.round(given * 100)) > 1e-9) continue;
+    const tenth = given / (divisor / 10);
+    if (Math.abs(tenth * 100 - Math.round(tenth * 100)) > 1e-9) continue;
+
+    const show = (v: number) => POUND + money(v, 2);
+    return {
+      subTopic: 'Reverse Percentages without a Calculator',
+      difficulty: 'skill',
+      variationId: 'percentages.reverse-non-calculator',
+      questionLines: ctx.lines(POUND + moneyNeat(given), rate),
+      boardQuestionLines: [`Down ${rate}% gives ${show(given)}. Find the original.`],
+      // 2022 P1 Q10's three marks: know that 70% = 16.10, begin a valid
+      // strategy, complete it. The middle one is the 10% step.
+      solutionSteps: [
+        `<strong>1.</strong> The price paid is ${divisor}% of the original:<br><br>$${divisor}\\% = ${show(given)}$`,
+        `<strong>2.</strong> Divide by ${divisor / 10} to get 10%:<br><br>$10\\% = ${show(given)} \\div ${divisor / 10} = ${show(tenth)}$`,
+        `<strong>3.</strong> Ten times that is the original:<br><br>$= ${show(original)}$`,
+      ],
+      stepMarks: [1, 1, 1],
+      finalAnswer: POUND + moneyNeat(original),
+    };
+  }
+  throw new Error('percentages.reverse-non-calculator: no valid question found');
+}
+
 export const PERCENTAGE_GENERATORS: Record<string, () => Q> = {
   'Compound Appreciation & Depreciation': compound,
   'Reverse Percentages': reverse,
+  'Reverse Percentages without a Calculator': reverseNonCalculator,
   'Percentage Change': percentageChange,
   'Two-Stage Depreciation': twoStage,
   'Appreciation Between Two Years': compoundBetweenYears,
