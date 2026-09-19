@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "6c616bde6c889dde6134518e9f38dcdabbda559c",
+  "sourceCommit": "9d87fb4fd550d61c735482483523073114efa2a3",
   "sourceDirty": false,
   "count": 96,
   "files": {
@@ -25,7 +25,7 @@
     "diagrams/shapes/similar-sectors.ts": "8812a482ca4ed6e8",
     "diagrams/shapes/sketch-axes.ts": "5167b27d6aa5ab10",
     "diagrams/shapes/solid-on-axes.ts": "f9a34b60f0e1ab11",
-    "diagrams/shapes/solid.ts": "7c70cdf0ca394e75",
+    "diagrams/shapes/solid.ts": "dbf658d4be57ce98",
     "diagrams/shapes/split-side.ts": "5f02d970afa71796",
     "diagrams/shapes/tangent-circle.ts": "ffa91f154db429dc",
     "diagrams/shapes/tangent-meets-diameter.ts": "603eb2376f949ce9",

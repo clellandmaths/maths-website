@@ -449,9 +449,52 @@ export function solidFigure(spec: SolidSpec): Figure {
        */
       const edge = d.side === 'left' ? box.x0 : box.x1;
       if (d.rules) {
-        for (const [from, to] of [[pt(edge, a.y), a], [pt(apex ? apex.x : edge, b.y), b]] as [Pt, Pt][]) {
-          if (Math.abs(to.x - from.x) > 0.01) {
-            elements.push({ kind: 'segment', from, to, dashed: true, decoration: true });
+        /**
+         * **A rule has to land on the shape, and the cut face has two levels.**
+         *
+         * The owner, on the second pass: *"It might be my eyes but this still
+         * looks too low. Perhaps have the dashed horizontal line meet the
+         * bottom of the upper frustum so it is clear?"*
+         *
+         * A height of `h` on a stacked piece is the height of its face's
+         * *centre*, and a cut face drawn obliquely has its near corner below
+         * that and its far corner above - measured, 116.2 and 94.2 against a
+         * centre of 104.7. So the rule sat between the two corners, touching
+         * neither, and the arrow that ended on it read low by half a depth.
+         *
+         * The near corner is the one to meet: it is the edge closest to the
+         * reader and the one 2023 P2 Q9 rules from. Both dimensions that share
+         * this level snap to it together, so they still meet.
+         *
+         * Confined to `rules`, which only the frustum asks for. The same edit
+         * made unconditionally would move every solid with a height arrow -
+         * which is what it did last time, and `frozen` named the four.
+         */
+        const topPiece = spec.stack[spec.stack.length - 1];
+        const faceW = topPiece && 'wTop' in topPiece ? topPiece.wTop
+          : topPiece && 'w' in topPiece ? topPiece.w : 0;
+        const faceBack = depthOf(faceW);
+        /**
+         * A dimension speaks in plain heights; `o` is a seat and carries the
+         * face's depth as well, so the two are compared in plain heights or
+         * the test never fires - which is what the first attempt did.
+         *
+         * Measured rather than re-derived, after two wrong signs: a plain
+         * height renders at the *centre* of the cut face (corners at 94.2 and
+         * 116.2 about a level of 104.7), so the near corner is half the face's
+         * own depth below it, and the base's depth does not enter.
+         */
+        const stackH = spec.stack.reduce((t, p) => t + ('h' in p ? p.h : 0), 0);
+        const near = pt(o.x + faceW / 2 - faceBack.x / 2, stackH - faceBack.y / 2);
+        const atFace = (p: Pt) => Math.abs(p.y - stackH) < 1e-6;
+        if (atFace(a)) a = pt(a.x, near.y);
+        if (atFace(b)) b = pt(b.x, near.y);
+        inward = pt(a.x + (d.side === 'left' ? 1 : -1), (a.y + b.y) / 2);
+        const startFor = (p: Pt) => atFace(p) ? near : apex && Math.abs(p.y - apex.y) < 1e-6 ? apex : pt(edge, p.y);
+        for (const end of [a, b]) {
+          const from = pt(startFor(end).x, end.y);
+          if (Math.abs(end.x - from.x) > 0.01) {
+            elements.push({ kind: 'segment', from, to: end, dashed: true, decoration: true });
           }
         }
       }
