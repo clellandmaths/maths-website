@@ -426,26 +426,6 @@ function operation(
  * last hint stating the answer.
  */
 function brackets(): Q {
-  /**
-   * **2016 P1 Q2 keeps what it had; 2022 P1 Q1 gets the fix.**
-   *
-   * Removing the mixed number was right for 2022 P1 Q1 and moved 2016 P1 Q2
-   * with it - a paper nobody has reviewed, changed by a fix nobody aimed at
-   * it.   *
-   * The owner's rule, 2026-09-19: *"if we have to make a change to a generator
-   * for a question and that generator serves other questions then we need to
-   * branch off. It's really that simple."* The fix was aimed at 2022; this
-   * paper has not been reviewed, so it keeps exactly what it had until its own
-   * turn comes. `frozen` fails on any movement outside the year under review,
-   * which is what named this one.
-   *
-   * So the draw chooses the **id**: `-pre2022` is 2016's, with the bracket
-   * able to hold a mixed number one time in four exactly as before, and the
-   * plain id is 2022's three proper fractions. `generateQuestion` draws until
-   * it has the one asked for.
-   */
-  const pre2022 = getRandomInt(0, 1) === 0;
-  const mixedInside = pre2022 && getRandomInt(1, 4) === 1;
   for (let tries = 0; tries < 1200; tries++) {
     const out = properTerm(7), p = properTerm(7);
     /**
@@ -460,7 +440,7 @@ function brackets(): Q {
      * puts a step in front of the first mark that the scheme does not know
      * about, which makes it a different question, not a harder one.
      */
-    const q = mixedInside ? mixedTerm(1, 2, 5) : properTerm(7);
+    const q = properTerm(7);
     if (p.d === q.d) continue;
     // The bracket is an addition, so its two denominators are coprime like
     // every other addition the papers set: 2016 P1 Q2 is ⅓ + 2/7 and 2022 P1 Q1
@@ -471,11 +451,9 @@ function brackets(): Q {
     const inner = addF(value(p), value(q));
     const r = mulF(value(out), inner);
     if (r.n > 400 || !needsSimplifying(r)) continue;
-    // 2022 P1 Q1 answers 19/30 and 2016 P1 Q2 answers 13/28, both proper, and
-    // with a proper bracket the product is under 1 most of the time anyway.
-    // Held only on 2022's id: holding it on 2016's too would be a second
-    // change to a paper nobody has looked at.
-    if (!pre2022 && r.n >= r.d) continue;
+    // Both papers answer a proper fraction - 19/30 and 13/28 - and with a
+    // proper bracket the product is under 1 most of the time anyway.
+    if (r.n >= r.d) continue;
     // 2016 P1 Q2 answers 13/28 and 2022 P1 Q1 answers 19/30; this reached 70.
     // The PRINTED denominator: `needsSimplifying(r)` just above guarantees
     // `r.d` is not it.
@@ -483,9 +461,7 @@ function brackets(): Q {
     return {
       subTopic: 'Fractions with Brackets',
       difficulty: 'exam',
-      variationId: pre2022
-        ? 'fractions.brackets-pre2022'   // 2016 P1 Q2
-        : 'fractions.brackets',          // 2022 P1 Q1
+      variationId: 'fractions.brackets',
       questionLines: [
         `Evaluate $${show(out)}\\left(${show(p)} + ${show(q)}\\right)$`, SIMPLEST,
       ],

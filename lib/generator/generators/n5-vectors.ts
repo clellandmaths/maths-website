@@ -271,9 +271,6 @@ function twoPoints(wantEquation: boolean): Q {
     if (wantEquation && den !== 0 && num % den !== 0) continue;   // keep c whole
     const m = num / den;
     const c = y1 - m * x1;
-    // Drawn before the caps because it, and `preLine` below it, choose between
-    // this routine's three ids, and an id has to be known before its bounds.
-    const drawFig = getRandomInt(1, 3) === 1;
     /**
      * **Paper scale, for the equation only.**
      *
@@ -287,29 +284,22 @@ function twoPoints(wantEquation: boolean): Q {
      * Only the equation is held. `straight-line.gradient-two-points` is a
      * skill with no paper behind it and a steep gradient is no harder there,
      * so it keeps the range it had.
+     *
+     * **There was a `-pre2022` sibling here for an hour, and it is gone.** It
+     * was built to keep 2015 P1 Q8 exactly as it was while 2022 P1 Q6 got the
+     * caps. It did not work, and could not: `generateQuestion` discards draws
+     * until it lands on the id asked for, so splitting changes which draws
+     * each id keeps and the sibling moves anyway - `frozen` said so. What it
+     * did do was accept every draw the caps would have rejected, which let it
+     * win the retry loop and starved `-diagram` down to 36 draws in 400 until
+     * `mix` failed. A branch that does not achieve its purpose and unbalances
+     * its topic is worse than the drift it was aimed at.
      */
     // A gradient of 1 or -1 took 49% of draws once the top was capped - the
     // divisibility that keeps c whole favours den = 1 - and no paper here uses
     // it: 2, -2 and -4. It also makes the second mark nearly free, since there
     // is nothing to multiply. So the floor matters as much as the ceiling.
-    /**
-     * **The caps are 2022 P1 Q6's; 2015 P1 Q8 keeps the range it had.**
-     *
-     * Capping the gradient was right for 2022 P1 Q6 and moved 2015 P1 Q8 with
-     * it - a paper nobody has reviewed, changed by a fix nobody aimed at it.   *
-   * The owner's rule, 2026-09-19: *"if we have to make a change to a generator
-   * for a question and that generator serves other questions then we need to
-   * branch off. It's really that simple."* The fix was aimed at 2022; this
-   * paper has not been reviewed, so it keeps exactly what it had until its own
-   * turn comes. `frozen` fails on any movement outside the year under review,
-   * which is what named this one.
-     *
-     * `preLine` names the id rather than the presentation, the same shape of
-     * fix as the diagram split below.
-     */
-    const preLine = wantEquation && !drawFig && getRandomInt(0, 1) === 0;
-    if (wantEquation && !preLine
-        && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20)) continue;
+    if (wantEquation && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20)) continue;
 
     if (!wantEquation) {
       return {
@@ -353,7 +343,19 @@ function twoPoints(wantEquation: boolean): Q {
      * one that was asked for. The routine is otherwise identical, which is why
      * this is a split and not a copy.
      */
-    const drawIt = drawFig;
+    /**
+     * **An even toss, because it now names the id.**
+     *
+     * One draw in three was right while this was one variation choosing a
+     * presentation - a third of the citations print a diagram. Once the toss
+     * names the variation the ratio is a worksheet question instead, and a
+     * third is not enough: roughly half the diagram draws are then rejected by
+     * `verifyFigure`, which left `-diagram` on 67 of 400 against `mix`'s
+     * floor of 70 and failed the suite. Cloning a named paper is unaffected -
+     * `generateQuestion` asks for the id it wants either way - so this is
+     * only about how often each turns up on a mixed sheet.
+     */
+    const drawIt = getRandomInt(0, 1) === 0;
     const xs = [0, x1, x2], ys = [0, y1, y2];
     const padX = Math.max(1.5, (Math.max(...xs) - Math.min(...xs)) * 0.22);
     const padY = Math.max(2, (Math.max(...ys) - Math.min(...ys)) * 0.22);
@@ -379,9 +381,7 @@ function twoPoints(wantEquation: boolean): Q {
       difficulty: 'skill',
       variationId: drawIt
         ? 'straight-line.equation-two-points-diagram'   // 2017 P1 Q6
-        : preLine
-          ? 'straight-line.equation-two-points-pre2022' // 2015 P1 Q8
-          : 'straight-line.equation-two-points',        // 2022 P1 Q6
+        : 'straight-line.equation-two-points',          // 2015 P1 Q8, 2022 P1 Q6
       questionLines: [
         ask,
         ...(fig ? [renderScene(fig.scene), follow as string] : []),
