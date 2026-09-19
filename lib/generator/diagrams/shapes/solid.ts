@@ -370,8 +370,28 @@ export function solidFigure(spec: SolidSpec): Figure {
   }
   const foot = baseCentreOf(spec.stack[0], pt(0, 0));
   for (const g of spec.ghosts ?? []) {
+    /**
+     * **A seat is a face's centre; a flat-faced piece is drawn from its front
+     * edge.** `topOf` and `baseCentreOf` both return the middle of a face -
+     * the axis, as `baseCentreOf`'s own comment says - while `drawPiece` lays
+     * a box, pyramid or frustum out from `at(-w, 0)` to `at(w, 0)`, which is
+     * the *front* edge, and puts the depth behind it. Handed a centre, such a
+     * ghost sits half its own depth too far back.
+     *
+     * Seen on 2023 P2 Q9: the removed tip floated up and to the right of the
+     * cut face it is supposed to stand on, which is what the owner kept
+     * reading as the height arrow being wrong. It was the solid, not the
+     * arrow.
+     *
+     * A round ghost has no depth offset - `obliqueDepth` is null for a sphere,
+     * a cone, a hemisphere - so it is already seated on its axis and is left
+     * exactly as it was. Of the five ghosts in the course only the frustum's
+     * tip is flat-faced, so only that figure moves.
+     */
     const seat = g.on === 'top' ? o : foot;
-    elements.push(...drawPiece(g.piece, pt(seat.x, seat.y + (g.lift ?? 0)), true));
+    const back = obliqueDepth(g.piece);
+    const front = back ? pt(seat.x - back.x / 2, seat.y - back.y / 2) : seat;
+    elements.push(...drawPiece(g.piece, pt(front.x, front.y + (g.lift ?? 0)), true));
   }
 
   const box = extent(elements);
@@ -435,8 +455,11 @@ export function solidFigure(spec: SolidSpec): Figure {
        * offset still missing until this was taken from `o`.
        */
       const seat = gh ? (gh.on === 'top' ? o : foot) : undefined;
+      // The ghost is seated on the cut face's front edge and its apex stands
+      // half its own depth back from there, so the apex is the seat plus the
+      // height — the two half-depths cancel.
       const apex = seat && ghostH !== undefined
-        ? pt(seat.x + back.x / 2, seat.y + (gh!.lift ?? 0) + back.y / 2 + ghostH)
+        ? pt(seat.x, seat.y + (gh!.lift ?? 0) + ghostH)
         : undefined;
       const x = d.side === 'left' ? box.x0 - step : box.x1 + step;
       [a, b] = [pt(x, d.from), pt(x, apex ? apex.y : d.to)];
@@ -485,16 +508,26 @@ export function solidFigure(spec: SolidSpec): Figure {
          * own depth below it, and the base's depth does not enter.
          */
         const stackH = spec.stack.reduce((t, p) => t + ('h' in p ? p.h : 0), 0);
-        const near = pt(o.x + faceW / 2 - faceBack.x / 2, stackH - faceBack.y / 2);
+        const baseBack = depthOf(topPiece && 'w' in topPiece ? topPiece.w : faceW);
+        // `drawPiece` puts the cut face's near corners at `at(±t + lift.x,
+        // h + lift.y)`, lift being half the difference between the base's
+        // depth and the face's own.
+        const near = pt(o.x + faceW / 2 - faceBack.x / 2,
+                        stackH + (baseBack.y - faceBack.y) / 2);
         const atFace = (p: Pt) => Math.abs(p.y - stackH) < 1e-6;
-        if (atFace(a)) a = pt(a.x, near.y);
-        if (atFace(b)) b = pt(b.x, near.y);
+        // Asked BEFORE the snap: afterwards the endpoint sits at the corner
+        // rather than the plain height, so the same test stops matching and
+        // the rule starts from the bounding box instead of the face.
+        const wasFace: [boolean, boolean] = [atFace(a), atFace(b)];
+        if (wasFace[0]) a = pt(a.x, near.y);
+        if (wasFace[1]) b = pt(b.x, near.y);
         inward = pt(a.x + (d.side === 'left' ? 1 : -1), (a.y + b.y) / 2);
-        const startFor = (p: Pt) => atFace(p) ? near : apex && Math.abs(p.y - apex.y) < 1e-6 ? apex : pt(edge, p.y);
-        for (const end of [a, b]) {
-          const from = pt(startFor(end).x, end.y);
-          if (Math.abs(end.x - from.x) > 0.01) {
-            elements.push({ kind: 'segment', from, to: end, dashed: true, decoration: true });
+        const ends: [Pt, boolean][] = [[a, wasFace[0]], [b, wasFace[1]]];
+        for (const [end, onFace] of ends) {
+          const startX = onFace ? near.x
+            : apex && Math.abs(end.y - apex.y) < 1e-6 ? apex.x : edge;
+          if (Math.abs(end.x - startX) > 0.01) {
+            elements.push({ kind: 'segment', from: pt(startX, end.y), to: end, dashed: true, decoration: true });
           }
         }
       }
