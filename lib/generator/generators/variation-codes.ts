@@ -56,6 +56,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'fractions.divide-mixed':                 'r6fs9',
   'fractions.divide-mixed-pre2023':        '7zp4s',
   'fractions.brackets':                     '2cic3',
+  'fractions.brackets-pre2022p1':          'fynqm',
   'fractions.three-term':                   'fv42v',
   'fractions.context':                      'nfc79',
 
@@ -74,6 +75,7 @@ export const VARIATION_CODES: Record<string, string> = {
 
   'indices.laws':                           'nc7c5',
   'indices.negative-power':                 'faczv',
+  'indices.negative-power-pre2022p1':      '54yba',
   'indices.evaluate':                       'gd0t3',
   'indices.coefficient':                    'a2t9h',
   'indices.coefficient-quotient':           '63lcd',
@@ -227,6 +229,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'straight-line.intercept-from-equation':  'k2p9o',
   'straight-line.gradient-two-points':      '9858j',
   'straight-line.equation-two-points':      'jwfst',
+  'straight-line.equation-two-points-pre2022p1': 'ubjd4',
   'straight-line.equation-two-points-diagram': 'me045',
 
   'sci-notation.convert':                   'l3u3i',

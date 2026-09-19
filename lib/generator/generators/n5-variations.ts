@@ -428,7 +428,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'paper',
-    basedOn: ['2016 P1 Q2', '2022 P1 Q1'],
+    basedOn: ['2022 P1 Q1'],
     marks: 2,
     route: 'start the calculation correctly, which is the bracket over a common denominator, then a consistent answer in simplest form. Both schemes accept a second method that multiplies out first; ours takes the bracket first',
     method: 'Work out the bracket first by putting both fractions over a common denominator, then multiply and tidy the answer up',
@@ -672,7 +672,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2016 P2 Q10', '2022 P1 Q11'],
+    basedOn: ['2022 P1 Q11'],
     marks: 3,
     route: 'apply the power of a power, then add the powers, then express the result with a positive power. 2022 and 2023 accept two and three alternative orderings respectively; ours is their Method 1',
     plan: [
@@ -928,7 +928,11 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // the percentage out: "reduced by 20%", "an increase of 16%", "15% more
     // than last year". That first step is inside the first mark, and no clone
     // here ever produced the handed-over wording.
-    basedOn: ['2023 P2 Q6', '2024 P2 Q5', '2025 P1 Q4'],
+    // 2025 P1 Q4 moved to `percentages.reverse-non-calculator`: it is the
+    // other Paper 1 question here and it needs a divisor a pupil can divide
+    // by. What is left is the two calculator papers, which is why an awkward
+    // 108 or 116 is right for them.
+    basedOn: ['2023 P2 Q6', '2024 P2 Q5'],
     marks: 3,
     route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
     method: 'The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through',
@@ -963,7 +967,11 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // the percentage out: "reduced by 20%", "an increase of 16%", "15% more
     // than last year". That first step is inside the first mark, and no clone
     // here ever produced the handed-over wording.
-    basedOn: ['2022 P1 Q10'],
+    // Both Paper 1 reverse-percentage questions, and they really are one
+    // question: a discount stated, the reduced price given, the original
+    // wanted, no calculator. 2022 is 30% off 16.10 and 2025 is 20% off 720;
+    // both markschemes take the 10% route.
+    basedOn: ['2022 P1 Q10', '2025 P1 Q4'],
     marks: 3,
     route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
     method: 'The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through',
@@ -3097,7 +3105,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // a third of 2022 P1 Q6's draws was 2017's question under 2022's name.
     // A `-pre2022` sibling for 2015 also existed briefly; see n5-vectors.ts
     // for why it was removed.
-    basedOn: ['2015 P1 Q8', '2022 P1 Q6'],
+    basedOn: ['2022 P1 Q6'],
     marks: 3,
     route: 'find the gradient, substitute it and a point, then state the equation in its simplest form',
     method: 'Find the gradient from the two points, substitute it and one point into $y - b = m(x - a)$, then tidy the equation into its simplest form',
@@ -5365,6 +5373,9 @@ const ALIASES: Record<string, {
   'trig-diagram.area-exact-pre2023': { aliasOf: 'trig-diagram.area-exact', basedOn: ['2017 P1 Q7'] },
   'sector.arc-angle-pre2023': { aliasOf: 'sector.arc-angle', basedOn: ['2018 P2 Q2'] },
   'angles.polygon-produced-pre2023': { aliasOf: 'angles.polygon-produced', basedOn: ['2018 P1 Q9'] },
+  'fractions.brackets-pre2022p1': { aliasOf: 'fractions.brackets', basedOn: ['2016 P1 Q2'] },
+  'indices.negative-power-pre2022p1': { aliasOf: 'indices.negative-power', basedOn: ['2016 P2 Q10'] },
+  'straight-line.equation-two-points-pre2022p1': { aliasOf: 'straight-line.equation-two-points', basedOn: ['2015 P1 Q8'] },
   // lock-year: aliases end
 };
 
