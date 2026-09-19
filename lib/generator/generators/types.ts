@@ -205,6 +205,7 @@ export type Topic =
   | "Standard Deviation in Surd Form"
   | "Finding the Variance from a Surd"
   | "Solving Trigonometric Equations"
+  | "Solving a Trigonometric Equation with a Constant Term"
   | "Trigonometric Equations in a Formula"
   | "Simplifying Trigonometric Expressions"
   | "Expanding Trigonometric Brackets"
@@ -296,6 +297,7 @@ export type Topic =
   | "Two Similar Sectors"
   | "Length of an Arc"
   | "Finding the Angle of a Sector"
+  | "Finding the Reflex Angle of a Sector"
   | "Finding the Radius from an Arc"
   | "Area of a Segment of a Circle"
   | "A Polygon Inside a Circle"
@@ -578,6 +580,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
   ],
   "N5 Trigonometry": [
     "Solving Trigonometric Equations",
+    "Solving a Trigonometric Equation with a Constant Term",
     "Trigonometric Equations in a Formula",
     "Simplifying Trigonometric Expressions",
     "Expanding Trigonometric Brackets",
@@ -707,6 +710,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Two Similar Sectors",
     "Length of an Arc",
     "Finding the Angle of a Sector",
+    "Finding the Reflex Angle of a Sector",
     "Finding the Radius from an Arc",
     "Area of a Segment of a Circle",
     "A Polygon Inside a Circle",

@@ -156,13 +156,31 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
       });
       if (!fig) continue;
       const sq = u;
+      /*
+       * **No rounding instruction, because neither paper gives one.**
+       *
+       * 2022 P2 Q6 and 2019 P2 Q3 both end at "Calculate the area of triangle
+       * ...", and both markschemes accept the unrounded value: 339(.21...) and
+       * 1224(.004...). This added "Give your answer correct to the nearest
+       * whole number", which asks for something the paper does not.
+       *
+       * Edited in place rather than branched, on the owner's explicit word -
+       * *"I agree edit in place for just this one"* - because 2019 P2 Q3 is
+       * the only other paper here and the same change is right for it too, so
+       * branching would have made two identical generators to avoid improving
+       * an unreviewed question. `frozen` reports 2019 P2 Q3 as moved.
+       *
+       * The working still shows the unrounded value before the whole one, the
+       * way the schemes write it, so the answer is reached rather than
+       * asserted.
+       */
       const prose = [
         `The diagram shows triangle $${A}${B}${C}$.`,
-        `Calculate the area of triangle $${A}${B}${C}$. Give your answer correct to the nearest whole number.`,
+        `Calculate the area of triangle $${A}${B}${C}$.`,
       ];
       const steps = [
         `<strong>1.</strong> The angle at $${A}$ lies between the two known sides, so use $\\text{Area} = \\frac{1}{2}ab\\sin C$ with that angle:<br><br>$\\text{Area} = \\frac{1}{2} \\times ${q} \\times ${p} \\times \\sin ${angA}^{\\circ}$`,
-        `<strong>2.</strong> Evaluate and round:<br><br>$\\text{Area} = ${Math.round(area)}$ ${sq}$^{2}$`,
+        `<strong>2.</strong> Evaluate:<br><br>$\\text{Area} = ${area.toFixed(2)}\\ldots$, which is $${Math.round(area)}$ ${sq}$^{2}$ to the nearest square ${u}`,
       ];
       if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
       return {

@@ -68,12 +68,37 @@ const dp1 = (v: number): string => v.toFixed(1);
  * same question with different numbers — including the sign, which follows from
  * them — so each ratio gets one variation and no more.
  */
-function solveEquation(fn: 'sin' | 'cos' | 'tan'): Q {
+/**
+ * **`withConstant` is 2022 P2 Q9's split, and it is opt-in.**
+ *
+ * `b` is drawn from -9 to 9 and zero is in that range, so about one draw in
+ * twenty built `15\sin x^{\circ} + 0 = 6` - a literal "+ 0" on the page, and
+ * a question one step shorter than the one the papers ask, since there is
+ * nothing to shift across. All three papers this routine serves carry a
+ * constant: 2018 P2 Q8 is `7\sin x + 2 = 3`, 2022 P2 Q9 `3\sin x + 4 = 6`,
+ * 2024 P2 Q11 `17\sin x + 1 = 9`.
+ *
+ * It cannot simply be fixed here. `lhs` is printed by every variation this
+ * routine serves, and two of them - `trig-equations.solve` (2024 P2 Q11) and
+ * `trig-equations.solve-tan` (2026 P2 Q8) - are signed off. Suppressing the
+ * zero term would change their text, which is precisely what `frozen`
+ * forbids; and because a zero `b` is rare, the twelve seeded draws might well
+ * miss it and let the change through unreported, which is worse.
+ *
+ * So the flag rides in from a **subTopic of its own**, which is the split that
+ * gets its own draw loop and therefore moves no sibling. 2018 P2 Q8 stays on
+ * `trig-equations.solve-pre2023` unmoved, with the same fault, to be settled
+ * when 2018 is reviewed. See `docs/verdicts/2022-p2.md`.
+ */
+function solveEquation(fn: 'sin' | 'cos' | 'tan', withConstant = false): Q {
   for (let tries = 0; tries < 400; tries++) {
     const a = getRandomInt(2, 20);
     const b = getRandomInt(-9, 9);
     const c = getRandomInt(-9, 12);
     if (b === c) continue;                          // the ratio would be zero
+    // `withConstant` is a plain boolean, so for every other caller this costs
+    // no draw and leaves the random stream exactly where it was.
+    if (withConstant && b === 0) continue;            // the papers all shift one
     const r = (c - b) / a;
     // A fifth of the time the ratio is negative, which two of the seven papers
     // are — 2016's tan x = -9/2 and 2019's cos x = -1/5. (This used to say the
@@ -102,7 +127,32 @@ function solveEquation(fn: 'sin' | 'cos' | 'tan'): Q {
     const tex = fn === 'sin' ? S : fn === 'cos' ? C : T;
     const g = gcd(Math.abs(c - b), a) || 1;
     const ratioTex = a / g === 1 ? `${(c - b) / g}` : `\\frac{${(c - b) / g}}{${a / g}}`;
-    const lhs = `${times(a, tex)} ${b < 0 ? '-' : '+'} ${Math.abs(b)}`;
+    /**
+     * **A zero constant is not printed.**
+     *
+     * `b` is drawn from -9 to 9, so about one draw in twenty built
+     * `13\sin x^{\circ} + 0 = 2` - a "+ 0" on the page that reads as a broken
+     * question. Found reviewing 2022 P2 Q9; the owner, on the locked paper
+     * that shares this line: *"I'd fix the +0 on the locked paper and the re
+     * lock."*
+     *
+     * **This is a printing change and nothing else.** It draws no number and
+     * takes no branch, so the random stream is untouched and every draw is the
+     * draw it was before; only the ~5% that carried a zero `b` print
+     * differently. That is what makes it safe to make on a line shared by two
+     * signed-off questions - 2024 P2 Q11 here and 2026 P2 Q8 through
+     * `-tan`, both of which had the same fault and both of which are re-locked
+     * with it fixed.
+     *
+     * It does not make the constant non-zero: those draws still ask
+     * `13\sin x^{\circ} = 2`, a step shorter than the papers' own form. Only
+     * `trig-equations.solve-constant` (2022 P2 Q9) guarantees the constant,
+     * because doing that needs a rejected draw and a rejected draw moves the
+     * stream for every variation this routine serves.
+     */
+    const lhs = b === 0
+      ? times(a, tex)
+      : `${times(a, tex)} ${b < 0 ? '-' : '+'} ${Math.abs(b)}`;
     // **The domain as the papers write it, both ways.** Five of the nine
     // trigonometric equations in the corpus close the range - 2016 P2 Q14's
     // `0 <= x <= 360` - and four leave it open, 2026 P2 Q8 among them with
@@ -110,12 +160,20 @@ function solveEquation(fn: 'sin' | 'cos' | 'tan'): Q {
     // stated a domain its paper does not. Nothing turns on it here: the guard
     // above rejects a reference angle within 0.04 of a whole number, so no
     // solution can land on 0 or on 360 and the two forms admit the same pair.
-    const domain = getRandomInt(0, 1) === 0 ? '0 \\le x \\le 360' : '0 \\le x \\lt 360';
+    // The split settles the domain rather than tossing for it: 2022 P2 Q9
+    // closes its range, and a question served by one generator should not
+    // present itself two ways. The toss stays for the others, which the owner
+    // read form by form and kept (`__checks__/one-form.ts`, APPROVED_MULTIFORM).
+    const domain = withConstant ? '0 \\le x \\le 360'
+      : getRandomInt(0, 1) === 0 ? '0 \\le x \\le 360' : '0 \\le x \\lt 360';
 
     return {
-      subTopic: 'Solving Trigonometric Equations',
+      subTopic: withConstant
+        ? 'Solving a Trigonometric Equation with a Constant Term'
+        : 'Solving Trigonometric Equations',
       difficulty: 'skill',
-      variationId: fn === 'sin' ? 'trig-equations.solve'
+      variationId: withConstant ? 'trig-equations.solve-constant'
+        : fn === 'sin' ? 'trig-equations.solve'
         : fn === 'cos' ? 'trig-equations.solve-cos' : 'trig-equations.solve-tan',
       questionLines: [
         `Solve the equation $${lhs} = ${c}$, for $${domain}$.`,
@@ -653,6 +711,9 @@ export const TRIG_GENERATORS: Record<string, () => Q> = {
   // All three ratios are reachable from the topic, each with its own id, so
   // `variationsBasedOn` can send each paper to the one it asks for.
   'Solving Trigonometric Equations': () => solveEquation(pick(['sin', 'cos', 'tan'] as const)),
+  // Sine only: all three papers on this family are sine, and the split exists
+  // for 2022 P2 Q9, which is one of them.
+  'Solving a Trigonometric Equation with a Constant Term': () => solveEquation('sin', true),
   'Trigonometric Equations in a Formula': inFormula,
   // Two moves, two variations, both reachable from the topic.
   'Simplifying Trigonometric Expressions': () =>

@@ -204,6 +204,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'data.sd-find-a':                         '90h2w',
 
   'trig-equations.solve':                   'owldc',
+  'trig-equations.solve-constant':          '65edf',
   'trig-equations.solve-pre2023':          'nn5ex',
   'trig-equations.solve-cos':               '6rhni',
   'trig-equations.solve-tan':               '46vwi',
@@ -376,6 +377,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'sector.arc-angle-pi314':                 '0hhd3',
   'sector.area-arc':                        '73jev',
   'sector.angle-arc':                       'xdkqb',
+  'sector.angle-arc-reflex':                'uem2o',
   'sector.radius-arc':                      'zqqjg',
   'sector.segment-major':                   'rx79k',
   'sector.segment-minor':                   'gze44',

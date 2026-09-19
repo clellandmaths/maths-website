@@ -125,7 +125,37 @@ export type Dim =
        * had asked to touch. The same trap `angleMark` set earlier in the
        * week: a shared helper widened for one figure moves every figure.
        */
-      rules?: true }
+      rules?: true;
+      /**
+       * **End this height at the *drawn* top of a stacked piece.**
+       *
+       * A piece that sits on a flat-faced one is seated on that face's
+       * *centre*, which in oblique projection is half a depth back - so it is
+       * drawn `depthOf(w).y / 2` higher than its own height, and a height
+       * arrow that stops at the plain height stops inside it.
+       *
+       * The owner, on 2022 P2 Q3: *"the total height line does not draw tall
+       * enough - stops in middle of sphere... you need accurate drawing
+       * here."* Measured off that figure: the sphere's drawn top was at 0.00
+       * and the arrow's at 9.92, with the box's depth offset 19.85. Exactly
+       * half, exactly as above. The bottom end was already right, because the
+       * first piece in a stack sits at the origin with no offset.
+       *
+       * `onGhost` solves the same problem for a *ghost*'s apex; this is the
+       * stack's version, and it is the index of the piece whose top the arrow
+       * ends at. **Opt-in, like `rules` and for the same reason**: applied to
+       * every solid it would move every stacked figure in the course, which is
+       * what happened the last time a dimension branch was made unconditional
+       * and `frozen` named the four questions it moved.
+       */
+      toStackTop?: number;
+      /**
+       * Start this height at the drawn *seat* of a stacked piece - the level
+       * the piece rests on, carrying the same half-depth offset as
+       * `toStackTop`. Paired with it, this measures a stacked piece's own
+       * extent: on 2022 P2 Q3, the sphere's diameter.
+       */
+      fromStackSeat?: number }
   /**
    * A horizontal extent, on a line clear above or below everything.
    *
@@ -364,7 +394,11 @@ function extent(elements: Element[]): { x0: number; x1: number; y0: number; y1: 
 export function solidFigure(spec: SolidSpec): Figure {
   const elements: Element[] = [];
   let o = pt(0, 0);
+  // Where each piece was actually seated, so a dimension can end on a drawn
+  // top rather than on a plain height. See `toStackTop`.
+  const seats: Pt[] = [];
   for (const piece of spec.stack) {
+    seats.push(o);
     elements.push(...drawPiece(piece, o, false));
     o = topOf(piece, o);
   }
@@ -462,7 +496,20 @@ export function solidFigure(spec: SolidSpec): Figure {
         ? pt(seat.x, seat.y + (gh!.lift ?? 0) + ghostH)
         : undefined;
       const x = d.side === 'left' ? box.x0 - step : box.x1 + step;
-      [a, b] = [pt(x, d.from), pt(x, apex ? apex.y : d.to)];
+      /**
+       * A stacked piece is drawn above its own height by half the depth of
+       * whatever it stands on, so an arrow meant to reach its top or its seat
+       * is told which piece rather than a number. Both default to the plain
+       * heights the caller gave, so no existing figure moves.
+       */
+      const seatOf = (i: number | undefined) =>
+        i !== undefined && seats[i] !== undefined ? seats[i].y : undefined;
+      const stackTop = d.toStackTop !== undefined && seats[d.toStackTop] !== undefined
+        ? seats[d.toStackTop].y + pieceHeight(spec.stack[d.toStackTop])
+        : undefined;
+      const lo = seatOf(d.fromStackSeat) ?? d.from;
+      const hi = stackTop ?? (apex ? apex.y : d.to);
+      [a, b] = [pt(x, lo), pt(x, hi)];
       inward = pt(x + (d.side === 'left' ? 1 : -1), (a.y + b.y) / 2);
       /**
        * And the two ends are carried back to the shape, which is what the

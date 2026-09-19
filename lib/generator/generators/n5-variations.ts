@@ -2812,6 +2812,26 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   },
 
   // The same three marks with the tangent's quadrant rule — second value 180 + x.
+  'trig-equations.solve-constant': {
+    topic: 'Solving a Trigonometric Equation with a Constant Term',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    // 2022 P2 Q9, `3\\sin x^{\\circ} + 4 = 6`. The same three marks as
+    // `trig-equations.solve`, and the same sum; what it guarantees is the
+    // constant term the paper has, so the first mark is always a real
+    // rearrangement, and a single closed domain rather than a toss.
+    basedOn: ['2022 P2 Q9'],
+    marks: 3,
+    route: 'rearrange the equation, find one value of x, then find the other. The two values are separate marks',
+    plan: [
+      'Strip everything away from the trig ratio until it stands on its own - shift the added or subtracted number across first, then divide by whatever multiplies it',
+      'Put that ratio through the inverse on your calculator, dropping any minus sign for the moment, to get the reference angle in the first quadrant',
+      'Your calculator only ever hands back one angle, so mark the reference angle on a CAST diagram and find the other quadrant where that ratio carries the sign yours has - measuring back from $180$, back from $360$, or on past $180$ as that quadrant requires - then write down both angles',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Trigonometric equation'],
+    skill: 'Shift the constant across, then read both solutions off a CAST diagram',
+  },
   'trig-equations.solve-tan': {
     topic: 'Solving Trigonometric Equations',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
@@ -4564,7 +4584,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     method: 'Substitute the two sides and the angle between them into $\\frac{1}{2}ab\\sin C$, then work the area out',
     plan: [
       'Pick out the angle sitting between the two lengths you have been given, since the area formula only works with that one, and write $\\text{Area} = \\frac{1}{2}ab\\sin C$ with those lengths as $a$ and $b$',
-      'Put the lengths and the angle in, work it through with your calculator in degree mode, then round as the question asks and finish with square units',
+      'Put the lengths and the angle in, work it through with your calculator in degree mode, then finish with square units',
     ],
     planMarks: [1, 1],
     answerShape: 'rounded',
@@ -4890,7 +4910,13 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'sector.angle-arc': {
     topic: 'Finding the Angle of a Sector',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2017 P2 Q14', '2022 P2 Q10'],
+    // 2022 P2 Q10 moved to `sector.angle-arc-reflex`. Both papers here ask
+    // for the REFLEX angle off a MAJOR arc, and this drew the minor form in
+    // 154 of 200 draws - so three questions in four were a minor-sector
+    // question neither paper contains. 2017 P2 Q14 has not been reviewed yet,
+    // so it stays here, unmoved, with the same fault to settle when 2017
+    // comes up. See docs/verdicts/2022-p2.md.
+    basedOn: ['2017 P2 Q14'],
     marks: 3,
     route: 'an expression for the arc length, or the arc-to-circumference ratio, then know how to find the angle from it, then calculate the angle',
     plan: [
@@ -4902,6 +4928,28 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'integer',
     webTopics: ['Arc length'],
     skill: 'The arc as a fraction of the circumference gives the angle',
+  },
+  'sector.angle-arc-reflex': {
+    topic: 'Finding the Reflex Angle of a Sector',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    // 2022 P2 Q10: an arm swings from A to B along the MAJOR arc of a circle
+    // of radius 15, the arc is 69.4, and the answer is the reflex angle 265.
+    // The sum is the same one `sector.angle-arc` does; what makes it its own
+    // question is that a pupil has to see the arc is the long way round and
+    // that the angle asked for is over 180. Read off a minor sector it is a
+    // different piece of reasoning and a different answer.
+    basedOn: ['2022 P2 Q10'],
+    marks: 3,
+    route: 'an expression for the arc length, or the arc-to-circumference ratio, then know how to find the angle from it, then calculate the reflex angle',
+    plan: [
+      'Work out the whole circumference, $\\pi$ times the diameter, so you have something to measure the arc against',
+      'Divide the major arc by that circumference, then multiply by 360, since a full turn is 360 degrees',
+      'Work that out and give the reflex angle at the centre in degrees - it is the long way round, so expect more than 180',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'integer',
+    webTopics: ['Arc length'],
+    skill: 'The major arc as a fraction of the circumference gives the reflex angle',
   },
   'sector.radius-arc': {
     topic: 'Finding the Radius from an Arc',
@@ -5358,7 +5406,11 @@ const ALIASES: Record<string, {
   'inequalities.brackets-pre2023': { aliasOf: 'inequalities.brackets', basedOn: ['2015 P1 Q2', '2017 P1 Q8', '2018 P2 Q4'] },
   'simeq.solve-given-pre2023': { aliasOf: 'simeq.solve-given', basedOn: ['2015 P1 Q11', '2018 P1 Q3'] },
   'data.mean-sd-compare-pre2023': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6', '2018 P2 Q5', '2022 P2 Q5'] },
-  'trig-equations.solve-pre2023': { aliasOf: 'trig-equations.solve', basedOn: ['2018 P2 Q8', '2022 P2 Q9'] },
+  // 2022 P2 Q9 moved to `trig-equations.solve-constant`: the routine printed
+  // `+ 0` in one draw in twenty and the fix could not be made in place,
+  // because `lhs` is also printed by two signed-off questions. 2018 P2 Q8
+  // keeps the fault until 2018 is reviewed - see docs/verdicts/2022-p2.md.
+  'trig-equations.solve-pre2023': { aliasOf: 'trig-equations.solve', basedOn: ['2018 P2 Q8'] },
   'trig-equations.solve-tan-pre2023': { aliasOf: 'trig-equations.solve-tan', basedOn: ['2016 P2 Q14'] },
   'trig-equations.in-formula-pre2023': { aliasOf: 'trig-equations.in-formula', basedOn: ['2017 P2 Q15c'] },
   'vectors.components-pre2023': { aliasOf: 'vectors.components', basedOn: ['2014 P1 Q4'] },

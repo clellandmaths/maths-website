@@ -102,7 +102,60 @@ function drawP1Angle(sweep: SectorContext['sweep']): number {
   return pick([...P1_ANGLES.minor, ...P1_ANGLES.major]);
 }
 
-type Kind = 'area-angle' | 'arc-angle' | 'area-arc' | 'angle-arc' | 'radius-arc';
+type Kind = 'area-angle' | 'arc-angle' | 'area-arc' | 'angle-arc'
+  | 'angle-arc-reflex' | 'radius-arc';
+
+/**
+ * **Contexts for the reflex-angle question, kept apart from `CONTEXTS`.**
+ *
+ * `sector.angle-arc-reflex` is a split off `sector.angle-arc`, made because
+ * *both* papers that question serves ask for the **reflex** angle off a
+ * **major** arc — 2022 P2 Q10 answers 265, 2017 P2 Q14 answers 282 — while the
+ * generator drew the minor form in 154 of 200 draws. A pupil cloning 2022 P2
+ * Q10 got an ordinary minor-sector question three times in four, and nothing
+ * could see it: `formOf` reads a figure, the parts and the LaTeX commands, and
+ * minor and major are identical in all three.
+ *
+ * It has **its own list** rather than a filter over `CONTEXTS` for two
+ * reasons. `pick(CONTEXTS)` is read by every other sector kind, so narrowing
+ * that array would move `sector.area-angle`, `sector.arc-angle`,
+ * `sector.radius-arc` and `sector.angle-arc` itself — and 2017 P2 Q14 has not
+ * been reviewed yet, so it must not move now. And only five of the twelve
+ * entries there can carry a reflex sweep, which is below the floor
+ * `__checks__/contexts.ts` sets for a story-carrying topic; written for the
+ * purpose, a reflex context is easy, because *turning through most of a circle
+ * and leaving a gap* is its own kind of situation.
+ *
+ * **2017 P2 Q14 is left exactly as it was, and has the same fault.** It stays
+ * on `sector.angle-arc` until 2017 is reviewed, when the owner can decide
+ * whether to move it here or repeat the fix. Noted in `docs/verdicts/2022-p2.md`.
+ */
+const REFLEX_CONTEXTS: SectorContext[] = [
+  { letters: ['C', 'A', 'B'], sweep: 'major', unit: 'metres', short: 'm', band: [8, 22],
+    intro: (o, a, b) => `A fairground ride carries a gondola on an arm which swings from $${a}$ to $${b}$ the long way round a circle, centre $${o}$.` },
+  { letters: ['O', 'A', 'B'], sweep: 'major', unit: 'metres', short: 'm', band: [5, 18],
+    intro: (o, a, b) => `A security camera at $${o}$ turns through the arc $${a}${b}$, covering all but a narrow blind spot.` },
+  { letters: ['C', 'A', 'B'], sweep: 'major', unit: 'centimetres', short: 'cm', band: [6, 30],
+    intro: (o, a, b) => `The diagram shows a sector of a circle, centre $${o}$, with major arc $${a}${b}$.` },
+  { letters: ['O', 'A', 'B'], sweep: 'major', unit: 'centimetres', short: 'cm', band: [5, 26],
+    intro: (o, a, b) => `The diagram shows part of a circle, centre $${o}$, and its major arc $${a}${b}$.` },
+  { letters: ['O', 'X', 'Y'], sweep: 'major', unit: 'metres', short: 'm', band: [10, 40],
+    intro: (o, a, b) => `A radar at $${o}$ sweeps the major arc $${a}${b}$, leaving only the sector behind it unscanned.` },
+  { letters: ['C', 'A', 'B'], sweep: 'major', unit: 'centimetres', short: 'cm', band: [8, 26],
+    intro: (o, a, b) => `A cake with one slice taken out of it has centre $${o}$, and the crust that is left forms the major arc $${a}${b}$.` },
+  { letters: ['O', 'P', 'Q'], sweep: 'major', unit: 'metres', short: 'm', band: [6, 20],
+    intro: (o, a, b) => `A lighthouse lamp at $${o}$ sweeps from $${a}$ round to $${b}$, shielded over the stretch of coast between them.` },
+  { letters: ['C', 'M', 'N'], sweep: 'major', unit: 'centimetres', short: 'cm', band: [10, 32],
+    intro: (o, a, b) => `A revolving door turns about $${o}$, and one panel travels from $${a}$ to $${b}$ the long way round.` },
+  { letters: ['O', 'A', 'B'], sweep: 'major', unit: 'metres', short: 'm', band: [7, 24],
+    intro: (o, a, b) => `A crane jib pivots at $${o}$ and swings its hook from $${a}$ all the way round to $${b}$, clearing the site.` },
+  { letters: ['C', 'A', 'B'], sweep: 'major', unit: 'centimetres', short: 'cm', band: [12, 36],
+    intro: (o, a, b) => `A robot arm turns about $${o}$, its tip tracing the major arc $${a}${b}$ before it returns.` },
+  { letters: ['O', 'X', 'Y'], sweep: 'major', unit: 'metres', short: 'm', band: [9, 28],
+    intro: (o, a, b) => `A sprinkler at $${o}$ turns through the major arc $${a}${b}$, watering everything but the strip behind it.` },
+  { letters: ['C', 'A', 'B'], sweep: 'major', unit: 'centimetres', short: 'cm', band: [7, 22],
+    intro: (o, a, b) => `A fan at $${o}$ oscillates from $${a}$ the long way round to $${b}$, leaving one corner of the room still.` },
+];
 
 // ── the area of a segment: a sector less the triangle inside it ─────────────
 // 2014 P2 Q13, a tunnel whose cross-section is the larger of the two pieces.
@@ -298,8 +351,11 @@ export function sectorQuestion(kinds: Kind[]): Q {
   // and calling them "major arc AB". The note above already said "the area
   // questions" in the plural; only one of them was named.
   const minorOnly = kind === 'area-angle' || kind === 'area-arc';
+  // The reflex question reads its own list, so no other kind's `pick` moves.
+  const reflexOnly = kind === 'angle-arc-reflex';
   for (let tries = 0; tries < 3000; tries++) {
-    const c = pick(minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major') : CONTEXTS);
+    const c = pick(reflexOnly ? REFLEX_CONTEXTS
+      : minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major') : CONTEXTS);
     const sweep = minorOnly ? 'minor' as const : c.sweep;
     const [nO, nA, nB] = c.letters;
     const r = getRandomInt(c.band[0], c.band[1]);
@@ -311,7 +367,7 @@ export function sectorQuestion(kinds: Kind[]): Q {
     // value — so a pupil using the number actually on the page was told they
     // were wrong by a tenth. Whatever the question prints is what the question
     // means, and everything after it has to be built from that.
-    const arcGiven = kind === 'area-arc' || kind === 'angle-arc';
+    const arcGiven = kind === 'area-arc' || kind === 'angle-arc' || reflexOnly;
     let angle: number, arc: number;
     if (kind === 'radius-arc') {
       // Here the angle is a given too, printed in whole degrees, so it is
@@ -326,6 +382,11 @@ export function sectorQuestion(kinds: Kind[]): Q {
       if (arc <= 0) continue;
       angle = arc * 360 / (2 * Math.PI * r);
       if (angle < 15 || angle > 345) continue;
+      // The arc is rounded to a tenth before the angle is read back off it, so
+      // an angle drawn at 200 can land a shade under 180 and the question then
+      // asks for a "reflex" angle that is not one. `reflexOnly` is a constant,
+      // so for every other kind this costs no draw and changes no stream.
+      if (reflexOnly && angle <= 185) continue;
     } else if (paper1) {
       /* **A non-calculator question has to be non-calculable.**
          Until this, `paper1` changed pi to 3·14 and the wording and nothing
@@ -458,11 +519,16 @@ export function sectorQuestion(kinds: Kind[]): Q {
         finalAnswer: `$${trim(arc * r / 2)}$ ${c.short}$^{2}$`,
         figure: built({ radius: shown.radius, angle: '', arc: shown.arc }),
       };
-    } else if (kind === 'angle-arc') {
+    } else if (kind === 'angle-arc' || reflexOnly) {
       q = {
-        subTopic: 'Finding the Angle of a Sector',
+        // Two subTopics off one branch, because the maths and the marks are
+        // the same and only the sweep differs. A subTopic of its own is what
+        // gives the reflex question its own draw loop, so splitting it moved
+        // nothing on `sector.angle-arc` — which 2017 P2 Q14 still sits on.
+        subTopic: reflexOnly
+          ? 'Finding the Reflex Angle of a Sector' : 'Finding the Angle of a Sector',
         difficulty: 'exam',
-        variationId: 'sector.angle-arc',
+        variationId: reflexOnly ? 'sector.angle-arc-reflex' : 'sector.angle-arc',
         questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.arc,
           `Calculate the size of ${angle > 180 ? 'reflex ' : ''}angle $${nA}${nO}${nB}$.`],
         boardQuestionLines: [`Radius ${r}, arc ${trim(arc)}. Angle?`],
@@ -684,5 +750,6 @@ export const SECTOR_GENERATORS: Record<string, () => Q> = {
   'Area of a Sector': () => sectorQuestion(['area-angle', 'area-arc']),
   'Length of an Arc': () => sectorQuestion(['arc-angle']),
   'Finding the Angle of a Sector': () => sectorQuestion(['angle-arc']),
+  'Finding the Reflex Angle of a Sector': () => sectorQuestion(['angle-arc-reflex']),
   'Finding the Radius from an Arc': () => sectorQuestion(['radius-arc']),
 };

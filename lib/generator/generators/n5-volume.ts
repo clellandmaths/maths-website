@@ -680,10 +680,43 @@ function boxPlusSphere(): Q | null {
   ];
   return assemble({
     stack: [{ kind: 'box', w, h: boxH }, { kind: 'sphere', r: dia / 2 }],
+    /*
+     * **Three arrows, because the paper draws three arrows.**
+     *
+     * 2022 P2 Q3's own figure measures the base across the bottom, the total
+     * height up the right, and the sphere's diameter down its left — all three
+     * as double-headed arrows. This drew none of them: two plain dashed lines
+     * and, for the diameter, a *leader* pointing at the ball.
+     *
+     * Two of those read wrongly, and the question turns on both. A dashed line
+     * with no heads does not say where it starts and stops, and the total
+     * height is the number the cuboid's height is worked *out* of — the whole
+     * first move is `total - diameter`. A leader is worse: it points at the
+     * sphere without spanning it, so nothing on the page says whether 0·42 is
+     * the diameter or the radius. Read off the render, the height line also
+     * appeared to stop partway up the ball.
+     *
+     * So the diameter becomes a height arrow across the sphere's own extent
+     * (`boxH` to `total`, on the right, clear of the total-height arrow on the
+     * left), and both others ask for `arrow`. `arrow` and `rule` are per
+     * dimension exactly so this can be said for one figure without touching
+     * any other caller of `assemble`.
+     */
     dims: [
-      { along: 'width', halfWidth: w / 2, side: 'below', value: w, text: `${num(w)} m` },
-      { along: 'height', from: 0, to: total, side: 'left', value: total, text: `${num(total)} m` },
-      { along: 'leader', at: { x: 0, y: boxH + dia * 0.85 }, degrees: 125, text: `${num(dia)} m` },
+      { along: 'width', halfWidth: w / 2, side: 'below', value: w, text: `${num(w)} m`, arrow: true },
+      // `toStackTop`/`fromStackSeat` name the sphere (piece 1) rather than a
+      // plain height, because it is *drawn* half the box's depth above its own
+      // height - it is seated on the top face's centre, which is half a depth
+      // back. Measured on the first attempt, which did not do this: the
+      // sphere's drawn top was at 0.00 and the arrow's at 9.92, exactly half
+      // the box's 19.85 depth offset, so the total-height arrow stopped inside
+      // the ball and the diameter arrow sat a whole offset low while being the
+      // right length. The owner: *"the total height line does not draw tall
+      // enough - stops in middle of sphere... you need accurate drawing here."*
+      { along: 'height', from: 0, to: total, toStackTop: 1, side: 'left',
+        value: total, text: `${num(total)} m`, arrow: true },
+      { along: 'height', from: boxH, to: total, fromStackSeat: 1, toStackTop: 1,
+        side: 'right', value: dia, text: `${num(dia)} m`, arrow: true, rules: true },
     ],
   }, 'A Box with a Sphere on Top', 'volume.box-plus-sphere', prose,
     `Cuboid ${num(w)} square, sphere ${num(dia)} on top, total ${num(total)}. Volume?`,
