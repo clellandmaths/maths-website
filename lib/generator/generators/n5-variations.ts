@@ -350,7 +350,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2015 P1 Q1', '2024 P1 Q1'],
+    basedOn: ['2024 P1 Q1'],
     marks: 2,
     route: 'identify a common denominator, then a consistent answer. The second mark is worded "consistent answer" and accepts the improper fraction as readily as the mixed number - 2024 P1 Q1 takes 29/12 or 2 5/12, and notes not to penalise the conversion. Nothing here asks for simplest form, and with coprime denominators nothing could',
     method: 'Put both parts over a common denominator, then subtract and tidy the answer up',
@@ -378,7 +378,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2025 P1 Q1', '2014 P1 Q1', '2019 P1 Q2'],
+    basedOn: ['2025 P1 Q1'],
     marks: 2,
     route: 'start to multiply the fractions, which means converting to improper fractions first, then a consistent answer in simplest form',
     method: 'Turn both mixed numbers into improper fractions and multiply them, then tidy the answer up',
@@ -406,7 +406,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2023 P1 Q1', '2017 P1 Q3'],
+    basedOn: ['2023 P1 Q1'],
     marks: 2,
     route: 'convert to improper fractions and multiply by the reciprocal, then a consistent answer in simplest form',
     method: 'Turn the mixed number into an improper fraction and multiply by the reciprocal, then tidy the answer up',
@@ -533,7 +533,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2018 P1 Q11', '2023 P1 Q8', '2025 P1 Q12'],
+    basedOn: ['2023 P1 Q8', '2025 P1 Q12'],
     marks: 2,
     route: 'express as an equivalent fraction with a rational denominator, then express in simplest form. The second mark is only available where simplifying is required, which is why the generator rejects a numerator coprime to the radicand',
     method: 'Multiply top and bottom by the root in the denominator, then tidy what is left',
@@ -848,8 +848,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'zeta+paper',
-    basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2022 P2 Q2', '2024 P2 Q1',
-              '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'],
+    basedOn: ['2024 P2 Q1'],
     marks: 3,
     route: 'know how to change by the rate, then know how to carry it across the years, then evaluate to the stated accuracy',
     plan: [
@@ -904,7 +903,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'paper',
-    basedOn: ['2019 P2 Q1', '2025 P2 Q1'],
+    basedOn: ['2025 P2 Q1'],
     marks: 3,
     route: 'multiplier, then the number of years worked out from the two dates, then evaluate',
     plan: [
@@ -928,8 +927,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // the percentage out: "reduced by 20%", "an increase of 16%", "15% more
     // than last year". That first step is inside the first mark, and no clone
     // here ever produced the handed-over wording.
-    basedOn: ['2022 P1 Q10', '2023 P2 Q6',
-              '2015 P2 Q8', '2017 P2 Q5', '2024 P2 Q5', '2025 P1 Q4'],
+    basedOn: ['2023 P2 Q6', '2024 P2 Q5', '2025 P1 Q4'],
     marks: 3,
     route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
     method: 'The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through',
@@ -951,7 +949,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'answer-first',
     source: 'paper',
-    basedOn: ['2014 P1 Q9', '2026 P1 Q2', '2018 P2 Q11'],
+    basedOn: ['2026 P1 Q2'],
     marks: 3,
     route: 'know that r% is the figure given, find 1%, multiply by 100 — both are Paper 1, so it divides by hand',
     method: 'The amount you are given is that percentage of the total, so divide to find 1%, then multiply by 100',
@@ -1074,7 +1072,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam',
     strategy: 'input-first',
     source: 'paper',
-    basedOn: ['2022 P2 Q1', '2024 P1 Q3', '2026 P1 Q1', '2015 P1 Q4', '2017 P1 Q4', '2019 P1 Q3'],
+    basedOn: ['2024 P1 Q3', '2026 P1 Q1'],
     marks: 3,
     route: 'start to expand, evidenced by any three correct terms, then complete the expansion, then collect like terms. The third mark needs a term in x^3 and, in 2017 and 2022, a negative coefficient, which the generator\'s guards enforce',
     plan: [
@@ -1232,7 +1230,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.complete-square': {
     topic: 'Completing the Square',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2014 P1 Q3', '2016 P2 Q9', '2019 P2 Q10', '2025 P2 Q5'],
+    basedOn: ['2025 P2 Q5'],
     marks: 2,
     route: 'correct bracket with square, then complete the process. Writing out the finished expression is part of the second mark',
     method: 'Halve the coefficient of $x$ to get the number inside the bracket, then take off what that bracket adds on and bring the constant down',
@@ -1330,7 +1328,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // 2018 P1 Q7 has moved to `straight-line.exact-line`: it draws one exact
     // line with no cloud of points round it and never says "best fit", where
     // these four draw a scattergraph and do. The figure is the difference.
-    basedOn: ['2014 P1 Q6', '2016 P1 Q5', '2024 P1 Q9', '2026 P1 Q6'],
+    basedOn: ['2024 P1 Q9', '2026 P1 Q6'],
     marks: 4,
     route: '3 + 1 - find the gradient, substitute it with one of the points, state the equation in the question own letters and in simplest form, then evaluate it at a given value. A fractional gradient is carried as a fraction throughout, since 2018 P1 Q7 withholds the third mark for one turned into a decimal and the same scheme wording is used across this family',
     method: 'Read two points off your line and find the gradient, substitute it with one of the points to get the intercept, write the equation in the letters the question uses, then put the given value into it',
@@ -1374,7 +1372,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'straight-line.best-fit-grid': {
     topic: 'A Line of Best Fit on a Grid',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2019 P1 Q6', '2023 P1 Q7'],
+    basedOn: ['2023 P1 Q7'],
     marks: 4,
     route: '3 + 1, the same four as straight-line.best-fit - gradient, substitute a point, state the equation in the question letters, then evaluate. Its own id because these two name no points in their prose: the pupil reads them off the ruling, and both schemes name the exact intersections the gradient may be taken from',
     plan: [
@@ -1422,7 +1420,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-graphs.amplitude-cycles': {
     topic: 'Amplitude and Period of a Trigonometric Graph',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2015 P1 Q6', '2024 P1 Q8'],
+    basedOn: ['2024 P1 Q8'],
     marks: 2,
     route: 'state a, the amplitude read off the y-axis, then state b, the number of complete waves between 0 and 360. Two of the four ask it in two parts and two in one, and it is a mark each either way',
     plan: [
@@ -1507,7 +1505,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-graphs.turning-point': {
     topic: 'A Turning Point on a Trigonometric Graph',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2019 P1 Q13', '2025 P1 Q8'],
+    basedOn: ['2025 P1 Q8'],
     marks: 2,
     route: 'find the x of the turning point by shifting the unshifted one, then state the coordinates. The equation is given in the prose and the figure prints no numbers at all - it is there to say which turning point',
     plan: [
@@ -1523,7 +1521,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.sketch-completed-square': {
     topic: 'Sketching a Parabola from Completed Square Form',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2016 P1 Q10', '2026 P1 Q12'],
+    basedOn: ['2026 P1 Q12'],
     marks: 3,
     route: 'state the turning point, sketch a parabola with a minimum turning point consistent with it, then the y-intercept. The scheme puts the sketch at the second mark, before the intercept is known, so the figure shown there marks the turning point only',
     method: 'Read the turning point off the completed square, sketch a parabola with its minimum there, then mark where it crosses the $y$-axis',
@@ -1709,7 +1707,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'quadratics.discriminant': {
     topic: 'The Discriminant',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2016 P1 Q6', '2018 P1 Q8', '2023 P1 Q5'],
+    basedOn: ['2023 P1 Q5'],
     marks: 2,
     route: 'calculate the discriminant, then state the nature of the roots. Naming the coefficients earns nothing',
     plan: [
@@ -1961,7 +1959,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'alg-fractions.add': {
     topic: 'Adding Algebraic Fractions',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2016 P2 Q13', '2024 P2 Q12'],
+    basedOn: ['2024 P2 Q12'],
     marks: 3,
     route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
@@ -1979,7 +1977,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
     // 2019 P2 Q15 has moved to `alg-fractions.subtract-binomials`: it is the
     // one subtraction paper with no bare variable on a denominator.
-    basedOn: ['2014 P2 Q9', '2023 P2 Q10', '2025 P1 Q14'],
+    basedOn: ['2023 P2 Q10', '2025 P1 Q14'],
     marks: 3,
     route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
@@ -2147,7 +2145,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'change-subject.fraction': {
     topic: 'Changing the Subject',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2017 P1 Q10', '2024 P2 Q9'],
+    basedOn: ['2024 P2 Q9'],
     marks: 3,
     route: 'multiply by the denominator, subtract the constant term, divide by the coefficient - one mark per operation',
     plan: [
@@ -2213,7 +2211,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'change-subject.fraction-coefficient': {
     topic: 'Changing the Subject with a Fractional Coefficient',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2014 P2 Q11', '2019 P1 Q7', '2025 P2 Q9'],
+    basedOn: ['2025 P2 Q9'],
     marks: 3,
     route: 'clear the constant term, clear the fractional coefficient, then divide by what is left. 2023 and 2025 accept either order for the first two',
     plan: [
@@ -2253,8 +2251,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // Nothing could see it: no 2026 markscheme exists, so the citation was
     // never compared with anything until the check learned to read the paper's
     // own totals. 2026 P1 Q4 is the inequality.
-    basedOn: ['2015 P1 Q2', '2017 P1 Q8', '2018 P2 Q4', '2024 P2 Q4',
-              '2026 P1 Q4'],
+    basedOn: ['2024 P2 Q4', '2026 P1 Q4'],
     marks: 3,
     route: 'expand the bracket, then collect like terms, then solve. 2024 P2 Q4 requires visible handling of a negative coefficient, either by reversing the sign at the last mark or by collecting on the right at the second',
     plan: [
@@ -2291,7 +2288,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'simeq.solve-given': {
     topic: 'Solving Simultaneous Equations',
     difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
-    basedOn: ['2015 P1 Q11', '2018 P1 Q3', '2023 P1 Q3', '2024 P1 Q7'],
+    basedOn: ['2023 P1 Q3', '2024 P1 Q7'],
     marks: 3,
     route: 'correct scaling, then a value for one variable, then a value for the other',
     method: 'Multiply one equation so that a letter matches in both, add or subtract to eliminate that letter and get the first value, then substitute back for the second',
@@ -2620,7 +2617,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'data.mean-sd-compare': {
     topic: 'Comparing Mean and Standard Deviation',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2016 P2 Q6', '2018 P2 Q5', '2022 P2 Q5', '2025 P2 Q4'],
+    basedOn: ['2025 P2 Q4'],
     marks: 6,
     route: '4 + 2 - the mean, the squared differences, substitution into the formula, the standard deviation, then a valid comparison of the means and one of the standard deviations',
     method: 'Find the mean, square each difference from it, substitute into the standard deviation formula and work it out, then write one sentence comparing the means and another comparing the spreads',
@@ -2685,7 +2682,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // quadrant rule for the second solution, which is the third mark. So one
     // variation per ratio, and within each the papers are the same question
     // with different numbers — the sign included, since it follows from them.
-    basedOn: ['2018 P2 Q8', '2022 P2 Q9', '2024 P2 Q11'],
+    basedOn: ['2024 P2 Q11'],
     marks: 3,
     route: 'rearrange the equation, find one value of x, then find the other. The two values are separate marks',
     plan: [
@@ -2721,7 +2718,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-equations.solve-tan': {
     topic: 'Solving Trigonometric Equations',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2016 P2 Q14', '2026 P2 Q8'],
+    basedOn: ['2026 P2 Q8'],
     marks: 3,
     route: 'rearrange the equation, find one value of x, then find the other. The two values are separate marks',
     plan: [
@@ -2741,7 +2738,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-equations.in-formula': {
     topic: 'Trigonometric Equations in a Formula',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2017 P2 Q15c', '2023 P2 Q11', '2025 P2 Q14'],
+    basedOn: ['2023 P2 Q11', '2025 P2 Q14'],
     marks: 4,
     route: 'substitute the given height into the formula, rearrange it, calculate one value of x, then the second',
     plan: [
@@ -2913,7 +2910,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // clones it: its scheme is "Vectors (subtraction) — evidence of
     // subtraction", where u and u + v are given and v is wanted. Cited here as
     // well, it made two presses on that paper differ in kind.
-    basedOn: ['2014 P1 Q4', '2024 P1 Q4'],
+    basedOn: ['2024 P1 Q4'],
     marks: 2,
     route: 'calculate the scalar multiple, then the solution in component form. The second mark is withheld if the brackets are dropped or the answer is written as a coordinate',
     method: 'Multiply each component by its scalar, then add the two vectors one component at a time',
@@ -2966,7 +2963,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'straight-line.gradient-from-equation': {
     topic: 'Gradient from an Equation',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
-    basedOn: ['2017 P2 Q11', '2024 P1 Q11'],
+    basedOn: ['2024 P1 Q11'],
     marks: 2,
     route: 'isolate the term in y, or divide throughout, then state the gradient explicitly',
     plan: [
@@ -3038,7 +3035,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'sci-notation.calculate': {
     topic: 'Calculating in Scientific Notation',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2016 P2 Q2', '2019 P2 Q4', '2024 P2 Q2', '2025 P2 Q3'],
+    basedOn: ['2024 P2 Q2', '2025 P2 Q3'],
     marks: 2,
     route: 'correct method, then evaluate and write in scientific notation',
     plan: [
@@ -3094,7 +3091,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'cosine-rule.side-exact': {
     topic: 'Cosine Rule: Finding a Side',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2018 P1 Q10', '2023 P1 Q6'],
+    basedOn: ['2023 P1 Q6'],
     marks: 3,
     route: 'correct substitution into the cosine rule, evaluate the square of the side, then take the root',
     method: 'Substitute the two sides and the cosine you are given into the cosine rule, work out the square of the missing side, then take its square root',
@@ -3251,7 +3248,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'volume.sphere': {
     topic: 'Volume of a Sphere',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2018 P2 Q7', '2025 P2 Q2'],
+    basedOn: ['2025 P2 Q2'],
     answerShape: 'rounded',
     webTopics: ['Volume - simple shape'],
     skill: 'Halve the diameter, substitute into the volume of a sphere, and round',
@@ -3936,7 +3933,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig.related-angle': {
     topic: 'The Value at a Related Angle',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
-    basedOn: ['2018 P1 Q12', '2023 P1 Q11'],
+    basedOn: ['2023 P1 Q11'],
     marks: 1,
     route: 'state the value - one mark, and the scheme asks for nothing else',
     method: 'Find the related acute angle, recall its exact value, then give it the sign that quadrant requires',
@@ -4024,7 +4021,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'pythagoras.converse': {
     topic: 'The Converse of Pythagoras',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2014 P2 Q6', '2023 P2 Q8'],
+    basedOn: ['2023 P2 Q8'],
     marks: 4,
     route: 'valid strategy, then evaluation, then an explicit comparison, then a conclusion with a valid reason; the schemes all accept the cosine rule instead',
     method: 'Square the two shorter sides and add them, square the longest side, compare the two numbers, then say whether it is right-angled and why',
@@ -4358,7 +4355,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-diagram.cosine-side': {
     topic: 'Cosine Rule from a Diagram',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2015 P2 Q3', '2017 P2 Q3', '2026 P2 Q2'],
+    basedOn: ['2026 P2 Q2'],
     marks: 3,
     route: 'correct substitution into the cosine rule, evaluate the square of the side, then take the root',
     method: 'Substitute the two sides and the angle between them into the cosine rule, work out the square of the missing side, then take its square root',
@@ -4416,7 +4413,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // 2016 P2 Q8 is a set of stepladders rather than a lettered triangle,
     // but it is this question: two lengths and the angle at the foot of one
     // of them, find the angle at the foot of the other.
-    basedOn: ['2023 P2 Q4', '2016 P2 Q8'],
+    basedOn: ['2023 P2 Q4'],
     marks: 3,
     route: 'correct substitution into the sine rule, rearrange it, then calculate the angle',
     method: 'Pair each side with the angle opposite it and substitute into the sine rule, rearrange to make the sine the subject, then take the inverse to get the angle',
@@ -4640,7 +4637,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-diagram.area-exact': {
     topic: 'Area of a Triangle from a Diagram',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2017 P1 Q7', '2025 P1 Q5'],
+    basedOn: ['2025 P1 Q5'],
     marks: 2,
     route: 'correct substitution into the area formula, then calculate the area. The sine is given, so nothing has to be looked up',
     method: 'Substitute the two sides and the sine you are given into $\\frac{1}{2}ab\\sin C$, then work the area out exactly',
@@ -4714,7 +4711,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'sector.arc-angle': {
     topic: 'Length of an Arc',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2018 P2 Q2', '2023 P2 Q3'],
+    basedOn: ['2023 P2 Q3'],
     marks: 3,
     route: 'appropriate fraction, consistent substitution into the arc length formula, then calculate the arc',
     method: 'Write the angle as a fraction of 360, substitute the radius into the arc length formula, then work the arc out',
@@ -4891,7 +4888,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'angles.polygon-produced': {
     topic: 'A Side of a Polygon Produced',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
-    basedOn: ['2018 P1 Q9', '2025 P2 Q7'],
+    basedOn: ['2025 P2 Q7'],
     marks: 2,
     route: 'interior angle of the polygon (or the angle at the outside point), then the angle asked for',
     plan: [
@@ -5208,6 +5205,44 @@ const ALIASES: Record<string, {
   planMarksDiffer?: VariationMeta['planMarksDiffer'];
 }> = {
   // lock-year: aliases begin
+  'fractions.subtract-mixed-pre2023': { aliasOf: 'fractions.subtract-mixed', basedOn: ['2015 P1 Q1'] },
+  'fractions.multiply-mixed-pre2023': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2014 P1 Q1', '2019 P1 Q2'] },
+  'fractions.divide-mixed-pre2023': { aliasOf: 'fractions.divide-mixed', basedOn: ['2017 P1 Q3'] },
+  'surds.rationalise-pre2023': { aliasOf: 'surds.rationalise', basedOn: ['2018 P1 Q11'] },
+  'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2022 P2 Q2', '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'] },
+  'percentages.compound-between-years-pre2023': { aliasOf: 'percentages.compound-between-years', basedOn: ['2019 P2 Q1'] },
+  'percentages.reverse-pre2023': { aliasOf: 'percentages.reverse', basedOn: ['2022 P1 Q10', '2015 P2 Q8', '2017 P2 Q5'] },
+  'percentages.part-of-whole-pre2023': { aliasOf: 'percentages.part-of-whole', basedOn: ['2014 P1 Q9', '2018 P2 Q11'] },
+  'expanding.binomial-trinomial-pre2023': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2022 P2 Q1', '2015 P1 Q4', '2017 P1 Q4', '2019 P1 Q3'] },
+  'quadratics.complete-square-pre2023': { aliasOf: 'quadratics.complete-square', basedOn: ['2014 P1 Q3', '2016 P2 Q9', '2019 P2 Q10'] },
+  'straight-line.best-fit-pre2023': { aliasOf: 'straight-line.best-fit', basedOn: ['2014 P1 Q6', '2016 P1 Q5'] },
+  'straight-line.best-fit-grid-pre2023': { aliasOf: 'straight-line.best-fit-grid', basedOn: ['2019 P1 Q6'] },
+  'trig-graphs.amplitude-cycles-pre2023': { aliasOf: 'trig-graphs.amplitude-cycles', basedOn: ['2015 P1 Q6'] },
+  'trig-graphs.turning-point-pre2023': { aliasOf: 'trig-graphs.turning-point', basedOn: ['2019 P1 Q13'] },
+  'quadratics.sketch-completed-square-pre2023': { aliasOf: 'quadratics.sketch-completed-square', basedOn: ['2016 P1 Q10'] },
+  'quadratics.discriminant-pre2023': { aliasOf: 'quadratics.discriminant', basedOn: ['2016 P1 Q6', '2018 P1 Q8'] },
+  'alg-fractions.add-pre2023': { aliasOf: 'alg-fractions.add', basedOn: ['2016 P2 Q13'] },
+  'alg-fractions.subtract-pre2023': { aliasOf: 'alg-fractions.subtract', basedOn: ['2014 P2 Q9'] },
+  'change-subject.fraction-pre2023': { aliasOf: 'change-subject.fraction', basedOn: ['2017 P1 Q10'] },
+  'change-subject.fraction-coefficient-pre2023': { aliasOf: 'change-subject.fraction-coefficient', basedOn: ['2014 P2 Q11', '2019 P1 Q7'] },
+  'inequalities.brackets-pre2023': { aliasOf: 'inequalities.brackets', basedOn: ['2015 P1 Q2', '2017 P1 Q8', '2018 P2 Q4'] },
+  'simeq.solve-given-pre2023': { aliasOf: 'simeq.solve-given', basedOn: ['2015 P1 Q11', '2018 P1 Q3'] },
+  'data.mean-sd-compare-pre2023': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6', '2018 P2 Q5', '2022 P2 Q5'] },
+  'trig-equations.solve-pre2023': { aliasOf: 'trig-equations.solve', basedOn: ['2018 P2 Q8', '2022 P2 Q9'] },
+  'trig-equations.solve-tan-pre2023': { aliasOf: 'trig-equations.solve-tan', basedOn: ['2016 P2 Q14'] },
+  'trig-equations.in-formula-pre2023': { aliasOf: 'trig-equations.in-formula', basedOn: ['2017 P2 Q15c'] },
+  'vectors.components-pre2023': { aliasOf: 'vectors.components', basedOn: ['2014 P1 Q4'] },
+  'straight-line.gradient-from-equation-pre2023': { aliasOf: 'straight-line.gradient-from-equation', basedOn: ['2017 P2 Q11'] },
+  'sci-notation.calculate-pre2023': { aliasOf: 'sci-notation.calculate', basedOn: ['2016 P2 Q2', '2019 P2 Q4'] },
+  'cosine-rule.side-exact-pre2023': { aliasOf: 'cosine-rule.side-exact', basedOn: ['2018 P1 Q10'] },
+  'volume.sphere-pre2023': { aliasOf: 'volume.sphere', basedOn: ['2018 P2 Q7'] },
+  'trig.related-angle-pre2023': { aliasOf: 'trig.related-angle', basedOn: ['2018 P1 Q12'] },
+  'pythagoras.converse-pre2023': { aliasOf: 'pythagoras.converse', basedOn: ['2014 P2 Q6'] },
+  'trig-diagram.cosine-side-pre2023': { aliasOf: 'trig-diagram.cosine-side', basedOn: ['2015 P2 Q3', '2017 P2 Q3'] },
+  'trig-diagram.sine-angle-pre2023': { aliasOf: 'trig-diagram.sine-angle', basedOn: ['2016 P2 Q8'] },
+  'trig-diagram.area-exact-pre2023': { aliasOf: 'trig-diagram.area-exact', basedOn: ['2017 P1 Q7'] },
+  'sector.arc-angle-pre2023': { aliasOf: 'sector.arc-angle', basedOn: ['2018 P2 Q2'] },
+  'angles.polygon-produced-pre2023': { aliasOf: 'angles.polygon-produced', basedOn: ['2018 P1 Q9'] },
   // lock-year: aliases end
 };
 
