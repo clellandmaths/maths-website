@@ -64,7 +64,7 @@ function assemble(
 
 // ── y = a sin bx, y = a cos bx — 2015 P1 Q6, 2018 P1 Q6, 2022, 2024 ──────
 
-function amplitudeAndCycles(): Q | null {
+function amplitudeAndCycles(wanted?: string): Q | null {
   /**
    * **Which of the two presentations — and it is two questions, not one.**
    *
@@ -84,7 +84,11 @@ function amplitudeAndCycles(): Q | null {
    * counting six or eight waves is what does not work, and a period tick needs
    * a period of 90 or more to have room under it, which is `b` of 4 or less.
    */
-  const scaled = getRandomInt(0, 1) === 0;
+  // Taught: the two presentations are two questions and two ids, so an asked
+  // id names the presentation. Both `-period` ids are the scaled one.
+  const scaled = wanted !== undefined
+    ? wanted.startsWith('trig-graphs.amplitude-period')
+    : getRandomInt(0, 1) === 0;
   const a = getRandomInt(2, 8);
   const b = scaled ? pick([2, 3, 4, 6, 8]) : pick([2, 3, 4, 5]);
   const period = 360 / b;
@@ -126,7 +130,13 @@ function amplitudeAndCycles(): Q | null {
    * being retried until it happens to fit. **Retrying is what hid this**: it
    * looks identical to a mix that simply never chose those values.
    */
-  const fn = !scaled ? pick(['sin', 'cos'] as const)
+  // On the counting axis the id follows the function, so it can simply be
+  // read. On the scaled axis it cannot: the function is decided by `b`,
+  // above, and forcing it would put a number under a curve it does not
+  // clear. So that half is rejected below instead.
+  const fn = !scaled ? (wanted === 'trig-graphs.amplitude-cycles' ? 'cos' as const
+      : wanted === 'trig-graphs.amplitude-cycles-pre2023' ? 'sin' as const
+      : pick(['sin', 'cos'] as const))
     : b <= 3 ? 'cos'
     : b === 4 ? pick(['sin', 'cos'] as const)
     : 'sin';
@@ -167,6 +177,13 @@ function amplitudeAndCycles(): Q | null {
    * consumed a different number of randoms would move it.
    */
   const cosineForm = scaled && fn === 'cos';
+  // The scaled branch draws `b` first and the function follows from it, so a
+  // draw that cannot make the asked id is thrown away and `tried` draws
+  // again. Handing back the neighbour instead is what a filtered generator
+  // did, and it is the whole reason this migration exists.
+  if (scaled && wanted !== undefined && wanted !== (cosineForm
+    ? 'trig-graphs.amplitude-period-cosine'
+    : 'trig-graphs.amplitude-period')) return null;
   const askInParts = scaled ? !cosineForm : split;
   const showsHalfPeriod = scaled ? cosineForm : twoTicks;
   const eq = `y = ${a}\\${fn} ${b}x^{\\circ}`;
