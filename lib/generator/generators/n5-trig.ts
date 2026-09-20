@@ -583,48 +583,77 @@ function givenForm(): Q {
 // precisely so that arithmetic cannot be the difficulty.
 
 /**
- * **The value handed over is exact: 0.5, or 1.**
+ * **Any acute angle, and the value is scaffolding rather than recall.**
  *
- * The owner, on the 2026-2023 sign-off sheet: *"Use angles that give 0.5 only /
- * Or can be 1 and you can vary quadrant they ask about"*. Both papers do
- * exactly that and neither does anything else -
+ * This table held three rows until 2026-09-20 - `sin 30 = 0.5`, `cos 60 = 0.5`,
+ * `tan 45 = 1` - on a ruling the owner made on the 2026-2023 sign-off sheet:
+ * *"Use angles that give 0.5 only / Or can be 1 and you can vary quadrant they
+ * ask about"*. It had previously offered *"given that tan 25 = 0.466"*, and
+ * that was cut as a rounded calculator value in a non-calculator paper: nothing
+ * a pupil can check.
  *
- *   2018 P1 Q12   cos 60 = 0.5,  state cos 240
- *   2023 P1 Q11   sin 30 = 0.5,  state sin 330
+ * **That ruling is overturned, deliberately and with it in front of them.**
+ * Splitting the three functions apart left each paper's clone making three
+ * questions, and widening was put to the owner beside the fact that it reverses
+ * what they had said - https://claude.ai/artifact/3HyvSRZ6TNsvztZw29hY19 - with
+ * a surd-valued middle option offered. They chose the wide one twice, and then
+ * gave the reason the old ruling was answerable:
  *
- * - and the table used to hold 25, 40, 70 and 80 degrees as well, so the clone
- * offered "given that tan 25 = 0.466". That is a rounded calculator value in a
- * non-calculator paper: nothing a pupil can check, and nothing either paper
- * hands over. The value is given precisely so that arithmetic cannot be the
- * difficulty, and 0.466 puts it back.
+ *   *"National 5 pupils don't need to know exact values anyway so this check is
+ *   to see if they can work it out from the cast diagram"*
  *
- * Only three pairs reach an exact value at an acute angle, and both papers sit
- * inside them. The variety is the quadrant asked about, which is what the one
- * mark is for.
+ * Which resolves it rather than merely outvoting it. The earlier objection
+ * assumed the value was there so that **arithmetic** could not be the
+ * difficulty, and that an uncheckable 0.466 put arithmetic back. But a pupil
+ * never computes this value at all - it is handed over, and the single mark is
+ * the quadrant and the sign off a CAST diagram. `0.848` is exactly as
+ * checkable as `0.5`, because neither is checked: both are copied, and only the
+ * sign in front of them is earned.
+ *
+ * So the angle runs the acute range and the value is printed to three decimal
+ * places. **Both papers still fall out of it word for word**, and a special
+ * angle lands about one draw in three, so their look stays common.
  */
-const KNOWN: { deg: number; fn: 'sin' | 'cos' | 'tan'; value: string }[] = [
-  { deg: 30, fn: 'sin', value: '0.5' },
-  { deg: 60, fn: 'cos', value: '0.5' },
-  { deg: 45, fn: 'tan', value: '1' },
-];
+
+/** The three a pupil does know cold, kept frequent so the papers' form recurs. */
+const SPECIAL = [30, 45, 60];
+
+/**
+ * How far the arbitrary angle runs, per function.
+ *
+ * Tangent stops sooner because it runs away: `tan 85 = 11.430` is a legal
+ * answer and an ugly one beside a sine's `0.985`.
+ */
+const WIDEST: Record<'sin' | 'cos' | 'tan', number> = { sin: 85, cos: 85, tan: 80 };
 
 function relatedAngle(): Q {
-  const base = pick(KNOWN);
-  const fn = base.fn;
+  const fn = pick(['sin', 'cos', 'tan'] as const);
+  // One draw in three is a special angle. The rest run the acute range, which
+  // is what takes each id from three distinct questions to 228 (213 for tan).
+  const deg = getRandomInt(0, 2) === 0 ? pick(SPECIAL) : getRandomInt(10, WIDEST[fn]);
+  /**
+   * Printed to three decimal places, trailing zeros trimmed - so `sin 30` still
+   * reads `0.5` and `tan 45` still reads `1`, exactly as the two papers print
+   * them, rather than `0.500` and `1.000`.
+   *
+   * The answer echoes this string back with a sign rather than recomputing, so
+   * what a pupil writes and what the scheme wants agree to the digit.
+   */
+  const f = fn === 'sin' ? Math.sin : fn === 'cos' ? Math.cos : Math.tan;
+  const value = f(deg * Math.PI / 180).toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
   // the second, third or fourth quadrant — the first would be the same angle
   const quadrant = getRandomInt(2, 4);
-  const angle = quadrant === 2 ? 180 - base.deg
-    : quadrant === 3 ? 180 + base.deg
-    : 360 - base.deg;
+  const angle = quadrant === 2 ? 180 - deg
+    : quadrant === 3 ? 180 + deg
+    : 360 - deg;
   // CAST: all positive in the first, sine in the second, tangent in the third,
   // cosine in the fourth
   const positive = quadrant === 2 ? fn === 'sin'
     : quadrant === 3 ? fn === 'tan'
     : fn === 'cos';
-  const value = base.value;
-  const where = quadrant === 2 ? `$180^{\\circ} - ${base.deg}^{\\circ}$`
-    : quadrant === 3 ? `$180^{\\circ} + ${base.deg}^{\\circ}$`
-    : `$360^{\\circ} - ${base.deg}^{\\circ}$`;
+  const where = quadrant === 2 ? `$180^{\\circ} - ${deg}^{\\circ}$`
+    : quadrant === 3 ? `$180^{\\circ} + ${deg}^{\\circ}$`
+    : `$360^{\\circ} - ${deg}^{\\circ}$`;
   const name = quadrant === 2 ? 'second' : quadrant === 3 ? 'third' : 'fourth';
   const allowed = quadrant === 2 ? 'only sine is positive'
     : quadrant === 3 ? 'only tangent is positive'
@@ -670,9 +699,9 @@ function relatedAngle(): Q {
       : fn === 'cos' ? 'trig.related-angle-pre2023'               // 2018 P1 Q12
       : 'trig.related-angle-tan-practice',                        // no paper
     questionLines: [
-      `Given that $\\${fn} ${base.deg}^{\\circ} = ${value}$, state the value of $\\${fn} ${angle}^{\\circ}$.`,
+      `Given that $\\${fn} ${deg}^{\\circ} = ${value}$, state the value of $\\${fn} ${angle}^{\\circ}$.`,
     ],
-    boardQuestionLines: [`$\\${fn} ${base.deg}^{\\circ} = ${value}$. Find $\\${fn} ${angle}^{\\circ}$.`],
+    boardQuestionLines: [`$\\${fn} ${deg}^{\\circ} = ${value}$. Find $\\${fn} ${angle}^{\\circ}$.`],
     solutionSteps: [
       `<strong>1.</strong> $${angle}^{\\circ}$ is ${where}, so it lies in the ${name} quadrant, where ${allowed}. ` +
       `The size stays the same and only the sign can change:<br><br>$\\${fn} ${angle}^{\\circ} = ${positive ? '' : '-'}${value}$`,
