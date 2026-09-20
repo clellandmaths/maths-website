@@ -103,7 +103,7 @@ function drawP1Angle(sweep: SectorContext['sweep']): number {
 }
 
 type Kind = 'area-angle' | 'arc-angle' | 'area-arc' | 'angle-arc'
-  | 'angle-arc-reflex' | 'radius-arc';
+  | 'angle-arc-reflex' | 'arc-angle-major' | 'radius-arc';
 
 /**
  * **Contexts for the reflex-angle question, kept apart from `CONTEXTS`.**
@@ -336,8 +336,15 @@ export function sectorQuestion(kinds: Kind[]): Q {
   // This used to read `kind === 'area-angle'`, so the *arc* half never got a
   // Paper 1 draw even though 2019 P1 Q4 is one and is cited. The mechanism was
   // already here; only the gate was wrong.
-  const paper1 = (kind === 'area-angle' || kind === 'arc-angle')
-    && getRandomInt(0, 2) === 0;
+  /**
+   * **`arc-angle-major` is always a Paper 1 question**, and the `||`
+   * short-circuits so it spends no draw getting there. Every other kind
+   * reaches `getRandomInt` exactly as it did, which is what keeps the shared
+   * loop's stream where it was.
+   */
+  const majorArc = kind === 'arc-angle-major';
+  const paper1 = majorArc || ((kind === 'area-angle' || kind === 'arc-angle')
+    && getRandomInt(0, 2) === 0);
   // **The area questions are minor sectors, because both their papers are.**
   // 2025 P2 Q6 is 170 degrees and 2016 P1 Q3 is 45; the owner's family ruling
   // puts major against minor among the pairs a variation may not toss a coin
@@ -354,7 +361,7 @@ export function sectorQuestion(kinds: Kind[]): Q {
   // The reflex question reads its own list, so no other kind's `pick` moves.
   const reflexOnly = kind === 'angle-arc-reflex';
   for (let tries = 0; tries < 3000; tries++) {
-    const c = pick(reflexOnly ? REFLEX_CONTEXTS
+    const c = pick(reflexOnly || majorArc ? REFLEX_CONTEXTS
       : minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major') : CONTEXTS);
     const sweep = minorOnly ? 'minor' as const : c.sweep;
     const [nO, nA, nB] = c.letters;
@@ -458,13 +465,36 @@ export function sectorQuestion(kinds: Kind[]): Q {
         finalAnswer: `$${paper1 ? `${Math.round(ans * 100) / 100}` : dp1(ans)}$ ${c.short}$^{2}$`,
         figure: built({ radius: shown.radius, angle: shown.angle, arc: '' }),
       };
-    } else if (kind === 'arc-angle') {
+    } else if (kind === 'arc-angle' || majorArc) {
       // With pi taken as 3.14 the arc is a different number, so it is worked
       // out from PI rather than rounded differently at the end.
       const arcAns = angle / 360 * 2 * PI * r;
       const ans = paper1 ? `${Math.round(arcAns * 100) / 100}` : dp1(arcAns);
       q = {
-        subTopic: 'Length of an Arc',
+        /**
+         * **2019 P1 Q4 asks for the MAJOR arc, and gets a subTopic of its own.**
+         *
+         * It gives a 240 degree reflex angle and asks for the length of the
+         * major arc AB with pi as 3.14. Only 80 draws in 300 said "major"; the
+         * rest were an ordinary minor-arc question the paper does not ask.
+         *
+         * **Fixing it in place was tried and `frozen` refused it.** The first
+         * attempt took the reflex complement after the `share % 360` test, and
+         * the arithmetic for that was sound - `(360 - angle) x 2r` differs from
+         * `angle x 2r` by `720r`, a multiple of 360, so the same draws pass.
+         * What it missed is a *second* rejection further down: `verifyFigure`
+         * can fail a 240 degree sector where the 120 degree one passed. That
+         * changes how many turns the loop takes, and the loop is shared with
+         * `sector.arc-angle` - 2023 P2 Q3, signed off. frozen named it.
+         *
+         * So this gets its own subTopic and therefore its own draw loop, where
+         * nothing it does can be felt elsewhere. The old loop is left exactly
+         * as it was, **including its Paper 1 branch**: it still emits this id
+         * sometimes, and those draws are still discarded when `sector.arc-angle`
+         * is asked for, precisely as they were before. Dead output, and the
+         * price of not moving a locked question.
+         */
+        subTopic: majorArc ? 'Length of a Major Arc' : 'Length of an Arc',
         difficulty: 'exam',
         variationId: paper1 ? 'sector.arc-angle-pi314' : 'sector.arc-angle',
         questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.angle,
@@ -749,6 +779,9 @@ export const SECTOR_GENERATORS: Record<string, () => Q> = {
   },
   'Area of a Sector': () => sectorQuestion(['area-angle', 'area-arc']),
   'Length of an Arc': () => sectorQuestion(['arc-angle']),
+  // 2019 P1 Q4 - the major arc, pi as 3.14. Its own loop, so it cannot
+  // disturb `sector.arc-angle` (2023 P2 Q3) the way an in-place fix did.
+  'Length of a Major Arc': () => sectorQuestion(['arc-angle-major']),
   'Finding the Angle of a Sector': () => sectorQuestion(['angle-arc']),
   'Finding the Reflex Angle of a Sector': () => sectorQuestion(['angle-arc-reflex']),
   'Finding the Radius from an Arc': () => sectorQuestion(['radius-arc']),

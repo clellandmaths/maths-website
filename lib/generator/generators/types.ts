@@ -297,6 +297,7 @@ export type Topic =
   | "A Sector Cut Out of a Triangle"
   | "Two Similar Sectors"
   | "Length of an Arc"
+  | "Length of a Major Arc"
   | "Finding the Angle of a Sector"
   | "Finding the Reflex Angle of a Sector"
   | "Finding the Radius from an Arc"
@@ -711,6 +712,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "A Sector Cut Out of a Triangle",
     "Two Similar Sectors",
     "Length of an Arc",
+    "Length of a Major Arc",
     "Finding the Angle of a Sector",
     "Finding the Reflex Angle of a Sector",
     "Finding the Radius from an Arc",

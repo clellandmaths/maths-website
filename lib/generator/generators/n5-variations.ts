@@ -4944,7 +4944,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     skill: 'Radius and angle to the arc length, major or minor',
   },
   'sector.arc-angle-pi314': {
-    topic: 'Length of an Arc',
+    // Moved to its own subTopic on 2026-09-20 so 2019 P1 Q4 always asks for
+    // the MAJOR arc. The topic is what gives it its own draw loop; fixing it
+    // inside the shared one moved 2023 P2 Q3, which frozen caught.
+    topic: 'Length of a Major Arc',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2019 P1 Q4'],
     marks: 3,
