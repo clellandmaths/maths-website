@@ -1573,6 +1573,32 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Identify equation of trigonometric graph'],
     skill: 'Separate a sideways shift from a vertical one on a trig graph',
   },
+  'trig-graphs.turning-point-pre2023': {
+    topic: 'A Turning Point on a Trigonometric Graph',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    // 2019 P1 Q13: `y = 3cos(x + 45)`, state the coordinates of its minimum.
+    // Materialised from an alias on 2026-09-20. One id served both this and
+    // 2025 P1 Q8 (`y = 2sin(x - 30)`), so each paper's clone was the other's
+    // about half the time - measured, 2019 P1 Q13 drew cosine in only 46%.
+    //
+    // The split is on the FUNCTION only. Whether the turning point asked about
+    // is the maximum or the minimum stays a toss, on the owner's ruling: the
+    // work is the same either way, so the two are one question with different
+    // numbers. `__checks__/one-form.ts` sees one form here for that reason.
+    basedOn: ['2019 P1 Q13'],
+    marks: 2,
+    route: 'find where the shifted turning point sits, then read the amplitude off for its height',
+    plan: [
+      'The graph is the standard cosine curve slid sideways, so start from where an unshifted cosine has the turning point you want and move it by the number in the bracket',
+      'The amplitude is the number in front, so the turning point is that far above or below the axis - write the coordinates as a pair',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    // Derived from what 2019 P1 Q13 is tagged as on the website, not invented:
+    // `webtopics` checks these against lib/n5-topics.ts and failed the guess.
+    webTopics: ['Identify equation of trigonometric graph'],
+    skill: 'Read a turning point off a shifted cosine graph',
+  },
   'trig-graphs.turning-point': {
     topic: 'A Turning Point on a Trigonometric Graph',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
@@ -2323,6 +2349,29 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   },
   // `P = (1/3)mn - r` - 2023 P2 Q7, the one with no square and a bare
   // constant. See the note above `plain` in n5-formulae.ts.
+  'change-subject.fraction-coefficient-bracket': {
+    topic: 'Changing the Subject with a Fractional Coefficient',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    // 2019 P1 Q7: `A = (1/2)h(x + y)`, make x the subject. The subject sits
+    // inside a bracket, so the three marks are multiply by 2, divide by h,
+    // subtract y - a different route from the squared shape's add, multiply,
+    // divide by the square. Split from `change-subject.fraction-coefficient`
+    // on 2026-09-20; before that each paper was the other about half the time.
+    basedOn: ['2019 P1 Q7'],
+    marks: 3,
+    route: 'clear the fraction, divide by the multiplier outside the bracket, then take the other term across',
+    plan: [
+      'Multiply both sides by the number under the fraction, so the bracket is no longer divided by anything',
+      'Divide both sides by the letter multiplying the bracket, which leaves the bracket on its own',
+      'Take the term you do not want away from both sides, and the subject is left',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    // As above - the website's own subtopic name, which is longer than the
+    // obvious guess.
+    webTopics: ['Changing the subject of a formula'],
+    skill: 'Rearrange a formula whose subject sits inside a bracket',
+  },
   'change-subject.fraction-coefficient-plain': {
     topic: 'Changing the Subject with a Fractional Coefficient',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
@@ -5417,13 +5466,20 @@ const ALIASES: Record<string, {
   'straight-line.best-fit-pre2023': { aliasOf: 'straight-line.best-fit', basedOn: ['2014 P1 Q6', '2016 P1 Q5'] },
   'straight-line.best-fit-grid-pre2023': { aliasOf: 'straight-line.best-fit-grid', basedOn: ['2019 P1 Q6'] },
   'trig-graphs.amplitude-cycles-pre2023': { aliasOf: 'trig-graphs.amplitude-cycles', basedOn: ['2015 P1 Q6'] },
-  'trig-graphs.turning-point-pre2023': { aliasOf: 'trig-graphs.turning-point', basedOn: ['2019 P1 Q13'] },
+  // MATERIALISED 2026-09-20 - see the entry above the aliases. It keeps its
+  // name because the name is a public identifier in shared worksheet links.
+
   'quadratics.sketch-completed-square-pre2023': { aliasOf: 'quadratics.sketch-completed-square', basedOn: ['2016 P1 Q10'] },
   'quadratics.discriminant-pre2023': { aliasOf: 'quadratics.discriminant', basedOn: ['2016 P1 Q6', '2018 P1 Q8'] },
   'alg-fractions.add-pre2023': { aliasOf: 'alg-fractions.add', basedOn: ['2016 P2 Q13'] },
   'alg-fractions.subtract-pre2023': { aliasOf: 'alg-fractions.subtract', basedOn: ['2014 P2 Q9'] },
   'change-subject.fraction-pre2023': { aliasOf: 'change-subject.fraction', basedOn: ['2017 P1 Q10'] },
-  'change-subject.fraction-coefficient-pre2023': { aliasOf: 'change-subject.fraction-coefficient', basedOn: ['2014 P2 Q11', '2019 P1 Q7'] },
+  // 2019 P1 Q7 moved to `change-subject.fraction-coefficient-bracket`: its
+  // formula puts the subject inside a bracket, while this id carries the
+  // squared shape, which is 2025 P2 Q9's. 2014 P2 Q11 stays - `s = ut +
+  // (1/2)at^2` is a third shape again and the squared one is the nearer of
+  // the two, a known compromise recorded in n5-formulae.ts.
+  'change-subject.fraction-coefficient-pre2023': { aliasOf: 'change-subject.fraction-coefficient', basedOn: ['2014 P2 Q11'] },
   'inequalities.brackets-pre2023': { aliasOf: 'inequalities.brackets', basedOn: ['2015 P1 Q2', '2017 P1 Q8', '2018 P2 Q4'] },
   'simeq.solve-given-pre2023': { aliasOf: 'simeq.solve-given', basedOn: ['2015 P1 Q11', '2018 P1 Q3'] },
   'data.mean-sd-compare-pre2023': { aliasOf: 'data.mean-sd-compare', basedOn: ['2022 P2 Q5'] },

@@ -384,7 +384,34 @@ function turningPoint(): Q | null {
     view: view(a), domain: DEGREES,
     plot: { kind: 'trig', fn, a, b: 1, h: shift, k: 0 },
     points: [{ x: at, y, text: 'A', side: wantMax ? 'above' : 'below' }],
-  }, 'A Turning Point on a Trigonometric Graph', 'trig-graphs.turning-point',
+    /*
+     * **The id follows the function; the turning point stays a toss.**
+     *
+     * Two papers sit here and they differ by function: 2025 P1 Q8 is
+     * `y = 2sin(x - 30)` and 2019 P1 Q13 is `y = 3cos(x + 45)`. One id served
+     * both, so each paper's clone was the other paper's question a good share
+     * of the time - measured over 400 draws, 2025 P1 Q8 got sine only 54% and
+     * 2019 P1 Q13 got cosine only 46%.
+     *
+     * **Max against min is deliberately NOT split on.** The owner, 2026-09-20:
+     * *"it does not matter if a candidate is given a max vs a min as long as
+     * it is same trig ie cos gives cos and sin gives sin."* The work is
+     * identical either way - shift the standard turning point and read off the
+     * amplitude - so the two are one question with different numbers, which is
+     * exactly what a split is never for.
+     *
+     * So the toss chooses the id by function and the routine is otherwise
+     * untouched. A worksheet built from the topic still meets every
+     * combination at the rates it always did, because it asks for the topic
+     * and takes whatever comes; only a request for a specific paper narrows.
+     * Measured before the change: drawing 400 times from the topic gave all
+     * four combinations, every one stamped `trig-graphs.turning-point`.
+     */
+  }, 'A Turning Point on a Trigonometric Graph',
+    // The cosine id is the alias 2019 P1 Q13 already had, MATERIALISED - it
+    // keeps its `aliasOf` removed and its own fields, which is the documented
+    // path and keeps its variation code, a public identifier in shared links.
+    fn === 'cos' ? 'trig-graphs.turning-point-pre2023' : 'trig-graphs.turning-point',
     prose, `$${eq}$. State the coordinates of its ${wantMax ? 'maximum' : 'minimum'}.`,
     steps, [1, 1], `$A(${at}, ${y})$`);
 }

@@ -177,6 +177,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'change-subject.root':                    't28fq',
   'change-subject.root-two-step':           'fiqhm',
   'change-subject.fraction-coefficient':    '0ddl4',
+  'change-subject.fraction-coefficient-bracket': 'v0evl',
   'change-subject.fraction-coefficient-pre2023': 'fydqp',
 
   'inequalities.brackets':                  'jmj4x',

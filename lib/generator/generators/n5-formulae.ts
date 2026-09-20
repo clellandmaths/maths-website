@@ -328,24 +328,74 @@ function subjectFractionCoefficient(): Q {
   const mTex = squareM ? `${mLetter}^{2}` : mLetter;
 
   if (bracketed) {
-    // V = (1/d)·M·(S + T)  — the trapezium formula's shape
+    /**
+     * **The sign inside the bracket, taken from a draw already made.**
+     *
+     * Splitting this shape onto its own id showed how thin it really is: three
+     * distinct questions in 300 draws, because `questionKey` normalises
+     * letters and the only thing that actually varied was `d`, one of 2, 3, 4.
+     * Sharing an id with the squared shape had been hiding that.
+     *
+     * `plain` is drawn above and goes unused on this path, so reading the sign
+     * off it doubles the pool to six and **consumes no new random**. That
+     * matters: an extra draw here would shift the stream for every discarded
+     * bracket draw, which moves `change-subject.fraction-coefficient-plain` -
+     * 2023 P2 Q7, signed off, and no part of the decision that authorised
+     * this split.
+     *
+     * Six is still thin, and it is the ceiling without touching 2023 P2 Q7:
+     * `d` is drawn before the branch and shared, so widening it moves that
+     * paper too. Reported rather than worked around.
+     */
+    const inner = plain ? '+' : '-';
+    /*
+     * **V = (1/d)*M*(S + T) - the trapezium shape, and 2019 P1 Q7's own.**
+     *
+     * This used to be stamped `change-subject.fraction-coefficient`, the same
+     * id as the squared shape below, so one id covered two genuinely different
+     * questions: 2019 P1 Q7 is `A = (1/2)h(x + y)` with the subject **inside a
+     * bracket**, and 2025 P2 Q9 is `B = (1/4)kc^2 - 3c`, a squared term and no
+     * bracket. Measured: 47% of 2025 P2 Q9's draws were the bracket shape and
+     * 53% of 2019 P1 Q7's were the squared one. Each paper's clone was the
+     * other paper's question about half the time.
+     *
+     * The fix is the one this project already settled on: **let the toss
+     * choose the id, not the presentation.** The routine is untouched - it
+     * still draws `bracketed` one time in three and produces both shapes at
+     * exactly the rates it did - and only the name stamped on the way out
+     * changes. `generateQuestion` then discards until it has the id asked for,
+     * so a clone of 2019 P1 Q7 is always the bracket and a clone of 2025 P2 Q9
+     * always the square.
+     *
+     * **A worksheet built from the topic still sees both**, because it asks
+     * for the topic rather than an id and takes whatever the routine emits.
+     * That was the owner's condition for splitting at all: *"if we can still
+     * get access to all the variations anyway when building a sheet ... then
+     * point is mute and we should split to ensure specific question clones
+     * based on itself."* Verified on the sibling trig-graph case by drawing
+     * 400 times from the topic and finding every form still present at the
+     * same rates.
+     *
+     * `-plain` already did this correctly for 2023 P2 Q7; this is the same
+     * separation for the two shapes that were left sharing.
+     */
     return {
       subTopic: 'Changing the Subject with a Fractional Coefficient',
       difficulty: 'exam',
-      variationId: 'change-subject.fraction-coefficient',
+      variationId: 'change-subject.fraction-coefficient-bracket',
       questionLines: [
-        `A formula is given by $${v} = ${frac('1', `${d}`)}${mLetter}(${subj} + ${tLetter})$.`,
+        `A formula is given by $${v} = ${frac('1', `${d}`)}${mLetter}(${subj} ${inner} ${tLetter})$.`,
         `Make $${subj}$ the subject of the formula.`,
       ],
-      boardQuestionLines: [`$${v} = ${frac('1', `${d}`)}${mLetter}(${subj} + ${tLetter})$, make $${subj}$ the subject`],
+      boardQuestionLines: [`$${v} = ${frac('1', `${d}`)}${mLetter}(${subj} ${inner} ${tLetter})$, make $${subj}$ the subject`],
       solutionSteps: [
-        `<strong>1.</strong> Multiply both sides by $${d}$ to clear the fraction:<br><br>$${d}${v} = ${mLetter}(${subj} + ${tLetter})$`,
-        `<strong>2.</strong> Divide both sides by $${mLetter}$:<br><br>$${frac(`${d}${v}`, mLetter)} = ${subj} + ${tLetter}$`,
-        `<strong>3.</strong> Subtract $${tLetter}$ from both sides:<br><br>$${subj} = ${frac(`${d}${v}`, mLetter)} - ${tLetter}$`,
+        `<strong>1.</strong> Multiply both sides by $${d}$ to clear the fraction:<br><br>$${d}${v} = ${mLetter}(${subj} ${inner} ${tLetter})$`,
+        `<strong>2.</strong> Divide both sides by $${mLetter}$:<br><br>$${frac(`${d}${v}`, mLetter)} = ${subj} ${inner} ${tLetter}$`,
+        `<strong>3.</strong> ${plain ? `Subtract $${tLetter}$ from` : `Add $${tLetter}$ to`} both sides:<br><br>$${subj} = ${frac(`${d}${v}`, mLetter)} ${plain ? '-' : '+'} ${tLetter}$`,
       ],
       // 2019 P1 Q7: •¹ multiply by 2, •² divide by h, •³ subtract y
       stepMarks: [1, 1, 1],
-      finalAnswer: `$${subj} = ${frac(`${d}${v}`, mLetter)} - ${tLetter}$`,
+      finalAnswer: `$${subj} = ${frac(`${d}${v}`, mLetter)} ${plain ? '-' : '+'} ${tLetter}$`,
     };
   }
 
