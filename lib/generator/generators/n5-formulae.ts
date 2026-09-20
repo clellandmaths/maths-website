@@ -234,22 +234,48 @@ function subjectWithRoot(): Q {
   // 2026 has no published scheme. One mark per operation is the rule every
   // other change-of-subject scheme in the set follows, so two is the reading.
   if (getRandomInt(1, 3) === 1) {
-    const k = pick([2, 3, 4, 5, 6]);
+    /**
+     * **Widened 2026-09-20, on the owner's word at the 2026 locked-year pass.**
+     *
+     * This made **five** questions. The coefficient was the only thing that
+     * varied - `questionKey` normalises the letters - so a pupil pressing
+     * *another like this* a sixth time had seen them all, and `pool` reported
+     * the topic as one of its two standing reds because of it.
+     *
+     * Two levers, both faithful to a two-mark square-then-take-across:
+     *
+     * - the coefficient runs **2 to 12** rather than 2 to 6;
+     * - the sign inside the root varies, so `P = \sqrt{T + 3L}` is reachable.
+     *   The same lever took 2019 P1 Q7 from three questions to six.
+     *
+     * **The sign costs no new random number, and that is not a detail.** This
+     * routine serves `change-subject.root` as well and is reached by drawing
+     * and discarding, so an extra `getRandomInt` here would move 2016 P2 Q12
+     * and 2018 P1 Q14 on every draw that landed in this branch and was thrown
+     * away. `insideRoot` is already drawn above, splits evenly, and this
+     * branch does not otherwise use it - so it names the sign. That is the
+     * trick 2022 P1 Q2's cube constant uses, for the same reason.
+     */
+    const k = getRandomInt(2, 12);
+    const plus = insideRoot;
+    const sign = plus ? '+' : '-';
+    const undo = plus ? 'Subtract' : 'Add';
+    const back = plus ? '-' : '+';
     return {
       subTopic: 'Changing the Subject with Roots',
       difficulty: 'exam',
       variationId: 'change-subject.root-two-step',
       questionLines: [
         `Change the subject of the following formula to $${subj}$.`,
-        `$${v} = \\sqrt{${subj} - ${k}${a}}$`,
+        `$${v} = \\sqrt{${subj} ${sign} ${k}${a}}$`,
       ],
-      boardQuestionLines: [`$${v} = \\sqrt{${subj} - ${k}${a}}$, make $${subj}$ the subject`],
+      boardQuestionLines: [`$${v} = \\sqrt{${subj} ${sign} ${k}${a}}$, make $${subj}$ the subject`],
       solutionSteps: [
-        `<strong>1.</strong> Square both sides to undo the root:<br><br>$${v}^{2} = ${subj} - ${k}${a}$`,
-        `<strong>2.</strong> Add $${k}${a}$ to both sides:<br><br>$${subj} = ${v}^{2} + ${k}${a}$`,
+        `<strong>1.</strong> Square both sides to undo the root:<br><br>$${v}^{2} = ${subj} ${sign} ${k}${a}$`,
+        `<strong>2.</strong> ${undo} $${k}${a}$ ${plus ? 'from' : 'to'} both sides:<br><br>$${subj} = ${v}^{2} ${back} ${k}${a}$`,
       ],
       stepMarks: [1, 1],
-      finalAnswer: `$${subj} = ${v}^{2} + ${k}${a}$`,
+      finalAnswer: `$${subj} = ${v}^{2} ${back} ${k}${a}$`,
     };
   }
 

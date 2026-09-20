@@ -965,7 +965,9 @@ export function pythagorasChordReverse(findChord: boolean): Q {
       `The diagram shows a circle with centre $${O}$ and chord $${A}${B}$.`,
       `&bull;&nbsp; $${A}${B}$ is ${withUnit(chord, ctx.unit)}`,
       `&bull;&nbsp; $${M}$ is the midpoint of $${A}${B}$, and $${O}${M}$ is ${withUnit(dShown, ctx.unit)}`,
-      `Calculate the radius of the circle. Give your answer correct to one decimal place.`,
+      // **No rounding line.** 2026 P2 Q5 asks for no particular accuracy and
+      // its scheme takes 15.4(02...) as it comes. Owner's word, 2026-09-20.
+      `Calculate the radius of the circle.`,
     ];
     // 2026 P2 Q5 is three marks, one fewer than 2014 P1 Q12, because the
     // perpendicular is handed over rather than worked out of the height. No

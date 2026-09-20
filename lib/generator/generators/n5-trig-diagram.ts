@@ -122,7 +122,12 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
       if (!fig) continue;
       const prose = [
         `The diagram shows triangle $${A}${B}${C}$.`,
-        `Calculate the length of $${B}${C}$. Give your answer correct to one decimal place.`,
+        // **No rounding line.** 2026 P2 Q2, 2017 P2 Q3 and 2015 P2 Q3 all stop
+        // at "calculate the length" and their schemes take 7.2..., 412.7...
+        // and 0.78... as they come. The cosine-rule ANGLE branch of this same
+        // file lost this line on exactly that reasoning; the SIDE branch was
+        // missed. Owner's word on the 2026 locked-year pass, 2026-09-20.
+        `Calculate the length of $${B}${C}$.`,
       ];
       const steps = [
         `<strong>1.</strong> The angle at $${A}$ lies between the two known sides, so the cosine rule applies directly:<br><br>$${B}${C}^{2} = ${q}^{2} + ${p}^{2} - 2 \\times ${q} \\times ${p} \\times \\cos ${angA}^{\\circ}$`,

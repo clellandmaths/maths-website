@@ -393,7 +393,26 @@ function commonFactor(): Q {
   return {
     subTopic: 'Simplifying Trigonometric Expressions',
     difficulty: 'exam',
-    variationId: 'trig-identities.common-factor',
+    /*
+     * **The id follows the degree — 2026-09-20.**
+     *
+     * One id served two signed-off papers that set *different expressions*:
+     *
+     *   2026 P2 Q12   cos x sin^2 x + cos^3 x   -> cos x     (degree 3)
+     *   2023 P2 Q13   sin^2 x cos^2 x + cos^4 x -> cos^2 x   (degree 4)
+     *
+     * Measured over 400 draws before the split, each paper got its own degree
+     * in about half of them and its own wording in about half again, so each
+     * landed on its own question roughly one draw in twenty.
+     *
+     * **Nothing in the suite could see it.** `one-form` reads presentation and
+     * the two are identical on figure, parts and vocabulary; `audit-fidelity`
+     * reads words and both carry sin and cos. It lives in the algebra, which
+     * is a third place a fault can hide. Found by reading the draws during the
+     * 2026 locked-year pass; the owner: *"Agree split by degree"*.
+     */
+    variationId: odd ? 'trig-identities.common-factor-cubed'   // 2026 P2 Q12
+      : 'trig-identities.common-factor',                       // 2023 P2 Q13
     // **Both papers' instructions, because they do not use the same one.**
     // 2023 P2 Q13 says "Simplify ... Show your working."; 2026 P2 Q12 says
     // "Express the following in its simplest form:" and asks for no working.
@@ -402,10 +421,16 @@ function commonFactor(): Q {
     // wording. The marks are the same either way: the first is for factorising
     // or substituting, which a bare answer cannot earn whether the paper asks
     // for working or not.
-    questionLines: getRandomInt(0, 1) === 0
-      ? [`Simplify $${co}${product} + ${co}${cubed}$.`, WORKING]
-      : ['Express the following in its simplest form:',
-         `$${co}${product} + ${co}${cubed}$`],
+    // **The wording follows the id too, since 2026-09-20.** It used to be a
+    // second coin toss, so each paper printed the other one's instruction half
+    // the time. 2023 P2 Q13 says "Simplify ... Show your working"; 2026 P2 Q12
+    // says "Express the following in its simplest form:" and asks for none.
+    // The marks are the same either way - the first is for factorising or
+    // substituting, which a bare answer cannot earn whichever way it is asked.
+    questionLines: odd
+      ? ['Express the following in its simplest form:',
+         `$${co}${product} + ${co}${cubed}$`]
+      : [`Simplify $${co}${product} + ${co}${cubed}$.`, WORKING],
     boardQuestionLines: [`Simplify $${co}${product} + ${co}${cubed}$`],
     solutionSteps: [
       `<strong>1.</strong> Take out the common factor $${factored}$:<br><br>$${factored}\\left(${other} + ${odd ? (sinFirst ? C2 : S2) : keep}\\right)$`,

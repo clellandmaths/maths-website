@@ -3045,10 +3045,36 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // different powers, so one variation. A whole-number coefficient widens the
   // pool without changing it: taking a numerical factor out alongside an
   // algebraic one is National 5 factorising, and it comes straight back out.
-  'trig-identities.common-factor': {
+  // The degree-3 half of the same routine, split off on 2026-09-20.
+  'trig-identities.common-factor-cubed': {
     topic: 'Simplifying Trigonometric Expressions',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
-    basedOn: ['2023 P2 Q13', '2026 P2 Q12'],
+    // 2026 P2 Q12: `cos x sin^2 x + cos^3 x`, where the common factor is a
+    // bare cosine rather than a squared one, and the answer is `cos x`. Two
+    // marks, the same two, but it is not the same expression as 2023 P2 Q13
+    // and a pupil asking for this paper should not be handed that one.
+    basedOn: ['2026 P2 Q12'],
+    marks: 2,
+    route: 'take out the common factor, then use the identity to simplify what is left',
+    method: 'Take the common factor out in front of a bracket, then use $\\sin^2 x + \\cos^2 x = 1$',
+    plan: [
+      'Scan the two terms for the factor they share — a power of sine or cosine, and any number in front of both — and pull it out before a bracket',
+      'Read what is left inside the bracket against $\\sin^{2} x^{\\circ} + \\cos^{2} x^{\\circ} = 1$: swapping that pair for $1$ leaves the factor on its own',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'expression',
+    webTopics: ['Trigonometric identities'],
+    skill: 'Take out the common factor, then use the square identity',
+  },
+  'trig-identities.common-factor': {
+    topic: 'Simplifying Trigonometric Expressions',
+    // **2023 P2 Q13 only since 2026-09-20.** `sin^2 x cos^2 x + cos^4 x`, the
+    // degree-4 shape whose common factor is `cos^2 x`. It shared this id with
+    // 2026 P2 Q12's degree-3 shape and the routine tossed between them, so
+    // each locked paper was the other about half the time. See the id stamp
+    // in n5-trig.ts.
+    difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
+    basedOn: ['2023 P2 Q13'],
     marks: 2,
     route: 'take out the common factor, then use the identity to simplify what is left',
     method: 'Take the common factor out in front of a bracket, then use $\\sin^2 x + \\cos^2 x = 1$',

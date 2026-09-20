@@ -340,8 +340,22 @@ function pyramidHeight(): Q | null {
  * than trusted when the real scheme appears.
  */
 function sphereConeEqual(): Q | null {
-  const r = getRandomInt(3, 12);
-  const rc = getRandomInt(3, 12);
+  /**
+   * **3 to 16, widened 2026-09-20 on the owner's word.**
+   *
+   * The declared range was 3..12 and the drawn set was far smaller, which is
+   * the trap this file has been caught by before: the guard below keeps only
+   * `0.585 rc <= r < rc`, so the two ranges never disagreed openly - they
+   * just produced **25 distinct questions** over 300 draws. Counting the
+   * surviving pairs by hand gives 26, so nothing was being rejected at
+   * random; the geometry was the ceiling, not the declaration.
+   *
+   * Raising both ends lifts it without printing a sphere the exam would not
+   * set: 2026 P2 Q6 is radius 5 with a 12 cm base, and a 16 cm radius is
+   * still an ordinary classroom number.
+   */
+  const r = getRandomInt(3, 16);
+  const rc = getRandomInt(3, 16);
   if (rc === r) return null;
   const v = 4 / 3 * Math.PI * r ** 3;
   const h = v / (Math.PI * rc * rc / 3);
@@ -356,7 +370,9 @@ function sphereConeEqual(): Q | null {
     `<strong>(a)</strong> Calculate the volume of the sphere.`,
     `A cone has the same volume as the sphere. The base of the cone has diameter ${2 * rc} centimetres.`,
     `<strong>(b)</strong> Calculate the height of the cone.`,
-    `Give each answer correct to one decimal place.`,
+    // **No rounding line.** 2026 P2 Q6's scheme prints 523.59... or 524 for
+    // (a) and 13.88... or 14 for (b) - it accepts either without asking.
+    // Owner's word on the 2026 locked-year pass, 2026-09-20.
   ];
   const steps = [
     `<strong>1.</strong> Substitute the radius into the volume of a sphere:` +
@@ -406,7 +422,6 @@ function sphereConeEqual(): Q | null {
     questionLines: [
       prose[0], renderScene(sphereFig.scene), prose[1],
       prose[2], renderScene(coneFig.scene), prose[3],
-      prose[4],
     ],
     boardQuestionLines: [
       `Sphere radius ${r}. A cone of base diameter ${2 * rc} has the same volume. Height?`,

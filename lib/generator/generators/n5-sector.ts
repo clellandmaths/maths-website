@@ -296,7 +296,9 @@ function polygonSegment(): Q | null {
     '',
     `The radius of the circle is ${r} ${unit}.`,
     'Calculate the area of the shaded segment.',
-    'Give your answer correct to one decimal place.',
+    // **No rounding line.** 2026 P2 Q10's last mark is "calculate area of
+    // segment AND state correct units", and the scheme takes 18.48... or
+    // 18.5 - accuracy is never asked for. Owner's word, 2026-09-20.
   ];
   // 2026 P2 Q10 is five marks and has no published scheme, so the five are
   // inferred from 2014 P2 Q13 — the same segment with the angle handed over,
