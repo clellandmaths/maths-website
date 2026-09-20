@@ -215,7 +215,43 @@ function amplitudeAndCycles(): Q | null {
       y: [a, 0, -a],
     },
   }, 'Amplitude and Period of a Trigonometric Graph',
-    !scaled ? 'trig-graphs.amplitude-cycles'
+    /*
+     * **On the counting axis the id follows the function too — 2026-09-20.**
+     *
+     * The scaled pair above were separated on 2026-09-18 because their figures
+     * differ. The counting pair were left sharing one id, and nothing was
+     * measuring what that cost: 2024 P1 Q8 is `y = a cos bx` and 2015 P1 Q6 is
+     * `y = a sin bx`, so each paper's clone was the *other* paper's question
+     * about half the time — measured, 2024 P1 Q8 drew cosine in 48% and 2015
+     * P1 Q6 drew sine in 48%.
+     *
+     * The owner had read and kept this toss on the 2026–2023 closure sheet, so
+     * it sat in `APPROVED_MULTIFORM` and the fidelity audit marked it settled.
+     * What reopened it is the later ruling — *"cos gives cos and sin gives
+     * sin"* — which is general and postdates that approval. Shown side by side
+     * at https://claude.ai/artifact/T9VBXrkAsE2nLdXGrJZNnY the owner said
+     * *"Yes split"*, and then *"Split the function I mean"*.
+     *
+     * **Only the function.** `split` — lettered parts against one instruction —
+     * stays a toss on both ids. That is a wording difference the owner approved
+     * knowingly and with the shape in front of them, and the newer ruling is
+     * about the maths changing kind, not about how the instruction is laid out.
+     * So `APPROVED_MULTIFORM` keeps an entry for each id, at two forms rather
+     * than four.
+     *
+     * Measured after the split, 300 draws each: both ids are 100% their own
+     * function and **both still make 56 distinct questions** — the amplitude,
+     * the cycle count and the two wordings are what carry the spread, and none
+     * of them was narrowed.
+     *
+     * **No randomness moves.** `fn` is already drawn; this only reads it, and
+     * the scaled branch's two ids are chosen exactly as before — which matters
+     * because 2022 P1 Q8 and 2018 P1 Q6 are signed off and are reached through
+     * this same routine by drawing and discarding.
+     */
+    !scaled ? (fn === 'cos'
+      ? 'trig-graphs.amplitude-cycles'                        // 2024 P1 Q8
+      : 'trig-graphs.amplitude-cycles-pre2023')               // 2015 P1 Q6
       : cosineForm ? 'trig-graphs.amplitude-period-cosine'   // 2018 P1 Q6
       : 'trig-graphs.amplitude-period',                      // 2022 P1 Q8
     prose, `$${shown}$ shown. Find $a$ and $b$.`,

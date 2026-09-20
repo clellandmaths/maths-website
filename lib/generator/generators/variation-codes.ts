@@ -199,6 +199,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'functions.find-unknown':                 'rg8f4',
   'functions.evaluate-then-solve':          'vg7vf',
   'functions.evaluate-trig':                'v8v0s',
+  'functions.evaluate-trig-sine-practice':  'f7jr8',
 
   'data.quartiles':                         'mg3gd',
   'data.quartiles-semi':                    'w3sba',
@@ -317,6 +318,7 @@ export const VARIATION_CODES: Record<string, string> = {
 
   'trig.related-angle':                     'cvxl4',
   'trig.related-angle-pre2023':            'b52kx',
+  'trig.related-angle-tan-practice':        '5xahs',
   'trig.order-by-size':                     'hfzd9',
 
   'vectors.magnitude-difference':           'eodv5',

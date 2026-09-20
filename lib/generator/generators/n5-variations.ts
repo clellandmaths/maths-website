@@ -1461,6 +1461,34 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // second time reading the questions brought that down: none of these is
   // gridded either. 2015 P1 Q6 carries a 4, a 0, a -4 and a 360; 2019 P1 Q13
   // carries no numbers at all.
+  'trig-graphs.amplitude-cycles-pre2023': {
+    topic: 'Amplitude and Period of a Trigonometric Graph',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    // 2015 P1 Q6: `y = a sin bx`, the waves counted across a full turn, asked
+    // as one instruction. Materialised from an alias on 2026-09-20 — it keeps
+    // its name because the name is a public identifier in shared worksheet
+    // links. One id served this and 2024 P1 Q8 (`y = a cos bx`), so each
+    // paper's clone was the other's about half the time: measured, this one
+    // drew sine in only 48%.
+    //
+    // **Split on the function only.** Whether the two marks are asked as (a)
+    // and (b) or as one line stays a toss on both ids — a wording difference
+    // the owner approved with the shape in front of them, and one that
+    // `APPROVED_MULTIFORM` still records, at two forms each rather than four.
+    basedOn: ['2015 P1 Q6'],
+    marks: 2,
+    route: 'state a, the amplitude read off the y-axis, then state b, the number of complete waves between 0 and 360. Asked in two parts or in one, and it is a mark each either way',
+    plan: [
+      'Look at how far the curve climbs above the $x$-axis at its highest point, reading that distance off the scale on the $y$-axis — the wave drops the same amount below, and that distance is $a$',
+      'Count how many complete waves are squeezed in along the $x$-axis between $0^{\\circ}$ and $360^{\\circ}$, and that count is $b$',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'integer',
+    webTopics: ['Identify equation of trigonometric graph'],
+    skill: 'Read the amplitude off the axis and count the cycles for b',
+  },
+  // 2024 P1 Q8: `y = a cos bx`. **Cosine only since 2026-09-20** — see the
+  // sibling above and the note at the id stamp in n5-trig-graph.ts.
   'trig-graphs.amplitude-cycles': {
     topic: 'Amplitude and Period of a Trigonometric Graph',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
@@ -2654,9 +2682,28 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Function notation'],
     skill: 'Evaluate f at a value, then solve f(a) = b for a',
   },
+  'functions.evaluate-trig-sine-practice': {
+    topic: 'Evaluating a Trigonometric Function',
+    // No paper stands behind this. 2026 P1 Q13 is a cosine and is the only
+    // paper question on this routine, but a worksheet built from the topic
+    // should still meet the sine form — the access the owner made the
+    // condition of splitting. Declared rather than left carrying the exam id.
+    //
+    // 32 distinct questions over 300 draws, the same as its cosine sibling.
+    difficulty: 'skill', strategy: 'curated-pool', source: 'zeta',
+    basedOn: [],
+    answerShape: 'integer',
+    webTopics: ['Function notation', 'sin/cos/tan of related angles'],
+    skill: 'Evaluate a trigonometric function at a quadrantal angle',
+  },
   // Function notation outside, a related angle inside. The paper tags it as
   // both, and it is the second that carries the question: substituting is one
   // line, and then cos 180 has to be known cold in a non-calculator paper.
+  //
+  // **Cosine only since 2026-09-20.** The toss between sine and cosine handed a
+  // pupil a sine question under this paper's name in 58% of draws. Approved as
+  // two forms on the closure sheet, reopened under the later *"cos gives cos"*
+  // ruling; the owner: *"Split by function"*.
   'functions.evaluate-trig': {
     topic: 'Evaluating a Trigonometric Function',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
@@ -4162,9 +4209,47 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // One mark and nothing to calculate: the value is handed over so that the
   // only difficulty is which quadrant the angle lands in and what that does to
   // the sign.
+  //
+  // **Three ids since 2026-09-20, one per function.** They shared a routine and
+  // a three-way toss, so 2023 P1 Q11 — a sine question — came out as a tangent
+  // question in 45% of draws and its own shape in 32%. See the note at the id
+  // stamp in n5-trig.ts for the ruling that reopened it.
+  'trig.related-angle-pre2023': {
+    topic: 'The Value at a Related Angle',
+    difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
+    // 2018 P1 Q12: `cos 60 = 0.5`, state `cos 240`. Materialised from an alias,
+    // keeping its name, which is a public identifier in shared worksheet links.
+    basedOn: ['2018 P1 Q12'],
+    marks: 1,
+    route: 'state the value - one mark, and the scheme asks for nothing else',
+    method: 'Find the related acute angle, recall its exact value, then give it the sign that quadrant requires',
+    plan: [
+      'Write your angle as a distance from $180$ or from $360$ — that tells you the related acute angle and which quadrant you have landed in',
+      'The size of the value is unchanged from the one you were given, so keep that number and attach the sign that function carries in that quadrant, which a CAST diagram settles for you',
+    ],
+    planMarks: [0, 1],
+    answerShape: 'rounded',
+    webTopics: ['sin/cos/tan of related angles'],
+    skill: 'Use the quadrant to put the right sign on a known trigonometric value',
+  },
+  'trig.related-angle-tan-practice': {
+    topic: 'The Value at a Related Angle',
+    // No paper stands behind this. Both papers on this routine are a sine and
+    // a cosine, but the tangent form is a third of what the topic can ask and
+    // dropping it would take that third off any worksheet built by topic — the
+    // access the owner made the condition of splitting at all. Declared rather
+    // than left carrying an exam id, which is what `mix` refuses.
+    difficulty: 'skill', strategy: 'curated-pool', source: 'zeta',
+    basedOn: [],
+    answerShape: 'rounded',
+    webTopics: ['sin/cos/tan of related angles'],
+    skill: 'Use the quadrant to put the right sign on a known trigonometric value',
+  },
   'trig.related-angle': {
     topic: 'The Value at a Related Angle',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
+    // 2023 P1 Q11: `sin 30 = 0.5`, state `sin 330`. **Sine only since
+    // 2026-09-20** — the owner, on the approved-tosses sheet: *"Make it sine"*.
     basedOn: ['2023 P1 Q11'],
     marks: 1,
     route: 'state the value - one mark, and the scheme asks for nothing else',
@@ -5482,7 +5567,11 @@ const ALIASES: Record<string, {
   'quadratics.complete-square-pre2023': { aliasOf: 'quadratics.complete-square', basedOn: ['2014 P1 Q3', '2016 P2 Q9', '2019 P2 Q10'] },
   'straight-line.best-fit-pre2023': { aliasOf: 'straight-line.best-fit', basedOn: ['2014 P1 Q6', '2016 P1 Q5'] },
   'straight-line.best-fit-grid-pre2023': { aliasOf: 'straight-line.best-fit-grid', basedOn: ['2019 P1 Q6'] },
-  'trig-graphs.amplitude-cycles-pre2023': { aliasOf: 'trig-graphs.amplitude-cycles', basedOn: ['2015 P1 Q6'] },
+  // 'trig-graphs.amplitude-cycles-pre2023' MATERIALISED 2026-09-20 — it draws
+  // the sine now and its target draws the cosine, so it no longer shares its
+  // target's output. The entry is above the aliases; it keeps its name because
+  // the name is a public identifier in shared worksheet links.
+
   // MATERIALISED 2026-09-20 - see the entry above the aliases. It keeps its
   // name because the name is a public identifier in shared worksheet links.
 
@@ -5512,7 +5601,9 @@ const ALIASES: Record<string, {
   'sci-notation.calculate-pre2023': { aliasOf: 'sci-notation.calculate', basedOn: ['2016 P2 Q2', '2019 P2 Q4'] },
   'cosine-rule.side-exact-pre2023': { aliasOf: 'cosine-rule.side-exact', basedOn: ['2018 P1 Q10'] },
   'volume.sphere-pre2023': { aliasOf: 'volume.sphere', basedOn: ['2018 P2 Q7'] },
-  'trig.related-angle-pre2023': { aliasOf: 'trig.related-angle', basedOn: ['2018 P1 Q12'] },
+  // 'trig.related-angle-pre2023' MATERIALISED 2026-09-20 — it draws the cosine
+  // and its target draws the sine. Entry above the aliases; name kept.
+
   'pythagoras.converse-pre2023': { aliasOf: 'pythagoras.converse', basedOn: ['2014 P2 Q6'] },
   'trig-diagram.cosine-side-pre2023': { aliasOf: 'trig-diagram.cosine-side', basedOn: ['2015 P2 Q3', '2017 P2 Q3'] },
   'trig-diagram.sine-angle-pre2023': { aliasOf: 'trig-diagram.sine-angle', basedOn: ['2016 P2 Q8'] },

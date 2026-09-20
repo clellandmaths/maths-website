@@ -269,7 +269,28 @@ function evaluateTrig(): Q {
     return {
       subTopic: 'Evaluating a Trigonometric Function',
       difficulty: 'exam',
-      variationId: 'functions.evaluate-trig',
+      /*
+       * **The id follows the ratio — 2026-09-20.**
+       *
+       * 2026 P1 Q13 is `f(x) = 5 cos 2x`, and the second of its two marks is
+       * knowing `cos 180 = -1` cold. The toss handed a pupil a sine question
+       * under that paper's name in 58% of draws — measured, cosine came up in
+       * 42%.
+       *
+       * Approved as two forms on the 2026–2023 closure sheet, and reopened
+       * under the later *"cos gives cos and sin gives sin"* ruling. The owner,
+       * at https://claude.ai/artifact/T9VBXrkAsE2nLdXGrJZNnY: *"Split by
+       * function"*.
+       *
+       * The sine form has no paper behind it and is declared rather than
+       * dropped, so a worksheet built from this topic still meets both.
+       * Measured after the split, 300 draws each: both sides make 32 distinct
+       * questions, so nothing was lost by narrowing.
+       *
+       * `ratio` is already drawn; reading it costs no randomness.
+       */
+      variationId: ratio === 'cos' ? 'functions.evaluate-trig'   // 2026 P1 Q13
+        : 'functions.evaluate-trig-sine-practice',               // no paper
       questionLines: [
         `Given that $${fn}(x) = ${k}\\,\\${ratio}\\,${inner}x^{\\circ}$, evaluate $${fn}(${at})$.`,
       ],

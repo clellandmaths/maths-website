@@ -633,7 +633,42 @@ function relatedAngle(): Q {
   return {
     subTopic: 'The Value at a Related Angle',
     difficulty: 'exam',
-    variationId: 'trig.related-angle',
+    /*
+     * **The id follows the function — 2026-09-20.**
+     *
+     * One id served a three-way toss, and the two papers it carries want
+     * different corners of it:
+     *
+     *   2023 P1 Q11   `sin 30 = 0.5`, state `sin 330`   — signed off
+     *   2018 P1 Q12   `cos 60 = 0.5`, state `cos 240`   — unreviewed
+     *
+     * Measured over 300 draws: 2023 P1 Q11 was a sine question in 32% of them
+     * and a *tangent* question in 45%, so its clone was more often a question
+     * its own paper does not ask than the one it does. 2018 P1 Q12 got cosine
+     * in 35%.
+     *
+     * The owner had approved this as three forms on the 2026–2023 closure
+     * sheet. It is reopened under the later ruling — *"cos gives cos and sin
+     * gives sin"* — which is general and came after. On the sheet at
+     * https://claude.ai/artifact/T9VBXrkAsE2nLdXGrJZNnY: *"Make it sine"* for
+     * 2023 P1 Q11, *"Yes split"* for 2018 P1 Q12.
+     *
+     * The tangent form has no paper behind it, so it is declared rather than
+     * dropped: `trig.related-angle-tan-practice`. Dropping it would take a
+     * third of this topic's questions off a worksheet built by topic, and the
+     * owner made keeping that access the condition of splitting at all.
+     *
+     * **Nothing here is retried, so no randomness moves.** `base` is a single
+     * `pick` and the function comes with it.
+     *
+     * **This leaves three distinct questions per id** — one base angle and
+     * three quadrants. The split did not cause that; it made it visible, the
+     * same way 2019 P1 Q7's split did. Widening is the owner's call and the
+     * plan is in `docs/verdicts/related-angle-widening.md`.
+     */
+    variationId: fn === 'sin' ? 'trig.related-angle'              // 2023 P1 Q11
+      : fn === 'cos' ? 'trig.related-angle-pre2023'               // 2018 P1 Q12
+      : 'trig.related-angle-tan-practice',                        // no paper
     questionLines: [
       `Given that $\\${fn} ${base.deg}^{\\circ} = ${value}$, state the value of $\\${fn} ${angle}^{\\circ}$.`,
     ],
