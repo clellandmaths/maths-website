@@ -85,6 +85,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'indices.root-as-power':                  'nz5nj',
 
   'percentages.compound':                   'ndvrl',
+  'percentages.compound-pre2022':          'r9147',
   'percentages.compound-pre2023':          'h9ff8',
   'percentages.compound-3sf':               'wgwz0',
   'percentages.compound-between-years':     'frk33',
@@ -103,6 +104,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'expanding.monomial':                     '48vij',
   'expanding.two-binomials':                '8ifho',
   'expanding.binomial-trinomial':           'il2ma',
+  'expanding.binomial-trinomial-pre2022':  '3r86w',
   'expanding.binomial-trinomial-pre2023':  'dqtvv',
   'expanding.product-plus':                 'nqpad',
 
@@ -185,6 +187,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'simeq.solve-given-pre2023':             'bjesy',
   'simeq.intersection':                     '80x6l',
   'simeq.construct-solve':                  'x1gsz',
+  'simeq.construct-solve-pre2022':         'cgc3d',
   'simeq.construct-combine':                'sqtw9',
 
   'functions.evaluate':                     'f9ts3',
@@ -199,6 +202,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'data.mean-sd-consistency':               '7elwh',
   'data.mean-sd':                           '73bao',
   'data.mean-sd-compare':                   'k88uu',
+  'data.mean-sd-compare-pre2022':          'rg3rw',
   'data.mean-sd-compare-pre2023':          '1fpgv',
   'data.sd-surd':                           'briyn',
   'data.sd-find-a':                         '90h2w',
@@ -312,6 +316,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'vectors.magnitude-difference':           'eodv5',
 
   'pythagoras.chord':                       'i0hsz',
+  'pythagoras.chord-pre2022':              'wp9mx',
   'pythagoras.chord-whole':                 'vn44x',
   'pythagoras.chord-cut':                   '5zaga',
   'quadratics.parabola-scale-k':            '72pn9',
@@ -352,6 +357,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'trig-diagram.sine-angle':                '43fww',
   'trig-diagram.sine-angle-pre2023':       'tg72h',
   'trig-diagram.area':                      'toch6',
+  'trig-diagram.area-pre2022':             'jrc4w',
 
   'bearings.two-bearings':                  'af93i',
   'bearings.three-sides-angle':             '9dj1r',

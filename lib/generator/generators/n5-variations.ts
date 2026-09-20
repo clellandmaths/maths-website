@@ -2426,7 +2426,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // part (c) asks for the total weight of six stacks of slabs and five of
     // blocks - a quantity neither equation mentions - where all four papers
     // left here stop at the two values themselves.
-    basedOn: ['2014 P2 Q3', '2016 P1 Q4', '2019 P1 Q8', '2022 P2 Q4'],
+    basedOn: ['2022 P2 Q4'],
     marks: 6,
     route: '1 + 1 + 4 - construct an equation for each situation, then correct scaling, a value, the other value, and the answer communicated in its units',
     method: 'Write an equation for each situation, multiply one of them so a letter matches, eliminate that letter for the first value, substitute back for the second, then give both answers in their units',
@@ -4148,7 +4148,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // the context is free to change.
     // Two papers, one family: an open arc standing on its chord, with the
     // radius drawn solid. `-whole` and `-cut` are the other two.
-    basedOn: ['2016 P2 Q15', '2022 P2 Q8'],
+    basedOn: ['2022 P2 Q8'],
     marks: 4,
     route: 'marshal the facts and recognise the right-angled triangle, then a consistent Pythagoras statement, then calculate the third side, then the length asked for',
     method: 'Drop a perpendicular from the centre to the chord to make a right-angled triangle, write Pythagoras down for it, work out the third side, then add or subtract the radius',
@@ -4578,7 +4578,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'trig-diagram.area': {
     topic: 'Area of a Triangle from a Diagram',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2019 P2 Q3', '2022 P2 Q6'],
+    basedOn: ['2022 P2 Q6'],
     marks: 2,
     route: 'correct substitution into the area of a triangle formula, then calculate the area',
     method: 'Substitute the two sides and the angle between them into $\\frac{1}{2}ab\\sin C$, then work the area out',
@@ -5385,13 +5385,13 @@ const ALIASES: Record<string, {
   'fractions.multiply-mixed-pre2023': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2014 P1 Q1', '2019 P1 Q2'] },
   'fractions.divide-mixed-pre2023': { aliasOf: 'fractions.divide-mixed', basedOn: ['2017 P1 Q3'] },
   'surds.rationalise-pre2023': { aliasOf: 'surds.rationalise', basedOn: ['2018 P1 Q11'] },
-  'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2022 P2 Q2', '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'] },
+  'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2022 P2 Q2'] },
   'percentages.compound-between-years-pre2023': { aliasOf: 'percentages.compound-between-years', basedOn: ['2019 P2 Q1'] },
   // 2022 P1 Q10 left this alias for `percentages.reverse-non-calculator`:
   // it is a Paper 1 question and needs a divisor a pupil can divide by.
   'percentages.reverse-pre2023': { aliasOf: 'percentages.reverse', basedOn: ['2015 P2 Q8', '2017 P2 Q5'] },
   'percentages.part-of-whole-pre2023': { aliasOf: 'percentages.part-of-whole', basedOn: ['2014 P1 Q9', '2018 P2 Q11'] },
-  'expanding.binomial-trinomial-pre2023': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2022 P2 Q1', '2015 P1 Q4', '2017 P1 Q4', '2019 P1 Q3'] },
+  'expanding.binomial-trinomial-pre2023': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2022 P2 Q1'] },
   'quadratics.complete-square-pre2023': { aliasOf: 'quadratics.complete-square', basedOn: ['2014 P1 Q3', '2016 P2 Q9', '2019 P2 Q10'] },
   'straight-line.best-fit-pre2023': { aliasOf: 'straight-line.best-fit', basedOn: ['2014 P1 Q6', '2016 P1 Q5'] },
   'straight-line.best-fit-grid-pre2023': { aliasOf: 'straight-line.best-fit-grid', basedOn: ['2019 P1 Q6'] },
@@ -5405,7 +5405,7 @@ const ALIASES: Record<string, {
   'change-subject.fraction-coefficient-pre2023': { aliasOf: 'change-subject.fraction-coefficient', basedOn: ['2014 P2 Q11', '2019 P1 Q7'] },
   'inequalities.brackets-pre2023': { aliasOf: 'inequalities.brackets', basedOn: ['2015 P1 Q2', '2017 P1 Q8', '2018 P2 Q4'] },
   'simeq.solve-given-pre2023': { aliasOf: 'simeq.solve-given', basedOn: ['2015 P1 Q11', '2018 P1 Q3'] },
-  'data.mean-sd-compare-pre2023': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6', '2018 P2 Q5', '2022 P2 Q5'] },
+  'data.mean-sd-compare-pre2023': { aliasOf: 'data.mean-sd-compare', basedOn: ['2022 P2 Q5'] },
   // 2022 P2 Q9 moved to `trig-equations.solve-constant`: the routine printed
   // `+ 0` in one draw in twenty and the fix could not be made in place,
   // because `lhs` is also printed by two signed-off questions. 2018 P2 Q8
@@ -5428,6 +5428,12 @@ const ALIASES: Record<string, {
   'fractions.brackets-pre2022p1': { aliasOf: 'fractions.brackets', basedOn: ['2016 P1 Q2'] },
   'indices.negative-power-pre2022p1': { aliasOf: 'indices.negative-power', basedOn: ['2016 P2 Q10'] },
   'straight-line.equation-two-points-pre2022p1': { aliasOf: 'straight-line.equation-two-points', basedOn: ['2015 P1 Q8'] },
+  'simeq.construct-solve-pre2022': { aliasOf: 'simeq.construct-solve', basedOn: ['2014 P2 Q3', '2016 P1 Q4', '2019 P1 Q8'] },
+  'pythagoras.chord-pre2022': { aliasOf: 'pythagoras.chord', basedOn: ['2016 P2 Q15'] },
+  'trig-diagram.area-pre2022': { aliasOf: 'trig-diagram.area', basedOn: ['2019 P2 Q3'] },
+  'percentages.compound-pre2022': { aliasOf: 'percentages.compound', basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'] },
+  'expanding.binomial-trinomial-pre2022': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2015 P1 Q4', '2017 P1 Q4', '2019 P1 Q3'] },
+  'data.mean-sd-compare-pre2022': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6', '2018 P2 Q5'] },
   // lock-year: aliases end
 };
 
