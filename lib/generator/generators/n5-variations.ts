@@ -2419,6 +2419,27 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // The last mark is for communicating the answer with its units, and 2022
   // P2 Q4 note 2 requires both quantities to be named. The worked answer ends
   // with that sentence rather than a bare pair of numbers.
+  'simeq.construct-solve-p1': {
+    topic: 'Constructing Simultaneous Equations without a Calculator',
+    difficulty: 'exam', strategy: 'answer-first', source: 'paper',
+    // 2019 P1 Q8: 7 bags of cement and 3 of gravel weigh 215 kg, 5 and 4 weigh
+    // 200 kg, answering 20 and 25. Non-calculator, and whole throughout. The
+    // shared generator drew money contexts - pence, two decimal places - in
+    // most draws, which is a different exercise by hand. This one draws only
+    // the whole and tenth units, both of which a real Paper 1 question uses.
+    basedOn: ['2019 P1 Q8'],
+    marks: 6,
+    route: 'construct each equation, scale them to match, find one value, find the other, and state both with units',
+    plan: [
+      'Turn each sentence into an equation, using the letters the question names for the two unknowns',
+      'Multiply one or both equations so that one letter has the same number in front of it in both, then subtract to remove it',
+      'Solve for the letter that is left, put it back into either equation to get the other, and state both with their units',
+    ],
+    planMarks: [2, 1, 3],
+    answerShape: 'rounded',
+    webTopics: ['Simultaneous equations'],
+    skill: 'Build two equations from a story and solve them without a calculator',
+  },
   'simeq.construct-solve': {
     topic: 'Constructing Simultaneous Equations',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
@@ -5428,7 +5449,11 @@ const ALIASES: Record<string, {
   'fractions.brackets-pre2022p1': { aliasOf: 'fractions.brackets', basedOn: ['2016 P1 Q2'] },
   'indices.negative-power-pre2022p1': { aliasOf: 'indices.negative-power', basedOn: ['2016 P2 Q10'] },
   'straight-line.equation-two-points-pre2022p1': { aliasOf: 'straight-line.equation-two-points', basedOn: ['2015 P1 Q8'] },
-  'simeq.construct-solve-pre2022': { aliasOf: 'simeq.construct-solve', basedOn: ['2014 P2 Q3', '2016 P1 Q4', '2019 P1 Q8'] },
+  // 2019 P1 Q8 moved to `simeq.construct-solve-p1`: it is non-calculator and
+  // this put pence in the question in 145 draws of 200. 2016 P1 Q4 is also
+  // Paper 1 and belongs there too, but it is unreviewed, so it stays until
+  // 2016 is looked at - see docs/verdicts/2019-p1.md.
+  'simeq.construct-solve-pre2022': { aliasOf: 'simeq.construct-solve', basedOn: ['2014 P2 Q3', '2016 P1 Q4'] },
   'pythagoras.chord-pre2022': { aliasOf: 'pythagoras.chord', basedOn: ['2016 P2 Q15'] },
   'trig-diagram.area-pre2022': { aliasOf: 'trig-diagram.area', basedOn: ['2019 P2 Q3'] },
   'percentages.compound-pre2022': { aliasOf: 'percentages.compound', basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'] },

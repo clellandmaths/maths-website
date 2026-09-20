@@ -244,9 +244,37 @@ function amount(v: number, kind: TwoItemContext['kind']): string {
  * six marks map onto the other five papers' scheme exactly except for what the
  * last one buys.
  */
-function constructSolve(combine = false): Q {
+/**
+ * **`paper1` keeps the money contexts out, and the reason is not "no
+ * decimals".**
+ *
+ * 2019 P1 Q8 is a non-calculator paper and its numbers are whole throughout -
+ * 215 kg and 200 kg, answering 20 and 25. The clone put a decimal in the
+ * question in 145 draws of 200, because most contexts here are money:
+ * *"5 bags of compost and 6 trays of seedlings, total 27.55"*, answering 3.35.
+ * Solving that pair by hand is a different exercise from the one the paper
+ * sets.
+ *
+ * **But the rule is not that Paper 1 has no decimals.** 2016 P1 Q4 is also
+ * non-calculator and reads 9.6 and 13.3 square metres, answering 1.5 and 2.2.
+ * The board sets tenths by hand quite happily. What it does not set is
+ * *hundredths*: money carries pence, and `u2` is drawn in steps of 5p, so the
+ * clone's pairs need two-decimal arithmetic all the way through.
+ *
+ * So the line is drawn at the unit, not at the decimal point. `kg` is whole
+ * and `m2` is tenths - both attested by a real Paper 1 question - and `money`
+ * is out. That leaves 10 of the 22 contexts, which is enough to keep the pool
+ * healthy.
+ *
+ * Opt-in from a subTopic of its own, so `simeq.construct-solve` (2022 P2 Q4,
+ * **signed off**, and a calculator paper where 4.25 is exactly right) does not
+ * move.
+ */
+function constructSolve(combine = false, paper1 = false): Q {
   for (let tries = 0; tries < 300; tries++) {
-    const ctx = pick(TWO_ITEM_CONTEXTS);
+    const ctx = pick(paper1
+      ? TWO_ITEM_CONTEXTS.filter(c => c.kind !== 'money')
+      : TWO_ITEM_CONTEXTS);
     const [v1, v2] = ctx.vars;
     if (v1 === v2) continue;
 
@@ -285,9 +313,11 @@ function constructSolve(combine = false): Q {
     const together = n1 * u1 + n2 * u2;
 
     return {
-      subTopic: combine ? 'Simultaneous Equations Used Again' : 'Constructing Simultaneous Equations',
+      subTopic: paper1 ? 'Constructing Simultaneous Equations without a Calculator'
+        : combine ? 'Simultaneous Equations Used Again' : 'Constructing Simultaneous Equations',
       difficulty: 'exam',
-      variationId: combine ? 'simeq.construct-combine' : 'simeq.construct-solve',
+      variationId: paper1 ? 'simeq.construct-solve-p1'
+        : combine ? 'simeq.construct-combine' : 'simeq.construct-solve',
       questionLines: [
         `${ctx.people[0]} ${ctx.verb} ${q1} ${ctx.plural[0]} and ${q2} ${ctx.plural[1]}. ${ctx.total} ${amount(t1, ctx.kind)}.`,
         `(a) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
@@ -326,5 +356,7 @@ export const SIMEQ_GENERATORS: Record<string, () => Q> = {
   'Solving Simultaneous Equations': solveGiven,
   'Intersection of Two Lines': intersection,
   'Constructing Simultaneous Equations': () => constructSolve(false),
+  // 2019 P1 Q8: the same question without a calculator, so no money contexts.
+  'Constructing Simultaneous Equations without a Calculator': () => constructSolve(false, true),
   'Simultaneous Equations Used Again': () => constructSolve(true),
 };

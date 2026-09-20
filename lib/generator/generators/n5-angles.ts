@@ -148,8 +148,48 @@ export function polygonDiameterQuestion(): Q {
 
     const names = LETTERS.slice(0, n).split('');
     const far = LETTERS[n];
+    /**
+     * **The diameter stands upright, because that is what makes it readable.**
+     *
+     * `V[0]` sits at `start` and the far point at `start + 180`, so AF is a
+     * diameter at any rotation - but only at 90 or 270 is it *vertical*, and
+     * only then is the whole figure symmetric about it. At 90 the vertices
+     * either side pair off (for a pentagon, 18 with 162 and 234 with 306), and
+     * the eye follows the chords straight away.
+     *
+     * This drew `getRandomInt(0, 11) * 30`, so ten rotations in twelve tilted
+     * it. The owner, on the 2019 P1 Q11 card, seeing an upright decagon beside
+     * a tilted pentagon: *"Agree with your recommendation."* Nothing measured
+     * it; it was found by rendering two draws and looking at them, and the
+     * tilted one is legal, correct and a tangle of crossing chords.
+     *
+     * **It is the pentagon that cannot be rotated, not the figure.** The first
+     * pass held every draw upright, and `diagrams` failed it: 5 and 9 sides
+     * times two uprights is four pictures in six hundred runs, against a floor
+     * of eight. The first diagnosis was also sloppy - the tangle was found on
+     * a *rotated pentagon* and the clean one was an *upright nonagon*, two
+     * things changed at once, and rotation took the blame.
+     *
+     * Rendered one at a time, the answer is the shape. A rotated **pentagon**
+     * is a tangle: five vertices means long chords that cross the diameter at
+     * shallow angles. A rotated **nonagon** reads perfectly well, because its
+     * chords are short and meet at open angles.
+     *
+     * So the pentagon stands upright - which is also 2019 P1 Q11's own figure,
+     * A at the top and F at the bottom - and the nonagon keeps the full turn.
+     * Two pictures plus twelve is fourteen, comfortably over the floor, and
+     * the paper's own shape is always drawn the paper's own way.
+     *
+     * Rotation is explicitly not a thing to *split* for, and this is not a
+     * split: `polygonDiameterQuestion` is its own dispatch entry with its own
+     * draw loop, serving `angles.polygon-diameter` and nothing else, so no
+     * other question can be reached from here.
+     */
+    const start = n === 5
+      ? (getRandomInt(0, 1) === 0 ? 90 : 270)
+      : getRandomInt(0, 11) * 30;
     const fig = polygonDiameter({
-      sides: n, radius: 1, start: getRandomInt(0, 11) * 30,
+      sides: n, radius: 1, start,
       names, far, centre: 'O',
     });
     if (!fig) continue;

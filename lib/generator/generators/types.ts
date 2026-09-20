@@ -193,6 +193,7 @@ export type Topic =
   | "Solving Simultaneous Equations"
   | "Intersection of Two Lines"
   | "Constructing Simultaneous Equations"
+  | "Constructing Simultaneous Equations without a Calculator"
   | "Simultaneous Equations Used Again"
   | "Evaluating a Function"
   | "Finding an Unknown in a Function"
@@ -562,6 +563,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Solving Simultaneous Equations",
     "Intersection of Two Lines",
     "Constructing Simultaneous Equations",
+    "Constructing Simultaneous Equations without a Calculator",
     "Simultaneous Equations Used Again",
   ],
   "N5 Functions": [

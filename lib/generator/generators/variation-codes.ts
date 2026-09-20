@@ -187,6 +187,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'simeq.solve-given-pre2023':             'bjesy',
   'simeq.intersection':                     '80x6l',
   'simeq.construct-solve':                  'x1gsz',
+  'simeq.construct-solve-p1':               '3cohp',
   'simeq.construct-solve-pre2022':         'cgc3d',
   'simeq.construct-combine':                'sqtw9',
 
