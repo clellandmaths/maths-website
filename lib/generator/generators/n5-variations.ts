@@ -2349,8 +2349,22 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   },
   // `P = (1/3)mn - r` - 2023 P2 Q7, the one with no square and a bare
   // constant. See the note above `plain` in n5-formulae.ts.
-  'change-subject.fraction-coefficient-bracket': {
+  'change-subject.fraction-coefficient-bracket-practice': {
     topic: 'Changing the Subject with a Fractional Coefficient',
+    // No paper stands behind this. The shared loop makes the bracket shape a
+    // third of the time and cannot stop without moving 2023 P2 Q7 and 2025 P2
+    // Q9, which share its random stream. Declared rather than left carrying
+    // the exam id, which `mix` refused.
+    difficulty: 'skill', strategy: 'input-first', source: 'zeta',
+    basedOn: [],
+    answerShape: 'expression',
+    webTopics: ['Changing the subject of a formula'],
+    skill: 'Rearrange a formula whose subject sits inside a bracket',
+  },
+  'change-subject.fraction-coefficient-bracket': {
+    // Its own topic since 2026-09-20, which is what gives it its own draw loop
+    // and lets the denominator run 2 to 30. See n5-formulae.ts.
+    topic: 'Changing the Subject Inside a Bracket',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     // 2019 P1 Q7: `A = (1/2)h(x + y)`, make x the subject. The subject sits
     // inside a bracket, so the three marks are multiply by 2, divide by h,
@@ -2734,7 +2748,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   'data.median-siqr-compare': {
     topic: 'Comparing Median and Interquartile Range',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2015 P1 Q10', '2019 P1 Q5'],
+    basedOn: ['2019 P1 Q5'],
     marks: 5,
     route: '3 + 2 - the median, the quartiles, the semi-interquartile range, then a valid comparison of the medians and one of the semi-interquartile ranges. Each comparison must name the quantity and the group',
     method: 'Find the median and the two quartiles, halve their difference for the semi-interquartile range, then write one sentence comparing the medians and another comparing the spreads',
@@ -5455,7 +5469,7 @@ const ALIASES: Record<string, {
 }> = {
   // lock-year: aliases begin
   'fractions.subtract-mixed-pre2023': { aliasOf: 'fractions.subtract-mixed', basedOn: ['2015 P1 Q1'] },
-  'fractions.multiply-mixed-pre2023': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2014 P1 Q1', '2019 P1 Q2'] },
+  'fractions.multiply-mixed-pre2023': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2019 P1 Q2'] },
   'fractions.divide-mixed-pre2023': { aliasOf: 'fractions.divide-mixed', basedOn: ['2017 P1 Q3'] },
   'surds.rationalise-pre2023': { aliasOf: 'surds.rationalise', basedOn: ['2018 P1 Q11'] },
   'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2022 P2 Q2'] },
@@ -5516,8 +5530,11 @@ const ALIASES: Record<string, {
   'pythagoras.chord-pre2022': { aliasOf: 'pythagoras.chord', basedOn: ['2016 P2 Q15'] },
   'trig-diagram.area-pre2022': { aliasOf: 'trig-diagram.area', basedOn: ['2019 P2 Q3'] },
   'percentages.compound-pre2022': { aliasOf: 'percentages.compound', basedOn: ['2016 P2 Q1', '2018 P2 Q1', '2014 P2 Q1', '2015 P2 Q1', '2017 P2 Q2'] },
-  'expanding.binomial-trinomial-pre2022': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2015 P1 Q4', '2017 P1 Q4', '2019 P1 Q3'] },
+  'expanding.binomial-trinomial-pre2022': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2019 P1 Q3'] },
   'data.mean-sd-compare-pre2022': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6', '2018 P2 Q5'] },
+  'data.median-siqr-compare-pre2019p1': { aliasOf: 'data.median-siqr-compare', basedOn: ['2015 P1 Q10'] },
+  'fractions.multiply-mixed-pre2019p1': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2014 P1 Q1'] },
+  'expanding.binomial-trinomial-pre2019p1': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2015 P1 Q4', '2017 P1 Q4'] },
   // lock-year: aliases end
 };
 

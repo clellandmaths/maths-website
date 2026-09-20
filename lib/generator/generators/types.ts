@@ -188,6 +188,7 @@ export type Topic =
   | "Changing the Subject"
   | "Changing the Subject with Roots"
   | "Changing the Subject with a Fractional Coefficient"
+  | "Changing the Subject Inside a Bracket"
   | "Solving Inequalities"
   | "Inequalities with Fractions"
   | "Solving Simultaneous Equations"
@@ -557,6 +558,7 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Changing the Subject",
     "Changing the Subject with Roots",
     "Changing the Subject with a Fractional Coefficient",
+    "Changing the Subject Inside a Bracket",
     "Solving Inequalities",
     "Inequalities with Fractions",
   ],

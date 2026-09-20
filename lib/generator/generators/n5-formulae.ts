@@ -304,9 +304,33 @@ function subjectWithRoot(): Q {
 //   V = (1/d)·S·M ± T        ->  S = d(V ∓ T)/M     [2014, 2023, 2025]
 //   V = (1/d)·M·(S + T)      ->  S = dV/M - T       [2019]
 
-function subjectFractionCoefficient(): Q {
-  const bracketed = getRandomInt(1, 3) === 1;   // the 2019 shape, 1 of the 4
-  const d = pick([2, 3, 4]);
+/**
+ * **`bracketOnly` is 2019 P1 Q7's own loop, and it exists to widen `d`.**
+ *
+ * Splitting the bracket shape onto its own id showed it made three distinct
+ * questions: `questionKey` normalises letters, so the only real variable was
+ * the divisor, one of 2, 3, 4.
+ *
+ * The owner, 2026-09-20: *"we can vary the denominator of the fraction to be
+ * almost any number as long as the numerator stays as 1"*, and then, on the
+ * denominator specifically: *"keep it to positive numbers only ... and widen
+ * it so it can take any number from 2 to 30."*
+ *
+ * That cannot be done in the shared loop. `d` is drawn **before** the branch
+ * and used by the squared shape too, so widening its pool changes what the
+ * squared shape draws - and that is 2023 P2 Q7 and 2025 P2 Q9, both signed
+ * off. Drawing a second `d` inside the branch is no better: the extra random
+ * shifts the stream for every discarded bracket draw, which moves the same
+ * two papers. Both were tested rather than assumed; `frozen` named them.
+ *
+ * So the bracket shape gets a **subTopic of its own**, and therefore its own
+ * draw loop, where `d` can be drawn from whatever pool suits it.
+ */
+function subjectFractionCoefficient(bracketOnly = false): Q {
+  const bracketed = bracketOnly || getRandomInt(1, 3) === 1;   // the 2019 shape, 1 of the 4
+  // 2 to 30 and always positive in its own loop. The shared loop keeps the
+  // pool it always had, so the squared and plain shapes draw what they drew.
+  const d = bracketOnly ? getRandomInt(2, 30) : pick([2, 3, 4]);
   const [v, subj, mLetter, tLetter] = letters(4, true);
   /**
    * **Plain, or squared with a coefficient — two of the papers, two shapes.**
@@ -380,9 +404,31 @@ function subjectFractionCoefficient(): Q {
      * separation for the two shapes that were left sharing.
      */
     return {
-      subTopic: 'Changing the Subject with a Fractional Coefficient',
-      difficulty: 'exam',
-      variationId: 'change-subject.fraction-coefficient-bracket',
+      /**
+       * **Two ids for one shape, because two loops produce it.**
+       *
+       * 2019 P1 Q7's own loop makes the exam variation, with the wide
+       * denominator. The *shared* loop still makes this shape a third of the
+       * time and cannot stop without moving the questions that share its
+       * random stream - tested, and it moves 2023 P2 Q7 and 2025 P2 Q9, both
+       * signed off.
+       *
+       * Leaving those draws stamped with the exam id was the first attempt and
+       * `mix` refused it, correctly: 142 draws in 400 of the shared topic came
+       * out carrying an id the registry files under a different topic. An
+       * undeclared variation is exactly what that check is for, and the reply
+       * to it is to declare, not to suppress.
+       *
+       * So the shared loop's copies are named for what they are - a practice
+       * variation with no paper behind it, in the topic that produces them.
+       */
+      subTopic: bracketOnly
+        ? 'Changing the Subject Inside a Bracket'
+        : 'Changing the Subject with a Fractional Coefficient',
+      difficulty: bracketOnly ? 'exam' : 'skill',
+      variationId: bracketOnly
+        ? 'change-subject.fraction-coefficient-bracket'
+        : 'change-subject.fraction-coefficient-bracket-practice',
       questionLines: [
         `A formula is given by $${v} = ${frac('1', `${d}`)}${mLetter}(${subj} ${inner} ${tLetter})$.`,
         `Make $${subj}$ the subject of the formula.`,
@@ -598,6 +644,9 @@ export const FORMULA_GENERATORS: Record<string, () => Q> = {
   'Changing the Subject': subjectInNumerator,
   'Changing the Subject with Roots': subjectWithRoot,
   'Changing the Subject with a Fractional Coefficient': subjectFractionCoefficient,
+  // 2019 P1 Q7 - its own loop, so its denominator can run 2 to 30 without
+  // moving 2023 P2 Q7 or 2025 P2 Q9, which share the other one.
+  'Changing the Subject Inside a Bracket': () => subjectFractionCoefficient(true),
   'Solving Inequalities': inequalityBrackets,
   'Inequalities with Fractions': inequalityFractions,
 };
