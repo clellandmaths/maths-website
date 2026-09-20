@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import { rightTriangle } from '../diagrams/shapes/right-triangle';
 import { circleChord } from '../diagrams/shapes/circle-chord';
@@ -377,7 +378,7 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
 // answer. It is drawn exactly to scale, which is honest: the numbers sit close
 // to a triple either way, so it still cannot be settled by eye.
 
-export function pythagorasConverse(): Q {
+export function pythagorasConverse(wanted?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(CONVERSE_CONTEXTS);
     const [lo, hi] = ctx.band;
@@ -457,7 +458,11 @@ export function pythagorasConverse(): Q {
     // `converse-from-total` on two draws in nine, which `mix.ts` reads as
     // suppressed about half the time — a flaky check being the symptom, not
     // the fault.
-    const shape = pick(['bare', 'from-total', 'context'] as const);
+    // Taught: each shape stamps its own id, so the asked id names the shape.
+    const shape = wanted === 'pythagoras.converse-sides' ? 'bare' as const
+      : wanted === 'pythagoras.converse-from-total' ? 'from-total' as const
+      : wanted === 'pythagoras.converse' ? 'context' as const
+      : pick(['bare', 'from-total', 'context'] as const);
 
     if (shape === 'bare') {
       const sumSq = p * p + q * q;
@@ -1005,7 +1010,7 @@ export function pythagorasChordReverse(findChord: boolean): Q {
 // Half the questions ask whether a given object fits, which needs a comparison
 // and a conclusion, and half ask for the diagonal outright.
 
-export function pythagorasSpaceDiagonal(): Q {
+export function pythagorasSpaceDiagonal(wanted?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(BOX_CONTEXTS);
     const [lo, hi] = ctx.band;
@@ -1018,7 +1023,15 @@ export function pythagorasSpaceDiagonal(): Q {
     const spaceSq = faceSq + H * H;
     const space = Math.sqrt(spaceSq);
     const exact = Number.isInteger(space);
-    const asksFit = ctx.fits !== null && getRandomInt(0, 1) === 0;
+    // Taught: `-fits` is 2018 P2 Q16's four-mark shape and the plain id is
+    // 2022 P2 Q11's three-mark one, so the asked id decides it. A context
+    // with nothing to fit into cannot make the asked id, so that draw is
+    // retried rather than quietly substituted by its neighbour.
+    const wantsFit = wanted === 'pythagoras.space-diagonal-fits';
+    const asksFit = wanted !== undefined
+      ? (wantsFit && ctx.fits !== null)
+      : (ctx.fits !== null && getRandomInt(0, 1) === 0);
+    if (wantsFit && !asksFit) continue;
 
     // ── the two papers draw two different boxes ──────────────────────────────
     //
@@ -1142,7 +1155,7 @@ export function pythagorasSpaceDiagonal(): Q {
 // part (a) work in 2016: A is one base corner, and the opposite corner is
 // twice the centre minus A.
 
-export function pythagorasCoordinates(): Q {
+export function pythagorasCoordinates(wanted?: string): Q {
   // Far more tries than the other variations get, because this figure lays out
   // successfully only about one attempt in forty: a projected solid carries
   // eight corner labels among edges running in three directions, and most
@@ -1160,7 +1173,11 @@ export function pythagorasCoordinates(): Q {
   // Fixing it here also makes a branch that can *never* lay out fail loudly
   // instead of silently substituting its neighbour, which is how a figure once
   // went missing entirely without a single check noticing.
-  const isCuboid = getRandomInt(0, 1) === 0;
+  // Taught: the id already says which solid this is, so read it rather than
+  // toss for it. A topic sheet asks for nothing and keeps the even draw.
+  const isCuboid = wanted !== undefined
+    ? wanted === 'pythagoras.coordinates-cuboid'
+    : getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 4000; tries++) {
     // The pyramid clones 2016 P1 Q7, which is non-calculator and answers
     // exactly 7 — A(2,0,0) to V(5,2,6) is sqrt(3² + 2² + 6²) = sqrt(49).
@@ -1306,13 +1323,17 @@ export function pythagorasCoordinates(): Q {
 //   snowman    AB is a diameter of the head and a chord of the body, which
 //              fixes the body's radius at r*sqrt(2)
 
-export function pythagorasTwoCircles(): Q {
+export function pythagorasTwoCircles(wanted?: string): Q {
   // Chosen once, outside the loop, and each arrangement carries its own
   // variation id. Both matter: picking inside meant a rejected snowman retried
   // as an overlap, and one id for all three meant no check could see that the
   // snowman had stopped appearing — which it had, for every attempt, because
   // its diameter label anchored on the very point it was pushed away from.
-  const kind = pick(['overlap', 'half-turn', 'snowman'] as const);
+  // Taught: three arrangements, three ids, so the asked id names the kind.
+  const kind = wanted === 'pythagoras.two-circles-overlap' ? 'overlap' as const
+    : wanted === 'pythagoras.two-circles-half-turn' ? 'half-turn' as const
+    : wanted === 'pythagoras.two-circles-snowman' ? 'snowman' as const
+    : pick(['overlap', 'half-turn', 'snowman'] as const);
   for (let tries = 0; tries < 4000; tries++) {
 
     if (kind === 'snowman') {
@@ -1451,17 +1472,19 @@ export function pythagorasTwoCircles(): Q {
   throw new Error('pythagoras.two-circles: no valid question found');
 }
 
-export const PYTHAGORAS_GENERATORS: Record<string, () => Q> = {
-  'Pythagoras with Two Circles': pythagorasTwoCircles,
-  '3D Coordinates and Lengths': pythagorasCoordinates,
-  'The Space Diagonal of a Cuboid': pythagorasSpaceDiagonal,
+export const PYTHAGORAS_GENERATORS: Record<string, Gen> = {
+  'Pythagoras with Two Circles': (wanted) => pythagorasTwoCircles(wanted),
+  '3D Coordinates and Lengths': (wanted) => pythagorasCoordinates(wanted),
+  'The Space Diagonal of a Cuboid': (wanted) => pythagorasSpaceDiagonal(wanted),
   'Finding a Chord or Radius in a Circle': () => pythagorasChordReverse(true),
   'Finding the Radius from a Chord': () => pythagorasChordReverse(false),
   // Three presentations of the converse, and the dispatch is where the third
   // joins: `pythagorasConverse` already splits itself between the plain shape
   // and the from-a-total one.
-  'The Converse of Pythagoras': () =>
-    getRandomInt(1, 3) === 1 ? pythagorasConverseJoined() : pythagorasConverse(),
+  'The Converse of Pythagoras': (wanted) =>
+    wanted === 'pythagoras.converse-joined' ? pythagorasConverseJoined()
+    : wanted !== undefined ? pythagorasConverse(wanted)
+    : getRandomInt(1, 3) === 1 ? pythagorasConverseJoined() : pythagorasConverse(),
   'Pythagoras in a Right-Angled Triangle': pythagorasFindSide,
   // All three families reachable from the topic, each with its own id.
   'Pythagoras in a Circle': () => pythagorasChord(pick(['segment', 'whole', 'cut'] as const)),

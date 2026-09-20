@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd, nonZeroInt } from './utils';
 import { fmt, type Poly } from './n5-expanding';
 
@@ -62,7 +63,7 @@ const br = (s: string) => (/^[a-z]$/.test(s) ? s : `(${s})`);
 // which is already excluded — so the only rejection needed is the degenerate
 // case where the x term vanishes.
 
-function addSubtract(minus: boolean, bare = false): Q {
+function addSubtract(minus: boolean, bareDraw = false, wanted?: string): Q {
   // One draw in three, not the one in six that matches how often the papers
   // ask it.
   //
@@ -73,7 +74,17 @@ function addSubtract(minus: boolean, bare = false): Q {
   // in six `mix.ts` reads the powers shape as a buried branch. Paper fidelity
   // is unaffected: `similarTo` redraws until it gets the variation the paper
   // cites, so this governs browsing and worksheets only.
-  const powers = getRandomInt(1, 3) === 1;
+  // Taught: the powers shape is a variation in its own right, so an asked id
+  // decides it. Nothing asked keeps the one-in-three draw described above.
+  const powers = wanted !== undefined
+    ? wanted === (minus ? 'alg-fractions.subtract-powers' : 'alg-fractions.add-powers')
+    : getRandomInt(1, 3) === 1;
+  // The two subtracting shapes are two ids as well. The dispatch still makes
+  // its draw either way, so asking for one of these does not shift the
+  // random stream the other's numbers come out of.
+  const bare = wanted === 'alg-fractions.subtract' ? true
+    : wanted === 'alg-fractions.subtract-binomials' ? false
+    : bareDraw;
   // x:6, a:1 across the seven papers — and the split is exactly this branch:
   // six ordinary questions in x, and the one 2017 powers question in a. `b`,
   // `n` and `y` appear in none of them.
@@ -626,13 +637,14 @@ function divideFactoriseNumerator(): Q {
   throw new Error('alg-fractions.divide-squares-on-top: no valid question found');
 }
 
-export const ALG_FRACTION_GENERATORS: Record<string, () => Q> = {
+export const ALG_FRACTION_GENERATORS: Record<string, Gen> = {
   'Simplifying Algebraic Fractions': () =>
     (getRandomInt(1, 5) <= 3 ? simplifyFraction() : factoriseHence()),
-  'Adding Algebraic Fractions': () => addSubtract(false),
+  'Adding Algebraic Fractions': (wanted) => addSubtract(false, false, wanted),
   // Two questions under one topic: the one with a bare variable on a
   // denominator, and the one with two binomials.
-  'Subtracting Algebraic Fractions': () => addSubtract(true, getRandomInt(0, 1) === 0),
+  'Subtracting Algebraic Fractions': (wanted) =>
+    addSubtract(true, getRandomInt(0, 1) === 0, wanted),
   'Multiplying Algebraic Fractions': multiply,
   'Dividing Algebraic Fractions': divide,
   'Dividing with a Difference of Squares': divideFactoriseNumerator,

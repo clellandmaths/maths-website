@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import { apexOverBase } from '../diagrams/shapes/apex-over-base';
 import { splitSide } from '../diagrams/shapes/split-side';
@@ -582,7 +583,22 @@ function hexagonArea(): Q | null {
   };
 }
 
-function composite(kinds: string[]): Q {
+/**
+ * **The inverse of the `variationId` stamps below** — which kind makes which
+ * id. `composite` is handed the id that was asked for and picks the kind that
+ * makes it, rather than drawing and discarding until it lands on one.
+ */
+const ID_KIND: Record<string, string> = {
+  'composite.height-from-two-angles': 'elevation',
+  'composite.perpendicular-in-triangle': 'bare',
+  'composite.two-elevations': 'two-elevations',
+  'composite.split-side-cosine': 'split-cosine',
+  'composite.split-side-area': 'split-area',
+  'composite.straight-line-angle': 'straight-line',
+  'composite.hexagon-area': 'hexagon',
+};
+
+function composite(kinds: string[], wanted?: string): Q {
   // The branch is chosen once, before the retry loop, not inside it.
   //
   // Choosing inside means a rejected layout re-enters the lottery rather than
@@ -594,7 +610,17 @@ function composite(kinds: string[]): Q {
   // Fixing it here also makes a branch that can *never* lay out fail loudly
   // instead of silently substituting its neighbour, which is how a figure once
   // went missing entirely without a single check noticing.
-  const kind = pick(kinds);
+  // Taught: the asked id names the kind that makes it. A kind this topic does
+  // not offer is simply not in `kinds`, and the draw stands.
+  //
+  // `kinds.length > 1` is not a tidiness guard, it is the freeze. A topic
+  // offering one kind never drew a choice, so there is nothing to teach it —
+  // but skipping `pick` takes one fewer random off the stream, and that alone
+  // changed three questions that had no second form to be confused with.
+  // `frozen` named all three, 2024 P2 Q13 among them.
+  const asked = ID_KIND[wanted ?? ''];
+  const kind = kinds.length > 1 && asked !== undefined && kinds.includes(asked)
+    ? asked : pick(kinds);
   for (let tries = 0; tries < 4000; tries++) {
     const q = kind === 'two-elevations' ? twoElevations()
       : kind === 'split-cosine' ? splitSideCosine()
@@ -607,10 +633,10 @@ function composite(kinds: string[]): Q {
   throw new Error('composite-trig: no valid question found');
 }
 
-export const COMPOSITE_TRIG_GENERATORS: Record<string, () => Q> = {
-  'Two Angles of Elevation': () => composite(['elevation', 'two-elevations']),
-  'A Perpendicular Inside a Triangle': () => composite(['bare']),
-  'Two Triangles Sharing an Angle': () => composite(['split-cosine', 'split-area']),
-  'A Point Off a Straight Line': () => composite(['straight-line']),
-  'Area of a Regular Hexagon': () => composite(['hexagon']),
+export const COMPOSITE_TRIG_GENERATORS: Record<string, Gen> = {
+  'Two Angles of Elevation': (w) => composite(['elevation', 'two-elevations'], w),
+  'A Perpendicular Inside a Triangle': (w) => composite(['bare'], w),
+  'Two Triangles Sharing an Angle': (w) => composite(['split-cosine', 'split-area'], w),
+  'A Point Off a Straight Line': (w) => composite(['straight-line'], w),
+  'Area of a Regular Hexagon': (w) => composite(['hexagon'], w),
 };
