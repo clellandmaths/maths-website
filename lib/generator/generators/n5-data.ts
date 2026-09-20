@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, random } from './utils';
 import { DATA_CONTEXTS, type DataContext, unitFor } from './n5-contexts';
 
@@ -607,11 +608,15 @@ function stdevFindA(): Q {
   throw new Error('data.sd-find-a: no valid question found');
 }
 
-export const DATA_GENERATORS: Record<string, () => Q> = {
+export const DATA_GENERATORS: Record<string, Gen> = {
   // Both statistics are reachable from the topic; each carries its own id, so
   // `variationsBasedOn` can send a paper to the one that asks what it asks.
-  'Quartiles and Interquartile Range': () => quartilesOnly(getRandomInt(0, 1) === 0),
-  'Comparing Median and Interquartile Range': () => medianCompare(getRandomInt(0, 1) === 0),
+  // Taught: the id names which statistic is asked for, so read it rather
+  // than draw it. A topic sheet names none and keeps the even toss.
+  'Quartiles and Interquartile Range': (wanted) => quartilesOnly(
+    wanted !== undefined ? wanted === 'data.quartiles-semi' : getRandomInt(0, 1) === 0),
+  'Comparing Median and Interquartile Range': (wanted) => medianCompare(
+    wanted !== undefined ? wanted === 'data.median-siqr-compare' : getRandomInt(0, 1) === 0),
   'Mean and Standard Deviation': meanStdev,
   'Comparing Mean and Standard Deviation': meanStdevCompare,
   'Judging Consistency from the Standard Deviation': meanStdevConsistency,

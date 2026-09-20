@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd } from './utils';
 import { ROTATING_CONTEXTS, withUnit } from './n5-contexts';
 
@@ -683,8 +684,14 @@ const SPECIAL = [30, 45, 60];
  */
 const WIDEST: Record<'sin' | 'cos' | 'tan', number> = { sin: 85, cos: 85, tan: 80 };
 
-function relatedAngle(): Q {
-  const fn = pick(['sin', 'cos', 'tan'] as const);
+function relatedAngle(wanted?: string): Q {
+  // Taught for docs/one-question-one-generator.md: the function is what the id
+  // names, so read it rather than draw it. A topic sheet names no id and keeps
+  // the even three-way draw.
+  const fn = wanted === 'trig.related-angle' ? 'sin' as const
+    : wanted === 'trig.related-angle-pre2023' ? 'cos' as const
+    : wanted === 'trig.related-angle-tan-practice' ? 'tan' as const
+    : pick(['sin', 'cos', 'tan'] as const);
   // One draw in three is a special angle. The rest run the acute range, which
   // is what takes each id from three distinct questions to 228 (213 for tan).
   const deg = getRandomInt(0, 2) === 0 ? pick(SPECIAL) : getRandomInt(10, WIDEST[fn]);
@@ -817,7 +824,7 @@ function orderBySize(): Q {
   throw new Error('trig.order-by-size: no valid question found');
 }
 
-export const TRIG_GENERATORS: Record<string, () => Q> = {
+export const TRIG_GENERATORS: Record<string, Gen> = {
   'The Value at a Related Angle': relatedAngle,
   'Ordering Trigonometric Values': orderBySize,
   // All three ratios are reachable from the topic, each with its own id, so

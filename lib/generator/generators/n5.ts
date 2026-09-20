@@ -545,7 +545,17 @@ function inContext(): Q {
 // table in the dispatch chain below is imported and therefore already readable;
 // this one being local made five signed-off fractions questions invisible to
 // the map that tells the pre-edit hook what a file serves. No behaviour change.
-export const N5_GENERATORS: Record<string, () => Q> = {
+/**
+ * A generator, optionally told which variation id the caller asked for.
+ *
+ * A routine serving one id ignores the argument and nothing changes. One
+ * serving several reads it INSTEAD of drawing, so `generateQuestion` has
+ * nothing to discard - and the discards are what couple two questions that
+ * share a routine. docs/one-question-one-generator.md.
+ */
+export type Gen = (wanted?: string) => Q;
+
+export const N5_GENERATORS: Record<string, Gen> = {
   // the skill axis — Zeta's breakdown
   // Adding and subtracting are separate topics, not one topic that picks at
   // random: a starter on subtraction is a thing a teacher asks for, and while
@@ -599,7 +609,7 @@ export const N5_GENERATORS: Record<string, () => Q> = {
   'Fractions in Context': inContext,
 };
 
-export function generateN5Question(selectedTopic: string): Q {
+export function generateN5Question(selectedTopic: string, wanted?: string): Q {
   const gen = N5_GENERATORS[selectedTopic]
     ?? SURD_GENERATORS[selectedTopic]
     ?? INDICES_GENERATORS[selectedTopic]
@@ -637,5 +647,5 @@ export function generateN5Question(selectedTopic: string): Q {
     ?? QUADRATIC_CONTEXT_GENERATORS[selectedTopic]
     ?? LINEAR_EQUATION_GENERATORS[selectedTopic];
   if (!gen) throw new Error(`No National 5 generator for topic "${selectedTopic}"`);
-  return gen();
+  return gen(wanted);
 }

@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 
 /** "a = b", or just "a" when the simplification changed nothing. */
 const orSame = (raw: string, simplified: string): string =>
@@ -723,11 +724,14 @@ export function notSimilarQuestion(): Q {
   throw new Error('similarity.not-similar: no valid question found');
 }
 
-export const SIMILARITY_GENERATORS: Record<string, () => Q> = {
+export const SIMILARITY_GENERATORS: Record<string, Gen> = {
   'A Side of a Similar Triangle': similarTrianglePartQuestion,
   'The Rest of a Similar Triangle': similarTriangleRestQuestion,
   'The Area Left by a Similar Triangle': similarTriangleAreaQuestion,
-  'Volumes of Similar Solids': () => similarVolumeQuestion(getRandomInt(0, 1) === 0),
+  // Taught: 2014 P2 Q5 scales up and 2026 P2 Q3 scales down, and the id
+  // says which. A topic sheet names none and keeps the even toss.
+  'Volumes of Similar Solids': (wanted) => similarVolumeQuestion(
+    wanted !== undefined ? wanted === 'similarity.volume-scale' : getRandomInt(0, 1) === 0),
   'Areas of Similar Figures': similarAreaQuestion,
   'Cost of a Similar Figure': similarCostQuestion,
   'Showing Two Solids Are Not Similar': notSimilarQuestion,

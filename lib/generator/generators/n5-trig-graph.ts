@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import { sketchAxes, type SketchAxesSpec } from '../diagrams/shapes/sketch-axes';
 import { renderScene } from '../diagrams/render';
@@ -381,8 +382,13 @@ function shiftAndRaise(): Q | null {
 // nothing to read: the equation is in the prose and the turning point is
 // computed from it. The graph is there to say *which* turning point.
 
-function turningPoint(): Q | null {
-  const fn = pick(['sin', 'cos'] as const);
+function turningPoint(wanted?: string): Q | null {
+  // Taught for docs/one-question-one-generator.md. The id follows the function
+  // (see the stamp below), so read it rather than draw it; a topic sheet names
+  // no id and keeps the even toss.
+  const fn = wanted === 'trig-graphs.turning-point-pre2023' ? 'cos' as const
+    : wanted === 'trig-graphs.turning-point' ? 'sin' as const
+    : pick(['sin', 'cos'] as const);
   const a = getRandomInt(2, 6);
   // **Both directions**, because the two papers go opposite ways: 2025 P1 Q8
   // is `2sin(x - 30)` and 2019 P1 Q13 is `3cos(x + 45)`. The shift was drawn
@@ -454,15 +460,22 @@ function turningPoint(): Q | null {
 
 // ── dispatch ─────────────────────────────────────────────────────────────
 
-const tried = (name: string, make: () => Q | null): (() => Q) => () => {
+/**
+ * Retry a routine that can reject its own draw, and **forward the wanted id**.
+ *
+ * Without the forwarding a taught routine wrapped in this would never see the
+ * id, and would go on drawing and being filtered — the wrapper would silently
+ * undo the teaching. Routines that ignore the argument are unaffected.
+ */
+const tried = (name: string, make: (wanted?: string) => Q | null): Gen => (wanted) => {
   for (let i = 0; i < 4000; i++) {
-    const made = make();
+    const made = make(wanted);
     if (made) return made;
   }
   throw new Error(`${name}: no valid question found`);
 };
 
-export const TRIG_GRAPH_GENERATORS: Record<string, () => Q> = {
+export const TRIG_GRAPH_GENERATORS: Record<string, Gen> = {
   'Amplitude and Period of a Trigonometric Graph':
     tried('trig-graphs.amplitude-cycles', amplitudeAndCycles),
   'A Shifted Trigonometric Graph': tried('trig-graphs.shift', amplitudeAndShift),

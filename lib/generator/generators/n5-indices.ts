@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd } from './utils';
 
 /**
@@ -451,12 +452,17 @@ function rootAsPower(): Q {
   };
 }
 
-export const INDICES_GENERATORS: Record<string, () => Q> = {
+export const INDICES_GENERATORS: Record<string, Gen> = {
   'Laws of Indices': laws,
   // Two papers write a product and one writes a fraction; the fraction is
   // 2023 P1 Q12. Chosen here rather than inside either routine, so each id
   // draws only its own shape.
-  'Negative Indices': () => (getRandomInt(0, 1) === 0 ? negativePower() : negativePowerFraction()),
+  // Taught: the two shapes are two ids, so the wanted one picks the routine
+  // instead of a coin. A topic sheet names none and keeps the even toss.
+  'Negative Indices': (wanted) => (
+    wanted === 'indices.negative-power' ? negativePower()
+    : wanted === 'indices.negative-power-fraction' ? negativePowerFraction()
+    : getRandomInt(0, 1) === 0 ? negativePower() : negativePowerFraction()),
   'Fractional Indices': evaluateFractional,
   'Indices with Coefficients': () => withCoefficient(true),
   'Indices in a Quotient': () => withCoefficient(false),

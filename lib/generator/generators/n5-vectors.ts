@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd, nonZeroInt } from './utils';
 import { vectorGrid } from '../diagrams/shapes/vector-grid';
 import { vectorFigure } from '../diagrams/shapes/vector-figure';
@@ -59,8 +60,13 @@ function frac(n: number, d: number): string {
 
 // ── combine two vectors — 2014 P1 Q4, 2016 P1 Q1, 2024 P1 Q4 ─────────────
 
-function components(): Q {
-  const half = getRandomInt(0, 1) === 0;             // the 2016 P1 Q1 shape
+function components(wanted?: string): Q {
+  // Taught for docs/one-question-one-generator.md: the id the caller
+  // asked for decides this, and the draw is only the fallback for a
+  // topic sheet, which names none.
+  const half = wanted !== undefined
+    ? wanted === 'vectors.components-half'
+    : getRandomInt(0, 1) === 0;             // the 2016 P1 Q1 shape
   for (let tries = 0; tries < 200; tries++) {
     /**
      * **Three rows for a multiple, two for a half.** The owner, on the
@@ -899,7 +905,7 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
   throw new Error(`${name}: no valid question found`);
 };
 
-export const VECTOR_GENERATORS: Record<string, () => Q> = {
+export const VECTOR_GENERATORS: Record<string, Gen> = {
   'Magnitude of a Vector': magnitude,
   'Magnitude as a Surd': magnitudeSurd,
   'A Pathway in Components': componentsMidpoint,

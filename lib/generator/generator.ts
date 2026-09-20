@@ -18,6 +18,24 @@ export { type Topic, TOPIC_GROUPS, ALL_TOPICS, type GeneratedQuestion, COURSES }
 export interface GenerateOptions {
   /** Only accept these variation ids. Topics are narrowed to match. */
   variationIds?: string[];
+  /**
+   * **Internal. The one id the routine should MAKE, rather than be filtered
+   * to.**
+   *
+   * `generateQuestion` is otherwise a rejection sampler: the routine draws
+   * whatever it likes and this filters. Those discards are the only thing
+   * coupling two questions that share a routine - each keeps a different
+   * subset of one random stream, so an edit for one moves the other.
+   *
+   * A routine that has not been taught to read this **ignores it**, and then
+   * behaves exactly as it did before, down to the byte. That is what lets the
+   * 68 shared routines be taught one at a time instead of all at once, with
+   * `frozen` naming only the questions each step actually moves.
+   *
+   * Set from `variationIds` when they resolve to a single routine id, never
+   * by a caller. See docs/one-question-one-generator.md.
+   */
+  makeId?: string;
 }
 
 /**
@@ -44,6 +62,20 @@ export async function withSeed<T>(seed: number | string, fn: () => Promise<T> | 
 
 /** Enough draws that a one-in-five variation is missed about once in 10^5. */
 const DRAW_LIMIT = 60;
+
+/**
+ * **How many draws the last single-id request took.**
+ *
+ * One means the routine made the id it was asked for. More means it drew
+ * something else and was filtered, and those discards are what tie two
+ * questions on one routine to a single random stream.
+ *
+ * Exported so `__checks__/one-routine.ts` can measure the migration in
+ * docs/one-question-one-generator.md instead of inferring it. Nothing else
+ * should read it: it is a fact about the last call, not about a question.
+ */
+let DREW = 0;
+export const lastDraws = (): number => DREW;
 
 export async function generateQuestion(
   topics: Topic[],
@@ -80,8 +112,19 @@ export async function generateQuestion(
       const target = aliasTarget(id);
       if (target !== id && !wanted.has(target)) stampAs.set(target, id);
     }
+    /**
+     * The id the routine should make, when the request names exactly one.
+     *
+     * Aliases resolve to their target because that is the id a routine emits.
+     * With several wanted - a topic sheet - there is nothing to name and the
+     * loop below draws as it always has.
+     */
+    const targets = new Set([...wanted].map(id => aliasTarget(id) ?? id));
+    const makeId = targets.size === 1 ? [...targets][0] : undefined;
+
     for (let draw = 0; draw < DRAW_LIMIT; draw++) {
-      const q = await generateQuestion(topics);
+      DREW = draw + 1;
+      const q = await generateQuestion(topics, { makeId });
       if (q.variationId && wanted.has(q.variationId)) return q;
       const alias = q.variationId && stampAs.get(q.variationId);
       // The code travels with the id: the website builds a question's uid from
@@ -112,7 +155,7 @@ export async function generateQuestion(
   const isN5 = Object.values(COURSES["National 5 Maths"]).some(ts => ts.includes(selected));
   if (isN5) {
     const { generateN5Question } = await import('./generators/n5');
-    q = generateN5Question(selected);
+    q = generateN5Question(selected, options.makeId);
   }
   else if (TOPIC_GROUPS["Sequences"].includes(selected)) {
     const { generateSequencesQuestion } = await import('./generators/sequences');

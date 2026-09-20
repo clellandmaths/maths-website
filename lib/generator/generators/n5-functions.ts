@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, nonZeroInt } from './utils';
 
 /**
@@ -113,10 +114,14 @@ function shapes(which?: number): Shape[] {
  * `docs/diagram-questions.md` section 2 - so the mix is even rather than
  * whatever survives the guards below.
  */
-function evaluate(): Q {
-  const which = getRandomInt(0, 3);
+function evaluate(wanted?: string): Q {
   const ids = ['functions.evaluate', 'functions.evaluate-cube-multiple',
                'functions.evaluate-cube-plus', 'functions.evaluate-square'];
+  // Taught for docs/one-question-one-generator.md. `ids` is one id per shape,
+  // so the id the caller asked for IS the index — no draw to discard. A topic
+  // sheet names none and keeps the even draw across all four.
+  const asked = wanted === undefined ? -1 : ids.indexOf(wanted);
+  const which = asked >= 0 ? asked : getRandomInt(0, 3);
   for (let tries = 0; tries < 200; tries++) {
     const s = shapes(which)[which];
     const fn = pick(FN);
@@ -308,7 +313,7 @@ function evaluateTrig(): Q {
   throw new Error('functions.evaluate-trig: no valid question found');
 }
 
-export const FUNCTION_GENERATORS: Record<string, () => Q> = {
+export const FUNCTION_GENERATORS: Record<string, Gen> = {
   'Evaluating a Function': evaluate,
   'Finding an Unknown in a Function': findUnknown,
   'Evaluating a Trigonometric Function': evaluateTrig,

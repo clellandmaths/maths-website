@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, nonZeroInt } from './utils';
 import { sketchAxes, type SketchAxesSpec, type View } from '../diagrams/shapes/sketch-axes';
 import { renderScene } from '../diagrams/render';
@@ -389,10 +390,27 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
   throw new Error(`${name}: no valid question found`);
 };
 
-export const PARABOLA_GRAPH_GENERATORS: Record<string, () => Q> = {
-  'A Parabola Through a Point': () => (getRandomInt(0, 1) === 0
-    ? tried('quadratics.parabola-scale', () => parabolaScale(true))
-    : tried('quadratics.parabola-scale-k', () => parabolaScale(false)))(),
+export const PARABOLA_GRAPH_GENERATORS: Record<string, Gen> = {
+  /**
+   * **The caller's id decides the form, and only falls back to a toss when
+   * nobody asked for one.**
+   *
+   * 2014 P1 Q7 states the scale factor and 2026 P1 Q9 leaves it as `k`. Both
+   * already had their own id; the toss here picked one and `generateQuestion`
+   * threw away the draws that came out as the other, which is what tied the
+   * two questions to a single random stream.
+   *
+   * A topic sheet names no id, so `wanted` is undefined and the toss stands —
+   * the spread a teacher gets is unchanged. First routine taught for
+   * docs/one-question-one-generator.md.
+   */
+  'A Parabola Through a Point': (wanted) => {
+    const stated = wanted !== undefined
+      ? wanted === 'quadratics.parabola-scale'
+      : getRandomInt(0, 1) === 0;
+    return tried(stated ? 'quadratics.parabola-scale' : 'quadratics.parabola-scale-k',
+      () => parabolaScale(stated))();
+  },
   'A Parabola from its Turning Point':
     tried('quadratics.parabola-from-turning-point', () => parabolaFromTurningPoint('plain')),
   'A Parabola and its Axis of Symmetry':

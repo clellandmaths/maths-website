@@ -669,7 +669,11 @@ function inequalityFractions(): Q {
 export const FORMULA_GENERATORS: Record<string, () => Q> = {
   'Changing the Subject': subjectInNumerator,
   'Changing the Subject with Roots': subjectWithRoot,
-  'Changing the Subject with a Fractional Coefficient': subjectFractionCoefficient,
+  // Wrapped, not bare. Dispatch now hands the routine the variation id the
+  // caller asked for, and a bare reference would take that string as
+  // `bracketOnly` - which is truthy. frozen caught it on 2023 P2 Q7 and
+  // 2025 P2 Q9 the moment the argument was introduced.
+  'Changing the Subject with a Fractional Coefficient': () => subjectFractionCoefficient(),
   // 2019 P1 Q7 - its own loop, so its denominator can run 2 to 30 without
   // moving 2023 P2 Q7 or 2025 P2 Q9, which share the other one.
   'Changing the Subject Inside a Bracket': () => subjectFractionCoefficient(true),
