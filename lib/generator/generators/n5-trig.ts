@@ -69,36 +69,50 @@ const dp1 = (v: number): string => v.toFixed(1);
  * them — so each ratio gets one variation and no more.
  */
 /**
- * **`withConstant` is 2022 P2 Q9's split, and it is opt-in.**
+ * **`withConstant` is 2022 P2 Q9's split, and what it still settles is the
+ * domain.**
  *
- * `b` is drawn from -9 to 9 and zero is in that range, so about one draw in
- * twenty built `15\sin x^{\circ} + 0 = 6` - a literal "+ 0" on the page, and
- * a question one step shorter than the one the papers ask, since there is
- * nothing to shift across. All three papers this routine serves carry a
- * constant: 2018 P2 Q8 is `7\sin x + 2 = 3`, 2022 P2 Q9 `3\sin x + 4 = 6`,
- * 2024 P2 Q11 `17\sin x + 1 = 9`.
+ * It was made to guarantee the constant term as well, back when the zero was
+ * only suppressed in the printing and could not be removed from the draw
+ * without moving two signed-off questions. The owner then ruled that the
+ * zero should never be drawn at all - *"it should always have plus or minus
+ * something"* - so that now holds for every variation here and the flag no
+ * longer carries it.
  *
- * It cannot simply be fixed here. `lhs` is printed by every variation this
- * routine serves, and two of them - `trig-equations.solve` (2024 P2 Q11) and
- * `trig-equations.solve-tan` (2026 P2 Q8) - are signed off. Suppressing the
- * zero term would change their text, which is precisely what `frozen`
- * forbids; and because a zero `b` is rare, the twelve seeded draws might well
- * miss it and let the change through unreported, which is worse.
- *
- * So the flag rides in from a **subTopic of its own**, which is the split that
- * gets its own draw loop and therefore moves no sibling. 2018 P2 Q8 stays on
- * `trig-equations.solve-pre2023` unmoved, with the same fault, to be settled
- * when 2018 is reviewed. See `docs/verdicts/2022-p2.md`.
+ * What is left is the range. 2022 P2 Q9 closes its domain, `0 <= x <= 360`,
+ * and a question served by one generator should not present itself two ways.
+ * The other papers keep the toss between the closed and open forms, which the
+ * owner read form by form and kept - see `APPROVED_MULTIFORM` in
+ * `__checks__/one-form.ts`. A subTopic of its own is what gives this its own
+ * draw loop, so settling the domain here moves no sibling.
  */
 function solveEquation(fn: 'sin' | 'cos' | 'tan', withConstant = false): Q {
   for (let tries = 0; tries < 400; tries++) {
     const a = getRandomInt(2, 20);
-    const b = getRandomInt(-9, 9);
+    /**
+     * **The constant is never zero.**
+     *
+     * The owner, 2026-09-20: *"So having 7tan x = 3 is not a clone of the
+     * question. It should always have plus or minus something you just can't
+     * pick 0."* Every paper this routine serves shifts a constant across as
+     * its first mark - 2018 P2 Q8 `7\sin x + 2 = 3`, 2022 P2 Q9
+     * `3\sin x + 4 = 6`, 2024 P2 Q11 `17\sin x + 1 = 9`, and the cos and tan
+     * papers likewise - so a draw without one is a different, shorter question
+     * wearing the paper's name.
+     *
+     * An earlier pass suppressed the *printing* of a zero, which left
+     * `7\tan x^{\circ} = 3` on the page: tidier, and still not the question.
+     *
+     * **One draw, 18 values, no zero.** Written as a single `getRandomInt` on
+     * purpose: a rejected draw costs an extra turn of the generator and would
+     * move the stream by a different amount each time. This moves it once, by
+     * remapping which `b` a given random produces - every question on the
+     * routine moves, which is unavoidable and was done with the owner's word.
+     */
+    let b = getRandomInt(-9, 8);
+    if (b >= 0) b += 1;
     const c = getRandomInt(-9, 12);
     if (b === c) continue;                          // the ratio would be zero
-    // `withConstant` is a plain boolean, so for every other caller this costs
-    // no draw and leaves the random stream exactly where it was.
-    if (withConstant && b === 0) continue;            // the papers all shift one
     const r = (c - b) / a;
     // A fifth of the time the ratio is negative, which two of the seven papers
     // are — 2016's tan x = -9/2 and 2019's cos x = -1/5. (This used to say the
@@ -127,32 +141,9 @@ function solveEquation(fn: 'sin' | 'cos' | 'tan', withConstant = false): Q {
     const tex = fn === 'sin' ? S : fn === 'cos' ? C : T;
     const g = gcd(Math.abs(c - b), a) || 1;
     const ratioTex = a / g === 1 ? `${(c - b) / g}` : `\\frac{${(c - b) / g}}{${a / g}}`;
-    /**
-     * **A zero constant is not printed.**
-     *
-     * `b` is drawn from -9 to 9, so about one draw in twenty built
-     * `13\sin x^{\circ} + 0 = 2` - a "+ 0" on the page that reads as a broken
-     * question. Found reviewing 2022 P2 Q9; the owner, on the locked paper
-     * that shares this line: *"I'd fix the +0 on the locked paper and the re
-     * lock."*
-     *
-     * **This is a printing change and nothing else.** It draws no number and
-     * takes no branch, so the random stream is untouched and every draw is the
-     * draw it was before; only the ~5% that carried a zero `b` print
-     * differently. That is what makes it safe to make on a line shared by two
-     * signed-off questions - 2024 P2 Q11 here and 2026 P2 Q8 through
-     * `-tan`, both of which had the same fault and both of which are re-locked
-     * with it fixed.
-     *
-     * It does not make the constant non-zero: those draws still ask
-     * `13\sin x^{\circ} = 2`, a step shorter than the papers' own form. Only
-     * `trig-equations.solve-constant` (2022 P2 Q9) guarantees the constant,
-     * because doing that needs a rejected draw and a rejected draw moves the
-     * stream for every variation this routine serves.
-     */
-    const lhs = b === 0
-      ? times(a, tex)
-      : `${times(a, tex)} ${b < 0 ? '-' : '+'} ${Math.abs(b)}`;
+    // `b` can no longer be zero (see its draw above), so the sign is all this
+    // has to choose and there is no empty case to guard.
+    const lhs = `${times(a, tex)} ${b < 0 ? '-' : '+'} ${Math.abs(b)}`;
     // **The domain as the papers write it, both ways.** Five of the nine
     // trigonometric equations in the corpus close the range - 2016 P2 Q14's
     // `0 <= x <= 360` - and four leave it open, 2026 P2 Q8 among them with
