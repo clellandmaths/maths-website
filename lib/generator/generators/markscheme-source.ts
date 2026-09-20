@@ -91,6 +91,42 @@ function readRow(line: string): MarkRow | null {
 }
 
 /**
+ * **Transcribed answers that are wrong, and the right ones.**
+ *
+ * The markscheme files under `../reference/N5_Markschemes` are transcriptions,
+ * and a transcription can slip. `emit-paper-markscheme` generates from them,
+ * so a slipped answer is shown to pupils as the answer.
+ *
+ * **Why this lives here and not in the file.** That folder is untracked. A fix
+ * made there is invisible to git, unreviewable, and lost the moment anyone
+ * re-extracts the file from its PDF - silently, because nothing would report
+ * it. Correcting at read time instead keeps the transcription faithful to its
+ * source, puts the correction under review with its reasoning attached, and
+ * survives a re-extraction.
+ *
+ * **Each entry must be arithmetic, not interpretation.** A correction here is
+ * for a value the scheme's own other marks contradict. Anything that needs a
+ * judgement about what the examiner meant is not a transcription slip and does
+ * not belong here.
+ *
+ * `was` must match exactly, so if a re-extraction fixes the file upstream the
+ * correction simply stops firing rather than corrupting a good value.
+ */
+export const MARKSCHEME_CORRECTIONS: {
+  label: string; mark: number; was: string; is: string; why: string;
+}[] = [
+  {
+    label: '2019 P1 Q5', mark: 0, was: '$15$', is: '$5$',
+    why: 'The nine temperatures are 4 7 4 3 6 10 9 5 3, which sort to '
+       + '3 3 4 4 5 6 7 9 10 and have a median of 5. 15 is not in the data at '
+       + 'all. The scheme\'s own next two marks settle it: the quartiles it '
+       + 'gives, 3.5 and 8, are the medians of 3 3 4 4 and 6 7 9 10, which are '
+       + 'the halves either side of a median of 5, and the SIQR of 2.25 '
+       + 'follows from those. Found reviewing 2019 Paper 1 on 2026-09-20.',
+  },
+];
+
+/**
  * Every question in the corpus, keyed by its paper label.
  *
  * Null when the folder is absent, so a caller can say so rather than report
@@ -177,7 +213,18 @@ export function readSchemes(dir?: string): Map<string, SchemeQuestion> | null {
       }
 
       const row = readRow(line);
-      if (row) { current.rows.push(row); continue; }
+      if (row) {
+        // A transcription slip is corrected here rather than in the untracked
+        // file it came from - see MARKSCHEME_CORRECTIONS above. `q` is a local
+        // because narrowing does not reach inside the callback.
+        const q = current;
+        const fix = MARKSCHEME_CORRECTIONS.find(
+          c => c.label === q.label && c.mark === q.rows.length
+               && c.was === row.illustrative);
+        if (fix) row.illustrative = fix.is;
+        current.rows.push(row);
+        continue;
+      }
 
       // The subject line sits under the heading, before any table.
       if (!current.subject && !current.rows.length && line.trim() && !line.startsWith('|')

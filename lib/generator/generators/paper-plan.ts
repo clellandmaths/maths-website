@@ -475,7 +475,7 @@ export const PLAN_OF: Record<string, PlanOf> = {
   "2019 P1 Q2": {"v":"fractions.multiply-mixed-pre2023","marks":[1,1],"shows":["\\(\\frac{3}{8} \\times \\frac{12}{7}\\)",null]},
   "2019 P1 Q3": {"v":"expanding.binomial-trinomial-pre2022","marks":[1,1,1],"shows":["\\(2x^3 - 7x^2 - 3x\\)","\\(2x^3 - 7x^2 - 3x + 10x^2 - 35x - 15\\)",null]},
   "2019 P1 Q4": {"v":"sector.arc-angle-pi314","marks":[1,1,1],"shows":["\\(\\frac{240}{360}\\)","\\(\\frac{240}{360} \\times 3.14 \\times 60\\)",null]},
-  "2019 P1 Q5": {"v":"data.median-siqr-compare","marks":[1,2,1,1],"shows":["\\(15\\)","\\(3.5\\) and \\(8\\)","On average, temperatures in Grantford are lower.",null]},
+  "2019 P1 Q5": {"v":"data.median-siqr-compare","marks":[1,2,1,1],"shows":[null,"\\(3.5\\) and \\(8\\)","On average, temperatures in Grantford are lower.",null]},
   "2019 P1 Q6": {"v":"straight-line.best-fit-grid-pre2023","marks":[1,1,1,1],"shows":["\\(-\\frac{6}{2}\\)","\\(y - 8 = -\\frac{6}{2}(x - 3.5)\\) or \\(8 = (-\\frac{6}{2}) \\times 3.5 + c\\)",null,null]},
   "2019 P1 Q7": {"v":"change-subject.fraction-coefficient-pre2023","marks":[1,1,1],"shows":["\\(2A = h(x + y)\\)","\\(\\frac{2A}{h} = x + y\\) OR \\(2A - hy = hx\\)",null]},
   "2019 P1 Q8": {"v":"simeq.construct-solve-pre2022","marks":[1,1,2,2],"shows":[null,null,"\\(28c + 12g = 860\\) and \\(15c + 12g = 600\\)","\\(g = 25\\) or \\(c = 20\\)"]},
