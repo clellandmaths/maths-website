@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "635d8933777f1df5f32f50ac22b5af8820775771",
+  "sourceCommit": "c0d63bed9d8d31bdc4ed78ca7fba164fb9c9624f",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -84,7 +84,7 @@
     "generators/n5-vector-pathway.ts": "66156155a9febfa5",
     "generators/n5-vectors.ts": "81d54a2ce7335d5a",
     "generators/n5-volume.ts": "0802764bcae9ee8a",
-    "generators/n5.ts": "7a1a387dc7238232",
+    "generators/n5.ts": "b950faccd35555bf",
     "generators/paper-hints.ts": "6cd6530e771848c1",
     "generators/paper-markscheme.ts": "c505b9c52b91748d",
     "generators/paper-plan.ts": "83f3cb956982199d",

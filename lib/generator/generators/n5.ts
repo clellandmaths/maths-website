@@ -541,7 +541,11 @@ function inContext(): Q {
 
 // ── dispatch ───────────────────────────────────────────────────────────────
 
-const N5_GENERATORS: Record<string, () => Q> = {
+// Exported only so `scripts/emit-serves.ts` can read its topics. Every other
+// table in the dispatch chain below is imported and therefore already readable;
+// this one being local made five signed-off fractions questions invisible to
+// the map that tells the pre-edit hook what a file serves. No behaviour change.
+export const N5_GENERATORS: Record<string, () => Q> = {
   // the skill axis — Zeta's breakdown
   // Adding and subtracting are separate topics, not one topic that picks at
   // random: a starter on subtraction is a thing a teacher asks for, and while
