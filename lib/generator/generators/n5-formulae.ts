@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd, nonZeroInt } from './utils';
 
 /**
@@ -79,9 +80,14 @@ function letters(n: number, upper = false): string[] {
 // Input-first: every choice of letters and coefficients gives a fair question,
 // so nothing needs rejecting beyond keeping the letters distinct.
 
-function subjectInNumerator(): Q {
+function subjectInNumerator(wanted?: string): Q {
   const [v, subj, den, other] = letters(4, true);
-  const k = pick([1, 1, 2, 3, 4, 5]);           // 1 gives the no-fraction answer
+  // Taught: k === 1 is the two-step question and anything else is the other,
+  // so the asked id decides which side of that line to draw on. The odds
+  // among the non-one values are unchanged, and so is the roll count.
+  const k = wanted === 'change-subject.fraction-two-step' ? 1
+    : wanted === 'change-subject.fraction' ? pick([2, 3, 4, 5])
+    : pick([1, 1, 2, 3, 4, 5]);           // 1 gives the no-fraction answer
   /**
    * **2022 P1 Q7's denominator is always a square.**
    *
@@ -352,8 +358,12 @@ function subjectWithRoot(): Q {
  * So the bracket shape gets a **subTopic of its own**, and therefore its own
  * draw loop, where `d` can be drawn from whatever pool suits it.
  */
-function subjectFractionCoefficient(bracketOnly = false): Q {
-  const bracketed = bracketOnly || getRandomInt(1, 3) === 1;   // the 2019 shape, 1 of the 4
+function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
+  // Taught: all four ids this routine stamps are named for their shape, so
+  // the asked id settles both flags. Nothing asked keeps the 1-in-3.
+  const bracketed = bracketOnly || (wanted !== undefined
+    ? wanted.includes('-bracket')
+    : getRandomInt(1, 3) === 1);   // the 2019 shape, 1 of the 4
   // 2 to 30 and always positive in its own loop. The shared loop keeps the
   // pool it always had, so the squared and plain shapes draw what they drew.
   const d = bracketOnly ? getRandomInt(2, 30) : pick([2, 3, 4]);
@@ -373,7 +383,9 @@ function subjectFractionCoefficient(bracketOnly = false): Q {
    * extra term, and is not built here at all; it shares `-squared`'s id as the
    * nearest of the two. That is a known compromise, not a claim they match.
    */
-  const plain = getRandomInt(0, 1) === 0;
+  const plain = wanted !== undefined
+    ? wanted === 'change-subject.fraction-coefficient-plain'
+    : getRandomInt(0, 1) === 0;
   const squareM = !plain;
   const mTex = squareM ? `${mLetter}^{2}` : mLetter;
 
@@ -666,17 +678,18 @@ function inequalityFractions(): Q {
   throw new Error('inequalities.fractions: no valid question found');
 }
 
-export const FORMULA_GENERATORS: Record<string, () => Q> = {
-  'Changing the Subject': subjectInNumerator,
+export const FORMULA_GENERATORS: Record<string, Gen> = {
+  'Changing the Subject': (w) => subjectInNumerator(w),
   'Changing the Subject with Roots': subjectWithRoot,
   // Wrapped, not bare. Dispatch now hands the routine the variation id the
   // caller asked for, and a bare reference would take that string as
   // `bracketOnly` - which is truthy. frozen caught it on 2023 P2 Q7 and
   // 2025 P2 Q9 the moment the argument was introduced.
-  'Changing the Subject with a Fractional Coefficient': () => subjectFractionCoefficient(),
+  'Changing the Subject with a Fractional Coefficient': (w) =>
+    subjectFractionCoefficient(false, w),
   // 2019 P1 Q7 - its own loop, so its denominator can run 2 to 30 without
   // moving 2023 P2 Q7 or 2025 P2 Q9, which share the other one.
-  'Changing the Subject Inside a Bracket': () => subjectFractionCoefficient(true),
+  'Changing the Subject Inside a Bracket': (w) => subjectFractionCoefficient(true, w),
   'Solving Inequalities': inequalityBrackets,
   'Inequalities with Fractions': inequalityFractions,
 };

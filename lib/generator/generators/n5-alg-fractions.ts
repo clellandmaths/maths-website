@@ -284,8 +284,13 @@ function buildSimplify(shape: 'common' | 'squares' | 'two-letter'): Simplified |
  * loop - the rule in `docs/diagram-questions.md` section 2 - and each carries
  * its own id.
  */
-function simplifyFraction(): Q {
-  const shape = pick(['common', 'squares', 'two-letter'] as const);
+function simplifyFraction(wanted?: string): Q {
+  // Taught: the three shapes were already named and already had their own
+  // ids — they were simply drawn from a hat. The asked id names the shape.
+  const shape = wanted === 'alg-fractions.simplify-squares' ? 'squares' as const
+    : wanted === 'alg-fractions.simplify-two-letter' ? 'two-letter' as const
+    : wanted === 'alg-fractions.simplify' ? 'common' as const
+    : pick(['common', 'squares', 'two-letter'] as const);
   const id = shape === 'squares' ? 'alg-fractions.simplify-squares'
     : shape === 'two-letter' ? 'alg-fractions.simplify-two-letter'
     : 'alg-fractions.simplify';
@@ -317,7 +322,7 @@ function simplifyFraction(): Q {
 // five simplify questions lead the pupil in this way, and 2017 uses a leading
 // coefficient in the denominator, which is the harder trinomial.
 
-function factoriseHence(): Q {
+function factoriseHence(wanted?: string): Q {
   // **Chosen once, outside the loop.** The non-monic branch rejects more often
   // than the monic one — coprime k and c, a non-zero middle term — and choosing
   // inside the loop sent every rejected attempt back into the lottery, so what
@@ -326,7 +331,11 @@ function factoriseHence(): Q {
   // anything under 35% of a fair share as a buried branch and it was at 34%.
   // This is the shape `diagram-questions.md` §2 sets out, and the same fault it
   // records for the cuboid that was picked half the time and drawn 9%.
-  const hard = getRandomInt(0, 1) === 0;
+  // Taught: the non-monic denominator is its own id (2017 P2 Q9), so the
+  // asked id decides it and the even split above stands when none is asked.
+  const hard = wanted !== undefined
+    ? wanted === 'alg-fractions.factorise-simplify-nonmonic'
+    : getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 400; tries++) {
     // Simplifying: x:6 y:2 in the papers, and no n at all.
     const v = pick(['x', 'x', 'x', 'y']);
@@ -638,8 +647,13 @@ function divideFactoriseNumerator(): Q {
 }
 
 export const ALG_FRACTION_GENERATORS: Record<string, Gen> = {
-  'Simplifying Algebraic Fractions': () =>
-    (getRandomInt(1, 5) <= 3 ? simplifyFraction() : factoriseHence()),
+  // Taught at the dispatch as well as inside: which of the two routines
+  // makes the asked id is decided by the id, not by the 3-in-5 draw.
+  'Simplifying Algebraic Fractions': (w) =>
+    w !== undefined
+      ? (w.startsWith('alg-fractions.factorise-simplify')
+        ? factoriseHence(w) : simplifyFraction(w))
+      : (getRandomInt(1, 5) <= 3 ? simplifyFraction() : factoriseHence()),
   'Adding Algebraic Fractions': (wanted) => addSubtract(false, false, wanted),
   // Two questions under one topic: the one with a bare variable on a
   // denominator, and the one with two binomials.

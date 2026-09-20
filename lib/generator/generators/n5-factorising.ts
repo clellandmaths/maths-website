@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd, nonZeroInt } from './utils';
 import { fmt, bracket, type Poly } from './n5-expanding';
 
@@ -208,8 +209,11 @@ function fully(): Q {
 // non-unitary questions were printed as two, which is the shape a pupil most
 // needs the third mark explained on.
 
-function solveByFactorising(): Q {
-  const hard = getRandomInt(0, 1) === 1;
+function solveByFactorising(wanted?: string): Q {
+  // Taught: the non-unitary shape is its own id, so the asked id decides it.
+  const hard = wanted !== undefined
+    ? wanted === 'factorising.solve-non-unitary'
+    : getRandomInt(0, 1) === 1;
   for (let tries = 0; tries < 400; tries++) {
     // Not `VARS`: this files under a different subtopic, whose only bare-algebra
     // letter in the papers is `x`. See the note on VARS above.
@@ -283,11 +287,11 @@ function solveByFactorising(): Q {
   throw new Error('factorising.solve: no valid question found');
 }
 
-export const FACTORISING_GENERATORS: Record<string, () => Q> = {
+export const FACTORISING_GENERATORS: Record<string, Gen> = {
   'Factorising a Common Factor': commonFactor,
   'Difference of Two Squares': differenceOfSquares,
   'Factorising a Trinomial': trinomialSimple,
   'Factorising a Harder Trinomial': trinomialHard,
   'Factorising Fully': fully,
-  'Solving by Factorising': solveByFactorising,
+  'Solving by Factorising': (w) => solveByFactorising(w),
 };

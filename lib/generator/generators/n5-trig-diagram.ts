@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import { abbrev } from './n5-contexts';
 import { triangleFromSides, trueAngle } from '../diagrams/shapes/triangle-sides';
@@ -60,7 +61,17 @@ const EXACT_SINES: [number, number][] = [
  * function pick a kind at random and mapped all three topic names to it, so
  * asking for "Area of a Triangle" could hand back a cosine rule question.
  */
-export function trigDiagramQuestion(kinds: Kind[]): Q {
+/** The inverse of the `variationId` stamps — which kind makes which id. */
+const ID_KIND: Record<string, Kind> = {
+  'trig-diagram.cosine-side': 'side',
+  'trig-diagram.cosine-angle': 'angle',
+  'trig-diagram.cosine-angle-smallest': 'angle',
+  'trig-diagram.sine-angle': 'sine-angle',
+  'trig-diagram.area': 'area',
+  'trig-diagram.area-exact': 'area-exact',
+};
+
+export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
   // The branch is chosen once, before the retry loop, not inside it.
   //
   // Choosing inside means a rejected layout re-enters the lottery rather than
@@ -72,7 +83,12 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
   // Fixing it here also makes a branch that can *never* lay out fail loudly
   // instead of silently substituting its neighbour, which is how a figure once
   // went missing entirely without a single check noticing.
-  const kind = pick(kinds);
+  // Taught: the asked id names the kind that makes it. `kinds.length > 1` is
+  // the freeze — a topic with one kind never drew a choice, and skipping `pick`
+  // would move its numbers for nothing.
+  const asked = ID_KIND[wanted ?? ''];
+  const kind = kinds.length > 1 && asked !== undefined && kinds.includes(asked)
+    ? asked : pick(kinds);
   /**
    * **Which angle the question points at, chosen once.**
    *
@@ -375,8 +391,9 @@ export function trigDiagramQuestion(kinds: Kind[]): Q {
   throw new Error('trig-diagram: no valid question found');
 }
 
-export const TRIG_DIAGRAM_GENERATORS: Record<string, () => Q> = {
-  'Cosine Rule from a Diagram': () => trigDiagramQuestion(['side', 'angle']),
-  'Sine Rule from a Diagram': () => trigDiagramQuestion(['sine-angle']),
-  'Area of a Triangle from a Diagram': () => trigDiagramQuestion(['area', 'area-exact']),
+export const TRIG_DIAGRAM_GENERATORS: Record<string, Gen> = {
+  'Cosine Rule from a Diagram': (w) => trigDiagramQuestion(['side', 'angle'], w),
+  'Sine Rule from a Diagram': (w) => trigDiagramQuestion(['sine-angle'], w),
+  'Area of a Triangle from a Diagram': (w) =>
+    trigDiagramQuestion(['area', 'area-exact'], w),
 };

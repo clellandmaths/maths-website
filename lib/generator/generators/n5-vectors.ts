@@ -266,7 +266,7 @@ function lineFromEquation(wantIntercept: boolean): Q {
 // ── Zeta skills the papers have not asked directly ──────────────────────
 //    the gradient between two points, and the equation through two points
 
-function twoPoints(wantEquation: boolean): Q {
+function twoPoints(wantEquation: boolean, wanted?: string): Q {
   for (let tries = 0; tries < 200; tries++) {
     const [x1, y1] = [nonZeroInt(-8, 8), nonZeroInt(-9, 9)];
     const [x2, y2] = [nonZeroInt(-8, 8), nonZeroInt(-9, 9)];
@@ -361,7 +361,11 @@ function twoPoints(wantEquation: boolean): Q {
      * `generateQuestion` asks for the id it wants either way - so this is
      * only about how often each turns up on a mixed sheet.
      */
-    const drawIt = getRandomInt(0, 1) === 0;
+    // Taught: the diagram shape is its own id (2017 P1 Q6), so the asked id
+    // decides it. The gradient topic asks for neither and is untouched.
+    const drawIt = wanted !== undefined
+      ? wanted === 'straight-line.equation-two-points-diagram'
+      : getRandomInt(0, 1) === 0;
     const xs = [0, x1, x2], ys = [0, y1, y2];
     const padX = Math.max(1.5, (Math.max(...xs) - Math.min(...xs)) * 0.22);
     const padY = Math.max(2, (Math.max(...ys) - Math.min(...ys)) * 0.22);
@@ -915,7 +919,7 @@ export const VECTOR_GENERATORS: Record<string, Gen> = {
   'Gradient from an Equation': () => lineFromEquation(false),
   'Intercept from an Equation': () => lineFromEquation(true),
   'Gradient from Two Points': () => (getRandomInt(1, 5) === 1 ? gradientSpecial() : twoPoints(false)),
-  'Equation of a Line from Two Points': () => twoPoints(true),
+  'Equation of a Line from Two Points': (w) => twoPoints(true, w),
   'Adding Two Vectors Drawn on a Grid': tried('vectors.add-from-grid', addFromGrid),
   'Drawing the Resultant of Two Vectors': tried('vectors.draw-resultant', drawResultant),
 };

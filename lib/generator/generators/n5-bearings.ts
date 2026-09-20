@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import { BEARING_CONTEXTS, type BearingContext } from './n5-contexts';
 import {
@@ -67,7 +68,15 @@ function intro(c: BearingContext): string {
   return c.intro.replace(/\{(\d)\}/g, (_, d) => `$${c.letters[Number(d)]}$`);
 }
 
-export function bearingsQuestion(kinds: string[]): Q {
+/** The inverse of the `variationId` stamps — which kind makes which id. */
+const ID_KIND: Record<string, string> = {
+  'bearings.two-bearings': 'side',
+  'bearings.three-sides-angle': 'angle',
+  'bearings.three-sides-bearing': 'bearing',
+  'bearings.two-sides': 'two-sides',
+};
+
+export function bearingsQuestion(kinds: string[], wanted?: string): Q {
   // The branch is chosen once, before the retry loop, not inside it.
   //
   // Choosing inside means a rejected layout re-enters the lottery rather than
@@ -79,7 +88,12 @@ export function bearingsQuestion(kinds: string[]): Q {
   // Fixing it here also makes a branch that can *never* lay out fail loudly
   // instead of silently substituting its neighbour, which is how a figure once
   // went missing entirely without a single check noticing.
-  const kind = pick(kinds);
+  // Taught: the asked id names the kind that makes it. `kinds.length > 1` is
+  // the freeze — a topic with one kind never drew a choice, and skipping `pick`
+  // would move its numbers for nothing.
+  const asked = ID_KIND[wanted ?? ''];
+  const kind = kinds.length > 1 && asked !== undefined && kinds.includes(asked)
+    ? asked : pick(kinds);
   for (let tries = 0; tries < 4000; tries++) {
     const c = pick(BEARING_CONTEXTS);
     // which way round the third point lies: every bearing in the question, and
@@ -369,8 +383,8 @@ function twoSides(c: BearingContext, side: number): Q | null {
   };
 }
 
-export const BEARINGS_GENERATORS: Record<string, () => Q> = {
-  'Bearings with the Sine Rule': () => bearingsQuestion(['side']),
-  'Bearings with the Cosine Rule': () => bearingsQuestion(['angle']),
-  'Finding a Bearing': () => bearingsQuestion(['bearing', 'two-sides']),
+export const BEARINGS_GENERATORS: Record<string, Gen> = {
+  'Bearings with the Sine Rule': (w) => bearingsQuestion(['side'], w),
+  'Bearings with the Cosine Rule': (w) => bearingsQuestion(['angle'], w),
+  'Finding a Bearing': (w) => bearingsQuestion(['bearing', 'two-sides'], w),
 };

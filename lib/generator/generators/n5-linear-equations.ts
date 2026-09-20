@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd, nonZeroInt } from './utils';
 
 /**
@@ -356,13 +357,18 @@ function clearDenominators(shape: 1 | 2 | 3): Q {
   throw new Error('linear-equations.clear-denominators: no valid question found');
 }
 
-export const LINEAR_EQUATION_GENERATORS: Record<string, () => Q> = {
+export const LINEAR_EQUATION_GENERATORS: Record<string, Gen> = {
   'Solving Linear Equations': solveLinear,
   'Equations with Brackets': solveWithBracket,
   'Equations with Fractions': solveWithFractions,
   // Chosen once, outside the routine's retry loop, so the three arrangements
   // come out in equal thirds rather than in proportion to how often each
   // survives its guards.
-  'Clearing Denominators in an Equation': () =>
-    clearDenominators(getRandomInt(1, 3) as 1 | 2 | 3),
+  // Taught at the dispatch, where the shape is drawn: each shape stamps its
+  // own id, so the asked id names the shape.
+  'Clearing Denominators in an Equation': (w) => clearDenominators(
+    w === 'linear-equations.clear-denominators' ? 1
+    : w === 'linear-equations.clear-denominators-each-side' ? 2
+    : w === 'linear-equations.clear-denominators-linear-top' ? 3
+    : getRandomInt(1, 3) as 1 | 2 | 3),
 };

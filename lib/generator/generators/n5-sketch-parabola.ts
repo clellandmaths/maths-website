@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, nonZeroInt, formatNum } from './utils';
 import { sketchAxes, type SketchAxesSpec, type View, type Side } from '../diagrams/shapes/sketch-axes';
 import { renderScene } from '../diagrams/render';
@@ -153,7 +154,7 @@ const LABEL_PLANS: {
   { roots: ['above', 'above'], turningPoint: 'below', yIntercept: 'right' },
 ];
 
-function sketchFactorised(): Q | null {
+function sketchFactorised(wanted?: string): Q | null {
   const r1 = nonZeroInt(-6, 4);
   const r2 = r1 + 2 * getRandomInt(1, 5);       // an even gap, so the turning point is whole
   if (r2 > 7 || r1 === 0 || r2 === 0) return null;
@@ -186,7 +187,11 @@ function sketchFactorised(): Q | null {
    * `sketchCompletedSquare` above has its own `onAxes` and is left alone: it
    * cites 2026 P1 Q12, which is signed off.
    */
-  const onAxes = getRandomInt(0, 1) === 0;
+  // Taught: axes or no axes is the whole difference between 2022 P1 Q14 and
+  // 2018 P1 Q16, and each is its own id, so the asked id decides it.
+  const onAxes = wanted !== undefined
+    ? wanted === 'quadratics.sketch-factorised-axes'
+    : getRandomInt(0, 1) === 0;
 
   const view = windowFor(h, k, [{ x: r1, y: 0 }, { x: r2, y: 0 }, { x: 0, y: c }]);
   const plot = { kind: 'parabola' as const, a: 1, h, k };
@@ -269,15 +274,15 @@ function sketchFactorised(): Q | null {
 
 // ── dispatch ─────────────────────────────────────────────────────────────
 
-const tried = (name: string, make: () => Q | null): (() => Q) => () => {
+const tried = (name: string, make: (wanted?: string) => Q | null): Gen => (wanted) => {
   for (let i = 0; i < 4000; i++) {
-    const made = make();
+    const made = make(wanted);
     if (made) return made;
   }
   throw new Error(`${name}: no valid question found`);
 };
 
-export const SKETCH_PARABOLA_GENERATORS: Record<string, () => Q> = {
+export const SKETCH_PARABOLA_GENERATORS: Record<string, Gen> = {
   'Sketching a Parabola from Completed Square Form':
     tried('quadratics.sketch-completed-square', sketchCompletedSquare),
   'Sketching a Parabola from Factorised Form':

@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, nonZeroInt } from './utils';
 
 /**
@@ -256,8 +257,13 @@ function binomialTrinomial(): Q {
  * that exist, and each carries its own id so a press on 2023 P1 Q2 cannot
  * return 2025's.
  */
-function productPlusBracket(): Q {
-  const shape = getRandomInt(0, 2);              // 0 2018, 1 2023, 2 2025
+function productPlusBracket(wanted?: string): Q {
+  // Taught: the three shapes are the three papers and each stamps its own
+  // id, so the asked id names the shape.
+  const shape = wanted === 'expanding.product-plus-square' ? 1
+    : wanted === 'expanding.product-plus-linear' ? 2
+    : wanted === 'expanding.product-plus' ? 0
+    : getRandomInt(0, 2);              // 0 2018, 1 2023, 2 2025
   const squared = shape === 1;
   const quadratic = shape !== 2;
   for (let tries = 0; tries < 400; tries++) {
@@ -315,11 +321,11 @@ function productPlusBracket(): Q {
   throw new Error('expanding.product-plus: no valid question found');
 }
 
-export const EXPANDING_GENERATORS: Record<string, () => Q> = {
+export const EXPANDING_GENERATORS: Record<string, Gen> = {
   'Expanding a Single Bracket': single,
   'Expanding Two Single Brackets': twoSingles,
   'Expanding with a Term Outside': monomial,
   'Expanding Two Brackets': twoBinomials,
   'Expanding a Trinomial': binomialTrinomial,
-  'Expanding and Collecting': productPlusBracket,
+  'Expanding and Collecting': (w) => productPlusBracket(w),
 };

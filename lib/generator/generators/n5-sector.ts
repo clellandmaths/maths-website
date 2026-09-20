@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import { sector } from '../diagrams/shapes/sector';
 import { circleSegment } from '../diagrams/shapes/circle-segment';
@@ -329,9 +330,35 @@ function polygonSegment(): Q | null {
   };
 }
 
-export function sectorQuestion(kinds: Kind[]): Q {
-  // chosen once, so a rejected layout retries this kind rather than another
-  const kind = pick(kinds);
+/**
+ * **The inverse of the `variationId` stamps below** — which kind makes which
+ * id, so the routine can build the id it is handed instead of drawing and
+ * discarding until it lands on it.
+ *
+ * `-pi314` is not in here because it is not a kind: Paper 1 is a second flag
+ * on top of the kind, read from the id just below.
+ */
+const ID_KIND: Record<string, Kind> = {
+  'sector.area-angle': 'area-angle',
+  'sector.area-angle-pi314': 'area-angle',
+  'sector.area-arc': 'area-arc',
+  'sector.arc-angle': 'arc-angle',
+  'sector.arc-angle-pi314': 'arc-angle-major',
+  'sector.angle-arc': 'angle-arc',
+  'sector.angle-arc-reflex': 'angle-arc-reflex',
+  'sector.radius-arc': 'radius-arc',
+};
+
+export function sectorQuestion(kinds: Kind[], wanted?: string): Q {
+  // Taught: the asked id names the kind that makes it.
+  //
+  // `kinds.length > 1` is the freeze, not tidiness. A topic offering one kind
+  // never drew a choice, so there is nothing to teach it — but skipping `pick`
+  // takes one fewer random off the stream and moves its numbers for no reason.
+  // With one kind the pick returns that kind anyway.
+  const asked = ID_KIND[wanted ?? ''];
+  const kind = kinds.length > 1 && asked !== undefined && kinds.includes(asked)
+    ? asked : pick(kinds);
   // Paper 1 or Paper 2 is settled here too, for the same reason: re-rolling it
   // inside would let the easier one crowd out the other.
   //
@@ -345,8 +372,14 @@ export function sectorQuestion(kinds: Kind[]): Q {
    * loop's stream where it was.
    */
   const majorArc = kind === 'arc-angle-major';
+  // Taught as well, because Paper 1 is part of the id: the same kind stamps
+  // `-pi314` or not according to this flag, so an asked id settles it. The
+  // `&&` still short-circuits for every other kind, so no kind that never
+  // reached `getRandomInt` starts reaching it.
   const paper1 = majorArc || ((kind === 'area-angle' || kind === 'arc-angle')
-    && getRandomInt(0, 2) === 0);
+    && (wanted !== undefined
+      ? wanted.endsWith('-pi314')
+      : getRandomInt(0, 2) === 0));
   // **The area questions are minor sectors, because both their papers are.**
   // 2025 P2 Q6 is 170 degrees and 2016 P1 Q3 is 45; the owner's family ruling
   // puts major against minor among the pairs a variation may not toss a coin
@@ -750,7 +783,7 @@ function similarSectorsQuestion(): Q | null {
   };
 }
 
-export const SECTOR_GENERATORS: Record<string, () => Q> = {
+export const SECTOR_GENERATORS: Record<string, Gen> = {
   'A Sector Cut Out of a Triangle': () => {
     for (let i = 0; i < 4000; i++) {
       const q = sectorInTriangleQuestion();
@@ -779,12 +812,12 @@ export const SECTOR_GENERATORS: Record<string, () => Q> = {
     }
     throw new Error('segment: no valid question found');
   },
-  'Area of a Sector': () => sectorQuestion(['area-angle', 'area-arc']),
-  'Length of an Arc': () => sectorQuestion(['arc-angle']),
+  'Area of a Sector': (w) => sectorQuestion(['area-angle', 'area-arc'], w),
+  'Length of an Arc': (w) => sectorQuestion(['arc-angle'], w),
   // 2019 P1 Q4 - the major arc, pi as 3.14. Its own loop, so it cannot
   // disturb `sector.arc-angle` (2023 P2 Q3) the way an in-place fix did.
-  'Length of a Major Arc': () => sectorQuestion(['arc-angle-major']),
-  'Finding the Angle of a Sector': () => sectorQuestion(['angle-arc']),
-  'Finding the Reflex Angle of a Sector': () => sectorQuestion(['angle-arc-reflex']),
-  'Finding the Radius from an Arc': () => sectorQuestion(['radius-arc']),
+  'Length of a Major Arc': (w) => sectorQuestion(['arc-angle-major'], w),
+  'Finding the Angle of a Sector': (w) => sectorQuestion(['angle-arc'], w),
+  'Finding the Reflex Angle of a Sector': (w) => sectorQuestion(['angle-arc-reflex'], w),
+  'Finding the Radius from an Arc': (w) => sectorQuestion(['radius-arc'], w),
 };
