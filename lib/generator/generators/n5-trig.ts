@@ -376,13 +376,44 @@ function substituteTan(): Q {
 // algebraic one is National 5 factorising.
 
 function commonFactor(): Q {
-  const sinFirst = getRandomInt(0, 1) === 0;
+  /**
+   * **Cosine, and the coefficient runs to 12 - 2026-09-20, the owner's word on
+   * the enumerated-space sheet.**
+   *
+   * Both papers factor out a COSINE, and this drew a sine in about half its
+   * draws - measured over 900 per id, the answer was a cosine in 51-53%. The
+   * sine form is kept as a paperless practice sibling rather than dropped, so a
+   * worksheet built from the topic still meets it; that is the condition the
+   * owner set for splitting at all, and the tangent related-angle is the
+   * precedent.
+   *
+   * **Three draws before, three draws now, and that is deliberate.** This
+   * routine shares its topic draw loop with `substituteTan`, which serves
+   * 2016 P1 Q11 and 2018 P1 Q18. A discarded draw here moves those, so
+   * removing or adding a `getRandomInt` would move two unreviewed papers for
+   * no reason. The first draw used to choose sine against cosine; it now
+   * chooses the exam pair against the practice sibling, and the third widens
+   * in place. Same count, same order, so nothing outside these three ids
+   * shifts by a single question.
+   *
+   * **Why widening stops at 12, and why that is the honest ceiling.** The
+   * expression is `k f^p g^2 + k f^(p+2)`, factoring to `k f^p`. With the
+   * degree split and the function pinned, `k` is the only lever left - and it
+   * factors straight back out, so `3cos x sin^2 x + 3cos^3 x` and its seventh
+   * cousin are one question to a pupil. Going further inflates a count without
+   * adding a question. The only lever that would buy real variety is the
+   * factor power, and `p = 3` prints `cos^5 x`, which no N5 paper sets.
+   */
+  const practice = getRandomInt(0, 3) === 0;
   const odd = getRandomInt(0, 1) === 0;
-  const k = pick([1, 1, 2, 3, 4, 5]);          // 1 twice: the papers' own form
-  const [keep, other] = sinFirst
+  // 13 entries so 1 - the form both papers print - still lands about one draw
+  // in six, while the other eleven share the rest.
+  const k = pick([1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  // The exam pair factor a cosine; only the practice sibling factors a sine.
+  const [keep, other] = !practice
     ? [odd ? C : C2, S2]
     : [odd ? S : S2, C2];
-  const cubed = sinFirst
+  const cubed = !practice
     ? (odd ? '\\cos^{3}x^{\\circ}' : '\\cos^{4}x^{\\circ}')
     : (odd ? '\\sin^{3}x^{\\circ}' : '\\sin^{4}x^{\\circ}');
   // "cos x sin^2 x", not "sin^2 x cos x" — the paper leads with the factor
@@ -411,8 +442,9 @@ function commonFactor(): Q {
      * is a third place a fault can hide. Found by reading the draws during the
      * 2026 locked-year pass; the owner: *"Agree split by degree"*.
      */
-    variationId: odd ? 'trig-identities.common-factor-cubed'   // 2026 P2 Q12
-      : 'trig-identities.common-factor',                       // 2023 P2 Q13
+    variationId: practice ? 'trig-identities.common-factor-sine-practice'
+      : odd ? 'trig-identities.common-factor-cubed'              // 2026 P2 Q12
+      : 'trig-identities.common-factor',                         // 2023 P2 Q13
     // **Both papers' instructions, because they do not use the same one.**
     // 2023 P2 Q13 says "Simplify ... Show your working."; 2026 P2 Q12 says
     // "Express the following in its simplest form:" and asks for no working.
@@ -427,13 +459,13 @@ function commonFactor(): Q {
     // says "Express the following in its simplest form:" and asks for none.
     // The marks are the same either way - the first is for factorising or
     // substituting, which a bare answer cannot earn whichever way it is asked.
-    questionLines: odd
+    questionLines: odd && !practice
       ? ['Express the following in its simplest form:',
          `$${co}${product} + ${co}${cubed}$`]
       : [`Simplify $${co}${product} + ${co}${cubed}$.`, WORKING],
     boardQuestionLines: [`Simplify $${co}${product} + ${co}${cubed}$`],
     solutionSteps: [
-      `<strong>1.</strong> Take out the common factor $${factored}$:<br><br>$${factored}\\left(${other} + ${odd ? (sinFirst ? C2 : S2) : keep}\\right)$`,
+      `<strong>1.</strong> Take out the common factor $${factored}$:<br><br>$${factored}\\left(${other} + ${odd ? (!practice ? C2 : S2) : keep}\\right)$`,
       `<strong>2.</strong> The bracket is $${S2} + ${C2} = 1$:<br><br>$${factored} \\times 1 = ${factored}$`,
     ],
     stepMarks: [1, 1],

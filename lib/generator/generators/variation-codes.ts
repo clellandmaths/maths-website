@@ -227,6 +227,7 @@ export const VARIATION_CODES: Record<string, string> = {
   'trig-identities.simplify':               '3wch5',
   'trig-identities.common-factor':          'cm0a1',
   'trig-identities.common-factor-cubed':   '466vj',
+  'trig-identities.common-factor-sine-practice': '2yz91',
   'trig-identities.expand':                 'ygt6q',
   'trig-identities.fractions':              'ruobh',
   'trig-identities.given-form':             'm0h3o',

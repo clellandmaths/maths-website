@@ -3045,6 +3045,19 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // different powers, so one variation. A whole-number coefficient widens the
   // pool without changing it: taking a numerical factor out alongside an
   // algebraic one is National 5 factorising, and it comes straight back out.
+  'trig-identities.common-factor-sine-practice': {
+    topic: 'Simplifying Trigonometric Expressions',
+    // No paper stands behind this. Both exam questions on this routine factor
+    // out a COSINE, and the routine used to draw a sine in about half its
+    // draws. Pinned to cosine on 2026-09-20; the sine form is declared here
+    // rather than dropped so a worksheet built from the topic still meets it,
+    // which is the access the owner made the condition of splitting.
+    difficulty: 'skill', strategy: 'curated-pool', source: 'zeta',
+    basedOn: [],
+    answerShape: 'expression',
+    webTopics: ['Trigonometric identities'],
+    skill: 'Take out the common factor, then use the square identity',
+  },
   // The degree-3 half of the same routine, split off on 2026-09-20.
   'trig-identities.common-factor-cubed': {
     topic: 'Simplifying Trigonometric Expressions',
