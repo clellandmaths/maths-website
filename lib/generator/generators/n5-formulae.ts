@@ -269,7 +269,11 @@ function subjectWithRoot(wanted?: string): Q {
      * branch does not otherwise use it - so it names the sign. That is the
      * trick 2022 P1 Q2's cube constant uses, for the same reason.
      */
-    const k = getRandomInt(2, 12);
+    // **Widened again 2026-09-21, at the owner's word on the 2026 P1 sheet.**
+    // 2 to 12 against two signs is exactly 22 questions, which is what the
+    // card reported. 2 to 20 makes 38. No extra random is drawn, so nothing
+    // that shares this routine moves for it.
+    const k = getRandomInt(2, 20);
     const plus = insideRoot;
     const sign = plus ? '+' : '-';
     const undo = plus ? 'Subtract' : 'Add';
@@ -530,12 +534,30 @@ function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
 const INEQ_WORD = ['inequality', 'inequation'];
 const INEQ_LEAD = ['Solve algebraically the', 'Solve, algebraically, the'];
 
-function inequalityBrackets(): Q {
+/**
+ * **Which way each paper points.** Four of the five say `<` and 2017 P1 Q8
+ * says `>`, so pinning the lot to `<` - which is what was first recommended,
+ * from having read two of them - would have made 2017 P1 Q8 wrong. Read all
+ * the cited papers before capping anything: that rule is in CLAUDE.md and
+ * this is the second time it has earned its place.
+ */
+const REL_OF: Record<string, string> = {
+  'inequalities.brackets': '\\lt',            // 2026 P1 Q4
+  'inequalities.brackets-2024': '\\lt',       // 2024 P2 Q4
+  'inequalities.brackets-pre2023': '\\lt',    // 2018 P2 Q4
+  'inequalities.brackets-2017': '\\gt',       // 2017 P1 Q8
+  'inequalities.brackets-2015': '\\lt',       // 2015 P1 Q2
+};
+
+function inequalityBrackets(wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 500; tries++) {
     // x in all ten *Linear equations and inequations* papers; `y` and `p` in
     // none. An inequality is solved for x for the same reason an equation is.
     const v = 'x';
-    const rel = pick(['\\lt', '\\gt']);
+    // Taught: a paper points one way and the clone should point that way
+    // too. The owner, on the 2026 P1 sheet: *"Agree"*. Nothing asked - a
+    // topic sheet - keeps the even draw, so browsing still meets both.
+    const rel = REL_OF[asked ?? ''] ?? pick(['\\lt', '\\gt']);
     const bracketLeft = getRandomInt(0, 1) === 0;
     // one in five should end with a negative x coefficient, so the sign flips —
     // that is 2015 P1 Q2, and it is where the marks are lost
@@ -697,6 +719,6 @@ export const FORMULA_GENERATORS: Record<string, Gen> = {
   // 2019 P1 Q7 - its own loop, so its denominator can run 2 to 30 without
   // moving 2023 P2 Q7 or 2025 P2 Q9, which share the other one.
   'Changing the Subject Inside a Bracket': (w) => subjectFractionCoefficient(true, w),
-  'Solving Inequalities': inequalityBrackets,
+  'Solving Inequalities': (w, a) => inequalityBrackets(w, a),
   'Inequalities with Fractions': inequalityFractions,
 };

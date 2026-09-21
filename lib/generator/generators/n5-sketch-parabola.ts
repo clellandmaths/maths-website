@@ -58,14 +58,30 @@ function figureFor(spec: SketchAxesSpec): string | null {
 
 // ── y = (x - h)^2 + k, no roots — 2016 P1 Q10, 2026 P1 Q12 ───────────────
 
-function sketchCompletedSquare(): Q | null {
+function sketchCompletedSquare(wanted?: string, asked?: string): Q | null {
   const h = nonZeroInt(-5, 5);
   const k = getRandomInt(1, 8);                 // positive, so there are no roots
   const c = h * h + k;                          // where it cuts the y-axis
   if (c > 40) return null;
   const sign = h < 0 ? `+ ${-h}` : `- ${h}`;
   const equation = `y = (x ${sign})^{2} + ${k}`;
-  const onAxes = getRandomInt(0, 1) === 0;      // 2026 provides axes, 2016 does not
+  /**
+   * **Two papers, and the coin was deciding which one a pupil got.**
+   *
+   * 2026 P1 Q12 says "On the AXES BELOW, sketch the graph", supplies them,
+   * and its scheme pays for "7 marked on the y-axis" - marks made ON the
+   * sketch. 2016 P1 Q10 says only "Sketch the graph of..." and supplies
+   * nothing. Measured over 240 draws this split 53/47, so over half the
+   * time a pupil asking for 2026 P1 Q12 was handed 2016 P1 Q10's question
+   * with nowhere to draw. The owner, on the 2026 P1 sheet: *"Yes split"*.
+   *
+   * Both papers resolve to one clone, so `wanted` is the same string for
+   * each and cannot separate them. `asked` is the id as the paper asked for
+   * it, which is the whole reason it exists.
+   */
+  const onAxes = asked === 'quadratics.sketch-completed-square' ? true
+    : asked === 'quadratics.sketch-completed-square-pre2023' ? false
+    : getRandomInt(0, 1) === 0;      // nothing asked: a topic sheet, keep both
 
   const view = windowFor(h, k, [{ x: 0, y: c }]);
   const plot = { kind: 'parabola' as const, a: 1, h, k };
@@ -85,10 +101,14 @@ function sketchCompletedSquare(): Q | null {
   const blank = onAxes ? figureFor({ view, plot: { kind: 'none' } }) : '';
   if (!partial || !complete || blank === null) return null;
 
+  // **The axes sit under the whole question, not between its two sentences.**
+  // That is where 2026 P1 Q12 prints them, it is what the owner asked for
+  // - *"ensure axes are below the question in generator"* - and it is what
+  // the factorised sibling below already did.
   const prose = [
     `${onAxes ? 'On the axes below, sketch' : 'Sketch'} the graph of $${equation}$.`,
-    ...(onAxes ? [blank] : []),
     'On your sketch, show clearly the coordinates of the turning point and the point of intersection with the y-axis.',
+    ...(onAxes ? [blank] : []),
   ];
   const steps = [
     `<strong>1.</strong> The bracket is squared, so it is never negative and is smallest when it is zero — at $x = ${h}$. There $y = ${k}$, so the turning point is:<br><br>$${coord(h, k)}$`,
@@ -274,9 +294,11 @@ function sketchFactorised(wanted?: string): Q | null {
 
 // ── dispatch ─────────────────────────────────────────────────────────────
 
-const tried = (name: string, make: (wanted?: string) => Q | null): Gen => (wanted) => {
+const tried = (
+  name: string, make: (wanted?: string, asked?: string) => Q | null,
+): Gen => (wanted, asked) => {
   for (let i = 0; i < 4000; i++) {
-    const made = make(wanted);
+    const made = make(wanted, asked);
     if (made) return made;
   }
   throw new Error(`${name}: no valid question found`);
