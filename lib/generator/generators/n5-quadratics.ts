@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, gcd, nonZeroInt } from './utils';
 import { fmt, type Poly } from './n5-expanding';
 
@@ -162,7 +163,7 @@ function turningPoint(): Q {
 // roots" or "real and distinct roots". The other two cases have their own
 // expected answers.
 
-function discriminant(): Q {
+function discriminant(wanted?: string): Q {
   /**
    * **The cap belongs to 2025 P1 Q11 alone.**
    *
@@ -179,7 +180,12 @@ function discriminant(): Q {
    * Chosen once, above the loop, so a rejected draw cannot skew which of the
    * two ids comes out - `docs/diagram-questions.md` section 2.
    */
-  const capped = getRandomInt(0, 1) === 0;
+  // Taught: the cap belongs to 2025 P1 Q11 alone and carries its own id, so
+  // the asked id decides it — which is exactly the separation the note
+  // above was written to protect.
+  const capped = wanted !== undefined
+    ? wanted === 'quadratics.discriminant-capped'
+    : getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 400; tries++) {
   // **Always the function form.** All four cited papers word it identically -
   // "Determine the nature of the roots of the function f(x) = ..." - and this
@@ -258,12 +264,19 @@ function discriminant(): Q {
 // Every paper example asks for a rounded answer, and the rounding varies by
 // diet: one decimal place, two decimal places, two significant figures.
 
-function quadraticFormula(): Q {
-  const rounding = pick([
+function quadraticFormula(wanted?: string): Q {
+  const ROUNDINGS = [
     { dp: 1, phrase: 'Give your answers correct to one decimal place.' },
     { dp: 2, phrase: 'Give your answers correct to two decimal places.' },
     { sf: 2, phrase: 'Give your answers correct to two significant figures.' },
-  ] as const);
+  ] as const;
+  // Taught: the rounding instruction IS the id. 2022 P2 Q7 asks for two
+  // significant figures and 2024 P2 Q8 for two decimal places — a pupil meets
+  // two different questions, so the draw must not decide which one they get.
+  const rounding = wanted === 'quadratics.formula-sigfigs' ? ROUNDINGS[2]
+    : wanted === 'quadratics.formula-2dp' ? ROUNDINGS[1]
+    : wanted === 'quadratics.formula' ? ROUNDINGS[0]
+    : pick([...ROUNDINGS]);
 
   for (let tries = 0; tries < 400; tries++) {
     const v = pick(VARS);
@@ -396,10 +409,10 @@ function completeSquareSurdRoots(): Q {
   throw new Error('quadratics.complete-square-surd-roots: no valid question found');
 }
 
-export const QUADRATIC_GENERATORS: Record<string, () => Q> = {
+export const QUADRATIC_GENERATORS: Record<string, Gen> = {
   'Completing the Square': completeSquare,
   'Turning Point of a Parabola': turningPoint,
-  'The Discriminant': discriminant,
-  'The Quadratic Formula': quadraticFormula,
+  'The Discriminant': (w) => discriminant(w),
+  'The Quadratic Formula': (w) => quadraticFormula(w),
   'Completing the Square with Surd Roots': completeSquareSurdRoots,
 };

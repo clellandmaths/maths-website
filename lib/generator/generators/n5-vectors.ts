@@ -590,9 +590,12 @@ function magnitudeSurd(): Q {
   throw new Error('vectors.magnitude-surd: no valid question found');
 }
 
-function magnitude(): Q {
+function magnitude(wanted?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
-    const difference = getRandomInt(1, 3) === 1;   // the |a - b| shape
+    // Taught: the |a - b| shape is its own id, so the asked id decides it.
+    const difference = wanted !== undefined
+      ? wanted === 'vectors.magnitude-difference'
+      : getRandomInt(1, 3) === 1;   // the |a - b| shape
     const dim = difference ? (getRandomInt(0, 1) === 0 ? 2 : 3) : 3;
     // The magnitude papers name their vector u, v, r, p or d - never `a`.
     const name = pick(['u', 'v', 'r', 'p', 'd']);
@@ -910,7 +913,7 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
 };
 
 export const VECTOR_GENERATORS: Record<string, Gen> = {
-  'Magnitude of a Vector': magnitude,
+  'Magnitude of a Vector': (w) => magnitude(w),
   'Magnitude as a Surd': magnitudeSurd,
   'A Pathway in Components': componentsMidpoint,
   'Vector Components': components,

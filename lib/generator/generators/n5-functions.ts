@@ -172,7 +172,7 @@ function evaluate(wanted?: string): Q {
 // and not three: "set up the equation" then "state the value". A third step
 // would be a hint the exam does not pay for.
 
-function findUnknown(): Q {
+function findUnknown(wanted?: string): Q {
   const fn = pick(FN);
   // The letter the question solves for is its own pool, separate from the
   // function's name: 2018 and 2025 write "f(a) = 73, calculate a" and 2022
@@ -189,7 +189,11 @@ function findUnknown(): Q {
 
   const answer = nonZeroInt(-9, 15);
   const target = m * answer + c;
-  const twoPart = getRandomInt(0, 1) === 0;         // the 2025 P1 Q7 shape
+  // Taught: the two-part shape is 2025 P1 Q7 and has its own id, so the
+  // asked id decides it rather than a coin.
+  const twoPart = wanted !== undefined
+    ? wanted === 'functions.evaluate-then-solve'
+    : getRandomInt(0, 1) === 0;         // the 2025 P1 Q7 shape
   const evalAt = getRandomInt(2, 9);
   const evalOut = m * evalAt + c;
 
@@ -315,6 +319,6 @@ function evaluateTrig(): Q {
 
 export const FUNCTION_GENERATORS: Record<string, Gen> = {
   'Evaluating a Function': evaluate,
-  'Finding an Unknown in a Function': findUnknown,
+  'Finding an Unknown in a Function': (w) => findUnknown(w),
   'Evaluating a Trigonometric Function': evaluateTrig,
 };

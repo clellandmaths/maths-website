@@ -226,8 +226,15 @@ function subjectInNumerator(wanted?: string): Q {
 //   L = sqrt(4kt - p)  to k  ->  k = (L^2 + p)/(4t)
 //   y = g sqrt(x) + h  to x  ->  x = ((y - h)/g)^2
 
-function subjectWithRoot(): Q {
+function subjectWithRoot(wanted?: string): Q {
   const insideRoot = getRandomInt(0, 1) === 0;
+  // Taught: the two-step shape is 2026 P1 Q8 and is worth two marks where
+  // the others are worth three — its own id for that reason, so the asked
+  // id decides it. Drawn here rather than in the `if` below so that the
+  // stream is the same shape whether or not an id was asked for.
+  const twoStep = wanted !== undefined
+    ? wanted === 'change-subject.root-two-step'
+    : getRandomInt(1, 3) === 1;
   const [v, subj, a, b] = letters(4);
 
   // 2026 P1 Q8 — P = sqrt(T - 3L) to T. The subject sits inside the root with
@@ -239,7 +246,7 @@ function subjectWithRoot(): Q {
   //
   // 2026 has no published scheme. One mark per operation is the rule every
   // other change-of-subject scheme in the set follows, so two is the reading.
-  if (getRandomInt(1, 3) === 1) {
+  if (twoStep) {
     /**
      * **Widened 2026-09-20, on the owner's word at the 2026 locked-year pass.**
      *
@@ -680,7 +687,7 @@ function inequalityFractions(): Q {
 
 export const FORMULA_GENERATORS: Record<string, Gen> = {
   'Changing the Subject': (w) => subjectInNumerator(w),
-  'Changing the Subject with Roots': subjectWithRoot,
+  'Changing the Subject with Roots': (w) => subjectWithRoot(w),
   // Wrapped, not bare. Dispatch now hands the routine the variation id the
   // caller asked for, and a bare reference would take that string as
   // `bracketOnly` - which is truthy. frozen caught it on 2023 P2 Q7 and

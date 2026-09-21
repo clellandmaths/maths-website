@@ -466,8 +466,12 @@ function multiply(): Q {
 //
 // Three questions, three genuinely different shapes, so all three are built.
 
-function divide(): Q {
-  const shape = pick(['monomial', 'factorise', 'powers'] as const);
+function divide(wanted?: string): Q {
+  // Taught: `powers` is the only shape that makes `-simple`; the other two
+  // both make `divide`, so asking for it keeps the choice between them.
+  const shape = wanted === 'alg-fractions.divide-simple' ? 'powers' as const
+    : wanted === 'alg-fractions.divide' ? pick(['monomial', 'factorise'] as const)
+    : pick(['monomial', 'factorise', 'powers'] as const);
 
   if (shape === 'monomial') {
     // 2015 P2 Q7: (5t/s) / (t/2s^2) = 10s
@@ -660,7 +664,7 @@ export const ALG_FRACTION_GENERATORS: Record<string, Gen> = {
   'Subtracting Algebraic Fractions': (wanted) =>
     addSubtract(true, getRandomInt(0, 1) === 0, wanted),
   'Multiplying Algebraic Fractions': multiply,
-  'Dividing Algebraic Fractions': divide,
+  'Dividing Algebraic Fractions': (w) => divide(w),
   'Dividing with a Difference of Squares': divideFactoriseNumerator,
   'Gradient as an Algebraic Fraction': gradientContext,
 };
