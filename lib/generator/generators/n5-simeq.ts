@@ -47,7 +47,7 @@ const num = (x: number): string => `${Math.round(x * 1000) / 1000}`;
  * scaling to eliminate — the markscheme's first mark is "correct scaling", so a
  * pair where the coefficients already match would not test the same thing.
  */
-function buildPair(x0: number, y0: number) {
+function buildPair(x0: number, y0: number, bothScaled = false) {
   for (let tries = 0; tries < 400; tries++) {
     // **The first variable's coefficient is positive in both equations, and it
     // is never 1.** All four papers are that shape:
@@ -66,6 +66,25 @@ function buildPair(x0: number, y0: number) {
     const a2 = getRandomInt(2, 7), b2 = nonZeroInt(-7, 7);
     if (a1 * b2 - a2 * b1 === 0) continue;                 // no unique solution
     if (Math.abs(a1) === Math.abs(a2) || Math.abs(b1) === Math.abs(b2)) continue;
+    /**
+     * **Both equations must need scaling.** The owner, on the 2024 P1 sheet:
+     * *"Agreed, needs to have both needing scaled."*
+     *
+     * Where one coefficient already divides the other, a pupil scales one
+     * equation and adds — and the first mark, which this paper's scheme pays
+     * for producing BOTH `4p - 14r = 22` and `21p + 14r = 28`, costs a single
+     * multiplication. It happened in 173 draws of 300.
+     *
+     * Every paper this routine serves sets a pair needing both scaled, but
+     * only 2024 P1 Q7 is released to change — so this is keyed on the asked
+     * id and off by default. 2015 P1 Q11, 2018 P1 Q3 and 2023 P1 Q3 draw
+     * exactly as they did.
+     */
+    if (bothScaled) {
+      const divides = (m: number, n: number) =>
+        Math.abs(m) % Math.abs(n) === 0 || Math.abs(n) % Math.abs(m) === 0;
+      if (divides(a1, a2) || divides(b1, b2)) continue;
+    }
     const c1 = a1 * x0 + b1 * y0, c2 = a2 * x0 + b2 * y0;
     if (!Number.isInteger(c1) || !Number.isInteger(c2)) continue;
     if (Math.abs(c1) > 60 || Math.abs(c2) > 60) continue;
@@ -110,7 +129,38 @@ function eliminationSteps(
 // constants — which is the only way to guarantee the answer is presentable.
 // 2018 P1 Q3's answer is x = 1/2, so a half is allowed occasionally.
 
-function solveGiven(): Q {
+/**
+ * **Which papers require both equations scaled.**
+ *
+ * The owner, after the 2024 P1 sheet: *"if it affects papers still to be
+ * reviewed then we can widen now as long as the markscheme for those papers
+ * requires both to be scaled."* Each was read before being added:
+ *
+ *   2024 P1 Q7   `simeq.solve-given`          2p - 7r = 11, 3p + 2r = 4
+ *                scheme: 4p - 14r = 22 AND 21p + 14r = 28
+ *   2015 P1 Q11  `simeq.solve-given-2015`     3x + 2y = 17, 2x + 5y = 4
+ *                scheme: 6x + 4y = 34 AND 6x + 15y = 12
+ *   2018 P1 Q3   `simeq.solve-given-pre2023`  4x + 5y = -3, 6x - 2y = 5
+ *                scheme: "8x + 10y = -6 OR 30x - 10y = 25" - the `or` offers
+ *                two evidence lines, not two routes: matching y is x2 and x5,
+ *                matching x is x3 and x2, and both scale both equations.
+ *
+ * **2023 P1 Q3 is deliberately absent, and its turn is already decided.** Its
+ * markscheme requires both as well (10x + 15y = 40 and 10x + 4y = -4), and it
+ * still draws a one-scaling system in 135 draws of 240. It is left out only
+ * because it is SIGNED OFF and the owner's condition named papers still to be
+ * reviewed — *"I will extend to 2023 when I get there as we are re reviewing
+ * anyway"*. Add `'simeq.solve-given-2023'` below when 2023 is revisited; it
+ * will move a frozen question, which is what that review is for.
+ */
+const BOTH_SCALED = new Set([
+  'simeq.solve-given',           // 2024 P1 Q7
+  'simeq.solve-given-2015',      // 2015 P1 Q11
+  'simeq.solve-given-pre2023',   // 2018 P1 Q3
+]);
+
+function solveGiven(_wanted?: string, asked?: string): Q {
+  const bothScaled = asked !== undefined && BOTH_SCALED.has(asked);
   for (let tries = 0; tries < 200; tries++) {
     // The four bare "solve the system" papers are x/y three times and p/r once
     // - 2024 P1 Q7 is the p/r one. `a`/`b` and `m`/`n` are ours and appear in
@@ -120,7 +170,7 @@ function solveGiven(): Q {
     const half = getRandomInt(1, 6) === 1;                 // the 2018 P1 Q3 shape
     const x0 = half ? nonZeroInt(-9, 13) / 2 : nonZeroInt(-8, 9);
     const y0 = nonZeroInt(-8, 9);
-    const p = buildPair(x0, y0);
+    const p = buildPair(x0, y0, bothScaled);
     if (!p) continue;
 
     return {

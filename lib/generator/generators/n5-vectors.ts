@@ -60,7 +60,7 @@ function frac(n: number, d: number): string {
 
 // ── combine two vectors — 2014 P1 Q4, 2016 P1 Q1, 2024 P1 Q4 ─────────────
 
-function components(wanted?: string): Q {
+function components(wanted?: string, asked?: string): Q {
   // Taught for docs/one-question-one-generator.md: the id the caller
   // asked for decides this, and the draw is only the fallback for a
   // topic sheet, which names none.
@@ -108,7 +108,29 @@ function components(wanted?: string): Q {
     // before the loop, so the mix is even rather than whatever survives.
     const k1 = half ? 0.5 : getRandomInt(2, 4);
     const k2 = 1;
-    const minus = getRandomInt(0, 1) === 0;
+    /**
+     * **Adding and subtracting are two different questions.** The owner, on
+     * the 2024 P1 sheet: *"Agreed"*, against the measurement that the coin
+     * toss here handed a pupil the wrong paper's arithmetic in 141 draws of
+     * 300.
+     *
+     *   2024 P1 Q4   3a + b    -> `vectors.components`
+     *   2014 P1 Q4   2u - v    -> `vectors.components-pre2023`
+     *   2016 P1 Q1   1/2 p + q -> `vectors.components-half`
+     *
+     * Every mechanical check reads these as one form - same layout, same
+     * instruction, the same LaTeX - and only the operation differs. That is
+     * the 2025 P2 Q3 fault, and this is the same repair: the id the caller
+     * asked for decides it, and the draw survives only as the fallback for a
+     * topic sheet, which names no id.
+     *
+     * `asked` and not `wanted`: 2014's id is an ALIAS of 2024's, so both
+     * arrive here with the same `wanted` and only the asked id tells them
+     * apart.
+     */
+    const minus = asked === 'vectors.components' ? false        // 2024 P1 Q4
+      : asked === 'vectors.components-pre2023' ? true           // 2014 P1 Q4
+      : getRandomInt(0, 1) === 0;
 
     // a half scalar needs even components, or the answer is not whole
     const step = half ? 2 : 1;

@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 
 /** "a = b", or just "a" when the simplification changed nothing. */
 const orSame = (raw: string, simplified: string): string =>
@@ -91,6 +92,16 @@ interface LineContext {
    * scoring 106 in the final.
    */
   cap?: number;
+  /**
+   * **Offered only to the id named here.**
+   *
+   * Adding a context to this shared list widens the pool of every question the
+   * routine serves, and one of them — 2026 P1 Q6 — is signed off. So a context
+   * added for one paper carries that paper's id and is invisible to the rest,
+   * which keeps their pools byte-identical. Leave it unset for a context that
+   * belongs to everything, as all the original twelve do.
+   */
+  only?: string;
 }
 
 const CONTEXTS: LineContext[] = [
@@ -115,6 +126,48 @@ const CONTEXTS: LineContext[] = [
     point: (l, x, y) => `Point $${l}$ represents a competitor who has been driving for ${x} minutes and is ${y} kilometres from the finishing line.`,
     estimate: x => `Estimate how far a competitor is from the finishing line after ${x} minutes.`,
     band: [2, 14], base: [24, 40], slope: [-3, -1] },
+  // ── falling scattergraphs added for 2024 P1 Q9 ──────────────────────────
+  //
+  // Pinning that question to a falling line left it two stories out of eight,
+  // so a pupil pressing "another like this" met the car rally or the running
+  // club and nothing else. The owner: *"I would like more contexts that Q9,
+  // ensure that the numbers chosen for the contexts make sense."*
+  //
+  // Each carries `only`, so it is offered to 2024 P1 Q9 and to nothing else -
+  // 2026 P1 Q6 is signed off and shares this routine.
+  //
+  // The intercept range is the value at x = 0, which for a falling line is the
+  // largest the quantity gets, and the bands are set so the line is still
+  // above zero at the far end of the plotted range. Each was checked by
+  // drawing it: the numbers below are what a pupil actually reads off.
+  { story: 'A teacher records the number of hours each pupil in her class spent watching television in a week, and their mark in a test. The scattergraph shows the relationship between the time spent watching television, $H$ hours, and the test mark, $M$.',
+    scatter: true, only: 'straight-line.best-fit-2024',
+    x: { letter: 'H', caption: 'Television (hours)' },
+    y: { letter: 'M', caption: 'Test mark' },
+    point: (l, x, y) => `Point $${l}$ represents a pupil who watched television for ${x} hours and scored ${y} in the test.`,
+    estimate: x => `Estimate the test mark of a pupil who watched television for ${x} hours.`,
+    band: [2, 20], base: [70, 95], slope: [-3, -1], cap: 100 },
+  { story: 'A garage lists the cars it has for sale. The scattergraph shows the relationship between the age of a car, $A$ years, and its value, $V$ thousand pounds.',
+    scatter: true, only: 'straight-line.best-fit-2024',
+    x: { letter: 'A', caption: 'Age (years)' },
+    y: { letter: 'V', caption: 'Value (thousand pounds)' },
+    point: (l, x, y) => `Point $${l}$ represents a car which is ${x} years old and worth ${y} thousand pounds.`,
+    estimate: x => `Estimate the value of a car which is ${x} years old.`,
+    band: [1, 10], base: [16, 26], slope: [-3, -1] },
+  { story: 'A cafe records the number of hot chocolates it sells each day. The scattergraph shows the relationship between the temperature, $T$ degrees Celsius, and the number of hot chocolates sold, $N$.',
+    scatter: true, only: 'straight-line.best-fit-2024',
+    x: { letter: 'T', caption: 'Temperature (degrees)' },
+    y: { letter: 'N', caption: 'Hot chocolates' },
+    point: (l, x, y) => `Point $${l}$ represents a day when the temperature was ${x} degrees Celsius and ${y} hot chocolates were sold.`,
+    estimate: x => `Estimate the number of hot chocolates sold on a day when the temperature is ${x} degrees Celsius.`,
+    band: [2, 16], base: [32, 48], slope: [-3, -1] },
+  { story: 'A class records how long it has been since each pupil last charged their phone. The scattergraph shows the relationship between the time since charging, $T$ hours, and the battery remaining, $B$ per cent.',
+    scatter: true, only: 'straight-line.best-fit-2024',
+    x: { letter: 'T', caption: 'Time since charging (hours)' },
+    y: { letter: 'B', caption: 'Battery remaining (per cent)' },
+    point: (l, x, y) => `Point $${l}$ represents a phone which was charged ${x} hours ago and has ${y} per cent of its battery remaining.`,
+    estimate: x => `Estimate the battery remaining in a phone which was charged ${x} hours ago.`,
+    band: [1, 14], base: [85, 100], slope: [-6, -3], cap: 100 },
   { story: 'A teacher records the marks scored by her class in the prelim exam and the final exam. The scattergraph shows the relationship between the prelim mark, $P$, and the final mark, $F$.',
     scatter: true,
     x: { letter: 'P', caption: 'Prelim mark' },
@@ -300,7 +353,11 @@ function bestFitOnGridQuestion(): Q | null {
   // Both papers are scattergraphs, and a ruling under an exact relationship —
   // a taxi fare — would invite reading the fare straight off the paper instead
   // of from the equation the question asks for.
-  const ctx = pick(CONTEXTS.filter(c => c.scatter));
+  // `only` contexts belong to the one question they were added for. This
+  // routine is a different variation with its own signed-off papers — 2023 P1
+  // Q7 and 2019 P1 Q6 — and `frozen` caught both moving the moment four
+  // contexts were added to the shared list for 2024 P1 Q9.
+  const ctx = pick(CONTEXTS.filter(c => c.scatter && c.only === undefined));
 
   const xSteps = rulings(ctx.band[1] * 1.2);
   const reach = (ctx.base[0] + ctx.base[1]) / 2
@@ -471,7 +528,7 @@ function bestFitOnGridQuestion(): Q | null {
  * the prose already says "line of best fit" or "the line" according to the
  * context's own `scatter`.
  */
-export function bestFitQuestion(scatter: boolean): Q | null {
+export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   // The gradient, as a fraction in lowest terms. Mostly whole, because most of
   // the papers are — but 2018 is 3/2 and 2026 is 2/3, and the 2018 scheme
   // refuses the last mark for a gradient turned into a decimal, so the
@@ -486,7 +543,25 @@ export function bestFitQuestion(scatter: boolean): Q | null {
   // fractional gradient; one clone in twenty did, because the fractional
   // attempts nearly all landed on a context that could not hold one. Picking
   // the context from those that can makes the rate the papers' rate.
-  const kind = CONTEXTS.filter(c => c.scatter === scatter);
+  /**
+   * **2024 P1 Q9's line falls.** The owner, on the 2024 P1 sheet: *"Yes pin to
+   * a falling line, leave the 1 3% of the time. Ensure it only affects this
+   * paper."*
+   *
+   * It asks for the distance still to run against time driven, so D drops as
+   * T rises and the gradient is -2. Read off the answers of 300 draws the
+   * clone rose in 252 of them: the other three papers on this routine all
+   * rise, and the clone had settled into their shape.
+   *
+   * Keyed on the ASKED id, because `straight-line.best-fit-2024` is an alias
+   * of `straight-line.best-fit` and both reach here with the same `wanted` -
+   * and `straight-line.best-fit` is 2026 P1 Q6, which is signed off. Its pool
+   * is untouched, as are 2014 P1 Q6's and 2016 P1 Q5's.
+   */
+  const falling = asked === 'straight-line.best-fit-2024';
+  const kind = CONTEXTS.filter(c => c.scatter === scatter
+    && (c.only === undefined || c.only === asked)
+    && (!falling || Math.max(c.slope[0], c.slope[1]) < 0));
   const pool = q === 1 ? kind : kind.filter(c =>
     Math.min(Math.abs(c.slope[0]), Math.abs(c.slope[1])) * q <= 8);
   if (!pool.length) return null;
@@ -704,17 +779,27 @@ export function lineThroughMarkedPointsQuestion(): Q | null {
 
 // ── dispatch ─────────────────────────────────────────────────────────────
 
-const tried = (name: string, make: () => Q | null): (() => Q) => () => {
+/**
+ * The wrapper passes the asked id down. It used to drop both arguments, which
+ * was invisible until a paper needed telling apart from the siblings on its
+ * clone: `straight-line.best-fit-2024` is an ALIAS of `straight-line.best-fit`,
+ * so both arrive with the same `wanted` and only `asked` separates them.
+ * Routines that ignore the arguments are unaffected.
+ */
+const tried = (
+  name: string,
+  make: (wanted?: string, asked?: string) => Q | null,
+): Gen => (wanted, asked) => {
   for (let i = 0; i < 6000; i++) {
-    const made = make();
+    const made = make(wanted, asked);
     if (made) return made;
   }
   throw new Error(`${name}: no valid question found`);
 };
 
-export const LINE_GRAPH_GENERATORS: Record<string, () => Q> = {
+export const LINE_GRAPH_GENERATORS: Record<string, Gen> = {
   'The Equation of a Line of Best Fit':
-    tried('straight-line.best-fit', () => bestFitQuestion(true)),
+    tried('straight-line.best-fit', (_w, asked) => bestFitQuestion(true, asked)),
   'The Equation of a Line from a Graph':
     tried('straight-line.exact-line', () => bestFitQuestion(false)),
   'A Line of Best Fit on a Grid': tried('straight-line.best-fit-grid', bestFitOnGridQuestion),

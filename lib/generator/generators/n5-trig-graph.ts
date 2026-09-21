@@ -184,7 +184,24 @@ function amplitudeAndCycles(wanted?: string): Q | null {
   if (scaled && wanted !== undefined && wanted !== (cosineForm
     ? 'trig-graphs.amplitude-period-cosine'
     : 'trig-graphs.amplitude-period')) return null;
-  const askInParts = scaled ? !cosineForm : split;
+  /**
+   * **2024 P1 Q8 asks in lettered parts, and its scheme pays a mark for each.**
+   * The owner, on the 2024 P1 sheet: *"Yes pin as long as it does not affect
+   * any other papers"*.
+   *
+   * The unscaled branch was letting `split` choose, so the paper's own shape
+   * came up in 45% of 240 draws and a single "state the values of a and b"
+   * in the rest. The shape was already in the code; a coin toss was choosing
+   * against it more often than not.
+   *
+   * `wanted` is enough to separate them here - `trig-graphs.amplitude-cycles-
+   * pre2023` (2015 P1 Q6) was materialised on 2026-09-20 and is a real id,
+   * not an alias - so 2015 keeps drawing `split` exactly as before. `split`
+   * is still drawn either way, so the random stream does not move.
+   */
+  const askInParts = scaled ? !cosineForm
+    : wanted === 'trig-graphs.amplitude-cycles' ? true          // 2024 P1 Q8
+    : split;
   const showsHalfPeriod = scaled ? cosineForm : twoTicks;
   const eq = `y = ${a}\\${fn} ${b}x^{\\circ}`;
   const shown = `y = a\\${fn} bx^{\\circ}`;
