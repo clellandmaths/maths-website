@@ -80,7 +80,29 @@ function letters(n: number, upper = false): string[] {
 // Input-first: every choice of letters and coefficients gives a fair question,
 // so nothing needs rejecting beyond keeping the letters distinct.
 
-function subjectInNumerator(wanted?: string): Q {
+/**
+ * **Which shape each paper on the `k != 1` branch actually sets.**
+ *
+ * The owner, on the 2024 P2 sheet: *"Agreed"*, against two findings measured
+ * over 300 draws.
+ *
+ *   2024 P2 Q9   `change-subject.fraction`          f = (2d + 3)/e
+ *   2017 P1 Q10  `change-subject.fraction-pre2023`  F = (t^2 + 4b)/c
+ *
+ * Both have a **plain** denominator, and the routine was squaring it in 57 of
+ * 300 draws — a shape neither paper sets anywhere. And the term beside the
+ * subject was a coin toss, so each paper got the other's shape about half the
+ * time: a squared letter in 139 draws, a plain constant in 161.
+ *
+ * `asked` and not `wanted`: 2017's id is an alias of 2024's, so both arrive
+ * with the same `wanted`.
+ */
+const NUMERATOR_SHAPE: Record<string, { constTerm: boolean }> = {
+  'change-subject.fraction': { constTerm: true },           // 2024 P2 Q9: + 3
+  'change-subject.fraction-pre2023': { constTerm: false },  // 2017 P1 Q10: t^2
+};
+
+function subjectInNumerator(wanted?: string, asked?: string): Q {
   const [v, subj, den, other] = letters(4, true);
   // Taught: k === 1 is the two-step question and anything else is the other,
   // so the asked id decides which side of that line to draw on. The odds
@@ -103,7 +125,13 @@ function subjectInNumerator(wanted?: string): Q {
    * stops consulting it.
    */
   const denRoll = getRandomInt(1, 3);
-  const squareDen = k === 1 ? true : denRoll === 1;
+  // **The roll still happens** — both papers named above want a plain
+  // denominator, but skipping the draw would shift the stream for the
+  // two-step branch, which clones 2022 P1 Q7. Only the value read off it
+  // changes. Same reasoning as the `flavour` note below.
+  const squareDen = k === 1 ? true
+    : asked !== undefined && asked in NUMERATOR_SHAPE ? false
+    : denRoll === 1;
   /**
    * **Three choices out of one draw, on the two-step branch only.**
    *
@@ -133,7 +161,11 @@ function subjectInNumerator(wanted?: string): Q {
   // the owner's note above - but `pick(consts)` must still be called exactly
   // when `flavour < 4`, or a discarded draw consumes a different number of
   // randoms and 2024 P2 Q9 moves again. See `numberBeside` below.
-  const constTerm = k === 1 ? true : flavour < 4;
+  // `flavour` is still drawn above, in the same place and on the same scale;
+  // the two named papers simply stop consulting it and take their own shape.
+  const constTerm = k === 1 ? true
+    : NUMERATOR_SHAPE[asked ?? '']?.constTerm
+    ?? flavour < 4;
 
   const dTex = squareDen ? `${den}^{2}` : den;
   // "5g + 5" shares a factor a pupil would want to take out; the papers keep the
@@ -185,9 +217,26 @@ function subjectInNumerator(wanted?: string): Q {
    */
   const picked = flavour < 4 ? pick(consts) : null;
   const numberBeside = picked ?? consts[((flavour - 4) * 3 + denRoll - 1) % 6];
+  /**
+   * **`numberBeside`, never `picked`.** `picked` is null whenever
+   * `flavour >= 4`, and until the 2024 P2 pin that could not happen on this
+   * branch because `constTerm` WAS `flavour < 4`. Forcing `constTerm` true
+   * broke that tie and half the draws printed `2d + null`, which the owner
+   * read off the sheet: *"Can't have null written has to be a number"*.
+   * `numberBeside` is the same value wherever `picked` was non-null, so the
+   * unpinned ids are untouched.
+   */
   const tTex = wide ? `${numberBeside}`
-    : constTerm ? `${picked}` : `${other}^{2}`;
-  const minus = wide && (flavour & 1) !== 0;
+    : constTerm ? `${numberBeside}` : `${other}^{2}`;
+  /**
+   * **A minus is reachable where the term is a number.** *"...and can be minus
+   * a number"* — the owner, same note. The draw is made only for 2024 P2 Q9,
+   * so no other id on this routine gains or loses a random: 2022 P1 Q7 reads
+   * its sign off `flavour` exactly as before, and 2017 P1 Q10's term is a
+   * squared letter rather than a number, so it keeps its plus.
+   */
+  const minusRoll = asked === 'change-subject.fraction' ? getRandomInt(0, 1) : 0;
+  const minus = wide ? (flavour & 1) !== 0 : minusRoll === 1;
   const numTex = `${term(k, subj)} ${minus ? '-' : '+'} ${tTex}`;
   const product = `${v}${dTex}`;
   const undo = `${product} ${minus ? '+' : '-'} ${tTex}`;
@@ -718,7 +767,7 @@ function inequalityFractions(): Q {
 }
 
 export const FORMULA_GENERATORS: Record<string, Gen> = {
-  'Changing the Subject': (w) => subjectInNumerator(w),
+  'Changing the Subject': (w, a) => subjectInNumerator(w, a),
   'Changing the Subject with Roots': (w) => subjectWithRoot(w),
   // Wrapped, not bare. Dispatch now hands the routine the variation id the
   // caller asked for, and a bare reference would take that string as

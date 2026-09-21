@@ -104,6 +104,11 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
   const smallestAngle = wanted !== undefined
     ? wanted === 'trig-diagram.cosine-angle-smallest'
     : getRandomInt(0, 1) === 0;
+  // See the note at `obtuseAt` below: 2024 P2 Q3's shaded angle is obtuse and
+  // its cosine negative, and the clone was reaching that in 22 draws of 300.
+  // Chosen here, once, so a triangle with no obtuse angle can be rejected.
+  const wantObtuse = wanted === 'trig-diagram.cosine-angle'
+    && getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 4000; tries++) {
     const [A, B, C] = pick(TRIANGLES);
     const unit = pick(UNITS);
@@ -227,10 +232,35 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
       const whole = { ab: q, bc: Math.round(bc), ca: p };
       if (!drawable(whole.ab, whole.bc, whole.ca)) continue;
       const smallest = smallestAngle;
+      /**
+       * **2024 P2 Q3's shaded angle is OBTUSE, and that is the question.**
+       *
+       * The paper sets 25, 18 and 34 and asks for the angle at A — opposite
+       * the longest side — so `cos A = -0.23` and the answer is 103 degrees.
+       * Its markscheme pays a mark for evaluating that negative cosine.
+       *
+       * A triangle has at most one obtuse angle, so picking the vertex
+       * uniformly gave an obtuse answer in only 22 draws of 300, and the sign
+       * handling the question exists to test was the rare case. The owner, on
+       * the 2024 P2 sheet: *"Agreed"*.
+       *
+       * Aiming at about half keeps the acute shape reachable — 2019 P2 Q7 is
+       * on the sibling id and takes the `smallest` branch above, which is
+       * untouched.
+       */
+      const obtuseAt = (['a', 'b', 'c'] as const).find(v =>
+        trueAngle(v, whole.ab, whole.bc, whole.ca) > 90);
+      // **Decided once per call, above the loop, and enforced by rejection.**
+      // Reading the coin here instead only fired when the triangle happened to
+      // carry an obtuse angle, which left the share at 18% rather than a half.
+      // A triangle that cannot supply one is thrown back.
+      if (wantObtuse && obtuseAt === undefined) continue;
       const at = smallest
         ? (['a', 'b', 'c'] as const).reduce((m, v) =>
             trueAngle(v, whole.ab, whole.bc, whole.ca) < trueAngle(m, whole.ab, whole.bc, whole.ca) ? v : m, 'a' as const)
-        : pick(['a', 'b', 'c'] as const);
+        : wantObtuse && obtuseAt !== undefined
+          ? obtuseAt
+          : pick(['a', 'b', 'c'] as const);
       const name = { a: A, b: B, c: C }[at];
       const answer = trueAngle(at, whole.ab, whole.bc, whole.ca);
       const [arm1, arm2, opp] = at === 'a' ? [whole.ab, whole.ca, whole.bc]

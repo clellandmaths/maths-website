@@ -319,28 +319,59 @@ function rhombus(): Q | null {
     [X]: C(0, 1, 1, 1),
   };
   pos[Y] = cSub(pos[X], pos[W]);
-  pos[M] = cHalf(cAdd(pos[X], pos[Y]));
   /**
-   * Which way along each of the two rays.
+   * **Which side carries the midpoint, and where the pathway starts.**
    *
-   * The construction is otherwise fixed, so this was **one question** however
-   * often it was drawn - the rhombus's angle jitters and nothing else moves.
+   * This used to read: *"Moving the midpoint is not available: step 3 turns on
+   * XY being exactly -a, and a midpoint on YZ needs a three-leg pathway - a
+   * different mark total rather than a different question."*
    *
-   * Reversing a ray is not padding. A pupil who writes WX confidently will
-   * often stall on XW, and the topic's papers ask it both ways round. Moving
-   * the midpoint is not available: step 3 turns on XY being exactly -a, and a
-   * midpoint on YZ needs a three-leg pathway - a different mark total rather
-   * than a different question.
+   * **That was true only while part (b) always started at W.** Fix the start
+   * and a midpoint on YZ is indeed three legs. Let the start move with the
+   * side and every one of the four is two legs, because the vertex *before*
+   * the side reaches it as one edge plus a half:
+   *
+   *   M on WX   ->  ZM = ZW + 1/2 WX
+   *   M on XY   ->  WM = WX + 1/2 XY      the paper's own arrangement
+   *   M on YZ   ->  XM = XY + 1/2 YZ
+   *   M on ZW   ->  YM = YZ + 1/2 ZW
+   *
+   * So the mark total is untouched - one for part (a), two for the pathway -
+   * and the four sides multiply the two ray reversals to give sixteen
+   * questions where there were four. The owner, on the 2024 P2 sheet, asked
+   * for both levers: *"Yes do both"*.
+   *
+   * Reversing a ray is not padding either. A pupil who writes WX confidently
+   * will often stall on XW, and the topic's papers ask it both ways round.
    */
+  const cycle = [W, X, Y, Z];
+  /**
+   * **Three sides, not four: ZW carries the arrow for `a`.**
+   *
+   * The fourth side was tried and rendered, and the PNG settled it — the
+   * midpoint's dot lands on top of that arrow's head, and its label prints
+   * against the vector's own label, so the figure reads `c M` crammed at one
+   * point. `verifyFigure` passed it; looking at it did not. The other three
+   * sides carry no arrow and are clear.
+   */
+  const sideAt = getRandomInt(0, 2);
+  const P = cycle[sideAt];                     // the side runs P -> Q
+  const Q = cycle[(sideAt + 1) % 4];
+  const V = cycle[(sideAt + 3) % 4];           // the vertex before P
+  pos[M] = cHalf(cAdd(pos[P], pos[Q]));
+
   const flipA = getRandomInt(0, 1) === 0;
   const flipB = getRandomInt(0, 1) === 0;
   const [fromA, toA] = flipA ? [X, W] : [W, X];
-  const [fromB, toB] = flipB ? [M, W] : [W, M];
+  const [fromB, toB] = flipB ? [M, V] : [V, M];
   const neg = (c: Combo): Combo => cSub(C(0, 1, 0, 1), c);
   const firstWX = cSub(pos[X], pos[W]);
-  const secondWM = cSub(pos[M], pos[W]);
+  const secondVM = cSub(pos[M], pos[V]);
   const first = flipA ? neg(firstWX) : firstWX;
-  const second = flipB ? neg(secondWM) : secondWM;
+  const second = flipB ? neg(secondVM) : secondVM;
+  // the two legs of the pathway, for the worked answer
+  const legVP = cSub(pos[P], pos[V]);
+  const legPQ = cSub(pos[Q], pos[P]);
 
   // A rhombus needs |b - a| = |a|, so b is placed on that circle. The turn is
   // what the interior angle at W comes to, less ninety: at the first range
@@ -357,15 +388,17 @@ function rhombus(): Q | null {
     `The diagram shows a rhombus $${W}${X}${Y}${Z}$ with the diagonal $${Z}${X}$ drawn.`,
     `$${ray(Z, W)}$ represents vector $${vec(na)}$ and $${ray(Z, X)}$ represents vector $${vec(nb)}$.`,
     `<strong>(a)</strong> Express $${ray(fromA, toA)}$ in terms of $${vec(na)}$ and $${vec(nb)}$.`,
-    `$${M}$ is the midpoint of $${X}${Y}$.`,
+    `$${M}$ is the midpoint of $${P}${Q}$.`,
     `<strong>(b)</strong> Express $${ray(fromB, toB)}$ in terms of $${vec(na)}$ and $${vec(nb)}$. Give your answer in its simplest form.`,
   ];
   const steps = [
     `<strong>1.</strong> Go from $${fromA}$ to $${toA}$ by way of $${Z}$:` +
     `<br><br>$${ray(fromA, toA)} = ${ray(fromA, Z)} + ${ray(Z, toA)} = ${ans1}$`,
-    `<strong>2.</strong> $${M}$ is halfway along $${X}${Y}$, so the pathway is` +
-    `<br><br>$${ray(W, M)} = ${ray(W, X)} + \\frac{1}{2}${ray(X, Y)}$`,
-    `<strong>3.</strong> $${ray(X, Y)} = -${vec(na)}$, so collect${flipB ? ', then turn it round' : ''}:<br><br>$${ray(fromB, toB)} = ${ans2}$`,
+    `<strong>2.</strong> $${M}$ is halfway along $${P}${Q}$, so the pathway is` +
+    `<br><br>$${ray(V, M)} = ${ray(V, P)} + \\frac{1}{2}${ray(P, Q)}$`,
+    `<strong>3.</strong> $${ray(V, P)} = ${combo(legVP.a, legVP.b, na, nb)}$ and ` +
+    `$${ray(P, Q)} = ${combo(legPQ.a, legPQ.b, na, nb)}$, so collect` +
+    `${flipB ? ', then turn it round' : ''}:<br><br>$${ray(fromB, toB)} = ${ans2}$`,
   ];
   return assemble({
     points,

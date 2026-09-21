@@ -103,6 +103,15 @@ const dp1 = (v: number): string => v.toFixed(1);
 const DOMAIN_OF: Record<string, string> = {
   'trig-equations.solve-tan': '0 \\le x \\lt 360',          // 2026 P2 Q8
   'trig-equations.solve-tan-pre2023': '0 \\le x \\le 360',  // 2016 P2 Q14
+  /**
+   * **The sine pair, added after the 2024 P2 sheet.** Unlike the tangent pair
+   * above, these two papers AGREE — 2024 P2 Q11 and 2018 P2 Q8 both write
+   * `0 \le x < 360`. So the toss was not handing one paper the other's range;
+   * it was handing both a range that neither sets, in 132 draws of 300. The
+   * owner: *"Agreed"*.
+   */
+  'trig-equations.solve': '0 \\le x \\lt 360',              // 2024 P2 Q11
+  'trig-equations.solve-pre2023': '0 \\le x \\lt 360',      // 2018 P2 Q8
 };
 
 function solveEquation(
