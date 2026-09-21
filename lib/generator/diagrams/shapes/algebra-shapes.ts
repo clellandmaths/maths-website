@@ -1,5 +1,5 @@
 import {
-  type Claim, type Element, type Figure, type Pt, mid, pt, sideLabel,
+  dimensionArrow, mid, pt, sideLabel, type Claim, type Element, type Figure, type Pt,
 } from '../scene';
 
 /**
@@ -42,7 +42,11 @@ export interface BorderedRectangleSpec {
    * not merely stated.
    */
   sides: 3 | 4;
-  labels: { width: string; height: string; border: string };
+  labels: {
+    width: string; height: string; border: string;
+    /** Three-sided only: what the question calls the whole span. */
+    length?: string;
+  };
 }
 
 export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
@@ -71,6 +75,51 @@ export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
     { kind: 'segment', from: pt(-t, h * 0.55), to: pt(0, h * 0.55), dashed: true },
     { kind: 'label', text: spec.labels.border, anchor: pt(-t / 2, h * 0.55), away: pt(-t / 2, h * 1.4) },
   ];
+
+  /**
+   * **What the three-sided figure has to show, and did not.**
+   *
+   * 2026 P2 Q13 part (a) is *"write down an expression for the LENGTH of
+   * the extension in terms of x"*, and the first mark is `2x + 6` — which
+   * needs the reader to see a wall at BOTH ends. The figure marked x on the
+   * left wall only, named neither the floor nor the wall, shaded nothing,
+   * and carried no arrow saying what "length" meant. The paper does all
+   * four. The owner, on the 2026 P2 sheet: *"Agreed"*.
+   *
+   * **The paper's "floor" and "wall" words are NOT reproduced**, and that is
+   * a deliberate omission rather than an oversight. Both were tried and
+   * `verifyFigure` rejected them at every size tested: the wall strip is too
+   * narrow to hold a word without touching one of its own edges, and the floor
+   * already carries the width and height labels pushed in from two sides. A
+   * label that sits on ink it does not name is worse than no label — that rule
+   * is the reason the check exists. What the words were there to disambiguate,
+   * the shading and the span arrow now do.
+   *
+   * **Gated on `sides === 3`**, so `form-equation.border` — the four-sided
+   * caller, a different question — is untouched.
+   */
+  if (sides === 3) {
+    // the wall itself, as a ring: outer boundary then back round the inner
+    elements.unshift({ kind: 'shadedShape',
+      points: [o0, o1, o2, i2, i1, i0, i3, o3] });
+    // x on the other two walls, matching the left one already drawn
+    elements.push(
+      { kind: 'segment', from: pt(w, h * 0.55), to: pt(w + t, h * 0.55), dashed: true },
+      { kind: 'label', text: spec.labels.border, anchor: pt(w + t / 2, h * 0.55),
+        away: pt(w + t / 2, h * 1.4) },
+      { kind: 'segment', from: pt(w * 0.5, -t), to: pt(w * 0.5, 0), dashed: true },
+      { kind: 'label', text: spec.labels.border, anchor: pt(w * 0.5, -t / 2),
+        away: pt(w * 1.6, -t / 2) },
+    );
+    // what the question calls the length, spanned and named
+    // NB `dimensionArrow` moves the arrow TOWARD its third argument, where
+    // `sideLabel` moves a label AWAY from its fourth. Passing a point below
+    // the figure — the reading that matches sideLabel — drove the arrow down
+    // onto the rectangle's own edge and its label sat on ink at 0.0px.
+    elements.push(...dimensionArrow(
+      pt(-t, h), pt(w + t, h), pt(w / 2, h * 3), t * 0.9,
+      spec.labels.length ?? 'length', true));
+  }
 
   // Right angles at two corners of each rectangle. True whatever x is, which
   // is the only thing about this picture that is.

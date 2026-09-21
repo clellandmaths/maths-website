@@ -1,4 +1,6 @@
-import { type Element, type Figure, type Pt, pt, scale, sideLabel } from '../scene';
+import {
+  add, mid, pt, scale, sideLabel, type Element, type Figure, type Pt,
+} from '../scene';
 
 /**
  * A regular polygon with its vertices on a circle, one segment shaded.
@@ -55,9 +57,22 @@ export function polygonInCircle(spec: PolygonInCircleSpec): Figure | null {
     ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: O })),
   ];
   if (spec.radiusLabel) {
-    // pushed away from the middle of the triangle it borders, not onto it
+    /**
+     * **Beside the radius, which is where the paper writes it.**
+     *
+     * 2026 P2 Q10 puts "11 cm" hard against the dashed radius OA, so it is
+     * unmistakably the radius. This pushed away from a point two thirds of
+     * the way toward the shaded piece, which is far from the label's own
+     * anchor, and the number drifted into the middle of the polygon where
+     * it reads as the distance from the centre to an edge.
+     *
+     * The point to move away from is now just off the radius, a quarter of
+     * the way toward the shaded piece, so the push is short and the label
+     * lands next to the line it names — still on the far side from the
+     * shading, where the two radii and the arc crowd together.
+     */
     elements.push(sideLabel(O, V[0], spec.radiusLabel,
-      pt((V[0].x + V[1].x) / 3, (V[0].y + V[1].y) / 3)));
+      add(mid(O, V[0]), scale(dir(start + step / 2), r * 0.25))));
   }
 
   return {

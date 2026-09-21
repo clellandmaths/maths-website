@@ -87,7 +87,27 @@ const dp1 = (v: number): string => v.toFixed(1);
  * `__checks__/one-form.ts`. A subTopic of its own is what gives this its own
  * draw loop, so settling the domain here moves no sibling.
  */
-function solveEquation(fn: 'sin' | 'cos' | 'tan', withConstant = false): Q {
+/**
+ * **Which papers state their range which way.**
+ *
+ * 2026 P2 Q8 leaves it open — `0 <= x < 360` — and 2016 P2 Q14 closes it.
+ * Both resolve to one clone, so the id the routine is told to build is the
+ * same string for each and cannot separate them; only `asked` can. Measured
+ * over 240 draws the coin was handing out 2016's range on 49% of requests
+ * for 2026's question. The owner, on the 2026 P2 sheet: *"Agreed"*.
+ *
+ * **Only the two raised here are pinned.** The other papers on this routine
+ * keep the toss between the closed and open forms, which the owner read form
+ * by form and kept — see `APPROVED_MULTIFORM` in `__checks__/one-form.ts`.
+ */
+const DOMAIN_OF: Record<string, string> = {
+  'trig-equations.solve-tan': '0 \\le x \\lt 360',          // 2026 P2 Q8
+  'trig-equations.solve-tan-pre2023': '0 \\le x \\le 360',  // 2016 P2 Q14
+};
+
+function solveEquation(
+  fn: 'sin' | 'cos' | 'tan', withConstant = false, asked?: string,
+): Q {
   for (let tries = 0; tries < 400; tries++) {
     const a = getRandomInt(2, 20);
     /**
@@ -157,7 +177,8 @@ function solveEquation(fn: 'sin' | 'cos' | 'tan', withConstant = false): Q {
     // present itself two ways. The toss stays for the others, which the owner
     // read form by form and kept (`__checks__/one-form.ts`, APPROVED_MULTIFORM).
     const domain = withConstant ? '0 \\le x \\le 360'
-      : getRandomInt(0, 1) === 0 ? '0 \\le x \\le 360' : '0 \\le x \\lt 360';
+      : DOMAIN_OF[asked ?? '']
+      ?? (getRandomInt(0, 1) === 0 ? '0 \\le x \\le 360' : '0 \\le x \\lt 360');
 
     return {
       subTopic: withConstant
@@ -839,11 +860,11 @@ export const TRIG_GENERATORS: Record<string, Gen> = {
   // All three ratios are reachable from the topic, each with its own id, so
   // `variationsBasedOn` can send each paper to the one it asks for.
   // Taught: the function IS the id — a sine is not a clone of a cosine.
-  'Solving Trigonometric Equations': (w) => solveEquation(
+  'Solving Trigonometric Equations': (w, a) => solveEquation(
     w === 'trig-equations.solve' ? 'sin'
     : w === 'trig-equations.solve-cos' ? 'cos'
     : w === 'trig-equations.solve-tan' ? 'tan'
-    : pick(['sin', 'cos', 'tan'] as const)),
+    : pick(['sin', 'cos', 'tan'] as const), false, a),
   // Sine only: all three papers on this family are sine, and the split exists
   // for 2022 P2 Q9, which is one of them.
   'Solving a Trigonometric Equation with a Constant Term': () => solveEquation('sin', true),

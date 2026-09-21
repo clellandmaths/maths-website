@@ -961,6 +961,11 @@ export function pythagorasChordReverse(findChord: boolean): Q {
     // question describes makes the picture agree with the text and the retry
     // budget a formality.
     const fig = circleChord({
+      // The paper draws dashed lines from the chord out to its
+      // dimension arrow. Opt-in, so every other caller of this shape
+      // is untouched — the owner's condition was "only affect this
+      // question".
+      chordExtensions: true,
       radius: answer, chord, major: true, rest: 'solid', radiusLine: 'none',
       names: { a: A, b: B, centre: O, mid: M },
       labels: { radius: '', chord: `${num(chord)} ${abbrev(ctx.unit)}`, height: '',

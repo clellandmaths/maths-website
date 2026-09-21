@@ -223,7 +223,8 @@ function wallOnThreeSides(): Q | null {
   ];
   return assemble(
     borderedRectangle({ innerW: len * 10, innerH: wid * 10, sides: 3,
-      labels: { width: `${len} m`, height: `${wid} m`, border: 'x' } }),
+      labels: { width: `${len} m`, height: `${wid} m`, border: 'x m',
+        length: 'length' } }),
     'A Wall on Three Sides', 'form-equation.three-sided', prose,
     `Floor ${len} by ${wid}, wall $x$ thick on three sides, total area ${area}. Find $x$.`,
     steps, [1, 1, 1, 1, 1, 1, 1], `$x = ${x.toFixed(2)}$ m`);

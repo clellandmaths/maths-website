@@ -70,6 +70,12 @@ export interface CircleChordSpec {
   /** Fill the piece being asked about — the milk in the tank. */
   shade?: boolean;
   /**
+   * Dashed lines from the chord's ends out to its dimension arrow, as
+   * 2026 P2 Q5 draws them. Opt-in: this shape serves several questions and
+   * only that one asked for it.
+   */
+  chordExtensions?: boolean;
+  /**
    * Put the piece being asked about **below** the chord instead of above it.
    *
    * 2015 P2 Q12 is a container of liquid: the surface is the chord, the liquid
@@ -188,7 +194,8 @@ export function circleChord(spec: CircleChordSpec): Figure {
      */
     const clearArc = Math.abs(k + r) + r * 0.16;
     const outward = pt(M.x, M.y - m * 2 * r);
-    elements.push(...dimensionArrow(A, B, outward, clearArc, spec.labels.chord));
+    elements.push(...dimensionArrow(A, B, outward, clearArc, spec.labels.chord,
+      spec.chordExtensions === true));
   }
   if (spec.labels.height) elements.push(sideLabel(M, T, spec.labels.height, rightOf((k + r) * m / 2)));
   if (spec.labels.centreToChord) elements.push(sideLabel(O, M, spec.labels.centreToChord, rightOf(k * m / 2)));

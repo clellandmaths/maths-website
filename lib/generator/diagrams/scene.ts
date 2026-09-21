@@ -398,8 +398,16 @@ export function parallelMark(from: Pt, to: Pt, count = 1): Element[] {
  * `away` is any point on the side the arrow should sit; the arrow is offset
  * square off the line, on that side, by `gap`.
  */
+/**
+ * @param extend draw dashed lines from the measured points out to the
+ *   arrow, as 2026 P2 Q5 does. **Off by default on purpose.** This helper
+ *   serves every dimensioned figure in the course, and the owner's
+ *   condition on the 2026 P2 sheet was *"only affect this question"* —
+ *   turning extension lines on for everything is the shape of change that
+ *   moved four signed-off questions when one had been asked about.
+ */
 export function dimensionArrow(
-  from: Pt, to: Pt, away: Pt, gap: number, text?: string,
+  from: Pt, to: Pt, away: Pt, gap: number, text?: string, extend = false,
 ): Element[] {
   const u = unit(sub(to, from));
   const n = pt(-u.y, u.x);
@@ -411,6 +419,13 @@ export function dimensionArrow(
 
   const head = Math.min(dist(a, b) * 0.12, gap * 1.1);
   const out: Element[] = [{ kind: 'segment', from: a, to: b, decoration: true }];
+  // Out to the arrow from what it measures, so the number cannot be read as
+  // belonging to something else. Decoration, so the minimum-length rule
+  // does not apply — these carry no measurement of their own.
+  if (extend) {
+    out.push({ kind: 'segment', from, to: a, dashed: true, decoration: true });
+    out.push({ kind: 'segment', from: to, to: b, dashed: true, decoration: true });
+  }
   for (const [tip, dir] of [[a, u], [b, scale(u, -1)]] as [Pt, Pt][]) {
     const back = add(tip, scale(dir, head));
     for (const side of [1, -1]) {
