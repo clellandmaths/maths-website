@@ -377,7 +377,17 @@ function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
     : getRandomInt(1, 3) === 1);   // the 2019 shape, 1 of the 4
   // 2 to 30 and always positive in its own loop. The shared loop keeps the
   // pool it always had, so the squared and plain shapes draw what they drew.
-  const d = bracketOnly ? getRandomInt(2, 30) : pick([2, 3, 4]);
+  // **Widened 2026-09-21, on the owner's word at the 2025 P2 pass.**
+  // Three denominators against two constant coefficients and a sign is
+  // exactly the twelve different questions the card reported. Four and
+  // three takes it to about thirty. No extra random is drawn.
+  const d = bracketOnly ? getRandomInt(2, 30)
+    // **Only the paper the owner widened.** `-plain` is 2023 P2 Q7, which
+    // is signed off and was not in scope; it draws from the pool it was
+    // approved with. The wanted id already tells the two apart, so this
+    // needs nothing threading through.
+    : wanted === 'change-subject.fraction-coefficient-plain' ? pick([2, 3, 4])
+    : pick([2, 3, 4, 5, 6]);
   const [v, subj, mLetter, tLetter] = letters(4, true);
   /**
    * **Plain, or squared with a coefficient — two of the papers, two shapes.**
@@ -497,7 +507,7 @@ function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
   // V = (1/d)·S·M ± T, where T may itself carry a coefficient
   const minus = getRandomInt(0, 1) === 0;
   // 2023 P2 Q7's constant is bare; 2025 P2 Q9's carries a 3.
-  const tCoef = plain ? 1 : pick([2, 3]);
+  const tCoef = plain ? 1 : pick([2, 3, 4]);
   const tTex = term(tCoef, tLetter);
   const flipped = minus ? '+' : '-';            // the sign after moving T across
 

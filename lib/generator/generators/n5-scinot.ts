@@ -136,7 +136,7 @@ function leadingDigitOnly(lo: number, hi: number): number {
   return options.length ? pick(options) : getRandomInt(lo, hi);
 }
 
-function calculate(wanted?: string): Q {
+function calculate(wanted?: string, asked?: string): Q {
   // Which of the two paper shapes to build. Four of the five papers give an
   // answer that already sits at three significant figures and are worth two
   // marks; only 2023 P2 Q2 asks for rounding, and is worth three. Left to the
@@ -173,9 +173,30 @@ function calculate(wanted?: string): Q {
   const wantRounding = wanted !== undefined
     ? wanted === 'sci-notation.calculate-3sf'
     : getRandomInt(1, 3) === 1;
-  // One each in the exact papers: 2016 P2 Q2 divides, 2019 P2 Q4 takes a
-  // percentage, 2024 P2 Q2 multiplies.
-  const exactOp = pick(['multiply', 'percent', 'divide'] as const);
+  /**
+   * **The operation IS the question, and a three-way toss was deciding it.**
+   *
+   * The line below this used to say the mapping outright — 2016 P2 Q2
+   * divides, 2019 P2 Q4 takes a percentage, 2024 P2 Q2 multiplies — and
+   * then drew one of the three at random anyway. So two draws in three of
+   * 2025 P2 Q3, whose own question is *"the mass of one atom of carbon is
+   * 6.1% of the mass of an atom of gold"*, handed a pupil a multiplication
+   * or a division: 2024's question or 2016's.
+   *
+   * **`one-form` cannot see this.** All three read as one form — no figure,
+   * one instruction, the same LaTeX — because only the arithmetic differs.
+   * The owner found it off the contact sheet, which is what the sheet is
+   * for: *"For this variation we want the percentage type question to show
+   * up. Therefore we should split here."*
+   */
+  const OP_OF: Record<string, 'multiply' | 'percent' | 'divide'> = {
+    'sci-notation.calculate': 'percent',            // 2025 P2 Q3
+    'sci-notation.calculate-pre2023': 'percent',    // 2019 P2 Q4
+    'sci-notation.calculate-2024': 'multiply',      // 2024 P2 Q2
+    'sci-notation.calculate-2016': 'divide',        // 2016 P2 Q2
+  };
+  const exactOp = OP_OF[asked ?? '']
+    ?? pick(['multiply', 'percent', 'divide'] as const);
   for (let tries = 0; tries < 600; tries++) {
     // **The rounded variation has one paper, and it divides.** 2023 P2 Q2 is
     // 300 grams over 6.64 x 10^-24 grams an atom - a division - and it is the
@@ -276,5 +297,5 @@ function calculate(wanted?: string): Q {
 
 export const SCINOT_GENERATORS: Record<string, Gen> = {
   'Writing in Scientific Notation': convert,
-  'Calculating in Scientific Notation': (w) => calculate(w),
+  'Calculating in Scientific Notation': (w, a) => calculate(w, a),
 };
