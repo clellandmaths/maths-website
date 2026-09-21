@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "e00024f29618a6211b1691e8d5af125fd03243c1",
+  "sourceCommit": "f0ef9069fdd8b390fe442ab945f88232a48b65f9",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -60,7 +60,7 @@
     "generators/n5-formulae.ts": "10fc5163e039023d",
     "generators/n5-functions.ts": "a2d58f685a8acdb0",
     "generators/n5-indices.ts": "f2553d53809c5a94",
-    "generators/n5-line-graph.ts": "249e32674b3aeecd",
+    "generators/n5-line-graph.ts": "f8f27dea714b499e",
     "generators/n5-linear-equations.ts": "04f464a99eafa4e4",
     "generators/n5-measure.ts": "5971e7a321f5388b",
     "generators/n5-parabola-graph.ts": "987bcfa4602a8073",

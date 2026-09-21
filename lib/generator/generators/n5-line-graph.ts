@@ -624,7 +624,32 @@ export function lineThroughMarkedPointsQuestion(): Q | null {
   const x1 = getRandomInt(-4, 4);
   const x2 = x1 + getRandomInt(2, 7);
   const q = pick([1, 1, 1, 2]);
-  const p = getRandomInt(-4 * q, 4 * q);
+  /**
+   * **A gradient of 1 was a third of the draws, and the owner cut it.**
+   *
+   * Measured over 200 draws on the 2025 P1 second pass: −1 on 39 and +1 on 35,
+   * the two commonest values by a distance. 2025 P1 Q6's own gradient is −2,
+   * and its scheme pays one mark for calculating the gradient, a second for
+   * substituting it and a third for simplifying. At ±1 the first is mental
+   * arithmetic and the equation carries no coefficient through the other two,
+   * so better than a third of the time this was a smaller question than the
+   * paper sets. The owner, on the sheet: *"I agree having 1 come up a third of
+   * the time is too much."*
+   *
+   * **A flat draw would not have produced a third.** ±1 is 2 of the 8 usable
+   * values at q = 1, which is 25% of those draws and under 20% overall — the
+   * rest comes from the rejection filter below, which throws out steep
+   * gradients far more often because they break |y| ≤ 20 first. So the weights
+   * here are set against that bias rather than against a uniform draw, and the
+   * share is measured rather than reasoned about.
+   *
+   * It costs no extra random: one `pick` where there was one `getRandomInt`.
+   * This variation is alone on its clone, so nothing else moves with it.
+   */
+  const p = q === 1
+    ? pick([-4, -4, -4, -3, -3, -3, -2, -2, -2, -1,
+      1, 2, 2, 2, 3, 3, 3, 4, 4, 4])
+    : getRandomInt(-4 * q, 4 * q);
   if (p === 0 || gcd(Math.abs(p), q) !== 1) return null;
   if ((x2 - x1) % q !== 0) return null;
   const m = p / q;
