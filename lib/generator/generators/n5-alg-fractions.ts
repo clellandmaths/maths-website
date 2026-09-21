@@ -502,7 +502,11 @@ function divide(wanted?: string): Q {
     const v = pick(['x', 'x', 'n']);
     const m = nonZeroInt(-8, 8);
     const p = getRandomInt(2, 9), q = getRandomInt(2, 9);
-    if (gcd(p, q) !== 1) return divide();       // keep the coefficients in lowest terms
+    // **The retry has to carry the wanted id.** Without it the second
+    // attempt re-enters blind and can come back as a different variation,
+    // which is a discard — the very thing being removed. 2022 P1 Q12 was
+    // taking two draws for exactly this reason.
+    if (gcd(p, q) !== 1) return divide(wanted);  // keep the coefficients in lowest terms
     const d = lin(v, m);
     return {
       subTopic: 'Dividing Algebraic Fractions',

@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt, roundHalfUp, timesPowerOfTen } from './utils';
 import { SCI_CONTEXTS } from './n5-contexts';
 
@@ -135,7 +136,7 @@ function leadingDigitOnly(lo: number, hi: number): number {
   return options.length ? pick(options) : getRandomInt(lo, hi);
 }
 
-function calculate(): Q {
+function calculate(wanted?: string): Q {
   // Which of the two paper shapes to build. Four of the five papers give an
   // answer that already sits at three significant figures and are worth two
   // marks; only 2023 P2 Q2 asks for rounding, and is worth three. Left to the
@@ -165,7 +166,13 @@ function calculate(): Q {
   // three-mark shape lands just under mix.ts's floor and reports as suppressed,
   // and a guard against a variation going unreachable is worth more than
   // matching a five-paper sample exactly.
-  const wantRounding = getRandomInt(1, 3) === 1;
+  // Taught: the rounding instruction is the three-mark question and its
+  // absence the two-mark one, so the asked id decides it. The guard further
+  // down already rejects a draw whose arithmetic disagrees, so asking for
+  // one shape cannot quietly hand back the other.
+  const wantRounding = wanted !== undefined
+    ? wanted === 'sci-notation.calculate-3sf'
+    : getRandomInt(1, 3) === 1;
   // One each in the exact papers: 2016 P2 Q2 divides, 2019 P2 Q4 takes a
   // percentage, 2024 P2 Q2 multiplies.
   const exactOp = pick(['multiply', 'percent', 'divide'] as const);
@@ -267,7 +274,7 @@ function calculate(): Q {
   throw new Error('sci-notation.calculate: no valid question found');
 }
 
-export const SCINOT_GENERATORS: Record<string, () => Q> = {
+export const SCINOT_GENERATORS: Record<string, Gen> = {
   'Writing in Scientific Notation': convert,
-  'Calculating in Scientific Notation': calculate,
+  'Calculating in Scientific Notation': (w) => calculate(w),
 };

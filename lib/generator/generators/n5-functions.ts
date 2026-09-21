@@ -261,7 +261,7 @@ const QUADRANTAL: { deg: number; sin: number; cos: number }[] = [
   { deg: 360, sin: 0, cos: 1 },
 ];
 
-function evaluateTrig(): Q {
+function evaluateTrig(wanted?: string): Q {
   for (let tries = 0; tries < 300; tries++) {
     const fn = pick(FN);
     const k = getRandomInt(2, 9);              // the multiplier outside
@@ -269,7 +269,11 @@ function evaluateTrig(): Q {
     const target = pick(QUADRANTAL);
     if (target.deg === 0 || target.deg % inner !== 0) continue;
     const at = target.deg / inner;
-    const ratio = pick(['sin', 'cos'] as const);
+    // Taught: the cosine form is 2026 P1 Q13 and the sine form has no paper
+    // behind it, so the asked id decides which is built.
+    const ratio = wanted === 'functions.evaluate-trig' ? 'cos' as const
+      : wanted === 'functions.evaluate-trig-sine-practice' ? 'sin' as const
+      : pick(['sin', 'cos'] as const);
     const value = ratio === 'sin' ? target.sin : target.cos;
     // A zero answer hides the multiplier entirely and tests nothing about it
     if (value === 0) continue;
@@ -320,5 +324,5 @@ function evaluateTrig(): Q {
 export const FUNCTION_GENERATORS: Record<string, Gen> = {
   'Evaluating a Function': evaluate,
   'Finding an Unknown in a Function': (w) => findUnknown(w),
-  'Evaluating a Trigonometric Function': evaluateTrig,
+  'Evaluating a Trigonometric Function': (w) => evaluateTrig(w),
 };

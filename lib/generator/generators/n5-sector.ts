@@ -195,8 +195,15 @@ const SEGMENT_CONTEXTS: {
     unit: 'centimetres', short: 'cm', band: [4, 14] },
 ];
 
-function segmentArea(): Q | null {
-  const c = pick(SEGMENT_CONTEXTS);
+function segmentArea(wanted?: string): Q | null {
+  // Taught: which piece is shaded IS the id, and the shade belongs to the
+  // context — a tunnel over its floor is a major piece, a window sill a
+  // minor one — so the pool is narrowed to the contexts that can make it.
+  const c = pick(wanted === 'sector.segment-minor'
+    ? SEGMENT_CONTEXTS.filter(x => x.shade === 'minor')
+    : wanted === 'sector.segment-major'
+      ? SEGMENT_CONTEXTS.filter(x => x.shade !== 'minor')
+      : SEGMENT_CONTEXTS);
   const nO = 'O', nA = pick(['A', 'M', 'P']), nB = { A: 'B', M: 'N', P: 'Q' }[nA] ?? 'B';
   const r = getRandomInt(c.band[0], c.band[1]);
   const angle = getRandomInt(40, 165);
@@ -805,9 +812,9 @@ export const SECTOR_GENERATORS: Record<string, Gen> = {
     }
     throw new Error('polygon segment: no valid question found');
   },
-  'Area of a Segment of a Circle': () => {
+  'Area of a Segment of a Circle': (w) => {
     for (let i = 0; i < 3000; i++) {
-      const q = segmentArea();
+      const q = segmentArea(w);
       if (q) return q;
     }
     throw new Error('segment: no valid question found');

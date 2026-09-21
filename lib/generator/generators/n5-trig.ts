@@ -189,7 +189,7 @@ function solveEquation(fn: 'sin' | 'cos' | 'tan', withConstant = false): Q {
 
 // ── a height that follows a cosine — 2017 P2 Q15, 2023 P2 Q11, 2025 P2 Q14 ─
 
-function inFormula(): Q {
+function inFormula(wanted?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(ROTATING_CONTEXTS);
     const B = getRandomInt(ctx.centre[0], ctx.centre[1]);
@@ -198,7 +198,11 @@ function inFormula(): Q {
     const minus = getRandomInt(0, 1) === 0;         // "10 - 8cos x" as in 2025
     const formula = minus ? `h = ${B} - ${times(A, C)}` : `h = ${B} + ${times(A, C)}`;
 
-    const solveFor = getRandomInt(0, 1) === 0;
+    // Taught: solving the formula and evaluating it are two questions with
+    // two ids, so the asked id decides which.
+    const solveFor = wanted !== undefined
+      ? wanted === 'trig-equations.in-formula'
+      : getRandomInt(0, 1) === 0;
     if (solveFor) {
       // choose the target height from a whole ratio, so the angle is clean to find
       const target = B + (minus ? -1 : 1) * (getRandomInt(-(A - 1), A - 1));
@@ -376,7 +380,7 @@ function substituteTan(): Q {
 // straight back out at the end, and taking a numerical factor out alongside an
 // algebraic one is National 5 factorising.
 
-function commonFactor(): Q {
+function commonFactor(wanted?: string): Q {
   /**
    * **Cosine, and the coefficient runs to 12 - 2026-09-20, the owner's word on
    * the enumerated-space sheet.**
@@ -405,8 +409,13 @@ function commonFactor(): Q {
    * adding a question. The only lever that would buy real variety is the
    * factor power, and `p = 3` prints `cos^5 x`, which no N5 paper sets.
    */
-  const practice = getRandomInt(0, 3) === 0;
-  const odd = getRandomInt(0, 1) === 0;
+  // Taught: three ids, and the two flags between them name which.
+  const practice = wanted !== undefined
+    ? wanted === 'trig-identities.common-factor-sine-practice'
+    : getRandomInt(0, 3) === 0;
+  const odd = wanted !== undefined
+    ? wanted === 'trig-identities.common-factor-cubed'
+    : getRandomInt(0, 1) === 0;
   // 13 entries so 1 - the form both papers print - still lands about one draw
   // in six, while the other eleven share the rest.
   const k = pick([1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
@@ -829,14 +838,22 @@ export const TRIG_GENERATORS: Record<string, Gen> = {
   'Ordering Trigonometric Values': orderBySize,
   // All three ratios are reachable from the topic, each with its own id, so
   // `variationsBasedOn` can send each paper to the one it asks for.
-  'Solving Trigonometric Equations': () => solveEquation(pick(['sin', 'cos', 'tan'] as const)),
+  // Taught: the function IS the id — a sine is not a clone of a cosine.
+  'Solving Trigonometric Equations': (w) => solveEquation(
+    w === 'trig-equations.solve' ? 'sin'
+    : w === 'trig-equations.solve-cos' ? 'cos'
+    : w === 'trig-equations.solve-tan' ? 'tan'
+    : pick(['sin', 'cos', 'tan'] as const)),
   // Sine only: all three papers on this family are sine, and the split exists
   // for 2022 P2 Q9, which is one of them.
   'Solving a Trigonometric Equation with a Constant Term': () => solveEquation('sin', true),
-  'Trigonometric Equations in a Formula': inFormula,
+  'Trigonometric Equations in a Formula': (w) => inFormula(w),
   // Two moves, two variations, both reachable from the topic.
-  'Simplifying Trigonometric Expressions': () =>
-    getRandomInt(0, 1) === 0 ? substituteTan() : commonFactor(),
+  'Simplifying Trigonometric Expressions': (w) =>
+    w === 'trig-identities.simplify' ? substituteTan()
+    : w !== undefined && w.startsWith('trig-identities.common-factor')
+      ? commonFactor(w)
+    : getRandomInt(0, 1) === 0 ? substituteTan() : commonFactor(),
   'Expanding Trigonometric Brackets': expandBracket,
   'Trigonometric Fractions': splitFraction,
   'Writing in a Given Trigonometric Form': givenForm,

@@ -1487,5 +1487,10 @@ export const PYTHAGORAS_GENERATORS: Record<string, Gen> = {
     : getRandomInt(1, 3) === 1 ? pythagorasConverseJoined() : pythagorasConverse(),
   'Pythagoras in a Right-Angled Triangle': pythagorasFindSide,
   // All three families reachable from the topic, each with its own id.
-  'Pythagoras in a Circle': () => pythagorasChord(pick(['segment', 'whole', 'cut'] as const)),
+  // Taught: the three families are three ids, so the asked id names one.
+  'Pythagoras in a Circle': (w) => pythagorasChord(
+    w === 'pythagoras.chord' ? 'segment'
+    : w === 'pythagoras.chord-whole' ? 'whole'
+    : w === 'pythagoras.chord-cut' ? 'cut'
+    : pick(['segment', 'whole', 'cut'] as const)),
 };

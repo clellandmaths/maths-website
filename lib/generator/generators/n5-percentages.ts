@@ -1,4 +1,5 @@
 import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import {
   money, plain, ASSET_CONTEXTS, DEPRECIATING_MONEY, REVERSE_CONTEXTS,
@@ -117,7 +118,7 @@ function drawRate(up: boolean): { rate: number; multiplier: number } {
   return { rate, multiplier: Math.round(raw * 10000) / 10000 };
 }
 
-function compound(): Q {
+function compound(wanted?: string): Q {
   // Pick the shape, then a context that fits it — not a context and whatever
   // shape it implies.
   //
@@ -128,7 +129,12 @@ function compound(): Q {
   // of its own topic and `mix.ts` called it suppressed. This is the pattern
   // `diagram-questions.md` §2 sets out — choose the branch once, outside the
   // draw — and the reason it exists.
-  const threeSf = getRandomInt(0, 1) === 0;
+  // Taught: how it is rounded IS which question this is — three significant
+  // figures is the four-mark shape — so the asked id decides it rather than
+  // a coin, and the context is then chosen to fit.
+  const threeSf = wanted !== undefined
+    ? wanted === 'percentages.compound-3sf'
+    : getRandomInt(0, 1) === 0;
   const ctx = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf));
   const up = ctx.appreciates;
   let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
@@ -571,8 +577,8 @@ function reverseNonCalculator(): Q {
   throw new Error('percentages.reverse-non-calculator: no valid question found');
 }
 
-export const PERCENTAGE_GENERATORS: Record<string, () => Q> = {
-  'Compound Appreciation & Depreciation': compound,
+export const PERCENTAGE_GENERATORS: Record<string, Gen> = {
+  'Compound Appreciation & Depreciation': (w) => compound(w),
   'Reverse Percentages': reverse,
   'Reverse Percentages without a Calculator': reverseNonCalculator,
   'Percentage Change': percentageChange,

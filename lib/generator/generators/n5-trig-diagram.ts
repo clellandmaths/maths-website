@@ -99,7 +99,11 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
    * half the presses on 2024 P2 Q3 returned 2019's question with no shading,
    * which the owner read off the contact sheet.
    */
-  const smallestAngle = getRandomInt(0, 1) === 0;
+  // Taught: 2019 P2 Q7 asks for the smallest angle by name and 2024 P2 Q3
+  // asks for a named one, which is why they are two ids.
+  const smallestAngle = wanted !== undefined
+    ? wanted === 'trig-diagram.cosine-angle-smallest'
+    : getRandomInt(0, 1) === 0;
   for (let tries = 0; tries < 4000; tries++) {
     const [A, B, C] = pick(TRIANGLES);
     const unit = pick(UNITS);
