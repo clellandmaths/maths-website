@@ -142,6 +142,26 @@ export interface SketchAxesSpec {
    */
   periodMark?: { to: number; text: string };
   /**
+   * Which corner of the crossing the origin's `O` is written in.
+   *
+   * **Default `below-left`, which is where the papers print it and where every
+   * caller but one leaves it.** Opt-in for the same reason `frame` and `rules`
+   * are: this file draws every sketch, parabola, scatter and trigonometric
+   * graph in the course, and moving the origin label for all of them to suit
+   * one figure is the shape of change that has broken three others.
+   *
+   * **2022 P1 Q14 is the one that needs it.** Its own question is
+   * `y = (x + 1)(x - 3)`, whose curve crosses the x-axis one unit left of the
+   * origin and dives away below — so the whole of the `below-left` corner is
+   * curve. `verifyFigure` measured the `O` at **4.1px from ink it does not
+   * label** against a clearance of 5, and that 0.9px was the only thing left
+   * standing between the clone and the paper's own question: every one of the
+   * ten label arrangements failed, and the paper's factorisation appeared 0
+   * times in 3000 draws. Between the roots the curve is *below* the axis, so
+   * `above-left` is empty.
+   */
+  originCorner?: 'below-left' | 'above-left' | 'below-right' | 'above-right';
+  /**
    * A wider drawing frame, for the one shape that needs one.
    *
    * Eight waves across a near-square frame is a blur: each crest gets eleven
@@ -533,10 +553,16 @@ export function sketchAxes(spec: SketchAxesSpec): Figure {
   // both sides of it. Anchoring it *at* the crossing and pushing diagonally
   // clears each line by only the push over root two, which is not enough; it is
   // anchored a little down and left instead, and pushed further the same way.
-  const oOff = pt(o.x - 3.5, o.y - 3.5);
+  //
+  // **Which corner, when down-left is the one the curve is in.** Default
+  // unchanged, and every existing caller keeps it — see `originCorner`.
+  const oDir = spec.originCorner ?? 'below-left';
+  const oDx = oDir.endsWith('right') ? 1 : -1;
+  const oDy = oDir.startsWith('above') ? 1 : -1;
+  const oOff = pt(o.x + 3.5 * oDx, o.y + 3.5 * oDy);
   elements.push({
     kind: 'label', text: zero ? '0' : 'O',
-    anchor: oOff, away: pt(o.x + 20, o.y + 20), small: true,
+    anchor: oOff, away: pt(o.x - 20 * oDx, o.y - 20 * oDy), small: true,
   });
 
   // Each equation goes beside its own line, at opposite ends of the frame: the

@@ -157,7 +157,7 @@ function sketchCompletedSquare(wanted?: string, asked?: string): Q | null {
  * Order matters. The first plan is what shipped before, so a question that
  * placed cleanly already keeps the arrangement it had.
  */
-const LABEL_PLANS: {
+const BASE_PLANS: {
   roots: [Side, Side];
   turningPoint: Side;
   yIntercept: Side;
@@ -172,6 +172,34 @@ const LABEL_PLANS: {
   { roots: ['below', 'below'], turningPoint: 'below', yIntercept: 'right' },
   { roots: ['above', 'above'], turningPoint: 'below', yIntercept: 'left'  },
   { roots: ['above', 'above'], turningPoint: 'below', yIntercept: 'right' },
+];
+
+/**
+ * **The same ten again, with the origin label moved out of the curve's way.**
+ *
+ * The ten above are tried first and unchanged, so **every figure that already
+ * placed cleanly keeps the exact arrangement it had** — these are only ever
+ * reached by a draw that today produces no figure at all and is thrown away.
+ *
+ * That is what 2022 P1 Q14's own question was. `y = (x + 1)(x - 3)` failed all
+ * ten, and once the root label is put above the axis (plan 2) the single
+ * remaining objection was the origin's `O` at **4.1px from the curve** against
+ * a clearance of 5. Between the roots the curve is below the axis, so writing
+ * the `O` in the `above-left` corner clears it. Measured: the paper's own
+ * factorisation appeared **0 times in 3000 draws** before this and draws every
+ * time after it.
+ *
+ * The papers print `O` below-left and that stays the default everywhere,
+ * including here — this is the fallback, not the first choice.
+ */
+const LABEL_PLANS: {
+  roots: [Side, Side];
+  turningPoint: Side;
+  yIntercept: Side;
+  originCorner?: 'below-left' | 'above-left' | 'below-right' | 'above-right';
+}[] = [
+  ...BASE_PLANS,
+  ...BASE_PLANS.map(p => ({ ...p, originCorner: 'above-left' as const })),
 ];
 
 function sketchFactorised(wanted?: string): Q | null {
@@ -223,16 +251,19 @@ function sketchFactorised(wanted?: string): Q | null {
   // arrangement that places cleanly wins — see the note on LABEL_PLANS for why
   // one fixed arrangement was costing this question three quarters of itself.
   let partial = '', complete = '';
+  let originCorner: 'below-left' | 'above-left' | 'below-right' | 'above-right' | undefined;
   for (const plan of LABEL_PLANS) {
     const marks = [
       { x: r1, y: 0, text: `${r1}`, side: plan.roots[0] },
       { x: r2, y: 0, text: `${r2}`, side: plan.roots[1] },
       { x: h, y: k, text: coord(h, k), side: plan.turningPoint },
     ];
-    const withoutIntercept = figureFor({ view, plot, points: marks });
+    const withoutIntercept = figureFor({
+      view, plot, points: marks, originCorner: plan.originCorner,
+    });
     if (!withoutIntercept) continue;
     const withIntercept = figureFor({
-      view, plot,
+      view, plot, originCorner: plan.originCorner,
       points: [...marks, { x: 0, y: c, text: `${c}`, side: plan.yIntercept }],
     });
     if (!withIntercept) continue;
@@ -240,10 +271,13 @@ function sketchFactorised(wanted?: string): Q | null {
     // its own labels between •² and •³.
     partial = withoutIntercept;
     complete = withIntercept;
+    // ...and so must the blank axes below, or the pupil is given a pair of
+    // axes whose O sits somewhere else from the one in the worked answer.
+    originCorner = plan.originCorner;
     break;
   }
 
-  const blank = onAxes ? figureFor({ view, plot: { kind: 'none' } }) : '';
+  const blank = onAxes ? figureFor({ view, plot: { kind: 'none' }, originCorner }) : '';
   if (!partial || !complete || blank === null) return null;
 
   /**

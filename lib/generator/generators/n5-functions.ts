@@ -125,8 +125,27 @@ function evaluate(wanted?: string): Q {
   for (let tries = 0; tries < 200; tries++) {
     const s = shapes(which)[which];
     const fn = pick(FN);
-    // three of the four papers substitute a negative
-    const input = getRandomInt(1, 4) === 1 ? getRandomInt(2, 8) : -getRandomInt(2, 6);
+    /**
+     * **2022 P1 Q2 always substitutes a negative, because that IS the
+     * question.** It is `f(-3)` on `x^3 - 2`, and the second mark is for
+     * knowing `(-3)^3 = -27` rather than `27`. Measured on the second pass:
+     * the input came out POSITIVE in 79 of 300 draws, and `f(4)` on `x^3 + 6`
+     * is `64 + 6` with no sign to get wrong — a different and easier question.
+     * The owner, on the 2022 P1 sheet: *"Agree"*.
+     *
+     * **Pinned for this shape only.** Only three of the four papers substitute
+     * a negative, and one of the four — 2024 P1 Q2 — is signed off. `which` is
+     * read straight off the id the caller asked for and nothing is discarded to
+     * reach it, so this branch never runs on another id and their draws are
+     * untouched.
+     *
+     * The first pass fixed the sign of the CONSTANT on this shape and never
+     * looked at the sign of the input.
+     */
+    const input = ids[which] === 'functions.evaluate-cube-plus'
+      ? -getRandomInt(2, 6)
+      // three of the four papers substitute a negative
+      : getRandomInt(1, 4) === 1 ? getRandomInt(2, 8) : -getRandomInt(2, 6);
     const out = s.at(input);
     if (!Number.isInteger(out) || Math.abs(out) > 400) continue;
     // **Never zero.** The four papers answer 10, -40, -29 and 100. Zero is

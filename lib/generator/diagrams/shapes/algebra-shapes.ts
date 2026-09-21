@@ -146,7 +146,32 @@ export type PlaneShape =
    * thing about the same area, and puts the height on the outside where it can
    * be read.
    */
-  | { kind: 'triangle'; base: number; height: number; labels: { base: string; height: string } };
+  | { kind: 'triangle'; base: number; height: number; labels: { base: string; height: string } }
+  /**
+   * Upright and general, with the height as a dimension arrow beside it.
+   *
+   * **This is what 2022 P1 Q15's own scan draws**, and the note on `triangle`
+   * above ruled the paper's shape out on a premise that does not describe it.
+   * It says *"the paper draws a general triangle with the height dropped
+   * inside it, and that is where the height label has to live"*. It is not.
+   * Counted off the scan: a tall upright triangle, `3 cm` written under the
+   * base, and `(x + 12) cm` on a **double-headed arrow standing clear of the
+   * triangle altogether** — the same device this paper's own Q3 uses for the
+   * height of a cone. Outside, so there is room; and no right angle, because
+   * the paper marks none.
+   *
+   * That matters beyond looks: a right angle is information the paper does not
+   * give, and the paper's height is a perpendicular distance rather than a
+   * side. The area is the same either way, which is why nothing in the suite
+   * caught it — the 2023 P1 Q10 fault, right in every number and wrong in its
+   * picture. Found by putting the render beside the scan.
+   *
+   * **Opt-in, and `triangle` is left exactly as it was.**
+   * `form-equation.rectangle-triangle` (2016 P1 Q12) is the other caller and
+   * is not yet reviewed, so it keeps the right-angled drawing it has.
+   */
+  | { kind: 'triangle-upright'; base: number; height: number;
+      labels: { base: string; height: string } };
 
 const shapeWidth = (s: PlaneShape): number =>
   s.kind === 'rectangle' ? s.w : s.kind === 'square' ? s.s : s.base;
@@ -176,6 +201,29 @@ function drawShape(s: PlaneShape, at: Pt, side: 'left' | 'right'): Element[] {
       { kind: 'rightAngle', at: a, arms: [b, apex] },
       sideLabel(a, b, s.labels.base, above),
       { kind: 'label', text: s.labels.height, anchor: mid(a, apex), away: outward },
+    ];
+  }
+
+  if (s.kind === 'triangle-upright') {
+    // Apex over the middle of the base, so no side is vertical and nothing
+    // reads as a right angle — the paper's triangle leans both ways.
+    const [a, b, apex] = [P(0, 0), P(s.base, 0), P(s.base / 2, s.height)];
+    // The arrow stands on the OUTWARD side, the same rule the rectangles
+    // follow: on the left shape it goes left, so the pair's gap stays clear.
+    // `dimensionArrow` takes a point on the side the arrow should sit, which
+    // is the opposite convention to `sideLabel`'s `away` — hence the flip.
+    const armX = side === 'left' ? 0 : s.base;
+    return [
+      { kind: 'polygon', points: [a, b, apex] },
+      sideLabel(a, b, s.labels.base, above),
+      // `extend` draws the dashed leaders out to the arrow, so it is clear the
+      // measurement runs from the base line up to the apex's level rather than
+      // along any side. 2022 P1 Q15's scan draws exactly those leaders.
+      ...dimensionArrow(
+        P(armX, 0), P(armX, s.height),
+        side === 'left' ? P(-w, h / 2) : P(w * 2, h / 2),
+        Math.max(w * 0.3, 14), s.labels.height, true,
+      ),
     ];
   }
 
@@ -221,6 +269,10 @@ export function shapePair(
   // expression, so no length on this page is a number anybody printed.
   const claims: Claim[] = [];
   for (const [s, x] of [[left, 0], [right, shapeWidth(left) + gap]] as [PlaneShape, number][]) {
+    // An upright triangle has no right angle to claim — its apex sits over the
+    // middle of the base, so the corner at (x, 0) is acute. Claiming 90 here
+    // would assert something the drawing deliberately does not show.
+    if (s.kind === 'triangle-upright') continue;
     claims.push({
       kind: 'angle', at: pt(x, 0),
       arms: [pt(x + shapeWidth(s), 0), pt(x, shapeHeight(s))],

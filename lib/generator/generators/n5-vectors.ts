@@ -327,7 +327,28 @@ function twoPoints(wantEquation: boolean, wanted?: string): Q {
     // divisibility that keeps c whole favours den = 1 - and no paper here uses
     // it: 2, -2 and -4. It also makes the second mark nearly free, since there
     // is nothing to multiply. So the floor matters as much as the ceiling.
-    if (wantEquation && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20)) continue;
+    /**
+     * **The line never passes through the origin.** `c === 0` printed
+     * `y = 2x`, `y = 3x`, `y = -2x` in 6 of 300 draws on the second pass, and
+     * a line with no constant is a step shorter than the question all three
+     * papers set: the third mark is determining the equation with both parts,
+     * and there is nothing to substitute back for. The three papers' own
+     * intercepts are 9, 4 and -13.
+     *
+     * The owner, on the 2022 P1 sheet: *"Agree can't go through origin"* —
+     * brought rather than assumed, because the general form of this is their
+     * 2022 P2 Q9 ruling on a different topic: *"it should always have plus or
+     * minus something you just can't pick 0."*
+     *
+     * **This moves 2017 P1 Q6 and 2015 P1 Q8, and both are declared.** The
+     * guard is shared by both equation ids — `drawIt` is decided below it, so
+     * it cannot be keyed to one without a branch — and 2015 P1 Q8 rides the
+     * `-pre2022p1` alias on this same routine. Neither is signed off and both
+     * have the identical fault, so both move towards their own papers rather
+     * than away. `straight-line.gradient-two-points` is untouched: the guard
+     * is gated on `wantEquation`, which is fixed per call.
+     */
+    if (wantEquation && (Math.abs(m) > 5 || Math.abs(m) < 2 || Math.abs(c) > 20 || c === 0)) continue;
 
     if (!wantEquation) {
       return {

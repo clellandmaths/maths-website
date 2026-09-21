@@ -289,8 +289,22 @@ function triangleAgainstRectangle(): Q | null {
   const u = abbrev(c.unit);
   return assemble(
     shapePair(
-      { kind: 'triangle', base: 100, height: 44,
-        labels: { base: `(x + ${b}) ${u}`, height: `${hTri} ${u}` } },
+      /**
+       * **Base and height the way round the paper writes them.**
+       *
+       * 2022 P1 Q15 draws a tall upright triangle whose BASE is the plain
+       * number — `3 cm` — with `(x + 12) cm` as its HEIGHT, on an arrow beside
+       * it. This had them the other way about and lying flat, with the
+       * expression along the bottom and a right angle marked, so the picture
+       * was not the paper's even though every number and all five marks were.
+       * The area is `½ × 3 × (x + 12)` either way, which is exactly why
+       * nothing caught it; step 1 below already writes it in the paper's
+       * order.
+       *
+       * Drawn tall and narrow, as the scan is: the base is the short side.
+       */
+      { kind: 'triangle-upright', base: 44, height: 104,
+        labels: { base: `${hTri} ${u}`, height: `(x + ${b}) ${u}` } },
       { kind: 'rectangle', w: 52, h: 68,
         labels: { w: `(${k} - x) ${u}`, h: `${r} ${u}` } } as PlaneShape,
     ),

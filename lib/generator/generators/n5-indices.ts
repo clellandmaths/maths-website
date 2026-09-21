@@ -94,10 +94,38 @@ function laws(): Q {
 // "(m⁻²)⁴ × m⁻⁵" -> m⁻¹³ -> 1/m¹³. The mark is for expressing it with a
 // positive power, so the combined index must come out negative.
 
-function negativePower(): Q {
+/**
+ * **Each paper gets the shape its own paper writes.**
+ *
+ * The two papers here differ in the sign INSIDE the bracket, and that changes
+ * where a pupil first meets a negative index:
+ *
+ *   2022 P1 Q11   (m^-2)^4 x m^-5    inner power NEGATIVE — negative from the
+ *                                    very first move
+ *   2016 P2 Q10   (n^2)^3  x n^-10   inner power positive — the negative only
+ *                                    arrives at the multiply
+ *
+ * Measured on the second pass, 300 draws of 2022 P1 Q11's own id: 220
+ * negative, **80 positive**. So 27% of the time a pupil asking for 2022 P1 Q11
+ * was handed 2016's shape, and 2016 P2 Q10 received 2022's the other way
+ * about. The owner, on the 2022 P1 sheet: *"Agreed key it"* — the same call
+ * they made for the three trig formulae on 2023 P2 Q11.
+ *
+ * **`asked` is what separates them.** 2016 P2 Q10 rides the `-pre2022p1`
+ * alias, so `wanted` resolves to the same string for both and cannot. A topic
+ * sheet asks for neither and keeps the full spread.
+ *
+ * Both papers' clones move, which is what keying them means. 2016 P2 Q10 is
+ * not yet reviewed. `indices.negative-power-fraction` (2023 P1 Q12, signed
+ * off) is a different routine on its own dispatch arm and is untouched.
+ */
+function negativePower(asked?: string): Q {
+  const inner = asked === 'indices.negative-power' ? [-3, -2]          // 2022 P1 Q11
+    : asked === 'indices.negative-power-pre2022p1' ? [2, 3]            // 2016 P2 Q10
+    : [-3, -2, 2, 3];
   for (let tries = 0; tries < 300; tries++) {
     const v = pick(VARS);
-    const a = pick([-3, -2, 2, 3]);    // inside the bracket
+    const a = pick(inner);             // inside the bracket
     const b = getRandomInt(2, 4);      // the bracket's power
     const c = getRandomInt(-10, -2);   // the multiplier's power
     const result = a * b + c;
@@ -459,10 +487,13 @@ export const INDICES_GENERATORS: Record<string, Gen> = {
   // draws only its own shape.
   // Taught: the two shapes are two ids, so the wanted one picks the routine
   // instead of a coin. A topic sheet names none and keeps the even toss.
-  'Negative Indices': (wanted) => (
-    wanted === 'indices.negative-power' ? negativePower()
+  // `asked` is passed through because the two product papers are separated by
+  // it and not by `wanted` — 2016 P2 Q10 is an alias of 2022 P1 Q11's id, so
+  // both resolve to the same target. See the note above `negativePower`.
+  'Negative Indices': (wanted, asked) => (
+    wanted === 'indices.negative-power' ? negativePower(asked)
     : wanted === 'indices.negative-power-fraction' ? negativePowerFraction()
-    : getRandomInt(0, 1) === 0 ? negativePower() : negativePowerFraction()),
+    : getRandomInt(0, 1) === 0 ? negativePower(asked) : negativePowerFraction()),
   'Fractional Indices': evaluateFractional,
   'Indices with Coefficients': () => withCoefficient(true),
   'Indices in a Quotient': () => withCoefficient(false),
