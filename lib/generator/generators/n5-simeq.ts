@@ -145,18 +145,22 @@ function eliminationSteps(
  *                two evidence lines, not two routes: matching y is x2 and x5,
  *                matching x is x3 and x2, and both scale both equations.
  *
- * **2023 P1 Q3 is deliberately absent, and its turn is already decided.** Its
- * markscheme requires both as well (10x + 15y = 40 and 10x + 4y = -4), and it
- * still draws a one-scaling system in 135 draws of 240. It is left out only
- * because it is SIGNED OFF and the owner's condition named papers still to be
- * reviewed — *"I will extend to 2023 when I get there as we are re reviewing
- * anyway"*. Add `'simeq.solve-given-2023'` below when 2023 is revisited; it
- * will move a frozen question, which is what that review is for.
+ *   2023 P1 Q3   `simeq.solve-given-2023`     2x + 3y = 8, 5x + 2y = -2
+ *                scheme: 10x + 15y = 40 AND 10x + 4y = -4
+ *
+ * **2023 P1 Q3 was added on 2026-09-21**, when its own paper came up for
+ * review. It had been held back only because it was signed off while the
+ * others were not — *"I will extend to 2023 when I get there as we are re
+ * reviewing anyway"*, then *"Agree apply"* on the 2023 P1 sheet. It had been
+ * drawing a one-scaling system in 135 draws of 240.
+ *
+ * All four papers this routine serves are now on the rule.
  */
 const BOTH_SCALED = new Set([
   'simeq.solve-given',           // 2024 P1 Q7
   'simeq.solve-given-2015',      // 2015 P1 Q11
   'simeq.solve-given-pre2023',   // 2018 P1 Q3
+  'simeq.solve-given-2023',      // 2023 P1 Q3
 ]);
 
 function solveGiven(_wanted?: string, asked?: string): Q {

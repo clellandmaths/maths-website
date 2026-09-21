@@ -316,7 +316,7 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
       cut: { rest: 'dashed', radiusLine: 'dashed', shade: false },
     } as const;
     const fig = circleChord({
-      radius: r, chord, major: true, flip: ctx.flip,
+      radius: r, chord, major: true, flip: ctx.flip, sideways: ctx.sideways,
       ...drawn[ctx.family],
       names: { a: A, b: B, centre: O },
       labels: {
@@ -339,7 +339,10 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
       `<strong>1.</strong> The perpendicular from the centre to a chord bisects it, so drop it from $${O}$ to the midpoint $M$ of $${A}${B}$. That makes a right-angled triangle $${O}M${B}$, with $${O}${B}$ as its hypotenuse.`,
       `<strong>2.</strong> Half the chord is $${num(chord)} \\div 2 = ${num(chord / 2)}$ ${ctx.unit}. Now use Pythagoras to find $${O}M$:<br><br>$${O}M^{2} = ${num(r)}^{2} - ${num(chord / 2)}^{2} = ${num(Number((r * r - (chord / 2) ** 2).toFixed(4)))}$`,
       `<strong>3.</strong> So $${O}M = ${exact ? num(d) : d.toFixed(3)}$ ${ctx.unit}.`,
-      `<strong>4.</strong> The shape is the larger piece, so its height is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
+      // "height" reads wrong on a chord stood on end, where the answer runs
+      // across the page. Scoped to the sideways contexts so the working on the
+      // other seven papers this routine serves is untouched.
+      `<strong>4.</strong> The shape is the larger piece, so its ${ctx.sideways ? 'width' : 'height'} is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
     ];
 
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
@@ -830,7 +833,19 @@ export function pythagorasConverseJoined(): Q {
 
 export function pythagorasChordReverse(findChord: boolean): Q {
   for (let tries = 0; tries < 400; tries++) {
-    const ctx = pick(CHORD_CONTEXTS);
+    /**
+     * **`sideways` contexts belong to 2023 P1 Q10 and nothing else.**
+     *
+     * `CHORD_CONTEXTS` is shared, and this routine reads it unfiltered. The
+     * three contexts added for that question's orientation landed here too,
+     * and `frozen` named 2026 P2 Q5 — SIGNED OFF — and 2014 P1 Q12 the moment
+     * they did. This routine draws its figure upright and does not pass
+     * `sideways` through, so those stories would have been told against the
+     * wrong picture even if nothing had been frozen.
+     *
+     * *A shared list is shared.* Fifth time on this project.
+     */
+    const ctx = pick(CHORD_CONTEXTS.filter(c => !c.sideways));
     const [lo, hi] = ctx.band;
     const [O, A, B] = pick([['O', 'A', 'B'], ['C', 'P', 'Q'], ['O', 'A', 'C']]);
 

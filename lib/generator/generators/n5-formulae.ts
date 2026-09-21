@@ -706,7 +706,23 @@ function inequalityFractions(): Q {
     // x in all ten *Linear equations and inequations* papers; `y` and `p` in
     // none. An inequality is solved for x for the same reason an equation is.
     const v = 'x';
-    const rel = pick(['\\lt', '\\gt']);
+    /**
+     * **The paper sets a strict greater-than, and this clones only that
+     * paper.** 2023 P1 Q14 is `(x + 1)/3 - 2 > 3x/5`, and its markscheme
+     * carries the direction through to `x < -25/4`, where the sign turns over
+     * because the `x` term ends up negative. That turn is the third mark.
+     *
+     * This was `pick(['\\lt', '\\gt'])`, so 143 draws of 300 asked under this
+     * paper's name a question no paper sets. The owner, on the 2023 P1 sheet:
+     * *"Yes pin it and ensure it only affects this papers question"* — and it
+     * does: nothing else cites `inequalities.fractions`, as the note below
+     * the return records.
+     *
+     * `outRel` still flips when the coefficient comes out negative, so the
+     * ANSWER is a less-than as often as the algebra demands. Only the
+     * question's own operator is fixed.
+     */
+    const rel = '\\gt';
     const p = pick([2, 3, 4, 5]), r = pick([2, 3, 4, 5]);
     if (p === r) continue;
     const a = nonZeroInt(-8, 8);                // constant inside the numerator
@@ -736,7 +752,10 @@ function inequalityFractions(): Q {
     if (den > MAX_INEQ_DEN) continue;
     const ansTex = den === 1 ? `${num}`
       : num < 0 ? `-${frac(`${-num}`, `${den}`)}` : frac(`${num}`, `${den}`);
-    const outRel = A < 0 ? (rel === '\\lt' ? '\\gt' : '\\lt') : rel;
+    // The question always asks with `>` (see `rel` above), so the answer turns
+    // over exactly when the `x` coefficient comes out negative — which is the
+    // paper's third mark, and happens in about 95% of draws.
+    const outRel = A < 0 ? '\\lt' : '\\gt';
 
     const lhs = `${frac(`${v}${tail(a)}`, `${p}`)}${tail(-b)}`;
     const rhs = frac(term(q, v), `${r}`);

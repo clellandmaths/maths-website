@@ -86,6 +86,23 @@ export interface CircleChordSpec {
    * carry over unaltered.
    */
   flip?: boolean;
+  /**
+   * **Stand the chord on end, so the piece runs across the page.**
+   *
+   * 2023 P1 Q10 is printed that way: the chord vertical on the left, A above
+   * B, and the *width* measured horizontally across the bottom. Every clone of
+   * it laid the chord flat and asked for a height, so a pupil never met the
+   * sideways picture the exam sets — and turning it mentally is part of the
+   * difficulty. The owner, on the 2023 P1 sheet: *"Is it worth having some
+   * rotations on here with some contexts that justify the rotations so we get
+   * some that match the orientation of the original question?"*
+   *
+   * **Opt-in, because this shape serves eight papers.** It is a quarter turn
+   * and nothing more: every claim the figure makes is a length or an angle,
+   * and rotation changes neither, so the checks carry over unaltered — the
+   * same argument `flip` makes for its mirror.
+   */
+  sideways?: boolean;
 }
 
 export function circleChord(spec: CircleChordSpec): Figure {
@@ -97,11 +114,21 @@ export function circleChord(spec: CircleChordSpec): Figure {
   const rest = spec.rest ?? 'none';
   const radiusLine = spec.radiusLine ?? 'none';
 
-  const O = pt(0, 0);
-  const A = pt(-half, k * m);
-  const B = pt(half, k * m);
+  /**
+   * A quarter turn clockwise, or nothing at all.
+   *
+   * `(x, y) -> (y, -x)` puts the chord on the LEFT with the piece opening to
+   * the right, which is how 2023 P1 Q10 is printed; the other direction would
+   * mirror it. Every point below is built through this, so the bearings the
+   * arcs are drawn from follow without being touched.
+   */
+  const at = (x: number, y: number) => spec.sideways ? pt(y, -x) : pt(x, y);
+
+  const O = at(0, 0);
+  const A = at(-half, k * m);
+  const B = at(half, k * m);
   const M = mid(A, B);
-  const T = pt(0, r * m);                        // the far point of the arc
+  const T = at(0, r * m);                        // the far point of the arc
 
   // Anticlockwise from B round the far point to A, which is the piece being
   // asked about. Reflecting negates every bearing, which reverses the sweep —
@@ -139,7 +166,7 @@ export function circleChord(spec: CircleChordSpec): Figure {
   // the vertical rather than "away from B" — `sideLabel` shoves a label from
   // its reference point towards the middle of the side, and a reference that
   // is not square-on to a vertical line sends the label sliding up it.
-  const rightOf = (y: number) => pt(Math.max(half, r * 0.5), y);
+  const rightOf = (y: number) => at(Math.max(half, r * 0.5), y);
   if (radiusLine !== 'none' && spec.labels.radius) {
     /**
      * **Pushed away from A, the chord's far end.**
@@ -162,7 +189,19 @@ export function circleChord(spec: CircleChordSpec): Figure {
      * against it — 0.0px from "ink it does not label", which is the radius line
      * it is sitting on and labelling.
      */
-    elements.push(sideLabel(O, B, spec.labels.radius, A));
+    /**
+     * **Turned on its side, push away from the chord's midpoint instead.**
+     *
+     * A is the chord's far END, and in the upright figure that carries the
+     * label along the chord's direction into the open part of the piece — the
+     * note above. Rotate the figure and A is directly above B, so "away from
+     * A" points straight down, onto the arc. `verifyFigure` rejected every
+     * sideways draw whose radius label was wider than about three characters:
+     * "6 m" passed, "40 cm" and "50 cm" were 4.6px from ink they did not
+     * label. M sits on the chord, so pushing away from it carries the label
+     * into the body of the piece, which is where the paper prints it.
+     */
+    elements.push(sideLabel(O, B, spec.labels.radius, spec.sideways ? M : A));
   }
   if (spec.labels.chord) {
     /**
@@ -193,7 +232,10 @@ export function circleChord(spec: CircleChordSpec): Figure {
      * depth of cut it stops working at.
      */
     const clearArc = Math.abs(k + r) + r * 0.16;
-    const outward = pt(M.x, M.y - m * 2 * r);
+    // Built in the upright frame and turned with everything else: the chord's
+    // midpoint is (0, k*m) before rotation, so reading M.x/M.y here would mix
+    // a rotated point into an unrotated calculation.
+    const outward = at(0, k * m - m * 2 * r);
     elements.push(...dimensionArrow(A, B, outward, clearArc, spec.labels.chord,
       spec.chordExtensions === true));
   }

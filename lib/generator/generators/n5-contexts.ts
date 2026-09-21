@@ -1028,6 +1028,27 @@ export interface ChordContext {
    * a disc is `cut`; a container seen end-on is `whole`.
    */
   family: 'segment' | 'whole' | 'cut';
+  /**
+   * Draw the chord **vertical**, with the piece running across the page.
+   *
+   * 2023 P1 Q10 is printed that way — chord on the left, A above B, and the
+   * *width* measured horizontally across the bottom — and every context here
+   * laid it flat and asked for a height or a depth, so the clone never made
+   * the paper's own picture. The owner, on the 2023 P1 sheet: *"Is it worth
+   * having some rotations on here with some contexts that justify the
+   * rotations so we get some that match the orientation of the original
+   * question?"*
+   *
+   * **The context has to earn it.** A clock face or a doorstep sits flat, and
+   * standing one on end would be a picture of nothing. These are things whose
+   * straight edge is naturally upright: against a wall, a fence, or the next
+   * slab along a path.
+   *
+   * **`pythagorasChordReverse` filters these out**, because it reads this same
+   * list and draws its figure upright. `frozen` named 2026 P2 Q5 and 2014 P1
+   * Q12 the moment they were added without that filter.
+   */
+  sideways?: boolean;
 }
 
 export const CHORD_CONTEXTS: ChordContext[] = [
@@ -1051,9 +1072,28 @@ export const CHORD_CONTEXTS: ChordContext[] = [
   { scene: (o, a, b) => `A wooden tabletop is cut from a circular board with centre ${o}, leaving one straight edge ${a}${b}.`,
     asks: 'the depth of the tabletop', unit: 'centimetres', band: [30, 90], family: 'cut' },
   { scene: (o, a, b) => `A cheese round has a slice taken off it along the straight cut ${a}${b}. The centre of the round is ${o}.`,
-    asks: 'the width of what is left', unit: 'centimetres', band: [10, 40], family: 'cut' },
+    // Height for the same reason as the biscuit: drawn upright, measured
+    // vertically.
+    asks: 'the height of what is left', unit: 'centimetres', band: [10, 40], family: 'cut' },
   { scene: (o, a, b) => `A clock face is cut from a circular sheet with centre ${o}, with a flat edge ${a}${b} along the bottom.`,
     asks: 'the height of the clock face', unit: 'centimetres', band: [12, 40], family: 'cut' },
+  // ── the paper's own orientation: chord upright, width measured across ────
+  //
+  // 2023 P1 Q10 IS the paving slab, and it was the one context this list did
+  // not have. Each of these stands its straight edge against something, so the
+  // picture the rotation draws is the picture the story describes.
+  { scene: (o, a, b) => `Alan is laying a path from identical paving slabs. Each slab is cut from a circle with centre ${o}, and the straight edge ${a}${b} butts against the next slab.`,
+    asks: 'the width of the paving slab', unit: 'centimetres', band: [30, 90],
+    family: 'cut', sideways: true },
+  { scene: (o, a, b) => `A mirror is cut from a circular sheet of glass with centre ${o}. Its straight edge ${a}${b} is fixed flat against the wall.`,
+    // "how far the mirror stands out from the wall" was a mouthful where every
+    // other context here names a width, a height or a depth. Fixed flat to a
+    // wall, the width is what it is — and it is the paper's own noun.
+    asks: 'the width of the mirror', unit: 'centimetres', band: [20, 60],
+    family: 'cut', sideways: true },
+  { scene: (o, a, b) => `A flower bed is cut from a circular lawn with centre ${o}. Its straight edge ${a}${b} runs along a fence.`,
+    asks: 'the width of the flower bed', unit: 'metres', band: [2, 8],
+    family: 'cut', sideways: true },
   { scene: (o, a, b) => `A jam jar has a sticker in the shape of part of a circle, centre ${o}, with straight edge ${a}${b}.`,
     asks: 'the height of the sticker', unit: 'centimetres', band: [5, 14], family: 'segment' },
   { scene: (o, a, b) => `A window is made from part of a circle with centre ${o}, resting on a horizontal sill ${a}${b}.`,
@@ -1069,7 +1109,11 @@ export const CHORD_CONTEXTS: ChordContext[] = [
   { scene: (o, a, b) => `A speed bump has a cross-section that is part of a circle with centre ${o}, sitting on the road ${a}${b}.`,
     asks: 'the height of the speed bump', unit: 'centimetres', band: [15, 60], family: 'whole' },
   { scene: (o, a, b) => `A biscuit is cut from a circular sheet of dough, centre ${o}, along the straight edge ${a}${b}.`,
-    asks: 'the width of the biscuit', unit: 'centimetres', band: [4, 12], family: 'cut' },
+    // **Height, not width.** Drawn upright, with the straight edge along the
+    // bottom, the length asked for runs vertically — so "width" labelled a
+    // vertical line. The owner spotted it off the wordings on the 2023 P1
+    // sheet, once the sideways contexts made orientation visible.
+    asks: 'the height of the biscuit', unit: 'centimetres', band: [4, 12], family: 'cut' },
   { scene: (o, a, b) => `The end of a fuel tank is part of a circle with centre ${o}, welded to a flat base ${a}${b}.`,
     asks: 'the height of the tank end', unit: 'metres', band: [1, 4], family: 'segment' },
   { scene: (o, a, b) => `A bridge arch is part of a circle with centre ${o}, spanning the river along ${a}${b}.`,
