@@ -393,7 +393,28 @@ function runningOn(): Q | null {
     [E]: C(1, 1, 1, 1),
   };
   pos[F] = cAdd(pos[E], cScale(pos[E], r(1, k)));
-  const want = cSub(pos[F], pos[G]);
+  /**
+   * **Which end the journey starts from — the second lever.**
+   *
+   * The ratio was the only thing that counted (the point names and the
+   * vector names are both normalised when different questions are counted),
+   * so this clone made FOUR different questions and a pupil doing five had
+   * seen them all. Widening the ratio does not help: k > 5 is excluded
+   * deliberately just above, because the run-on leg becomes too short to
+   * letter clearly, so wider draws are simply rejected.
+   *
+   * The owner, on the 2025 P2 sheet: *"your idea of going DF which i think
+   * is good"*. 2025 P2 Q15 asks for GF; DF is the same journey read from
+   * the other end, one step longer and no harder, and it doubles the count.
+   *
+   * **Not a form split.** Both ask "express a journey in terms of r and s"
+   * with the same two marks and the same working; only the starting point
+   * moves. A different starting point is a different number, not a
+   * different question.
+   */
+  const fromD = getRandomInt(0, 1) === 0;
+  const start = fromD ? D : G;
+  const want = cSub(pos[F], pos[start]);
 
   const R = pt(30, 52), S = pt(60, -32);
   const points = Object.fromEntries(Object.entries(pos).map(([kk, v]) => [kk, place(v, R, S)]));
@@ -402,13 +423,16 @@ function runningOn(): Q | null {
   const prose = [
     `In the diagram, $${ray(D, G)}$ and $${ray(G, E)}$ are represented by vectors $${vec(nr)}$ and $${vec(ns)}$ respectively.`,
     `$${ray(D, E)} = ${k}${ray(E, F)}$.`,
-    `Express $${ray(G, F)}$ in terms of $${vec(nr)}$ and $${vec(ns)}$. Give your answer in its simplest form.`,
+    `Express $${ray(start, F)}$ in terms of $${vec(nr)}$ and $${vec(ns)}$. Give your answer in its simplest form.`,
   ];
   const steps = [
     `<strong>1.</strong> First find $${ray(D, E)}$, then take the fraction of it that $${ray(E, F)}$ is:` +
     `<br><br>$${ray(D, E)} = ${vec(nr)} + ${vec(ns)}$, so $${ray(E, F)} = \\frac{1}{${k}}(${vec(nr)} + ${vec(ns)})$`,
-    `<strong>2.</strong> The pathway from $${G}$ is $${ray(G, E)} + ${ray(E, F)}$:` +
-    `<br><br>$${ray(G, F)} = ${vec(ns)} + \\frac{1}{${k}}(${vec(nr)} + ${vec(ns)}) = ${answer}$`,
+    fromD
+      ? `<strong>2.</strong> The pathway from $${D}$ is $${ray(D, E)} + ${ray(E, F)}$:` +
+        `<br><br>$${ray(D, F)} = (${vec(nr)} + ${vec(ns)}) + \\frac{1}{${k}}(${vec(nr)} + ${vec(ns)}) = ${answer}$`
+      : `<strong>2.</strong> The pathway from $${G}$ is $${ray(G, E)} + ${ray(E, F)}$:` +
+        `<br><br>$${ray(G, F)} = ${vec(ns)} + \\frac{1}{${k}}(${vec(nr)} + ${vec(ns)}) = ${answer}$`,
   ];
   return assemble({
     points,
@@ -417,10 +441,13 @@ function runningOn(): Q | null {
     // alongside GE. That last one is the vector the question asks for, and the
     // clone left it out - so a pupil was asked to express a journey the picture
     // did not show.
-    edges: [[D, G], [G, E], [D, E], [E, F], [G, F]],
+    // The asked journey is drawn, whichever end it starts from — 2025 P2 Q15
+    // draws GF alongside GE, and a pupil should not be asked to express a
+    // journey the picture does not show.
+    edges: [[D, G], [G, E], [D, E], [E, F], [start, F]],
     arrows: [{ from: D, to: G, label: nr }, { from: G, to: E, label: ns }],
   }, 'A Pathway Running On', 'vectors.pathway-running-on', prose,
-    `$${ray(D, G)} = ${vec(nr)}$, $${ray(G, E)} = ${vec(ns)}$, $${ray(D, E)} = ${k}${ray(E, F)}$. Find $${ray(G, F)}$.`,
+    `$${ray(D, G)} = ${vec(nr)}$, $${ray(G, E)} = ${vec(ns)}$, $${ray(D, E)} = ${k}${ray(E, F)}$. Find $${ray(start, F)}$.`,
     steps, [1, 1], `$${answer}$`);
 }
 
