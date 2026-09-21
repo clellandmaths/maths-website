@@ -218,8 +218,8 @@ export const pastpaper2023 = {
                     topics: ["Simplifying algebraic fraction"]
                 },
                 {
-                    question: `<small><strong><span style="white-space: nowrap;">2023 P2 Q13</span></strong></small><p>Simplify \\(\\sin^2 x^\\circ\\cos^2 x^\\circ + \\cos^4 x^\\circ\\) Show your working.</p>`,
-                    answer: `\\(\\cos^2 x^\\circ\\)`,
+                    question: `<small><strong><span style="white-space: nowrap;">2023 P2 Q13</span></strong></small><p>Simplify \\(2\\sin^2 x^\\circ + 2\\cos^2 x^\\circ\\) Show your working.</p>`,
+                    answer: `\\(2\\)`,
                     videoId: "wBABvZztps0",
                     timestamp: "924s",
                     marks: [2],
