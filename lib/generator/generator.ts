@@ -36,6 +36,13 @@ export interface GenerateOptions {
    * by a caller. See docs/one-question-one-generator.md.
    */
   makeId?: string;
+  /**
+   * Internal. The exact id that was ASKED FOR, which for an alias is not the
+   * id the routine emits. `makeId` says what to build; this says which paper
+   * wanted it, so a routine can give one paper its own shape without the
+   * alias first having to be turned into a full variation.
+   */
+  askedId?: string;
 }
 
 /**
@@ -121,10 +128,17 @@ export async function generateQuestion(
      */
     const targets = new Set([...wanted].map(id => aliasTarget(id) ?? id));
     const makeId = targets.size === 1 ? [...targets][0] : undefined;
+    /**
+     * And the id as it was asked for. Two papers on one alias target share a
+     * clone, so `makeId` cannot tell them apart; this can. A routine reads it
+     * only where a paper has been given its own shape, and ignores it
+     * everywhere else, which is why adding it moves nothing.
+     */
+    const askedId = wanted.size === 1 ? [...wanted][0] : undefined;
 
     for (let draw = 0; draw < DRAW_LIMIT; draw++) {
       DREW = draw + 1;
-      const q = await generateQuestion(topics, { makeId });
+      const q = await generateQuestion(topics, { makeId, askedId });
       if (q.variationId && wanted.has(q.variationId)) return q;
       const alias = q.variationId && stampAs.get(q.variationId);
       // The code travels with the id: the website builds a question's uid from
@@ -155,7 +169,7 @@ export async function generateQuestion(
   const isN5 = Object.values(COURSES["National 5 Maths"]).some(ts => ts.includes(selected));
   if (isN5) {
     const { generateN5Question } = await import('./generators/n5');
-    q = generateN5Question(selected, options.makeId);
+    q = generateN5Question(selected, options.makeId, options.askedId);
   }
   else if (TOPIC_GROUPS["Sequences"].includes(selected)) {
     const { generateSequencesQuestion } = await import('./generators/sequences');

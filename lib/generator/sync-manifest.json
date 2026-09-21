@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "afd0675b0c86adedd2dd6562153d9fc38063a1bf",
+  "sourceCommit": "9e3db28c74977f9c17b37c35cb094a1da9c58b74",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -39,7 +39,7 @@
     "diagrams/shapes/vector-figure.ts": "af12b230a3d133e1",
     "diagrams/shapes/vector-grid.ts": "f172ca16f9bc344e",
     "diagrams/verify.ts": "ce69a0bc126f0855",
-    "generator.ts": "a514d477ba3f4191",
+    "generator.ts": "e0232371ac5d9ae3",
     "generators/apps.ts": "86479fd7c8a3132f",
     "generators/circle.ts": "b810b6204e5b2541",
     "generators/differentiation.ts": "246fdc8a7311ce93",
@@ -84,7 +84,7 @@
     "generators/n5-vector-pathway.ts": "66156155a9febfa5",
     "generators/n5-vectors.ts": "2dfb39d0d4e8c3a2",
     "generators/n5-volume.ts": "0802764bcae9ee8a",
-    "generators/n5.ts": "de21ac0262a997aa",
+    "generators/n5.ts": "493e0e75362a3e39",
     "generators/paper-hints.ts": "6cd6530e771848c1",
     "generators/paper-markscheme.ts": "c505b9c52b91748d",
     "generators/paper-plan.ts": "a7763d918a6ad34f",

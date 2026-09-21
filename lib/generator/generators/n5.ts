@@ -553,7 +553,13 @@ function inContext(): Q {
  * nothing to discard - and the discards are what couple two questions that
  * share a routine. docs/one-question-one-generator.md.
  */
-export type Gen = (wanted?: string) => Q;
+/**
+ * `wanted` is the id to BUILD — an alias resolves to its target, because
+ * that is what a routine emits. `asked` is the id the caller named, which
+ * for an alias is the alias itself, and so is the only way a routine can
+ * tell two papers that share one clone apart.
+ */
+export type Gen = (wanted?: string, asked?: string) => Q;
 
 export const N5_GENERATORS: Record<string, Gen> = {
   // the skill axis — Zeta's breakdown
@@ -609,7 +615,9 @@ export const N5_GENERATORS: Record<string, Gen> = {
   'Fractions in Context': inContext,
 };
 
-export function generateN5Question(selectedTopic: string, wanted?: string): Q {
+export function generateN5Question(
+  selectedTopic: string, wanted?: string, asked?: string,
+): Q {
   const gen = N5_GENERATORS[selectedTopic]
     ?? SURD_GENERATORS[selectedTopic]
     ?? INDICES_GENERATORS[selectedTopic]
@@ -647,5 +655,5 @@ export function generateN5Question(selectedTopic: string, wanted?: string): Q {
     ?? QUADRATIC_CONTEXT_GENERATORS[selectedTopic]
     ?? LINEAR_EQUATION_GENERATORS[selectedTopic];
   if (!gen) throw new Error(`No National 5 generator for topic "${selectedTopic}"`);
-  return gen(wanted);
+  return gen(wanted, asked);
 }
