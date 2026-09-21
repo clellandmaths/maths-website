@@ -219,14 +219,58 @@ function solveEquation(
 
 // ── a height that follows a cosine — 2017 P2 Q15, 2023 P2 Q11, 2025 P2 Q14 ─
 
-function inFormula(wanted?: string): Q {
+/**
+ * **Each paper writes this formula its own way, and the clone wrote none of
+ * them.** — 2026-09-21
+ *
+ *   2023 P2 Q11   h = 20 cos x + 147     the cosine FIRST, coefficient positive
+ *   2017 P2 Q15   h = 40 + 23 cos x      the constant first, coefficient positive
+ *   2025 P2 Q14   h = 10 - 8 cos x       the constant first, coefficient NEGATIVE
+ *
+ * Measured over 240 draws each: **every draw of all three was constant-first**,
+ * because there was no cosine-first branch at all — so 2023 P2 Q11's own form
+ * was unreachable, 0 of 240 — and the sign was a coin toss, so 2017 and 2025
+ * handed each other their shape about half the time.
+ *
+ * The owner, reading the clock question on the 2023 P2 sheet: *"we need the cos
+ * to come first with a positive coefficient or it's too hard"*, then *"Id agree
+ * key each of the trig variations to own paper"*.
+ *
+ * `asked` and not `wanted`: 2023's and 2017's ids are both ALIASES of 2025's,
+ * so all three arrive with the same `wanted`.
+ */
+const FORM_OF: Record<string, { cosFirst: boolean; minus: boolean }> = {
+  'trig-equations.in-formula-2023': { cosFirst: true, minus: false },   // 2023 P2 Q11
+  'trig-equations.in-formula-pre2023': { cosFirst: false, minus: false }, // 2017 P2 Q15
+  'trig-equations.in-formula': { cosFirst: false, minus: true },        // 2025 P2 Q14
+};
+
+function inFormula(wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(ROTATING_CONTEXTS);
     const B = getRandomInt(ctx.centre[0], ctx.centre[1]);
     const A = getRandomInt(ctx.swing[0], ctx.swing[1]);
     if (A >= B) continue;
-    const minus = getRandomInt(0, 1) === 0;         // "10 - 8cos x" as in 2025
-    const formula = minus ? `h = ${B} - ${times(A, C)}` : `h = ${B} + ${times(A, C)}`;
+    /**
+     * **The draw still happens**, in the same place and with the same range,
+     * so nothing sharing this routine's loop shifts. Only the value read off
+     * it moves, and only for a paper whose own form is recorded above.
+     */
+    const drawnMinus = getRandomInt(0, 1) === 0;    // "10 - 8cos x" as in 2025
+    const form = FORM_OF[asked ?? ''];
+    const minus = form ? form.minus : drawnMinus;
+    /**
+     * **Cosine-first is always `+ B`, and that is the world's constraint
+     * rather than a choice.** `h = A cos x - B` has a minimum of `-A - B`, so
+     * the tip of the hand, blade or car would be below the ground on every
+     * one of these contexts. The owner's *"then plus or minus a number"* is
+     * available on the constant-first shapes, where the sign sits on the
+     * cosine and the height stays positive — which is how all three papers
+     * do it.
+     */
+    const formula = form?.cosFirst ? `h = ${times(A, C)} + ${B}`
+      : minus ? `h = ${B} - ${times(A, C)}`
+      : `h = ${B} + ${times(A, C)}`;
 
     // Taught: solving the formula and evaluating it are two questions with
     // two ids, so the asked id decides which.
@@ -460,6 +504,53 @@ function commonFactor(wanted?: string): Q {
   const product = odd ? `${keep}${other}` : `${other}${keep}`;
   const co = k === 1 ? '' : `${k}`;
   const factored = k === 1 ? keep : `${k}${keep}`;
+
+  /**
+   * **2023 P2 Q13 was never a cos-degree question.** — 2026-09-21
+   *
+   * It was recorded in the corpus as `sin^2 x cos^2 x + cos^4 x`, answering
+   * `cos^2 x`, and that is what put it in this family beside 2026 P2 Q12. It
+   * is not what the paper asks. The markscheme had said so all along — its two
+   * steps read `2(sin^2 x + cos^2 x)` then `2` — and the question and its
+   * stored answer had BOTH been transcribed to the wrong expression, so they
+   * agreed with each other and only the scheme disagreed with them. The owner,
+   * on the 2023 P2 sheet: *"Question should be 2 sin squared plus 2 cos
+   * squared that's a mistake in the live app and live website that needs
+   * fixing before we fix this"*, then *"Yes build it"*.
+   *
+   * Both repos were corrected first; this follows them.
+   *
+   *   2023 P2 Q13   k sin^2 x + k cos^2 x      -> k          a numerical factor
+   *   2026 P2 Q12   cos x sin^2 x + cos^3 x    -> cos x      degree 3
+   *   practice      sin x cos^2 x + sin^3 x    -> sin x      no paper
+   *
+   * **The three draws above are untouched**, which is the whole reason this
+   * sits here rather than earlier: `practice`, `odd` and `k` happen in the
+   * same places and in the same order, so `substituteTan` — sharing this
+   * topic's draw loop for 2016 P1 Q11 and 2018 P1 Q18 — does not shift by a
+   * single question, and nor does 2026 P2 Q12.
+   */
+  if (!practice && !odd) {
+    // `k = 1` would print `sin^2 x + cos^2 x`, where there is nothing to take
+    // out and the first mark is for taking something out. The draw still
+    // happened; only the value it is read as moves, so no stream shifts.
+    const kk = k === 1 ? 2 : k;
+    return {
+      subTopic: 'Simplifying Trigonometric Expressions',
+      difficulty: 'exam',
+      variationId: 'trig-identities.common-factor',              // 2023 P2 Q13
+      questionLines: [`Simplify $${kk}${S2} + ${kk}${C2}$.`, WORKING],
+      boardQuestionLines: [`Simplify $${kk}${S2} + ${kk}${C2}$`],
+      solutionSteps: [
+        `<strong>1.</strong> Take out the common factor $${kk}$:<br><br>$${kk}\\left(${S2} + ${C2}\\right)$`,
+        `<strong>2.</strong> The bracket is $${S2} + ${C2} = 1$:<br><br>$${kk} \\times 1 = ${kk}$`,
+      ],
+      // •¹ factorise (or expand, or substitute), •² substitute and simplify —
+      // the paper's two marks, whichever of its three methods a pupil takes.
+      stepMarks: [1, 1],
+      finalAnswer: `$${kk}$`,
+    };
+  }
 
   return {
     subTopic: 'Simplifying Trigonometric Expressions',
@@ -877,7 +968,7 @@ export const TRIG_GENERATORS: Record<string, Gen> = {
   // Sine only: all three papers on this family are sine, and the split exists
   // for 2022 P2 Q9, which is one of them.
   'Solving a Trigonometric Equation with a Constant Term': () => solveEquation('sin', true),
-  'Trigonometric Equations in a Formula': (w) => inFormula(w),
+  'Trigonometric Equations in a Formula': (w, a) => inFormula(w, a),
   // Two moves, two variations, both reachable from the topic.
   'Simplifying Trigonometric Expressions': (w) =>
     w === 'trig-identities.simplify' ? substituteTan()

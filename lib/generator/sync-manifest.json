@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "228d0059a079366cc723e72e46ece0150b9508e0",
+  "sourceCommit": "e62fc849c55af59b5c535a3a26ee0e382bde518f",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -57,7 +57,7 @@
     "generators/n5-expanding.ts": "c8ec19858d4c8603",
     "generators/n5-factorising.ts": "0dc34b95d4574f4b",
     "generators/n5-form-equation.ts": "8d863a437ff3f35e",
-    "generators/n5-formulae.ts": "40f4270405580199",
+    "generators/n5-formulae.ts": "6dcbe7e20040c4c0",
     "generators/n5-functions.ts": "a2d58f685a8acdb0",
     "generators/n5-indices.ts": "f2553d53809c5a94",
     "generators/n5-line-graph.ts": "67f6aff22ae48e7c",
@@ -79,7 +79,7 @@
     "generators/n5-triangle-trig.ts": "6d5722072e9d0846",
     "generators/n5-trig-diagram.ts": "a0a9a450c761e68e",
     "generators/n5-trig-graph.ts": "4fe7d9e9259a9849",
-    "generators/n5-trig.ts": "bc2da5fc1efceeae",
+    "generators/n5-trig.ts": "74eb7ff153806bfc",
     "generators/n5-variations.ts": "f619962830ea531f",
     "generators/n5-vector-pathway.ts": "0b9fb469c85305b7",
     "generators/n5-vectors.ts": "c2a3c386462c47cd",

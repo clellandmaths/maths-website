@@ -431,11 +431,24 @@ function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
   // exactly the twelve different questions the card reported. Four and
   // three takes it to about thirty. No extra random is drawn.
   const d = bracketOnly ? getRandomInt(2, 30)
-    // **Only the paper the owner widened.** `-plain` is 2023 P2 Q7, which
-    // is signed off and was not in scope; it draws from the pool it was
-    // approved with. The wanted id already tells the two apart, so this
-    // needs nothing threading through.
-    : wanted === 'change-subject.fraction-coefficient-plain' ? pick([2, 3, 4])
+    /**
+     * **`-plain` is 2023 P2 Q7, and it was widened on 2026-09-21.**
+     *
+     * This read `pick([2, 3, 4])` and said so deliberately: *"Only the paper
+     * the owner widened. `-plain` is 2023 P2 Q7, which is signed off and was
+     * not in scope; it draws from the pool it was approved with."* That held
+     * until its own paper came up for review and the owner read the count off
+     * the card — three denominators against two signs is six different
+     * questions, and 1/2, 1/3, 1/4 are the only fractions the papers set.
+     *
+     *   *"This needs widened the denominator of the fraction could be any
+     *   positive number - widen to 30 variations."*
+     *
+     * Fifteen denominators against the sign is thirty, which is the number
+     * asked for. One `getRandomInt` either way, so the draw count is
+     * unchanged and the squared sibling does not move.
+     */
+    : wanted === 'change-subject.fraction-coefficient-plain' ? getRandomInt(2, 16)
     : pick([2, 3, 4, 5, 6]);
   const [v, subj, mLetter, tLetter] = letters(4, true);
   /**
