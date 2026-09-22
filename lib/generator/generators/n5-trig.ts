@@ -389,17 +389,52 @@ interface TanProduct { p: number; q: number; r: number }
  * `q >= r` throughout: the cosine the tangent brings down has to have one to
  * cancel against, or the answer is a fraction and the question is a different
  * one. (0,2,2) is 2016 P1 Q11 and (1,1,1) is 2018 P1 Q18.
+ *
+ * **Two papers, two families, and one id was shuffling between them —
+ * 2026-09-22.** The entries with `p === 0` are written tangent-first and
+ * asked as *"Simplify"*, which is 2016 P1 Q11; the entries with `p > 0` are
+ * written sine-cosine-tangent and asked as *"Express … in its simplest
+ * form"*, which is 2018 P1 Q18. Both wordings and both shapes were already
+ * here — the **seventh** time a paper's own form turned out to be in the code
+ * behind a toss — and each paper was getting the other's in about half its
+ * draws. `TAN_FAMILY` below sorts them by the id asked for.
+ *
+ * **Widened at the same time, on the owner's word** — *"Fix and widen"*.
+ * Keying alone would have left four questions on each side. Every triple
+ * with `1 <= r <= q <= 3` is legal; the cap is `p + q + r <= 6`, which is
+ * exactly the weight of `sin^2 x cos^2 x tan^2 x`, the heaviest entry the
+ * pool already had. That gives six for 2016 and nine for 2018, and nothing
+ * heavier than what was there before.
  */
 const TAN_PRODUCTS: TanProduct[] = [
-  { p: 0, q: 1, r: 1 },   // tan x cos x            -> sin x
-  { p: 0, q: 2, r: 2 },   // tan^2 x cos^2 x        -> sin^2 x     2016 P1 Q11
-  { p: 1, q: 1, r: 1 },   // sin x cos x tan x      -> sin^2 x     2018 P1 Q18
-  { p: 0, q: 2, r: 1 },   // tan x cos^2 x          -> sin x cos x
-  { p: 1, q: 2, r: 1 },   // sin x cos^2 x tan x    -> sin^2 x cos x
-  { p: 0, q: 3, r: 2 },   // tan^2 x cos^3 x        -> sin^2 x cos x
-  { p: 1, q: 2, r: 2 },   // sin x cos^2 x tan^2 x  -> sin^3 x
+  // ── p = 0: tangent-first, "Simplify" — 2016 P1 Q11's family
+  { p: 0, q: 1, r: 1 },   // tan x cos x             -> sin x
+  { p: 0, q: 2, r: 1 },   // tan x cos^2 x           -> sin x cos x
+  { p: 0, q: 2, r: 2 },   // tan^2 x cos^2 x         -> sin^2 x     2016 P1 Q11
+  { p: 0, q: 3, r: 1 },   // tan x cos^3 x           -> sin x cos^2 x
+  { p: 0, q: 3, r: 2 },   // tan^2 x cos^3 x         -> sin^2 x cos x
+  { p: 0, q: 3, r: 3 },   // tan^3 x cos^3 x         -> sin^3 x
+  // ── p > 0: sine-first, "in its simplest form" — 2018 P1 Q18's family
+  { p: 1, q: 1, r: 1 },   // sin x cos x tan x       -> sin^2 x     2018 P1 Q18
+  { p: 1, q: 2, r: 1 },   // sin x cos^2 x tan x     -> sin^2 x cos x
+  { p: 1, q: 2, r: 2 },   // sin x cos^2 x tan^2 x   -> sin^3 x
+  { p: 1, q: 3, r: 1 },   // sin x cos^3 x tan x     -> sin^2 x cos^2 x
+  { p: 1, q: 3, r: 2 },   // sin x cos^3 x tan^2 x   -> sin^3 x cos x
+  { p: 2, q: 1, r: 1 },   // sin^2 x cos x tan x     -> sin^3 x
+  { p: 2, q: 2, r: 1 },   // sin^2 x cos^2 x tan x   -> sin^3 x cos x
   { p: 2, q: 2, r: 2 },   // sin^2 x cos^2 x tan^2 x -> sin^4 x
+  { p: 2, q: 3, r: 1 },   // sin^2 x cos^3 x tan x   -> sin^3 x cos^2 x
 ];
+
+/**
+ * Which family each id draws from. 2016 sits on an alias, so this is keyed on
+ * `asked` — `wanted` resolves an alias to its target and both would read the
+ * same. Anything else (a worksheet built by topic) may have either.
+ */
+const TAN_FAMILY: Record<string, (t: TanProduct) => boolean> = {
+  'trig-identities.simplify': t => t.p > 0,         // 2018 P1 Q18
+  'trig-identities.simplify-2016': t => t.p === 0,  // 2016 P1 Q11
+};
 
 /** `\\sin^{2}x^{\\circ}`, or `\\sin x^{\\circ}` at the first power, or nothing. */
 function power(fn: 's' | 'c' | 't', n: number): string {
@@ -408,31 +443,22 @@ function power(fn: 's' | 'c' | 't', n: number): string {
   return n === 1 ? `${base} x^{\\circ}` : `${base}^{${n}}x^{\\circ}`;
 }
 
-function substituteTan(): Q {
-  // A quotient one time in four: it is the same identity read the other way,
-  // and the papers have not set one, so it stays the minority.
-  const quotient = getRandomInt(1, 4) === 1;
-
-  if (quotient) {
-    const n = pick([1, 2]);
-    const top = power('s', n), bot = power('t', n), ans = power('c', n);
-    const expr = `\\frac{${top}}{${bot}}`;
-    return {
-      subTopic: 'Simplifying Trigonometric Expressions',
-      difficulty: 'exam',
-      variationId: 'trig-identities.simplify',
-      questionLines: [`Simplify $${expr}$.`, WORKING],
-      boardQuestionLines: [`Simplify $${expr}$`],
-      solutionSteps: [
-        `<strong>1.</strong> Replace the tangent using $\\tan x^{\\circ} = \\frac{${S}}{${C}}$, and divide by flipping:<br><br>$${top} \\div \\frac{${top}}{${ans}} = ${top} \\times \\frac{${ans}}{${top}}$`,
-        `<strong>2.</strong> The $${top}$ cancels:<br><br>$${ans}$`,
-      ],
-      stepMarks: [1, 1],
-      finalAnswer: `$${ans}$`,
-    };
-  }
-
-  const { p, q, r } = pick(TAN_PRODUCTS);
+/**
+ * **The quotient shape was removed on 2026-09-22.**
+ *
+ * It drew `sin^n x / tan^n x` one time in four — 94 of 400 measured draws —
+ * and the comment that sat here admitted the problem in passing: *"the papers
+ * have not set one, so it stays the minority."* A question no past paper sets
+ * is not a minority, it is a third question sharing two papers' id, and it is
+ * half of why `one-form` was red on this variation.
+ *
+ * It is a genuine National 5 manipulation and could have its own id if a paper
+ * ever wants it. Nothing cites it today, so it is gone rather than parked.
+ */
+function substituteTan(asked?: string): Q {
+  const family = asked !== undefined ? TAN_FAMILY[asked] : undefined;
+  const pool = family ? TAN_PRODUCTS.filter(family) : TAN_PRODUCTS;
+  const { p, q, r } = pick(pool);
   // Written tangent-first where there is no sine in front of it, as 2016 does,
   // and sine-cosine-tangent otherwise, as 2018 does.
   const expr = p === 0
@@ -447,8 +473,27 @@ function substituteTan(): Q {
     subTopic: 'Simplifying Trigonometric Expressions',
     difficulty: 'exam',
     variationId: 'trig-identities.simplify',
+    /**
+     * **The wording follows the ID, not the shape.**
+     *
+     * It followed `p` at first, which is right for the two paper clones —
+     * 2018 is `p > 0` and asks for *"its simplest form"*, 2016 is `p === 0`
+     * and asks *"Simplify"* — and wrong for a worksheet built by TOPIC,
+     * where no id is asked for, the whole pool is in play, and every draw is
+     * stamped `trig-identities.simplify` whatever its shape. `instructions`
+     * caught exactly that: the clone asked for simplest form in 86% of
+     * draws, the missing 14% being tangent-first expressions carrying 2018's
+     * id. Measuring by id alone had shown 400 of 400 and missed it.
+     *
+     * So only the 2016 alias says *"Simplify"*. A topic draw of a
+     * tangent-first expression now reads *"Express tan²x cos²x in its
+     * simplest form"*, which is what 2018's id promises and is correct
+     * English for it.
+     */
     questionLines: [
-      p === 0 ? `Simplify $${expr}$.` : `Express $${expr}$ in its simplest form.`,
+      asked === 'trig-identities.simplify-2016'
+        ? `Simplify $${expr}$.`
+        : `Express $${expr}$ in its simplest form.`,
       WORKING,
     ],
     boardQuestionLines: [`Simplify $${expr}$`],
@@ -990,11 +1035,11 @@ export const TRIG_GENERATORS: Record<string, Gen> = {
   'Solving a Trigonometric Equation with a Constant Term': () => solveEquation('sin', true),
   'Trigonometric Equations in a Formula': (w, a) => inFormula(w, a),
   // Two moves, two variations, both reachable from the topic.
-  'Simplifying Trigonometric Expressions': (w) =>
-    w === 'trig-identities.simplify' ? substituteTan()
+  'Simplifying Trigonometric Expressions': (w, a) =>
+    w === 'trig-identities.simplify' ? substituteTan(a)
     : w !== undefined && w.startsWith('trig-identities.common-factor')
       ? commonFactor(w)
-    : getRandomInt(0, 1) === 0 ? substituteTan() : commonFactor(),
+    : getRandomInt(0, 1) === 0 ? substituteTan(a) : commonFactor(),
   'Expanding Trigonometric Brackets': expandBracket,
   'Trigonometric Fractions': splitFraction,
   'Writing in a Given Trigonometric Form': givenForm,

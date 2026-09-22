@@ -275,8 +275,32 @@ function subjectInNumerator(wanted?: string, asked?: string): Q {
 //   L = sqrt(4kt - p)  to k  ->  k = (L^2 + p)/(4t)
 //   y = g sqrt(x) + h  to x  ->  x = ((y - h)/g)^2
 
-function subjectWithRoot(wanted?: string): Q {
-  const insideRoot = getRandomInt(0, 1) === 0;
+function subjectWithRoot(wanted?: string, asked?: string): Q {
+  const insideRootDraw = getRandomInt(0, 1) === 0;
+  /**
+   * **The two papers here are two different questions, and one id was
+   * handing out both — 2026-09-22.**
+   *
+   *   2016 P2 Q12   L = sqrt(4kt - p)   square, add, divide
+   *   2018 P1 Q14   y = g sqrt(x) + h   subtract, divide, square
+   *
+   * Different method and a different shape of answer, chosen by a coin toss
+   * that neither paper could see. Measured over 400 draws of 2018 P1 Q14:
+   * **206 of them were 2016's question.**
+   *
+   * `one-form` passes this, and would pass it again. There is no figure on
+   * either, both ask in one instruction, both use the same vocabulary and
+   * both are three marks — the difference lives entirely in the algebra,
+   * which is the third hiding place `docs/review-paper.md` names.
+   *
+   * Keyed on `asked` rather than `wanted`, because 2016 sits on the alias
+   * `change-subject.root-2016` and an alias resolves `wanted` to its target.
+   * The draw above still happens either way, so the random stream keeps the
+   * same shape and nothing that shares this routine moves.
+   */
+  const insideRoot = asked === 'change-subject.root-2016' ? true
+    : asked === 'change-subject.root' ? false
+    : insideRootDraw;
   // Taught: the two-step shape is 2026 P1 Q8 and is worth two marks where
   // the others are worth three — its own id for that reason, so the asked
   // id decides it. Drawn here rather than in the `if` below so that the
@@ -369,18 +393,42 @@ function subjectWithRoot(wanted?: string): Q {
 
   // v = a·sqrt(subj) + b — the root itself has to be undone last
   const bSign = getRandomInt(0, 1) === 0 ? 1 : -1;
-  const inner = frac(`${v} ${bSign > 0 ? '-' : '+'} ${b}`, a);
+  /**
+   * **Widened 2026-09-22, at the owner's word on the 2018 P1 sheet** — *"Yes
+   * split. But we need to find more structures for this question."*
+   *
+   * Splitting 2016 off (see `insideRoot` above) left this branch, which is
+   * 2018 P1 Q14's own, making **two** questions: the sign, and nothing else,
+   * because `questionKey` normalises the letters. That is thinner than
+   * anything else in the paper and thinner than it was before the split, so
+   * the split had to come with this.
+   *
+   * The two levers are the coefficient in front of the root and the loose
+   * term, each of which may be a number instead of a letter. The paper uses
+   * letters for both (`y = g sqrt(x) + h`) and that stays the common case;
+   * a number in either place is the same three marks and the same three
+   * operations — subtract, divide, square — so it is widening, not a second
+   * question. This is the lever `change-subject.root-two-step` was widened
+   * with on 2026-09-21, for the same reason.
+   *
+   * **Both randoms are drawn inside this branch, which nothing else reaches**
+   * now that 2016 is keyed away and the two-step shape returns above — so no
+   * other variation's stream moves. `frozen` is the backstop and was run.
+   */
+  const coef = getRandomInt(1, 2) === 1 ? a : String(getRandomInt(2, 12));
+  const term = getRandomInt(1, 2) === 1 ? b : String(getRandomInt(2, 20));
+  const inner = frac(`${v} ${bSign > 0 ? '-' : '+'} ${term}`, coef);
   return {
     subTopic: 'Changing the Subject with Roots',
     difficulty: 'exam',
     variationId: 'change-subject.root',
     questionLines: [
-      `Change the subject of the formula $${v} = ${a}\\sqrt{${subj}}${bSign > 0 ? ` + ${b}` : ` - ${b}`}$ to $${subj}$.`,
+      `Change the subject of the formula $${v} = ${coef}\\sqrt{${subj}}${bSign > 0 ? ` + ${term}` : ` - ${term}`}$ to $${subj}$.`,
     ],
-    boardQuestionLines: [`$${v} = ${a}\\sqrt{${subj}}${bSign > 0 ? ` + ${b}` : ` - ${b}`}$, make $${subj}$ the subject`],
+    boardQuestionLines: [`$${v} = ${coef}\\sqrt{${subj}}${bSign > 0 ? ` + ${term}` : ` - ${term}`}$, make $${subj}$ the subject`],
     solutionSteps: [
-      `<strong>1.</strong> ${bSign > 0 ? `Subtract $${b}$ from` : `Add $${b}$ to`} both sides:<br><br>$${v} ${bSign > 0 ? '-' : '+'} ${b} = ${a}\\sqrt{${subj}}$`,
-      `<strong>2.</strong> Divide both sides by $${a}$:<br><br>$${inner} = \\sqrt{${subj}}$`,
+      `<strong>1.</strong> ${bSign > 0 ? `Subtract $${term}$ from` : `Add $${term}$ to`} both sides:<br><br>$${v} ${bSign > 0 ? '-' : '+'} ${term} = ${coef}\\sqrt{${subj}}$`,
+      `<strong>2.</strong> Divide both sides by $${coef}$:<br><br>$${inner} = \\sqrt{${subj}}$`,
       `<strong>3.</strong> Square both sides:<br><br>$${subj} = \\left(${inner}\\right)^{2}$`,
     ],
     // 2018 P1 Q14: •¹ subtract h, •² divide by g, •³ square
@@ -800,7 +848,7 @@ function inequalityFractions(): Q {
 
 export const FORMULA_GENERATORS: Record<string, Gen> = {
   'Changing the Subject': (w, a) => subjectInNumerator(w, a),
-  'Changing the Subject with Roots': (w) => subjectWithRoot(w),
+  'Changing the Subject with Roots': (w, a) => subjectWithRoot(w, a),
   // Wrapped, not bare. Dispatch now hands the routine the variation id the
   // caller asked for, and a bare reference would take that string as
   // `bracketOnly` - which is truthy. frozen caught it on 2023 P2 Q7 and

@@ -182,6 +182,27 @@ interface OpOpts {
    * round is a different sum with a different answer.
    */
   mixedLeads?: true;
+  /**
+   * The SECOND term may be a proper fraction instead of a mixed number.
+   *
+   * **2018 P1 Q1 is `2 1/3 + 4/5` — a mixed number plus a proper fraction —
+   * and the clone drew mixed + mixed in 400 of 400.** The paper's own shape
+   * could not appear at all. Found reviewing 2018 P1, changed on the owner's
+   * word: *"Yes but ensure it only affects this year and not previous
+   * years."*
+   *
+   * Unlike `oneProper` this is a **widening, not a pin**: both shapes are the
+   * same two marks and the same method, and the paper's own markscheme
+   * accepts either — it pays for `.../15 + .../15` OR `2 .../15 + .../15`.
+   * So the clone keeps mixed + mixed and gains the paper's shape beside it.
+   *
+   * **It costs no extra random number.** `mixedFirst` is drawn for every call
+   * already and is read only where `oneProper` is set, so this reads the coin
+   * that is there rather than adding one. Nothing else `operation` serves
+   * passes this flag, so no other variation's stream moves — and
+   * `fractions.add-mixed` cites 2018 P1 Q1 and nothing else.
+   */
+  properSecond?: true;
   subTopic: string;
   variationId: string;
   /**
@@ -267,7 +288,8 @@ const MAX_DIVIDE_MIXED_DEN = 20;
 const MAX_BRACKET_DEN = 40;
 
 function operation(
-  { op, useMixed, oneProper, mixedLeads, subTopic, variationId, stepMarks, maxDen }: OpOpts,
+  { op, useMixed, oneProper, mixedLeads, properSecond, subTopic, variationId,
+    stepMarks, maxDen }: OpOpts,
 ): Q {
   for (let tries = 0; tries < 1200; tries++) {
     // Which side carries the whole number, where only one of them does. Both
@@ -277,7 +299,9 @@ function operation(
     const x = !useMixed || (oneProper && !mixedFirst)
       ? properTerm(PROPER_DEN(op))
       : mixedTerm(op === 'subtract' ? 2 : 1, 5);
-    const y = !useMixed || (oneProper && mixedFirst)
+    // `properSecond` reads the same coin: half the draws put a proper fraction
+    // second, which is 2018 P1 Q1's own shape, and half keep both mixed.
+    const y = !useMixed || (oneProper && mixedFirst) || (properSecond && mixedFirst)
       ? properTerm(PROPER_DEN(op))
       : mixedTerm(1, op === 'add' || op === 'subtract' ? 3 : 2);
 
@@ -318,7 +342,9 @@ function operation(
     // **"Give your answer in its simplest form" has to have something to do.**
     // 2 2/3 x 1 1/2 is 4, and a whole number answers that instruction before
     // the pupil reads it. The three papers answer 4/5, 25/27 and 9/14.
-    if (oneProper && r.n % r.d === 0) continue;   // r is unreduced here
+    // `properSecond` joins this for the same reason: a whole-number total
+    // answers "simplest form" before the pupil starts.
+    if ((oneProper || properSecond) && r.n % r.d === 0) continue;   // r is unreduced here
     if (r.n > (useMixed ? 300 : 120)) continue;   // hold to the scale the papers use
 
     // Does it need simplifying *as the pupil arrives at it*?
@@ -575,8 +601,11 @@ export const N5_GENERATORS: Record<string, Gen> = {
     op: 'subtract', useMixed: false,
     subTopic: 'Subtracting Fractions', variationId: 'fractions.subtract',
   }),
+  // `properSecond` is 2018 P1 Q1's own shape, `2 1/3 + 4/5`, which the clone
+  // could not produce at all until 2026-09-22. Adding Mixed Numbers is the
+  // only variation that passes it.
   'Adding Mixed Numbers': () => operation({
-    op: 'add', useMixed: true,
+    op: 'add', useMixed: true, properSecond: true,
     subTopic: 'Adding Mixed Numbers', variationId: 'fractions.add-mixed',
     stepMarks: [1, 1],   // 2018 P1 Q1
   }),

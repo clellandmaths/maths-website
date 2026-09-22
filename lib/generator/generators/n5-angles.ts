@@ -31,9 +31,46 @@ const WORD: Record<number, string> = {
 // the decagon is ABCDEFGHJK and the point is L.
 const LETTERS = 'ABCDEFGHJKL';
 
-export function polygonAngleQuestion(): Q {
+/**
+ * **2018 P1 Q9 is a DECAGON and the clone drew one in 17 of 400 draws** —
+ * pentagon 169, hexagon 102, octagon 80, nonagon 32, decagon 17. The spread
+ * is not wrong in itself (every polygon is the same mathematics) but the
+ * paper's own shape arriving one draw in twenty-four is. The owner: *"Raise
+ * the decagon share on 2018 id only and shade the angle needed if possible?"*
+ *
+ * Both are keyed on `asked`. 2018 sits on the alias
+ * `angles.polygon-produced-pre2023`; 2025 P2 Q7 is the target, is a pentagon,
+ * shades nothing, and is **signed off** — so it keeps the old list, the old
+ * spread and no shading. `pick` is one `getRandomInt` whatever the array's
+ * length, so the draw costs the same either way.
+ */
+const P1_2018 = 'angles.polygon-produced-pre2023';
+
+export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
+  const forPaper2018 = asked === P1_2018;
   for (let tries = 0; tries < 3000; tries++) {
-    const n = pick([5, 6, 7, 8, 9, 10]);
+    /**
+     * **Four attempts in five ask for the decagon, and that yields about a
+     * third of the draws.** The weighting has to be that heavy because a
+     * decagon figure survives `verifyFigure` far less often than a smaller
+     * one — 4% of legal (angle, rotation) pairs against the pentagon's 47%.
+     * Measured: the vertex letter beside the produced side and the angle
+     * label at the outside point collide, because ten vertices sit close
+     * together and the mark is drawn well back along the bisector to hold
+     * its number.
+     *
+     * **What survives is faithful, which is why weighting is the right
+     * answer here and not a figure change.** The decagon draws at given
+     * angles 17 to 28 — the paper's own is 17 — across ten of the twelve
+     * rotations, so roughly 140 questions, all of them the paper's shape.
+     * Widening the figure to admit the rest would mean moving label
+     * placement that 2025 P2 Q7 shares, and it is signed off.
+     *
+     * Seven is dropped by the whole-interior-angle guard below either way.
+     */
+    const n = forPaper2018
+      ? (getRandomInt(1, 5) === 1 ? pick([5, 6, 8, 9]) : 10)
+      : pick([5, 6, 7, 8, 9, 10]);
     const interior = 180 * (n - 2) / n;
     if (!Number.isInteger(interior)) continue;      // 7 and 9 are not whole
     /**
@@ -80,6 +117,7 @@ export function polygonAngleQuestion(): Q {
     const fig = polygonPoint({
       sides: n, radius: r, start, names, point,
       reach, angleLabel: `${given}°`,
+      shadeAsked: forPaper2018,
     });
     if (!fig) continue;
 
@@ -89,7 +127,10 @@ export function polygonAngleQuestion(): Q {
       '',
       `&bull;&nbsp; Angle $${E}${point}${A}$ is $${given}^{\\circ}$`,
       `&bull;&nbsp; $${point}${A}${B}$ is a straight line`,
-      `Calculate the size of angle $${point}${E}${A}$.`,
+      // 2018 P1 Q9 shades the angle and names it that way — "Calculate the
+      // size of shaded angle KJL" — where 2025 P2 Q7 shades nothing and asks
+      // for "the size of angle FEA". The word follows the shading.
+      `Calculate the size of ${forPaper2018 ? 'shaded ' : ''}angle $${point}${E}${A}$.`,
     ];
     // Two marks: the interior angle of the polygon, then the angle asked for.
     // The straight line and the angle sum are how the second is reached, not a

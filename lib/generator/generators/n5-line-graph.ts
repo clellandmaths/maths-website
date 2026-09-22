@@ -605,7 +605,27 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   // the papers are — but 2018 is 3/2 and 2026 is 2/3, and the 2018 scheme
   // refuses the last mark for a gradient turned into a decimal, so the
   // fractional case has to be generated and carried as a fraction.
-  const q = pick([1, 1, 1, 2, 3]);
+  const qDraw = pick([1, 1, 1, 2, 3]);
+  /**
+   * **2018 P1 Q7's gradient is always a fraction — 2026-09-22.**
+   *
+   * The paper's points are (8, 14) and (12, 20), so `m = 6/4 = 3/2`, and its
+   * markscheme pays a mark for `6/4` and refuses the last one if the gradient
+   * is turned into a decimal. The clone gave a WHOLE gradient in **344 of 400
+   * draws**, which removes exactly the step the scheme is buying. The owner:
+   * *"Yea make is always fractional for this question. But ensure that C
+   * always comes out as a whole number."*
+   *
+   * `c` is drawn as an integer and `y1 = m*x1 + c` is required to be an
+   * integer below, so the intercept is whole by construction — measured at
+   * 400 of 400 after this change, not assumed.
+   *
+   * **No extra random is drawn**: the pick above still happens and its value
+   * is mapped, so the scatter side — `straight-line.best-fit`, which is
+   * 2026 P1 Q6 and signed off — reads exactly the stream it always read.
+   * Keyed on `asked` for the same reason the falling pin below is.
+   */
+  const q = asked === 'straight-line.exact-line' ? (qDraw === 3 ? 3 : 2) : qDraw;
 
   // **The denominator is chosen before the context, because it decides which
   // contexts can carry it.** `p` is drawn across the context's own slope band,
@@ -872,8 +892,10 @@ const tried = (
 export const LINE_GRAPH_GENERATORS: Record<string, Gen> = {
   'The Equation of a Line of Best Fit':
     tried('straight-line.best-fit', (_w, asked) => bestFitQuestion(true, asked)),
+  // `asked` is threaded so 2018 P1 Q7 can be pinned to a fractional gradient
+  // without touching the scatter side above.
   'The Equation of a Line from a Graph':
-    tried('straight-line.exact-line', () => bestFitQuestion(false)),
+    tried('straight-line.exact-line', (_w, asked) => bestFitQuestion(false, asked)),
   'A Line of Best Fit on a Grid': tried('straight-line.best-fit-grid', bestFitOnGridQuestion),
   'The Equation of a Line Through Two Marked Points':
     tried('straight-line.from-marked-points', lineThroughMarkedPointsQuestion),

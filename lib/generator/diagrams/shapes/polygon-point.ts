@@ -1,4 +1,4 @@
-import { type Element, type Figure, type Pt, angleAt, angleMark, dist, pt, scale, sub, unit } from '../scene';
+import { type Element, type Figure, type Pt, angleAt, angleMark, dist, pt, scale, shadeAngle, sub, unit } from '../scene';
 import { textWidth } from '../render';
 
 /**
@@ -32,6 +32,21 @@ export interface PolygonPointSpec {
   reach: number;
   /** What to write in the angle at that point; empty leaves it unmarked. */
   angleLabel: string;
+  /**
+   * Shade the angle the question asks for — at the far vertex, between the
+   * outside point and the first vertex.
+   *
+   * **2018 P1 Q9 shades it and says so in its own wording**: *"Calculate the
+   * size of shaded angle KJL"*, with the wedge at J filled grey. 2025 P2 Q7,
+   * the other paper on this routine, shades nothing and asks for *"the size
+   * of angle FEA"*. Two papers, two conventions — so this is opt-in and the
+   * generator turns it on for 2018's id alone. 2025 P2 Q7 is signed off and
+   * its figure must not move.
+   *
+   * Added on the owner's word reviewing 2018 P1: *"Raise the decagon share on
+   * 2018 id only and shade the angle needed if possible?"*
+   */
+  shadeAsked?: boolean;
 }
 
 export function polygonPoint(spec: PolygonPointSpec): Figure | null {
@@ -51,6 +66,10 @@ export function polygonPoint(spec: PolygonPointSpec): Figure | null {
 
   const O = pt(0, 0);
   const elements: Element[] = [
+    // The shading goes down first so every line is drawn over it, as it is on
+    // the paper — see `shadeAsked`. The angle is at the far vertex, between
+    // the outside point and the vertex the side was produced past.
+    ...(spec.shadeAsked ? [shadeAngle(last, [P, V[0]])] : []),
     { kind: 'polygon', points: V },
     // **The centre, and a dashed spoke to every vertex** — 2025 P2 Q7 rules
     // them and marks the centre with a filled dot. They are what show the
