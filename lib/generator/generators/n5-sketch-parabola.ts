@@ -204,7 +204,30 @@ const LABEL_PLANS: {
 
 function sketchFactorised(wanted?: string): Q | null {
   const r1 = nonZeroInt(-6, 4);
-  const r2 = r1 + 2 * getRandomInt(1, 5);       // an even gap, so the turning point is whole
+  const gapDraw = getRandomInt(1, 5);
+  /**
+   * **2018 P1 Q16 does not take roots two apart — the owner, 2026-09-22:**
+   * *"I think we should look at not having close roots."*
+   *
+   * Rendering all 27 root pairs showed the cramped case: roots close together
+   * with a large y-intercept, where the vertical scale swamps the horizontal
+   * detail. `(x-4)(x-6)` is the worst — roots 2 apart, intercept 24 — and the
+   * two root dots and the turning point end up almost touching. Eight of the
+   * 27 pairs were two apart and all eight are gone; separations of 4, 6, 8
+   * and 10 remain, and the paper's own `(x-6)(x+4)` is 10.
+   *
+   * **Keyed, because this routine also serves 2022 P1 Q14, which is SIGNED
+   * OFF.** Its own pair is `(x+1)(x-3)`, four apart, so it would survive the
+   * rule — but its *distribution* must not move, so it keeps the old draw.
+   *
+   * **The redraw is 2018's alone.** Clamping the first roll instead would
+   * have cost nothing in randoms but folded gap 1 onto gap 2, so a separation
+   * of four took 222 of 400 draws against the others' 45 to 77. A second roll
+   * inside this branch spreads them evenly, and 2022's id never reaches it —
+   * it reads `gapDraw` and stops, exactly as it always did.
+   */
+  const gap = wanted === 'quadratics.sketch-factorised' ? getRandomInt(2, 5) : gapDraw;
+  const r2 = r1 + 2 * gap;                      // an even gap, so the turning point is whole
   if (r2 > 7 || r1 === 0 || r2 === 0) return null;
   const h = (r1 + r2) / 2;
   // Roots symmetric about zero put the turning point *on* the y-axis, so the
