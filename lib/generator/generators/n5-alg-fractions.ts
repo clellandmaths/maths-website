@@ -466,10 +466,32 @@ function multiply(): Q {
 //
 // Three questions, three genuinely different shapes, so all three are built.
 
-function divide(wanted?: string): Q {
+function divide(wanted?: string, asked?: string): Q {
+  /**
+   * **2018 P2 Q15 is the factorising one, and it was getting 2015's in half
+   * its draws — 2026-09-22.**
+   *
+   *   2018 P2 Q15   n/(n^2-4) / (3/(n-2)),  n != +-2   a difference of two
+   *                 squares has to be factorised, and the scheme pays for it
+   *   2015 P2 Q7    5t/s / (t/2s^2)                    monomials that cancel
+   *
+   * Measured over 400 draws of 2018 P2 Q15: **197 factorising, 203
+   * monomial**. Two different questions on one id, and it was the suite's
+   * last non-tolerated `one-form` red.
+   *
+   * Keyed on `asked`, because 2015 sits on the alias `alg-fractions.divide-
+   * 2015` and an alias resolves `wanted` to its target — both papers arrive
+   * with the same `wanted`.
+   *
+   * **2015 is deliberately left tossing.** The owner: *"Yes key it and we
+   * will get to 2015 in it's revew."* So its alias still picks between the
+   * two shapes and will be settled when 2015 is reviewed; `one-form` lists it
+   * under NOT YET REVIEWED, where it does not fail.
+   */
   // Taught: `powers` is the only shape that makes `-simple`; the other two
   // both make `divide`, so asking for it keeps the choice between them.
   const shape = wanted === 'alg-fractions.divide-simple' ? 'powers' as const
+    : asked === 'alg-fractions.divide' ? 'factorise' as const
     : wanted === 'alg-fractions.divide' ? pick(['monomial', 'factorise'] as const)
     : pick(['monomial', 'factorise', 'powers'] as const);
 
@@ -506,7 +528,7 @@ function divide(wanted?: string): Q {
     // attempt re-enters blind and can come back as a different variation,
     // which is a discard — the very thing being removed. 2022 P1 Q12 was
     // taking two draws for exactly this reason.
-    if (gcd(p, q) !== 1) return divide(wanted);  // keep the coefficients in lowest terms
+    if (gcd(p, q) !== 1) return divide(wanted, asked);  // keep the coefficients in lowest terms
     const d = lin(v, m);
     return {
       subTopic: 'Dividing Algebraic Fractions',
@@ -668,7 +690,7 @@ export const ALG_FRACTION_GENERATORS: Record<string, Gen> = {
   'Subtracting Algebraic Fractions': (wanted) =>
     addSubtract(true, getRandomInt(0, 1) === 0, wanted),
   'Multiplying Algebraic Fractions': multiply,
-  'Dividing Algebraic Fractions': (w) => divide(w),
+  'Dividing Algebraic Fractions': (w, a) => divide(w, a),
   'Dividing with a Difference of Squares': divideFactoriseNumerator,
   'Gradient as an Algebraic Fraction': gradientContext,
 };

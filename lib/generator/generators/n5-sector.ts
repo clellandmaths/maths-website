@@ -356,7 +356,9 @@ const ID_KIND: Record<string, Kind> = {
   'sector.radius-arc': 'radius-arc',
 };
 
-export function sectorQuestion(kinds: Kind[], wanted?: string): Q {
+export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string): Q {
+  // `askedId` is the variation id the caller named. NOT to be confused with
+  // the local `asked` just below, which is the KIND that id maps to.
   // Taught: the asked id names the kind that makes it.
   //
   // `kinds.length > 1` is the freeze, not tidiness. A topic offering one kind
@@ -400,12 +402,32 @@ export function sectorQuestion(kinds: Kind[], wanted?: string): Q {
   // and calling them "major arc AB". The note above already said "the area
   // questions" in the plural; only one of them was named.
   const minorOnly = kind === 'area-angle' || kind === 'area-arc';
+  /**
+   * **2018 P2 Q2 is a MAJOR arc and was getting 2023's minor one — 2026-09-22.**
+   *
+   *   2018 P2 Q2   reflex 320 degrees, "the length of the major arc AB":
+   *                a near-complete circle with a wedge cut out
+   *   2023 P2 Q3   106 degrees on a football pitch, an ordinary minor sector
+   *
+   * Two papers, two pictures, one clone. Measured over 400 draws of 2018 P2
+   * Q2: **282 minor against 118 reflex-and-major**, so the paper's own shape
+   * arrived in under a third of them. Rendered both against the scan — the
+   * reflex draw is 2018's picture exactly, reflex mark inside the arc and
+   * all, so nothing had to be drawn, only chosen.
+   *
+   * **Only the alias is keyed.** `sector.arc-angle` is 2023 P2 Q3 and is
+   * SIGNED OFF, so it keeps the mixed draw it was approved with; pinning it
+   * to minor would move it. That is why this reads `asked` and not `kind`.
+   */
+  const majorOnly = askedId === 'sector.arc-angle-pre2023';
   // The reflex question reads its own list, so no other kind's `pick` moves.
   const reflexOnly = kind === 'angle-arc-reflex';
   for (let tries = 0; tries < 3000; tries++) {
     const c = pick(reflexOnly || majorArc ? REFLEX_CONTEXTS
-      : minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major') : CONTEXTS);
-    const sweep = minorOnly ? 'minor' as const : c.sweep;
+      : minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major')
+      : majorOnly ? CONTEXTS.filter(x => x.sweep !== 'minor') : CONTEXTS);
+    const sweep = minorOnly ? 'minor' as const
+      : majorOnly ? 'major' as const : c.sweep;
     const [nO, nA, nB] = c.letters;
     const r = getRandomInt(c.band[0], c.band[1]);
     const start = getRandomInt(0, 11) * 30;
@@ -820,7 +842,7 @@ export const SECTOR_GENERATORS: Record<string, Gen> = {
     throw new Error('segment: no valid question found');
   },
   'Area of a Sector': (w) => sectorQuestion(['area-angle', 'area-arc'], w),
-  'Length of an Arc': (w) => sectorQuestion(['arc-angle'], w),
+  'Length of an Arc': (w, a) => sectorQuestion(['arc-angle'], w, a),
   // 2019 P1 Q4 - the major arc, pi as 3.14. Its own loop, so it cannot
   // disturb `sector.arc-angle` (2023 P2 Q3) the way an in-place fix did.
   'Length of a Major Arc': (w) => sectorQuestion(['arc-angle-major'], w),

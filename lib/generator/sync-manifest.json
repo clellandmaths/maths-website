@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "41b3b690fead38d929aae6ddac6c4557b81feb7d",
+  "sourceCommit": "f4721590b14dd62924063173cb8b95431075cde1",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -47,7 +47,7 @@
     "generators/integration.ts": "7f9ca1a247d7da5f",
     "generators/logs.ts": "5a3f8dd2ac80876d",
     "generators/markscheme-source.ts": "22799ede4d1792df",
-    "generators/n5-alg-fractions.ts": "043ac8822bc1cdbc",
+    "generators/n5-alg-fractions.ts": "e8567ea0899dc5f4",
     "generators/n5-angles.ts": "3707b81e771390f9",
     "generators/n5-bearings.ts": "3b41eea970a241f4",
     "generators/n5-composite-trig.ts": "e4202e2645702b4b",
@@ -70,7 +70,7 @@
     "generators/n5-quadratics.ts": "1e982f780da0fc2c",
     "generators/n5-rounding.ts": "8faa901ae0a33ef5",
     "generators/n5-scinot.ts": "3955efa757299a08",
-    "generators/n5-sector.ts": "04808323f7aebb26",
+    "generators/n5-sector.ts": "933a266ae4c0ff0e",
     "generators/n5-simeq.ts": "42acb845fbe8d809",
     "generators/n5-similarity.ts": "dbc4b4f18c7692eb",
     "generators/n5-sketch-parabola.ts": "fcf0e06fa6d52cbc",
