@@ -112,6 +112,24 @@ const DOMAIN_OF: Record<string, string> = {
    */
   'trig-equations.solve': '0 \\le x \\lt 360',              // 2024 P2 Q11
   'trig-equations.solve-pre2023': '0 \\le x \\lt 360',      // 2018 P2 Q8
+  /**
+   * **The cosine pair, added on the 2019 P2 sheet — and these two DISAGREE.**
+   *
+   * Unlike the sine pair above, the two papers here write different ranges:
+   * 2019 P2 Q14 is `0 \le x < 360` (half-open) and 2014 P2 Q12 is
+   * `0 \le x \le 360` (closed). So the toss WAS handing each paper the other's
+   * wording — measured over 300 draws of 2019 P2 Q14's own id, 157 half-open
+   * and 143 closed. This is one of the two reds `one-form` has carried since
+   * 2022 was locked; it was waiting for 2019's review, which is when the fix
+   * is cheap. The owner: *"Yes key it"*.
+   *
+   * Only the DOMAIN is keyed. The sign of the rearranged ratio also splits by
+   * paper — 2019's is `cos x = -1/5`, 2014's is `+5/11` — but that is a number
+   * rather than a printed form, and numbers are the one thing never to split
+   * for. Raised on the sheet and deliberately not done.
+   */
+  'trig-equations.solve-cos': '0 \\le x \\lt 360',          // 2019 P2 Q14
+  'trig-equations.solve-cos-2014': '0 \\le x \\le 360',     // 2014 P2 Q12
 };
 
 function solveEquation(
@@ -610,29 +628,31 @@ function commonFactor(wanted?: string): Q {
 function expandBracket(): Q {
   const sign = getRandomInt(0, 1) === 0 ? '+' : '-';
 
-  // The paper's own shape has only two forms, which is too few for a worksheet.
-  // A difference of two squares against 1 uses the same identity rearranged, and
-  // a common coefficient scales it — both stay squarely in the N5 skill.
-  const shape = pick(['square', 'square', 'scaled', 'difference'] as const);
-
-  if (shape === 'difference') {
-    // (1 + sin x)(1 - sin x) = 1 - sin^2 x = cos^2 x
-    const useSin = getRandomInt(0, 1) === 0;
-    const [f, sq, other] = useSin ? [S, S2, C2] : [C, C2, S2];
-    return {
-      subTopic: 'Expanding Trigonometric Brackets',
-      difficulty: 'exam',
-      variationId: 'trig-identities.expand',
-      questionLines: [`Expand and simplify $\\left(1 + ${f}\\right)\\left(1 - ${f}\\right)$.`, WORKING],
-      boardQuestionLines: [`Expand $\\left(1 + ${f}\\right)\\left(1 - ${f}\\right)$`],
-      solutionSteps: [
-        `<strong>1.</strong> This is a difference of two squares:<br><br>$1 - ${sq}$`,
-        `<strong>2.</strong> Rearranging $${S2} + ${C2} = 1$ gives $1 - ${sq} = ${other}$:<br><br>$${other}$`,
-      ],
-      stepMarks: [1, 1],
-      finalAnswer: `$${other}$`,
-    };
-  }
+  /**
+   * **The difference of two squares is gone, and it was a deliberate choice
+   * being overturned.** The note here read: *"The paper's own shape has only
+   * two forms, which is too few for a worksheet. A difference of two squares
+   * against 1 uses the same identity rearranged, and a common coefficient
+   * scales it — both stay squarely in the N5 skill."*
+   *
+   * The variety argument is sound and `scaled` already carries it. What
+   * `difference` carried was a **different question**: `(1 + cos x)(1 - cos x)`
+   * answering `sin^2 x` is a difference of two squares, where nothing is
+   * squared out and nothing collapses to a numeral — against this paper's
+   * `(sin x + cos x)^2` answering `1 + 2 sin x cos x`. Different method,
+   * different kind of answer, and it was **68 of 300 draws**. `one-form` had
+   * been failing on it since 2022 was locked.
+   *
+   * **No paper sets it.** This variation is cited only by 2019 P2 Q17, which is
+   * what makes removal the right move rather than a split: `docs/review-paper.md`
+   * — *"Removing one of the forms is only right when no paper has it."* The
+   * owner, on the 2019 P2 sheet: *"I agree"*.
+   *
+   * It costs two questions, not the pool: `difference` produced exactly two
+   * distinct questions (the sine and the cosine version), so the count goes
+   * from 12 to 10. `square` is weighted twice because k = 1 is the paper's own.
+   */
+  const shape = pick(['square', 'square', 'scaled'] as const);
 
   const k = shape === 'scaled' ? getRandomInt(2, 5) : 1;
   const inner = k === 1 ? `${S} ${sign} ${C}` : `${k}${S} ${sign} ${k}${C}`;

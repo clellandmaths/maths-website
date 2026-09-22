@@ -274,7 +274,29 @@ function reverse(): Q {
 // pupil has to subtract two dates before anything else, and it is the step they
 // get wrong — 2018 to 2021 is three years and reads like four.
 
-function compoundBetweenYears(): Q {
+/**
+ * **2019 P2 Q1 spans THREE years, and that span IS the question.**
+ *
+ * The note above says why: *"a pupil has to subtract two dates before anything
+ * else, and it is the step they get wrong — 2018 to 2021 is three years and
+ * reads like four."* Measured on the 2019 P2 sheet, 300 draws of that paper's
+ * own id: **289 spanned two years, 11 spanned three.** The span is drawn from
+ * 2 to 4 uniformly, but the loop below keeps only draws whose value comes out
+ * whole, and a third or fourth application of the multiplier survives that far
+ * less often — so the trap the question is built around had all but vanished.
+ *
+ * The other paper here, 2025 P2 Q1, is 2024 to 2026 and says *"over the next
+ * two years"* in words, so it carries no such trap.
+ *
+ * **Only the alias is pinned, deliberately.** 2025 P2 Q1 sits on the target id
+ * and is SIGNED OFF, and the sheet promised this fix could not reach it — so
+ * the target keeps the free draw it had, and `frozen` should name neither.
+ * The owner: *"Yes key it to the year."*
+ */
+function compoundBetweenYears(asked?: string): Q {
+  const pinnedYears = asked === 'percentages.compound-between-years-pre2023'
+    ? 3        // 2019 P2 Q1 — 2018 to 2021
+    : 0;
   const ctx = pick(BETWEEN_YEARS_CONTEXTS);
   const [lo, hi] = ctx.band;
   const step = hi > 200000 ? 10000 : hi > 40000 ? 2500 : 500;
@@ -287,7 +309,7 @@ function compoundBetweenYears(): Q {
   // them what to do about it.
   for (let tries = 0; tries < 400; tries++) {
     ({ rate, multiplier } = drawRate(true));
-    years = getRandomInt(2, 4);
+    years = pinnedYears || getRandomInt(2, 4);
     start = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;
     value = start * Math.pow(multiplier, years);
     if (Math.abs(value - Math.round(value)) < 1e-6) break;
@@ -583,7 +605,10 @@ export const PERCENTAGE_GENERATORS: Record<string, Gen> = {
   'Reverse Percentages without a Calculator': reverseNonCalculator,
   'Percentage Change': percentageChange,
   'Two-Stage Depreciation': twoStage,
-  'Appreciation Between Two Years': compoundBetweenYears,
+  // `asked` is passed through so 2019 P2 Q1 can be pinned to its own
+  // three-year span without touching 2025 P2 Q1 on the target id, which is
+  // signed off. See the note above `compoundBetweenYears`.
+  'Appreciation Between Two Years': (_w, asked) => compoundBetweenYears(asked),
   'Finding a Total from a Percentage': partOfWhole,
   'Finding the Extra Charged': surcharge,
 };

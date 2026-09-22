@@ -71,8 +71,24 @@ export type AxesPart =
    * base edge, which is what 2018 P1 Q13 measures.
    */
   | { kind: 'prism'; at: P3; size: P3 }
-  /** A cone standing on the z = 0 plane, its base circle centred over `at`. */
-  | { kind: 'cone'; at: P3; r: number; h: number };
+  /**
+   * A cone standing on the z = 0 plane, its base circle centred over `at`.
+   *
+   * `axis` draws the construction 2019 P2 Q5's own diagram carries: the
+   * diameter dashed across the base through the point where it touches the
+   * x-axis, the cone's axis dashed from the base centre up to the apex, and
+   * the right angle between them. **Opt-in**, because this file draws every
+   * prism and cuboid on axes too.
+   *
+   * It is not decoration. That question asks for the coordinates of the point
+   * of contact and of the apex, and the apex's two horizontal coordinates are
+   * the centre's — so a pupil has to see that the centre lies one radius back
+   * from the point of contact. Without the dashed diameter the figure states
+   * the diameter in prose only and leaves the centre to be inferred, which the
+   * owner picked up off the sheet: *"This one needs work to show the diameters
+   * like original question."*
+   */
+  | { kind: 'cone'; at: P3; r: number; h: number; axis?: boolean };
 
 export interface SolidOnAxesSpec {
   parts: AxesPart[];
@@ -282,6 +298,24 @@ export function solidOnAxes(spec: SolidOnAxesSpec): Figure {
       const rim2 = { centre: rim.at, rx: rim.rx, ry: rim.ry, tilt: rim.tilt };
       elements.push({ kind: 'ellipse', ...rim2, from: deg(t2), to: deg(t1) });
       elements.push({ kind: 'ellipse', ...rim2, from: deg(t1), to: deg(t2), dashed: true });
+
+      /**
+       * The diameter through the point of contact, the axis, and the right
+       * angle where they meet — 2019 P2 Q5's own diagram. See `axis` on the
+       * part type for why this is the question rather than decoration.
+       *
+       * The diameter runs along **y**, not x: the base touches the x-axis at
+       * `(r, 0, 0)` and its centre is `(r, r, 0)`, so the contact point is one
+       * radius back along y and the diameter through it runs that way.
+       */
+      if (part.axis) {
+        const base = P(ox, oy, oz);
+        const touch = v(0, -part.r, 0);     // where the base meets the x-axis
+        const far = v(0, part.r, 0);
+        elements.push({ kind: 'segment', from: touch, to: far, dashed: true });
+        elements.push({ kind: 'segment', from: base, to: apex, dashed: true });
+        elements.push({ kind: 'rightAngle', at: base, arms: [far, apex] });
+      }
       continue;
     }
 

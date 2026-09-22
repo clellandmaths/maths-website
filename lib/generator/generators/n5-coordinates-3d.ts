@@ -204,7 +204,13 @@ function coneOnAxes(): Q | null {
     `<br><br>$B${coord(B)}$`,
   ];
   return assemble({
-    parts: [{ kind: 'cone', at: { x: r, y: r, z: 0 }, r, h }],
+    // `axis` draws the dashed diameter through the point of contact, the
+    // cone's axis up to the apex, and the right angle between them — the
+    // construction the paper's own diagram carries. It is what shows the
+    // centre lies one radius back from A, which is the whole of the second
+    // mark. The owner, on the 2019 P2 sheet: "This one needs work to show
+    // the diameters like original question."
+    parts: [{ kind: 'cone', at: { x: r, y: r, z: 0 }, r, h, axis: true }],
     names: { A, B },
     showCoords: [],
   }, 'Coordinates on a Cone', 'coords.cone', prose,
