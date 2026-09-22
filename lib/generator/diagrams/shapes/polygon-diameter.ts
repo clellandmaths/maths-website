@@ -90,17 +90,36 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
     };
   }
 
+  /**
+   * **The design runs E to O to B, not E straight to B — and the shaded shape
+   * is the arrowhead EOBF with its notch at the centre.**
+   *
+   * This drew a single chord `E–B` and shaded the triangle `EBF`. Counted off
+   * the paper's second diagram: two of the radii dashed in the first diagram,
+   * `OE` and `OB`, are **filled in solid** as part of the design, and the grey
+   * region dips to a point at O. The owner: *"EO and BO clearly shown drawn on
+   * the second diagram filling in the dotted lines of them from the first
+   * diagram."*
+   *
+   * That is the whole design: the polygon, the diameter through O, the two
+   * radii drawn in, and the two chords down to F.
+   *
+   * **Read off the scan three times before it was right.** The first reading
+   * missed the paper's first diagram entirely; the second read this boundary
+   * as a straight `E–B` passing above O. It is not — it meets O.
+   */
   const elements: Element[] = [
     // the design's own shading, first, so every line is drawn over it
-    { kind: 'shadedShape', points: [B, E, F] },
+    { kind: 'shadedShape', points: [E, O, B, F] },
     { kind: 'circle', centre: O, r, dashed: true },
     { kind: 'polygon', points: V },
     // the diameter in two pieces, so the centre is an endpoint and can carry
     // its own letter
     { kind: 'segment', from: V[0], to: O },
     { kind: 'segment', from: O, to: F },
-    // the rest of the design: the triangle the paper shades
-    { kind: 'segment', from: E, to: B },
+    // the two radii the design fills in, then the chords down to the far point
+    { kind: 'segment', from: E, to: O },
+    { kind: 'segment', from: O, to: B },
     { kind: 'segment', from: E, to: F },
     { kind: 'segment', from: B, to: F },
     ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: O })),

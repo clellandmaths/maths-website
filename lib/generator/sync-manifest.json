@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "d3b8bac6d91e0e75bba62b580c88b560264b990b",
+  "sourceCommit": "88f0b8c3827d94820ea1615de8344e81d6d69ce3",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -14,7 +14,7 @@
     "diagrams/shapes/circle-segment.ts": "dceb8b75c47e2f47",
     "diagrams/shapes/cuboid.ts": "033a6bfeb937150a",
     "diagrams/shapes/nested-triangles.ts": "2509fcd10ae5347f",
-    "diagrams/shapes/polygon-diameter.ts": "f61fe129b20e5730",
+    "diagrams/shapes/polygon-diameter.ts": "b11002697f0ff50a",
     "diagrams/shapes/polygon-in-circle.ts": "b3245d6a27d2ab6d",
     "diagrams/shapes/polygon-point.ts": "2a02c9749bcbe12a",
     "diagrams/shapes/regular-polygon.ts": "fff14e8f7a128dc5",
