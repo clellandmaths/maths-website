@@ -104,7 +104,23 @@ interface LineContext {
   only?: string;
 }
 
-const CONTEXTS: LineContext[] = [
+/**
+ * **Exported so `shared-lists` can watch it — 2026-09-22.**
+ *
+ * That check's own header names this list as one that moved signed-off
+ * questions, and it could not see it: the ratchet only read `n5-contexts.ts`,
+ * and this array lived here and was not exported. So the guard built after
+ * this list bit us did not cover this list.
+ *
+ * It has now been load-bearing twice more — the four contexts for 2019 P1 Q6
+ * and the four for 2018 P1 Q7 — with nothing but the `only` tag and the
+ * author's care between them and every other paper on the routine.
+ *
+ * Exporting changes no behaviour. It makes the count a recorded number, so
+ * adding an entry fails the suite until someone has answered *who else picks
+ * from this?* — which is the whole point of the ratchet.
+ */
+export const CONTEXTS: LineContext[] = [
   { story: 'A cafe lists the nutrition of the wraps on its menu. The graph shows the relationship between the amount of fat, $F$ grams, and the number of calories, $C$, in each wrap.',
     scatter: true,
     x: { letter: 'F', caption: 'Fat (grams)' },
@@ -285,6 +301,59 @@ const CONTEXTS: LineContext[] = [
     point: (l, x, y) => `Point $${l}$ represents a sapling ${x} years old which is ${y} centimetres tall.`,
     estimate: x => `Estimate the height of a sapling ${x} years old.`,
     band: [1, 12], base: [30, 70], slope: [15, 30] },
+
+  // ── four for 2018 P1 Q7 only, added 2026-09-22 ────────────────────────
+  //
+  // **Pinning that question's gradient to a fraction cost it two of its four
+  // contexts.** The plumber charges £15-35 an hour and the van hire £12-30 a
+  // day, and a simple fraction on top of a rate that size gives gradients
+  // like 30/2 — which the routine rejects, rightly, because on a
+  // non-calculator paper a gradient is only a simple fraction if it looks
+  // like one. That left Tom's Taxis and the courier. The owner, asked
+  // whether to make the difference up: *"2018 P1 Q7 add 3 or 4 more
+  // contexts."*
+  //
+  // So every one of these has a **low rate**, 1 to 3 in its own units, which
+  // is the band the two survivors use and the only band a halves-or-thirds
+  // gradient fits inside.
+  //
+  // `only` is what keeps them to this question. Without it they would widen
+  // the pool of every paper this routine serves, and one of those — 2026 P1
+  // Q6 — is signed off. They are also `scatter: false`, so the best-fit
+  // questions could not reach them even if the tag were missed.
+  { story: 'A mobile phone tariff charges a fixed monthly fee plus an amount for each gigabyte of data used. The graph shows the monthly bill, $B$ pounds, against the data used, $G$ gigabytes.',
+    scatter: false, money: true, only: 'straight-line.exact-line',
+    x: { letter: 'G', caption: 'Data used (gigabytes)' },
+    y: { letter: 'B', caption: 'Monthly bill (pounds)' },
+    point: (l, x, y) => `Point $${l}$ represents a month in which ${x} gigabytes were used and the bill was ${y}.`,
+    estimate: x => `Calculate the bill for a month in which ${x} gigabytes are used.`,
+    band: [2, 16], base: [8, 18], slope: [1, 3] },
+  { story: 'A car park charges a fixed entry fee plus an hourly rate. The graph shows the total cost, $C$ pounds, against the time parked, $T$ hours.',
+    scatter: false, money: true, only: 'straight-line.exact-line',
+    x: { letter: 'T', caption: 'Time parked (hours)' },
+    y: { letter: 'C', caption: 'Cost (pounds)' },
+    point: (l, x, y) => `Point $${l}$ represents a stay of ${x} hours which costs ${y}.`,
+    estimate: x => `Calculate the cost of parking for ${x} hours.`,
+    band: [2, 12], base: [2, 6], slope: [1, 3] },
+  // The one that is not money, so part (b) asks for a plain number. It is
+  // also the one that lets a gradient in THIRDS through often: a money
+  // answer has to land on a whole or a half, which throws most thirds away,
+  // while this one only needs a whole and the reading point is already a
+  // multiple of the denominator.
+  { story: 'Water is poured into a tank at a steady rate. The graph shows the depth of the water, $D$ centimetres, against the time, $T$ minutes.',
+    scatter: false, only: 'straight-line.exact-line',
+    x: { letter: 'T', caption: 'Time (minutes)' },
+    y: { letter: 'D', caption: 'Depth (centimetres)' },
+    point: (l, x, y) => `Point $${l}$ represents a time of ${x} minutes when the depth is ${y} centimetres.`,
+    estimate: x => `Calculate the depth of the water after ${x} minutes.`,
+    band: [2, 18], base: [4, 12], slope: [1, 3] },
+  { story: 'A printing company charges a setup fee plus an amount for each poster printed. The graph shows the total cost, $C$ pounds, against the number of posters, $N$.',
+    scatter: false, money: true, only: 'straight-line.exact-line',
+    x: { letter: 'N', caption: 'Posters' },
+    y: { letter: 'C', caption: 'Cost (pounds)' },
+    point: (l, x, y) => `Point $${l}$ represents an order of ${x} posters which costs ${y}.`,
+    estimate: x => `Calculate the cost of an order of ${x} posters.`,
+    band: [4, 20], base: [5, 15], slope: [1, 3] },
 ];
 
 /** A gradient as the answer should print it — 3/2 stays a fraction. */
