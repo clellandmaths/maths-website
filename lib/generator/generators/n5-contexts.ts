@@ -436,6 +436,69 @@ const PART_OF_WHOLE: { lines: (p: string, r: number) => string[]; unit: string; 
 
 export const PART_OF_WHOLE_CONTEXTS: PartOfWholeContext[] = PART_OF_WHOLE;
 
+/**
+ * **The same question with the quantity in STANDARD FORM — 2018 P2 Q11.**
+ *
+ * That paper gives the volume of Venus as `9.3 x 10^11` cubic kilometres,
+ * says it is 85% of Earth's, and asks for Earth's. The arithmetic is the
+ * ordinary reverse percentage every context above does; the difficulty the
+ * paper is buying is **carrying standard form through it**, and its
+ * markscheme prices exactly that — `85% = 9.3 x 10^11`, then
+ * `1% = 9.3 x 10^11 / 85`.
+ *
+ * The clone gave a plain number in 400 of 400 draws, so that difficulty was
+ * absent from every one. The owner: *"Yes key it needs to be scientific
+ * notation."*
+ *
+ * **A separate list rather than a flag on the one above**, because the two
+ * need different fields: a standard-form context has no `band`, since the
+ * size is carried by the exponent rather than drawn from a range of wholes.
+ *
+ * Offered only to `percentages.part-of-whole-pre2023`, which cites 2018 P2
+ * Q11 and nothing else — 2026 P1 Q2 and 2014 P1 Q9 are the plain kind and
+ * sit on their own ids.
+ *
+ * Every quantity here is one a real measurement would write this way, so the
+ * standard form is the subject's own convention rather than decoration.
+ */
+export interface SciPartOfWholeContext {
+  /** The sentences, given the part already written in standard form. */
+  lines: (part: string, pct: number) => string[];
+  /** The word the answer is counted in. */
+  unit: string;
+  /** The power of ten the quantity lives at, as a range. */
+  exponent: [number, number];
+}
+
+export const SCI_PART_OF_WHOLE_CONTEXTS: SciPartOfWholeContext[] = [
+  // 2018 P2 Q11's own
+  { unit: 'cubic kilometres', exponent: [11, 12], lines: (p, r) => [
+    `Venus and Earth are two planets within our solar system.`,
+    `The volume of Venus is approximately $${p}$ cubic kilometres.`,
+    `This is ${r}% of the volume of Earth.`,
+    `Calculate the volume of Earth.`] },
+  { unit: 'kilometres', exponent: [8, 10], lines: (p, r) => [
+    `A space probe has travelled $${p}$ kilometres since it was launched.`,
+    `This is ${r}% of the total distance to its destination.`,
+    `Calculate the total distance the probe must travel.`] },
+  { unit: 'cells', exponent: [10, 13], lines: (p, r) => [
+    `A biologist estimates that a blood sample contains $${p}$ red blood cells.`,
+    `This is ${r}% of all the cells in the sample.`,
+    `Calculate the total number of cells in the sample.`] },
+  { unit: 'kilograms', exponent: [14, 17], lines: (p, r) => [
+    `The mass of the ice in a glacier is $${p}$ kilograms.`,
+    `This is ${r}% of the mass the glacier had a century ago.`,
+    `Calculate the mass of the glacier a century ago.`] },
+  { unit: 'litres', exponent: [11, 13], lines: (p, r) => [
+    `A reservoir is holding $${p}$ litres of water.`,
+    `This is ${r}% of its capacity.`,
+    `Calculate the capacity of the reservoir.`] },
+  { unit: 'bytes', exponent: [12, 15], lines: (p, r) => [
+    `A data centre is storing $${p}$ bytes of information.`,
+    `This is ${r}% of the space it has available.`,
+    `Calculate the total space available at the data centre.`] },
+];
+
 // ── a surcharge on a bill: how much extra was paid ────────────────────────
 
 /**

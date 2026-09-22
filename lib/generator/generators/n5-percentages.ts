@@ -3,7 +3,7 @@ import type { Gen } from './n5';
 import { getRandomInt } from './utils';
 import {
   money, plain, ASSET_CONTEXTS, DEPRECIATING_MONEY, REVERSE_CONTEXTS,
-  CHANGE_CONTEXTS, PART_OF_WHOLE_CONTEXTS, SURCHARGE_CONTEXTS,
+  CHANGE_CONTEXTS, PART_OF_WHOLE_CONTEXTS, SCI_PART_OF_WHOLE_CONTEXTS, SURCHARGE_CONTEXTS,
   BETWEEN_YEARS_CONTEXTS, moneyNeat,
   type AssetContext, type Rounding,
 } from './n5-contexts';
@@ -347,7 +347,72 @@ function compoundBetweenYears(asked?: string): Q {
 // "80% = 480 000" and a pupil reaching for 100 + r has misread the question.
 // Both are Paper 1, so the numbers have to divide by hand.
 
-function partOfWhole(): Q {
+/**
+ * **2018 P2 Q11 in standard form.**
+ *
+ * The paper gives `9.3 x 10^11` cubic kilometres as 85% of Earth's volume and
+ * asks for Earth's, which is `1.094 x 10^12`. The arithmetic is the reverse
+ * percentage `partOfWhole` already does; what the paper is buying is carrying
+ * standard form through it, and its markscheme prices exactly that. The clone
+ * printed a plain number in 400 of 400 draws, so none of them asked what the
+ * paper asks. The owner: *"Yes key it needs to be scientific notation."*
+ *
+ * The part is drawn as a one-decimal mantissa, as the paper's 9.3 is, and the
+ * whole falls out of it rather than the other way round — so the given number
+ * is always tidy and the answer is the one that needs rounding, which is the
+ * way round the exam sets it. Four significant figures, as the paper's 1.094.
+ */
+function sciPartOfWhole(): Q {
+  const ctx = pick(SCI_PART_OF_WHOLE_CONTEXTS);
+  const pct = pick([20, 25, 40, 60, 65, 75, 80, 85, 90]);
+  // the mantissa of the PART, one decimal place — the paper's is 9.3
+  const pm = getRandomInt(12, 98) / 10;
+  const pe = getRandomInt(ctx.exponent[0], ctx.exponent[1]);
+  /**
+   * **Every line has to be in standard form, including the middle one.**
+   *
+   * The first version printed 1% straight from the division — `8 x 10^12 / 90`
+   * gives `0.0889 x 10^12`, which is arithmetically right and is not standard
+   * form at all. That is the step the markscheme prices (`1% = 9.3 x 10^11 /
+   * 85`), so it is the last line that should be sloppy about it.
+   *
+   * So the mantissa is normalised back into [1, 10) and the exponent carries
+   * the difference, both up and down, and the whole is computed FROM the
+   * normalised 1% — not alongside it — so the three lines cannot disagree.
+   */
+  const norm = (m: number, e: number): [number, number] => {
+    while (m >= 10) { m /= 10; e += 1; }
+    while (m < 1) { m *= 10; e -= 1; }
+    return [Math.round(m * 1000) / 1000, e];
+  };
+  // 1% of the whole, which is the middle step the scheme pays for
+  const [om, oe] = norm(pm / pct, pe);
+  // and the whole is a hundred times that
+  const [wm, we] = norm(om, oe + 2);
+  const sci = (m: number, e: number) => `${m} \\times 10^{${e}}`;
+
+  return {
+    subTopic: 'Finding a Total from a Percentage',
+    difficulty: 'exam',
+    variationId: 'percentages.part-of-whole',
+    questionLines: ctx.lines(sci(pm, pe), pct),
+    boardQuestionLines: [`$${sci(pm, pe)}$ is ${pct}% of the total. Find the total.`],
+    solutionSteps: [
+      `<strong>1.</strong> Write down what the question tells you:<br><br>$${pct}\\% = ${sci(pm, pe)}$`,
+      `<strong>2.</strong> Divide to find $1\\%$, and write the result in standard form:<br><br>$1\\% = \\frac{${sci(pm, pe)}}{${pct}} = ${sci(om, oe)}$`,
+      `<strong>3.</strong> Multiply by 100 to get the whole:<br><br>$100\\% = ${sci(om, oe)} \\times 100 = ${sci(wm, we)}$ ${ctx.unit}`,
+    ],
+    // •¹ know that r% = the figure given, •² begin a valid strategy, •³ answer
+    stepMarks: [1, 1, 1],
+    finalAnswer: `$${sci(wm, we)}$ ${ctx.unit}`,
+  };
+}
+
+function partOfWhole(askedId?: string): Q {
+  // 2018 P2 Q11 is the standard-form one and nothing else on this routine is.
+  // Its alias cites that paper alone — 2026 P1 Q2 and 2014 P1 Q9 are the plain
+  // kind and sit on their own ids — so this reaches no other question.
+  if (askedId === 'percentages.part-of-whole-pre2023') return sciPartOfWhole();
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(PART_OF_WHOLE_CONTEXTS);
     /**
@@ -609,6 +674,6 @@ export const PERCENTAGE_GENERATORS: Record<string, Gen> = {
   // three-year span without touching 2025 P2 Q1 on the target id, which is
   // signed off. See the note above `compoundBetweenYears`.
   'Appreciation Between Two Years': (_w, asked) => compoundBetweenYears(asked),
-  'Finding a Total from a Percentage': partOfWhole,
+  'Finding a Total from a Percentage': (_w, a) => partOfWhole(a),
   'Finding the Extra Charged': surcharge,
 };

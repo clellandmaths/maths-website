@@ -318,6 +318,27 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
     const fig = circleChord({
       radius: r, chord, major: true, flip: ctx.flip, sideways: ctx.sideways,
       ...drawn[ctx.family],
+      /**
+       * **2018 P2 Q12 marks the centre and arrows the span it asks for.**
+       *
+       * The owner, on the 2018 P2 sheet: *"Put a dot in the centre and show
+       * arrow line outside circle showing which length to calculate"*. The
+       * paper does both — a dot at O, and an arrow along the bottom labelled
+       * "width" — and the clone did neither, so "calculate the width of the
+       * shape" could only be settled from the prose.
+       *
+       * **Scoped to the `whole` family**, which is 2018 P2 Q12 and
+       * 2015 P2 Q12 and nothing else. The other two families are other
+       * papers, several of them signed off, and an arrow there would be ink
+       * their questions never asked for.
+       *
+       * The word follows the working, which already says `width` for a chord
+       * stood on end and `height` otherwise — so the arrow and step 4 cannot
+       * disagree.
+       */
+      centreDot: ctx.family === 'whole',
+      askedSpan: ctx.family === 'whole'
+        ? (ctx.sideways ? 'width' : 'height') : undefined,
       names: { a: A, b: B, centre: O },
       labels: {
         radius: `${num(r)} ${abbrev(ctx.unit)}`,

@@ -76,6 +76,35 @@ export interface CircleChordSpec {
    */
   chordExtensions?: boolean;
   /**
+   * A dot at the centre, as 2018 P2 Q12 prints it.
+   *
+   * That paper marks O with a dot as well as a letter; the clone lettered it
+   * and drew nothing, so a pupil had to take on trust where the radius is
+   * measured from. Opt-in, because other papers on this shape letter the
+   * centre without a dot and putting one everywhere is ink nothing asked for.
+   */
+  centreDot?: boolean;
+  /**
+   * An external dimension arrow spanning the piece, carrying a WORD rather
+   * than a number — the length being asked for.
+   *
+   * **2018 P2 Q12 prints exactly this**: an arrow along the bottom labelled
+   * "width", spanning the shape from its far edge to the chord. The owner, on
+   * the 2018 P2 sheet: *"Put a dot in the centre and show arrow line outside
+   * circle showing which length to calculate"*. Without it, "calculate the
+   * width of the shape" has to be resolved from the prose, because the
+   * picture never says which span is meant.
+   *
+   * It is deliberately NOT `labels.height`. That field means *given*, and
+   * setting it draws the line solid across the piece — see the note there.
+   * This is the opposite: the span is the unknown, so the arrow sits outside
+   * the shape and nothing is drawn across it.
+   *
+   * The claims below are untouched, because a word is not a measurement:
+   * `printed()` looks for a digit and finds none.
+   */
+  askedSpan?: string;
+  /**
    * Put the piece being asked about **below** the chord instead of above it.
    *
    * 2015 P2 Q12 is a container of liquid: the surface is the chord, the liquid
@@ -241,6 +270,23 @@ export function circleChord(spec: CircleChordSpec): Figure {
   }
   if (spec.labels.height) elements.push(sideLabel(M, T, spec.labels.height, rightOf((k + r) * m / 2)));
   if (spec.labels.centreToChord) elements.push(sideLabel(O, M, spec.labels.centreToChord, rightOf(k * m / 2)));
+  /**
+   * The arrow for the span being asked for — see `askedSpan`.
+   *
+   * It runs M to T, the chord's midpoint out to the far edge, which is the
+   * width the question wants. Shifted sideways rather than outward, because
+   * that span is perpendicular to the chord and its own perpendicular runs
+   * parallel to it: `at(-2 * r, 0)` is a point off to one side in the upright
+   * frame, and the shift clears the circle at `r * 1.15`.
+   *
+   * Built in the upright frame and turned with everything else, for the same
+   * reason the chord's arrow is — reading `M.x` here would mix a rotated
+   * point into an unrotated calculation.
+   */
+  if (spec.askedSpan) {
+    elements.push(...dimensionArrow(M, T, at(-2 * r, 0), r * 1.15, spec.askedSpan));
+  }
+  if (spec.centreDot) elements.push({ kind: 'dot', at: O, small: true });
 
   const printed = (s: string) => /\d/.test(s);
 

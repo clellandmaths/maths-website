@@ -206,13 +206,41 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
   if (Math.round(answer) % 360 === 0) return null;
 
   const points: [Pt, Pt, Pt] = [A, B, C];
-  // 2018 states the bearing at the pivot; 2014 states it the other way round,
-  // from the far point, and marks the wanted angle at the pivot unlabelled
-  // 2018 states the bearing at the pivot; 2014 states it from the far point,
-  // and its part (b) works back through the back bearing, which is the route
-  // its scheme prices ("360 - 120 - [answer to (a)]"). So the two-part question
-  // always takes 2014's arrangement.
-  const atPivot = kind === 'angle' ? false : getRandomInt(0, 1) === 0;
+  /**
+   * 2018 states the bearing at the pivot; 2014 states it from the far point,
+   * and its part (b) works back through the back bearing, which is the route
+   * its scheme prices ("360 - 120 - [answer to (a)]"). So the two-part
+   * question always takes 2014's arrangement.
+   *
+   * **And the one-part question always takes 2018's — it was a coin toss until
+   * 2026-09-22.** The owner, on the 2018 P2 sheet: *"Have a good look at the
+   * original question, I think our variations are much more difficult."* They
+   * were, by exactly one step:
+   *
+   *   atPivot    "F is on a bearing of 240 from T" … "the bearing of the
+   *              yacht from the trawler". Both measured from T, so the
+   *              cosine-rule angle is added to 240 and that is the answer.
+   *   otherwise  "H is 14 km from G on a bearing of 075" … "the bearing of K
+   *              from H". Measured from a different point, so a BACK BEARING
+   *              has to be found first — 075 + 180 = 255 — before the triangle
+   *              angle goes on.
+   *
+   * Measured over 400 draws of 2018 P2 Q13: **204 the paper's way, 196 needing
+   * a back bearing.** Both are four steps, and both read identically to
+   * `one-form`, which compares presentation — so nothing in the suite could
+   * see it. It was found by reading the two questions side by side.
+   *
+   * The comment above already knew which paper wanted which. Both arrangements
+   * were here and both were right; only the choosing between them was wrong.
+   * That is the eighth time on this project that a paper's own form turned out
+   * to be sitting in the code behind a toss.
+   *
+   * **No key is needed.** `bearings.three-sides-bearing` cites 2018 P2 Q13
+   * alone, and the `angle` branch short-circuits before the draw — so
+   * 2014 P2 Q10 never read the random this removes, and its stream is
+   * untouched.
+   */
+  const atPivot = kind !== 'angle';
   const stated = atPivot ? given : (given + 180) % 360;
   const arcs: BearingArc[] = atPivot
     ? [{ at: 1, to: 0, compass: given, label: brgPlain(given) }]

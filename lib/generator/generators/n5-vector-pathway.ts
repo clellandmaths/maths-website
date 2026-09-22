@@ -251,11 +251,30 @@ function multiples(): Q | null {
   const [A, B, Cp, D, E] = pick([['A', 'B', 'C', 'D', 'E'], ['P', 'Q', 'R', 'S', 'T'],
     ['J', 'K', 'L', 'M', 'N'], ['V', 'W', 'X', 'Y', 'Z']]);
   const [nu, nw] = pick(LETTER_SETS);
-  // 2 x 3 = six combinations, of which three used to reach the page: the rest
-  // were rejected on label clearance and dropped by the retry loop without a
-  // word. With the placer and the verifier finally measuring the same thing
-  // they all draw, so the band can widen too.
-  const m = getRandomInt(2, 4);         // ED = m x AB
+  /**
+   * **"They all draw" was not true — 2026-09-22.**
+   *
+   * The comment that stood here said the placer and the verifier had been made
+   * to measure the same thing, so every combination reached the page.
+   * Counted: **five of twelve did.** `n = 4` and `n = 5` never drew at all,
+   * nor did `m = 4, n = 3`. The retry loop discarded the rest in silence,
+   * which is the failure `docs/review-paper.md` names — a pool collapses while
+   * every draw succeeds, because the generator retries until it lands on a
+   * survivor.
+   *
+   * The cause is the last leg: `DC` is `w / n`, so the larger `n` is the
+   * shorter that segment gets, until its label cannot clear `D`. The fix is in
+   * the drawing, below — the `w` direction now scales with `n`.
+   *
+   * The owner asked for this question to be widened. It turned out not to need
+   * new levers at all, only the ability to draw what the arithmetic already
+   * allowed: **sixteen combinations, and all sixteen draw**, against five.
+   *
+   * Sixths draw too — `n` to 6 gives twenty and every one of those draws as
+   * well — and are deliberately not used. No paper on this topic sets one, and
+   * halves through fifths are the ordinary National 5 range.
+   */
+  const m = getRandomInt(2, 5);         // ED = m x AB
   const n = getRandomInt(2, 5);         // EA = n x DC
   // A at the origin, AB = u, EA = w so E = -w, ED = m u, DC = w / n
   const pos: Record<string, Combo> = {
@@ -268,10 +287,22 @@ function multiples(): Q | null {
   const want = cSub(pos[Cp], pos[B]);
   if (want.a[0] === 0 || want.b[0] === 0) return null;
 
-  // The chain runs m lengths of u across, so the figure grows the same way
-  // downwards. Held at a fixed height it went long and thin as m rose and the
-  // labels crowded, which is why only three of its combinations ever drew.
-  const U = pt(60, 0), W = pt(-20, -45 * (m + 1) / 3);
+  /**
+   * The chain runs m lengths of u across, so the figure grows the same way
+   * downwards. Held at a fixed height it went long and thin as m rose and the
+   * labels crowded.
+   *
+   * **And it has to grow with `n` as well, which is what was missing.** The
+   * last leg `DC` is `w / n`; with `w` fixed, a larger `n` shrinks that
+   * segment until its label collides with `D` and the whole draw is thrown
+   * away. Scaling `w` by `n / 2` keeps the shortest leg readable at every
+   * combination — see the note on the bands above.
+   *
+   * **`n / 2` rather than anything cleverer, because at `n = 2` it is exactly
+   * one.** Every combination that drew before this change is bit-identical
+   * after it; only the seven that never drew are new.
+   */
+  const U = pt(60, 0), W = pt(-20, -45 * (m + 1) / 3 * (n / 2));
   const points = Object.fromEntries(Object.entries(pos).map(([k, v]) => [k, place(v, U, W)]));
   const answer = combo(want.a, want.b, nu, nw);
 
