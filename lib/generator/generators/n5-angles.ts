@@ -193,13 +193,40 @@ export function polygonDiameterQuestion(): Q {
       names, far, centre: 'O',
     });
     if (!fig) continue;
+    /**
+     * **The paper prints TWO diagrams and this printed one.** The first is the
+     * bare polygon on its circle with every radius dashed in to a dotted
+     * centre; the second adds the diameter, the chords and the shading. The
+     * owner, with both in front of them: *"I wonder if we do what the paper
+     * does and show the polygon before the shape is added? ... you can clearly
+     * see what the adding does to the original diagram and where angles you
+     * have might work something out."*
+     *
+     * It matters for the first mark. `AOB = 360/n` comes from the vertices
+     * dividing the turn equally, and the dashed radii are exactly what make
+     * that visible — the design figure never draws them, in the paper or here,
+     * so with one figure a pupil had to know to imagine them.
+     */
+    const plainFig = polygonDiameter({
+      sides: n, radius: 1, start,
+      names, far, centre: 'O', plain: true,
+    });
+    if (!plainFig) continue;
 
     const [A, B] = [names[0], names[1]];
     const context = pick(LOGO_CONTEXTS);
+    /**
+     * Worded as the paper words it, now that there are two figures: the shape
+     * is drawn first, then the design is added to it. 2019 P1 Q11 reads *"She
+     * starts by drawing a regular pentagon ABCDE ... She then adds to the
+     * design as shown in the diagram below."*
+     */
     const prose = [
       `${context} is designed around a regular ${WORD[n]} $${names.join('')}$.`,
+      `The vertices of the ${WORD[n]} lie on a circle with centre $O$.`,
       '',
-      `&bull;&nbsp; The vertices of the ${WORD[n]} lie on a circle with centre $O$`,
+      `The design is then completed as shown below.`,
+      '',
       `&bull;&nbsp; $${A}${far}$ is a diameter of the circle`,
       `Calculate the size of angle $O${far}${B}$.`,
     ];
@@ -209,6 +236,8 @@ export function polygonDiameterQuestion(): Q {
       `<strong>3.</strong> $O${B}$ and $O${far}$ are both radii, so triangle $O${B}${far}$ is isosceles and its other two angles are equal:<br><br>$O${far}${B} = \\frac{180 - ${180 - step}}{2} = ${answer}^{\\circ}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    // Both figures have to place cleanly, or the question arrives half drawn.
+    if (verifyFigure(plainFig, [...prose, ...steps].join(' ')).length) continue;
 
     return {
       subTopic: 'A Polygon and a Diameter',
@@ -217,7 +246,11 @@ export function polygonDiameterQuestion(): Q {
       // straight line, •³ the base angle of the isosceles triangle
       variationId: 'angles.polygon-diameter',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // the shape, then the design added to it — the paper's own order
+      questionLines: [
+        prose[0], prose[1], renderScene(plainFig.scene),
+        prose[3], renderScene(fig.scene), ...prose.slice(5),
+      ],
       boardQuestionLines: [`Regular ${WORD[n]} on a circle, centre O. ${A}${far} is a diameter. Find angle O${far}${B}.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,

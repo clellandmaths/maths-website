@@ -141,10 +141,22 @@ function evaluate(wanted?: string): Q {
      *
      * The first pass fixed the sign of the CONSTANT on this shape and never
      * looked at the sign of the input.
+     *
+     * **2019 P1 Q1 is pinned for the same reason, added 2026-09-22.** It is
+     * `f(-2)` on `5x^3`, answering -40, and the second mark is knowing
+     * `(-2)^3 = -8` rather than `8`. Measured on its own second pass: positive
+     * in **49 of 300** draws, so one in six was `5 x 8` with no sign to get
+     * wrong. The owner: *"Agree to pin negative"*.
+     *
+     * That leaves the two shapes whose papers genuinely mix: `functions.
+     * evaluate` (2017 P1 Q1) and `functions.evaluate-square` (2024 P1 Q2,
+     * SIGNED OFF), which keep the draw they had.
      */
-    const input = ids[which] === 'functions.evaluate-cube-plus'
+    const pinNegative = ids[which] === 'functions.evaluate-cube-plus'    // 2022 P1 Q2
+      || ids[which] === 'functions.evaluate-cube-multiple';              // 2019 P1 Q1
+    const input = pinNegative
       ? -getRandomInt(2, 6)
-      // three of the four papers substitute a negative
+      // the papers on the remaining two shapes substitute either sign
       : getRandomInt(1, 4) === 1 ? getRandomInt(2, 8) : -getRandomInt(2, 6);
     const out = s.at(input);
     if (!Number.isInteger(out) || Math.abs(out) > 400) continue;

@@ -26,6 +26,26 @@ export interface PolygonDiameterSpec {
   /** The letter for the far end of the diameter. */
   far: string;
   centre: string;
+  /**
+   * Draw the polygon BEFORE the design is added — the paper's first figure.
+   *
+   * **2019 P1 Q11 prints two diagrams and the clone printed one.** The first
+   * is the bare polygon on its circle with every radius dashed in to a dotted
+   * centre; the second adds the diameter, the chords and the shading. The
+   * owner, looking at both: *"I wonder if we do what the paper does and show
+   * the polygon before the shape is added? ... you can clearly see what the
+   * adding does to the original diagram and where angles you have might work
+   * something out."*
+   *
+   * That first figure is where the whole question comes from. The first mark
+   * is `AOB = 360/n`, and the dashed radii are what make the turn visibly
+   * divided into n equal parts. Without them a pupil has to know to imagine
+   * them — which is exactly the gap the owner spotted.
+   *
+   * The second figure does not draw the radii, here or in the paper: by then
+   * they have served their purpose and the design is what matters.
+   */
+  plain?: boolean;
 }
 
 const dir = (deg: number): Pt =>
@@ -43,6 +63,32 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
   const F = scale(dir(start + 180), r);
   const side = 2 * r * Math.sin(Math.PI / n);
   const [B, E] = [V[1], V[n - 1]];
+
+  // ── the paper's FIRST figure: the polygon as it is drawn, before the
+  //    design. Every radius dashed to a dotted centre, which is what shows
+  //    the turn divided into n equal parts. See `plain` on the spec.
+  if (spec.plain) {
+    return {
+      scene: {
+        elements: [
+          { kind: 'circle', centre: O, r, dashed: true },
+          { kind: 'polygon', points: V },
+          ...V.map((p): Element => ({ kind: 'segment', from: O, to: p, dashed: true })),
+          { kind: 'dot', at: O, small: true },
+          ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: O })),
+          // no diameter here, so the letter can sit straight below the centre
+          { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start), r * 0.4) },
+        ],
+      },
+      claims: [
+        ...V.map((p) => ({ kind: 'length' as const, from: O, to: p, value: r, shown: false })),
+        ...V.map((p, i) => ({
+          kind: 'length' as const, from: p, to: V[(i + 1) % n], value: side, shown: false,
+        })),
+        { kind: 'angle', at: O, arms: [V[0], V[1]], value: step, shown: false },
+      ],
+    };
+  }
 
   const elements: Element[] = [
     // the design's own shading, first, so every line is drawn over it

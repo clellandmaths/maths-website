@@ -168,6 +168,54 @@ const CONTEXTS: LineContext[] = [
     point: (l, x, y) => `Point $${l}$ represents a phone which was charged ${x} hours ago and has ${y} per cent of its battery remaining.`,
     estimate: x => `Estimate the battery remaining in a phone which was charged ${x} hours ago.`,
     band: [1, 14], base: [85, 100], slope: [-6, -3], cap: 100 },
+  // ── falling scattergraphs added for 2019 P1 Q6 ─────────────────────────
+  //
+  // Pinning that question to a falling line left it TWO stories, exactly as
+  // 2024 P1 Q9 was left with two above. The owner, recognising it: *"Yes let's
+  // pin to falling one. However, how many different contexts do we get? I
+  // think we made more contexts earlier when same thing came up in previous
+  // locked year."* They did, and this is the same remedy.
+  //
+  // These carry `only: 'straight-line.best-fit-grid-pre2023'`, so they are
+  // offered to 2019 P1 Q6 and to nothing else. **2023 P1 Q7 is signed off and
+  // shares this routine**; it reads the list with `only === undefined`, so
+  // these are invisible to it. That is the whole purpose of the field, and
+  // `frozen` caught both questions moving the last time entries went into this
+  // list without it.
+  //
+  // THE FIRST IS THE PAPER'S OWN CONTEXT, which the clone did not have at all:
+  // 2019 P1 Q6 is fuel consumption against engine size, F = -3E + 18.5.
+  //
+  // Each base is the value at x = 0 — the largest the quantity gets — and each
+  // band keeps the line above zero at the far end of the plotted range.
+  { story: 'The fuel consumption of a group of cars is recorded. The scattergraph shows the relationship between the engine size, $E$ litres, and the fuel consumption, $F$ kilometres per litre, of the cars.',
+    scatter: true, only: 'straight-line.best-fit-grid-pre2023',
+    x: { letter: 'E', caption: 'Engine size (litres)' },
+    y: { letter: 'F', caption: 'Fuel consumption (km/l)' },
+    point: (l, x, y) => `Point $${l}$ represents a car with an engine size of ${x} litres which travels ${y} kilometres per litre.`,
+    estimate: x => `A car has an engine size of ${x} litres. Estimate how many kilometres per litre it travels.`,
+    band: [1, 6], base: [18, 26], slope: [-4, -2] },
+  { story: 'A walking group records the temperature at different heights up a mountain. The scattergraph shows the relationship between the height above sea level, $H$ hundred metres, and the temperature, $T$ degrees Celsius.',
+    scatter: true, only: 'straight-line.best-fit-grid-pre2023',
+    x: { letter: 'H', caption: 'Height (hundred metres)' },
+    y: { letter: 'T', caption: 'Temperature (degrees)' },
+    point: (l, x, y) => `Point $${l}$ represents a reading taken ${x} hundred metres above sea level where the temperature was ${y} degrees.`,
+    estimate: x => `Estimate the temperature ${x} hundred metres above sea level.`,
+    band: [1, 9], base: [16, 24], slope: [-2, -1] },
+  { story: 'A shop records how long each of its delivery vans has been in service and what it is now worth. The scattergraph shows the relationship between the age of a van, $A$ years, and its value, $V$ thousand pounds.',
+    scatter: true, only: 'straight-line.best-fit-grid-pre2023',
+    x: { letter: 'A', caption: 'Age (years)' },
+    y: { letter: 'V', caption: 'Value (thousand pounds)' },
+    point: (l, x, y) => `Point $${l}$ represents a van which is ${x} years old and worth ${y} thousand pounds.`,
+    estimate: x => `Estimate the value of a van which is ${x} years old.`,
+    band: [1, 10], base: [20, 30], slope: [-3, -2] },
+  { story: 'A swimming coach records how many weeks each swimmer has been training and their time for one length. The scattergraph shows the relationship between the number of weeks training, $W$, and the time taken, $S$ seconds.',
+    scatter: true, only: 'straight-line.best-fit-grid-pre2023',
+    x: { letter: 'W', caption: 'Weeks training' },
+    y: { letter: 'S', caption: 'Time (seconds)' },
+    point: (l, x, y) => `Point $${l}$ represents a swimmer who has trained for ${x} weeks and takes ${y} seconds for one length.`,
+    estimate: x => `Estimate the time taken by a swimmer who has trained for ${x} weeks.`,
+    band: [1, 12], base: [44, 60], slope: [-3, -2] },
   { story: 'A teacher records the marks scored by her class in the prelim exam and the final exam. The scattergraph shows the relationship between the prelim mark, $P$, and the final mark, $F$.',
     scatter: true,
     x: { letter: 'P', caption: 'Prelim mark' },
@@ -349,7 +397,26 @@ function rulings(span: number): number[] {
  * then on an intersection by construction, and the gradient is in range because
  * it was picked to be.
  */
-function bestFitOnGridQuestion(): Q | null {
+/**
+ * **2019 P1 Q6's line FALLS, and that is the whole point of its context.**
+ *
+ * Fuel consumption against engine size: a bigger engine gives fewer kilometres
+ * per litre, gradient -3. Measured on the second pass, **255 of 300** draws
+ * rose. The first pass measured the same thing at 37 of 300 and left it, on
+ * the reasoning that a gradient's sign follows from the data points and the
+ * rules say never split for different numbers.
+ *
+ * That reasoning was brought back to the owner and overturned: a falling
+ * relationship is not a different number, it is a different **context** — the
+ * clone has to have a story in which the quantity genuinely falls, and it had
+ * two. *"Yes let's pin to falling one."*
+ *
+ * So this id takes only the falling contexts, including four added with it
+ * above — the first of which is the paper's own, which the clone had never
+ * had. **2023 P1 Q7 keeps exactly the list it was approved with**: its filter
+ * is unchanged, and the new entries carry `only`, so they are invisible to it.
+ */
+function bestFitOnGridQuestion(_wanted?: string, asked?: string): Q | null {
   // Both papers are scattergraphs, and a ruling under an exact relationship —
   // a taxi fare — would invite reading the fare straight off the paper instead
   // of from the equation the question asks for.
@@ -357,7 +424,12 @@ function bestFitOnGridQuestion(): Q | null {
   // routine is a different variation with its own signed-off papers — 2023 P1
   // Q7 and 2019 P1 Q6 — and `frozen` caught both moving the moment four
   // contexts were added to the shared list for 2024 P1 Q9.
-  const ctx = pick(CONTEXTS.filter(c => c.scatter && c.only === undefined));
+  const falling = asked === 'straight-line.best-fit-grid-pre2023';   // 2019 P1 Q6
+  const ctx = pick(CONTEXTS.filter(c => c.scatter && (falling
+    // its own four, plus any base context that already falls
+    ? (c.only === 'straight-line.best-fit-grid-pre2023'
+       || (c.only === undefined && Math.max(c.slope[0], c.slope[1]) < 0))
+    : c.only === undefined)));
 
   const xSteps = rulings(ctx.band[1] * 1.2);
   const reach = (ctx.base[0] + ctx.base[1]) / 2

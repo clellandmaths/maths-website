@@ -336,7 +336,20 @@ function constructSolve(combine = false, paper1 = false): Q {
     // band that context makes plausible — an apple should not cost more than a
     // mango, and fruit should not be priced like theatre tickets.
     const [lo, hi] = ctx.band;
-    const step = ctx.kind === 'money' ? 5 : 1;
+    /**
+     * **On Paper 1 the unit values step by the context's own scale**, so the
+     * numbers a pupil sees are whole by construction rather than by rejection.
+     *
+     * The square-metre contexts hold their values in tenths, so a free draw
+     * gives 20.3 square metres. Rejecting those outright — which is what this
+     * did first — killed two contexts entirely and dropped the subTopic to 8,
+     * under `contexts`'s floor of 10. Stepping by the scale keeps all ten and
+     * still guarantees whole numbers: a multiple of ten tenths is a whole
+     * square metre, and any sum of multiples is too.
+     */
+    const step = ctx.kind === 'money' ? 5
+      : paper1 ? (ctx.kind === 'm2' ? 10 : 1)
+      : 1;
     const round = (x: number) => Math.round(x / step) * step;
     const u1 = round(getRandomInt(lo, hi));
     const u2 = round(getRandomInt(Math.max(step, Math.round(lo * 0.5)), Math.round(u1 * 0.8)));
@@ -356,6 +369,30 @@ function constructSolve(combine = false, paper1 = false): Q {
     // 2022 P2 Q4's is 4m + 3a = 4.25, not 425.
     const scale = ctx.kind === 'money' ? 100 : ctx.kind === 'm2' ? 10 : 1;
     const [d1, d2, dt1, dt2] = [u1 / scale, u2 / scale, t1 / scale, t2 / scale];
+    /**
+     * **Paper 1 has no calculator, so nothing may carry a decimal — and
+     * excluding money was only half of it.**
+     *
+     * The first pass saw decimals, diagnosed the MONEY contexts and filtered
+     * them out above. Measured on the second pass, **129 of 300** draws still
+     * had one: the square-metre contexts hold their values in *tenths*
+     * (`scale = 10`), so a draw reads *"4 tents and 5 awnings, total 20.3
+     * square metres"* and answers 3.2 and 1.5. Solving that by hand is a
+     * different exercise from the one 2019 P1 Q8 sets — 7 bags of cement and
+     * 3 of gravel weigh 215 kilograms, answers 20 and 25, whole throughout.
+     *
+     * The owner: *"I agree lets ensure no decimals and that the numbers are do
+     * able by hand."* So the test is on the numbers a pupil actually sees
+     * rather than on the kind of context they came from — **fix the property,
+     * not the context**, which is exactly what the first pass got wrong.
+     *
+     * A rejection rather than a remap, and that is safe here: `paper1` is
+     * fixed for the whole call, so this `continue` can never run on
+     * `simeq.construct-solve` (2022 P2 Q4, SIGNED OFF) or on
+     * `simeq.construct-combine`. Their draws are untouched, and 2022 P2 Q4
+     * keeps the money it should have as a calculator paper.
+     */
+    if (paper1 && [d1, d2, dt1, dt2].some(v => !Number.isInteger(v))) continue;
     const p = { a1: q1, b1: q2, c1: dt1, a2: q3, b2: q4, c2: dt2 };
 
     const unit = ctx.kind === 'money' ? 'cost' : ctx.kind === 'kg' ? 'weight' : 'amount of material';
