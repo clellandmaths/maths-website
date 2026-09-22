@@ -216,17 +216,29 @@ function sketchFactorised(wanted?: string): Q | null {
    * 27 pairs were two apart and all eight are gone; separations of 4, 6, 8
    * and 10 remain, and the paper's own `(x-6)(x+4)` is 10.
    *
-   * **Keyed, because this routine also serves 2022 P1 Q14, which is SIGNED
-   * OFF.** Its own pair is `(x+1)(x-3)`, four apart, so it would survive the
-   * rule — but its *distribution* must not move, so it keeps the old draw.
+   * **2022 P1 Q14 takes the same rule, and it is SIGNED OFF.** It was keyed
+   * to 2018 alone at first, on the reasoning that a locked question's
+   * distribution must not move. Asked whether the locked sibling carried the
+   * same fault, the answer measured out as *yes, identically*: roots two
+   * apart in **126 of 400** draws, 58 of them with an intercept of 12 or
+   * more, and `(x-4)(x-6)` rendering pixel-for-pixel the case 2018 had just
+   * had removed. The owner: *"Yes do it for 2022."* Snapshot re-recorded with
+   * those words.
    *
-   * **The redraw is 2018's alone.** Clamping the first roll instead would
-   * have cost nothing in randoms but folded gap 1 onto gap 2, so a separation
-   * of four took 222 of 400 draws against the others' 45 to 77. A second roll
-   * inside this branch spreads them evenly, and 2022's id never reaches it —
-   * it reads `gapDraw` and stops, exactly as it always did.
+   * The two ids differ only in whether blank axes are printed. Those axes are
+   * bare and unnumbered — the pupil picks their own scale — so in both cases
+   * this was a legibility fault in the **worked answer**, never in what the
+   * pupil is handed.
+   *
+   * **The redraw, not a clamp.** Clamping the first roll would cost nothing
+   * in randoms but folds gap 1 onto gap 2, so a separation of four took 222
+   * of 400 draws against the others' 45 to 77. A second roll spreads them
+   * evenly. `gapDraw` is still taken first, so a worksheet built by topic —
+   * which asks for no id and is no paper's clone — draws exactly as it did.
    */
-  const gap = wanted === 'quadratics.sketch-factorised' ? getRandomInt(2, 5) : gapDraw;
+  const noCloseRoots = wanted === 'quadratics.sketch-factorised'
+    || wanted === 'quadratics.sketch-factorised-axes';
+  const gap = noCloseRoots ? getRandomInt(2, 5) : gapDraw;
   const r2 = r1 + 2 * gap;                      // an even gap, so the turning point is whole
   if (r2 > 7 || r1 === 0 || r2 === 0) return null;
   const h = (r1 + r2) / 2;
