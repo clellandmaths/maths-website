@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "65a9a7009a527cc35b5188a779cfc888f9a75057",
+  "sourceCommit": "d5526cf83862ebeb92691087813f2a93a2d3f627",
   "sourceDirty": false,
   "count": 97,
   "files": {
