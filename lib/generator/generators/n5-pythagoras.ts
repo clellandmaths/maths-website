@@ -815,6 +815,21 @@ export function pythagorasConverseJoined(): Q {
   for (let tries = 0; tries < 300; tries++) {
     const right = getRandomInt(0, 1) === 0;
     const [X, Y, z1, z2, d] = pick([...(right ? CEVIAN_RIGHT : CEVIAN_NEAR)]);
+    /**
+     * **The join must be readable off the lengths.** — 2026-09-23
+     *
+     * The pupil carries the lengths across from the two parts to a joined
+     * figure that has none, and does it by finding the one edge A and B have
+     * in common. 2017 P2 Q7's parts share exactly one length, 7 cm. In 146 of
+     * 400 draws here they shared two — A 12, 10, 14 against B 8, 14, 10 — or
+     * one part carried the shared length twice, and which edge was joined
+     * could not be told from the numbers. The owner: *"Yes drop the
+     * composites don't widen"*.
+     */
+    const A = [z1, d, X], B = [z2, Y, d];
+    const clearJoin = A.filter(v => v === d).length === 1 && B.filter(v => v === d).length === 1
+      && A.every(v => v === d || !B.includes(v));
+    if (!clearJoin) continue;
     const base = z1 + z2;
     const unit = pick(['centimetres', 'metres']);
     const u = abbrev(unit);
@@ -875,14 +890,6 @@ export function pythagorasConverseJoined(): Q {
     // their bases and the join standing on end. The paper draws all three the
     // same way up. Turning is kept as the fallback for a sliver whose labels
     // will not clear in the natural pose.
-    const firstTurn = (build: (t: 0 | 1 | 2 | 3) => Figure | null): Figure | null => {
-      for (const t of [0, 1, 2, 3] as const) {
-        const f = build(t);
-        if (f && !verifyFigure(f, text).length) return f;
-      }
-      return null;
-    };
-
     // **One figure holding both parts, so they share a scale.** Drawn as two
     // figures they each fill their own box, and a 6-7-8 triangle comes out the
     // same size as a 16-19-7 one. The paper draws A visibly smaller than B, and
@@ -894,29 +901,50 @@ export function pythagorasConverseJoined(): Q {
     // gap. Both turns are searched, sixteen pairs, and 30 of the 88 tuples have
     // a pair that clears. A wider gap does not help: it shrinks the triangles
     // in the same breath, and at 1.8x the usable tuples fall to 14.
+    /**
+     * **One turn for all three figures.** — 2026-09-23
+     *
+     * The parts were each searched over four turns, independently of each
+     * other and of the join, so A could come out on its side and B upright
+     * beside a joined figure standing base-down. The paper draws A, B and the
+     * join all the same way up, and that is how a pupil sees which edge meets
+     * which. The owner: *"make the varied diagrams clearer. The actual
+     * question shows the triangles in same orientation before and after
+     * joining"*. All three share one frame — base from the origin, apex above
+     * — so the same turn keeps every edge where it is in the join.
+     *
+     * **Base down only.** Turning all three together still keeps each part's
+     * edges where they are, but the parts stand side by side while the turned
+     * join stacks them one above the other, which is a second thing to undo
+     * before the pupil can read it. The paper draws all three base down.
+     * Measured: 24 of the 38 clear part pairs place base down; allowing the
+     * quarter turns as well would place 36.
+     */
     let parts: Figure | null = null;
-    outer: for (const ta of [0, 1, 2, 3] as const) {
-      for (const tb of [0, 1, 2, 3] as const) {
-        const f = twoTrianglesApart({
-          left: { sides: [z1, d, X], labels: [`${z1} ${u}`, `${d} ${u}`, `${X} ${u}`], name: 'A', turn: ta },
-          right: { sides: [z2, Y, d], labels: [`${z2} ${u}`, `${Y} ${u}`, `${d} ${u}`], name: 'B', turn: tb },
-        });
-        if (f && !verifyFigure(f, text).length) { parts = f; break outer; }
-      }
+    let fig: Figure | null = null;
+    for (const turn of [0] as const) {
+      const p = twoTrianglesApart({
+        left: { sides: [z1, d, X], labels: [`${z1} ${u}`, `${d} ${u}`, `${X} ${u}`], name: 'A', turn },
+        right: { sides: [z2, Y, d], labels: [`${z2} ${u}`, `${Y} ${u}`, `${d} ${u}`], name: 'B', turn },
+      });
+      if (!p || verifyFigure(p, text).length) continue;
+      // No vertex letters and no letter on the foot: the paper's joined figure
+      // carries none. Only the two parts are named, and the prose names them.
+      const j = triangleFromSides({
+        sides: { ab: base, bc: Y, ca: X },
+        vertices: ['', '', ''],
+        labels: { ab: '', bc: '', ca: '' },
+        cevian: {
+          at: z1, length: d, name: '',
+          labels: { left: '', right: '', line: '' },
+          partNames: ['A', 'B'],
+        },
+        turn,
+      });
+      if (!j || verifyFigure(j, text).length) continue;
+      [parts, fig] = [p, j];
+      break;
     }
-    // No vertex letters and no letter on the foot: the paper's joined figure
-    // carries none. Only the two parts are named, and the prose names them.
-    const fig = firstTurn(turn => triangleFromSides({
-      sides: { ab: base, bc: Y, ca: X },
-      vertices: ['', '', ''],
-      labels: { ab: '', bc: '', ca: '' },
-      cevian: {
-        at: z1, length: d, name: '',
-        labels: { left: '', right: '', line: '' },
-        partNames: ['A', 'B'],
-      },
-      turn,
-    }));
     if (!parts || !fig) continue;
 
     return {

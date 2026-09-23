@@ -118,7 +118,22 @@ function drawRate(up: boolean): { rate: number; multiplier: number } {
   return { rate, multiplier: Math.round(raw * 10000) / 10000 };
 }
 
-function compound(wanted?: string): Q {
+/**
+ * **2017 P2 Q2 is an increase, rounded to the nearest pound.** — 2026-09-23
+ *
+ * Measured on the 2017 P2 sheet, 400 draws of its id: a decrease in 243, and
+ * no rounding instruction in 144 — the money contexts that round to the penny,
+ * which is right for the four papers that say nothing and wrong for this one,
+ * which says *"Give your answer to the nearest pound."* The owner: *"Key to
+ * this question ensuring it only affects this one"*.
+ *
+ * `asked` and not `wanted`: this id is an ALIAS of `percentages.compound`, so
+ * it arrives with the same `wanted` as LOCKED 2018 P2 Q1, 2022 P2 Q2 and
+ * 2024 P2 Q1. Only this id takes the branch; every other draw is unchanged.
+ */
+const COMPOUND_2017 = 'percentages.compound-2017';
+
+function compound(wanted?: string, asked?: string): Q {
   // Pick the shape, then a context that fits it — not a context and whatever
   // shape it implies.
   //
@@ -135,7 +150,13 @@ function compound(wanted?: string): Q {
   const threeSf = wanted !== undefined
     ? wanted === 'percentages.compound-3sf'
     : getRandomInt(0, 1) === 0;
-  const ctx = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf));
+  const is2017 = asked === COMPOUND_2017;
+  const drawn = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
+    && (!is2017 || c.appreciates)));
+  // A copy, never the shared context: money to the penny becomes the nearest
+  // pound for this paper alone. Counts already round to the whole number.
+  const ctx = is2017 && drawn.rounding === 'money'
+    ? { ...drawn, rounding: 'nearest-pound' as const } : drawn;
   const up = ctx.appreciates;
   let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
   // **The fourth mark is for the rounding, so there has to be something to
@@ -665,7 +686,9 @@ function reverseNonCalculator(): Q {
 }
 
 export const PERCENTAGE_GENERATORS: Record<string, Gen> = {
-  'Compound Appreciation & Depreciation': (w) => compound(w),
+  // `asked` so 2017 P2 Q2 can be keyed without moving the locked papers that
+  // share its target id. See the note above `compound`.
+  'Compound Appreciation & Depreciation': (w, asked) => compound(w, asked),
   'Reverse Percentages': reverse,
   'Reverse Percentages without a Calculator': reverseNonCalculator,
   'Percentage Change': percentageChange,

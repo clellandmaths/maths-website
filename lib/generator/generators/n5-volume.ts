@@ -5,6 +5,7 @@ import { article, withUnit } from './n5-contexts';
 import { solidFigure, type SolidSpec } from '../diagrams/shapes/solid';
 import { renderScene } from '../diagrams/render';
 import { verifyFigure } from '../diagrams/verify';
+import { type Element, type Figure, type Pt, pt } from '../diagrams/scene';
 
 /**
  * Volume — the thirteen paper questions, drawn.
@@ -569,9 +570,19 @@ function sphereShell(): Q | null {
   const small = 4 / 3 * Math.PI * inner ** 3;
   const exact = big - small;
 
-  const coat = c.coat.startsWith('a ') ? c.coat : `${c.coat} coating`;
+  /**
+   * **The article belongs in the first sentence, not the third.** — 2026-09-23
+   *
+   * This read "evenly with plastic cover … the volume of the a plastic cover"
+   * in 201 of 400 draws: the "a" was stripped where English needs it and kept
+   * where it does not. A countable coating keeps it on the way in ("evenly
+   * with a plastic cover") and becomes "the plastic cover" when asked for; a
+   * mass noun takes none and is asked for as "the toffee coating", as the
+   * paper's "the chocolate coating". The owner: *"Fix"*.
+   */
+  const coat = c.coat.startsWith('a ') ? c.coat.replace(/^a /, '') : `${c.coat} coating`;
   const prose = [
-    `A spherical ${c.thing} is made by coating a ${c.core} sphere evenly with ${c.coat.replace(/^a /, '')}.`,
+    `A spherical ${c.thing} is made by coating a ${c.core} sphere evenly with ${c.coat}.`,
     `The diameter of the ${c.thing} is ${withUnit(dia, c.unit)} and the thickness of the coating is ${withUnit(t, c.unit)}.`,
     `Calculate the volume of the ${coat}.`,
     `Give your answer correct to ${sf} significant figures.`,
@@ -585,16 +596,79 @@ function sphereShell(): Q | null {
     `<strong>4.</strong> Subtract:<br><br>$${big.toFixed(2)}\\ldots - ${small.toFixed(2)}\\ldots = ${exact.toFixed(2)}\\ldots$`,
     rounded(5, exact, sf, c.short),
   ];
-  return assemble({
-    stack: [{ kind: 'sphere', r: dia / 2 }],
-    ghosts: [{ piece: { kind: 'sphere', r: inner }, on: 'base', lift: dia / 2 - inner }],
-    dims: [
-      { along: 'width', halfWidth: dia / 2, side: 'below', value: dia, text: `${dia} ${c.short}` },
-      { along: 'leader', at: { x: -(dia / 2) * 0.62, y: dia / 2 + (dia / 2) * 0.7 }, degrees: 140, text: `${t} ${c.short}` },
+  const fig = shellSection(dia, t, c.short);
+  if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
+  return {
+    subTopic: 'The Coating on a Sphere', difficulty: 'exam', variationId: 'volume.sphere-shell',
+    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    boardQuestionLines: [`Sphere diameter ${dia} ${c.short}, coating ${t} ${c.short} thick. Volume of coating?`],
+    solutionSteps: steps, stepMarks: [1, 1, 1, 1, 1],
+    finalAnswer: `$${toSigFigs(exact, sf)}$ ${cubic(c.short)}`, figure: fig,
+  };
+}
+
+/**
+ * **The sweet cut in half, as 2017 P2 Q6 draws it.** — 2026-09-23
+ *
+ * The paper prints a cross-section: two circles with the coating between
+ * them shaded, the diameter as an arrow straight across, and the thickness as
+ * a short arrow across the ring with its number outside. This drew a
+ * three-dimensional sphere with a dashed one inside and a leader to the outer
+ * surface, so nothing in the picture showed *which* span the thickness was.
+ * The owner: *"make the width of coating clearer like the paper. Perhaps
+ * shading but not if it makes the diagram worse"*.
+ *
+ * Built here rather than in `solid.ts`, which draws every solid in the
+ * course: this figure is this question's alone, and nothing else moves.
+ */
+function shellSection(dia: number, t: number, short: string): Figure {
+  const R = dia / 2, r = R - t;
+  const ring = (rad: number, from: number, to: number, n = 96): Pt[] =>
+    Array.from({ length: n + 1 }, (_, i) => {
+      const a = (from + (to - from) * i / n) * Math.PI / 180;
+      return pt(rad * Math.cos(a), rad * Math.sin(a));
+    });
+  // The ring as one keyhole outline: round the outside one way, in along a
+  // seam, round the inside the other way. Filled, the hole winds to zero and
+  // stays clear, and the seam is never stroked.
+  const shade: Element = { kind: 'shadedShape', points: [...ring(R, 0, 360), ...ring(r, 360, 0)] };
+
+  /** A double-headed arrow from a to b, barbs as decoration. */
+  const arrow = (a: Pt, b: Pt, head: number): Element[] => {
+    const len = Math.hypot(b.x - a.x, b.y - a.y);
+    const u = pt((b.x - a.x) / len, (b.y - a.y) / len), n = pt(-u.y, u.x);
+    const out: Element[] = [{ kind: 'segment', from: a, to: b, decoration: true }];
+    for (const [tip, s] of [[a, 1], [b, -1]] as [Pt, number][]) {
+      const back = pt(tip.x + u.x * head * s, tip.y + u.y * head * s);
+      for (const side of [1, -1]) {
+        out.push({ kind: 'segment', decoration: true, to: tip,
+          from: pt(back.x + n.x * head * 0.42 * side, back.y + n.y * head * 0.42 * side) });
+      }
+    }
+    return out;
+  };
+
+  // The diameter straight across, its number above the shaft in the hole.
+  const [dl, dr] = [pt(-R, 0), pt(R, 0)];
+  // The thickness at the paper's angle, up and to the right, number outside.
+  const deg = 40 * Math.PI / 180;
+  const [ti, to] = [pt(r * Math.cos(deg), r * Math.sin(deg)), pt(R * Math.cos(deg), R * Math.sin(deg))];
+  const elements: Element[] = [
+    shade,
+    { kind: 'circle', centre: pt(0, 0), r: R },
+    { kind: 'circle', centre: pt(0, 0), r },
+    ...arrow(dl, dr, R * 0.07),
+    { kind: 'label', text: `${dia} ${short}`, anchor: pt(0, 0), away: pt(0, -1) },
+    ...arrow(ti, to, Math.min(t * 0.3, R * 0.06)),
+    { kind: 'label', text: `${t} ${short}`, anchor: to, away: pt(0, 0) },
+  ];
+  return {
+    scene: { elements },
+    claims: [
+      { kind: 'length', from: dl, to: dr, value: dia },
+      { kind: 'length', from: ti, to, value: t },
     ],
-  }, 'The Coating on a Sphere', 'volume.sphere-shell', prose,
-    `Sphere diameter ${dia} ${c.short}, coating ${t} ${c.short} thick. Volume of coating?`,
-    steps, [1, 1, 1, 1, 1], `$${toSigFigs(exact, sf)}$ ${cubic(c.short)}`);
+  };
 }
 
 const BOLLARDS = [

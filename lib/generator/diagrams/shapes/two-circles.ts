@@ -1,5 +1,5 @@
 import {
-  type Element, type Figure, type Pt, bearing, mid, pt, sideLabel,
+  type Element, type Figure, type Pt, bearing, dimensionArrow, mid, pt, sideLabel,
 } from '../scene';
 
 /**
@@ -105,10 +105,32 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
       ...(spec.labels.radius ? [{ kind: 'segment' as const, from: C2, to: B, dashed: true }] : []),
       { kind: 'label', text: NA, anchor: A, away: M },
       { kind: 'label', text: NB, anchor: B, away: M },
-      { kind: 'label', text: NC, anchor: C1, away: pt(0, 0) },
-      { kind: 'label', text: NC2 ?? 'C', anchor: C2, away: pt(0, 0) },
+      /**
+       * **Dotted centres, a height arrow, and AB's length off the crossing.**
+       * — 2026-09-23
+       *
+       * The paper marks each centre with a dot and draws the height as an
+       * arrow beside the logo, which is what tells a pupil what "the height"
+       * is. This drew neither, and wrote AB's length at M — the half-turn
+       * centre, where both arcs cross AB — in 16 of 16 renders. The owner:
+       * *"Yes fix"*. Above the left half of AB is the one place neither
+       * shape reaches: the lower shape is the part of its circle *below* its
+       * chord, and the upper circle does not come down that far out.
+       *
+       * This branch draws 2017 P2 Q13 alone; the snowman (2019 P2 Q18) and
+       * the overlap (2024 P2 Q10), both locked, are the other two branches.
+       */
+      { kind: 'dot', at: C1 },
+      { kind: 'dot', at: C2 },
+      { kind: 'label', text: NC, anchor: C1, away: pt(C1.x + 1, C1.y) },
+      { kind: 'label', text: NC2 ?? 'C', anchor: C2, away: pt(C2.x - 1, C2.y) },
     );
-    if (spec.labels.chord) elements.push(sideLabel(A, B, spec.labels.chord, pt(0, r)));
+    const right = Math.max(each, half + r);
+    elements.push(...dimensionArrow(
+      pt(right, -(d + r)), pt(right, d + r), pt(right + 1, 0), r * 0.2, 'height'));
+    if (spec.labels.chord) {
+      elements.push(sideLabel(pt(-each, 0), pt(0, 0), spec.labels.chord, pt(-half, -1)));
+    }
     if (spec.labels.radius) elements.push(sideLabel(C2, B, spec.labels.radius, pt(0, 0)));
     claims.push(
       { kind: 'length', from: A, to: B, value: spec.chord, shown: printed(spec.labels.chord) },

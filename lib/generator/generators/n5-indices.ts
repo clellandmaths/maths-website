@@ -458,7 +458,17 @@ function rootAsPower(): Q {
    */
   const v = pick(['x', 'm', 'c']);
   const n = pick([2, 3, 3, 4]);                    // the root
-  const m = getRandomInt(1, n - 1);                // the power under it, proper
+  /**
+   * **The power under the root runs to 5, past the root itself.** — 2026-09-23
+   *
+   * Held below the root it made five questions — the whole of that space —
+   * and a pupil pressing "another like this" met 1/√x one time in four. The
+   * owner: *"Widen"*. The same two laws carry 1/√(x³) and 1/∛(x⁴) exactly as
+   * they carry 1/∛x, and the same two marks, so this is more of the paper's
+   * question rather than a new one: ten. `gcd` below still drops 2/4 (1/2
+   * written twice) and 4/2 (no root at all).
+   */
+  const m = getRandomInt(1, 5);                    // the power under it
   const g = gcd(m, n);
   if (g !== 1) return rootAsPower();               // 2/4 is 1/2 written twice
   const inside = m === 1 ? v : pow(v, m);

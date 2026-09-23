@@ -275,7 +275,25 @@ function inFormula(wanted?: string, asked?: string): Q {
      * it moves, and only for a paper whose own form is recorded above.
      */
     const drawnMinus = getRandomInt(0, 1) === 0;    // "10 - 8cos x" as in 2025
-    const form = FORM_OF[asked ?? ''];
+
+    // Taught: solving the formula and evaluating it are two questions with
+    // two ids, so the asked id decides which.
+    //
+    // **2017 P2 Q15 is both, in one question** — its own id since 2026-09-23;
+    // see the registry entry. It takes the solving path and puts the paper's
+    // parts (a) and (b) in front of it, on the same formula. Asked for by id,
+    // nothing else enters that branch and nothing draws a toss here, so 2023
+    // P2 Q11 and 2025 P2 Q14 draw as they did. A draw by topic alone tosses
+    // three ways instead of two, so the whole question is offered there too;
+    // the toss sits where the two-way one did, with no draw between, and no
+    // paper question is drawn that way.
+    const WHOLE = 'trig-equations.in-formula-pre2023';
+    const shape = wanted !== undefined
+      ? (wanted === WHOLE || asked === WHOLE ? 'whole'
+        : wanted === 'trig-equations.in-formula' ? 'solve' : 'evaluate')
+      : (['solve', 'evaluate', 'whole'] as const)[getRandomInt(0, 2)];
+    const whole = shape === 'whole';
+    const form = FORM_OF[whole ? WHOLE : asked ?? ''];
     const minus = form ? form.minus : drawnMinus;
     /**
      * **Cosine-first is always `+ B`, and that is the world's constraint
@@ -290,11 +308,7 @@ function inFormula(wanted?: string, asked?: string): Q {
       : minus ? `h = ${B} - ${times(A, C)}`
       : `h = ${B} + ${times(A, C)}`;
 
-    // Taught: solving the formula and evaluating it are two questions with
-    // two ids, so the asked id decides which.
-    const solveFor = wanted !== undefined
-      ? wanted === 'trig-equations.in-formula'
-      : getRandomInt(0, 1) === 0;
+    const solveFor = shape !== 'evaluate';
     if (solveFor) {
       // choose the target height from a whole ratio, so the angle is clean to find
       const target = B + (minus ? -1 : 1) * (getRandomInt(-(A - 1), A - 1));
@@ -303,6 +317,40 @@ function inFormula(wanted?: string, asked?: string): Q {
       const base = Math.acos(Math.abs(r)) * 180 / Math.PI;
       const [x1, x2] = r > 0 ? [base, 360 - base] : [180 - base, 180 + base];
       if (Math.abs(x1 - Math.round(x1)) < 0.04) continue;
+
+      if (whole) {
+        // (a) and (b) exactly as the evaluating branch below writes them,
+        // on this formula; then (c), with the range the paper states.
+        const at = pick([30, 45, 60, 120, 135, 150, 210, 240, 300]);
+        const value = B + (minus ? -1 : 1) * A * Math.cos(at * Math.PI / 180);
+        const lowest = B - A;
+        return {
+          subTopic: 'Trigonometric Equations in a Formula',
+          difficulty: 'exam',
+          variationId: 'trig-equations.in-formula-pre2023',
+          questionLines: [
+            `${ctx.scene}`,
+            `The height, $h$ ${ctx.unit}, of ${ctx.thing} above the ground is given by $${formula}$, $0 \\le x < 360$,`,
+            `where $x^{\\circ}$ is ${ctx.angle}.`,
+            `(a) Calculate the height of ${ctx.thing} after it has turned through an angle of $${at}^{\\circ}$.`,
+            `(b) Find the minimum height of ${ctx.thing} above the ground.`,
+            `(c) Calculate the values of $x$ for which ${ctx.thing} is ${target} ${ctx.unit} above the ground.`,
+          ],
+          boardQuestionLines: [`$${formula}$, $0 \\le x < 360$. Height at $${at}^{\\circ}$; the minimum; $x$ when $h = ${target}$`],
+          // 2017 P2 Q15: •¹ (a), •² (b), then (c)'s four — substitute,
+          // rearrange, one value, the second
+          solutionSteps: [
+            `<strong>(a)</strong> Substitute $x = ${at}$:<br><br>$h = ${B} ${minus ? '-' : '+'} ${A} \\times \\cos ${at}^{\\circ} = ${dp1(value)}$ ${ctx.unit}`,
+            `<strong>(b)</strong> The cosine runs between $-1$ and $1$, so the height is smallest when $${minus ? `\\cos x^{\\circ} = 1` : `\\cos x^{\\circ} = -1`}$:<br><br>$h = ${B} - ${A} = ${lowest}$ ${ctx.unit}`,
+            `<strong>(c) 1.</strong> Put the height into the formula:<br><br>$${target} = ${B} ${minus ? '-' : '+'} ${times(A, C)}$`,
+            `<strong>(c) 2.</strong> Rearrange to get the cosine on its own:<br><br>$${C} = ${r.toFixed(4)}$`,
+            `<strong>(c) 3.</strong> Take the inverse cosine, then use that ${r > 0 ? 'the second solution is $360 - x$' : 'a negative cosine gives solutions $180 - x$ and $180 + x$'}. The first value is:<br><br>$x = ${dp1(x1)}$`,
+            `<strong>(c) 4.</strong> And the second:<br><br>$x = ${dp1(x2)}$`,
+          ],
+          stepMarks: [1, 1, 1, 1, 1, 1],
+          finalAnswer: `(a) ${dp1(value)} ${ctx.unit}, (b) ${withUnit(lowest, ctx.unit)}, (c) $x = ${dp1(x1)}$ or $x = ${dp1(x2)}$`,
+        };
+      }
 
       return {
         subTopic: 'Trigonometric Equations in a Formula',

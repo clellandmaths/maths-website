@@ -1,5 +1,5 @@
 import {
-  type Element, type Figure, type Pt, centroid, pt, sideLabel,
+  type Element, type Figure, type Pt, pt, sideLabel,
 } from '../scene';
 
 /**
@@ -26,8 +26,9 @@ import {
  *   triangle, so it grows with the pair rather than with the smaller of them
  *
  *   each triangle is half the width it would have alone, so its own labels
- *   are relatively larger  ->  the caller searches turns, four for each
- *   triangle, and takes the first pair that verifies
+ *   are relatively larger  ->  each number is pushed square off its own side,
+ *   and the caller searches one turn shared by both parts and the join (so
+ *   all three stay the same way up, as the paper draws them)
  *
  *   a letter naming a region cannot be pushed off its anchor  ->  `centred`,
  *   seated at the incentre
@@ -107,15 +108,33 @@ export function twoTrianglesApart(spec: TwoTrianglesApartSpec): Figure | null {
 
   for (const [ps, t] of [[lp, spec.left], [rp, spec.right]] as const) {
     const [P, Q, S] = ps;
-    const inside = centroid([P, Q, S]);
     elements.push({ kind: 'polygon', points: [P, Q, S] });
     elements.push({
       kind: 'label', text: t.name, anchor: incentre(ps, t.sides), away: S, centred: true,
     });
 
     const sidesOf: [Pt, Pt][] = [[P, Q], [Q, S], [S, P]];
+    /**
+     * **Each number is pushed straight out from its own side.** — 2026-09-23
+     *
+     * `sideLabel` pushes away from the centroid, which for most triangles is
+     * as good as square off the side. On a sliver the centroid lies almost on
+     * the long side, so the push runs *along* it and the number lands on its
+     * own line — and because that is a direction, drawing the figure bigger
+     * does not help. With all three figures held the same way up, as the owner
+     * asked on 2017 P2 Q7, 32 of the 38 part pairs failed on exactly this.
+     * The point pushed from is now just inside the side, square to it.
+     */
+    const opposite = [S, P, Q];
     sidesOf.forEach(([a, b], i) => {
-      if (t.labels[i]) elements.push(sideLabel(a, b, t.labels[i], inside));
+      if (t.labels[i]) {
+        const m = pt((a.x + b.x) / 2, (a.y + b.y) / 2);
+        const len = Math.hypot(b.x - a.x, b.y - a.y);
+        let n = pt(-(b.y - a.y) / len, (b.x - a.x) / len);
+        const c = opposite[i];
+        if (n.x * (c.x - m.x) + n.y * (c.y - m.y) < 0) n = pt(-n.x, -n.y);
+        elements.push(sideLabel(a, b, t.labels[i], pt(m.x + n.x, m.y + n.y)));
+      }
       claims.push({
         kind: 'length', from: a, to: b, value: t.sides[i],
         shown: /\d/.test(t.labels[i]),

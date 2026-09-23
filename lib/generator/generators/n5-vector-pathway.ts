@@ -195,16 +195,30 @@ function extendedSide(): Q | null {
   // collinear with the edge it names. Stated here rather than left to the
   // retry loop, which would drop it in silence.
   const k = getRandomInt(1, 2);              // TA = k x AB
-  const bisectsAD = getRandomInt(0, 1) === 0;
-  // A at the origin. AB = d. DB = c, so D = B - c. T runs back from A along
-  // BA, k lengths of AB. V is the midpoint of AD or of BD.
+  /**
+   * **V is always the midpoint of the part (a) side, and each given vector
+   * may point either way.** — 2026-09-23
+   *
+   * 2017 P2 Q8's route for (b) is TP + ½PR: it builds on the PR that part (a)
+   * found. Half the draws here put V on the side carrying a given vector
+   * instead, so (b) no longer used (a), and V's dot sat on that side's
+   * arrowhead. That left 4 questions, two of them not the paper's. The owner
+   * agreed to pin V and to let each given vector run either way — RQ or QR,
+   * PQ or QP — which changes the signs a pupil works with and nothing else.
+   */
+  const sc = getRandomInt(0, 1) === 0 ? 1 : -1;   // DB = c, or BD = c
+  const sd = getRandomInt(0, 1) === 0 ? 1 : -1;   // AB = d, or BA = d
+  // A at the origin. AB = sd·d, DB = sc·c, so D = B - sc·c. T runs back from
+  // A along BA, k lengths of AB. V is the midpoint of AD.
   const pos: Record<string, Combo> = {
     [A]: C(0, 1, 0, 1),
-    [B]: C(0, 1, 1, 1),                       // b-letter is d
-    [D]: cSub(C(0, 1, 1, 1), C(1, 1, 0, 1)),  // d - c
-    [T]: C(0, 1, -k, 1),
+    [B]: C(0, 1, sd, 1),
+    [D]: cSub(C(0, 1, sd, 1), C(sc, 1, 0, 1)),
+    [T]: C(0, 1, -k * sd, 1),
   };
-  const [m1, m2] = bisectsAD ? [A, D] : [B, D];
+  const [m1, m2] = [A, D];
+  const cRay = sc === 1 ? ray(D, B) : ray(B, D);
+  const dRay = sd === 1 ? ray(A, B) : ray(B, A);
   pos[V] = cHalf(cAdd(pos[m1], pos[m2]));
   const first = cSub(pos[D], pos[A]);
   const second = cSub(pos[V], pos[T]);
@@ -219,7 +233,7 @@ function extendedSide(): Q | null {
   const [ans1, ans2] = [combo(first.a, first.b, nc, nd), combo(second.a, second.b, nc, nd)];
 
   const prose = [
-    `In the diagram below, $${ray(D, B)}$ and $${ray(A, B)}$ represent the vectors $${vec(nc)}$ and $${vec(nd)}$ respectively.`,
+    `In the diagram below, $${cRay}$ and $${dRay}$ represent the vectors $${vec(nc)}$ and $${vec(nd)}$ respectively.`,
     `<strong>(a)</strong> Express $${ray(A, D)}$ in terms of $${vec(nc)}$ and $${vec(nd)}$.`,
     `The line $${B}${A}$ is extended to $${T}$, with $${T}${A} = ${k === 1 ? '' : k}${A}${B}$, and $${V}$ is the midpoint of $${m1}${m2}$.`,
     `<strong>(b)</strong> Express $${ray(T, V)}$ in terms of $${vec(nc)}$ and $${vec(nd)}$. Give your answer in its simplest form.`,
@@ -239,9 +253,12 @@ function extendedSide(): Q | null {
     // and ours put a tick at the midpoint of the very edge that carries an
     // arrow, whose barbs splay back into it. Removed rather than moved: the
     // collision goes away by not drawing what the exam does not draw.
-    arrows: [{ from: D, to: B, label: nc }, { from: A, to: B, label: nd }],
+    arrows: [
+      sc === 1 ? { from: D, to: B, label: nc } : { from: B, to: D, label: nc },
+      sd === 1 ? { from: A, to: B, label: nd } : { from: B, to: A, label: nd },
+    ],
   }, 'A Pathway with an Extended Side', 'vectors.pathway-extended', prose,
-    `$${ray(D, B)} = ${vec(nc)}$, $${ray(A, B)} = ${vec(nd)}$, $${T}${A} = ${k === 1 ? '' : k}${A}${B}$, $${V}$ midpoint of $${m1}${m2}$. Find $${ray(A, D)}$ and $${ray(T, V)}$.`,
+    `$${cRay} = ${vec(nc)}$, $${dRay} = ${vec(nd)}$, $${T}${A} = ${k === 1 ? '' : k}${A}${B}$, $${V}$ midpoint of $${m1}${m2}$. Find $${ray(A, D)}$ and $${ray(T, V)}$.`,
     steps, [1, 1, 1], `(a) $${ans1}$ &nbsp;&nbsp; (b) $${ans2}$`);
 }
 

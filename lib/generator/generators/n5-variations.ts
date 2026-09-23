@@ -3000,12 +3000,16 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Trigonometric equation'],
     skill: 'Solve a given height formula for the angle, in a range',
   },
+  // A warm-up since 2026-09-23: 2017 P2 Q15 is cloned whole now, by
+  // `-pre2023` below, and a bare citation cannot stand beside a lettered one
+  // (`one-generator`). What was parts (a) and (b) stays offered as practice
+  // for the two one-mark moves on their own.
   'trig-equations.in-formula-evaluate': {
     topic: 'Trigonometric Equations in a Formula',
-    difficulty: 'exam', strategy: 'input-first', source: 'paper',
-    basedOn: ['2017 P2 Q15a', '2017 P2 Q15b'],
+    difficulty: 'skill', strategy: 'input-first', source: 'practice',
+    basedOn: [],
     marks: 2,
-    route: 'one mark for the height at the given angle, one for the minimum height. These are 2017 P2 Q15 parts (a) and (b)',
+    route: 'one mark for the height at the given angle, one for the minimum height, as in parts (a) and (b) of 2017 P2 Q15',
     plan: [
       'Put the angle the question names in for $x$ and run the whole formula through your calculator in degree mode, keeping the multiplying before the adding',
       'For the smallest height, use that the cosine itself never leaves the range $-1$ to $1$: put whichever of those two ends makes the whole formula smallest in place of the $\\cos$ term, then work the height out',
@@ -3014,6 +3018,38 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     answerShape: 'rounded',
     webTopics: ['Trigonometric equation'],
     skill: 'Evaluate a height formula at an angle, then state its minimum',
+  },
+  /**
+   * **2017 P2 Q15 as the paper sets it: all three parts.** — 2026-09-23
+   *
+   * It was cloned by part: this id was an alias carrying part (c) alone, and
+   * (a) and (b) sat on `-evaluate`, which no paper plan reaches — so a pupil
+   * pressing "another like this" on a six-mark question got a four-mark one,
+   * and never the height at an angle or the minimum. The only question in the
+   * course cloned that way. The paper also states the range, 0 ≤ x < 360,
+   * which the clone never did. The owner: *"Yes and ensure locked ones are
+   * genuinely ok and don't need any changes"*.
+   *
+   * Materialised rather than left an alias, so its marks are its own. LOCKED
+   * 2023 P2 Q11 and 2025 P2 Q14 stay on their ids; the routine takes a
+   * separate branch for this one, so neither draws differently.
+   */
+  'trig-equations.in-formula-pre2023': {
+    topic: 'Trigonometric Equations in a Formula',
+    difficulty: 'exam', strategy: 'input-first', source: 'paper',
+    basedOn: ['2017 P2 Q15'],
+    marks: 6,
+    route: '1 + 1 + 4 - evaluate the formula at the given angle, state the minimum height, then substitute the given height, rearrange, and find both values of x in the range',
+    plan: [
+      'Put the angle the question names in for $x$ and run the whole formula through your calculator in degree mode, keeping the multiplying before the adding',
+      'For the smallest height, use that the cosine itself never leaves the range $-1$ to $1$: put whichever of those two ends makes the whole formula smallest in place of the $\\cos$ term, then work the height out',
+      'Put the height part (c) hands you in place of $h$, then rearrange until the $\\cos$ term stands alone — take the constant across, then divide by the number in front, keeping any minus sign attached to the ratio',
+      'Run that ratio through the inverse on your calculator, ignoring any minus sign, for the reference angle; then put it on a CAST diagram and take both places where the cosine carries the sign yours does — back from $180$ or back from $360$ — giving both angles in the range asked for',
+    ],
+    planMarks: [1, 1, 2, 2],
+    answerShape: 'rounded',
+    webTopics: ['Trigonometric equation'],
+    skill: 'Evaluate a height formula, state its minimum, then solve it for the angle in a range',
   },
 
   // The gap table lists three identity types. Reading the six questions there
@@ -5634,7 +5670,9 @@ const ALIASES: Record<string, {
   // keeps the fault until 2018 is reviewed - see docs/verdicts/2022-p2.md.
   'trig-equations.solve-pre2023': { aliasOf: 'trig-equations.solve', basedOn: ['2018 P2 Q8'] },
   'trig-equations.solve-tan-pre2023': { aliasOf: 'trig-equations.solve-tan', basedOn: ['2016 P2 Q14'] },
-  'trig-equations.in-formula-pre2023': { aliasOf: 'trig-equations.in-formula', basedOn: ['2017 P2 Q15c'] },
+  // 'trig-equations.in-formula-pre2023' MATERIALISED 2026-09-23 — it is the
+  // whole of 2017 P2 Q15 now, parts (a), (b) and (c). Entry above the aliases;
+  // name and code kept.
   'vectors.components-pre2023': { aliasOf: 'vectors.components', basedOn: ['2014 P1 Q4'] },
   'straight-line.gradient-from-equation-pre2023': { aliasOf: 'straight-line.gradient-from-equation', basedOn: ['2017 P2 Q11'] },
   'sci-notation.calculate-pre2023': { aliasOf: 'sci-notation.calculate', basedOn: ['2019 P2 Q4'] },

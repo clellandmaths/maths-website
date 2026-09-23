@@ -264,7 +264,7 @@ function discriminant(wanted?: string): Q {
 // Every paper example asks for a rounded answer, and the rounding varies by
 // diet: one decimal place, two decimal places, two significant figures.
 
-function quadraticFormula(wanted?: string): Q {
+function quadraticFormula(wanted?: string, asked?: string): Q {
   const ROUNDINGS = [
     { dp: 1, phrase: 'Give your answers correct to one decimal place.' },
     { dp: 2, phrase: 'Give your answers correct to two decimal places.' },
@@ -279,7 +279,14 @@ function quadraticFormula(wanted?: string): Q {
     : pick([...ROUNDINGS]);
 
   for (let tries = 0; tries < 400; tries++) {
-    const v = pick(VARS);
+    /**
+     * **2017 P2 Q4 always solves in x.** The owner, on the 2017 P2 sheet:
+     * *"For this question variable should always be x"*. The letter is still
+     * drawn, so the stream is the same for every id, and only this one - an
+     * ALIAS sharing `wanted` with LOCKED 2019 P2 Q6 - reads x instead.
+     */
+    const drawnV = pick(VARS);
+    const v = asked === 'quadratics.formula-2017' ? 'x' : drawnV;
     const a = nonZeroInt(1, 3);
     const b = nonZeroInt(-9, 9);
     const c = nonZeroInt(-9, 9);
@@ -413,6 +420,6 @@ export const QUADRATIC_GENERATORS: Record<string, Gen> = {
   'Completing the Square': completeSquare,
   'Turning Point of a Parabola': turningPoint,
   'The Discriminant': (w) => discriminant(w),
-  'The Quadratic Formula': (w) => quadraticFormula(w),
+  'The Quadratic Formula': (w, asked) => quadraticFormula(w, asked),
   'Completing the Square with Surd Roots': completeSquareSurdRoots,
 };
