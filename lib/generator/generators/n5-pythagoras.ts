@@ -369,12 +369,14 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
      * noun — and taking it from there means the arrow cannot disagree with the
      * question no matter what context is added later.
      *
-     * **Scoped to the `whole` family, like the arrow itself.** The `cut`
-     * contexts include "the depth of the doorstep", and 2023 P1 Q10 is signed
-     * off: changing its step 4 to say "depth" would move a locked question for
-     * no reason anybody asked.
+     * **Keyed to 2018, like the arrow itself.** The `cut` contexts include
+     * "the depth of the doorstep", and 2023 P1 Q10 is signed off: changing its
+     * step 4 to say "depth" would move a locked question for no reason anybody
+     * asked. And 2015 P2 Q12 keeps the old word until its own review — the
+     * owner, 2026-09-23: *"Key them to 2018 only for now"*. It had reached
+     * 2015 unkeyed, declared on the sheet but never approved for that paper.
      */
-    const spanWord = ctx.family === 'whole'
+    const spanWord = forPaper2018
       ? (ctx.asks.split(' ')[1] ?? 'height')
       : (ctx.sideways ? 'width' : 'height');
 
@@ -424,17 +426,18 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
        * "width" — and the clone did neither, so "calculate the width of the
        * shape" could only be settled from the prose.
        *
-       * **Scoped to the `whole` family**, which is 2018 P2 Q12 and
-       * 2015 P2 Q12 and nothing else. The other two families are other
-       * papers, several of them signed off, and an arrow there would be ink
-       * their questions never asked for.
+       * **Keyed to 2018 P2 Q12 alone.** It was scoped to the `whole` family,
+       * which reached 2015 P2 Q12 through its alias as well — declared, never
+       * approved for 2015. The owner, 2026-09-23: *"Key them to 2018 only for
+       * now"*. 2015's review decides whether it wants them; its paper does
+       * bracket "Depth of milk" down the side. The other two families are
+       * other papers, several signed off, and never had them.
        *
-       * The word follows the working, which already says `width` for a chord
-       * stood on end and `height` otherwise — so the arrow and step 4 cannot
-       * disagree.
+       * The word is `spanWord`, as step 4's is, so the arrow and the working
+       * cannot disagree.
        */
-      centreDot: ctx.family === 'whole',
-      askedSpan: ctx.family === 'whole' ? spanWord : undefined,
+      centreDot: forPaper2018,
+      askedSpan: forPaper2018 ? spanWord : undefined,
       names: { a: A, b: B, centre: O },
       labels: {
         radius: `${num(r)} ${abbrev(ctx.unit)}`,
@@ -458,9 +461,9 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
       `<strong>3.</strong> So $${O}M = ${exact ? num(d) : d.toFixed(3)}$ ${ctx.unit}.`,
       // "height" reads wrong on a chord stood on end, where the answer runs
       // across the page — and equally wrong on a depth. `spanWord` is the
-      // question's own noun for the `whole` family and the old expression
-      // everywhere else, so the working and the arrow say the same thing and
-      // the signed-off papers on the other two families do not move.
+      // question's own noun for 2018 P2 Q12 and the old expression everywhere
+      // else, so the working and the arrow say the same thing and 2015 P2 Q12
+      // and the signed-off papers on the other two families do not move.
       `<strong>4.</strong> The shape is the larger piece, so its ${spanWord} is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
     ];
 

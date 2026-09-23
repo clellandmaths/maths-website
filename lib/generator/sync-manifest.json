@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "30e9a4db08543260591246a8564c46d7721958ab",
+  "sourceCommit": "c03b082a206ca7f7eef4e2367c9eec2ed4065672",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -65,7 +65,7 @@
     "generators/n5-measure.ts": "5971e7a321f5388b",
     "generators/n5-parabola-graph.ts": "987bcfa4602a8073",
     "generators/n5-percentages.ts": "4f4323f18cdb3d75",
-    "generators/n5-pythagoras.ts": "71c33929161f2879",
+    "generators/n5-pythagoras.ts": "64244bc70c3ec9d5",
     "generators/n5-quadratic-context.ts": "024b3fabcbbdf017",
     "generators/n5-quadratics.ts": "1e982f780da0fc2c",
     "generators/n5-rounding.ts": "8faa901ae0a33ef5",
