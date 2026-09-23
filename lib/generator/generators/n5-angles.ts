@@ -118,6 +118,10 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
       sides: n, radius: r, start, names, point,
       reach, angleLabel: `${given}°`,
       shadeAsked: forPaper2018,
+      // The number up against the outside point, not beside the shaded
+      // corner - the owner, 2026-09-23: "Fix 2018 P1 Q9". 2025 P2 Q7 is
+      // signed off and keeps the old placement until its own sheet is read.
+      markAtPoint: forPaper2018,
     });
     if (!fig) continue;
 
@@ -140,6 +144,26 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
       `<strong>2.</strong> $${point}${A}${B}$ is a straight line, so the angle at $${A}$ inside the triangle is $180 - ${interior} = ${180 - interior}^{\\circ}$, and the angles of triangle $${point}${A}${E}$ add to $180^{\\circ}$:<br><br>$180 - ${given} - ${180 - interior} = ${answer}^{\\circ}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    /**
+     * **2018 keeps the draws it was locked with; only the labelling moved.**
+     *
+     * Moving the number changed which layouts pass `verifyFigure`, and on its
+     * own that let the wide apexes back in: the angle at the outside point
+     * went from a median of 26 degrees to 83, and obtuse from 24 draws in 400
+     * to 111. Nobody asked for that - the owner's comment was about where the
+     * number and the shading sit - and the paper's own is a 17-degree sliver.
+     *
+     * So a 2018 draw must ALSO pass as the figure it was signed off with. That
+     * holds the questions to the approved set exactly, and it costs no random:
+     * both figures are built from numbers already drawn.
+     */
+    if (forPaper2018) {
+      const asLocked = polygonPoint({
+        sides: n, radius: r, start, names, point,
+        reach, angleLabel: `${given}°`, shadeAsked: true,
+      });
+      if (!asLocked || verifyFigure(asLocked, [...prose, ...steps].join(' ')).length) continue;
+    }
 
     return {
       subTopic: 'A Side of a Polygon Produced',

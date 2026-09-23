@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "c03b082a206ca7f7eef4e2367c9eec2ed4065672",
+  "sourceCommit": "8e44a79ecebf7680b613e26ec92062d4180002ca",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -16,7 +16,7 @@
     "diagrams/shapes/nested-triangles.ts": "2509fcd10ae5347f",
     "diagrams/shapes/polygon-diameter.ts": "b11002697f0ff50a",
     "diagrams/shapes/polygon-in-circle.ts": "b3245d6a27d2ab6d",
-    "diagrams/shapes/polygon-point.ts": "f60652cf6e17ca7f",
+    "diagrams/shapes/polygon-point.ts": "e29592accb04f31f",
     "diagrams/shapes/regular-polygon.ts": "fff14e8f7a128dc5",
     "diagrams/shapes/right-triangle.ts": "9ad9732b7ab741cc",
     "diagrams/shapes/sector-in-triangle.ts": "3d196199c9d3bb9d",
@@ -48,7 +48,7 @@
     "generators/logs.ts": "5a3f8dd2ac80876d",
     "generators/markscheme-source.ts": "22799ede4d1792df",
     "generators/n5-alg-fractions.ts": "e8567ea0899dc5f4",
-    "generators/n5-angles.ts": "3707b81e771390f9",
+    "generators/n5-angles.ts": "25e66bbf07352207",
     "generators/n5-bearings.ts": "bfcebd087d630dc1",
     "generators/n5-composite-trig.ts": "e4202e2645702b4b",
     "generators/n5-contexts.ts": "87acc356d3027c4e",
