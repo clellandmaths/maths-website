@@ -116,7 +116,7 @@ function subjectInNumerator(wanted?: string, asked?: string): Q {
    * one it was and 2024 P2 Q9, signed off, draws exactly what it drew.
    */
   const k = wanted === 'change-subject.fraction-two-step' ? 1
-    : asked === 'change-subject.fraction-pre2023' ? pick([2, 3, 4, 5, 6, 7, 8, 9])
+    : asked === 'change-subject.fraction-pre2023' ? pick([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
     : wanted === 'change-subject.fraction' ? pick([2, 3, 4, 5])
     : pick([1, 1, 2, 3, 4, 5]);           // 1 gives the no-fraction answer
   /**
@@ -244,16 +244,29 @@ function subjectInNumerator(wanted?: string, asked?: string): Q {
    * its sign off `flavour` exactly as before, and 2017 P1 Q10's term is a
    * squared letter rather than a number, so it keeps its plus.
    */
-  const minusRoll = asked === 'change-subject.fraction' ? getRandomInt(0, 1) : 0;
-  const minus = wide ? (flavour & 1) !== 0 : minusRoll === 1;
+  /**
+   * **2017 P1 Q10 takes either sign on the subject's term too** - the owner,
+   * on the 2017 P1 sheet: *"8 questions still very thin, I think you could
+   * have + or - on the top and expand the coefficients further"*. So t^2 + kb
+   * or t^2 - kb. The draw is made on 2017's id alone, so 2024 P2 Q9's stream
+   * is the one it was.
+   */
+  const is2017 = asked === 'change-subject.fraction-pre2023';
+  const minusRoll = asked === 'change-subject.fraction' || is2017 ? getRandomInt(0, 1) : 0;
+  const minus = !is2017 && (wide ? (flavour & 1) !== 0 : minusRoll === 1);
+  const subjMinus = is2017 && minusRoll === 1;
   // 2017 P1 Q10 writes the squared term first, as its paper does:
-  // F = (t^2 + 4b)/c. Order only - same terms, same working, no random.
-  const numTex = asked === 'change-subject.fraction-pre2023'
-    ? `${tTex} + ${term(k, subj)}`
+  // F = (t^2 + 4b)/c.
+  const numTex = is2017
+    ? `${tTex} ${subjMinus ? '-' : '+'} ${term(k, subj)}`
     : `${term(k, subj)} ${minus ? '-' : '+'} ${tTex}`;
   const product = `${v}${dTex}`;
-  const undo = `${product} ${minus ? '+' : '-'} ${tTex}`;
-  const rhs = k === 1 ? undo : frac(undo, `${k}`);
+  const undo = is2017 ? `${product} - ${tTex}` : `${product} ${minus ? '+' : '-'} ${tTex}`;
+  // With the subject's term negative, dividing by -k is written the way a
+  // pupil would leave it: the t^2 first and a positive denominator.
+  const rhs = k === 1 ? undo
+    : subjMinus ? frac(`${tTex} - ${product}`, `${k}`)
+    : frac(undo, `${k}`);
 
   // Every mark in these schemes is one operation: •¹ multiply by c, •² subtract
   // t^2, •³ divide by 4. So when k is 1 there is no division to do and the
@@ -263,7 +276,12 @@ function subjectInNumerator(wanted?: string, asked?: string): Q {
   // available hint was handed both real steps and left to supply a no-op.
   const move = minus ? 'Add' : 'Subtract';
   const toFrom = minus ? 'to' : 'from';
-  const steps = [
+  const steps = is2017 ? [
+    // 2017 P1 Q10's scheme: multiply by c, subtract t^2, divide by 4.
+    `<strong>1.</strong> Multiply both sides by $${dTex}$:<br><br>$${product} = ${numTex}$`,
+    `<strong>2.</strong> Subtract $${tTex}$ from both sides:<br><br>$${undo} = ${subjMinus ? '-' : ''}${term(k, subj)}$`,
+    `<strong>3.</strong> Divide both sides by $${subjMinus ? -k : k}$:<br><br>$${subj} = ${rhs}$`,
+  ] : [
     `<strong>1.</strong> Multiply both sides by $${dTex}$:<br><br>$${product} = ${numTex}$`,
     k === 1
       ? `<strong>2.</strong> ${move} $${tTex}$ ${toFrom} both sides, which leaves the subject on its own:<br><br>$${subj} = ${rhs}$`

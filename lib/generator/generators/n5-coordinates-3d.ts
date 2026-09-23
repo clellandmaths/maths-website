@@ -110,9 +110,13 @@ function pyramidOnCube(): Q | null {
    * then key it to half the height" - checked, it serves 2017 P1 Q5 alone.
    *
    * The half form alone made nine questions, so the cube is widened with it,
-   * 8-24 to 4-30, even so the apex stays whole; the paper's own is 6.
+   * even so the apex stays whole; the paper's own is 6. First to 4-30, which
+   * made 14; then the owner: "I think we could widen this a bit to get at
+   * least 20 out of it. The question is fairly easy" - so 4-42, twenty sides,
+   * one question each. Odd sides would get there with smaller numbers but
+   * put C on half-coordinates, where the paper's answer is whole.
    */
-  const s = getRandomInt(2, 15) * 2;
+  const s = getRandomInt(2, 21) * 2;
   const h = s / 2;
   const A: P3 = { x: s, y: 0, z: 0 };
   const B: P3 = { x: 0, y: s, z: s };

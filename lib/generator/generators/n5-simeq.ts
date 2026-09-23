@@ -252,6 +252,23 @@ function intersection(): Q {
       `Find, algebraically, the coordinates of $${point}$.`,
     ];
     if (verifyFigure(fig, prose.join(' ')).length) continue;
+    /**
+     * **No pair so nearly parallel that the two lines cannot be told apart.**
+     * Measured as drawn - the frame scales x and y differently, so the angle on
+     * the page is not the angle in the algebra. 74 draws in 400 crossed at
+     * under 15 degrees there, 36 under 5, drawn almost on top of each other
+     * with no way for a label to say which was which; the paper's cross near
+     * 90. The owner, on the 2017 P1 sheet: "Yes reject ones that are too
+     * extreme to make out".
+     */
+    const drawn = (fig.scene.elements as { kind: string; points?: { x: number; y: number }[] }[])
+      .filter(e => e.kind === 'path' && e.points && e.points.length > 1)
+      .map(e => { const a = e.points![0], b = e.points![e.points!.length - 1]; return Math.atan2(b.y - a.y, b.x - a.x); });
+    if (drawn.length >= 2) {
+      let cross = Math.abs(drawn[0] - drawn[1]) * 180 / Math.PI % 180;
+      if (cross > 90) cross = 180 - cross;
+      if (cross < 15) continue;
+    }
 
     return {
       subTopic: 'Intersection of Two Lines',
