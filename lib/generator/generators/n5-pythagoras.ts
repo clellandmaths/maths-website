@@ -245,10 +245,32 @@ export function pythagorasFindSide(): Q {
  * first and builds the circle from it, exactly as `chord-reverse` has done for
  * 2014 P1 Q12 since it was written.
  */
-export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
+export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: string): Q {
   const exact = family === 'cut';
+  /**
+   * **The id this draw will be STAMPED with, which is not always the one
+   * asked for.**
+   *
+   * `pythagoras.chord-whole` serves 2018 P2 Q12; 2015 P2 Q12 sits on the alias
+   * `pythagoras.chord-whole-2015`, which resolves to the same target — so
+   * `wanted` cannot tell them apart and `asked` can.
+   *
+   * But **a worksheet built by topic asks for no id at all** and still stamps
+   * one, and the id it stamps is 2018's. Keying on `asked === '...-whole'`
+   * would then give the by-topic draw 2015's arrangement under 2018's id —
+   * two different questions behind one name. That is precisely how 2018 P1
+   * Q18's `instructions` red came back after passing when measured by id.
+   *
+   * So the question is not "was 2018 asked for" but "is 2015 asked for": the
+   * alias is the only thing that means 2015, and everything else is 2018.
+   */
+  const stampedId = family !== 'whole' ? undefined
+    : askedId === 'pythagoras.chord-whole-2015' ? askedId
+    : 'pythagoras.chord-whole';
+  const forPaper2018 = stampedId === 'pythagoras.chord-whole';
   for (let tries = 0; tries < 400; tries++) {
-    const ctx = pick(CHORD_CONTEXTS.filter(c => c.family === family));
+    const ctx = pick(CHORD_CONTEXTS.filter(c => c.family === family
+      && (c.only === undefined || c.only === stampedId)));
     const [lo, hi] = ctx.band;
     let r: number, chord: number, d: number;
     if (exact) {
@@ -275,6 +297,33 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
       if (!fits.length) continue;
       const t = pick(whole);
       [r, chord, d] = [t.r, t.half * 2, t.d];
+    } else if (forPaper2018) {
+      /**
+       * **Whole numbers in the question — the owner, on the 2018 P2 sheet:**
+       *
+       * > *"I'd also like to see less funky numbers, perhaps whole numbers
+       * > given in the question."*
+       *
+       * Right, and it is the same fault as 2018 P2 Q11's standard form: the
+       * radius and chord were drawn to whatever fell out, so the page printed
+       * a radius of 42.1 cm across a chord of 66.5 cm. **Both papers do it the
+       * other way round** — 13 and 20 in 2018, 1.2 and 1.8 in 2015 — and let
+       * the ANSWER be the untidy one, 21.3 and 1.99. Tidy givens and an
+       * untidy answer is what an exam sets.
+       *
+       * The chord is drawn EVEN as well as whole, because step 2 halves it:
+       * 2018's own reads "20 ÷ 2 = 10", and an odd chord would print 8.5.
+       */
+      r = getRandomInt(lo, hi);
+      const half = getRandomInt(Math.ceil(r * 0.55), Math.floor(r * 0.85));
+      chord = half * 2;
+      if (half < 1 || half > r * 0.85 || chord >= 2 * r * 0.95) continue;
+      d = Math.sqrt(r * r - half * half);
+      // The whole point is an untidy answer, so a draw that happens to land on
+      // a Pythagorean triple is the one shape to refuse here: it would print a
+      // width that needs no rounding at all, which is 2023 P1 Q10's question,
+      // not this one.
+      if (Number.isInteger(d)) continue;
     } else {
       r = Number((getRandomInt(lo * 10, hi * 10) / 10).toFixed(1));
       // Every paper puts the chord between 0.6 and 0.8 of the diameter — 4
@@ -306,6 +355,29 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
     if (height === chord || height === r) continue;
     if (height < 0.4) continue;
 
+    /**
+     * **The word on the arrow is the question's own word.**
+     *
+     * It was `sideways ? 'width' : 'height'`, which is right for the four new
+     * upright contexts and wrong for the two liquids: the arrow read "height"
+     * beside a question asking for *the depth of the water*, and 2015 P2 Q12's
+     * own paper labels that arrow "Depth of milk". That arrow is mine, added
+     * yesterday at the owner's request, so this is repairing it rather than
+     * widening anything.
+     *
+     * `asks` is always "the <word> of the <thing>", so the second word is the
+     * noun — and taking it from there means the arrow cannot disagree with the
+     * question no matter what context is added later.
+     *
+     * **Scoped to the `whole` family, like the arrow itself.** The `cut`
+     * contexts include "the depth of the doorstep", and 2023 P1 Q10 is signed
+     * off: changing its step 4 to say "depth" would move a locked question for
+     * no reason anybody asked.
+     */
+    const spanWord = ctx.family === 'whole'
+      ? (ctx.asks.split(' ')[1] ?? 'height')
+      : (ctx.sideways ? 'width' : 'height');
+
     const [O, A, B] = pick([['O', 'A', 'B'], ['C', 'P', 'Q'], ['O', 'M', 'N']]);
     // Three figure families for one question — see `ChordContext.family`.
     // The radius is on the figure only where the paper puts it there; the
@@ -318,6 +390,31 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
     const fig = circleChord({
       radius: r, chord, major: true, flip: ctx.flip, sideways: ctx.sideways,
       ...drawn[ctx.family],
+      /**
+       * **2018 P2 Q12 draws the SHAPE, not the circle it came from.**
+       *
+       * Counted off the scan
+       * (`Current Deployment/src/public/img/N5_Past_Papers/2018/2018_P2_Q12.png`):
+       * the outline is one arc from A round the left to B and the straight
+       * chord back up. **There is no arc to the right of AB.** 2015 P2 Q12,
+       * on the same id through its alias, draws the whole circle with the milk
+       * shaded — so the two papers on this routine print different figures,
+       * and by the owner's own ruling a figure that differs is a different
+       * question.
+       *
+       * The family was set from a different attribute — "the radius is given
+       * in the prose and not drawn", which both papers do — and the outline
+       * was read to match. It was wrong for 2018 from the start.
+       *
+       * It matters for the answer, not only the look: with the whole circle
+       * drawn, the width arrow runs from the far arc to the chord while the
+       * circle carries on past it, so the span asked for and the span drawn
+       * are two different lengths on the page (`r + d` against `2r`). The
+       * paper has nothing past the chord and cannot be misread.
+       *
+       * **Keyed, so 2015 keeps its own picture**, which is right for 2015.
+       */
+      ...(forPaper2018 ? { rest: 'none' as const } : {}),
       /**
        * **2018 P2 Q12 marks the centre and arrows the span it asks for.**
        *
@@ -337,8 +434,7 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
        * disagree.
        */
       centreDot: ctx.family === 'whole',
-      askedSpan: ctx.family === 'whole'
-        ? (ctx.sideways ? 'width' : 'height') : undefined,
+      askedSpan: ctx.family === 'whole' ? spanWord : undefined,
       names: { a: A, b: B, centre: O },
       labels: {
         radius: `${num(r)} ${abbrev(ctx.unit)}`,
@@ -361,9 +457,11 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut'): Q {
       `<strong>2.</strong> Half the chord is $${num(chord)} \\div 2 = ${num(chord / 2)}$ ${ctx.unit}. Now use Pythagoras to find $${O}M$:<br><br>$${O}M^{2} = ${num(r)}^{2} - ${num(chord / 2)}^{2} = ${num(Number((r * r - (chord / 2) ** 2).toFixed(4)))}$`,
       `<strong>3.</strong> So $${O}M = ${exact ? num(d) : d.toFixed(3)}$ ${ctx.unit}.`,
       // "height" reads wrong on a chord stood on end, where the answer runs
-      // across the page. Scoped to the sideways contexts so the working on the
-      // other seven papers this routine serves is untouched.
-      `<strong>4.</strong> The shape is the larger piece, so its ${ctx.sideways ? 'width' : 'height'} is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
+      // across the page — and equally wrong on a depth. `spanWord` is the
+      // question's own noun for the `whole` family and the old expression
+      // everywhere else, so the working and the arrow say the same thing and
+      // the signed-off papers on the other two families do not move.
+      `<strong>4.</strong> The shape is the larger piece, so its ${spanWord} is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
     ];
 
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
@@ -1529,9 +1627,12 @@ export const PYTHAGORAS_GENERATORS: Record<string, Gen> = {
   'Pythagoras in a Right-Angled Triangle': pythagorasFindSide,
   // All three families reachable from the topic, each with its own id.
   // Taught: the three families are three ids, so the asked id names one.
-  'Pythagoras in a Circle': (w) => pythagorasChord(
+  // `asked` as well as `wanted`, because 2015 P2 Q12 reaches the `whole`
+  // family through an alias: `wanted` resolves to 2018's id and only `asked`
+  // separates the two papers. See `forPaper2018` in `pythagorasChord`.
+  'Pythagoras in a Circle': (w, asked) => pythagorasChord(
     w === 'pythagoras.chord' ? 'segment'
     : w === 'pythagoras.chord-whole' ? 'whole'
     : w === 'pythagoras.chord-cut' ? 'cut'
-    : pick(['segment', 'whole', 'cut'] as const)),
+    : pick(['segment', 'whole', 'cut'] as const), asked),
 };

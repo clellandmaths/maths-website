@@ -197,6 +197,44 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
   const phi = Math.acos((ba * ba + bcLen * bcLen - ca * ca) / (2 * ba * bcLen)) / DEG;
   if (phi < 26 || phi > 140) return null;
 
+  /**
+   * **No right-angled triangles — 2018 P2 Q13, the owner on the sheet:**
+   *
+   * > *"I wouldn't give a right angled triangle for this question as it makes
+   * > it easy to do without cosine rule"*
+   *
+   * Right, and the marks say so: the scheme's first two are "correct
+   * substitution into the cosine rule" and "correct calculation of cos YTF".
+   * A square corner lets a pupil reach the same angle by SOHCAHTOA, or spot
+   * it outright by Pythagoras, and take none of that. The figure is drawn at
+   * true coordinates, so a corner that *is* square also *looks* square.
+   *
+   * Measured over 400 draws before the guard: **62 came within five degrees
+   * of a right angle** (24 within two, 9 within one).
+   *
+   * **Five degrees, because that is where the exam itself stops.** 2014 P2
+   * Q10 sets 8, 11 and 13 km, and its angle B is 84.8 degrees — Qualifications
+   * Scotland are content with a triangle 5.2 degrees off square. A wider guard
+   * would refuse to draw a past paper's own question, which is the one thing
+   * this review may never do. So the bar is set at the paper's own limit and
+   * not at what looks tidy.
+   *
+   * **Keyed to the bearing question.** This routine also serves
+   * `bearings.three-sides-angle` — 2014 P2 Q10, and 2014 is not yet reviewed.
+   * The guard is very likely right for it too (a right angle undercuts the
+   * cosine rule wherever it appears, and that question's own part (a) is the
+   * cosine rule) but the owner has not been asked about that paper, and
+   * `CLAUDE.md` is explicit: split if the generator serves ANY other paper,
+   * not only a signed-off one. **Recorded for 2014's review** in
+   * `docs/verdicts/IN-PROGRESS.md`; it will be one word here.
+   */
+  if (kind !== 'angle') {
+    const ang = (o: number, p: number, q: number) =>
+      Math.acos((p * p + q * q - o * o) / (2 * p * q)) / DEG;
+    const angles = [phi, ang(ba, bcLen, ca), ang(bcLen, ca, ba)];
+    if (angles.some(a => Math.abs(a - 90) <= 5)) return null;
+  }
+
   const given = getRandomInt(1, 71) * 5 % 360;         // a bearing in whole degrees
   const B = pt(0, 0);
   const A = travel(B, given, ba);

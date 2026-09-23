@@ -1112,6 +1112,20 @@ export interface ChordContext {
    * Q12 the moment they were added without that filter.
    */
   sideways?: boolean;
+  /**
+   * Confine this context to **one** variation id, matched against the id
+   * actually asked for rather than the alias-resolved one.
+   *
+   * `pythagoras.chord-whole` (2018 P2 Q12) and its alias
+   * `pythagoras.chord-whole-2015` (2015 P2 Q12) share a routine and a family,
+   * so a context added for one arrives at the other. 2015 is not yet
+   * reviewed. A list this shared is exactly how three contexts added for 2023
+   * P1 Q10 reached a signed-off question, which is why `shared-lists.ts`
+   * exists; `only` keeps a new entry where it was meant to go.
+   *
+   * The same field on `LineContext` does the same job for the same reason.
+   */
+  only?: string;
 }
 
 export const CHORD_CONTEXTS: ChordContext[] = [
@@ -1119,10 +1133,20 @@ export const CHORD_CONTEXTS: ChordContext[] = [
     asks: 'the height of the culvert', unit: 'metres', band: [3, 9], family: 'segment' },
   // 2015 P2 Q12's shape: a container end-on, the liquid hanging *below* its
   // surface, the whole circle drawn and the liquid shaded.
+  // **The two liquids belong to 2015 P2 Q12 and stay there.** A liquid needs
+  // its container drawn round it — 2015's paper draws the whole circle and
+  // shades the milk inside — and 2018 P2 Q12 draws the shape's own outline and
+  // nothing else, so the same context rendered under 2018's arrangement came
+  // out as water with no trough. Rendered and looked at before deciding.
+  //
+  // `only` keeps them where they work. 2015's set is the three it already had
+  // — these two and the speed bump — so nothing about that paper moves.
   { scene: (o, a, b) => `A cylindrical tank lies on its side. On the circular end, centre ${o}, the surface of the oil inside is the chord ${a}${b}.`,
-    asks: 'the depth of the oil', flip: true, unit: 'metres', band: [2, 6], family: 'whole' },
+    asks: 'the depth of the oil', flip: true, unit: 'metres', band: [2, 6],
+    family: 'whole', only: 'pythagoras.chord-whole-2015' },
   { scene: (o, a, b) => `A water trough has a circular cross-section with centre ${o}. The surface of the water is the chord ${a}${b}.`,
-    asks: 'the depth of the water', flip: true, unit: 'centimetres', band: [30, 80], family: 'whole' },
+    asks: 'the depth of the water', flip: true, unit: 'centimetres', band: [30, 80],
+    family: 'whole', only: 'pythagoras.chord-whole-2015' },
   // The `cut` bands sit where the Pythagorean triples land: this is the
   // non-calculator family, so its numbers have to come out whole.
   { scene: (o, a, b) => `A stone doorstep is cut from a circle with centre ${o}. The straight edge of the step is the chord ${a}${b}.`,
@@ -1171,6 +1195,34 @@ export const CHORD_CONTEXTS: ChordContext[] = [
   // the whole circle drawn, nothing else on it.
   { scene: (o, a, b) => `A speed bump has a cross-section that is part of a circle with centre ${o}, sitting on the road ${a}${b}.`,
     asks: 'the height of the speed bump', unit: 'centimetres', band: [15, 60], family: 'whole' },
+  // ── 2018 P2 Q12's own orientation: chord upright, width measured across ──
+  //
+  // The owner, on the 2018 P2 sheet: *"I think I'd also like to see the
+  // original questions form appear for this one with the rotation."* The paper
+  // prints its shape with the chord VERTICAL — A above B on the right, the
+  // circle bulging left, and `width` arrowed along the bottom — and every
+  // context in this family laid it flat and asked for a height or a depth, so
+  // the clone never made the paper's own picture.
+  //
+  // **`only`, because `pythagoras.chord-whole` is also 2015 P2 Q12's routine**
+  // through its alias, and 2015 is not yet reviewed. These four reach 2018
+  // alone; 2015's three contexts are exactly the three it had.
+  //
+  // Each one earns the rotation the way the `cut` ones do: its straight edge
+  // is against something upright. A speed bump lies down; a sign on a wall
+  // does not.
+  { scene: (o, a, b) => `A shop sign is part of a circle with centre ${o}. Its straight edge ${a}${b} is fixed flat against the door frame.`,
+    asks: 'the width of the sign', unit: 'centimetres', band: [15, 50],
+    family: 'whole', sideways: true, only: 'pythagoras.chord-whole' },
+  { scene: (o, a, b) => `A wall clock is part of a circle with centre ${o}, with its straight edge ${a}${b} against the corner of the room.`,
+    asks: 'the width of the clock', unit: 'centimetres', band: [12, 40],
+    family: 'whole', sideways: true, only: 'pythagoras.chord-whole' },
+  { scene: (o, a, b) => `A stained glass panel is part of a circle with centre ${o}. Its straight edge ${a}${b} runs up the side of the window frame.`,
+    asks: 'the width of the panel', unit: 'centimetres', band: [20, 70],
+    family: 'whole', sideways: true, only: 'pythagoras.chord-whole' },
+  { scene: (o, a, b) => `A garden pond is part of a circle with centre ${o}. Its straight edge ${a}${b} runs along the side of the house.`,
+    asks: 'the width of the pond', unit: 'metres', band: [2, 8],
+    family: 'whole', sideways: true, only: 'pythagoras.chord-whole' },
   { scene: (o, a, b) => `A biscuit is cut from a circular sheet of dough, centre ${o}, along the straight edge ${a}${b}.`,
     // **Height, not width.** Drawn upright, with the straight edge along the
     // bottom, the length asked for runs vertically — so "width" labelled a

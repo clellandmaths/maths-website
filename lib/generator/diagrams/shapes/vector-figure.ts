@@ -52,6 +52,12 @@ export interface VectorFigureSpec {
   ticks?: { edge: [string, string]; count: number }[];
   /** Corners to leave unlabelled — a midpoint the prose names but the figure need not. */
   hide?: string[];
+  /**
+   * Push a corner's letter along **that corner's own outward bisector** rather
+   * than away from the centre of the figure. Opt-in; see `cornerAway` below
+   * for why, and why it is not simply made the rule for everyone.
+   */
+  bisectCorners?: boolean;
 }
 
 /** Two barbs at a point, pointing along a direction. Decoration, never measured. */
@@ -192,6 +198,56 @@ export function vectorFigure(spec: VectorFigureSpec): Figure {
     return null;
   };
 
+  /**
+   * **The point a corner's letter is pushed away from.**
+   *
+   * The default is the centre of the figure, and for most corners that is
+   * right. It fails where the line from the centre to the corner runs nearly
+   * *along* one of the two edges meeting there — the same failure this file
+   * already records for edge labels, where `acrossEdge` was written to fix it.
+   * The corner then has no room in its preferred direction, the ring of
+   * fallbacks turns, and the seat that finally clears is the one pointing into
+   * the empty middle of the figure. **A letter inside the shape**, which is
+   * what the owner found on 2018 P2 Q10:
+   *
+   * > *"In this draw the Q is in wrong place should be outside shape on vertex
+   * > like the other draws"* — 2026-09-23
+   *
+   * Measured: six of that question's sixteen (m, n) pairs seated `B` inside
+   * the pentagon, and `verifyFigure` passed all six — a letter in open space
+   * is clear of every line, which is exactly why nothing caught it.
+   *
+   * The direction that always clears **both** edges at a corner is the
+   * outward bisector: the reverse of the sum of the unit vectors to its
+   * neighbours. It does not depend on where the centre happens to be.
+   *
+   * **Opt-in, because this file draws five questions and two of them are
+   * locked.** 2024 P2 Q14 and 2025 P2 Q15 place every letter correctly on the
+   * old path, and moving a signed-off figure to fix an unsigned one is the
+   * trap `CLAUDE.md` names. Only `multiples()` passes the flag.
+   */
+  const neighbours = new Map<string, string[]>();
+  for (const [a, b] of [...spec.edges, ...(spec.dashed ?? [])]) {
+    neighbours.set(a, [...(neighbours.get(a) ?? []), b]);
+    neighbours.set(b, [...(neighbours.get(b) ?? []), a]);
+  }
+  const cornerAway = (name: string, p: Pt): Pt => {
+    const ns = neighbours.get(name) ?? [];
+    if (!spec.bisectCorners || ns.length < 2) return middle;
+    let sx = 0, sy = 0;
+    for (const q of ns) {
+      const u = unit(sub(P(q), p));
+      sx += u.x; sy += u.y;
+    }
+    // A straight-through point has no bisector — the two units cancel. Nothing
+    // in these figures is one, but the fallback costs a line and it is the
+    // old behaviour, not a guess.
+    if (Math.hypot(sx, sy) < 1e-9) return middle;
+    // `away` is a point, and the seat is pushed along `p - away`: putting it
+    // on the INWARD side of p sends the letter outward along the bisector.
+    return add(p, unit(pt(sx, sy)));
+  };
+
   const hidden = new Set(spec.hide ?? []);
   for (const [name, p] of Object.entries(spec.points)) {
     if (hidden.has(name)) continue;
@@ -206,7 +262,9 @@ export function vectorFigure(spec: VectorFigureSpec): Figure {
      * pathway to it has to know where it is.
      */
     if (edge) elements.push({ kind: 'dot', at: p, small: true });
-    const away = edge ? add(p, sub(acrossEdge(edge[0], edge[1], middle), mid(edge[0], edge[1]))) : middle;
+    const away = edge
+      ? add(p, sub(acrossEdge(edge[0], edge[1], middle), mid(edge[0], edge[1])))
+      : cornerAway(name, p);
     elements.push({ kind: 'label', text: name, anchor: p, away, alternatives: ringAround(p, away) });
   }
 

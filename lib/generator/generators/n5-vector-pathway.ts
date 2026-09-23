@@ -322,6 +322,25 @@ function multiples(): Q | null {
     points,
     edges: [[E, A], [A, B], [B, Cp], [Cp, D], [D, E]],
     arrows: [{ from: A, to: B, label: nu }, { from: E, to: A, label: nw }],
+    /**
+     * **The letter goes outside its own corner, not wherever there is room.**
+     *
+     * The owner found `B` sitting inside the pathway. Counted across the
+     * sixteen (m, n) pairs: **six of them seated it inside the pentagon**, and
+     * `verifyFigure` passed all six — a letter in the open middle of a figure
+     * is clear of every line there is, which is why nothing reported it.
+     *
+     * One of the six, `m = 4, n = 2`, drew before yesterday's widening as
+     * well, so this is not purely a regression from it; the widening added
+     * the other five.
+     *
+     * `B` is the corner the default rule cannot serve: the line from the
+     * centre of the figure out to it runs almost straight along the edge
+     * `AB`, so its preferred seat is blocked by that edge and the fallback
+     * ring turns until it reaches the empty interior. A corner's own outward
+     * bisector always clears both edges meeting there. See `bisectCorners`.
+     */
+    bisectCorners: true,
   }, 'A Pathway with Multiples', 'vectors.pathway-multiples', prose,
     `$${ray(A, B)} = ${vec(nu)}$, $${ray(E, A)} = ${vec(nw)}$, $${ray(E, D)} = ${m}${ray(A, B)}$, $${ray(E, A)} = ${n}${ray(D, Cp)}$. Find $${ray(B, Cp)}$.`,
     steps, [1, 1], `$${answer}$`);
