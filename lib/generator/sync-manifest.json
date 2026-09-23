@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "08319904e80a78308d04f480dde08867100c2a4e",
+  "sourceCommit": "63c424cdc148e8a0653172a44d6c197c155d516e",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -48,7 +48,7 @@
     "generators/logs.ts": "5a3f8dd2ac80876d",
     "generators/markscheme-source.ts": "22799ede4d1792df",
     "generators/n5-alg-fractions.ts": "e8567ea0899dc5f4",
-    "generators/n5-angles.ts": "25e66bbf07352207",
+    "generators/n5-angles.ts": "dc424e3b237c5f41",
     "generators/n5-bearings.ts": "bfcebd087d630dc1",
     "generators/n5-composite-trig.ts": "e4202e2645702b4b",
     "generators/n5-contexts.ts": "87acc356d3027c4e",

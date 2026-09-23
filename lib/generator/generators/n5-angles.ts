@@ -118,10 +118,13 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
       sides: n, radius: r, start, names, point,
       reach, angleLabel: `${given}°`,
       shadeAsked: forPaper2018,
-      // The number up against the outside point, not beside the shaded
-      // corner - the owner, 2026-09-23: "Fix 2018 P1 Q9". 2025 P2 Q7 is
-      // signed off and keeps the old placement until its own sheet is read.
-      markAtPoint: forPaper2018,
+      // The number up against the outside point, not beside the asked
+      // corner - on both papers, each on the owner's word: "Fix 2018 P1 Q9",
+      // then, having read 2025's sheet, "Happy to go ahead with your
+      // recommendation for 2025 P2 Q7" (both 2026-09-23). 2025 still shades
+      // nothing, and its letters stay where they were: the letter move in
+      // polygonPoint needs shading as well.
+      markAtPoint: true,
     });
     if (!fig) continue;
 
@@ -153,17 +156,16 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
      * to 111. Nobody asked for that - the owner's comment was about where the
      * number and the shading sit - and the paper's own is a 17-degree sliver.
      *
-     * So a 2018 draw must ALSO pass as the figure it was signed off with. That
+     * So a draw must ALSO pass as the figure it was signed off with. That
      * holds the questions to the approved set exactly, and it costs no random:
-     * both figures are built from numbers already drawn.
+     * both figures are built from numbers already drawn. 2025 P2 Q7 is held
+     * the same way, to its own locked figure - unshaded.
      */
-    if (forPaper2018) {
-      const asLocked = polygonPoint({
-        sides: n, radius: r, start, names, point,
-        reach, angleLabel: `${given}°`, shadeAsked: true,
-      });
-      if (!asLocked || verifyFigure(asLocked, [...prose, ...steps].join(' ')).length) continue;
-    }
+    const asLocked = polygonPoint({
+      sides: n, radius: r, start, names, point,
+      reach, angleLabel: `${given}°`, shadeAsked: forPaper2018,
+    });
+    if (!asLocked || verifyFigure(asLocked, [...prose, ...steps].join(' ')).length) continue;
 
     return {
       subTopic: 'A Side of a Polygon Produced',
