@@ -172,10 +172,25 @@ export function polygonPoint(spec: PolygonPointSpec): Figure | null {
        * flag rather than to `shadeAsked`, so the figure 2018 was locked with
        * can still be built exactly, for the generator to hold its draws to.
        */
+      /**
+       * **...and not merely off the line: into the one clear gap at this
+       * corner.** Pushed square off the line away from the shading, the
+       * letter ran along the polygon's own side instead - the owner, on the
+       * rebuilt sheet: *"that K is drifting out of place"*. Three regions meet
+       * here: the polygon (from the next vertex round to the first), the
+       * shaded wedge (from the first vertex to the outside point), and the gap
+       * between the outside point and the next vertex. The first two make one
+       * wedge, so the gap is what lies opposite its bisector - which holds
+       * however wide the gap is, where bisecting the gap's own two rays would
+       * point the wrong way once it passes 180 degrees.
+       */
       if (spec.shadeAsked && spec.markAtPoint) {
-        const toFirst = sub(V[0], p);
-        const clear = perp.x * toFirst.x + perp.y * toFirst.y >= 0 ? -1 : 1;
-        return { kind: 'label', text: spec.names[i], anchor: p, away: sub(p, scale(perp, clear)) };
+        const ang = (q: Pt) => Math.atan2(q.y - p.y, q.x - p.x);
+        const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
+        const aFirst = ang(V[0]);
+        const mid = aFirst + (wrap(ang(V[n - 2]) - aFirst) + wrap(ang(P) - aFirst)) / 2;
+        const gap = pt(-Math.cos(mid), -Math.sin(mid));
+        return { kind: 'label', text: spec.names[i], anchor: p, away: sub(p, gap) };
       }
       const side = perp.x * outward.x + perp.y * outward.y >= 0 ? 1 : -1;
       const offLine = Math.hypot(square.x, square.y) < 0.05
