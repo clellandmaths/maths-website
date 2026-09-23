@@ -238,6 +238,9 @@ function parabolaFromAxis(): Q | null {
     view: windowFor(h, k, [{ x: px, y: py }]),
     plot: { kind: 'parabola', a: 1, h, k },
     points: [{ x: px, y: py, text: plainCoord(px, py), side: d > 0 ? 'right' : 'left' }],
+    // Drawn and labelled on the figure, as 2017 P1 Q14's is - the owner:
+    // "Draw the axis". Alone on its clone, so no other paper gains it.
+    axisOfSymmetry: { x: h, label: `x = ${h}` },
   }, 'A Parabola from its Axis of Symmetry', 'quadratics.parabola-from-axis', prose,
     `Parabola $y = (x + a)^{2} + b$, axis $x = ${h}$, through $${coord(px, py)}$. Find $a$ and $b$.`,
     // 2017 P1 Q14 is 1 + 2: •¹ state a, •² substitute the point, •³ state b

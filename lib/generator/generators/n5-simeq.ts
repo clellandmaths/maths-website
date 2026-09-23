@@ -241,6 +241,9 @@ function intersection(): Q {
       plot: line1,
       curveLabel: eq1,
       also: { plot: line2, label: eq2 },
+      // Each equation from its own line's end, as the paper prints them - the
+      // owner, 2017 P1: "Yes fix the equation drift". Alone on its clone.
+      labelAtLineEnd: true,
       points: [{ x: x0, y: y0, text: point, side: 'right' }],
     });
     const prose = [

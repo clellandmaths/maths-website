@@ -85,6 +85,12 @@ export interface SketchAxesSpec {
   /** The curve's own equation, written beside it as 2026 P1 Q9 does. */
   curveLabel?: string;
   /**
+   * Label each straight line from where it actually leaves the frame, rather
+   * than from the frame's edge with y clamped - see `besideCurve`. Opt-in:
+   * 2017 P1 Q13 only.
+   */
+  labelAtLineEnd?: boolean;
+  /**
    * A second curve on the same axes, with its own equation beside it.
    *
    * **2017 P1 Q13 is two straight lines crossing at a point P**, each labelled
@@ -182,6 +188,17 @@ export interface SketchAxesSpec {
    * markscheme's first step there is $12t - 5t^2 = -17$.
    */
   guide?: { y: number };
+  /**
+   * The axis of symmetry, dashed from the top of the frame to the bottom, with
+   * its equation written below the lower end.
+   *
+   * 2017 P1 Q14 draws it so - a dashed vertical through the turning point,
+   * labelled `x = -5` under the x-axis - where the clone stated it in the words
+   * only. The owner, on the 2017 P1 sheet: *"Draw the axis"*. **Opt-in**: this
+   * shape draws every sketched graph in the course, and none of the others
+   * asked for a line.
+   */
+  axisOfSymmetry?: { x: number; label: string };
   /**
    * A ruled background at this spacing in graph units, x and y separately.
    *
@@ -476,6 +493,21 @@ export function sketchAxes(spec: SketchAxesSpec): Figure {
     });
   }
 
+  // ── the axis of symmetry, when asked for ──────────────────────────────
+  //
+  // A `path` for the same reason as the guide: nothing is measured off it.
+  // Its label hangs below the lower end, pushed straight down, which is
+  // where 2017 P1 Q14 prints `x = -5`.
+  if (spec.axisOfSymmetry
+      && spec.axisOfSymmetry.x > xMin && spec.axisOfSymmetry.x < xMax) {
+    const gx = D(spec.axisOfSymmetry.x, 0).x;
+    elements.push({ kind: 'path', points: [pt(gx, 0), pt(gx, FRAME.h)], dashed: true });
+    elements.push({
+      kind: 'label', text: spec.axisOfSymmetry.label,
+      anchor: pt(gx, 0), away: pt(gx, 20), small: true,
+    });
+  }
+
   // Drawn after the curve, so it sits on top of it where they cross.
   if (spec.chord) {
     elements.push({
@@ -569,7 +601,47 @@ export function sketchAxes(spec: SketchAxesSpec): Figure {
   // first where it leaves at the left, the second where it leaves at the right.
   // Both at the same end would put two equations in one corner, and 2017 P1 Q13
   // separates them for the same reason.
+  /**
+   * **`labelAtLineEnd`: anchor at where a straight line really leaves the
+   * frame.** The default takes the frame's left or right edge and clamps y
+   * into the window - so a line that leaves through the top or bottom first
+   * is labelled from a CORNER, not from the line, and the label is pushed out
+   * from there. 2017 P1 Q13's equations drifted that way: one in ten more than
+   * 134px from its own line, 9 in 400 nearer the other. The owner: *"Yes fix
+   * the equation drift"*. Opt-in, and for straight lines only: the parabolas
+   * that also call this belong to other papers, one of them signed off.
+   */
+  let firstEnd: number | null = null;
   const besideCurve = (p: Plot, x: number, label: string) => {
+    if (spec.labelAtLineEnd && p.kind === 'line') {
+      let lo = xMin, hi = xMax;
+      if (p.m !== 0) {
+        const xa = (yMin - p.c) / p.m, xb = (yMax - p.c) / p.m;
+        lo = Math.max(xMin, Math.min(xa, xb));
+        hi = Math.min(xMax, Math.max(xa, xb));
+      }
+      // Of the line's two ends, the one further from the OTHER line: a fixed
+      // end sat beside the other line whenever that one passed close by, and
+      // the label then named the wrong line - 26 in 400 on the first try.
+      // And the second line takes the OPPOSITE end to the first, as the paper
+      // separates them: where the two lines run nearly parallel both "best"
+      // ends were the same corner, and the two equations stacked there with
+      // no way to tell which named which.
+      const other = p === spec.plot ? spec.also?.plot : spec.plot;
+      const ends = [lo, hi].map(ex => D(ex, p.m * ex + p.c));
+      let side = x === xMin ? 0 : 1;
+      if (p === spec.plot && other && other.kind === 'line') {
+        const a = D(xMin, other.m * xMin + other.c), b = D(xMax, other.m * xMax + other.c);
+        const off = (q: Pt) => Math.abs((b.x - a.x) * (q.y - a.y) - (b.y - a.y) * (q.x - a.x))
+          / Math.hypot(b.x - a.x, b.y - a.y);
+        side = off(ends[0]) >= off(ends[1]) ? 0 : 1;
+        firstEnd = side;
+      } else if (p !== spec.plot && firstEnd !== null) {
+        side = 1 - firstEnd;
+      }
+      elements.push({ kind: 'label', text: label, anchor: ends[side], away: middle });
+      return;
+    }
     const y = evaluate(p, x);
     const at = D(x, y !== null ? Math.min(Math.max(y, yMin), yMax) : yMax);
     elements.push({ kind: 'label', text: label, anchor: at, away: middle });

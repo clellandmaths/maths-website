@@ -107,7 +107,16 @@ function subjectInNumerator(wanted?: string, asked?: string): Q {
   // Taught: k === 1 is the two-step question and anything else is the other,
   // so the asked id decides which side of that line to draw on. The odds
   // among the non-one values are unchanged, and so is the roll count.
+  /**
+   * **2017 P1 Q10 takes a wider coefficient, 2 to 9.** It made four questions:
+   * the coefficient was all that varied, and letters are never counted. The
+   * owner, on the 2017 P1 sheet: *"Yes widen and key"*. Keyed on `asked` -
+   * 2017's id is an alias of 2024's, so `wanted` is the same for both - and
+   * `pick` is one random whatever the list's length, so the stream is the
+   * one it was and 2024 P2 Q9, signed off, draws exactly what it drew.
+   */
   const k = wanted === 'change-subject.fraction-two-step' ? 1
+    : asked === 'change-subject.fraction-pre2023' ? pick([2, 3, 4, 5, 6, 7, 8, 9])
     : wanted === 'change-subject.fraction' ? pick([2, 3, 4, 5])
     : pick([1, 1, 2, 3, 4, 5]);           // 1 gives the no-fraction answer
   /**
@@ -237,7 +246,11 @@ function subjectInNumerator(wanted?: string, asked?: string): Q {
    */
   const minusRoll = asked === 'change-subject.fraction' ? getRandomInt(0, 1) : 0;
   const minus = wide ? (flavour & 1) !== 0 : minusRoll === 1;
-  const numTex = `${term(k, subj)} ${minus ? '-' : '+'} ${tTex}`;
+  // 2017 P1 Q10 writes the squared term first, as its paper does:
+  // F = (t^2 + 4b)/c. Order only - same terms, same working, no random.
+  const numTex = asked === 'change-subject.fraction-pre2023'
+    ? `${tTex} + ${term(k, subj)}`
+    : `${term(k, subj)} ${minus ? '-' : '+'} ${tTex}`;
   const product = `${v}${dTex}`;
   const undo = `${product} ${minus ? '+' : '-'} ${tTex}`;
   const rhs = k === 1 ? undo : frac(undo, `${k}`);

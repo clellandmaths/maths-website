@@ -98,15 +98,29 @@ function cubeOnCuboid(): Q | null {
 // ── a pyramid on top of a cube — 2017 P1 Q5 ──────────────────────────────
 
 function pyramidOnCube(): Q | null {
-  const s = getRandomInt(4, 12) * 2;                  // even, so the apex is whole
-  const h = getRandomInt(1, 3) * (s / 2);
+  /**
+   * **The pyramid is always half the height of the cube, as the paper says.**
+   *
+   * It was drawn as one, two or three halves, and only the one-half case was
+   * worded the paper's way - "the height of the pyramid is half of the height
+   * of the cube" - while the others handed the height over as a number. That
+   * is what the pupil starts from, so it was two questions under one name:
+   * 196 of 600 draws the paper's, 404 the other. The owner, on the 2017 P1
+   * sheet: "Double check that the routine is not shared with another question
+   * then key it to half the height" - checked, it serves 2017 P1 Q5 alone.
+   *
+   * The half form alone made nine questions, so the cube is widened with it,
+   * 8-24 to 4-30, even so the apex stays whole; the paper's own is 6.
+   */
+  const s = getRandomInt(2, 15) * 2;
+  const h = s / 2;
   const A: P3 = { x: s, y: 0, z: 0 };
   const B: P3 = { x: 0, y: s, z: s };
   const C: P3 = { x: s / 2, y: s / 2, z: s + h };
 
   const prose = [
     `The diagram shows a square-based pyramid placed on top of a cube, relative to the coordinate axes.`,
-    `The height of the pyramid is ${h === s / 2 ? 'half of the height of the cube' : `$${h}$ units`}.`,
+    `The height of the pyramid is half of the height of the cube.`,
     `$A$ is the point $${coord(A)}$. The point $C$ is directly above the centre of the base.`,
     ask('B', 'C'),
   ];

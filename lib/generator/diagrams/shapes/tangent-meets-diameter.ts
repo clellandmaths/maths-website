@@ -72,7 +72,14 @@ export function tangentMeetsDiameter(spec: TangentMeetsDiameterSpec): Figure | n
   const tangentEnd = add(B, scale(along, reach * r / Math.hypot(along.x, along.y)));
 
   const elements: Element[] = [
-    shadeAngle(A, [C, B]),
+    // Most of the way to C. The default - three tenths of the shorter arm,
+    // which is AC - left a sliver, 13px across typically and 10 at worst:
+    // the owner, on the 2017 P1 sheet, "Shaded angle is a bit small on the
+    // shading". Half of AC, as the paper looks, was still 22px, because the
+    // clone's A sits much nearer the circle than the paper's; eight tenths
+    // is 35px typically and 26 at worst, and stops short of C's letter.
+    // This shape draws that question alone.
+    shadeAngle(A, [C, B], Math.min(0.8 * Math.hypot(C.x - A.x, C.y - A.y), 0.5 * Math.hypot(B.x - A.x, B.y - A.y))),
     { kind: 'circle', centre: O, r },
     // the diameter and its production, in three pieces, so the centre and the
     // near end are both endpoints and may carry their own letters
