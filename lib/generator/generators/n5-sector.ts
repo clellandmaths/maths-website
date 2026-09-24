@@ -422,8 +422,26 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
   const majorOnly = askedId === 'sector.arc-angle-pre2023';
   // The reflex question reads its own list, so no other kind's `pick` moves.
   const reflexOnly = kind === 'angle-arc-reflex';
+  /**
+   * **2017 P2 Q14 is reflex only, drawn as its paper draws it.** — 2026-09-24
+   *
+   * The paper gives a radius and a MAJOR arc and asks for the REFLEX angle;
+   * this handed out an ordinary minor sector in 280 of 400 draws. The owner,
+   * having seen 2022 P2 Q10 beside it: *"I'd want 2022 left as it is. I'd
+   * want 2017 to be reflex only as well and picture to match the original
+   * 2017 question"*.
+   *
+   * `sector.angle-arc` serves 2017 P2 Q14 alone, and this kind has its own
+   * topic and so its own draw loop, so nothing else draws differently. 2022's
+   * split, `-reflex`, is untouched. The picture: the gap turned to face down,
+   * A on the left and B on the right, the reflex angle marked with a bare arc
+   * at O, O inside the sector, and only the radius written on it — the arc
+   * length is in the prose, as on the paper. It reads REFLEX_CONTEXTS, the
+   * list written for a reflex sweep; reading a list moves nobody else's draws.
+   */
+  const reflex2017 = kind === 'angle-arc';
   for (let tries = 0; tries < 3000; tries++) {
-    const c = pick(reflexOnly || majorArc ? REFLEX_CONTEXTS
+    const c = pick(reflexOnly || majorArc || reflex2017 ? REFLEX_CONTEXTS
       : minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major')
       : majorOnly ? CONTEXTS.filter(x => x.sweep !== 'minor') : CONTEXTS);
     const sweep = minorOnly ? 'minor' as const
@@ -457,7 +475,7 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
       // an angle drawn at 200 can land a shade under 180 and the question then
       // asks for a "reflex" angle that is not one. `reflexOnly` is a constant,
       // so for every other kind this costs no draw and changes no stream.
-      if (reflexOnly && angle <= 185) continue;
+      if ((reflexOnly || reflex2017) && angle <= 185) continue;
     } else if (paper1) {
       /* **A non-calculator question has to be non-calculable.**
          Until this, `paper1` changed pi to 3·14 and the wording and nothing
@@ -635,7 +653,17 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         ],
         stepMarks: [1, 1, 1],
         finalAnswer: `$${Math.round(angle)}^{\\circ}$`,
-        figure: built({ radius: shown.radius, angle: '', arc: shown.arc }),
+        figure: reflex2017
+          // The gap centred straight down: the sector runs anticlockwise from
+          // its first radius, so that radius sits just right of the bottom and
+          // is named B, with A just left of it, as the paper places them.
+          ? sector({
+            radius: r, angle, start: 270 + (360 - angle) / 2,
+            names: { centre: nO, a: nB, b: nA },
+            labels: { radius: shown.radius, angle: '', arc: '' },
+            bareAngleMark: true, centreInWedge: true,
+          }) ?? undefined
+          : built({ radius: shown.radius, angle: '', arc: shown.arc }),
       };
     } else {
       q = {

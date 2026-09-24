@@ -33,6 +33,14 @@ export interface SectorSpec {
   names: { centre: string; a: string; b: string };
   /** Empty leaves that measurement off the drawing. */
   labels: { radius: string; angle: string; arc: string };
+  /**
+   * **2017 P2 Q14's picture — opt-in, 2026-09-24.** The paper marks the reflex
+   * angle it asks for with a small arc at the centre and writes nothing on
+   * it, and puts O inside the sector, above its vertex, rather than in the
+   * gap. Off for every other caller, so no other figure moves.
+   */
+  bareAngleMark?: boolean;
+  centreInWedge?: boolean;
 }
 
 const dir = (deg: number): Pt =>
@@ -80,7 +88,9 @@ export function sector(spec: SectorSpec): Figure | null {
     { kind: 'segment', from: O, to: A },
     { kind: 'segment', from: O, to: B },
     { kind: 'arc', centre: O, r, from: start, to: start + angle },
-    { kind: 'label', text: nO, anchor: O, away: middle },
+    // Pushed out of the wedge into the gap, unless asked to sit inside it.
+    { kind: 'label', text: nO, anchor: O,
+      away: spec.centreInWedge ? scale(middle, -1) : middle },
     { kind: 'label', text: nA, anchor: A, away: O },
     { kind: 'label', text: nB, anchor: B, away: O },
   ];
@@ -95,6 +105,10 @@ export function sector(spec: SectorSpec): Figure | null {
       kind: 'label', text: L.angle, small: true,
       anchor: add(O, scale(dir(start + angle / 2), mark)), away: O,
     });
+  }
+  if (spec.bareAngleMark && !L.angle) {
+    // The same arc as above, with no number on it: the angle is the unknown.
+    elements.push({ kind: 'arc', centre: O, r: r * 0.22, from: start, to: start + angle });
   }
   if (L.arc) {
     elements.push({

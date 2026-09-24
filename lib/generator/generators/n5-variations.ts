@@ -5160,21 +5160,24 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // 2022 P2 Q10 moved to `sector.angle-arc-reflex`. Both papers here ask
     // for the REFLEX angle off a MAJOR arc, and this drew the minor form in
     // 154 of 200 draws - so three questions in four were a minor-sector
-    // question neither paper contains. 2017 P2 Q14 has not been reviewed yet,
-    // so it stays here, unmoved, with the same fault to settle when 2017
-    // comes up. See docs/verdicts/2022-p2.md.
+    // question neither paper contains. 2017 P2 Q14 stayed here for its own
+    // review, and on 2026-09-24 the owner settled it: "I'd want 2022 left as
+    // it is. I'd want 2017 to be reflex only as well and picture to match the
+    // original 2017 question". So this is reflex only now, drawn as 2017's
+    // paper draws it (see `reflex2017` in n5-sector.ts), and 2022's split is
+    // untouched.
     basedOn: ['2017 P2 Q14'],
     marks: 3,
-    route: 'an expression for the arc length, or the arc-to-circumference ratio, then know how to find the angle from it, then calculate the angle',
+    route: 'an expression for the arc length, or the arc-to-circumference ratio, then know how to find the angle from it, then calculate the reflex angle',
     plan: [
       'Work out the whole circumference, $\\pi$ times the diameter, so you have something to measure the arc against',
-      'Divide the arc by that circumference, then multiply by 360, since a full turn is 360 degrees',
-      'Work that out and give the angle at the centre in degrees',
+      'Divide the major arc by that circumference, then multiply by 360, since a full turn is 360 degrees',
+      'Work that out and give the reflex angle at the centre in degrees - it is the long way round, so expect more than 180',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'integer',
     webTopics: ['Arc length'],
-    skill: 'The arc as a fraction of the circumference gives the angle',
+    skill: 'The major arc as a fraction of the circumference gives the reflex angle',
   },
   'sector.angle-arc-reflex': {
     topic: 'Finding the Reflex Angle of a Sector',
