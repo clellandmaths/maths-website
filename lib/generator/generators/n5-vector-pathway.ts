@@ -128,31 +128,23 @@ function parallelogram(): Q | null {
   const pos: Record<string, Combo> = {
     [P1]: C(0, 1, 0, 1), [P2]: C(1, 1, 0, 1), [P3]: C(1, 1, 1, 1), [P4]: C(0, 1, 1, 1),
   };
-  /**
-   * Which diagonal, and which way along it.
-   *
-   * This asked for one of two, so the whole variation was two questions. A
-   * diagonal has two ends and the parallelogram has two diagonals, and all four
-   * are one mark and the same skill - u+v, -u-v, v-u and u-v. Reversing a
-   * diagonal is not padding: a pupil who can write AC often stalls on CA.
-   *
-   * Four is this shape's ceiling and it is a real one. With u and v given,
-   * those four are every pathway there is; a fifth would need a multiple or a
-   * midpoint, and 2016 P2 Q3 has neither.
-   */
-  const [from, to] = pick([[P1, P3], [P3, P1], [P2, P4], [P4, P2]]);
-  // Every route goes via the corner the two share: A and C meet at B, B and D
-  // meet at A.
-  const via = (from === P1 || from === P3) ? P2 : P1;
-  const wantG = cSub(pos[to], pos[from]);
-
+  // Which diagonal, and which way along it: see the note on the given sides
+  // below. Reversing a diagonal is not padding - a pupil who can write BD
+  // often stalls on DB.
   /**
    * **Which two sides are given — 2026-09-24.** The owner, on the 2016 P2
    * sheet: *"Could we widen this by asking for any diagonal plus any of the
    * other 2 sides as long as it's not 2 parallel sides"* — confirmed as: the
    * two GIVEN vectors may be any pair of adjacent sides, going round the
-   * shape as the paper's AB then BC do, and the question still asks for a
-   * diagonal. 4 corners times 4 diagonals is 16, from 4.
+   * shape as the paper's AB then BC do.
+   *
+   * **And the diagonal asked for runs through the corner those two share.**
+   * The owner again, seeing the first build: *"I think asking for the
+   * diagonal in the same triangle makes the question too easy"*. Given AB and
+   * BC, AC is the third side of their own triangle - just u + v. The paper
+   * asks for BD, from the shared corner, which needs a side to be reversed
+   * (v - u). So the diagonal is always the one through that corner, either
+   * way along it: 4 corners times 2 directions is 8.
    *
    * The figure stays drawn in its own basis (AB along U, BC along V); the
    * given pair meeting at corner k is AB,BC / BC,CD / CD,DA / DA,AB, which
@@ -162,6 +154,12 @@ function parallelogram(): Q | null {
   const names = [P1, P2, P3, P4];
   const k = pick([0, 1, 2, 3]);
   const [g1, g2] = [[names[k], names[(k + 1) % 4]], [names[(k + 1) % 4], names[(k + 2) % 4]]];
+  const shared = names[(k + 1) % 4], across = names[(k + 3) % 4];
+  const [from, to] = pick([[shared, across], [across, shared]]);
+  // Every route goes via a corner the two share: A and C meet at B, B and D
+  // meet at A.
+  const via = (from === P1 || from === P3) ? P2 : P1;
+  const wantG = cSub(pos[to], pos[from]);
   const neg = (x: R): R => rSub(r(0, 1), x);
   const want: Combo = k === 0 ? wantG
     : k === 1 ? { a: wantG.b, b: neg(wantG.a) }

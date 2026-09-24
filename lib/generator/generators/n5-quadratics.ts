@@ -81,15 +81,30 @@ function sigFigs(v: number, n: number): number {
 
 function completeSquare(_wanted?: string, asked?: string): Q {
   const form = squareForm();
-  const { p: pName, q: qName } = form;
   /**
-   * **2016 P2 Q9 is in x, always.** The owner, on the 2016 P2 sheet: *"Yes
-   * want x only"*, against the variable being y or p in 174 of 400 draws.
-   * The letters are still drawn, so the stream is unchanged; only the one
-   * read for this id is replaced. The locked clones on this routine are on
-   * that sheet as their own cards.
+   * **Each paper in x, and the two locked ones in their own letters.**
+   *
+   * 2016 P2 Q9 — the owner, on the 2016 P2 sheet: *"Yes want x only"*,
+   * against the variable being y or p in 174 of 400 draws.
+   *
+   * 2019 P2 Q10 and 2025 P2 Q5, both LOCKED, had the same spread (not x in
+   * 237 and 235 of 400) and each printed the other paper's letters about
+   * half the time. Put to the owner on the same sheet as "x, and its paper's
+   * own letters": *"Yes key them all"* on 2019's, *"Yes for x and a and b"*
+   * on 2025's. 2019 is (x + p)^2 + q and 2025 is (x + a)^2 + b.
+   *
+   * The letters are still drawn for every id, so the stream is unchanged;
+   * only what these three ids read is replaced. A topic sheet asks for none
+   * of them and keeps the mix.
    */
-  const v = asked === 'quadratics.complete-square-2016' ? 'x' : form.v;
+  const KEYED: Record<string, { p?: string; q?: string }> = {
+    'quadratics.complete-square-2016': {},                         // 2016 P2 Q9
+    'quadratics.complete-square-pre2023': { p: 'p', q: 'q' },      // 2019 P2 Q10
+    'quadratics.complete-square': { p: 'a', q: 'b' },              // 2025 P2 Q5
+  };
+  const key = KEYED[asked ?? ''];
+  const pName = key?.p ?? form.p, qName = key?.q ?? form.q;
+  const v = key ? 'x' : form.v;
   const half = nonZeroInt(-8, 8);
   const b = 2 * half;
   const c = nonZeroInt(-40, 40);
