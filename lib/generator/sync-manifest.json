@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "615d0fcddee4449247ce5563d034f366a8c32344",
+  "sourceCommit": "9386552ad4ccd9b67d4184fdd47dfb6b364f841d",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -32,7 +32,7 @@
     "diagrams/shapes/tangent-reflex.ts": "5dc596f96b16ece7",
     "diagrams/shapes/tangent-semicircle.ts": "708b8baaddd882ec",
     "diagrams/shapes/triangle-sides.ts": "351ee8f94f1ed81c",
-    "diagrams/shapes/two-circles.ts": "9d8b31461d6b45e9",
+    "diagrams/shapes/two-circles.ts": "627fe8c0232c098c",
     "diagrams/shapes/two-tangents-chord.ts": "7c876ea6949b6809",
     "diagrams/shapes/two-tangents-diameters.ts": "b2d6697bba9f010e",
     "diagrams/shapes/two-triangles-apart.ts": "9dbf595e9ba40d9d",

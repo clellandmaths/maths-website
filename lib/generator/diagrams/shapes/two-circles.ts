@@ -52,14 +52,36 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
     const d = Math.sqrt(r * r - half * half);
     const A = pt(0, half), B = pt(0, -half);
     const C1 = pt(-d, 0), C2 = pt(d, 0);
+    /**
+     * **The sign's outline, not two whole circles.** — 2026-09-24
+     *
+     * 2024 P2 Q10 draws the door-number sign as its outline: each circle's
+     * MAJOR arc, the two meeting at A and B, with the chord AB and the radius
+     * AC dashed inside, a dot at C and a "width" arrow underneath — the width
+     * is what the question asks for. This drew both whole circles, so their
+     * inner arcs crossed the sign and one ran through the chord's length in
+     * 4 of 4 renders, and it drew no dot and no arrow. The owner, on the
+     * locked follow-ups sheet: *"Yes"*. Overlap branch only.
+     *
+     * Each arc is taken the long way round from A to B, tried both ways and
+     * the major one kept, as the half-turn branch settles its own direction.
+     */
+    const sweepOf = (a: { from: number; to: number }) => ((a.to - a.from) % 360 + 360) % 360;
+    const major = (centre: Pt) => {
+      const one = { kind: 'arc' as const, centre, r, from: bearing(centre, A), to: bearing(centre, B) };
+      const two = { kind: 'arc' as const, centre, r, from: bearing(centre, B), to: bearing(centre, A) };
+      return sweepOf(one) > 180 ? one : two;
+    };
     elements.push(
-      { kind: 'circle', centre: C1, r },
-      { kind: 'circle', centre: C2, r },
+      major(C1),
+      major(C2),
       { kind: 'segment', from: A, to: B, dashed: true },
       { kind: 'segment', from: A, to: C2, dashed: true },
+      { kind: 'dot', at: C2 },
       { kind: 'label', text: NA, anchor: A, away: pt(0, 0) },
       { kind: 'label', text: NB, anchor: B, away: pt(0, 0) },
       { kind: 'label', text: NC, anchor: C2, away: pt(0, 0) },
+      ...dimensionArrow(pt(-(d + r), -r), pt(d + r, -r), pt(0, -r - 1), r * 0.15, 'width'),
     );
     if (spec.labels.chord) elements.push(sideLabel(A, B, spec.labels.chord, C2));
     if (spec.labels.radius) elements.push(sideLabel(A, C2, spec.labels.radius, pt(0, 0)));
@@ -163,10 +185,20 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
     // a short dashed S-to-T instead, with no C and no D, so the figure did not
     // contain the segment the question names.
     { kind: 'segment', from: C, to: D },
-    // S and T sit one above the other on the axis, so their labels are pushed
-    // sideways in opposite directions rather than up and down into each other
-    { kind: 'label', text: NC, anchor: S, away: pt(-r, 0) },
-    { kind: 'label', text: NC2 ?? 'T', anchor: T, away: pt(r, -r) },
+    /**
+     * **Dotted centres, each letter below-right of its dot.** — 2026-09-24
+     *
+     * 2019 P2 Q18 dots S and T and writes each letter just below and right of
+     * its dot, in the clear. This drew no dots and pushed S straight sideways
+     * — along the dashed AB it sits on, so the dashes ran through the "S" in
+     * 4 of 4 renders — and T up towards the head. Pushed diagonally, each
+     * letter clears both the line through its dot and the axis. The owner, on
+     * the locked follow-ups sheet: *"Agree"*. Snowman branch only.
+     */
+    { kind: 'dot', at: S },
+    { kind: 'dot', at: T },
+    { kind: 'label', text: NC, anchor: pt(S.x + r * 0.10, S.y - r * 0.10), away: S },
+    { kind: 'label', text: NC2 ?? 'T', anchor: pt(T.x + r * 0.10, T.y - r * 0.10), away: T },
     { kind: 'label', text: NA, anchor: A, away: S },
     { kind: 'label', text: NB, anchor: B, away: S },
     ...(spec.names.top ? [{ kind: 'label' as const, text: spec.names.top, anchor: C, away: S }] : []),
