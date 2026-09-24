@@ -1427,7 +1427,27 @@ export function pythagorasCoordinates(wanted?: string): Q {
     const V = { x: X / 2, y: Y / 2, z: Z };
     if (!Number.isInteger(V.x) || !Number.isInteger(V.y)) continue;
     // the paper shifts the whole solid along x, so A is not at the origin
-    const shift = getRandomInt(1, 4);
+    /**
+     * **The whole y-axis, clear of the pyramid — 2026-09-24.** The owner, on
+     * the rebuilt 2016 P1 sheet: *"Still needs work the original question you
+     * can see whole y axis"*, then *"Let's try option a"*: A further along x
+     * so the axis can pass the pyramid by.
+     *
+     * Drawn at 40° (depth 0.76), the axis clears when A's x plus half the
+     * base length exceeds the height times cot 40°, with a little to spare.
+     * Measured over the 14 quadruples: shifts up to 4 left 0 layouts that
+     * clear; up to 12 leaves 34, across 7 shapes. The second test keeps the
+     * dashed height off a solid edge: at this projection an apex over
+     * `b · cos40° · 0.76 = a` sits exactly above the front-right corner and
+     * the construction line vanishes behind it.
+     */
+    const shift = getRandomInt(1, 12);
+    const RECEDE = { angle: 40, depth: 0.76 };
+    const along = Math.cos(RECEDE.angle * Math.PI / 180) * RECEDE.depth;
+    // The spare grows with the height: a fixed 0.6 let a 12-high apex sit
+    // against the axis, dot touching, in 2 of 12 rendered draws.
+    if (shift + X / 2 <= Z / Math.tan(RECEDE.angle * Math.PI / 180) + 0.5 + 0.25 * Z) continue;
+    if (Math.abs((Y / 2) * along - X / 2) < 0.12 * Math.max(X / 2, 1)) continue;
     const shifted = (p: { x: number; y: number; z: number }) =>
       ({ x: p.x + shift, y: p.y, z: p.z });
     const [sA, sB, sV] = [shifted(A), shifted(B), shifted(V)];
@@ -1448,10 +1468,10 @@ export function pythagorasCoordinates(wanted?: string): Q {
         size: { x: X, y: Y, z: Z }, construction: true,
       }],
       names, showCoords: ['A', 'V'],
-      // 2016 P1 Q7's own axes: y thrown back steeply and stopped behind the
-      // pyramid, as the paper draws it. The owner: "Yes". Opt-in; no other
-      // figure on axes moves.
-      recede: { angle: 40, depth: 0.76 }, hideBehind: true,
+      // 2016 P1 Q7's own axes: y thrown back more steeply, and drawn whole,
+      // clear of the pyramid (see `shift` above). Opt-in; no other figure on
+      // axes moves.
+      recede: RECEDE,
     });
 
     const prose = [
