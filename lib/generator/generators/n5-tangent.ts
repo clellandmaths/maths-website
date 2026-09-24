@@ -106,10 +106,14 @@ type TangentSemicircleNames = { centre: string; contact: string; near: string;
 export function tangentSemicircleQuestion(): Q {
   for (let tries = 0; tries < 3000; tries++) {
     const n = pick(SEMI_SETS);
-    // the arc between the point of contact and the near end of the diameter
-    // is 180 - 2x, and that arc is the room the tangent leaves for the near
-    // end's letter. Past about 66 the two start to crowd each other.
-    const x = getRandomInt(58, 66);       // the tangent-chord angle at B
+    // the arc between the point of contact and the far end of the diameter
+    // is 180 - 2x, and that arc is the room the tangent leaves for the far
+    // end's letter. Widened from 66 on the owner's "Yes" to the 2015 P1 sheet
+    // (the paper's own is 77), once that letter was pushed off B as well as
+    // off O: measured over every layout, 70 to 72 now draw in 800 to 1000 of
+    // 1200, and from 73 up the tangent passes within a tenth of a radius of
+    // E and none draws.
+    const x = getRandomInt(58, 72);       // the tangent-chord angle at B
     const y = getRandomInt(48, 72);       // the angle at E
     const first = 90 - x, second = 90 - y;
     const answer = first + second;

@@ -170,8 +170,16 @@ function solveGiven(_wanted?: string, asked?: string): Q {
     // - 2024 P1 Q7 is the p/r one. `a`/`b` and `m`/`n` are ours and appear in
     // none of them. The worded questions in this file are a different matter
     // entirely: see the note on the contexts' own letters.
-    const [v1, v2] = pick([['x', 'y'], ['x', 'y'], ['x', 'y'], ['p', 'r']]);
-    const half = getRandomInt(1, 6) === 1;                 // the 2018 P1 Q3 shape
+    //
+    // **2015 P1 Q11 is x and y with whole answers, x = 7 and y = -2.** The
+    // clone lent it 2024's p and r in 98 of 400 draws and 2018's half in 30.
+    // The owner, on the 2015 P1 sheet: *"Yes key"*. Both coins are still
+    // drawn; 2015's id reads them as x, y and whole, so the three LOCKED
+    // papers on this routine see the same stream as before.
+    const paper2015 = asked === 'simeq.solve-given-2015';
+    const drawnLetters = pick([['x', 'y'], ['x', 'y'], ['x', 'y'], ['p', 'r']]);
+    const [v1, v2] = paper2015 ? ['x', 'y'] : drawnLetters;
+    const half = getRandomInt(1, 6) === 1 && !paper2015;   // the 2018 P1 Q3 shape
     const x0 = half ? nonZeroInt(-9, 13) / 2 : nonZeroInt(-8, 9);
     const y0 = nonZeroInt(-8, 9);
     const p = buildPair(x0, y0, bothScaled);

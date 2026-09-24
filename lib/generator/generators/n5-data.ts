@@ -220,8 +220,17 @@ function quartilesOnly(semi: boolean): Q {
  * specifically, and 2019's notes refuse it to a candidate who halves the range
  * instead.
  */
-function medianCompare(semi: boolean): Q {
-  for (let tries = 0; tries < 300; tries++) {
+function medianCompare(semi: boolean, asked?: string): Q {
+  /**
+   * **2015 P1 Q10 is ten two-digit scores, on a non-calculator paper.** The
+   * clone gave nine values in 196 of 400 draws (2019's split, quartiles found
+   * differently) and three-digit data in 187 - "£551 £315 £491 ...". The
+   * owner, on the 2015 P1 sheet: *"Yes key"*. Ten values, every one of them
+   * and the second group's median under 100. Read by 2015's alias alone, and
+   * every coin is still drawn, so LOCKED 2019 P1 Q5 draws exactly as before.
+   */
+  const paper2015 = asked === 'data.median-siqr-compare-pre2019p1';
+  for (let tries = 0; tries < (paper2015 ? 600 : 300); tries++) {
     const ctx = pick(DATA_CONTEXTS);
     // **How many values is part of the question.** With an odd count the median
     // is one of the listed values and each quartile is a single value too; with
@@ -230,7 +239,8 @@ function medianCompare(semi: boolean): Q {
     // ten, six and ten, all even; the semi papers are ten and nine, and 2019's
     // quartiles of 3.5 and 8 come out of that odd split. So each variation
     // takes the counts its own papers use, rather than all four.
-    const n = pick(semi ? [9, 10] : [6, 10]);
+    const drawnN = pick(semi ? [9, 10] : [6, 10]);
+    const n = paper2015 ? 10 : drawnN;
     const [lo, hi] = ctx.band;
     if (hi - lo < n + 4) continue;
     const vals: number[] = [];
@@ -269,6 +279,7 @@ function medianCompare(semi: boolean): Q {
     const otherSpread = wider ? spread + step : spread - step;
     if (otherMed < lo || otherMed > hi) continue;
     if (otherSpread < grain || otherSpread === spread) continue;
+    if (paper2015 && (Math.max(...vals) > 99 || otherMed > 99)) continue;
 
     return {
       subTopic: 'Comparing Median and Interquartile Range',
@@ -615,8 +626,8 @@ export const DATA_GENERATORS: Record<string, Gen> = {
   // than draw it. A topic sheet names none and keeps the even toss.
   'Quartiles and Interquartile Range': (wanted) => quartilesOnly(
     wanted !== undefined ? wanted === 'data.quartiles-semi' : getRandomInt(0, 1) === 0),
-  'Comparing Median and Interquartile Range': (wanted) => medianCompare(
-    wanted !== undefined ? wanted === 'data.median-siqr-compare' : getRandomInt(0, 1) === 0),
+  'Comparing Median and Interquartile Range': (wanted, asked) => medianCompare(
+    wanted !== undefined ? wanted === 'data.median-siqr-compare' : getRandomInt(0, 1) === 0, asked),
   'Mean and Standard Deviation': meanStdev,
   'Comparing Mean and Standard Deviation': meanStdevCompare,
   'Judging Consistency from the Standard Deviation': meanStdevConsistency,

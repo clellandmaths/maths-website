@@ -203,6 +203,16 @@ interface OpOpts {
    * `fractions.add-mixed` cites 2018 P1 Q1 and nothing else.
    */
   properSecond?: true;
+  /**
+   * **The first fraction is the smaller, so the pupil has to borrow.**
+   *
+   * 2015 P1 Q1 is `6 1/5 - 2 1/3`: 1/5 is less than 1/3, and exchanging a
+   * whole is the step the question tests. The clone borrowed in 170 of 400
+   * draws. The owner, on the 2015 P1 sheet: *"Yes key to that"*. A rejection
+   * read by the 2015 alias alone, so LOCKED 2024 P1 Q1 (`3 2/3 - 1 1/4`, no
+   * borrow) never sees it and draws exactly as before.
+   */
+  borrow?: true;
   subTopic: string;
   variationId: string;
   /**
@@ -288,7 +298,7 @@ const MAX_DIVIDE_MIXED_DEN = 20;
 const MAX_BRACKET_DEN = 40;
 
 function operation(
-  { op, useMixed, oneProper, mixedLeads, properSecond, subTopic, variationId,
+  { op, useMixed, oneProper, mixedLeads, properSecond, borrow, subTopic, variationId,
     stepMarks, maxDen }: OpOpts,
 ): Q {
   for (let tries = 0; tries < 1200; tries++) {
@@ -307,6 +317,7 @@ function operation(
 
     // add and subtract need different denominators, or there is no skill in it
     if ((op === 'add' || op === 'subtract') && x.d === y.d) continue;
+    if (borrow && x.n / x.d >= y.n / y.d) continue;   // 2015 P1 Q1
 
     // Multiplying or dividing a fraction by ITSELF is correct and is not a
     // question. 1/2 ÷ 1/2 = 1 practises nothing and answers the drill's own
@@ -609,8 +620,9 @@ export const N5_GENERATORS: Record<string, Gen> = {
     subTopic: 'Adding Mixed Numbers', variationId: 'fractions.add-mixed',
     stepMarks: [1, 1],   // 2018 P1 Q1
   }),
-  'Subtracting Mixed Numbers': () => operation({
+  'Subtracting Mixed Numbers': (_w, asked) => operation({
     op: 'subtract', useMixed: true,
+    ...(asked === 'fractions.subtract-mixed-pre2023' ? { borrow: true as const } : {}),
     subTopic: 'Subtracting Mixed Numbers', variationId: 'fractions.subtract-mixed',
     stepMarks: [1, 1],   // 2024 P1 Q1
   }),

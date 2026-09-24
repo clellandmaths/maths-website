@@ -198,9 +198,15 @@ function amplitudeAndCycles(wanted?: string): Q | null {
    * pre2023` (2015 P1 Q6) was materialised on 2026-09-20 and is a real id,
    * not an alias - so 2015 keeps drawing `split` exactly as before. `split`
    * is still drawn either way, so the random stream does not move.
+   *
+   * **2015 P1 Q6 asks in one instruction, and now so does its clone.** The
+   * toss had been approved on 2026-09-19, while 2015 and 2024 shared one id;
+   * put back to the owner on the 2015 P1 sheet, lettered parts in 222 of 400
+   * draws: *"Yes"*. `split` is still drawn.
    */
   const askInParts = scaled ? !cosineForm
     : wanted === 'trig-graphs.amplitude-cycles' ? true          // 2024 P1 Q8
+    : wanted === 'trig-graphs.amplitude-cycles-pre2023' ? false // 2015 P1 Q6
     : split;
   const showsHalfPeriod = scaled ? cosineForm : twoTicks;
   const eq = `y = ${a}\\${fn} ${b}x^{\\circ}`;

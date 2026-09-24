@@ -232,7 +232,13 @@ function buildSimplify(shape: 'common' | 'squares' | 'two-letter'): Simplified |
   }
 
   // Simplifying: x:6 y:2 in the papers, and no n at all.
-  const v = pick(['x', 'x', 'x', 'y']);
+  //
+  // **The common-factor shape is 2015 P1 Q12's alone, and it is x.** y came
+  // up in 117 of 400 draws. The owner, on the 2015 P1 sheet: *"Key to x
+  // only"*. The letter is still drawn, so the squares shape (2023 P2 Q12)
+  // draws exactly as before.
+  const drawnV = pick(['x', 'x', 'x', 'y']);
+  const v = shape === 'common' ? 'x' : drawnV;
   const m = nonZeroInt(-9, 9);                  // the surviving denominator factor
 
   if (shape === 'common') {

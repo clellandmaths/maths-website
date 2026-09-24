@@ -70,16 +70,25 @@ export function tangentSemicircle(spec: TangentSemicircleSpec): Figure | null {
     { kind: 'segment', from: D, to: F },
     { kind: 'segment', from: B, to: E },
     { kind: 'segment', from: E, to: F },
+    // **The radius OB, and a dot at O, as 2015 P1 Q3 draws them.** OB is the
+    // line that shows triangle OBD is isosceles, the first step of the
+    // working. The owner, on the 2015 P1 sheet: *"Yes"*. Only that question
+    // draws this shape.
+    { kind: 'segment', from: O, to: B },
+    { kind: 'dot', at: O, small: true },
     { kind: 'label', text: n.contact, anchor: B, away: O },
     { kind: 'label', text: n.near, anchor: D, away: O },
-    { kind: 'label', text: n.far, anchor: E, away: O },
+    // Pushed off B as well as off the centre. The paper's 77 degrees puts B
+    // an arc of 26 degrees from E, and straight out from O the letter landed
+    // on the tangent in every layout from 71 up.
+    { kind: 'label', text: n.far, anchor: E, away: mid(O, B) },
     { kind: 'label', text: n.fourth, anchor: F, away: O },
     { kind: 'label', text: n.tangentA, anchor: A, away: B },
     { kind: 'label', text: n.tangentC, anchor: C, away: B },
-    // BD passes closer to the centre than anything else in the figure — it is
-    // r cos(x) away and everything else is further — so the centre's letter is
-    // pushed off it
-    { kind: 'label', text: n.centre, anchor: O, away: mid(B, D) },
+    // Three radii now leave the centre - to D, to E and to B - and the only
+    // side of DE with none on it is F's, so the centre's letter goes there,
+    // square off the diameter.
+    { kind: 'label', text: n.centre, anchor: O, away: scale(dir(start - 90), r) },
     ...angleMark(B, [A, D], `${x}°`),
     ...angleMark(E, [D, F], `${y}°`),
   ];

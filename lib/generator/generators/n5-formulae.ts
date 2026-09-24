@@ -724,10 +724,20 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
     // too. The owner, on the 2026 P1 sheet: *"Agree"*. Nothing asked - a
     // topic sheet - keeps the even draw, so browsing still meets both.
     const rel = REL_OF[asked ?? ''] ?? pick(['\\lt', '\\gt']);
-    const bracketLeft = getRandomInt(0, 1) === 0;
+    /**
+     * **2015 P1 Q2's own shape: `11 - 2(1 + 3x) < 39`.** A number minus a
+     * bracket on the left, a bare number on the right, so collecting leaves
+     * `-6x < 30` and the sign has to turn. The clone put an x on both sides
+     * in 400 of 400 draws. The owner, on the 2015 P1 sheet: *"Yes key the
+     * shape for this question."* Every coin below is still drawn; 2015's id
+     * only reads them differently, so the four LOCKED papers on this routine
+     * see the same stream as before.
+     */
+    const paper2015 = asked === 'inequalities.brackets-2015';
+    const bracketLeft = getRandomInt(0, 1) === 0 || paper2015;
     // one in five should end with a negative x coefficient, so the sign flips —
     // that is 2015 P1 Q2, and it is where the marks are lost
-    const wantFlip = getRandomInt(1, 5) === 1;
+    const wantFlip = getRandomInt(1, 5) === 1 || paper2015;
 
     const k = nonZeroInt(-6, 6);                // multiplier on the bracket
     const inner = nonZeroInt(-9, 9);            // constant inside the bracket
@@ -736,7 +746,8 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
     // Positive, as it is in every paper that has one: 19 + x, 3x, x + 8. A
     // negative there opened the question on a negative variable term, '-x - 8',
     // and put two sign reversals in a three-mark question.
-    const otherCoef = getRandomInt(1, 6);       // v coefficient on the other side
+    const drawnCoef = getRandomInt(1, 6);       // v coefficient on the other side
+    const otherCoef = paper2015 ? 0 : drawnCoef;
     const otherConst = nonZeroInt(-20, 20);
 
     // **The bracket has a multiplier.** The five papers use 2, 3, 5, 6 and 3;
@@ -749,12 +760,13 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
     // Written the other way round the question opened on a negative bracket,
     // `-3(x - 5) - 3`, which none of the five does.
     if (k < 0 && outside < 0) continue;
+    if (paper2015 && k > 0) continue;           // the bracket is subtracted
 
     const bracketTex = `${Math.abs(k)}(${term(innerCoef, v)}${tail(inner)})`;
     const withBracket = k < 0
       ? `${outside} - ${bracketTex}`
       : `${bracketTex}${tail(outside)}`;
-    const plain = `${term(otherCoef, v)}${tail(otherConst)}`;
+    const plain = otherCoef ? `${term(otherCoef, v)}${tail(otherConst)}` : `${otherConst}`;
 
     // bracket side: k·innerCoef·v + (k·inner + outside)
     const bCoef = k * innerCoef, bConst = k * inner + outside;

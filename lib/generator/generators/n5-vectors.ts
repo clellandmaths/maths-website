@@ -293,7 +293,7 @@ function lineFromEquation(wantIntercept: boolean): Q {
 // ── Zeta skills the papers have not asked directly ──────────────────────
 //    the gradient between two points, and the equation through two points
 
-function twoPoints(wantEquation: boolean, wanted?: string): Q {
+function twoPoints(wantEquation: boolean, wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 200; tries++) {
     const [x1, y1] = [nonZeroInt(-8, 8), nonZeroInt(-9, 9)];
     const [x2, y2] = [nonZeroInt(-8, 8), nonZeroInt(-9, 9)];
@@ -428,9 +428,15 @@ function twoPoints(wantEquation: boolean, wanted?: string): Q {
         { x: x2, y: y2, text: `B (${x2}, ${y2})`, side: 'right' },
       ],
     }) : null;
+    // **2015 P1 Q8 gives bare coordinates:** "the line joining the points
+    // (-2, 5) and (3, 15)". The clone named them A and B in 400 of 400 draws.
+    // The owner, on the 2015 P1 sheet: *"Yes"*. Wording only, and read by
+    // 2015's alias alone, so LOCKED 2022 P1 Q6 prints exactly as before.
     const ask = drawIt
       ? `The diagram shows the straight line joining $A(${x1}, ${y1})$ and $B(${x2}, ${y2})$.`
-      : `Find the equation of the straight line passing through $A(${x1}, ${y1})$ and $B(${x2}, ${y2})$.`;
+      : asked === 'straight-line.equation-two-points-pre2022p1'
+        ? `Find the equation of the line joining the points $(${x1}, ${y1})$ and $(${x2}, ${y2})$.`
+        : `Find the equation of the straight line passing through $A(${x1}, ${y1})$ and $B(${x2}, ${y2})$.`;
     const follow = drawIt ? `Find the equation of the line $AB$.` : null;
     if (fig && verifyFigure(fig, `${ask} ${follow} ${equation}`).length) continue;
 
@@ -970,7 +976,7 @@ export const VECTOR_GENERATORS: Record<string, Gen> = {
   'Gradient from an Equation': () => lineFromEquation(false),
   'Intercept from an Equation': () => lineFromEquation(true),
   'Gradient from Two Points': () => (getRandomInt(1, 5) === 1 ? gradientSpecial() : twoPoints(false)),
-  'Equation of a Line from Two Points': (w) => twoPoints(true, w),
+  'Equation of a Line from Two Points': (w, asked) => twoPoints(true, w, asked),
   'Adding Two Vectors Drawn on a Grid': tried('vectors.add-from-grid', addFromGrid),
   'Drawing the Resultant of Two Vectors': tried('vectors.draw-resultant', drawResultant),
 };

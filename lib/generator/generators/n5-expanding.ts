@@ -207,7 +207,7 @@ function twoBinomials(): Q {
 // papers collect to four terms. `twoBinomials` above already guards its middle
 // term for the same reason.
 
-function binomialTrinomial(): Q {
+function binomialTrinomial(_wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
     // **x, always.** Five of the six papers here use x and only 2026 P1 Q1
     // uses y; the owner's ruling on 2024 P1 Q3 is to keep the variable to x.
@@ -217,6 +217,12 @@ function binomialTrinomial(): Q {
     const a = nonZeroInt(1, 3), b = nonZeroInt(-6, 6);
     const c = nonZeroInt(1, 3), d = nonZeroInt(-6, 6), e = nonZeroInt(-6, 6);
     const result = mulP([b, a], [e, d, c]);
+    // **2015 P1 Q4 is `(x - 4)(x^2 + x - 2)`: a plain x leads both brackets.**
+    // The clone did that in 68 of 400 draws, and `(3x - 4)(3x^2 - 6x - 4)` is
+    // a harder sum than the paper sets. The owner, on the 2015 P1 sheet: *"I
+    // agree"*. A rejection read by 2015's id alone; the five LOCKED papers on
+    // this routine never reach it.
+    if (asked === 'expanding.binomial-trinomial-2015' && (a !== 1 || c !== 1)) continue;
     if (!result[3]) continue;                             // must have the cubic term
     if (!result.some(k => k < 0)) continue;               // and a negative coefficient
     if (result.some(k => Math.abs(k) > 60)) continue;     // keep it to paper scale

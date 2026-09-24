@@ -450,6 +450,11 @@ function rationaliseSimplify(): Q {
     // A whole-number answer means the root divided out and it stopped being a
     // surd question; the papers always leave one.
     if (num === den && den === 1) continue;
+    // **The number on top cancels with the bottom, partly or completely**, as
+    // the paper's 4 does. 23/√54 -> 23√6/18 left "simplest form" nothing to do
+    // but the surd, in 167 of 400 draws. The owner, on the 2015 P1 sheet:
+    // *"Yes"*. Nothing else cites this routine.
+    if (g === 1) continue;
 
     const numTex = num === 1 ? `\\sqrt{${s}}` : `${num}\\sqrt{${s}}`;
     const answer = den === 1 ? numTex : `\\frac{${numTex}}{${den}}`;
