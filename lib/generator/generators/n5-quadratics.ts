@@ -163,7 +163,7 @@ function turningPoint(): Q {
 // roots" or "real and distinct roots". The other two cases have their own
 // expected answers.
 
-function discriminant(wanted?: string): Q {
+function discriminant(wanted?: string, asked?: string): Q {
   /**
    * **The cap belongs to 2025 P1 Q11 alone.**
    *
@@ -199,7 +199,17 @@ function discriminant(wanted?: string): Q {
     const fname = 'f';
     const v = 'x';
     const kind = pick(['two', 'equal', 'none'] as const);
-    const a = nonZeroInt(1, 4);
+    /**
+     * **2016 P1 Q6 reaches 7x², and is capped as 2025 is.** The owner, on the
+     * 2016 P1 sheet: *"Yes"*, to both. The paper's own `7x^2 + 5x - 1` could
+     * not be drawn with the coefficient stopping at 4, and the discriminant
+     * ran past 60 in 268 of 800 draws, up to 225. Keyed on the ASKED id - the
+     * 2016 alias arrives with its target's `wanted` - so 2018 P1 Q8 and 2023
+     * P1 Q5, both signed off and uncapped, draw exactly as before: one draw
+     * either way, from a wider range only for 2016.
+     */
+    const is2016 = asked === 'quadratics.discriminant-2016';
+    const a = is2016 ? nonZeroInt(1, 7) : nonZeroInt(1, 4);
     const b = nonZeroInt(-9, 9);
     let c: number;
     if (kind === 'equal') {
@@ -228,7 +238,7 @@ function discriminant(wanted?: string): Q {
      *
      * Sixty, which clears 53 without reaching for a number no paper sets.
      */
-    if (capped && Math.abs(d) > 60) continue;
+    if ((capped || is2016) && Math.abs(d) > 60) continue;
     const nature = d > 0 ? 'two real and distinct roots'
       : d === 0 ? 'one repeated real root (two equal real roots)'
       : 'no real roots';
@@ -419,7 +429,7 @@ function completeSquareSurdRoots(): Q {
 export const QUADRATIC_GENERATORS: Record<string, Gen> = {
   'Completing the Square': completeSquare,
   'Turning Point of a Parabola': turningPoint,
-  'The Discriminant': (w) => discriminant(w),
+  'The Discriminant': (w, asked) => discriminant(w, asked),
   'The Quadratic Formula': (w, asked) => quadraticFormula(w, asked),
   'Completing the Square with Surd Roots': completeSquareSurdRoots,
 };

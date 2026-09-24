@@ -105,6 +105,66 @@ export interface SolidOnAxesSpec {
    * point on that edge.
    */
   dots?: string[];
+  /**
+   * **2016 P1 Q7's axes — opt-in, 2026-09-24.**
+   *
+   * The paper throws the y-axis back steeply, at about 58°, and stops it
+   * clear of the pyramid. At this file's 30° the y-axis ran straight through
+   * the pyramid's left faces in about 11 of 12 rendered draws. The owner, on
+   * the 2016 P1 sheet: *"Yes"*, to a steeper y-axis, stopped where it would
+   * pass behind the pyramid.
+   *
+   * `recede` replaces the angle (degrees) and depth of the projection for
+   * this figure only, and `hideBehind` leaves out the stretch of each axis
+   * that the solid covers - it is behind the solid, so the paper would not
+   * draw it. Every other caller passes neither and draws exactly as before.
+   */
+  recede?: { angle: number; depth: number };
+  hideBehind?: boolean;
+}
+
+/** Keep the parts of segment a→b that lie outside the convex polygon `poly`. */
+function outsideConvex(a: Pt, b: Pt, poly: Pt[]): [Pt, Pt][] {
+  // Cyrus–Beck: the t-interval of a + t(b - a) inside every edge's half-plane.
+  const area = poly.reduce((s, p, i) => {
+    const q = poly[(i + 1) % poly.length];
+    return s + p.x * q.y - q.x * p.y;
+  }, 0);
+  const orient = area >= 0 ? 1 : -1;
+  let [t0, t1] = [0, 1];
+  const d = pt(b.x - a.x, b.y - a.y);
+  for (let i = 0; i < poly.length; i++) {
+    const p = poly[i], q = poly[(i + 1) % poly.length];
+    // inward normal of edge p→q
+    const n = pt(-(q.y - p.y) * orient, (q.x - p.x) * orient);
+    const num = n.x * (a.x - p.x) + n.y * (a.y - p.y);
+    const den = n.x * d.x + n.y * d.y;
+    if (Math.abs(den) < 1e-12) { if (num < 0) return [[a, b]]; continue; }
+    const t = -num / den;
+    if (den > 0) t0 = Math.max(t0, t); else t1 = Math.min(t1, t);
+    if (t0 >= t1) return [[a, b]];
+  }
+  const at = (t: number) => pt(a.x + d.x * t, a.y + d.y * t);
+  const out: [Pt, Pt][] = [];
+  if (t0 > 1e-9) out.push([a, at(t0)]);
+  if (t1 < 1 - 1e-9) out.push([at(t1), b]);
+  return out;
+}
+
+/** The convex hull of a set of points, anticlockwise (monotone chain). */
+function convexHull(points: Pt[]): Pt[] {
+  const s = [...points].sort((p, q) => p.x - q.x || p.y - q.y);
+  const cross = (o: Pt, p: Pt, q: Pt) => (p.x - o.x) * (q.y - o.y) - (p.y - o.y) * (q.x - o.x);
+  const lower: Pt[] = [], upper: Pt[] = [];
+  for (const p of s) {
+    while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop();
+    lower.push(p);
+  }
+  for (const p of [...s].reverse()) {
+    while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop();
+    upper.push(p);
+  }
+  return [...lower.slice(0, -1), ...upper.slice(0, -1)];
 }
 
 /**
@@ -129,7 +189,12 @@ function flatCircle(centre: P3, r: number): { rx: number; ry: number; tilt: numb
 }
 
 export function solidOnAxes(spec: SolidOnAxesSpec): Figure {
-  const P = (x: number, y: number, z: number) => project({ x, y, z });
+  // The file's projection unless the caller opted into its own (see `recede`).
+  const proj = spec.recede === undefined ? project : (() => {
+    const t = spec.recede.angle * Math.PI / 180, k = spec.recede.depth;
+    return (p: P3): Pt => pt(p.x + p.y * Math.cos(t) * k, p.z + p.y * Math.sin(t) * k);
+  })();
+  const P = (x: number, y: number, z: number) => proj({ x, y, z });
   const elements: Element[] = [];
 
   // ── the axes, long enough to clear everything ─────────────────────────
@@ -251,7 +316,35 @@ export function solidOnAxes(spec: SolidOnAxesSpec): Figure {
   for (const [end, name] of [
     [axisEnds[0], 'x'], [axisEnds[1], 'y'], [axisEnds[2], 'z'],
   ] as [Pt, string][]) {
-    elements.push({ kind: 'segment', from: O, to: end });
+    if (spec.hideBehind && name === 'y') {
+      // Left out where it passes behind the solid, and drawn on past it with
+      // its letter out in open space. Against the solid's true outline, not
+      // its bounding box: clipped against the box, the axis broke in empty
+      // space. Stopping the axis at the solid instead - tried first - put the
+      // letter on the pyramid's face in most layouts. The y-axis alone: the
+      // x-axis runs along the base's front edge, which is drawn over it.
+      const tight = convexHull(spec.parts.flatMap(p => {
+        if (p.kind !== 'pyramid') return [];
+        const { x: X, y: Y, z: Z } = p.size, a = p.at;
+        return [P(a.x, a.y, a.z), P(a.x + X, a.y, a.z), P(a.x + X, a.y + Y, a.z),
+          P(a.x, a.y + Y, a.z), P(a.x + X / 2, a.y + Y / 2, a.z + Z)];
+      }));
+      // Grown by a margin so the break shows either side of the outline.
+      const cx = tight.reduce((s, q) => s + q.x, 0) / (tight.length || 1);
+      const cy = tight.reduce((s, q) => s + q.y, 0) / (tight.length || 1);
+      const grow = 14 * unitsPerPx;
+      const outline = tight.map(q => {
+        const k = Math.hypot(q.x - cx, q.y - cy) || 1;
+        return pt(q.x + (q.x - cx) / k * grow, q.y + (q.y - cy) / k * grow);
+      });
+      const pieces = outline.length ? outsideConvex(O, end, outline) : [[O, end] as [Pt, Pt]];
+      for (const [from, to] of pieces) {
+        if (Math.hypot(to.x - from.x, to.y - from.y) < 10 * unitsPerPx) continue;
+        elements.push({ kind: 'segment', from, to });
+      }
+    } else {
+      elements.push({ kind: 'segment', from: O, to: end });
+    }
     elements.push({ kind: 'label', text: name, anchor: end, away: O, small: true });
   }
 
@@ -380,7 +473,7 @@ export function solidOnAxes(spec: SolidOnAxesSpec): Figure {
       ? { x: 2 * part.r, y: 2 * part.r, z: part.h }
       : part.size;
     for (const dx of [0, s.x]) for (const dy of [0, s.y]) for (const dz of [0, s.z]) {
-      corners.push(project({ x: part.at.x + dx, y: part.at.y + dy, z: part.at.z + dz }));
+      corners.push(proj({ x: part.at.x + dx, y: part.at.y + dy, z: part.at.z + dz }));
     }
   }
   const middle = scale(corners.reduce((a, b) => add(a, b), pt(0, 0)), 1 / corners.length);
@@ -440,7 +533,7 @@ export function solidOnAxes(spec: SolidOnAxesSpec): Figure {
     const text = spec.showCoords.includes(name)
       ? `${name}(${p.x}, ${p.y}, ${p.z})`
       : name;
-    const anchor = project(p);
+    const anchor = proj(p);
     const line = onLine(anchor);
     let away = middle;
     /**

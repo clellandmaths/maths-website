@@ -495,6 +495,15 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
       angle = drawP1Angle(sweep);
       const share = kind === 'area-angle' ? angle * r * r : angle * 2 * r;
       if (share % 360 !== 0) continue;
+      /* **2016 P1 Q3: a round radius and a sum held to hand size.** The owner,
+         on the 2016 P1 sheet: *"Cap the radius to 100 and always a multiple
+         of 10"*, then, told a radius cap alone makes the sums bigger, chose
+         the number multiplying 3·14 held at 300 or under as well. The paper
+         is 20 cm at 45°, 3·14 × 50; the clone ran past 100 in 153 of 400
+         draws. Keyed on the asked id, and a rejection rather than a new
+         draw, so no other kind's stream moves. */
+      if (askedId === 'sector.area-angle-pi314'
+        && (r % 10 !== 0 || r > 100 || share / 360 > 300)) continue;
       arc = angle / 360 * 2 * Math.PI * r;
     } else {
       angle = drawAngle(sweep);
@@ -869,7 +878,7 @@ export const SECTOR_GENERATORS: Record<string, Gen> = {
     }
     throw new Error('segment: no valid question found');
   },
-  'Area of a Sector': (w) => sectorQuestion(['area-angle', 'area-arc'], w),
+  'Area of a Sector': (w, a) => sectorQuestion(['area-angle', 'area-arc'], w, a),
   'Length of an Arc': (w, a) => sectorQuestion(['arc-angle'], w, a),
   // 2019 P1 Q4 - the major arc, pi as 3.14. Its own loop, so it cannot
   // disturb `sector.arc-angle` (2023 P2 Q3) the way an in-place fix did.

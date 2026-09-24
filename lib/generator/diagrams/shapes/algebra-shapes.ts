@@ -171,7 +171,16 @@ export type PlaneShape =
    * is not yet reviewed, so it keeps the right-angled drawing it has.
    */
   | { kind: 'triangle-upright'; base: number; height: number;
-      labels: { base: string; height: string } };
+      labels: { base: string; height: string };
+      /**
+       * **2016 P1 Q12's picture — opt-in, 2026-09-24.** Counted off its scan:
+       * the same upright triangle, but with the height ALSO dropped inside it
+       * as a dashed line from the apex, a right angle at its foot, and the
+       * `3x` arrow standing to the triangle's LEFT, in the gap. The owner, on
+       * the 2016 P1 sheet: *"Yes"*, to drawing it as the paper does. Off by
+       * default, so 2022 P1 Q15 draws exactly as it did.
+       */
+      droppedHeight?: boolean };
 
 const shapeWidth = (s: PlaneShape): number =>
   s.kind === 'rectangle' ? s.w : s.kind === 'square' ? s.s : s.base;
@@ -212,6 +221,27 @@ function drawShape(s: PlaneShape, at: Pt, side: 'left' | 'right'): Element[] {
     // follow: on the left shape it goes left, so the pair's gap stays clear.
     // `dimensionArrow` takes a point on the side the arrow should sit, which
     // is the opposite convention to `sideLabel`'s `away` — hence the flip.
+    if (s.droppedHeight) {
+      // The paper's apex sits a little left of centre, so the dashed height
+      // and its right angle stand clear of both sloping sides.
+      const top = P(s.base * 0.45, s.height), foot = P(s.base * 0.45, 0);
+      // The paper stands its arrow in the gap, on the triangle's left. Here
+      // that gap is too narrow: the label, pushed off the arrow, landed on the
+      // rectangle's right side (0.8px, verifyFigure). So outward, as the
+      // plain upright triangle does, and the gap stays clear.
+      const toLeft = side === 'left';
+      return [
+        { kind: 'polygon', points: [a, b, top] },
+        { kind: 'segment', from: top, to: foot, dashed: true },
+        { kind: 'rightAngle', at: foot, arms: [b, top] },
+        sideLabel(a, b, s.labels.base, above),
+        ...dimensionArrow(
+          P(toLeft ? 0 : s.base, 0), P(toLeft ? 0 : s.base, s.height),
+          toLeft ? P(-w, h / 2) : P(w * 2, h / 2),
+          Math.max(w * 0.3, 14), s.labels.height, true,
+        ),
+      ];
+    }
     const armX = side === 'left' ? 0 : s.base;
     return [
       { kind: 'polygon', points: [a, b, apex] },

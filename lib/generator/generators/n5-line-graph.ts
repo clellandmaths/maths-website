@@ -776,7 +776,37 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   if (!ctx.money && !Number.isInteger(y3)) return null;
   if (ctx.money && !Number.isInteger(y3 * 2)) return null;
 
-  const [A, B] = ['A', 'B'];
+  /**
+   * **A marked point never shares a letter with a variable — 2026-09-24.**
+   *
+   * 2016 P1 Q5 calls its points D and E because its variable is A, the age.
+   * The routine named every point A and B, so "the age, A months … Point A
+   * represents a foal" put one letter on two things: 87 of 400 draws of
+   * 2016's id, 107 of 2026 P1 Q6's, 144 of 2024 P1 Q9's (whose own falling
+   * contexts use A for a car's age and B for a battery's charge). The owner,
+   * on the 2016 P1 sheet: *"Yes. But will have to fix other locked papers as
+   * well"*.
+   *
+   * 2016 takes the paper's D and E; 2026 and 2024 keep their papers' A and B.
+   * Where the preferred pair clashes, the first pair of consecutive letters
+   * the story leaves free. Keyed on the asked id, so 2014 P1 Q6 (on `-2014`,
+   * not asked about), the exact line and topic draws are untouched, and no
+   * random is drawn.
+   */
+  const taken = [ctx.x.letter, ctx.y.letter];
+  const free = (pair: string[]) => !pair.some(l => taken.includes(l));
+  const firstFree = (): string[] => {
+    for (let i = 0; i < 24; i++) {
+      const pair = [String.fromCharCode(65 + i), String.fromCharCode(66 + i)];
+      if (free(pair)) return pair;
+    }
+    return ['A', 'B'];
+  };
+  const preferred = asked === 'straight-line.best-fit-pre2023' ? ['D', 'E']       // 2016 P1 Q5
+    : asked === 'straight-line.best-fit' || asked === 'straight-line.best-fit-2024'  // 2026 P1 Q6, 2024 P1 Q9
+      ? ['A', 'B'] : undefined;
+  const [A, B] = preferred === undefined ? ['A', 'B']
+    : free(preferred) ? preferred : firstFree();
   const spread = Math.abs(m) * (x2 - x1) * 0.22;
   const xHi = x2 + (x2 - x1) * 0.45;
   const cloud = ctx.scatter ? cloudAbout(m, c, Math.max(0.5, x1 * 0.6), xHi, spread) : undefined;

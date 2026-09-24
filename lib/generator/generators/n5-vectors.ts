@@ -127,9 +127,14 @@ function components(wanted?: string, asked?: string): Q {
      * `asked` and not `wanted`: 2014's id is an ALIAS of 2024's, so both
      * arrive here with the same `wanted` and only the asked id tells them
      * apart.
+     *
+     * **2016 P1 Q1 adds too.** The owner, on the 2016 P1 sheet: *"Yes key"*,
+     * against 196 of 400 draws of `vectors.components-half` subtracting where
+     * the paper asks for ½p + q. That id had kept the toss.
      */
     const minus = asked === 'vectors.components' ? false        // 2024 P1 Q4
       : asked === 'vectors.components-pre2023' ? true           // 2014 P1 Q4
+      : asked === 'vectors.components-half' ? false             // 2016 P1 Q1
       : getRandomInt(0, 1) === 0;
 
     // a half scalar needs even components, or the answer is not whole

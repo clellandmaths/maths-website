@@ -1448,6 +1448,10 @@ export function pythagorasCoordinates(wanted?: string): Q {
         size: { x: X, y: Y, z: Z }, construction: true,
       }],
       names, showCoords: ['A', 'V'],
+      // 2016 P1 Q7's own axes: y thrown back steeply and stopped behind the
+      // pyramid, as the paper draws it. The owner: "Yes". Opt-in; no other
+      // figure on axes moves.
+      recede: { angle: 40, depth: 0.76 }, hideBehind: true,
     });
 
     const prose = [

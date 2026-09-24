@@ -557,7 +557,10 @@ function rectangleAgainstTriangle(): Q | null {
   return assemble(
     shapePair(
       { kind: 'rectangle', w: 96, h: 60, labels: { w: `x + ${C}`, h: A === 1 ? `x + ${B}` : `${A}x + ${B}` } },
-      { kind: 'triangle', base: 88, height: 74, labels: { base: `2(x + ${D})`, height: `${E === 1 ? '' : E}x` } } as PlaneShape,
+      // 2016 P1 Q12's own picture: upright, the height dashed inside it with a
+      // right angle at its foot, and the arrow beside it. The owner: "Yes".
+      { kind: 'triangle-upright', base: 88, height: 74, droppedHeight: true,
+        labels: { base: `2(x + ${D})`, height: `${E === 1 ? '' : E}x` } } as PlaneShape,
     ),
     'A Rectangle Against a Triangle', 'form-equation.rectangle-triangle', prose,
     `Rectangle $${left}(x + ${C})$ equals triangle base $2(x + ${D})$, height $${E}x$. Show $${shown}$ and find its sides.`,

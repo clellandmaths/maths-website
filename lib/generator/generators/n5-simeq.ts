@@ -344,7 +344,7 @@ function amount(v: number, kind: TwoItemContext['kind']): string {
  * **signed off**, and a calculator paper where 4.25 is exactly right) does not
  * move.
  */
-function constructSolve(combine = false, paper1 = false): Q {
+function constructSolve(combine = false, paper1 = false, asked?: string): Q {
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(paper1
       ? TWO_ITEM_CONTEXTS.filter(c => c.kind !== 'money')
@@ -413,6 +413,22 @@ function constructSolve(combine = false, paper1 = false): Q {
      * keeps the money it should have as a calculator paper.
      */
     if (paper1 && [d1, d2, dt1, dt2].some(v => !Number.isInteger(v))) continue;
+    /**
+     * **2016 P1 Q4 is non-calculator too, and its paper keeps a tenth.** The
+     * owner, on the 2016 P1 sheet: *"Yes do it"*, to holding it to the paper's
+     * scale - 9.6 and 13.3 square metres, answers 1.5 and 2.2. On the shared
+     * calculator scale it drew pennies in 241 of 400 draws and totals past
+     * 1000 kilograms in 16. So: totals of 100 or under, and every number a
+     * pupil sees to at most one decimal place.
+     *
+     * `simeq.construct-solve-pre2022` cites 2016 P1 Q4 alone (2014 P2 Q3 is
+     * on `-2014`), so keying on the asked id moves nothing else; a rejection,
+     * so the draws of `simeq.construct-solve` (2022 P2 Q4, SIGNED OFF) are
+     * untouched.
+     */
+    if (asked === 'simeq.construct-solve-pre2022'
+      && ([dt1, dt2].some(v => v > 100)
+        || [d1, d2, dt1, dt2].some(v => Math.abs(v * 10 - Math.round(v * 10)) > 1e-9))) continue;
     const p = { a1: q1, b1: q2, c1: dt1, a2: q3, b2: q4, c2: dt2 };
 
     const unit = ctx.kind === 'money' ? 'cost' : ctx.kind === 'kg' ? 'weight' : 'amount of material';
@@ -463,10 +479,10 @@ function constructSolve(combine = false, paper1 = false): Q {
   throw new Error(`simeq.construct-${combine ? 'combine' : 'solve'}: no valid question found`);
 }
 
-export const SIMEQ_GENERATORS: Record<string, () => Q> = {
+export const SIMEQ_GENERATORS: Record<string, (wanted?: string, asked?: string) => Q> = {
   'Solving Simultaneous Equations': solveGiven,
   'Intersection of Two Lines': intersection,
-  'Constructing Simultaneous Equations': () => constructSolve(false),
+  'Constructing Simultaneous Equations': (_w, asked) => constructSolve(false, false, asked),
   // 2019 P1 Q8: the same question without a calculator, so no money contexts.
   'Constructing Simultaneous Equations without a Calculator': () => constructSolve(false, true),
   'Simultaneous Equations Used Again': () => constructSolve(true),
