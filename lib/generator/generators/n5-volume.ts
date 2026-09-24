@@ -662,8 +662,30 @@ function shellSection(dia: number, t: number, short: string): Figure {
     ...arrow(ti, to, Math.min(t * 0.3, R * 0.06)),
     { kind: 'label', text: `${t} ${short}`, anchor: to, away: pt(0, 0) },
   ];
+  /**
+   * **And the whole sweet beside it, so the ring reads as a sphere cut in
+   * half.** — 2026-09-24
+   *
+   * The paper prints a small shaded ball to the right of its cross-section.
+   * Without it the two circles are just a ring, and nothing says the solid is
+   * a sphere. The owner, on the rebuilt sheet: *"now i would also show a
+   * picture of a sphere like original question to ensure candidates know
+   * this represents a sphere"*. Smaller than the section, as the paper's is,
+   * shaded, with its equator drawn front solid and back dashed so it reads as
+   * a ball. It carries no measurement; the section does.
+   */
+  const rs = R * 0.5;
+  const sc = pt(R * 1.95, -R * 0.3);
+  elements.push(
+    { kind: 'shadedShape', points: ring(rs, 0, 360).map(p => pt(p.x + sc.x, p.y + sc.y)), tone: 1.4 },
+    { kind: 'circle', centre: sc, r: rs },
+    { kind: 'ellipse', centre: sc, rx: rs, ry: rs * 0.3, from: 180, to: 360 },
+    { kind: 'ellipse', centre: sc, rx: rs, ry: rs * 0.3, from: 0, to: 180, dashed: true },
+  );
   return {
-    scene: { elements },
+    // Wider than the section alone, so drawn wider: the ring keeps the size it
+    // had and the ball sits in the extra room.
+    scene: { elements, target: 400 },
     claims: [
       { kind: 'length', from: dl, to: dr, value: dia },
       { kind: 'length', from: ti, to, value: t },

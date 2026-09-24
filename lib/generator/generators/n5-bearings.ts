@@ -76,7 +76,7 @@ const ID_KIND: Record<string, string> = {
   'bearings.two-sides': 'two-sides',
 };
 
-export function bearingsQuestion(kinds: string[], wanted?: string): Q {
+export function bearingsQuestion(kinds: string[], wanted?: string, askedId?: string): Q {
   // The branch is chosen once, before the retry loop, not inside it.
   //
   // Choosing inside means a rejected layout re-enters the lottery rather than
@@ -99,7 +99,7 @@ export function bearingsQuestion(kinds: string[], wanted?: string): Q {
     // which way round the third point lies: every bearing in the question, and
     // the sign of the arithmetic at the end, follows from this one choice
     const side = pick([1, -1]);
-    const q = kind === 'side' ? twoBearings(c, side)
+    const q = kind === 'side' ? twoBearings(c, side, askedId === 'bearings.two-bearings')
       : kind === 'two-sides' ? twoSides(c, side)
       : threeSides(c, side, kind);
     if (q) return q;
@@ -110,10 +110,24 @@ export function bearingsQuestion(kinds: string[], wanted?: string): Q {
 // ── two bearings from two known points: the sine rule for a side ────────────
 // 2015 P2 Q13, 2017 P2 Q10. The two places lie on a cardinal line so the angle
 // at each of them can be read straight off its bearing.
-function twoBearings(c: BearingContext, side: number): Q | null {
+function twoBearings(c: BearingContext, side: number, eastWest = false): Q | null {
   const [nA, nB, nC] = c.letters;
   const [rA, rB, rC] = c.refer;
-  const base = pick([0, 90, 180, 270]);
+  /**
+   * **2017 P2 Q10 lies east–west; 2015 P2 Q13 lies north–south.** — 2026-09-24
+   *
+   * "Dunbridge is 15 km west of Earlsford" against "Portlee is 25 kilometres
+   * due South of Queenstown". On a north–south line the angles inside the
+   * triangle come straight off the bearings; on an east–west one each is
+   * worked out from 90 or 270 first, which is the paper's first mark. One id
+   * served both and each got the other's layout: 2017's id was north–south in
+   * 153 of 400 draws. The owner: *"Yes key it"*.
+   *
+   * Keyed on the id asked, because 2015's is an ALIAS of this one and arrives
+   * with the same `wanted`. One `pick` either way, so the draws after it do
+   * not shift; 2015 keeps the free choice until its own review.
+   */
+  const base = eastWest ? pick([90, 270]) : pick([0, 90, 180, 270]);
   const d = getRandomInt(c.band[0], c.band[1]);
   const alpha = getRandomInt(26, 76);
   const beta = getRandomInt(26, 76);
@@ -450,7 +464,7 @@ function twoSides(c: BearingContext, side: number): Q | null {
 }
 
 export const BEARINGS_GENERATORS: Record<string, Gen> = {
-  'Bearings with the Sine Rule': (w) => bearingsQuestion(['side'], w),
+  'Bearings with the Sine Rule': (w, asked) => bearingsQuestion(['side'], w, asked),
   'Bearings with the Cosine Rule': (w) => bearingsQuestion(['angle'], w),
   'Finding a Bearing': (w) => bearingsQuestion(['bearing', 'two-sides'], w),
 };

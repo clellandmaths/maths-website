@@ -1592,9 +1592,14 @@ export function pythagorasTwoCircles(wanted?: string): Q {
       // 2024 P2 Q10 draws the radius AC dashed and labels it; 2017 P2 Q13 draws
       // no radius and states the 14 cm in prose only. An empty label means the
       // line is not drawn either.
+      // And 2017 P2 Q13 writes no length on AB either — "AB is 48 cm long" is
+      // prose only. Printed on the figure it sat above one half of AB and read
+      // as that half's length. The owner, 2026-09-24: *"Remove the 46 label
+      // from AB as it is ambiguous and original question doesn't have it"*.
+      // The overlap (LOCKED 2024 P2 Q10) keeps its chord label exactly as it was.
       labels: {
         radius: kind === 'overlap' ? `${num(r)} cm` : '',
-        chord: `${num(chord)} cm`,
+        chord: kind === 'overlap' ? `${num(chord)} cm` : '',
       },
     });
     if (!fig) continue;

@@ -26,7 +26,8 @@ import {
  * way round the answer runs.
  *
  * What stays undrawn is a target that cuts clean across the figure and is no
- * part of it - 2017's TV, 2024's WM.
+ * part of it - 2024's WM. (This once listed 2017's TV too, and was wrong: 2017
+ * P2 Q8's second figure joins T to V. The caller draws it as an edge.)
  *
  * Nothing here is claimed. Every measurement on the page is a letter, and a
  * figure whose sides are letters asserts no lengths; the shape is drawn true so

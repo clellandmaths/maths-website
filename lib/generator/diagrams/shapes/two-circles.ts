@@ -117,6 +117,12 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
        * shape reaches: the lower shape is the part of its circle *below* its
        * chord, and the upper circle does not come down that far out.
        *
+       * **And then not at all** (2026-09-24): there it read as the length of
+       * that half, and the paper writes no length on AB — the owner: *"Remove
+       * the 46 label from AB as it is ambiguous and original question doesn't
+       * have it"*. The caller now passes an empty chord label; the placement
+       * below stays for any caller that does pass one.
+       *
        * This branch draws 2017 P2 Q13 alone; the snowman (2019 P2 Q18) and
        * the overlap (2024 P2 Q10), both locked, are the other two branches.
        */

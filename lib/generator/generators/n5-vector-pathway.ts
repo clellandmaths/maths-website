@@ -245,21 +245,48 @@ function extendedSide(): Q | null {
     `<br><br>$${ray(T, V)} = ${ray(T, A)} + ${ray(A, m1)} + \\frac{1}{2}${ray(m1, m2)}$`,
     `<strong>3.</strong> Multiply out and collect:<br><br>$${ray(T, V)} = ${ans2}$`,
   ];
-  return assemble({
-    points,
-    edges: [[A, B], [B, D], [D, A], [T, A]],
-    // No equal-length marks. **Not one of the five papers draws them** -
-    // 2017 P2 Q8 states "TP = PQ" in its prose and leaves the line bare -
-    // and ours put a tick at the midpoint of the very edge that carries an
-    // arrow, whose barbs splay back into it. Removed rather than moved: the
-    // collision goes away by not drawing what the exam does not draw.
-    arrows: [
-      sc === 1 ? { from: D, to: B, label: nc } : { from: B, to: D, label: nc },
-      sd === 1 ? { from: A, to: B, label: nd } : { from: B, to: A, label: nd },
+  // No equal-length marks. **Not one of the five papers draws them** -
+  // 2017 P2 Q8 states "TP = PQ" in its prose and leaves the line bare -
+  // and ours put a tick at the midpoint of the very edge that carries an
+  // arrow, whose barbs splay back into it. Removed rather than moved: the
+  // collision goes away by not drawing what the exam does not draw.
+  const arrows = [
+    sc === 1 ? { from: D, to: B, label: nc } : { from: B, to: D, label: nc },
+    sd === 1 ? { from: A, to: B, label: nd } : { from: B, to: A, label: nd },
+  ];
+  /**
+   * **Two figures, as the paper prints two.** — 2026-09-24
+   *
+   * 2017 P2 Q8 draws the triangle alone for part (a), then draws it again
+   * with QP run on to T, V marked on PR and **T joined to V** for part (b).
+   * This drew one figure, already extended, above part (a), and never drew
+   * TV — the note in `vector-figure.ts` said the paper leaves it undrawn,
+   * and the paper's second figure shows otherwise. The owner: *"I'd make
+   * this question match original by have 2 diagrams. Also second diagram T
+   * and V should join with a line like original question"*.
+   *
+   * TV is a plain line, no arrowhead, as the paper draws it; drawing it
+   * gives nothing away, since the route to it is still the question.
+   */
+  const triangle: Record<string, Pt> = { [A]: points[A], [B]: points[B], [D]: points[D] };
+  const fig1 = vectorFigure({ points: triangle, edges: [[A, B], [B, D], [D, A]], arrows });
+  const fig2 = vectorFigure({
+    points, edges: [[A, B], [B, D], [D, A], [T, A], [T, V]], arrows,
+  });
+  if (verifyFigure(fig1).length || verifyFigure(fig2).length) return null;
+  return {
+    subTopic: 'A Pathway with an Extended Side', difficulty: 'exam',
+    variationId: 'vectors.pathway-extended',
+    questionLines: [
+      prose[0], renderScene(fig1.scene), prose[1],
+      prose[2], renderScene(fig2.scene), prose[3],
     ],
-  }, 'A Pathway with an Extended Side', 'vectors.pathway-extended', prose,
-    `$${cRay} = ${vec(nc)}$, $${dRay} = ${vec(nd)}$, $${T}${A} = ${k === 1 ? '' : k}${A}${B}$, $${V}$ midpoint of $${m1}${m2}$. Find $${ray(A, D)}$ and $${ray(T, V)}$.`,
-    steps, [1, 1, 1], `(a) $${ans1}$ &nbsp;&nbsp; (b) $${ans2}$`);
+    boardQuestionLines: [`$${cRay} = ${vec(nc)}$, $${dRay} = ${vec(nd)}$, $${T}${A} = ${k === 1 ? '' : k}${A}${B}$, $${V}$ midpoint of $${m1}${m2}$. Find $${ray(A, D)}$ and $${ray(T, V)}$.`],
+    solutionSteps: steps, stepMarks: [1, 1, 1],
+    finalAnswer: `(a) $${ans1}$ &nbsp;&nbsp; (b) $${ans2}$`,
+    // The second carries everything the first does, and T, V and TV besides.
+    figure: fig2,
+  };
 }
 
 // ── five points, two edges given as multiples — 2018 P2 Q10 ──────────────
