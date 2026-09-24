@@ -179,7 +179,16 @@ function fully(): Q {
     const p = sqrt(p2), a = sqrt(a2);
     if (p2 === a2 || gcd(p2, a2) !== 1) continue;
     const expanded: Poly = [-k * a2, 0, k * p2];
-    if (Math.abs(k * a2) > 300) continue;
+    /* **Squares no bigger than 12 x 12, and a printed number whose factor
+       shows.** The owner, on the 2016 P2 sheet: *"I'd leave this as long as
+       it gives a difference of 2 squares and the squares don't go past
+       12 x 12"*, then, asked which numbers: *"after common factor comes out
+       but ensure that we are not having a large number like 243 as it's not
+       clear 12 is a factor of that"*. So the square inside the bracket stays
+       at 144 or under, and the printed constant at 150 or under (it was
+       allowed 300, which let 243 = 3 x 81 through). This id serves 2016 P2
+       Q4 alone. */
+    if (a2 > 144 || Math.abs(k * a2) > 150) continue;
     return {
       subTopic: 'Factorising Fully',
       difficulty: 'exam',

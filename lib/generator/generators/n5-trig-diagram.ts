@@ -5,6 +5,7 @@ import { abbrev } from './n5-contexts';
 import { triangleFromSides, trueAngle } from '../diagrams/shapes/triangle-sides';
 import { renderScene } from '../diagrams/render';
 import { verifyFigure } from '../diagrams/verify';
+import { angleMark, pt, type Figure, type Pt } from '../diagrams/scene';
 
 /**
  * The triangle-trigonometry questions that carry a diagram.
@@ -425,9 +426,91 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
   throw new Error('trig-diagram: no valid question found');
 }
 
+/**
+ * **2016 P2 Q8, drawn as its paper draws it — 2026-09-24.**
+ *
+ * A stepladder: two legs standing on the ground, the angle between the LONGER
+ * leg and the ground given, x° at the other foot asked for. The same sine
+ * rule as 2023 P2 Q4's bare triangle - the given angle faces the short leg,
+ * x faces the long one - but the paper's picture is the ladder on a ground
+ * line, legs labelled, no vertex letters. The owner, on the 2016 P2 sheet:
+ * *"Yea draw as question and key it"*. Its own routine, reached only by
+ * 2016's id, so 2023 P2 Q4 (SIGNED OFF) draws exactly as before.
+ */
+function stepladder(): Q {
+  for (let tries = 0; tries < 2000; tries++) {
+    const long = getRandomInt(24, 40) * 5;           // 120 to 200 cm, as 150
+    const short = long - getRandomInt(1, 8) * 5;     // a little shorter, as 140
+    const angA = getRandomInt(55, 75);               // at the longer leg's foot, as 66
+    const sinB = long * Math.sin(angA * Math.PI / 180) / short;
+    if (sinB >= 1) continue;
+    const angB = Math.asin(sinB) * 180 / Math.PI;
+    if (angB >= 89.5 || 180 - angA - angB < 12) continue;
+
+    const base = long * Math.cos(angA * Math.PI / 180) + short * Math.cos(angB * Math.PI / 180);
+    const A = pt(0, 0), B = pt(base, 0);
+    const C = pt(long * Math.cos(angA * Math.PI / 180), long * Math.sin(angA * Math.PI / 180));
+    const inside = pt((A.x + B.x + C.x) / 3, (A.y + B.y + C.y) / 3);
+    const mid = (p: Pt, q: Pt) => pt((p.x + q.x) / 2, (p.y + q.y) / 2);
+    // Each leg's number pushed square off the leg, not away from the middle:
+    // on a leg this steep, pushing from the centroid slid the label along the
+    // leg and onto it (1.6 and 1.8px, `verifyFigure`).
+    const offLeg = (p: Pt, q: Pt): Pt => {
+      const m = mid(p, q), k = Math.hypot(q.x - p.x, q.y - p.y);
+      let n = pt(-(q.y - p.y) / k, (q.x - p.x) / k);
+      if ((inside.x - m.x) * n.x + (inside.y - m.y) * n.y < 0) n = pt(-n.x, -n.y);
+      return pt(m.x + n.x, m.y + n.y);
+    };
+    const r = Math.min(long, short) * 0.22;
+    const fig: Figure = {
+      scene: {
+        elements: [
+          { kind: 'segment', from: pt(-base * 0.25, 0), to: pt(base * 1.25, 0) },
+          { kind: 'segment', from: A, to: C },
+          { kind: 'segment', from: B, to: C },
+          { kind: 'label', text: `${long} cm`, anchor: mid(A, C), away: offLeg(A, C) },
+          { kind: 'label', text: `${short} cm`, anchor: mid(B, C), away: offLeg(B, C) },
+          ...angleMark(A, [B, C], `${angA}°`, r),
+          ...angleMark(B, [C, A], 'x°', r),
+        ],
+      },
+      claims: [
+        { kind: 'length', from: A, to: C, value: long },
+        { kind: 'length', from: B, to: C, value: short },
+        { kind: 'angle', at: A, arms: [B, C], value: angA },
+      ],
+    };
+    const prose = [
+      `A set of stepladders has legs ${long} centimetres and ${short} centimetres long.`,
+      `When the stepladder is fully open, the angle between the longer leg and the ground is $${angA}^{\\circ}$.`,
+      `Calculate $x^{\\circ}$, the size of the angle between the shorter leg and the ground.`,
+    ];
+    // •¹ correct substitution into the sine rule, •² rearrange, •³ find x
+    const steps = [
+      `<strong>1.</strong> Each leg is opposite the angle at the other foot: the ${long} cm leg is opposite $x^{\\circ}$, and the ${short} cm leg is opposite $${angA}^{\\circ}$. The sine rule pairs them:<br><br>$\\frac{\\sin x^{\\circ}}{${long}} = \\frac{\\sin ${angA}^{\\circ}}{${short}}$`,
+      `<strong>2.</strong> Rearrange to make $\\sin x^{\\circ}$ the subject:<br><br>$\\sin x^{\\circ} = \\frac{${long} \\times \\sin ${angA}^{\\circ}}{${short}} = ${sinB.toFixed(4)}$`,
+      `<strong>3.</strong> Take the inverse sine:<br><br>$x = ${dp1(angB)}$`,
+    ];
+    if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    return {
+      subTopic: 'Sine Rule from a Diagram',
+      difficulty: 'exam',
+      variationId: 'trig-diagram.sine-angle',
+      questionLines: [prose[0], prose[1], renderScene(fig.scene), prose[2]],
+      boardQuestionLines: [`Legs ${long} and ${short}, ${angA}° at the longer leg's foot. Angle x at the other?`],
+      solutionSteps: steps,
+      stepMarks: [1, 1, 1],
+      finalAnswer: `$x = ${dp1(angB)}$`,
+      figure: fig,
+    };
+  }
+  throw new Error('trig-diagram.sine-angle-pre2023: no valid question found');
+}
+
 export const TRIG_DIAGRAM_GENERATORS: Record<string, Gen> = {
   'Cosine Rule from a Diagram': (w) => trigDiagramQuestion(['side', 'angle'], w),
-  'Sine Rule from a Diagram': (w) => trigDiagramQuestion(['sine-angle'], w),
+  'Sine Rule from a Diagram': (w, asked) => asked === 'trig-diagram.sine-angle-pre2023'
+    ? stepladder() : trigDiagramQuestion(['sine-angle'], w),
   'Area of a Triangle from a Diagram': (w) =>
     trigDiagramQuestion(['area', 'area-exact'], w),
 };

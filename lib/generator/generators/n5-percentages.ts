@@ -151,8 +151,13 @@ function compound(wanted?: string, asked?: string): Q {
     ? wanted === 'percentages.compound-3sf'
     : getRandomInt(0, 1) === 0;
   const is2017 = asked === COMPOUND_2017;
+  // **2016 P2 Q1 is a decrease** — sugar down 8% a year. The owner, on the
+  // 2016 P2 sheet: *"Yes key"*, against 151 of 400 draws that increased. The
+  // mirror of 2017's key, and it reads a filtered list the same way, so no
+  // other id's draws move.
+  const is2016 = asked === 'percentages.compound-2016';
   const drawn = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
-    && (!is2017 || c.appreciates)));
+    && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)));
   // A copy, never the shared context: money to the penny becomes the nearest
   // pound for this paper alone. Counts already round to the whole number.
   const ctx = is2017 && drawn.rounding === 'money'

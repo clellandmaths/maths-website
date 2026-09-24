@@ -127,7 +127,9 @@ function negativePower(asked?: string): Q {
     const v = pick(VARS);
     const a = pick(inner);             // inside the bracket
     const b = getRandomInt(2, 4);      // the bracket's power
-    const c = getRandomInt(-10, -2);   // the multiplier's power
+    // 2016 P2 Q10 reaches -12: its 17 questions were the whole space at -10.
+    // The owner, on the 2016 P2 sheet: "Yes widen". One draw either way.
+    const c = getRandomInt(asked === 'indices.negative-power-pre2022p1' ? -12 : -10, -2);
     const result = a * b + c;
     if (result >= 0 || result < -18) continue;    // must be negative to need flipping
 

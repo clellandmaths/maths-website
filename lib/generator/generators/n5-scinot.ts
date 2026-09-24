@@ -203,7 +203,16 @@ function calculate(wanted?: string, asked?: string): Q {
     // only question `sci-notation.calculate-3sf` clones. Picking freely across
     // the operations put percentages and multiplications under its name. The
     // exact variation keeps all three, because its four papers use all three.
-    const ctx = pick(SCI_CONTEXTS.filter(c => c.op === (wantRounding ? 'divide' : exactOp)));
+    /**
+     * **2016 P2 Q2 shares a total out to find ONE** — 12 grams over 1.5 x 10^9
+     * grains, the weight of one grain. Three of the divide contexts go the
+     * other way (a size each, a total, find how MANY), and they are exactly the
+     * ones whose answer is a bare count, `unit: ''`. They reached 176 of 400
+     * draws of this id. The owner, on the 2016 P2 sheet: *"Key it"*. A
+     * filtered list read only for this id, so no other id's draws move.
+     */
+    const ctx = pick(SCI_CONTEXTS.filter(c => c.op === (wantRounding ? 'divide' : exactOp)
+      && (asked !== 'sci-notation.calculate-2016' || c.unit !== '')));
     const m = wantRounding
       ? Number((getRandomInt(101, 989) / 100).toFixed(2))
       : Number((getRandomInt(11, 98) / 10).toFixed(1));

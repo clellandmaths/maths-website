@@ -436,8 +436,15 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
        * The word is `spanWord`, as step 4's is, so the arrow and the working
        * cannot disagree.
        */
-      centreDot: forPaper2018,
-      askedSpan: forPaper2018 ? spanWord : undefined,
+      /**
+       * **And 2016 P2 Q15 the same way — 2026-09-24.** Its paper draws a
+       * "height of label" arrow down the side; the owner, on the 2016 P2
+       * sheet: *"Add height arrow, out dot in centre of circle"*. Keyed on
+       * 2016's asked id, so LOCKED 2022 P2 Q8 on the same family is untouched.
+       */
+      centreDot: forPaper2018 || askedId === 'pythagoras.chord-pre2022',
+      askedSpan: forPaper2018 ? spanWord
+        : askedId === 'pythagoras.chord-pre2022' ? ctx.asks.replace(/^the /, '') : undefined,
       names: { a: A, b: B, centre: O },
       labels: {
         radius: `${num(r)} ${abbrev(ctx.unit)}`,

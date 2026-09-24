@@ -165,7 +165,14 @@ function solveEquation(
     // A fifth of the time the ratio is negative, which two of the seven papers
     // are — 2016's tan x = -9/2 and 2019's cos x = -1/5. (This used to say the
     // papers had not used one.)
-    if (r > 0 === (getRandomInt(1, 5) === 1)) continue;
+    //
+    // **2016 P2 Q14 is always negative** - 2 tan x + 5 = -4, tan x = -9/2,
+    // answers in the second and fourth quadrants. It got a negative ratio in
+    // 53 of 400 draws. The owner, on the 2016 P2 sheet: "Yes key". The toss is
+    // still drawn for every id, so no other id's stream moves; 2016 simply
+    // reads its own rule. 2026 P2 Q8 (SIGNED OFF) keeps its mix.
+    const negativeToss = getRandomInt(1, 5) === 1;
+    if (asked === 'trig-equations.solve-tan-pre2023' ? r > 0 : r > 0 === negativeToss) continue;
     if (fn !== 'tan' && Math.abs(r) >= 0.98) continue;
     if (Math.abs(r) < 0.06) continue;
     if (fn === 'tan' && Math.abs(r) > 6) continue;

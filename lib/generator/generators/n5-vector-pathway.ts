@@ -144,7 +144,29 @@ function parallelogram(): Q | null {
   // Every route goes via the corner the two share: A and C meet at B, B and D
   // meet at A.
   const via = (from === P1 || from === P3) ? P2 : P1;
-  const want = cSub(pos[to], pos[from]);
+  const wantG = cSub(pos[to], pos[from]);
+
+  /**
+   * **Which two sides are given — 2026-09-24.** The owner, on the 2016 P2
+   * sheet: *"Could we widen this by asking for any diagonal plus any of the
+   * other 2 sides as long as it's not 2 parallel sides"* — confirmed as: the
+   * two GIVEN vectors may be any pair of adjacent sides, going round the
+   * shape as the paper's AB then BC do, and the question still asks for a
+   * diagonal. 4 corners times 4 diagonals is 16, from 4.
+   *
+   * The figure stays drawn in its own basis (AB along U, BC along V); the
+   * given pair meeting at corner k is AB,BC / BC,CD / CD,DA / DA,AB, which
+   * is U,V / V,-U / -U,-V / -V,U, so U and V are re-expressed in the named
+   * vectors before the answer is written. Only this routine reads it.
+   */
+  const names = [P1, P2, P3, P4];
+  const k = pick([0, 1, 2, 3]);
+  const [g1, g2] = [[names[k], names[(k + 1) % 4]], [names[(k + 1) % 4], names[(k + 2) % 4]]];
+  const neg = (x: R): R => rSub(r(0, 1), x);
+  const want: Combo = k === 0 ? wantG
+    : k === 1 ? { a: wantG.b, b: neg(wantG.a) }
+    : k === 2 ? { a: neg(wantG.a), b: neg(wantG.b) }
+    : { a: neg(wantG.b), b: wantG.a };
 
   const U = pt(70, 0), V = pt(26, 46);
   const points = Object.fromEntries(Object.entries(pos).map(([k, v]) => [k, place(v, U, V)]));
@@ -152,7 +174,7 @@ function parallelogram(): Q | null {
 
   const prose = [
     `The diagram below shows parallelogram $${P1}${P2}${P3}${P4}$.`,
-    `$${ray(P1, P2)}$ represents vector $${vec(nu)}$ and $${ray(P2, P3)}$ represents vector $${vec(nv)}$.`,
+    `$${ray(g1[0], g1[1])}$ represents vector $${vec(nu)}$ and $${ray(g2[0], g2[1])}$ represents vector $${vec(nv)}$.`,
     `Express $${ray(from, to)}$ in terms of $${vec(nu)}$ and $${vec(nv)}$.`,
   ];
   const steps = [
@@ -164,10 +186,10 @@ function parallelogram(): Q | null {
     // The diagonal asked for is drawn, with a bare arrowhead and no letter -
     // which is exactly what 2016 P2 Q3 does with its BD.
     edges: [[P1, P2], [P2, P3], [P3, P4], [P4, P1], [from, to]],
-    arrows: [{ from: P1, to: P2, label: nu }, { from: P2, to: P3, label: nv },
+    arrows: [{ from: g1[0], to: g1[1], label: nu }, { from: g2[0], to: g2[1], label: nv },
              { from, to }],
   }, 'A Pathway in a Parallelogram', 'vectors.pathway-parallelogram', prose,
-    `Parallelogram $${P1}${P2}${P3}${P4}$, $${ray(P1, P2)} = ${vec(nu)}$, $${ray(P2, P3)} = ${vec(nv)}$. Find $${ray(from, to)}$.`,
+    `Parallelogram $${P1}${P2}${P3}${P4}$, $${ray(g1[0], g1[1])} = ${vec(nu)}$, $${ray(g2[0], g2[1])} = ${vec(nv)}$. Find $${ray(from, to)}$.`,
     steps, [1], `$${answer}$`);
 }
 

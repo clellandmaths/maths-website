@@ -79,8 +79,17 @@ function sigFigs(v: number, n: number): number {
 // scope, and not a question any of these four papers sets. What the
 // specification permits is not what the paper asked.
 
-function completeSquare(): Q {
-  const { p: pName, q: qName, v } = squareForm();
+function completeSquare(_wanted?: string, asked?: string): Q {
+  const form = squareForm();
+  const { p: pName, q: qName } = form;
+  /**
+   * **2016 P2 Q9 is in x, always.** The owner, on the 2016 P2 sheet: *"Yes
+   * want x only"*, against the variable being y or p in 174 of 400 draws.
+   * The letters are still drawn, so the stream is unchanged; only the one
+   * read for this id is replaced. The locked clones on this routine are on
+   * that sheet as their own cards.
+   */
+  const v = asked === 'quadratics.complete-square-2016' ? 'x' : form.v;
   const half = nonZeroInt(-8, 8);
   const b = 2 * half;
   const c = nonZeroInt(-40, 40);

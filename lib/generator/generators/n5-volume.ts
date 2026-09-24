@@ -530,18 +530,93 @@ function coneMinusCone(): Q | null {
     `<strong>4.</strong> Subtract:<br><br>$${big.toFixed(2)}\\ldots - ${small.toFixed(2)}\\ldots = ${exact.toFixed(2)}\\ldots$`,
     rounded(5, exact, sf, 'cm'),
   ];
-  return assemble({
-    stack: [{ kind: 'frustum', r: bigD / 2, rTop: smallD / 2, h: bigH - smallH }],
-    ghosts: [{ piece: { kind: 'cone', r: smallD / 2, h: smallH }, on: 'top' }],
-    dims: [
-      { along: 'width', halfWidth: bigD / 2, side: 'below', value: bigD, text: `${bigD} cm` },
-      { along: 'width', halfWidth: smallD / 2, side: 'above', value: smallD, text: `${smallD} cm` },
-      { along: 'height', from: 0, to: bigH, side: 'left', value: bigH, text: `${bigH} cm` },
-      { along: 'height', from: bigH - smallH, to: bigH, side: 'right', value: smallH, text: `${num(smallH)} cm` },
+  const fig = cartonSection(bigD, bigH, smallD, smallH);
+  if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
+  return {
+    subTopic: 'A Cone with its Tip Removed', difficulty: 'exam', variationId: 'volume.cone-minus-cone',
+    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    boardQuestionLines: [`Cone ${bigD} by ${bigH}, tip ${smallD} by ${num(smallH)} removed. Volume?`],
+    solutionSteps: steps, stepMarks: [1, 1, 1, 1, 1],
+    finalAnswer: `$${toSigFigs(exact, sf)}$ ${cubic('cm')}`, figure: fig,
+  };
+}
+
+/**
+ * **2016 P2 Q7's own picture — 2026-09-24.**
+ *
+ * Counted off the scan: the carton stands POINT DOWN, like a cup. The part
+ * that is left is shaded; the removed tip hangs below it in dashes. The 32 cm
+ * across the open top is written above its rim, and the 18 cm across the cut is
+ * written on the cut circle itself. Both heights are double arrows measured
+ * from the tip: 24 cm on the right to the rim, 13·5 cm on the left to the cut.
+ *
+ * The shared `solidFigure` drew it point-up, measured with dashed lines
+ * without ends, and put the small cone's diameter above its tip, where nothing
+ * is that wide. The owner, on the 2016 P2 sheet: *"Yes redraw"*. Drawn here
+ * rather than in `solid.ts`, which every solid in the course shares, so no
+ * other figure can move. A true section of round pieces, so it claims its
+ * lengths.
+ */
+function cartonSection(bigD: number, bigH: number, smallD: number, smallH: number): Figure {
+  const [R, H, r, h] = [bigD / 2, bigH, smallD / 2, smallH];
+  const TILT = 0.24;
+  const arc = (cx: number, cy: number, rx: number, from: number, to: number, n = 48): Pt[] =>
+    Array.from({ length: n + 1 }, (_, i) => {
+      const a = (from + (to - from) * i / n) * Math.PI / 180;
+      return pt(cx + rx * Math.cos(a), cy + rx * TILT * Math.sin(a));
+    });
+  /** A double-headed arrow from a to b, barbs as decoration. */
+  const arrow = (a: Pt, b: Pt, head: number): Element[] => {
+    const len = Math.hypot(b.x - a.x, b.y - a.y);
+    const u = pt((b.x - a.x) / len, (b.y - a.y) / len), n = pt(-u.y, u.x);
+    const out: Element[] = [{ kind: 'segment', from: a, to: b, decoration: true }];
+    for (const [tip, s] of [[a, 1], [b, -1]] as [Pt, number][]) {
+      const back = pt(tip.x + u.x * head * s, tip.y + u.y * head * s);
+      for (const side of [1, -1]) {
+        out.push({ kind: 'segment', decoration: true, to: tip,
+          from: pt(back.x + n.x * head * 0.42 * side, back.y + n.y * head * 0.42 * side) });
+      }
+    }
+    return out;
+  };
+  const head = R * 0.08;
+  const gap = R * 0.22;
+  // The side you see: the near half of the rim down to the near half of the cut.
+  const shade: Element = { kind: 'shadedShape', points: [...arc(0, H, R, 180, 360), ...arc(0, h, r, 360, 180)] };
+  const [rl, rr] = [pt(-R, H), pt(R, H)];
+  const [cl, cr] = [pt(-r, h), pt(r, h)];
+  const [hr0, hr1] = [pt(R + gap, 0), pt(R + gap, H)];
+  const [hl0, hl1] = [pt(-r - gap, 0), pt(-r - gap, h)];
+  const elements: Element[] = [
+    shade,
+    { kind: 'segment', from: rl, to: cl },
+    { kind: 'segment', from: rr, to: cr },
+    { kind: 'ellipse', centre: pt(0, H), rx: R, ry: R * TILT },
+    { kind: 'ellipse', centre: pt(0, h), rx: r, ry: r * TILT },
+    // the tip that was removed
+    { kind: 'segment', from: cl, to: pt(0, 0), dashed: true },
+    { kind: 'segment', from: cr, to: pt(0, 0), dashed: true },
+    // across the open top, the number above the rim
+    ...arrow(rl, rr, head),
+    { kind: 'label', text: `${bigD} cm`, anchor: pt(0, H + R * TILT), away: pt(0, H) },
+    // across the cut, the number just under it
+    ...arrow(cl, cr, Math.min(head, r * 0.3)),
+    { kind: 'label', text: `${smallD} cm`, anchor: pt(0, h - r * TILT), away: pt(0, h) },
+    // the heights, both from the tip
+    ...arrow(hr0, hr1, head),
+    { kind: 'label', text: `${bigH} cm`, anchor: pt(hr0.x, H / 2), away: pt(0, H / 2) },
+    ...arrow(hl0, hl1, Math.min(head, h * 0.2)),
+    { kind: 'label', text: `${num(smallH)} cm`, anchor: pt(hl0.x, h / 2), away: pt(0, h / 2) },
+  ];
+  return {
+    scene: { elements },
+    claims: [
+      { kind: 'length', from: rl, to: rr, value: bigD },
+      { kind: 'length', from: cl, to: cr, value: smallD },
+      { kind: 'length', from: hr0, to: hr1, value: bigH },
+      { kind: 'length', from: hl0, to: hl1, value: smallH },
     ],
-  }, 'A Cone with its Tip Removed', 'volume.cone-minus-cone', prose,
-    `Cone ${bigD} by ${bigH}, tip ${smallD} by ${num(smallH)} removed. Volume?`,
-    steps, [1, 1, 1, 1, 1], `$${toSigFigs(exact, sf)}$ ${cubic('cm')}`);
+  };
 }
 
 const SHELLS = [

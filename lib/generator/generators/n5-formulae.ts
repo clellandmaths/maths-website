@@ -402,23 +402,38 @@ function subjectWithRoot(wanted?: string, asked?: string): Q {
 
   if (insideRoot) {
     // v = sqrt(k·subj·a - b)
-    const k = pick([2, 3, 4, 5, 6]);
+    /**
+     * **2016 P2 Q12 widened — 2026-09-24.** It made five questions, the
+     * coefficient being the only thing that varied once the letters are set
+     * aside. The owner, on the 2016 P2 sheet: *"So we won't be having a
+     * worksheet made where question is identical except variable name
+     * different. So id suggest widen by allowing - or + and also widening the
+     * coefficient of kt."* So for this id the loose term may be added or
+     * taken away inside the root, and the coefficient runs 2 to 12: 22
+     * questions, the same three operations (square, undo the term, divide).
+     * Both randoms are drawn only for this id; a topic sheet keeps 2 to 6 and
+     * the minus.
+     */
+    const wide = asked === 'change-subject.root-2016';
+    const k = wide ? getRandomInt(2, 12) : pick([2, 3, 4, 5, 6]);
+    const plus = wide && getRandomInt(0, 1) === 1;
+    const [sign, undo, back] = plus ? ['+', `Subtract $${b}$ from`, '-'] : ['-', `Add $${b}$ to`, '+'];
     return {
       subTopic: 'Changing the Subject with Roots',
       difficulty: 'exam',
       variationId: 'change-subject.root',
       questionLines: [
-        `Change the subject of the formula $${v} = \\sqrt{${k}${subj}${a} - ${b}}$ to $${subj}$.`,
+        `Change the subject of the formula $${v} = \\sqrt{${k}${subj}${a} ${sign} ${b}}$ to $${subj}$.`,
       ],
-      boardQuestionLines: [`$${v} = \\sqrt{${k}${subj}${a} - ${b}}$, make $${subj}$ the subject`],
+      boardQuestionLines: [`$${v} = \\sqrt{${k}${subj}${a} ${sign} ${b}}$, make $${subj}$ the subject`],
       solutionSteps: [
-        `<strong>1.</strong> Square both sides to undo the root:<br><br>$${v}^{2} = ${k}${subj}${a} - ${b}$`,
-        `<strong>2.</strong> Add $${b}$ to both sides:<br><br>$${v}^{2} + ${b} = ${k}${subj}${a}$`,
-        `<strong>3.</strong> Divide both sides by $${k}${a}$:<br><br>$${subj} = ${frac(`${v}^{2} + ${b}`, `${k}${a}`)}$`,
+        `<strong>1.</strong> Square both sides to undo the root:<br><br>$${v}^{2} = ${k}${subj}${a} ${sign} ${b}$`,
+        `<strong>2.</strong> ${undo} both sides:<br><br>$${v}^{2} ${back} ${b} = ${k}${subj}${a}$`,
+        `<strong>3.</strong> Divide both sides by $${k}${a}$:<br><br>$${subj} = ${frac(`${v}^{2} ${back} ${b}`, `${k}${a}`)}$`,
       ],
       // 2016 P2 Q12: •¹ square, •² add p, •³ divide by 4t — one per operation
       stepMarks: [1, 1, 1],
-      finalAnswer: `$${subj} = ${frac(`${v}^{2} + ${b}`, `${k}${a}`)}$`,
+      finalAnswer: `$${subj} = ${frac(`${v}^{2} ${back} ${b}`, `${k}${a}`)}$`,
     };
   }
 
