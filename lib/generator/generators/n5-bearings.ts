@@ -95,6 +95,7 @@ export function bearingsQuestion(kinds: string[], wanted?: string, askedId?: str
   const kind = kinds.length > 1 && asked !== undefined && kinds.includes(asked)
     ? asked : pick(kinds);
   for (let tries = 0; tries < 4000; tries++) {
+    // No context names a point N — see BEARING_CONTEXTS.
     const c = pick(BEARING_CONTEXTS);
     // which way round the third point lies: every bearing in the question, and
     // the sign of the arithmetic at the end, follows from this one choice

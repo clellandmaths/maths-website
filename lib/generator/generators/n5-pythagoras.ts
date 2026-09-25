@@ -454,6 +454,8 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
        * 2016's asked id, so LOCKED 2022 P2 Q8 on the same family is untouched.
        */
       centreDot: forPaper2018 || forPaper2015 || askedId === 'pythagoras.chord-pre2022',
+      // 2018's paper dots A and B too — the owner: "Put the dots in for A and B".
+      endDots: forPaper2018,
       askedSpan: forPaper2018 ? spanWord
         : forPaper2015 ? ctx.asks.replace(/^the /, '')
         : askedId === 'pythagoras.chord-pre2022' ? ctx.asks.replace(/^the /, '') : undefined,

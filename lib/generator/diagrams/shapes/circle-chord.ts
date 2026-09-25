@@ -85,6 +85,12 @@ export interface CircleChordSpec {
    */
   centreDot?: boolean;
   /**
+   * Dots at the chord's two ends, as 2018 P2 Q12 prints them at A and B.
+   * The owner, on the 2015 P2 sheet (2026-09-25): *"Put the dots in for A
+   * and B"*. Off unless a caller asks.
+   */
+  endDots?: boolean;
+  /**
    * An external dimension arrow spanning the piece, carrying a WORD rather
    * than a number — the length being asked for.
    *
@@ -287,6 +293,7 @@ export function circleChord(spec: CircleChordSpec): Figure {
     elements.push(...dimensionArrow(M, T, at(-2 * r, 0), r * 1.15, spec.askedSpan));
   }
   if (spec.centreDot) elements.push({ kind: 'dot', at: O, small: true });
+  if (spec.endDots) elements.push({ kind: 'dot', at: A, small: true }, { kind: 'dot', at: B, small: true });
 
   const printed = (s: string) => /\d/.test(s);
 

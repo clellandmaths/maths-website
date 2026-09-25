@@ -142,23 +142,72 @@ const COMPOUND_2017 = 'percentages.compound-2017';
  * *"Yes I'd key but also make sure in the contexts the number make sense. Ie
  * scale for a context is right"*.
  *
- * So this id draws only money that gains value, works it to the penny (which
- * goes unsaid), and prices each thing from its own band rather than the shared
- * £2,000-£30,000. The bands belong to this id alone: every other paper on the
- * routine keeps the shared one.
+ * So this id draws only money that gains value and works it to the penny
+ * (which goes unsaid). Its prices come from `BANDS` below.
  */
 const COMPOUND_2015 = 'percentages.compound-2015';
-const BAND_2015: Record<string, [number, number, number]> = {   // [lo, hi, step]
-  'the profit': [50000, 900000, 5000],
-  'the house': [120000, 450000, 5000],
-  'the investment': [1000, 20000, 500],
-  'the bond': [1000, 25000, 500],
-  'the flat': [80000, 300000, 5000],
-  'the guitar': [2000, 40000, 500],
-  'the donations': [10000, 500000, 5000],
-  'the cottage': [100000, 400000, 5000],
-  'the account': [500, 10000, 100],
-  'the woodland': [50000, 600000, 5000],
+
+/**
+ * **Every context priced for what it is.** — 2026-09-25
+ *
+ * Every money context started at £2,000-£30,000 and every counted one at
+ * 10,000-130,000, whatever it was: measured on the locked papers, houses at
+ * £2,000, a NEW laptop at £26,000 (2024 P2 Q1's own is £460), a new tractor
+ * or a passenger boat from £2,000, a deer herd of 122,500 on one estate. The
+ * owner, on the 2015 P2 sheet: *"the locked Q1 questions do need sensible
+ * prices for each context question"*.
+ *
+ * Keyed on the opening sentence, because subjects repeat ("the van", "the
+ * boat", "the colony"). [lo, hi, step]. The three-significant-figure
+ * contexts are not here: they belong to 2026 P2 Q1's own branch, which keeps
+ * its range. The first ten are the bands 2015 P2 Q1 was given first.
+ */
+const BANDS: Record<string, [number, number, number]> = {
+  // money that gains value
+  "A company's annual profit was %.": [50000, 900000, 5000],
+  'A house was bought for %.': [120000, 450000, 5000],
+  '% is invested in a savings account.': [1000, 20000, 500],
+  '% is placed in a five year bond.': [1000, 25000, 500],
+  'A flat was bought for %.': [80000, 300000, 5000],
+  'A vintage guitar was bought at auction for %.': [2000, 40000, 500],
+  'A charity received donations of % last year.': [10000, 500000, 5000],
+  'A holiday cottage was bought for %.': [100000, 400000, 5000],
+  '% is paid into a credit union account.': [500, 10000, 100],
+  'A woodland was bought for %.': [50000, 600000, 5000],
+  // money that loses value
+  'A new laptop is bought for %.': [300, 2000, 10],
+  'A motorhome was bought for %.': [25000, 90000, 500],
+  'A tractor was bought new for %.': [40000, 150000, 1000],
+  'A printing press was bought for %.': [20000, 250000, 1000],
+  'A minibus was bought by a school for %.': [20000, 60000, 500],
+  'A dentist bought a new x-ray machine for %.': [10000, 80000, 500],
+  'A recording studio bought a mixing desk for %.': [2000, 40000, 500],
+  'A courier firm bought an electric van for %.': [25000, 60000, 500],
+  'A haulage firm bought a lorry for %.': [40000, 150000, 1000],
+  'A caravan was bought for %.': [8000, 40000, 500],
+  'A bakery bought a dough mixer for %.': [2000, 20000, 500],
+  'A garage bought a vehicle lift for %.': [2000, 12000, 500],
+  'A gym bought a set of rowing machines for %.': [3000, 20000, 500],
+  'A photographer bought a camera body for %.': [800, 6000, 100],
+  'A landscaper bought a wood chipper for %.': [5000, 40000, 500],
+  'A brewery bought a bottling line for %.': [50000, 400000, 5000],
+  'A quarry bought a rock crusher for %.': [100000, 800000, 5000],
+  'A dairy bought a milking parlour for %.': [50000, 300000, 5000],
+  'A print shop bought a laser cutter for %.': [5000, 60000, 500],
+  'A ferry operator bought a passenger boat for %.': [100000, 900000, 5000],
+  // counted or measured
+  'A town has a population of %.': [5000, 60000, 500],
+  'Households in a city produced % tonnes of waste last year.': [50000, 400000, 5000],
+  'A colony of puffins on an island numbers %.': [2000, 60000, 500],
+  'A red squirrel population in a forest is estimated at %.': [200, 3000, 50],
+  'A reservoir holds % million litres of water.': [500, 20000, 100],
+  'A leisure centre has % members.': [800, 8000, 100],
+  'A wind farm generated % megawatt hours last year.': [20000, 400000, 5000],
+  'A glacier covers an area of % hectares.': [500, 20000, 100],
+  'A deer herd on an estate numbers %.': [100, 2500, 50],
+  'A library lent out % books last year.': [10000, 150000, 1000],
+  'A hospital had % patients on its waiting list.': [500, 15000, 100],
+  'A bee colony contains % bees.': [20000, 80000, 500],
 };
 
 function compound(wanted?: string, asked?: string): Q {
@@ -205,7 +254,8 @@ function compound(wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 200; tries++) {
     ({ rate, multiplier } = drawRate(up));
     years = getRandomInt(2, 4);
-    const band = is2015 ? BAND_2015[ctx.subject] : undefined;
+    // The three-significant-figure branch (2026 P2 Q1) keeps its own range.
+    const band = threeSf ? undefined : BANDS[ctx.opening('%')];
     start = band
       ? getRandomInt(band[0] / band[2], band[1] / band[2]) * band[2]
       : ctx.unit === '£'

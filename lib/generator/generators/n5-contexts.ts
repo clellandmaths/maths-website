@@ -1376,8 +1376,13 @@ export const BEARING_CONTEXTS: BearingContext[] = [
      ['the lifeboat', 'the tug', 'the cargo ship'], 'kilometres', [4, 13]),
   bc(['K', 'L', 'M'], 'In the diagram below {0}, {1} and {2} represent the positions of Kilbrae, Larkhill and Monkston respectively.',
      ['Kilbrae', 'Larkhill', 'Monkston'], 'kilometres', [9, 34]),
-  bc(['L', 'M', 'N'], 'The points {0}, {1} and {2} represent three lighthouses along a stretch of coast.',
-     ['L', 'M', 'N'], 'kilometres', [8, 28]),
+  // **Never a point called N in a bearings question**, where it stands beside
+  // the north arrow's "N". The owner, on the 2015 P2 sheet (2026-09-25): *"we
+  // will never want N in a bearings question as a point"*. This context and
+  // the radio masts below were the only two; each changes only its letters,
+  // so the list keeps its length and order and no other context's draws move.
+  bc(['L', 'M', 'P'], 'The points {0}, {1} and {2} represent three lighthouses along a stretch of coast.',
+     ['L', 'M', 'P'], 'kilometres', [8, 28]),
   bc(['A', 'B', 'C'], 'In the diagram {0}, {1} and {2} represent three airfields.',
      ['A', 'B', 'C'], 'kilometres', [22, 65]),
   bc(['S', 'T', 'U'], 'A hillwalker plans a route over three summits, shown as {0}, {1} and {2} on the map below.',
@@ -1394,8 +1399,8 @@ export const BEARING_CONTEXTS: BearingContext[] = [
      ['the base', 'the casualty', 'the helicopter'], 'kilometres', [2, 10]),
   bc(['V', 'W', 'Y'], 'The points {0}, {1} and {2} represent three villages on a moor.',
      ['V', 'W', 'Y'], 'kilometres', [9, 31]),
-  bc(['M', 'N', 'P'], 'Three radio masts stand at {0}, {1} and {2}.',
-     ['M', 'N', 'P'], 'metres', [320, 950]),
+  bc(['M', 'P', 'R'], 'Three radio masts stand at {0}, {1} and {2}.',
+     ['M', 'P', 'R'], 'metres', [320, 950]),
   bc(['R', 'S', 'T'], 'A surveyor places markers at {0}, {1} and {2} on level ground.',
      ['R', 'S', 'T'], 'metres', [110, 470]),
   bc(['A', 'B', 'C'], 'In the diagram {0}, {1} and {2} represent three harbours.',
