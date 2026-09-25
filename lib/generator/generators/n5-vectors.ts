@@ -739,6 +739,11 @@ function gradientAndXIntercept(): Q {
     const c = a * xInt;                                     // so y = 0 gives a whole x
     if (Math.abs(c) > 40) continue;
     if (c % b === 0 && Math.abs(c / b) < 2) continue;        // a y-intercept too tidy to test
+    // **No common factor across the equation**, as the paper's 4x + 3y = 12.
+    // 3x + 3y = 6 or 6x - 9y = 30 lets the pupil divide through first, an
+    // easier question: 155 of 400 draws. The owner, on the 2014 P1 sheet:
+    // "Yes ensure there no common factor". Nothing else serves this routine.
+    if (gcd(gcd(a, Math.abs(b)), Math.abs(c)) > 1) continue;
 
     const lhs = `${a === 1 ? '' : a === -1 ? '-' : a}x ${b < 0 ? '-' : '+'} ${Math.abs(b) === 1 ? '' : Math.abs(b)}y`;
     const equation = `${lhs} = ${c}`;

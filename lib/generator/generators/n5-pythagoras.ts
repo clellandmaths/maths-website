@@ -1038,11 +1038,38 @@ export function pythagorasChordReverse(findChord: boolean): Q {
       //
       // The other branch of this function is `chord-radius`, which clones
       // 2026 P2 Q5 — a calculator paper — and keeps its free choice.
+      /**
+       * **2014 P1 Q12 as the paper sets it — 2026-09-25.** The owner, on the
+       * 2014 P1 sheet: *"Yes all 3"*. Measured over 400 draws before:
+       *
+       * - **The answer was already in the question in 291.** The 3-4-5 trap
+       *   the other chord questions fixed: with the half-chord the 4, the
+       *   height is 8k and the chord is 8k, so the answer copies the height.
+       *   The paper's 15, 12, 9 has the half-chord as the SHORT leg, and a
+       *   given that equals the answer is refused outright.
+       * - **Lengths such as 12.5 in 182**, on a non-calculator paper; the
+       *   paper's 15, 27 and 18 are whole. Whole numbers only.
+       * - **The figure was not the paper's.** The paper letters the chord PQ,
+       *   its midpoint A, and B at the far end of the line through the centre
+       *   C (dotted), with no number on the figure: "A is the mid-point of
+       *   chord PQ. The length of AB is 27 centimetres."
+       *
+       * This branch is 2014's alone; `chord-radius` (2026 P2 Q5) is the other.
+       */
       const fits = CHORD_TRIPLES.flatMap(([legD, legH, hyp]) =>
         CHORD_SCALES.map(k => ({ d: legD * k, half: legH * k, r: hyp * k })))
-        .filter(t => t.r >= lo && t.r <= hi);
+        // No context band: this branch prints the paper's plain "a circle,
+        // centre C" and takes only the unit from the context, so a band made
+        // for a doorstep or a flower bed only threw away small radii.
+        .filter(t => Number.isInteger(t.r) && Number.isInteger(t.d) && Number.isInteger(t.half)
+          // Radius at most 15, the paper's own: squaring by hand on a
+          // non-calculator paper. The owner, on the 2014 P1 sheet: "Yes cap
+          // to 15", against radii up to 75 (75^2 by hand).
+          && t.r <= 15);
       if (!fits.length) continue;
       const t = pick(fits);
+      // The paper's own five letters, and two sets like it.
+      const [cN, pN, qN, aN, bN] = pick([['C', 'P', 'Q', 'A', 'B'], ['O', 'R', 'S', 'M', 'N'], ['O', 'E', 'F', 'G', 'H']]);
 
       const r = t.r;
       const chord = 2 * t.half;
@@ -1051,39 +1078,35 @@ export function pythagorasChordReverse(findChord: boolean): Q {
       const halfChord = t.half;
       const answer = chord;
       if (answer < r * 0.4) continue;
+      if (answer === height || answer === r) continue;   // never a given
 
       // 2014 P1 Q12 draws the whole circle and the line from the chord's
-      // midpoint through the centre to the far side — solid, because AB = 27 is
-      // the given. No radius to P or Q is drawn; it is in the prose.
+      // midpoint A through the centre to B on the far side — solid, and with
+      // no number on it, because AB = 27 is given in the words.
       const fig = circleChord({
         radius: r, chord, major: true, rest: 'solid', radiusLine: 'none',
-        names: { a: A, b: B, centre: O },
-        labels: { radius: '', chord: '',
-                  height: `${num(height)} ${abbrev(ctx.unit)}` },
+        names: { a: pN, b: qN, centre: cN, mid: aN, far: bN },
+        centreDot: true, spanLine: true,
+        labels: { radius: '', chord: '', height: '' },
       });
-      // Prose nobody had ever read, because this branch has never once reached
-      // the page. "A shape is part of a circle" says nothing, and a radius of
-      // one printed as "1 metres".
       const prose = [
-        // 2014 P1 Q12: "The diagram below shows a circle, centre C." The whole
-        // circle is drawn, so it is a circle, not part of one.
-        `The diagram shows a circle with centre $${O}$ and chord $${A}${B}$.`,
-        `&bull;&nbsp; The radius of the circle is ${withUnit(r, ctx.unit)}`,
-        `&bull;&nbsp; The height from the middle of $${A}${B}$ to the top of the arc is ${withUnit(height, ctx.unit)}`,
+        // 2014 P1 Q12: "The diagram below shows a circle, centre C."
+        `The diagram below shows a circle, centre $${cN}$.`,
+        `The radius of the circle is ${withUnit(r, ctx.unit)}.`,
+        `$${aN}$ is the mid-point of chord $${pN}${qN}$.`,
+        `The length of $${aN}${bN}$ is ${withUnit(height, ctx.unit)}.`,
         // No rounding instruction: the triple makes the answer exact, and
-        // 2014 P1 Q12 asks for none either — it just says "Calculate the
-        // length of PQ", because with the numbers it chose there is nothing
-        // to round.
-        `Calculate the length of the chord $${A}${B}$.`,
+        // 2014 P1 Q12 asks for none either.
+        `Calculate the length of $${pN}${qN}$.`,
       ];
       // 2014 P1 Q12 is four marks: •¹ marshal the facts and recognise the right
       // angle, •² know how to use Pythagoras, •³ the correct calculation, •⁴ the
-      // length asked for. Three steps meant one of them carried two marks.
+      // length asked for.
       const steps = [
-        `<strong>1.</strong> Let $M$ be the midpoint of $${A}${B}$. The height runs from $M$ through the centre $${O}$ to the arc, so the part from $${O}$ down to $M$ is the height minus the radius:<br><br>$${O}M = ${num(height)} - ${num(r)} = ${num(dShown)}$ ${ctx.unit}`,
-        `<strong>2.</strong> The perpendicular from the centre bisects the chord, so $${O}M${B}$ is right-angled with $${O}${B}$ as its hypotenuse:<br><br>$M${B}^{2} = ${num(r)}^{2} - ${num(dShown)}^{2}$`,
-        `<strong>3.</strong> Work that out and take the square root:<br><br>$M${B}^{2} = ${num(r * r - dShown * dShown)}$, so $M${B} = ${num(halfChord)}$ ${ctx.unit}`,
-        `<strong>4.</strong> The chord is twice $M${B}$:<br><br>$${A}${B} = 2 \\times ${num(halfChord)} = ${num(answer)}$ ${ctx.unit}`,
+        `<strong>1.</strong> $${aN}${bN}$ runs from the midpoint $${aN}$ through the centre $${cN}$ to the circle, so the part from $${cN}$ to $${aN}$ is $${aN}${bN}$ minus the radius:<br><br>$${cN}${aN} = ${num(height)} - ${num(r)} = ${num(dShown)}$ ${ctx.unit}`,
+        `<strong>2.</strong> The line from the centre to the midpoint of a chord is perpendicular to it, so $${cN}${aN}${qN}$ is right-angled with $${cN}${qN}$, a radius, as its hypotenuse:<br><br>$${aN}${qN}^{2} = ${num(r)}^{2} - ${num(dShown)}^{2}$`,
+        `<strong>3.</strong> Work that out and take the square root:<br><br>$${aN}${qN}^{2} = ${num(r * r - dShown * dShown)}$, so $${aN}${qN} = ${num(halfChord)}$ ${ctx.unit}`,
+        `<strong>4.</strong> The chord is twice $${aN}${qN}$:<br><br>$${pN}${qN} = 2 \\times ${num(halfChord)} = ${num(answer)}$ ${ctx.unit}`,
       ];
       if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
       return {

@@ -694,7 +694,15 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
    * 2026 P1 Q6 and signed off — reads exactly the stream it always read.
    * Keyed on `asked` for the same reason the falling pin below is.
    */
-  const q = asked === 'straight-line.exact-line' ? (qDraw === 3 ? 3 : 2) : qDraw;
+  /**
+   * **2014 P1 Q6 rises with a whole-number gradient** (C = 15F + 125). The
+   * owner, on the 2014 P1 sheet: *"Yes"*, against a fractional gradient in 64
+   * of 400 draws and a falling line in 66. The denominator is still drawn and
+   * read as 1, and only rising contexts are offered, for this asked id alone.
+   */
+  const rising2014 = asked === 'straight-line.best-fit-2014';
+  const q = asked === 'straight-line.exact-line' ? (qDraw === 3 ? 3 : 2)
+    : rising2014 ? 1 : qDraw;
 
   // **The denominator is chosen before the context, because it decides which
   // contexts can carry it.** `p` is drawn across the context's own slope band,
@@ -722,7 +730,8 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   const falling = asked === 'straight-line.best-fit-2024';
   const kind = CONTEXTS.filter(c => c.scatter === scatter
     && (c.only === undefined || c.only === asked)
-    && (!falling || Math.max(c.slope[0], c.slope[1]) < 0));
+    && (!falling || Math.max(c.slope[0], c.slope[1]) < 0)
+    && (!rising2014 || Math.min(c.slope[0], c.slope[1]) > 0));
   const pool = q === 1 ? kind : kind.filter(c =>
     Math.min(Math.abs(c.slope[0]), Math.abs(c.slope[1])) * q <= 8);
   if (!pool.length) return null;

@@ -166,11 +166,18 @@ function twoBinomials(): Q {
     const c = nonZeroInt(1, 4), d = nonZeroInt(-9, 9);
     const result = mulP([b, a], [d, c]);
     if (!result[1]) continue;                    // a vanishing middle term is a giveaway
+    // **No common factor in either bracket, in the paper's own words.**
+    // 2014 P1 Q2 is "Multiply out the brackets and collect like terms:
+    // (2x - 5)(3x + 1)". The clone had a bracket such as 4x + 8 in 184 of 400
+    // draws, which invites taking the 4 out first, and always said "Expand
+    // and simplify". The owner, on the 2014 P1 sheet: "Yes". Nothing else
+    // serves this routine.
+    if (gcd(a, b) > 1 || gcd(c, d) > 1) continue;
     return {
       subTopic: 'Expanding Two Brackets',
       difficulty: 'skill',
       variationId: 'expanding.two-binomials',
-      questionLines: [`${EXPAND} $${bracket([b, a], v)}${bracket([d, c], v)}$`],
+      questionLines: [`Multiply out the brackets and collect like terms: $${bracket([b, a], v)}${bracket([d, c], v)}$`],
       boardQuestionLines: [`$${bracket([b, a], v)}${bracket([d, c], v)}$`],
       solutionSteps: [
         `<strong>1.</strong> Multiply every term in the first bracket by every term in the second:<br><br>$${fmt([0, 0, a * c], v)} ${a * d < 0 ? '-' : '+'} ${Math.abs(a * d)}${v} ${b * c < 0 ? '-' : '+'} ${Math.abs(b * c)}${v} ${b * d < 0 ? '-' : '+'} ${Math.abs(b * d)}$`,

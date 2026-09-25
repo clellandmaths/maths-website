@@ -334,8 +334,42 @@ function amplitudeAndShift(): Q | null {
    *   $\\sin(x + 45)$ are the same curve, so a shift past 180 has a second,
    *   smaller answer a pupil would reasonably give and be marked wrong for.
    */
-  const shift = pick([45, 135]);
+  /**
+   * **Widened to the paper's scale — 2026-09-25.** 2014 P1 Q10 is
+   * `3 sin(x - 40)` on an axis marked every 20°, and this drew only 45 or
+   * 135: 10 questions, the paper's own 40 out of reach. The owner, on the 2014
+   * P1 sheet: *"Yes widen it but happy to have sine and cos turn up for
+   * variety"*.
+   *
+   * So the axis is marked every 20° as the paper's is, and the shift is any
+   * multiple of 20 from 20 to 160: readable off that scale, and short of 180
+   * so the drawn answer is the only one. The rule above still holds: **no
+   * labelled tick on a crossing**. A sine crosses at the shift and 180 past
+   * it, so those two ticks keep their mark and lose their number; the pupil
+   * reads 40 between a labelled 20 and 60, exactly as the paper intends. A
+   * cosine crosses 90 either side of its peak, which is never a multiple of
+   * 20, so every tick keeps its number.
+   *
+   * **Numbered every 40°, marked every 20°.** Eighteen numbers on this axis
+   * overlap at the figure's size (`verifyFigure`: "LABELS OVERLAP" on every
+   * layout tried); every other one fits on every layout. The paper numbers
+   * every 20°. A mark every 20° keeps the paper's scale, so a shift of 20 or
+   * 60 is read as the unnumbered mark between two numbered ones.
+   */
+  /**
+   * **On a numbered mark, and every number printed — 2026-09-25.** The owner,
+   * on the 2014 P1 sheet v2, against shifts of 20 and 60 read between two
+   * numbers and gaps where numbers had been left off: *"Needs to clearly go
+   * through one of the places on the x axis not in between. Also missing
+   * some of the numbers like 240"*. So the shift is a multiple of 40 (40,
+   * 80, 120, 160; the paper's 40 among them), which puts the crossing, or
+   * the cosine's peak, on a numbered mark; and every 40° is numbered. The
+   * curve can pass across a number near a crossing, as it does on the
+   * paper's own figure; the axis already forgives a scale number the curve.
+   */
+  const shift = 40 * getRandomInt(1, 4);
   const b = -shift;                              // y = a sin(x + b), shifted right
+  const xLabels = Array.from({ length: 9 }, (_, i) => 40 * (i + 1));
   const eq = `y = a\\${fn}(x + b)^{\\circ}`;
 
   const prose = [
@@ -345,14 +379,18 @@ function amplitudeAndShift(): Q | null {
   ];
   const steps = [
     `<strong>1.</strong> $a$ is the amplitude — how far the curve reaches above and below the $x$-axis:<br><br>$a = ${a}$`,
-    `<strong>2.</strong> $b$ shifts the graph sideways. An unshifted $\\${fn}$ graph ${fn === 'sin' ? 'crosses zero going upwards at $x = 0$' : 'has its maximum at $x = 0$'}. Read the marked ${fn === 'sin' ? 'crossing' : 'peak'} off the scale: it is at $x = ${shift}^{\\circ}$, so the graph has moved ${shift} to the right:<br><br>$b = ${b}$`,
+    `<strong>2.</strong> $b$ shifts the graph sideways. An unshifted $\\${fn}$ graph ${fn === 'sin' ? 'crosses zero going upwards at $x = 0$' : 'has its maximum at $x = 0$'}. Read ${fn === 'sin' ? 'where it crosses zero going upwards' : 'where its maximum is'} off the scale: it is at $x = ${shift}^{\\circ}$, so the graph has moved ${shift} to the right:<br><br>$b = ${b}$`,
   ];
   return assemble({
     view: view(a), domain: DEGREES,
     plot: { kind: 'trig', fn, a, b: 1, h: shift, k: 0 },
     // Marked, not named: naming it is the answer.
-    points: [{ x: shift, y: fn === 'sin' ? 0 : a, text: '' }],
-    ticks: { x: [45, 90, 135, 180, 225, 270, 315, 360], y: [a, 0, -a] },
+    // No dot: the paper marks nothing on its curve. The owner, on the 2014
+    // P1 sheet: "Also the original question has no dot on the turning point".
+    // The crossing or peak sits on a numbered mark instead (see `shift`).
+    points: [],
+    ticks: { x: xLabels, y: [a, 0, -a] },
+    minorTicks: 20,
     xTickRotate: true,
   }, 'A Shifted Trigonometric Graph', 'trig-graphs.shift',
     prose, `$${eq}$ shown. Find $a$ and $b$.`,

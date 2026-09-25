@@ -539,6 +539,14 @@ function partOfWhole(askedId?: string): Q {
      * five at all.
      */
     const pct = pick([20, 25, 40, 60, 65, 75, 80, 85, 90]);
+    // **2014 P1 Q9 is non-calculator: no 65% or 85%.** Both need a division
+    // by 13 or 17 on the way; the paper's is 80% (10% is 60,000). Measured in
+    // 90 of 400 draws. The owner, on the 2014 P1 sheet: "Yes". A rejection on
+    // 2014's asked id alone, so 2026 P1 Q2 draws exactly as before.
+    // **And 2026 P1 Q2 the same way**, also non-calculator (60%): 65% or 85%
+    // in 82 of 400 draws. The owner, at the foot of the 2014 P1 sheet: "Yes".
+    if ((askedId === 'percentages.part-of-whole-2014' || askedId === 'percentages.part-of-whole')
+        && (pct === 65 || pct === 85)) continue;
     const [lo, hi] = ctx.band;
     const step = hi > 100000 ? 20000 : hi > 10000 ? 1000 : hi > 1000 ? 100 : 20;
     const whole = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;

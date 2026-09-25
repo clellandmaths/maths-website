@@ -48,7 +48,13 @@ export interface CircleChordSpec {
    * paper names it. 2026 P2 Q5 calls it B and states "B is the midpoint of
    * AC"; a figure that leaves it unlettered contradicts its own prose.
    */
-  names: { a: string; b: string; centre: string; mid?: string };
+  names: { a: string; b: string; centre: string; mid?: string; far?: string };
+  /**
+   * Opt-in: draw the line from the chord's midpoint through the centre to the
+   * far side with no number on it, as 2014 P1 Q12 does (AB = 27 is in the
+   * words). `labels.height` draws the same line but writes the length on it.
+   */
+  spanLine?: boolean;
   /**
    * What to write on the radius, the chord, the height, and the perpendicular
    * from the centre. **A label on the height or the perpendicular draws that
@@ -186,15 +192,31 @@ export function circleChord(spec: CircleChordSpec): Figure {
     // Solid, because a labelled line is a given. Never drawn otherwise — the
     // perpendicular is the construction the first mark pays for.
     ...(spec.labels.centreToChord ? [{ kind: 'segment' as const, from: O, to: M }] : []),
-    ...(spec.labels.height ? [{ kind: 'segment' as const, from: M, to: T }] : []),
+    ...(spec.labels.height || spec.spanLine ? [{ kind: 'segment' as const, from: M, to: T }] : []),
     { kind: 'label', text: spec.names.a, anchor: A, away: O },
     { kind: 'label', text: spec.names.b, anchor: B, away: O },
     // Pushed away from B, so it sits up and to the left of the centre: clear
     // of the radius to B, and clear of the vertical through the centre that
     // 2014 and 2026 draw. Pushed away from T, as it used to be, it landed on
     // that vertical every time.
-    { kind: 'label', text: spec.names.centre, anchor: O, away: B },
-    ...(spec.names.mid ? [{ kind: 'label' as const, text: spec.names.mid, anchor: M, away: T }] : []),
+    // With `spanLine` the line through the centre is drawn, and a chord far
+    // from the centre (2014 P1 Q12's own: radius 15, 12 from the centre) sets
+    // B almost straight below it - so "away from B" runs up the line, and
+    // "away from T" pushes the midpoint's letter into the arc just below the
+    // chord. Both go up and to the side instead: off the line, and above the
+    // chord. Measured: every whole shape up to radius 15 failed on those two
+    // letters before this.
+    { kind: 'label', text: spec.names.centre, anchor: O, away: spec.spanLine ? at(r, 0) : B },
+    ...(spec.names.mid ? [{ kind: 'label' as const, text: spec.names.mid, anchor: M,
+      away: spec.spanLine ? at(r, k * m - r * m) : T,
+      // A chord far from the centre leaves a thin strip to the arc on one
+      // side and the line through the centre on the other, and a full-size
+      // letter fits neither (2014 P1 Q12's own 15, 12, 9 among them).
+      ...(spec.spanLine ? { small: true } : {}),
+      // the corner above the chord first, then below it (the paper's side),
+      // then the two lower corners; `verifyFigure` still judges the one used
+      ...(spec.spanLine ? { alternatives: [T, at(-r, k * m - r * m), at(r, k * m + r * m), at(-r, k * m + r * m)] } : {}) }] : []),
+    ...(spec.names.far ? [{ kind: 'label' as const, text: spec.names.far, anchor: T, away: M }] : []),
   ];
 
   // Each measurement sits beside the line it measures, pushed *sideways* off

@@ -217,6 +217,21 @@ interface OpOpts {
    * Put to the owner at the foot of the 2015 P1 sheet: *"Approved"*.
    */
   borrow?: boolean;
+  /**
+   * **A full stop after the sum, inside the maths.** — 2026-09-25
+   *
+   * The papers print "Evaluate 5/12 × 2 2/9. Give the answer in simplest
+   * form." and the clone printed "Evaluate 5/12 × 2 2/9 Give your answer…",
+   * with no stop, in 400 of 400 draws. The owner, on the 2014 P1 sheet: *"Yes
+   * and do it for the locked papers as well for the full stop."* That card was
+   * the three multiply papers (2014 P1 Q1, 2019 P1 Q2, 2025 P1 Q1), so the
+   * stop is theirs; the other fraction variations are unchanged.
+   */
+  stop?: true;
+  /** The proper fraction leads, as 2014 P1 Q1's 5/12 × 2 2/9. */
+  properLeads?: true;
+  /** The answer is a proper fraction, as 2014 P1 Q1's 25/27. */
+  properAnswer?: true;
   subTopic: string;
   variationId: string;
   /**
@@ -303,13 +318,15 @@ const MAX_BRACKET_DEN = 40;
 
 function operation(
   { op, useMixed, oneProper, mixedLeads, properSecond, borrow, subTopic, variationId,
-    stepMarks, maxDen }: OpOpts,
+    stepMarks, maxDen, stop, properLeads, properAnswer }: OpOpts,
 ): Q {
   for (let tries = 0; tries < 1200; tries++) {
     // Which side carries the whole number, where only one of them does. Both
     // orders are in the papers: 2025 P1 Q1 leads with the mixed number, 2014
-    // P1 Q1 and 2019 P1 Q2 lead with the proper fraction.
-    const mixedFirst = mixedLeads ? true : getRandomInt(0, 1) === 0;
+    // P1 Q1 and 2019 P1 Q2 lead with the proper fraction. The coin is still
+    // drawn when `properLeads` overrides it, so no other stream moves.
+    const coin = mixedLeads ? true : getRandomInt(0, 1) === 0;
+    const mixedFirst = properLeads ? false : coin;
     const x = !useMixed || (oneProper && !mixedFirst)
       ? properTerm(PROPER_DEN(op))
       : mixedTerm(op === 'subtract' ? 2 : 1, 5);
@@ -362,6 +379,7 @@ function operation(
     // answers "simplest form" before the pupil starts.
     if ((oneProper || properSecond) && r.n % r.d === 0) continue;   // r is unreduced here
     if (r.n > (useMixed ? 300 : 120)) continue;   // hold to the scale the papers use
+    if (properAnswer && r.n >= r.d) continue;     // 2014 P1 Q1 answers 25/27
 
     // Does it need simplifying *as the pupil arrives at it*?
     //
@@ -445,7 +463,7 @@ function operation(
       // simplest form would be asking for nothing.
       questionLines: COPRIME_REQUIRED(op, useMixed)
         ? [`Evaluate $${show(x)} ${SYMBOL[op]} ${show(y)}$`]
-        : [`Evaluate $${show(x)} ${SYMBOL[op]} ${show(y)}$`, SIMPLEST],
+        : [`Evaluate $${show(x)} ${SYMBOL[op]} ${show(y)}${stop ? '.' : ''}$`, SIMPLEST],
       boardQuestionLines: [`$${show(x)} ${SYMBOL[op]} ${show(y)}$`],
       solutionSteps: steps,
       stepMarks,
@@ -637,8 +655,10 @@ export const N5_GENERATORS: Record<string, Gen> = {
     op: 'multiply', useMixed: false,
     subTopic: 'Multiplying Fractions', variationId: 'fractions.multiply',
   }),
-  'Multiplying Mixed Numbers': () => operation({
-    op: 'multiply', useMixed: true, oneProper: true,
+  'Multiplying Mixed Numbers': (_w, asked) => operation({
+    op: 'multiply', useMixed: true, oneProper: true, stop: true,
+    // 2014 P1 Q1, on the owner's "Yes": the fraction first and an answer below 1.
+    ...(asked === 'fractions.multiply-mixed-pre2019p1' ? { properLeads: true, properAnswer: true } as const : {}),
     subTopic: 'Multiplying Mixed Numbers', variationId: 'fractions.multiply-mixed',
     stepMarks: [1, 1],   // 2025 P1 Q1, 2014 P1 Q1, 2019 P1 Q2
   }),

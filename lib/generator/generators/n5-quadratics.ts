@@ -101,13 +101,33 @@ function completeSquare(_wanted?: string, asked?: string): Q {
     'quadratics.complete-square-2016': {},                         // 2016 P2 Q9
     'quadratics.complete-square-pre2023': { p: 'p', q: 'q' },      // 2019 P2 Q10
     'quadratics.complete-square': { p: 'a', q: 'b' },              // 2025 P2 Q5
+    // 2014 P1 Q3, x^2 - 14x + 44 in the form (x - a)^2 + b. The owner, on the
+    // 2014 P1 sheet: "Yes" to x, a minus middle term, and a and b. Measured
+    // before: x in 176, a minus middle term in 205, a and b in 215 of 400.
+    'quadratics.complete-square-2014': { p: 'a', q: 'b' },
   };
   const key = KEYED[asked ?? ''];
   const pName = key?.p ?? form.p, qName = key?.q ?? form.q;
   const v = key ? 'x' : form.v;
-  const half = nonZeroInt(-8, 8);
+  // The middle term is drawn as ever; each keyed paper reads it with its own
+  // sign. 2014 is x^2 - 14x + 44; 2019 P2 Q10 (+10x) and 2025 P2 Q5 (+10x)
+  // are plus - the owner, on the 2014 P1 sheet: "Yes just ensure we never get
+  // a q to be 0" and "Ok again check we never get b = 0". 2016 P2 Q9 was not
+  // answered on its sign, so it keeps both.
+  const drawnHalf = nonZeroInt(-8, 8);
+  const PLUS = asked === 'quadratics.complete-square-pre2023' || asked === 'quadratics.complete-square';
+  const half = asked === 'quadratics.complete-square-2014' ? -Math.abs(drawnHalf)
+    : PLUS ? Math.abs(drawnHalf) : drawnHalf;
   const b = 2 * half;
-  const c = nonZeroInt(-40, 40);
+  let c = nonZeroInt(-40, 40);
+  /**
+   * **Never "+ 0".** When c is b^2/4 the quadratic is a perfect square and
+   * the answer ends "(x + 4)^2 + 0". The owner, on the 2014 P1 sheet: "Can't
+   * have +0", on 2016 P2 Q9's draws, and the two answers above. On the four
+   * papers' ids the constant moves up one instead, so no draw is spent and
+   * no other draw changes.
+   */
+  if (asked !== undefined && asked in KEYED && 4 * c === b * b) c += 1;
   const expr: Poly = [c, b, 1];
 
   // p = b/2, q = c - b^2/4, both over a denominator of 4 at worst

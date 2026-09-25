@@ -31,6 +31,18 @@ export interface TriangleSidesSpec {
   /** What to write along each side; empty leaves it unlabelled. */
   labels: { ab: string; bc: string; ca: string };
   /**
+   * Opt-in: push each side label perpendicular to its side, outward, rather
+   * than away from the centroid.
+   *
+   * On a thin triangle the centroid sits almost on the long side, so "away
+   * from it" runs along the side and into the next line: 2014 P1 Q5's own
+   * triangle (sin K = 0.4, a 24 degree corner) put "18 cm" 0 to 5px from ink
+   * it does not label at every turn, so the paper's own pair could never be
+   * drawn. The cevian labels below already push perpendicular for the same
+   * reason. Off unless a caller asks, so no existing figure moves.
+   */
+  perpSideLabels?: boolean;
+  /**
    * An angle to mark at a vertex, with its size written inside the arc.
    *
    * The sine and cosine rule questions give an angle as often as a third side,
@@ -175,9 +187,21 @@ export function triangleFromSides(spec: TriangleSidesSpec): Figure | null {
       centred: true,
     });
   }
-  if (spec.labels.ab) elements.push(sideLabel(P, Q, spec.labels.ab, inside));
-  if (spec.labels.bc) elements.push(sideLabel(Q, R, spec.labels.bc, inside));
-  if (spec.labels.ca) elements.push(sideLabel(R, P, spec.labels.ca, inside));
+  /** Outward along the side's normal, with the inward normal as a fallback. */
+  const perpLabel = (from: Pt, to: Pt, text: string): Element => {
+    const at = mid(from, to);
+    const len = Math.hypot(to.x - from.x, to.y - from.y) || 1;
+    const n = pt(-(to.y - from.y) / len, (to.x - from.x) / len);
+    const one = pt(at.x + n.x, at.y + n.y), two = pt(at.x - n.x, at.y - n.y);
+    // pushed AWAY from the point named, so name the one nearer the inside
+    const [away, alt] = dist(one, inside) < dist(two, inside) ? [one, two] : [two, one];
+    return { kind: 'label', text, anchor: at, away, alternatives: [alt] };
+  };
+  const side = (from: Pt, to: Pt, text: string) =>
+    spec.perpSideLabels ? perpLabel(from, to, text) : sideLabel(from, to, text, inside);
+  if (spec.labels.ab) elements.push(side(P, Q, spec.labels.ab));
+  if (spec.labels.bc) elements.push(side(Q, R, spec.labels.bc));
+  if (spec.labels.ca) elements.push(side(R, P, spec.labels.ca));
 
   // The foot is placed in the same frame as A and B - before the turn - and
   // rotated with everything else, so it stays on AB whichever way up it lands.

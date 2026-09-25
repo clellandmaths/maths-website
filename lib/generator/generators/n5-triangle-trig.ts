@@ -279,6 +279,9 @@ function sineRuleSideExact(): Q {
     const sinK = getRandomInt(2, 8) / 10;
     const sinL = getRandomInt(3, 9) / 10;
     if (sinK >= sinL) continue;                    // keep the answer shorter than the given side
+    // 0.4 and up: the paper's own 0.4 was asked for, and 0.2 and 0.3 (declared
+    // but never drawable until `perpSideLabels`) were not.
+    if (sinK < 0.4) continue;
     const kNum = Math.round(sinK * 10), lNum = Math.round(sinL * 10);
     if (gcd(kNum, lNum) === Math.min(kNum, lNum) && kNum !== lNum) { /* fine */ }
     const step = lNum / gcd(kNum, lNum);
@@ -300,6 +303,10 @@ function sineRuleSideExact(): Q {
       vertices: [K, L, M],
       labels: { ab: '', bc: '', ca: `${KM} ${u}` },
       turn: pick([0, 1, 2, 3] as const),
+      // The narrow corners (sin 0.2 to 0.4) could not letter their side at
+      // all, so the paper's own sin K = 0.4 never drew. The owner, on the
+      // 2014 P1 sheet: "Yes add it". See `perpSideLabels`.
+      perpSideLabels: true,
     });
     if (!fig) continue;
     const givens = [
