@@ -462,7 +462,7 @@ function operation(
       // from the same fact — a coprime add cannot simplify, so asking for
       // simplest form would be asking for nothing.
       questionLines: COPRIME_REQUIRED(op, useMixed)
-        ? [`Evaluate $${show(x)} ${SYMBOL[op]} ${show(y)}$`]
+        ? [`Evaluate $${show(x)} ${SYMBOL[op]} ${show(y)}${stop ? '.' : ''}$`]
         : [`Evaluate $${show(x)} ${SYMBOL[op]} ${show(y)}${stop ? '.' : ''}$`, SIMPLEST],
       boardQuestionLines: [`$${show(x)} ${SYMBOL[op]} ${show(y)}$`],
       solutionSteps: steps,
@@ -639,12 +639,12 @@ export const N5_GENERATORS: Record<string, Gen> = {
   // could not produce at all until 2026-09-22. Adding Mixed Numbers is the
   // only variation that passes it.
   'Adding Mixed Numbers': () => operation({
-    op: 'add', useMixed: true, properSecond: true,
+    op: 'add', useMixed: true, properSecond: true, stop: true,   // 2018 P1 Q1 prints one
     subTopic: 'Adding Mixed Numbers', variationId: 'fractions.add-mixed',
     stepMarks: [1, 1],   // 2018 P1 Q1
   }),
   'Subtracting Mixed Numbers': (_w, asked) => operation({
-    op: 'subtract', useMixed: true,
+    op: 'subtract', useMixed: true, stop: true,   // 2015 P1 Q1, 2024 P1 Q1 print one
     ...(asked === 'fractions.subtract-mixed-pre2023' ? { borrow: true }    // 2015 P1 Q1
       : asked === 'fractions.subtract-mixed' ? { borrow: false }           // 2024 P1 Q1
       : {}),
@@ -672,7 +672,7 @@ export const N5_GENERATORS: Record<string, Gen> = {
   // and their first mark is "convert to improper fraction and multiply by the
   // reciprocal", one conversion, not two.
   'Dividing Mixed Numbers': () => operation({
-    op: 'divide', useMixed: true, oneProper: true, mixedLeads: true,
+    op: 'divide', useMixed: true, oneProper: true, mixedLeads: true, stop: true,   // 2017 P1 Q3, 2023 P1 Q1
     subTopic: 'Dividing Mixed Numbers', variationId: 'fractions.divide-mixed',
     stepMarks: [1, 1],   // 2023 P1 Q1, 2017 P1 Q3
     maxDen: MAX_DIVIDE_MIXED_DEN,   // the papers answer 2 7/16 and 2 4/9

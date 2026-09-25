@@ -367,7 +367,16 @@ function amplitudeAndShift(): Q | null {
    * curve can pass across a number near a crossing, as it does on the
    * paper's own figure; the axis already forgives a scale number the curve.
    */
-  const shift = 40 * getRandomInt(1, 4);
+  /**
+   * **A cosine's shift is chosen so its crossings sit on the 20° marks.** The
+   * owner, 2026-09-25, on a cosine marked every 10°: *"That is too many
+   * divisions. We need to keep the same number of divisions as the sine ones
+   * but ensure that the numbers are picked so that cos ones go through a
+   * division."* A cosine crosses 90 either side of its peak, so the peak at
+   * 10, 30, ... 170 puts both crossings on multiples of 20. The peak itself
+   * then sits exactly halfway between two marks, which is how b is read.
+   */
+  const shift = fn === 'sin' ? 40 * getRandomInt(1, 4) : 20 * getRandomInt(0, 8) + 10;
   const b = -shift;                              // y = a sin(x + b), shifted right
   const xLabels = Array.from({ length: 9 }, (_, i) => 40 * (i + 1));
   const eq = `y = a\\${fn}(x + b)^{\\circ}`;
@@ -390,6 +399,16 @@ function amplitudeAndShift(): Q | null {
     // The crossing or peak sits on a numbered mark instead (see `shift`).
     points: [],
     ticks: { x: xLabels, y: [a, 0, -a] },
+    /**
+     * **Every crossing on a mark.** The owner, 2026-09-25: *"the curve has to
+     * go through the angle mark on the x axis - it should never go in between
+     * them"*. A sine shifted by a multiple of 40 crosses at the shift and 180
+     * past it, both on the 20° marks. A cosine crosses 90 either side of its
+     * peak - 130 and 310 for a peak at 40 - which falls between 20° marks, so
+     * a cosine's shift is chosen to put its crossings on the 20° marks
+     * instead (see `shift`); a cosine marked every 10° was "too many
+     * divisions".
+     */
     minorTicks: 20,
     xTickRotate: true,
   }, 'A Shifted Trigonometric Graph', 'trig-graphs.shift',

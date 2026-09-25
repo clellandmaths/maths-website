@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "7289eaa9a807498ca6244a0b54ddb7b7686f5026",
+  "sourceCommit": "b2dee5565c33c1a5d6ebc7c7d34f81d3596f7ebf",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -78,13 +78,13 @@
     "generators/n5-tangent.ts": "7ddd0d729f2ea93e",
     "generators/n5-triangle-trig.ts": "1859b6d6795420cd",
     "generators/n5-trig-diagram.ts": "bbb46cd6c366e9d8",
-    "generators/n5-trig-graph.ts": "7a6dc249fe575ce4",
+    "generators/n5-trig-graph.ts": "e786f110f52b92f5",
     "generators/n5-trig.ts": "53fe192aedc1aa7a",
     "generators/n5-variations.ts": "edd5ba4ace118bf8",
     "generators/n5-vector-pathway.ts": "43b51cfca07ccc80",
     "generators/n5-vectors.ts": "6032ff5f361ad382",
     "generators/n5-volume.ts": "94214d6e7ddd4165",
-    "generators/n5.ts": "6b1921e8e7e23671",
+    "generators/n5.ts": "b7544fa28cbe1d71",
     "generators/paper-hints.ts": "8cae511f1f595796",
     "generators/paper-markscheme.ts": "c505b9c52b91748d",
     "generators/paper-plan.ts": "9ffceaf0bec8249c",
