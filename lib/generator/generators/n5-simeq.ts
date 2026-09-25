@@ -379,6 +379,33 @@ function amount(v: number, kind: TwoItemContext['kind']): string {
  */
 const CONSTRUCT_2014 = 'simeq.construct-solve-2014';
 
+/**
+ * **Each item priced for what it is.** — 2026-09-25
+ *
+ * The shared draw prices the second item at up to 80% of the first, whatever
+ * it is, so 2014's sheet paired theatre tickets with a £24.70 programme. The
+ * owner, on that card: *"Ok any way to fix odd price pairings?"* - answered
+ * on the thread as a fix for 2014 P2 Q3 alone, since the draw is shared with
+ * LOCKED 2016 P1 Q4 and 2022 P2 Q4.
+ *
+ * [first lo, first hi, second lo, second hi] in pence, keyed on the first
+ * item. The paper's are £22.50 an adult and £15.25 a child.
+ */
+const PRICES_2014: Record<string, [number, number, number, number]> = {
+  'mangoes': [60, 150, 25, 60],
+  'adult tickets': [1200, 2800, 600, 1600],
+  'notebooks': [150, 450, 40, 150],
+  'bags of compost': [400, 900, 200, 500],
+  'cinema tickets': [800, 1400, 300, 650],
+  'bus passes': [1000, 2500, 800, 2000],
+  'boxes of tiles': [1500, 3500, 500, 1200],
+  'coffees': [220, 400, 150, 300],
+  'rolls of turf': [300, 700, 250, 600],
+  'theatre tickets': [1800, 4500, 300, 800],
+  'punnets of raspberries': [200, 400, 150, 350],
+  'train tickets': [1500, 4500, 300, 1000],
+};
+
 function constructSolve(combine = false, paper1 = false, asked?: string): Q {
   const is2014 = asked === CONSTRUCT_2014;
   for (let tries = 0; tries < 300; tries++) {
@@ -408,8 +435,10 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
       : paper1 ? (ctx.kind === 'm2' ? 10 : 1)
       : 1;
     const round = (x: number) => Math.round(x / step) * step;
-    const u1 = round(getRandomInt(lo, hi));
-    const u2 = round(getRandomInt(Math.max(step, Math.round(lo * 0.5)), Math.round(u1 * 0.8)));
+    const pair = is2014 ? PRICES_2014[ctx.plural[0]] : undefined;
+    const u1 = round(pair ? getRandomInt(pair[0], pair[1]) : getRandomInt(lo, hi));
+    const u2 = round(pair ? getRandomInt(pair[2], pair[3])
+      : getRandomInt(Math.max(step, Math.round(lo * 0.5)), Math.round(u1 * 0.8)));
     if (u1 <= u2 || u2 <= 0) continue;
 
     const q1 = getRandomInt(2, 7), q2 = getRandomInt(2, 7);

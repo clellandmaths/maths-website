@@ -661,10 +661,24 @@ function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
   }
 
   // V = (1/d)·S·M ± T, where T may itself carry a coefficient
+  /**
+   * **2025 P2 Q9 is B = ¼kc² − 3c: the other term holds the squared
+   * letter.** — 2026-09-25
+   *
+   * Measured on the 2014 P2 sheet, where its card was shown at the owner's
+   * request, 400 draws: the other term never held the squared letter
+   * (`A = ⅕nm² − 2w`). The owner: *"Yes"*. The sign was pinned to the
+   * paper's minus as well, which halved the clone to 15 questions, and the
+   * owner took that back - *"Plus or minus is fine surely as well"* - so
+   * the sign stays free (30 questions), then *"Confirmed"*.
+   *
+   * The squared shape only - `plain` is 2023 P2 Q7 (LOCKED) and keeps its
+   * own letter. 2014 P2 Q11 leaves before here.
+   */
   const minus = getRandomInt(0, 1) === 0;
   // 2023 P2 Q7's constant is bare; 2025 P2 Q9's carries a 3.
   const tCoef = plain ? 1 : pick([2, 3, 4]);
-  const tTex = term(tCoef, tLetter);
+  const tTex = term(tCoef, squareM ? mLetter : tLetter);
   const flipped = minus ? '+' : '-';            // the sign after moving T across
 
   return {

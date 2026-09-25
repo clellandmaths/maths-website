@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "e299bc4317982be3ac66909c72c197fb309118b2",
+  "sourceCommit": "16099474ffae052113be803241fc9eda12e225d7",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -57,7 +57,7 @@
     "generators/n5-expanding.ts": "8ceb2d57ec80742d",
     "generators/n5-factorising.ts": "34c9082ddff5cd90",
     "generators/n5-form-equation.ts": "9e9403407b371e83",
-    "generators/n5-formulae.ts": "1e001306c04e343f",
+    "generators/n5-formulae.ts": "ee5f22aafb268a4b",
     "generators/n5-functions.ts": "3c4d487da70cfc1e",
     "generators/n5-indices.ts": "ec93ea21e373c1c2",
     "generators/n5-line-graph.ts": "3a9b6399e7f43de6",
@@ -71,7 +71,7 @@
     "generators/n5-rounding.ts": "8faa901ae0a33ef5",
     "generators/n5-scinot.ts": "ebab1c1304aee364",
     "generators/n5-sector.ts": "e32fe3c78861d56f",
-    "generators/n5-simeq.ts": "f6f5f73ab0057bb4",
+    "generators/n5-simeq.ts": "9f9c8f838549c69a",
     "generators/n5-similarity.ts": "dbc4b4f18c7692eb",
     "generators/n5-sketch-parabola.ts": "fcf0e06fa6d52cbc",
     "generators/n5-surds.ts": "6fa82de815f4d617",
