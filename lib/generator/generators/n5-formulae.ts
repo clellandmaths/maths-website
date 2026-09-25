@@ -688,6 +688,49 @@ function subjectFractionCoefficient(bracketOnly = false, wanted?: string): Q {
   };
 }
 
+/**
+ * **2014 P2 Q11 is s = ut + ½at², to a.** — 2026-09-25
+ *
+ * The note above called this "a third shape again ... not built here at all",
+ * sharing the squared id as the nearest. Measured on the 2014 P2 sheet, 400
+ * draws: the fraction term always first, and the other term never containing
+ * the squared letter (0 of 400) - `A = ⅕nm² − 2w` where the paper's first term,
+ * ut, holds the t that is squared. The owner: *"Yes"* to its own shape: the
+ * other term first, a product containing the squared letter, a plus, and a
+ * unit fraction.
+ *
+ * `-pre2023` cites 2014 P2 Q11 alone, but it is an ALIAS of the id LOCKED
+ * 2025 P2 Q9 is on, so it is sent here from the dispatch before the shared
+ * routine draws anything. The other term may carry a small whole coefficient,
+ * as 2025's 3c does; 1 is the paper's.
+ */
+const SUVAT_2014 = 'change-subject.fraction-coefficient-pre2023';
+
+function subjectSuvat2014(): Q {
+  const [v, other, sq, subj] = letters(4);
+  const d = getRandomInt(2, 10);
+  const k = pick([1, 1, 2, 3]);
+  const kTerm = `${k === 1 ? '' : k}${other}${sq}`;
+  const sqTex = `${sq}^{2}`;
+  return {
+    subTopic: 'Changing the Subject with a Fractional Coefficient',
+    difficulty: 'exam',
+    variationId: 'change-subject.fraction-coefficient',
+    questionLines: [
+      `Change the subject of the formula $${v} = ${kTerm} + ${frac('1', `${d}`)}${subj}${sqTex}$ to $${subj}$.`,
+    ],
+    boardQuestionLines: [`$${v} = ${kTerm} + ${frac('1', `${d}`)}${subj}${sqTex}$, make $${subj}$ the subject`],
+    solutionSteps: [
+      `<strong>1.</strong> Subtract $${kTerm}$ from both sides:<br><br>$${v} - ${kTerm} = ${frac('1', `${d}`)}${subj}${sqTex}$`,
+      `<strong>2.</strong> Multiply both sides by $${d}$:<br><br>$${d}(${v} - ${kTerm}) = ${subj}${sqTex}$`,
+      `<strong>3.</strong> Divide both sides by $${sqTex}$:<br><br>$${subj} = ${frac(`${d}(${v} - ${kTerm})`, sqTex)}$`,
+    ],
+    // 2014 P2 Q11: •¹ subtract ut, •² multiply by 2, •³ divide by t²
+    stepMarks: [1, 1, 1],
+    finalAnswer: `$${subj} = ${frac(`${d}(${v} - ${kTerm})`, sqTex)}$`,
+  };
+}
+
 // ── inequalities with brackets — 2015 P1 Q2, 2017 P1 Q8, 2018 P2 Q4, ──────
 //    2024 P2 Q4, 2026 P1 Q11
 //
@@ -932,8 +975,10 @@ export const FORMULA_GENERATORS: Record<string, Gen> = {
   // caller asked for, and a bare reference would take that string as
   // `bracketOnly` - which is truthy. frozen caught it on 2023 P2 Q7 and
   // 2025 P2 Q9 the moment the argument was introduced.
-  'Changing the Subject with a Fractional Coefficient': (w) =>
-    subjectFractionCoefficient(false, w),
+  // 2014 P2 Q11 leaves before the shared routine draws anything, so the
+  // stream 2023 P2 Q7 and 2025 P2 Q9 read is untouched.
+  'Changing the Subject with a Fractional Coefficient': (w, a) =>
+    a === SUVAT_2014 ? subjectSuvat2014() : subjectFractionCoefficient(false, w),
   // 2019 P1 Q7 - its own loop, so its denominator can run 2 to 30 without
   // moving 2023 P2 Q7 or 2025 P2 Q9, which share the other one.
   'Changing the Subject Inside a Bracket': (w) => subjectFractionCoefficient(true, w),

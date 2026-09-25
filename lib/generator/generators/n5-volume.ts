@@ -489,26 +489,49 @@ function sphereConeEqual(): Q | null {
 
 // ── two pieces, added or taken away ───────────────────────────────────────
 
+/**
+ * **Each object at its own size.** — 2026-09-25
+ *
+ * Every context drew a diameter of 6 to 16 cm and a height of up to three
+ * times that, so the 2014 P2 sheet measured a 45 cm spinning top, a 44 cm plumb
+ * bob and a 42 cm paperweight - 86 of 400 draws over 30 cm tall. The paper's
+ * ornament is 8 wide and 15 tall. The owner: *"Yes d them for this question"*,
+ * to sizes that fit each object and the paper's figure. `dia` is [lo, hi]
+ * in centimetres, and the height follows from it; the paper's own glass
+ * ornament is added.
+ */
 const ORNAMENTS = [
-  { thing: 'candle holder', inner: 'granite', outer: 'wax', intro: 'A candle holder is in the shape of a cone' },
-  { thing: 'trophy', inner: 'lead', outer: 'resin', intro: 'A trophy is in the shape of a cone' },
-  { thing: 'spinning top', inner: 'steel', outer: 'wood', intro: 'A spinning top is in the shape of a cone' },
-  { thing: 'paperweight', inner: 'brass', outer: 'acrylic', intro: 'A paperweight is in the shape of a cone' },
-  { thing: 'doorstop', inner: 'iron', outer: 'rubber', intro: 'A doorstop is in the shape of a cone' },
-  { thing: 'chess piece', inner: 'lead', outer: 'marble', intro: 'A chess piece is in the shape of a cone' },
-  { thing: 'buoy', inner: 'concrete', outer: 'plastic', intro: 'A harbour buoy is in the shape of a cone' },
-  { thing: 'skittle', inner: 'steel', outer: 'beech', intro: 'A skittle is in the shape of a cone' },
-  { thing: 'garden light', inner: 'concrete', outer: 'glass', intro: 'A garden light is in the shape of a cone' },
-  { thing: 'plumb bob', inner: 'tungsten', outer: 'brass', intro: 'A plumb bob is in the shape of a cone' },
+  { thing: 'ornament', inner: 'copper', outer: 'glass', intro: 'An ornament is in the shape of a cone', dia: [6, 10] },
+  { thing: 'candle holder', inner: 'granite', outer: 'wax', intro: 'A candle holder is in the shape of a cone', dia: [7, 12] },
+  { thing: 'trophy', inner: 'lead', outer: 'resin', intro: 'A trophy is in the shape of a cone', dia: [8, 14] },
+  { thing: 'spinning top', inner: 'steel', outer: 'wood', intro: 'A spinning top is in the shape of a cone', dia: [5, 8] },
+  { thing: 'paperweight', inner: 'brass', outer: 'acrylic', intro: 'A paperweight is in the shape of a cone', dia: [6, 9] },
+  { thing: 'doorstop', inner: 'iron', outer: 'rubber', intro: 'A doorstop is in the shape of a cone', dia: [8, 14] },
+  { thing: 'chess piece', inner: 'lead', outer: 'marble', intro: 'A chess piece is in the shape of a cone', dia: [3, 5] },
+  { thing: 'buoy', inner: 'concrete', outer: 'plastic', intro: 'A harbour buoy is in the shape of a cone', dia: [50, 90] },
+  { thing: 'skittle', inner: 'steel', outer: 'beech', intro: 'A skittle is in the shape of a cone', dia: [6, 9] },
+  { thing: 'garden light', inner: 'concrete', outer: 'glass', intro: 'A garden light is in the shape of a cone', dia: [10, 18] },
+  { thing: 'plumb bob', inner: 'tungsten', outer: 'brass', intro: 'A plumb bob is in the shape of a cone', dia: [3, 5] },
 ];
 
 /** 2014 P2 Q7 — a cone with a hemisphere set into its base. */
 function coneMinusHemisphere(): Q | null {
   const c = pick(ORNAMENTS);
-  const dia = getRandomInt(6, 16);
-  const h = getRandomInt(dia + 2, dia * 3);
-  const inner = Math.round((dia - getRandomInt(3, 12) / 10) * 10) / 10;
-  if (inner <= dia * 0.6 || inner / 2 > h * 0.7) return null;
+  const dia = getRandomInt(c.dia[0], c.dia[1]);
+  // Height from the width, 1.2 to 2.1 times it: the paper's is 15 on 8, 1.9.
+  // Taller than about twice the width, the figure is drawn so narrow that the
+  // hemisphere's diameter cannot be written inside it.
+  const h = getRandomInt(Math.ceil(dia * 1.2), Math.floor(dia * 2.1));
+  // The hemisphere has to fit inside the cone: its radius no more than the
+  // distance from the centre of the base to the sloping side. The paper's
+  // 3.7 against 4 × 15 / √(4² + 15²) = 3.87 does, at 96% of the room. It is
+  // drawn from that room, 85% to 98% of it, rather than as a fixed amount
+  // under the base: a squat cone drew the dome straight through its sides,
+  // and a fixed gap on a large cone can never fit, which starved the pool to
+  // the smallest objects.
+  const room = (dia / 2) * h / Math.hypot(dia / 2, h);
+  const inner = Math.floor(2 * room * getRandomInt(85, 98) / 100 * 10) / 10;
+  if (inner <= dia * 0.6 || inner >= dia || inner / 2 > h * 0.7) return null;
   const sf = 2;
   const cone = Math.PI * (dia / 2) ** 2 * h / 3;
   const hemi = 2 / 3 * Math.PI * (inner / 2) ** 3;
@@ -529,13 +552,20 @@ function coneMinusHemisphere(): Q | null {
     `<strong>4.</strong> Carry out the subtraction:<br><br>$${cone.toFixed(2)}\\ldots - ${hemi.toFixed(2)}\\ldots = ${exact.toFixed(2)}\\ldots$`,
     rounded(5, exact, sf, 'cm'),
   ];
+  // Drawn as the paper draws it: the hemisphere seen through the cone, solid
+  // and shaded, with its diameter across it; the cone's diameter under the
+  // base and its height beside it, both with end marks and the height ruled
+  // back to the shape; and the two materials named on leaders.
+  const R = dia / 2, ri = inner / 2;
   return assemble({
-    stack: [{ kind: 'cone', r: dia / 2, h }],
-    ghosts: [{ piece: { kind: 'hemisphere', r: inner / 2 }, on: 'base' }],
+    stack: [{ kind: 'cone', r: R, h }],
+    ghosts: [{ piece: { kind: 'hemisphere', r: ri }, on: 'base', seen: true }],
     dims: [
-      { along: 'width', halfWidth: inner / 2, side: 'below', rank: 0, value: inner, text: `${num(inner)} cm` },
-      { along: 'width', halfWidth: dia / 2, side: 'below', rank: 1, value: dia, text: `${dia} cm` },
-      { along: 'height', from: 0, to: h, side: 'left', value: h, text: `${h} cm` },
+      { along: 'width', halfWidth: ri, side: 'above', onGhost: 0, arrow: true, value: inner, text: `${num(inner)} cm` },
+      { along: 'width', halfWidth: R, side: 'below', rank: 0, arrow: true, value: dia, text: `${dia} cm` },
+      { along: 'height', from: 0, to: h, side: 'right', arrow: true, rules: true, value: h, text: `${h} cm` },
+      { along: 'leader', at: pt(-R * 0.4, h * 0.6), degrees: 160, text: c.outer },
+      { along: 'leader', at: pt(-ri * 0.72, ri * 0.72), degrees: 175, text: c.inner },
     ],
   }, 'A Cone with a Hemisphere Removed', 'volume.cone-minus-hemisphere', prose,
     `Cone ${dia} by ${h}, hemisphere of diameter ${num(inner)} removed. Volume?`,

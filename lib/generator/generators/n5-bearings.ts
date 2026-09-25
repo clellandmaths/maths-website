@@ -275,6 +275,22 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
   const answer = ((given + side * phi) % 360 + 360) % 360;
   // a bearing that rounds to 000 reads as no bearing at all
   if (Math.round(answer) % 360 === 0) return null;
+  /**
+   * **2014 P2 Q10: the shaded angle lies outside the triangle, and no two
+   * sides are equal.** — 2026-09-25
+   *
+   * The paper's shaded angle at B turns from north round to BC without
+   * crossing BA, so (b) is the back bearing less (a): 360 − 120 − 84.8. On the
+   * 2014 P2 sheet, 211 of 400 draws swept across the triangle's own angle and
+   * added instead, and 65 had two equal sides (8 equilateral, (a) exactly
+   * 60°) against the paper's 8, 11 and 13. The owner: *"Yes"*.
+   *
+   * Only the `angle` kind, which is 2014's alone: 2018 P2 Q13 (LOCKED) comes
+   * through here as `bearing` and never reaches either test.
+   */
+  // Clockwise from north, BC comes before BA, with no wrap through north: a
+  // wrap puts north inside angle ABC, so the shaded angle lies in it.
+  if (kind === 'angle' && (!(side === -1 && given - phi > 0) || new Set([ba, bcLen, ca]).size < 3)) return null;
 
   const points: [Pt, Pt, Pt] = [A, B, C];
   /**

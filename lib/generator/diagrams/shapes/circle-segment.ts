@@ -33,6 +33,14 @@ export interface CircleSegmentSpec {
    */
   level?: boolean;
   labels: { radius: string; angle: string };
+  /**
+   * **Drawn as 2014 P2 Q13 draws it**: the larger piece's outline only - its
+   * arc and the chord, not the whole circle - with no shading, both radii
+   * dashed and both labelled. The outline is the region, so nothing needs
+   * filling to say which piece is meant. Opt-in; every other caller keeps
+   * the shaded whole circle.
+   */
+  paperOutline?: true;
 }
 
 const dir = (deg: number): Pt =>
@@ -49,7 +57,17 @@ export function circleSegment(spec: CircleSegmentSpec): Figure | null {
   const L = spec.labels;
   const inside = scale(dir(start + angle / 2), r * 0.4);
 
-  const elements: Element[] = [
+  const tri = pt((A.x + B.x) / 3, (A.y + B.y) / 3);
+  const elements: Element[] = spec.paperOutline ? [
+    { kind: 'arc', centre: O, r, from: start + angle, to: start + 360 },
+    { kind: 'segment', from: O, to: A, dashed: true },
+    { kind: 'segment', from: O, to: B, dashed: true },
+    { kind: 'segment', from: A, to: B },
+    { kind: 'label', text: nO, anchor: O, away: inside },
+    { kind: 'label', text: nA, anchor: A, away: O },
+    { kind: 'label', text: nB, anchor: B, away: O },
+    ...(L.radius ? [sideLabel(O, B, L.radius, tri)] : []),
+  ] : [
     // the shaded piece goes down first, so every line is drawn over it
     spec.shade === 'minor'
       ? { kind: 'shadedSegment', centre: O, r, from: start, to: start + angle }
@@ -68,7 +86,6 @@ export function circleSegment(spec: CircleSegmentSpec): Figure | null {
   // whose orientation was fixed, silently, because the retry simply moved on
   // to a context that had no orientation to fix.
   if (L.radius) {
-    const tri = pt((A.x + B.x) / 3, (A.y + B.y) / 3);
     elements.push(sideLabel(O, A, L.radius, tri));
   }
   if (L.angle) {
@@ -84,7 +101,7 @@ export function circleSegment(spec: CircleSegmentSpec): Figure | null {
     scene: { elements },
     claims: [
       { kind: 'length', from: O, to: A, value: r, shown: /\d/.test(L.radius) },
-      { kind: 'length', from: O, to: B, value: r, shown: false },
+      { kind: 'length', from: O, to: B, value: r, shown: spec.paperOutline ? /\d/.test(L.radius) : false },
       // under 180, so a measured angle comes back as itself and can be claimed
       // directly — unlike a sector, where the reflex case makes that useless
       { kind: 'angle', at: O, arms: [A, B], value: angle, shown: /\d/.test(L.angle) },

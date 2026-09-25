@@ -377,13 +377,19 @@ function cancelCoefficients(): Q {
     const c = getRandomInt(2, 4);                  // over d v^c
     const left = a + b - c;
     if (left < 2 || left > 12) continue;
+    // **The powers must not cancel straight off.** — 2026-09-25. With the
+    // denominator's power equal to the second factor's, the answer keeps the
+    // first factor's power and a pupil never adds any: 97 of 400 on the 2014
+    // P2 sheet. The paper's is 5 + 1 − 2. The owner: *"Do both"* - this, and
+    // the paper's full stop below, inside the maths. Alone on its clone.
+    if (c === b) continue;
 
     const numerator = `${pow(v, a)} \\times ${k}${pow(v, b)}`;
     return {
       subTopic: 'Cancelling Coefficients with Indices',
       difficulty: 'exam',
       variationId: 'indices.cancel-coefficients',
-      questionLines: [`Simplify $\\frac{${numerator}}{${d}${pow(v, c)}}$`],
+      questionLines: [`Simplify $\\frac{${numerator}}{${d}${pow(v, c)}}.$`],
       boardQuestionLines: [`$\\frac{${numerator}}{${d}${pow(v, c)}}$`],
       solutionSteps: [
         `<strong>1.</strong> Multiply out the numerator, adding the powers of $${v}$:<br><br>$${numerator} = ${k}${pow(v, a + b)}$`,

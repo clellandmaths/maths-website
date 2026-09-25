@@ -210,7 +210,15 @@ export interface SolidSpec {
    * front wall. `lift` raises it from there, for a piece concentric with
    * another rather than resting on a face.
    */
-  ghosts?: { piece: Piece; on: 'base' | 'top'; lift?: number }[];
+  ghosts?: { piece: Piece; on: 'base' | 'top'; lift?: number;
+    /**
+     * **Seen through the solid, so drawn solid and shaded.** 2014 P2 Q7's
+     * cone is glass, and the paper draws the copper hemisphere inside it as a
+     * visible, dark body with its outline unbroken. Only a hemisphere takes
+     * the shading. Opt-in: every other ghost in the course is a cut-out or a
+     * removed tip, and stays dashed and unfilled.
+     */
+    seen?: true }[];
   dims: Dim[];
 }
 
@@ -425,7 +433,31 @@ export function solidFigure(spec: SolidSpec): Figure {
     const seat = g.on === 'top' ? o : foot;
     const back = obliqueDepth(g.piece);
     const front = back ? pt(seat.x - back.x / 2, seat.y - back.y / 2) : seat;
-    elements.push(...drawPiece(g.piece, pt(front.x, front.y + (g.lift ?? 0)), true));
+    const at0 = pt(front.x, front.y + (g.lift ?? 0));
+    if (g.seen && g.piece.kind === 'hemisphere' && g.piece.flat !== 'up') {
+      // The dome over the near half of its flat face, filled first so the
+      // outline is drawn over it.
+      const r = g.piece.r, ry = r * TILT, pts: Pt[] = [];
+      for (let k = 0; k <= 36; k++) {
+        const t = Math.PI * k / 36;
+        pts.push(pt(at0.x + r * Math.cos(t), at0.y + r * Math.sin(t)));
+      }
+      for (let k = 1; k < 36; k++) {
+        const t = Math.PI + Math.PI * k / 36;
+        pts.push(pt(at0.x + r * Math.cos(t), at0.y + ry * Math.sin(t)));
+      }
+      elements.push({ kind: 'shadedShape', points: pts, tone: 3 });
+    }
+    // A seen hemisphere is opaque, so the far half of its own flat face is
+    // behind it, and so is the far half of the base it sits on: the paper
+    // draws neither, and both ran through the number written in the dome.
+    const farRim = (e: Element) => e.kind === 'ellipse' && e.dashed === true && e.from === 0 && e.to === 180;
+    if (g.seen && g.on === 'base') {
+      const i = elements.findIndex(e => farRim(e) && e.kind === 'ellipse'
+        && Math.abs(e.centre.x - foot.x) < 1e-9 && Math.abs(e.centre.y - foot.y) < 1e-9);
+      if (i >= 0) elements.splice(i, 1);
+    }
+    elements.push(...drawPiece(g.piece, at0, !g.seen).filter(e => !(g.seen && farRim(e))));
   }
 
   const box = extent(elements);
@@ -627,7 +659,15 @@ export function solidFigure(spec: SolidSpec): Figure {
     const labelAt = d.along === 'width' && d.onGhost !== undefined
       ? pt(mid.x, mid.y + (d.side === 'above' ? 1 : -1) * d.halfWidth * 0.5)
       : mid;
-    elements.push({ kind: 'label', text: d.text, anchor: labelAt, away: inward });
+    // A `seen` hemisphere (2014 P2 Q7) is a filled dome with its back rims
+    // just above the line, so its number is centred in the dome's middle
+    // rather than lifted and then pushed, which ran it into the top of the
+    // dome. Opt-in through the ghost; every other ghost keeps the push.
+    const seenGhost = d.along === 'width' && d.onGhost !== undefined
+      && spec.ghosts?.[d.onGhost]?.seen === true;
+    elements.push(seenGhost
+      ? { kind: 'label', text: d.text, anchor: pt(mid.x, mid.y + d.halfWidth * 0.45), away: inward, centred: true }
+      : { kind: 'label', text: d.text, anchor: labelAt, away: inward });
     claims.push({ kind: 'length', from: a, to: b, value: d.value,
       shown: d.along === 'height' && d.unknown ? false : undefined });
   }

@@ -165,21 +165,31 @@ const REFLEX_CONTEXTS: SectorContext[] = [
 const SEGMENT_CONTEXTS: {
   intro: (o: string, a: string, b: string) => string;
   asks: string; shade: 'minor' | 'major';
+  /** The paper's way, with no shading: the outline is the region, so the region is named. */
+  plain?: { intro: (o: string, a: string, b: string) => string; asks: string };
   /** The situation says which way up it goes, so the chord is drawn level. */
   level?: boolean;
   unit: string; short: string; band: [number, number];
 }[] = [
   { intro: (o, a, b) => `The entrance to a tunnel is part of a circle, centre $${o}$. The floor of the tunnel is the chord $${a}${b}$, and the cross-section of the tunnel is shaded.`,
     asks: 'the shaded area', shade: 'major', level: true,
+    plain: { intro: (o, a, b) => `The entrance to a tunnel is in the shape of part of a circle, centre $${o}$. The floor of the tunnel is the chord $${a}${b}$.`,
+      asks: 'the area of the cross-section of the tunnel' },
     unit: 'metres', short: 'm', band: [4, 12] },
   { intro: (o, a, b) => `A window is made from part of a circle, centre $${o}$, resting on the horizontal sill $${a}${b}$. The glass is shaded.`,
     asks: 'the shaded area', shade: 'major', level: true,
+    plain: { intro: (o, a, b) => `A window is in the shape of part of a circle, centre $${o}$. It rests on the horizontal sill $${a}${b}$.`,
+      asks: 'the area of the window' },
     unit: 'metres', short: 'm', band: [1, 4] },
   { intro: (o, a, b) => `A stone archway is part of a circle, centre $${o}$. The doorway below it is the chord $${a}${b}$, and the stone above is shaded.`,
     asks: 'the shaded area', shade: 'major', level: true,
+    plain: { intro: (o, a, b) => `The face of a stone archway is in the shape of part of a circle, centre $${o}$. It stands on the level ground $${a}${b}$.`,
+      asks: 'the area of the face of the archway' },
     unit: 'metres', short: 'm', band: [1, 5] },
   { intro: (o, a, b) => `A pond is a circle, centre $${o}$, with a straight decking edge $${a}${b}$. The water is shaded.`,
     asks: 'the shaded area', shade: 'major', level: true,
+    plain: { intro: (o, a, b) => `A pond is in the shape of part of a circle, centre $${o}$, with a straight decking edge $${a}${b}$.`,
+      asks: 'the area of the pond' },
     unit: 'metres', short: 'm', band: [2, 8] },
   { intro: (o, a, b) => `A porthole is a circle, centre $${o}$. Water covers it up to the level $${a}${b}$, and the part under water is shaded.`,
     asks: 'the shaded area', shade: 'minor', level: true,
@@ -218,19 +228,32 @@ function segmentArea(wanted?: string): Q | null {
   const answer = c.shade === 'minor' ? minor : Math.PI * r * r - minor;
   if (answer < 4) return null;
 
+  /**
+   * **The major piece is drawn as 2014 P2 Q13 draws it.** — 2026-09-25
+   *
+   * The paper draws the tunnel's outline only - the major arc and the floor -
+   * with no shading, both radii dashed and labelled 7 m, and asks for "the
+   * area of the cross-section of the tunnel". The clone shaded a whole circle
+   * and asked for "the shaded area". The owner: *"Perhaps draw it like paper
+   * no shading and not full circle"*. With nothing shaded, each context names
+   * its region instead. The major id is 2014 P2 Q13's alone; the minor
+   * contexts keep their shading.
+   */
+  const paper = c.shade === 'major' && c.plain !== undefined;
   const fig = circleSegment({
     radius: r, angle, start, shade: c.shade, level: c.level,
     names: { centre: nO, a: nA, b: nB },
     labels: { radius: `${r} ${c.short}`, angle: `${angle}°` },
+    ...(paper ? { paperOutline: true as const } : {}),
   });
   if (!fig) return null;
 
   const prose = [
-    c.intro(nO, nA, nB),
+    paper ? c.plain!.intro(nO, nA, nB) : c.intro(nO, nA, nB),
     '',
     `The radius of the circle is ${r} ${c.unit}.`,
     `Angle $${nA}${nO}${nB}$ is $${angle}^{\\circ}$.`,
-    `Calculate ${c.asks}.`,
+    `Calculate ${paper ? c.plain!.asks : c.asks}.`,
     'Give your answer correct to one decimal place.',
   ];
   // 2014 P2 Q13 pays five separate marks and names each one: •¹ know how to
@@ -249,7 +272,7 @@ function segmentArea(wanted?: string): Q | null {
   if (c.shade === 'major') {
     // the shaded major piece needs one more subtraction, which the scheme
     // folds into its last mark — "carry out all calculations correctly"
-    steps[4] = `<strong>5.</strong> Taking the triangle from the sector leaves the smaller piece, and the shaded piece is the rest of the circle:<br><br>$${dp1(sector)} - ${dp1(triangle)} = ${dp1(minor)}$, then $\\pi \\times ${r}^{2} - ${dp1(minor)} = ${dp1(answer)}$ ${c.short}$^{2}$`;
+    steps[4] = `<strong>5.</strong> Taking the triangle from the sector leaves the smaller piece, and the ${paper ? 'area asked for' : 'shaded piece'} is the rest of the circle:<br><br>$${dp1(sector)} - ${dp1(triangle)} = ${dp1(minor)}$, then $\\pi \\times ${r}^{2} - ${dp1(minor)} = ${dp1(answer)}$ ${c.short}$^{2}$`;
   }
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 

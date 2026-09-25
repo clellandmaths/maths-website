@@ -387,10 +387,165 @@ function meanStdev(): Q {
 // four papers ask for two comparisons covering both. Consistency is the standard
 // deviation and nothing else, and that is the whole of the mark.
 
+/**
+ * **Six values, and part (b) is a change made to improve consistency.** — 2026-09-25
+ *
+ * The paper: six lap times, then *"She changes her training routine hoping to
+ * improve her consistency. After this change, she records her times for another
+ * six laps. The mean is 55 seconds and the standard deviation 3·2 seconds. Has
+ * the new training routine improved her consistency?"* Measured on the 2014 P2
+ * sheet, 400 draws: six values in 152, and part (b) always "a second sample was
+ * recorded later". The owner: *"Yes"* to six values and the paper's part (b),
+ * with Yes or No left free and the mean left whole.
+ *
+ * Its own contexts, because part (b) needs something someone can change - a
+ * shared list with hours of sunshine and rainfall in it cannot be "improved".
+ * This variation serves 2014 P2 Q4 alone, so nothing else moves.
+ */
+interface ConsistencyContext {
+  ctx: DataContext;
+  /** "She changes her training routine hoping to improve her consistency." */
+  change: string;
+  /** "After this change, she records her times for another six laps." */
+  after: string;
+  /** "Has the new training routine improved her consistency?" */
+  ask: string;
+}
+const consistency = (
+  quantity: string, unit: string, lead: string, band: [number, number],
+  change: string, after: string, ask: string,
+): ConsistencyContext => ({
+  ctx: { quantity, inUnits: '', unit, prefix: '', groupA: '', groupB: '', lead: () => lead, band },
+  change, after, ask,
+});
+const CONSISTENCY_CONTEXTS: ConsistencyContext[] = [
+  consistency('lap times', 'seconds',
+    'A runner has recorded her times, in seconds, for six different laps of a running track:', [48, 66],
+    'She changes her training routine hoping to improve her consistency.',
+    'After this change, she records her times for another six laps.',
+    'Has the new training routine improved her consistency?'),
+  consistency('length times', 'seconds',
+    'A swimmer has recorded his times, in seconds, for six lengths of the pool:', [30, 46],
+    'He changes his stroke hoping to improve his consistency.',
+    'After this change, he records his times for another six lengths.',
+    'Has the new stroke improved his consistency?'),
+  consistency('drive distances', 'metres',
+    'A golfer has recorded the distances, in metres, of six drives:', [180, 250],
+    'She changes her grip hoping to improve her consistency.',
+    'After this change, she records the distances of another six drives.',
+    'Has the new grip improved her consistency?'),
+  consistency('ride times', 'minutes',
+    'A cyclist has recorded his times, in minutes, for six rides of the same route:', [30, 50],
+    'He changes his training routine hoping to improve his consistency.',
+    'After this change, he records his times for another six rides.',
+    'Has the new training routine improved his consistency?'),
+  consistency('scores', '',
+    'An archer has recorded her scores for six rounds:', [30, 60],
+    'She changes her bow hoping to improve her consistency.',
+    'After this change, she records her scores for another six rounds.',
+    'Has the new bow improved her consistency?'),
+  consistency('journey times', 'minutes',
+    'A bus company has recorded the journey time, in minutes, of its morning bus on six days:', [20, 52],
+    'It changes the route hoping to make the journey times more consistent.',
+    'After this change, it records the journey time on another six days.',
+    'Has the new route made the journey times more consistent?'),
+  consistency('masses', 'grams',
+    'A machine fills bags of flour. The masses, in grams, of six bags are:', [490, 530],
+    'The machine is adjusted hoping to make the masses more consistent.',
+    'After this change, another six bags are weighed.',
+    'Has the adjustment made the masses more consistent?'),
+  consistency('masses', 'grams',
+    'A bakery has weighed, in grams, six loaves from one batch:', [780, 830],
+    'The bakery services its oven hoping to make the loaves more consistent.',
+    'After this change, it weighs another six loaves.',
+    'Has servicing the oven made the loaves more consistent?'),
+  consistency('solving times', 'seconds',
+    'A pupil has recorded her times, in seconds, for solving a puzzle cube six times:', [40, 80],
+    'She learns a new method hoping to improve her consistency.',
+    'After this change, she records her times for another six solves.',
+    'Has the new method improved her consistency?'),
+  consistency('jump distances', 'centimetres',
+    'A long jumper has recorded the distances, in centimetres, of six jumps:', [520, 600],
+    'She changes her run-up hoping to improve her consistency.',
+    'After this change, she records the distances of another six jumps.',
+    'Has the new run-up improved her consistency?'),
+  consistency('scores', '',
+    'A darts player has recorded his scores for six throws of three darts:', [40, 100],
+    'He changes his grip hoping to improve his consistency.',
+    'After this change, he records his scores for another six throws.',
+    'Has the new grip improved his consistency?'),
+  consistency('lengths', 'millimetres',
+    'A machine cuts lengths of pipe. The lengths, in millimetres, of six pipes are:', [985, 1015],
+    'The machine is serviced hoping to make the lengths more consistent.',
+    'After this change, another six pipes are measured.',
+    'Has the service made the lengths more consistent?'),
+  consistency('waiting times', 'minutes',
+    'A tea room has recorded how long, in minutes, six customers waited to be served:', [4, 20],
+    'It takes on another waiter hoping to make the waiting times more consistent.',
+    'After this change, it records the waiting times of another six customers.',
+    'Has taking on another waiter made the waiting times more consistent?'),
+  consistency('points totals', 'points',
+    'A basketball player has recorded her points in six games:', [8, 30],
+    'She changes her shooting technique hoping to improve her consistency.',
+    'After this change, she records her points in another six games.',
+    'Has the new technique improved her consistency?'),
+  consistency('marks', 'marks',
+    'A pupil has recorded her marks in six spelling tests, each out of 40:', [18, 40],
+    'She changes how she revises hoping to improve her consistency.',
+    'After this change, she records her marks in another six tests.',
+    'Has the new way of revising improved her consistency?'),
+  consistency('volumes', 'millilitres',
+    'A machine fills cartons of juice. The volumes, in millilitres, of six cartons are:', [985, 1015],
+    'The machine is adjusted hoping to make the volumes more consistent.',
+    'After this change, another six cartons are measured.',
+    'Has the adjustment made the volumes more consistent?'),
+  consistency('times', 'seconds',
+    'A rower has recorded her times, in seconds, for six 500 metre pieces:', [95, 120],
+    'She changes her stroke rate hoping to improve her consistency.',
+    'After this change, she records her times for another six pieces.',
+    'Has the new stroke rate improved her consistency?'),
+  consistency('journey times', 'minutes',
+    'A commuter has recorded the time, in minutes, of her drive to work on six days:', [20, 45],
+    'She changes her route hoping to make her journey times more consistent.',
+    'After this change, she records the time on another six days.',
+    'Has the new route made her journey times more consistent?'),
+  consistency('speeds', 'miles per hour',
+    'A cricket bowler has recorded the speed, in miles per hour, of six deliveries:', [60, 85],
+    'He changes his run-up hoping to improve his consistency.',
+    'After this change, he records the speed of another six deliveries.',
+    'Has the new run-up improved his consistency?'),
+  consistency('masses', 'grams',
+    'A dairy has weighed, in grams, six blocks of cheese from one batch:', [480, 520],
+    'It replaces its cutting machine hoping to make the masses more consistent.',
+    'After this change, it weighs another six blocks.',
+    'Has the new machine made the masses more consistent?'),
+  consistency('scores', '',
+    'A golfer has recorded her scores for six rounds:', [68, 90],
+    'She changes her putter hoping to improve her consistency.',
+    'After this change, she records her scores for another six rounds.',
+    'Has the new putter improved her consistency?'),
+  consistency('baking times', 'minutes',
+    'A baker has recorded the baking time, in minutes, of six batches of bread:', [30, 50],
+    'She buys a new oven hoping to make the baking times more consistent.',
+    'After this change, she records the time for another six batches.',
+    'Has the new oven made the baking times more consistent?'),
+  consistency('run times', 'seconds',
+    'A skier has recorded her times, in seconds, for six runs of the same slope:', [55, 75],
+    'She changes her skis hoping to improve her consistency.',
+    'After this change, she records her times for another six runs.',
+    'Has changing her skis improved her consistency?'),
+  consistency('delays', 'minutes',
+    'A train company has recorded how many minutes late its morning train was on six days:', [2, 20],
+    'It changes the timetable hoping to make the delays more consistent.',
+    'After this change, it records the delay on another six days.',
+    'Has the new timetable made the delays more consistent?'),
+];
+
 function meanStdevConsistency(): Q {
   for (let tries = 0; tries < 300; tries++) {
-    const ctx = pick(DATA_CONTEXTS);
-    const n = pick([5, 6, 7]);
+    const story = pick(CONSISTENCY_CONTEXTS);
+    const ctx = story.ctx;
+    const n = 6;
     const vals = sampleWithWholeMean(ctx, n);
     if (!vals) continue;
     const { mean, ssq, s } = stdev(vals);
@@ -417,12 +572,12 @@ function meanStdevConsistency(): Q {
         row(vals, ctx),
         `<b>(a)</b>&nbsp;&nbsp;(i) Calculate the mean of these ${ctx.quantity}.`,
         `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) Calculate the standard deviation of these ${ctx.quantity}.`,
-        `<b>(b)</b>&nbsp;&nbsp;A second sample of ${n} ${ctx.quantity} was recorded later. `
-        + `Its mean is ${show(otherMean, ctx)} and its standard deviation is ${otherS}.`,
-        `Is the second sample more consistent than the first? Give a reason for your answer.`,
+        `<b>(b)</b>&nbsp;&nbsp;${story.change} ${story.after} `
+        + `The mean is ${amount(otherMean, ctx)} and the standard deviation ${otherS}${ctx.unit ? ` ${unitFor(otherS, ctx.unit)}` : ''}.`,
+        `${story.ask} Give a reason for your answer.`,
       ],
       boardQuestionLines: [
-        `Mean and s.d. of ${row(vals, ctx)}; then is a sample with s.d. ${otherS} more consistent?`,
+        `Mean and s.d. of ${row(vals, ctx)}; then after a change the s.d. is ${otherS}. Improved?`,
       ],
       // 2014 P2 Q4: •¹ the mean, •² the squared differences, •³ substitute into
       // the formula, •⁴ the standard deviation, •⁵ the judgement with a reason.
@@ -435,7 +590,7 @@ function meanStdevConsistency(): Q {
         + `<br><br>$s = \\sqrt{\\frac{${num(ssq)}}{${n - 1}}}$`,
         `<strong>4. (a)(ii)</strong> Take the square root:<br><br>$s = ${sd}$`,
         `<strong>5. (b)</strong> Consistency is about <strong>spread</strong>, so it is the standard `
-        + `deviation that answers this and not the mean. The second sample's is ${otherS}, `
+        + `deviation that answers this and not the mean. After the change it is ${otherS}, `
         + `${tighter ? 'smaller' : 'greater'} than ${sd}:<br><br>`
         + `${tighter ? 'Yes' : 'No'} — its standard deviation is ${tighter ? 'smaller' : 'greater'}, `
         + `so the ${ctx.quantity} are ${tighter ? 'less' : 'more'} spread out.`,

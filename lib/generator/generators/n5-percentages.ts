@@ -46,6 +46,7 @@ function roundingPhrase(r: Rounding): string {
     case 'nearest-pound': return 'Give your answer to the nearest pound.';
     case '3sf': return 'Give your answer correct to three significant figures.';
     case 'whole': return 'Give your answer to the nearest whole number.';
+    case 'ten': return 'Give your answer to the nearest ten.';
   }
 }
 
@@ -64,6 +65,7 @@ function roundedParts(v: number, r: Rounding, ctx: AssetContext): { math: string
     case 'nearest-pound': return { math: `£${money(Math.round(v), 0)}`, unit: '' };
     case '3sf': return { math: `£${money(toSigFigs(v, 3), 0)}`, unit: '' };
     case 'whole': return { math: plain(v), unit: ctx.unit };
+    case 'ten': return { math: plain(Math.round(v / 10) * 10), unit: ctx.unit };
   }
 }
 
@@ -146,6 +148,37 @@ const COMPOUND_2017 = 'percentages.compound-2017';
  * (which goes unsaid). Its prices come from `BANDS` below.
  */
 const COMPOUND_2015 = 'percentages.compound-2015';
+
+/**
+ * **2014 P2 Q1 is a count that falls, to the nearest ten.** — 2026-09-25
+ *
+ * 964 pupils on a school roll, down 15% a year for 3 years, "Give your answer
+ * to the nearest ten" → 590. Measured on the 2014 P2 sheet, 400 draws of its
+ * id: that shape in 0 — a rise in 139, money in 295, "nearest ten" never. The
+ * owner: *"Yes"* to keying it to a count that falls, to the nearest ten, at a
+ * size that fits each context.
+ *
+ * Its own list, not a filter of `ASSET_CONTEXTS`: the shared falling counts
+ * have no school roll, and adding one there would move every draw of the
+ * locked papers that pick from that list. [opening, asks, unit, lo, hi] —
+ * odd sizes, stepped by one, as the paper's 964 is.
+ */
+const COMPOUND_2014 = 'percentages.compound-2014';
+const FALLING_COUNTS_2014: AssetContext[] = ([
+  ['There are % pupils on the roll of a high school.', 'the expected roll', 'pupils', 600, 1800],
+  ['A primary school has % pupils on its roll.', 'the expected roll', 'pupils', 150, 600],
+  ['A golf club has % members.', 'the expected membership', 'members', 300, 1500],
+  ['An island has a population of %.', 'the expected population of the island', 'people', 400, 4000],
+  ['A village has a population of %.', 'the expected population of the village', 'people', 800, 6000],
+  ['A colony of puffins on an island numbers %.', 'the expected size of the colony', 'puffins', 2000, 30000],
+  ['A herd of red deer on an estate numbers %.', 'the expected size of the herd', 'deer', 200, 2500],
+  ['A hospital had % patients on its waiting list.', 'the expected number of patients on the waiting list', 'patients', 500, 9000],
+  ['A library lent out % books last year.', 'the expected number of loans', 'books', 5000, 60000],
+  ['A newspaper sells % copies a day.', 'the expected daily sales', 'copies', 2000, 40000],
+] as [string, string, string, number, number][]).map(([opening, asks, unit, lo, hi]) => ({
+  opening: (s: string) => opening.replace('%', s), subject: asks, format: plain,
+  asks, unit, rounding: 'ten' as const, appreciates: false, band: [lo, hi] as [number, number],
+}));
 
 /**
  * **Every context priced for what it is.** — 2026-09-25
@@ -234,9 +267,12 @@ function compound(wanted?: string, asked?: string): Q {
   // other id's draws move.
   const is2016 = asked === 'percentages.compound-2016';
   const is2015 = asked === COMPOUND_2015;
-  const drawn = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
-    && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)
-    && (!is2015 || (c.appreciates && c.unit === '£'))));
+  const is2014 = asked === COMPOUND_2014;
+  const drawn: AssetContext & { band?: [number, number] } = is2014
+    ? pick(FALLING_COUNTS_2014)
+    : pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
+      && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)
+      && (!is2015 || (c.appreciates && c.unit === '£'))));
   // A copy, never the shared context: money to the penny becomes the nearest
   // pound for this paper alone. Counts already round to the whole number.
   // 2015 goes the other way: whatever the context usually rounds to, this
@@ -256,12 +292,17 @@ function compound(wanted?: string, asked?: string): Q {
     years = getRandomInt(2, 4);
     // The three-significant-figure branch (2026 P2 Q1) keeps its own range.
     const band = threeSf ? undefined : BANDS[ctx.opening('%')];
-    start = band
+    start = drawn.band
+      ? getRandomInt(drawn.band[0], drawn.band[1])
+      : band
       ? getRandomInt(band[0] / band[2], band[1] / band[2]) * band[2]
       : ctx.unit === '£'
         ? getRandomInt(4, 60) * 500
         : getRandomInt(20, 260) * 500;
     value = start * Math.pow(multiplier, years);
+    // 2014 pays for rounding to the nearest ten, so the answer must not
+    // already be one.
+    if (is2014) { if (Math.abs(value - Math.round(value / 10) * 10) > 1e-6) break; continue; }
     if (!threeSf || toSigFigs(value, 3) !== value) break;
   }
 

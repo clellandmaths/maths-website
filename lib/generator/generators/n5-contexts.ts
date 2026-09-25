@@ -35,7 +35,8 @@ export const plain = (v: number): string => money(Math.round(v), 0);
 export const moneyNeat = (v: number): string =>
   Math.abs(v - Math.round(v)) < 1e-9 ? money(v, 0) : money(v, 2);
 
-export type Rounding = 'money' | 'nearest-pound' | '3sf' | 'whole';
+/** `ten` is 2014 P2 Q1's alone ("Give your answer to the nearest ten"); no shared context uses it. */
+export type Rounding = 'money' | 'nearest-pound' | '3sf' | 'whole' | 'ten';
 
 // ── things whose value grows or shrinks year on year ──────────────────────
 

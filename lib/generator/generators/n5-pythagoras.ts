@@ -13,7 +13,7 @@ import { twoTrianglesApart } from '../diagrams/shapes/two-triangles-apart';
 import type { Figure } from '../diagrams/scene';
 import {
   PYTHAGORAS_CONTEXTS, CHORD_CONTEXTS, CONVERSE_CONTEXTS, BOX_CONTEXTS, abbrev,
-  withUnit,
+  withUnit, type ConverseContext,
 } from './n5-contexts';
 
 /**
@@ -525,9 +525,38 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
 // answer. It is drawn exactly to scale, which is honest: the numbers sit close
 // to a triple either way, so it still cannot be settled by eye.
 
-export function pythagorasConverse(wanted?: string): Q {
+/**
+ * **2014 P2 Q6 is a compass question about three towns.** — 2026-09-25
+ *
+ * *"Lowtown is due west of Midtown … Is Hightown directly north of Lowtown?
+ * Justify your answer."* Measured on the 2014 P2 sheet, 400 draws of its id:
+ * "due west" and "directly north" in 0, towns in 53. The owner: *"Yes"* to
+ * three towns, one due west of another, asked whether the third is directly
+ * north of it, with the figure the paper's way up. Yes or No stays free.
+ *
+ * `-pre2023` cites 2014 P2 Q6 alone and is an ALIAS of `pythagoras.converse`
+ * (LOCKED 2023 P2 Q8), so this is keyed on the asked id and only that id
+ * leaves the shared draw.
+ */
+const CONVERSE_2014 = 'pythagoras.converse-pre2023';
+/** [west, east, north] — invented towns, as the paper's are. */
+const TOWNS_2014: [string, string, string][] = [
+  ['Lowtown', 'Midtown', 'Hightown'],
+  ['Kirkton', 'Easton', 'Northfield'],
+  ['Brigend', 'Carnock', 'Hillhead'],
+  ['Ashby', 'Dunlie', 'Tarland'],
+  ['Balmore', 'Ferness', 'Strathy'],
+  ['Rossie', 'Glenview', 'Moniack'],
+];
+const TOWNS_CONTEXT_2014: ConverseContext = {
+  scene: () => 'The diagram below shows the position of three towns.',
+  asks: () => '', unit: 'kilometres', band: [30, 160],
+};
+
+export function pythagorasConverse(wanted?: string, asked?: string): Q {
+  const is2014 = asked === CONVERSE_2014;
   for (let tries = 0; tries < 400; tries++) {
-    const ctx = pick(CONVERSE_CONTEXTS);
+    const ctx = is2014 ? TOWNS_CONTEXT_2014 : pick(CONVERSE_CONTEXTS);
     const [lo, hi] = ctx.band;
     const right = getRandomInt(0, 1) === 0;
 
@@ -685,6 +714,56 @@ export function pythagorasConverse(wanted?: string): Q {
      * arithmetic that identifies it, which is a different question again and
      * not one any paper asks.
      */
+    if (is2014) {
+      // West at the origin and east along the axis, so the north town sits
+      // above the west one, as the paper draws it. The corner tested is the
+      // west town, opposite the longest distance.
+      const [W, E, N] = pick(TOWNS_2014);
+      const [we, nw] = pick([[p, q], [q, p]] as const);
+      const fig14 = triangleFromSides({
+        sides: { ab: we, bc: r, ca: nw },
+        vertices: [W, E, N],
+        labels: { ab: `${we} km`, bc: `${r} km`, ca: `${nw} km` },
+        turn: 0,
+      });
+      if (!fig14) continue;
+      const sumSq = we * we + nw * nw, longSq = r * r;
+      const verdict = right
+        ? `Yes — ${N} is directly north of ${W}`
+        : `No — ${N} is not directly north of ${W}`;
+      const prose = [
+        ctx.scene('', '', ''),
+        `${W} is due west of ${E}.`,
+        `The distance from`,
+        `&bull; ${W} to ${E} is ${we} kilometres.`,
+        `&bull; ${E} to ${N} is ${r} kilometres.`,
+        `&bull; ${N} to ${W} is ${nw} kilometres.`,
+        `Is ${N} directly north of ${W}? Justify your answer.`,
+      ];
+      const steps = [
+        `<strong>1.</strong> The longest distance is ${r} km, from ${E} to ${N}, so if there is a right angle it is at ${W}, opposite it. Test the two shorter distances against it.`,
+        `<strong>2.</strong> Square the two shorter distances and add, then square the longest:<br><br>$${we}^{2} + ${nw}^{2} = ${we * we} + ${nw * nw} = ${sumSq}$ and $${r}^{2} = ${longSq}$`,
+        right
+          ? `<strong>3.</strong> Compare the two:<br><br>$${sumSq} = ${longSq}$, so they are <strong>equal</strong>`
+          : `<strong>3.</strong> Compare the two:<br><br>$${sumSq} \\neq ${longSq}$, so they are <strong>not equal</strong>`,
+        right
+          ? `<strong>4.</strong> Pythagoras holds, so the angle at ${W} is a right angle. ${W} to ${E} runs due east, so ${W} to ${N} runs due north:<br><br>${verdict}`
+          : `<strong>4.</strong> Pythagoras does not hold, so the angle at ${W} is not a right angle. ${W} to ${E} runs due east, so ${W} to ${N} cannot run due north:<br><br>${verdict}`,
+      ];
+      if (verifyFigure(fig14, [...prose, ...steps].join(' ')).length) continue;
+      return {
+        subTopic: 'The Converse of Pythagoras',
+        difficulty: 'exam',
+        variationId: 'pythagoras.converse',
+        questionLines: [prose[0], prose[1], renderScene(fig14.scene), ...prose.slice(2)],
+        boardQuestionLines: [`${W}–${E} ${we}, ${E}–${N} ${r}, ${N}–${W} ${nw}. Is ${N} due north of ${W}?`],
+        solutionSteps: steps,
+        stepMarks: [1, 1, 1, 1],
+        finalAnswer: `${verdict}, since $${we}^{2} + ${nw}^{2} = ${sumSq}$ and $${r}^{2} = ${longSq}$`,
+        figure: fig14,
+      };
+    }
+
     const fromTotal = shape === 'from-total';
     const total = p + q + r;
     // whichever of the two shorter sides is left out
@@ -1725,9 +1804,9 @@ export const PYTHAGORAS_GENERATORS: Record<string, Gen> = {
   // Three presentations of the converse, and the dispatch is where the third
   // joins: `pythagorasConverse` already splits itself between the plain shape
   // and the from-a-total one.
-  'The Converse of Pythagoras': (wanted) =>
+  'The Converse of Pythagoras': (wanted, asked) =>
     wanted === 'pythagoras.converse-joined' ? pythagorasConverseJoined()
-    : wanted !== undefined ? pythagorasConverse(wanted)
+    : wanted !== undefined ? pythagorasConverse(wanted, asked)
     : getRandomInt(1, 3) === 1 ? pythagorasConverseJoined() : pythagorasConverse(),
   'Pythagoras in a Right-Angled Triangle': pythagorasFindSide,
   // All three families reachable from the topic, each with its own id.

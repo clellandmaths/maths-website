@@ -364,10 +364,27 @@ function amount(v: number, kind: TwoItemContext['kind']): string {
  * **signed off**, and a calculator paper where 4.25 is exactly right) does not
  * move.
  */
+/**
+ * **2014 P2 Q3 is money, in the paper's own words.** — 2026-09-25
+ *
+ * Tickets for adults and children, "(a) Write down an equation to illustrate
+ * this information." and "(c) Calculate the cost of a ticket for an adult and
+ * the cost of a ticket for a child." Measured on the 2014 P2 sheet, 400 draws
+ * of its id: money in 214, and "an equation in a and c" and "algebraically" in
+ * all 400 - neither is in the paper. The owner: *"Yes"*.
+ *
+ * `-2014` is an ALIAS of `simeq.construct-solve` (LOCKED 2022 P2 Q4, and
+ * 2016 P1 Q4 through `-pre2022`), so it is keyed on the asked id and only
+ * this id takes either branch.
+ */
+const CONSTRUCT_2014 = 'simeq.construct-solve-2014';
+
 function constructSolve(combine = false, paper1 = false, asked?: string): Q {
+  const is2014 = asked === CONSTRUCT_2014;
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(paper1
       ? TWO_ITEM_CONTEXTS.filter(c => c.kind !== 'money')
+      : is2014 ? TWO_ITEM_CONTEXTS.filter(c => c.kind === 'money')
       : TWO_ITEM_CONTEXTS);
     const [v1, v2] = ctx.vars;
     if (v1 === v2) continue;
@@ -467,12 +484,14 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
         : combine ? 'simeq.construct-combine' : 'simeq.construct-solve',
       questionLines: [
         `${ctx.people[0]} ${ctx.verb} ${q1} ${ctx.plural[0]} and ${q2} ${ctx.plural[1]}. ${ctx.total} ${amount(t1, ctx.kind)}.`,
-        `(a) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
+        is2014 ? '(a) Write down an equation to illustrate this information.'
+          : `(a) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
         `${ctx.people[1]} ${ctx.verb} ${q3} ${ctx.plural[0]} and ${q4} ${ctx.plural[1]}. ${ctx.total} ${amount(t2, ctx.kind)}.`,
-        `(b) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
+        is2014 ? '(b) Write down an equation to illustrate this information.'
+          : `(b) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
         combine
           ? `(c) Calculate, algebraically, the total for ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}.`
-          : `(c) Calculate, algebraically, ${ctx.asks}.`,
+          : is2014 ? `(c) Calculate ${ctx.asks}.` : `(c) Calculate, algebraically, ${ctx.asks}.`,
       ],
       boardQuestionLines: [
         `${q1} ${ctx.plural[0]} + ${q2} ${ctx.plural[1]} = ${amount(t1, ctx.kind)}, and ${q3} ${ctx.plural[0]} + ${q4} ${ctx.plural[1]} = ${amount(t2, ctx.kind)}. Find each.`,
