@@ -408,6 +408,24 @@ const PRICES_2014: Record<string, [number, number, number, number]> = {
 
 function constructSolve(combine = false, paper1 = false, asked?: string): Q {
   const is2014 = asked === CONSTRUCT_2014;
+  /**
+   * **The papers' own words, keyed per paper.** — 2026-09-25
+   *
+   * Every draw said "an equation in x and y", and all but 2022's said
+   * "Calculate, algebraically", on papers that print neither: 2016 P1 Q4
+   * and 2019 P1 Q8 have no letters and no "algebraically"; 2022 P2 Q4 has
+   * "algebraically" but no letters. Shown LOCKED on the 2014 P2 sheet at the
+   * owner's request, 400 of 400 each; the owner: *"Agreed"* on each card.
+   *
+   * Each on its own paper's id: `-pre2022` is 2016 alone, `paper1` is 2019
+   * P1 Q8's own loop, the base id is 2022's. A topic draw, which asks for
+   * no id, keeps the old wording, and the combine papers (2025 P2 Q10, 2026
+   * P2 Q4) print their letters, so they keep them. Words only - no random
+   * is drawn differently.
+   */
+  const noLetters = !combine && (is2014 || paper1
+    || asked === 'simeq.construct-solve-pre2022' || asked === 'simeq.construct-solve');
+  const noAlgebraically = !combine && (is2014 || paper1 || asked === 'simeq.construct-solve-pre2022');
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(paper1
       ? TWO_ITEM_CONTEXTS.filter(c => c.kind !== 'money')
@@ -513,14 +531,14 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
         : combine ? 'simeq.construct-combine' : 'simeq.construct-solve',
       questionLines: [
         `${ctx.people[0]} ${ctx.verb} ${q1} ${ctx.plural[0]} and ${q2} ${ctx.plural[1]}. ${ctx.total} ${amount(t1, ctx.kind)}.`,
-        is2014 ? '(a) Write down an equation to illustrate this information.'
+        noLetters ? '(a) Write down an equation to illustrate this information.'
           : `(a) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
         `${ctx.people[1]} ${ctx.verb} ${q3} ${ctx.plural[0]} and ${q4} ${ctx.plural[1]}. ${ctx.total} ${amount(t2, ctx.kind)}.`,
-        is2014 ? '(b) Write down an equation to illustrate this information.'
+        noLetters ? '(b) Write down an equation to illustrate this information.'
           : `(b) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
         combine
           ? `(c) Calculate, algebraically, the total for ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}.`
-          : is2014 ? `(c) Calculate ${ctx.asks}.` : `(c) Calculate, algebraically, ${ctx.asks}.`,
+          : noAlgebraically ? `(c) Calculate ${ctx.asks}.` : `(c) Calculate, algebraically, ${ctx.asks}.`,
       ],
       boardQuestionLines: [
         `${q1} ${ctx.plural[0]} + ${q2} ${ctx.plural[1]} = ${amount(t1, ctx.kind)}, and ${q3} ${ctx.plural[0]} + ${q4} ${ctx.plural[1]} = ${amount(t2, ctx.kind)}. Find each.`,
