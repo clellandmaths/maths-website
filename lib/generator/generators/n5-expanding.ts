@@ -207,6 +207,15 @@ function twoBinomials(): Q {
 // papers collect to four terms. `twoBinomials` above already guards its middle
 // term for the same reason.
 
+const SHAPE_OF: Record<string, { plainFirst: boolean; plainSecond: boolean }> = {
+  'expanding.binomial-trinomial-2015':      { plainFirst: true,  plainSecond: true },  // (x - 4)(x^2 + x - 2)
+  'expanding.binomial-trinomial-pre2019p1': { plainFirst: false, plainSecond: true },  // 2017 P1 Q4 (2x + 3)(x^2 - 4x + 1)
+  'expanding.binomial-trinomial-pre2022':   { plainFirst: true,  plainSecond: false }, // 2019 P1 Q3 (x + 5)(2x^2 - 7x - 3)
+  'expanding.binomial-trinomial-pre2023':   { plainFirst: false, plainSecond: false }, // 2022 P2 Q1 (3x - 2)(2x^2 + 5x - 1), "Yes key"
+  'expanding.binomial-trinomial-2024':      { plainFirst: true,  plainSecond: true },  // 2024 P1 Q3 (x + 1)(x^2 - 4x + 5)
+  'expanding.binomial-trinomial':           { plainFirst: true,  plainSecond: true },  // 2026 P1 Q1 (y + 4)(y^2 - 3y + 2)
+};
+
 function binomialTrinomial(_wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 400; tries++) {
     // **x, always.** Five of the six papers here use x and only 2026 P1 Q1
@@ -217,12 +226,15 @@ function binomialTrinomial(_wanted?: string, asked?: string): Q {
     const a = nonZeroInt(1, 3), b = nonZeroInt(-6, 6);
     const c = nonZeroInt(1, 3), d = nonZeroInt(-6, 6), e = nonZeroInt(-6, 6);
     const result = mulP([b, a], [e, d, c]);
-    // **2015 P1 Q4 is `(x - 4)(x^2 + x - 2)`: a plain x leads both brackets.**
-    // The clone did that in 68 of 400 draws, and `(3x - 4)(3x^2 - 6x - 4)` is
-    // a harder sum than the paper sets. The owner, on the 2015 P1 sheet: *"I
-    // agree"*. A rejection read by 2015's id alone; the five LOCKED papers on
-    // this routine never reach it.
-    if (asked === 'expanding.binomial-trinomial-2015' && (a !== 1 || c !== 1)) continue;
+    // **Each paper's own shape: whether a plain x leads each bracket.** The
+    // clone mixed all of them for every paper, so each got its own in about
+    // one draw in five. 2015 P1 Q4 is `(x - 4)(x^2 + x - 2)`, and the owner,
+    // on the 2015 P1 sheet: *"I agree"*. The four LOCKED ones were put to
+    // them at the foot of that sheet, each against its own paper: *"Ok
+    // agree"*, *"Agreed"*, *"Yes"*, *"Agreed"*, and 2022 P2 Q1 once it was
+    // the last one mixing: *"Yes key"*. A rejection read by each paper's own id.
+    const shape = SHAPE_OF[asked ?? ''];
+    if (shape && ((a === 1) !== shape.plainFirst || (c === 1) !== shape.plainSecond)) continue;
     if (!result[3]) continue;                             // must have the cubic term
     if (!result.some(k => k < 0)) continue;               // and a negative coefficient
     if (result.some(k => Math.abs(k) > 60)) continue;     // keep it to paper scale

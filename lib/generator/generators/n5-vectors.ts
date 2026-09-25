@@ -431,11 +431,15 @@ function twoPoints(wantEquation: boolean, wanted?: string, asked?: string): Q {
     // **2015 P1 Q8 gives bare coordinates:** "the line joining the points
     // (-2, 5) and (3, 15)". The clone named them A and B in 400 of 400 draws.
     // The owner, on the 2015 P1 sheet: *"Yes"*. Wording only, and read by
-    // 2015's alias alone, so LOCKED 2022 P1 Q6 prints exactly as before.
+    // 2015's alias alone. LOCKED 2022 P1 Q6 has the same fault in its own
+    // words, "the line passing through the points (-3, -1) and (-5, 7)", and
+    // was put to the owner at the foot of the 2015 P1 sheet: *"Yes"*.
     const ask = drawIt
       ? `The diagram shows the straight line joining $A(${x1}, ${y1})$ and $B(${x2}, ${y2})$.`
       : asked === 'straight-line.equation-two-points-pre2022p1'
         ? `Find the equation of the line joining the points $(${x1}, ${y1})$ and $(${x2}, ${y2})$.`
+      : asked === 'straight-line.equation-two-points'
+        ? `Find the equation of the line passing through the points $(${x1}, ${y1})$ and $(${x2}, ${y2})$.`
         : `Find the equation of the straight line passing through $A(${x1}, ${y1})$ and $B(${x2}, ${y2})$.`;
     const follow = drawIt ? `Find the equation of the line $AB$.` : null;
     if (fig && verifyFigure(fig, `${ask} ${follow} ${equation}`).length) continue;

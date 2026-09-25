@@ -230,7 +230,16 @@ function medianCompare(semi: boolean, asked?: string): Q {
    * every coin is still drawn, so LOCKED 2019 P1 Q5 draws exactly as before.
    */
   const paper2015 = asked === 'data.median-siqr-compare-pre2019p1';
-  for (let tries = 0; tries < (paper2015 ? 600 : 300); tries++) {
+  /**
+   * **2019 P1 Q5 is nine temperatures, 4 7 4 3 6 10 9 5 3**, and had the
+   * same scale fault: values of 100 or more in 155 of 400 draws, and nine
+   * values in only 183. Put to the owner at the foot of the 2015 P1 sheet:
+   * *"Yes"*. Nine values under 100. Its answers to 2 dp stay, because the
+   * paper's own is 2.25.
+   */
+  const paper2019 = asked === 'data.median-siqr-compare';
+  const small = paper2015 || paper2019;
+  for (let tries = 0; tries < (small ? 600 : 300); tries++) {
     const ctx = pick(DATA_CONTEXTS);
     // **How many values is part of the question.** With an odd count the median
     // is one of the listed values and each quartile is a single value too; with
@@ -240,7 +249,7 @@ function medianCompare(semi: boolean, asked?: string): Q {
     // quartiles of 3.5 and 8 come out of that odd split. So each variation
     // takes the counts its own papers use, rather than all four.
     const drawnN = pick(semi ? [9, 10] : [6, 10]);
-    const n = paper2015 ? 10 : drawnN;
+    const n = paper2015 ? 10 : paper2019 ? 9 : drawnN;
     const [lo, hi] = ctx.band;
     if (hi - lo < n + 4) continue;
     const vals: number[] = [];
@@ -279,7 +288,7 @@ function medianCompare(semi: boolean, asked?: string): Q {
     const otherSpread = wider ? spread + step : spread - step;
     if (otherMed < lo || otherMed > hi) continue;
     if (otherSpread < grain || otherSpread === spread) continue;
-    if (paper2015 && (Math.max(...vals) > 99 || otherMed > 99)) continue;
+    if (small && (Math.max(...vals) > 99 || otherMed > 99)) continue;
 
     return {
       subTopic: 'Comparing Median and Interquartile Range',

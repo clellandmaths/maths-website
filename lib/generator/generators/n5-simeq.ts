@@ -163,6 +163,13 @@ const BOTH_SCALED = new Set([
   'simeq.solve-given-2023',      // 2023 P1 Q3
 ]);
 
+const OWN_LETTERS: Record<string, { letters: [string, string]; whole: boolean }> = {
+  'simeq.solve-given-2015':    { letters: ['x', 'y'], whole: true },   // 2015 P1 Q11  x = 7, y = -2
+  'simeq.solve-given-pre2023': { letters: ['x', 'y'], whole: false },  // 2018 P1 Q3   x = 0.5, y = -1
+  'simeq.solve-given-2023':    { letters: ['x', 'y'], whole: true },   // 2023 P1 Q3   x = -2, y = 4
+  'simeq.solve-given':         { letters: ['p', 'r'], whole: true },   // 2024 P1 Q7   p = 2, r = -1
+};
+
 function solveGiven(_wanted?: string, asked?: string): Q {
   const bothScaled = asked !== undefined && BOTH_SCALED.has(asked);
   for (let tries = 0; tries < 200; tries++) {
@@ -176,10 +183,15 @@ function solveGiven(_wanted?: string, asked?: string): Q {
     // The owner, on the 2015 P1 sheet: *"Yes key"*. Both coins are still
     // drawn; 2015's id reads them as x, y and whole, so the three LOCKED
     // papers on this routine see the same stream as before.
-    const paper2015 = asked === 'simeq.solve-given-2015';
+    //
+    // **The three LOCKED papers the same way, each to its own paper**, put
+    // to the owner at the foot of the 2015 P1 sheet, *"Yes"* on each: 2018
+    // P1 Q3 x and y (its halves left as they were - its own answer is
+    // x = 0.5), 2023 P1 Q3 x and y and whole, 2024 P1 Q7 p and r and whole.
+    const own = OWN_LETTERS[asked ?? ''];
     const drawnLetters = pick([['x', 'y'], ['x', 'y'], ['x', 'y'], ['p', 'r']]);
-    const [v1, v2] = paper2015 ? ['x', 'y'] : drawnLetters;
-    const half = getRandomInt(1, 6) === 1 && !paper2015;   // the 2018 P1 Q3 shape
+    const [v1, v2] = own ? own.letters : drawnLetters;
+    const half = getRandomInt(1, 6) === 1 && !own?.whole;  // the 2018 P1 Q3 shape
     const x0 = half ? nonZeroInt(-9, 13) / 2 : nonZeroInt(-8, 9);
     const y0 = nonZeroInt(-8, 9);
     const p = buildPair(x0, y0, bothScaled);

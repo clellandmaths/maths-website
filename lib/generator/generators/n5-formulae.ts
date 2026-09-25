@@ -734,7 +734,21 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
      * see the same stream as before.
      */
     const paper2015 = asked === 'inequalities.brackets-2015';
-    const bracketLeft = getRandomInt(0, 1) === 0 || paper2015;
+    // **2024 P2 Q4's bracket is on the left, `5(x - 2) + 4 < 7x + 8`**, and
+    // the clone put it on the right in 181 of 400 draws. The owner, at the
+    // foot of the 2015 P1 sheet: *"Left and right side opposite of what paper
+    // is"*. The coin is still drawn.
+    //
+    // **The other three papers put the bracket on the right**: 2017 P1 Q8
+    // `19 + x > 15 + 3(x - 2)`, 2018 P2 Q4 `3x < 6(x - 1) - 12`, 2026 P1 Q4
+    // `x + 8 < 3(x - 2) + 20`, and each clone put it on the left in about
+    // half its draws. The owner, on each card: *"Yes key"*.
+    const paper2024 = asked === 'inequalities.brackets-2024';
+    const bracketRight = asked === 'inequalities.brackets-2017'      // 2017 P1 Q8
+      || asked === 'inequalities.brackets-pre2023'                    // 2018 P2 Q4
+      || asked === 'inequalities.brackets';                           // 2026 P1 Q4
+    const coinLeft = getRandomInt(0, 1) === 0;
+    const bracketLeft = paper2015 || paper2024 ? true : bracketRight ? false : coinLeft;
     // one in five should end with a negative x coefficient, so the sign flips —
     // that is 2015 P1 Q2, and it is where the marks are lost
     const wantFlip = getRandomInt(1, 5) === 1 || paper2015;
@@ -792,7 +806,14 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
       subTopic: 'Solving Inequalities',
       difficulty: 'skill',
       variationId: 'inequalities.brackets',
-      questionLines: [`${pick(INEQ_LEAD)} ${pick(INEQ_WORD)} $${lhs} ${rel} ${rhs}$`],
+      // 2015 P1 Q2's own words, on the owner's "Pin the wording". Both are
+      // still drawn, so the four LOCKED papers keep their stream.
+      questionLines: [(() => {
+        const lead = pick(INEQ_LEAD), word = pick(INEQ_WORD);
+        return paper2015
+          ? `Solve algebraically the inequality $${lhs} ${rel} ${rhs}$`
+          : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
+      })()],
       boardQuestionLines: [`Solve $${lhs} ${rel} ${rhs}$`],
       solutionSteps: [
         `<strong>1.</strong> Expand the bracket:<br><br>$${bracketLeft ? `${term(bCoef, v)}${tail(bConst)} ${rel} ${plain}` : `${plain} ${rel} ${term(bCoef, v)}${tail(bConst)}`}$`,
