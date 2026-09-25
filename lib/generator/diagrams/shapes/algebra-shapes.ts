@@ -47,6 +47,15 @@ export interface BorderedRectangleSpec {
     /** Three-sided only: what the question calls the whole span. */
     length?: string;
   };
+  /**
+   * Four-sided only, and opt-in: shade the border and arrow the "length".
+   *
+   * 2015 P2 Q14's card is shaded grey round the picture, with "length" arrowed
+   * down the long side, and part (a)(i) asks for that length. The owner, on the
+   * 2015 P2 sheet: *"I would do the shading, mark the length"*. Off unless a
+   * caller asks, so the three-sided figure (LOCKED 2026 P2 Q13) cannot move.
+   */
+  paperMarks?: boolean;
 }
 
 export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
@@ -118,6 +127,17 @@ export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
     // onto the rectangle's own edge and its label sat on ink at 0.0px.
     elements.push(...dimensionArrow(
       pt(-t, h), pt(w + t, h), pt(w / 2, h * 3), t * 0.9,
+      spec.labels.length ?? 'length', true));
+  }
+
+  if (sides === 4 && spec.paperMarks) {
+    // The border as a ring: the outer boundary one way, a zero-width bridge to
+    // the inner corner, then the inner boundary the other way, so the picture
+    // itself is left clear. Filled without a stroke, so the bridge never shows.
+    elements.unshift({ kind: 'shadedShape',
+      points: [o0, o1, o2, o3, o0, i0, i3, i2, i1, i0] });
+    // "length" spans the long side of the whole card, outside it.
+    elements.push(...dimensionArrow(o3, o2, pt(w / 2, (h + t) * 3), t * 0.9,
       spec.labels.length ?? 'length', true));
   }
 

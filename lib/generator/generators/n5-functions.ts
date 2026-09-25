@@ -203,7 +203,7 @@ function evaluate(wanted?: string): Q {
 // and not three: "set up the equation" then "state the value". A third step
 // would be a hint the exam does not pay for.
 
-function findUnknown(wanted?: string): Q {
+function findUnknown(wanted?: string, asked?: string): Q {
   const fn = pick(FN);
   // The letter the question solves for is its own pool, separate from the
   // function's name: 2018 and 2025 write "f(a) = 73, calculate a" and 2022
@@ -238,7 +238,10 @@ function findUnknown(wanted?: string): Q {
       variationId: 'functions.find-unknown',
       questionLines: [
         `A function is defined as $${fn}(x) = ${tex}$.`,
-        `Given that $${fn}(${unknown}) = ${target}$, calculate $${unknown}$.`,
+        // 2015 P2 Q2 says "find a", where 2018 P2 Q6 says "calculate a". The owner,
+        // on the 2015 P2 sheet: "Yes pin the word" (2026-09-25). Read from the asked
+        // id alone, so no other paper's draws move.
+        `Given that $${fn}(${unknown}) = ${target}$, ${asked === 'functions.find-unknown-2015' ? 'find' : 'calculate'} $${unknown}$.`,
       ],
       boardQuestionLines: [`$${fn}(x) = ${tex}$ and $${fn}(${unknown}) = ${target}$. Find $${unknown}$`],
       solutionSteps: [
@@ -354,6 +357,6 @@ function evaluateTrig(wanted?: string): Q {
 
 export const FUNCTION_GENERATORS: Record<string, Gen> = {
   'Evaluating a Function': evaluate,
-  'Finding an Unknown in a Function': (w) => findUnknown(w),
+  'Finding an Unknown in a Function': (w, asked) => findUnknown(w, asked),
   'Evaluating a Trigonometric Function': (w) => evaluateTrig(w),
 };

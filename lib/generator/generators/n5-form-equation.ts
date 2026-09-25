@@ -141,6 +141,11 @@ function borderAllRound(): Q | null {
   const area = getRandomInt(Math.ceil(w * h * 1.25), w * h * 4);
   // (w + 2x)(h + 2x) = area  ->  4x^2 + 2(w + h)x + (wh - area) = 0
   const [A, B, C] = [4, 2 * (w + h), w * h - area];
+  // **No common factor to divide out.** 4 and 2(w + h) are always even, so an
+  // even constant makes the whole equation halve - 4x² + 54x - 94 - where the
+  // paper's 4x² + 44x - 153 cannot. The owner, on the 2015 P2 sheet: *"ensure
+  // we don't get a common factor version"* (2026-09-25).
+  if (C % 2 === 0) return null;
   const disc = B * B - 4 * A * C;
   const root = Math.sqrt(disc);
   if (Number.isInteger(root)) return null;            // the last mark needs rounding
@@ -170,7 +175,8 @@ function borderAllRound(): Q | null {
   // •¹ the expression, •² area and expansion, •³ construct and rearrange,
   // then the four formula marks
   return assemble(
-    borderedRectangle({ innerW: w * 10, innerH: h * 10, sides: 4,
+    // The paper shades the border and arrows the "length" (part (a)(i)).
+    borderedRectangle({ innerW: w * 10, innerH: h * 10, sides: 4, paperMarks: true,
       labels: { width: `${w} ${c.unit === 'metres' ? 'm' : 'cm'}`,
                 height: `${h} ${c.unit === 'metres' ? 'm' : 'cm'}`, border: 'x' } }),
     'A Border Round a Rectangle', 'form-equation.border', prose,

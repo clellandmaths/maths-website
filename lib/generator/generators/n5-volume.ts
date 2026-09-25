@@ -125,44 +125,94 @@ function sphere(): Q | null {
     steps, [1, 1, 1], `$${toSigFigs(exact, sf)}$ ${cubic(c.short)}`);
 }
 
-const WORLDS = [
-  { name: 'Titan', other: 'the asteroid Hygiea', unit: 'kilometres', short: 'km', band: [2400, 2700] },
-  { name: 'Mars', other: 'its moon Deimos', unit: 'kilometres', short: 'km', band: [3200, 3600] },
-  { name: 'Venus', other: 'the dwarf planet Ceres', unit: 'kilometres', short: 'km', band: [5900, 6200] },
-  { name: 'Jupiter', other: 'the Earth', unit: 'kilometres', short: 'km', band: [68000, 72000] },
-  { name: 'The Sun', other: 'Jupiter', unit: 'kilometres', short: 'km', band: [690000, 700000] },
-  { name: 'Saturn', other: 'its moon Enceladus', unit: 'kilometres', short: 'km', band: [57000, 61000] },
-  { name: 'Neptune', other: 'the Earth', unit: 'kilometres', short: 'km', band: [24000, 25000] },
-  { name: 'Uranus', other: 'Mercury', unit: 'kilometres', short: 'km', band: [25000, 26000] },
-  { name: 'The Moon', other: 'the asteroid Vesta', unit: 'kilometres', short: 'km', band: [1700, 1800] },
-  { name: 'Mercury', other: 'the dwarf planet Pluto', unit: 'kilometres', short: 'km', band: [2400, 2500] },
+/**
+ * **Real bodies, real figures.** — 2026-09-25
+ *
+ * The 2015 P2 sheet measured this building the second volume by dividing the
+ * first, so every comparison was fiction: "the volume of the Earth is
+ * 2.6 × 10¹³" (24 times the real one), Deimos at 10⁸-10⁹ km³ where it is about
+ * 1000, and 26 different volumes for Deimos in 400 draws. The paper's own
+ * Earth and Moon never came up. The owner: *"Happy with your assessment but we
+ * need to least 20 different questions"*.
+ *
+ * So each body has its published mean radius. The pupil is given the larger
+ * one's radius to 2 s.f., as the paper gives the Earth's 6400; the smaller
+ * one's volume is its real volume to 2 s.f., as the paper's Moon 2.2 × 10¹⁰.
+ * Only pairs whose two rounded volumes divide to a whole number are asked,
+ * because the paper's does (1.1 × 10¹² ÷ 2.2 × 10¹⁰ = 50). Haumea is left out:
+ * it is egg-shaped, not approximately spherical.
+ */
+const BODIES: { first: string; short: string; r: number }[] = [
+  { first: 'The Sun', short: 'the Sun', r: 696000 },
+  { first: 'Jupiter', short: 'Jupiter', r: 69911 },
+  { first: 'Saturn', short: 'Saturn', r: 58232 },
+  { first: 'Uranus', short: 'Uranus', r: 25362 },
+  { first: 'Neptune', short: 'Neptune', r: 24622 },
+  { first: 'The Earth', short: 'the Earth', r: 6371 },
+  { first: 'Venus', short: 'Venus', r: 6052 },
+  { first: 'Mars', short: 'Mars', r: 3390 },
+  { first: "Jupiter's moon Ganymede", short: 'Ganymede', r: 2634 },
+  { first: "Saturn's moon Titan", short: 'Titan', r: 2575 },
+  { first: 'Mercury', short: 'Mercury', r: 2440 },
+  { first: "Jupiter's moon Callisto", short: 'Callisto', r: 2410 },
+  { first: "Jupiter's moon Io", short: 'Io', r: 1822 },
+  { first: 'The Moon', short: 'the Moon', r: 1737 },
+  { first: "Jupiter's moon Europa", short: 'Europa', r: 1561 },
+  { first: "Neptune's moon Triton", short: 'Triton', r: 1353 },
+  { first: 'The dwarf planet Pluto', short: 'Pluto', r: 1188 },
+  { first: 'The dwarf planet Eris', short: 'Eris', r: 1163 },
+  { first: "Uranus's moon Titania", short: 'Titania', r: 789 },
+  { first: "Saturn's moon Rhea", short: 'Rhea', r: 764 },
+  { first: "Uranus's moon Oberon", short: 'Oberon', r: 761 },
+  { first: "Saturn's moon Iapetus", short: 'Iapetus', r: 735 },
+  { first: 'The dwarf planet Makemake', short: 'Makemake', r: 715 },
+  { first: "Pluto's moon Charon", short: 'Charon', r: 606 },
+  { first: "Uranus's moon Umbriel", short: 'Umbriel', r: 585 },
+  { first: "Uranus's moon Ariel", short: 'Ariel', r: 579 },
+  { first: "Saturn's moon Dione", short: 'Dione', r: 561 },
+  { first: "Saturn's moon Tethys", short: 'Tethys', r: 531 },
+  { first: 'The dwarf planet Ceres', short: 'Ceres', r: 470 },
+  { first: 'The asteroid Vesta', short: 'Vesta', r: 263 },
+  { first: 'The asteroid Pallas', short: 'Pallas', r: 256 },
+  { first: "Saturn's moon Enceladus", short: 'Enceladus', r: 252 },
+  { first: "Uranus's moon Miranda", short: 'Miranda', r: 236 },
+  { first: 'The asteroid Hygiea', short: 'Hygiea', r: 217 },
+  { first: "Saturn's moon Mimas", short: 'Mimas', r: 198 },
 ];
 
+const sphereVolume = (r: number) => 4 / 3 * Math.PI * r ** 3;
+
+/** Every pair the paper's arithmetic works for: [larger, smaller, stated radius, (a), given (b), times]. */
+const SCI_PAIRS = BODIES.flatMap(big => {
+  const r = Number(toSigFigs(big.r, 2));
+  const shown = Number(toSigFigs(sphereVolume(r), 2));
+  return BODIES.filter(s => s.r < big.r).flatMap(small => {
+    const other = Number(toSigFigs(sphereVolume(small.r), 2));
+    const times = Math.round(shown / other);
+    return times >= 2 && times <= 1000 && Math.abs(shown / other - times) < 1e-9
+      ? [{ big, small, r, shown, other, times }] : [];
+  });
+});
+
 /**
- * 2015 P2 Q6 — the same sphere, answered in scientific notation, then divided.
- *
- * Part (b) only reads properly if the ratio comes out whole, so the second
- * volume is built by dividing the first and is accepted only when dividing it
- * back gives the whole number again. Formatting to two figures is what can
- * spoil that, which is why it is checked after formatting rather than before.
+ * 2015 P2 Q6 — a sphere's volume in scientific notation, then divided by a
+ * smaller body's. See `BODIES` for why every figure is a real one.
  */
 function sphereScientific(): Q | null {
-  const c = pick(WORLDS);
-  const r = getRandomInt(c.band[0] / 100, c.band[1] / 100) * 100;
-  const times = pick([20, 25, 40, 50, 80, 100, 200, 250]);
-  const exact = 4 / 3 * Math.PI * r ** 3;
-  const shown = Number(toSigFigs(exact, 2));
-  const other = Number(toSigFigs(shown / times, 2));
-  if (Math.abs(shown / other - times) > 1e-9) return null;
+  const { big, small, r, shown, other, times } = pick(SCI_PAIRS);
+  const c = { unit: 'kilometres', short: 'km' };
+  const exact = sphereVolume(r);
 
+  // Always two figures: "7.0 × 10¹³", never "7 × 10¹³", which is one.
   const sci = (v: number) => {
-    const e = Math.floor(Math.log10(v));
-    return `${Math.round(v / 10 ** e * 100) / 100} \\times 10^{${e}}`;
+    const e = Math.floor(Math.log10(v) + 1e-12);
+    return `${(v / 10 ** e).toFixed(1)} \\times 10^{${e}}`;
   };
   const prose = [
-    `${c.name} is approximately spherical with a radius of ${r} ${c.unit}.`,
-    `<strong>(a)</strong> Calculate the volume of ${c.name.replace(/^The /, 'the ')}, giving your answer in scientific notation, correct to 2 significant figures.`,
-    `<strong>(b)</strong> The approximate volume of ${c.other} is $${sci(other)}$ cubic ${c.unit}. Calculate how many times greater the volume of ${c.name.replace(/^The /, 'the ')} is than the volume of ${c.other}.`,
+    `${big.first} is approximately spherical with a radius of ${r} ${c.unit}.`,
+    `<strong>(a)</strong> Calculate the volume of ${big.short}, giving your answer in scientific notation, correct to 2 significant figures.`,
+    // First mention in full ("Saturn's moon Iapetus"), then the short name.
+    `<strong>(b)</strong> The approximate volume of ${small.first.replace(/^The /, 'the ')} is $${sci(other)}$ cubic ${c.unit}. Calculate how many times greater the volume of ${big.short} is than the volume of ${small.short}.`,
   ];
   const steps = [
     `<strong>1.</strong> Substitute the radius into the volume of a sphere:` +
@@ -174,7 +224,10 @@ function sphereScientific(): Q | null {
   ];
   return assemble({
     stack: [{ kind: 'sphere', r: 1 }],
-    dims: [{ along: 'height', from: 1, to: 2, side: 'left', value: r, text: `${r} ${c.short}` }],
+    // No dimension on the figure: the paper's is a picture of the Earth with
+    // the radius in the words only. The dashed line this drew floated beside
+    // the sphere and measured nothing (`docs/verdicts/volume.md`).
+    dims: [],
   }, 'A Volume in Scientific Notation', 'volume.sphere-scientific', prose,
     `Sphere radius ${r} ${c.short}. Volume in scientific notation, 2 s.f.?`,
     steps, [1, 1, 1, 1, 1],

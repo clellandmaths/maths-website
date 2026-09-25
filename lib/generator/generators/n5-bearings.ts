@@ -99,7 +99,8 @@ export function bearingsQuestion(kinds: string[], wanted?: string, askedId?: str
     // which way round the third point lies: every bearing in the question, and
     // the sign of the arithmetic at the end, follows from this one choice
     const side = pick([1, -1]);
-    const q = kind === 'side' ? twoBearings(c, side, askedId === 'bearings.two-bearings')
+    const q = kind === 'side' ? twoBearings(c, side, askedId === 'bearings.two-bearings',
+        askedId === 'bearings.two-bearings-2015')
       : kind === 'two-sides' ? twoSides(c, side)
       : threeSides(c, side, kind);
     if (q) return q;
@@ -110,7 +111,7 @@ export function bearingsQuestion(kinds: string[], wanted?: string, askedId?: str
 // ── two bearings from two known points: the sine rule for a side ────────────
 // 2015 P2 Q13, 2017 P2 Q10. The two places lie on a cardinal line so the angle
 // at each of them can be read straight off its bearing.
-function twoBearings(c: BearingContext, side: number, eastWest = false): Q | null {
+function twoBearings(c: BearingContext, side: number, eastWest = false, paper2015 = false): Q | null {
   const [nA, nB, nC] = c.letters;
   const [rA, rB, rC] = c.refer;
   /**
@@ -127,7 +128,19 @@ function twoBearings(c: BearingContext, side: number, eastWest = false): Q | nul
    * with the same `wanted`. One `pick` either way, so the draws after it do
    * not shift; 2015 keeps the free choice until its own review.
    */
-  const base = eastWest ? pick([90, 270]) : pick([0, 90, 180, 270]);
+  const drawnBase = eastWest ? pick([90, 270]) : pick([0, 90, 180, 270]);
+  /**
+   * **2015 P2 Q13 is the paper's own layout, and shows only what it shows —
+   * 2026-09-25.** P due south of Q, R to the east: measured on the 2015 P2
+   * sheet, 132 of 400 draws of its id had that, 251 lay east–west and 16 put
+   * the third point west. And the paper's figure marks less: one north arrow
+   * (up through Q), 25 km on PQ, and the 72° at P, with Q's 128° left to the
+   * words. The owner: *"Yes key it and also only show the information that the
+   * original question does on the diagram."* The pick above is still drawn,
+   * so this changes 2015's draws and nothing else.
+   */
+  const base = paper2015 ? 0 : drawnBase;
+  if (paper2015) side = -1;
   const d = getRandomInt(c.band[0], c.band[1]);
   const alpha = getRandomInt(26, 76);
   const beta = getRandomInt(26, 76);
@@ -143,14 +156,19 @@ function twoBearings(c: BearingContext, side: number, eastWest = false): Q | nul
   if (AC < d * 0.3 || AC > d * 3) return null;      // keep the drawing balanced
 
   const points: [Pt, Pt, Pt] = [A, B, C];
-  const arcs: BearingArc[] = [
-    { at: 0, to: 2, compass: bA, label: brgPlain(bA) },
-    { at: 1, to: 2, compass: bB, label: brgPlain(bB) },
-  ];
+  const arcs: BearingArc[] = paper2015
+    // The paper writes the angle at P as "72°", not as a three-figure bearing.
+    ? [{ at: 0, to: 2, compass: bA, label: `${bA}°` }]
+    : [
+      { at: 0, to: 2, compass: bA, label: brgPlain(bA) },
+      { at: 1, to: 2, compass: bB, label: brgPlain(bB) },
+    ];
   const fig = bearingsTriangle({
     names: c.letters, points, arcs,
     north: [0, 1].filter(i => needsArrow(points, i)),
     sides: [`${d} ${c.short}`, '', ''],
+    // 2015 only: B's letter goes west, off its north line (see `nameAway`).
+    ...(paper2015 ? { nameAway: [undefined, pt(B.x + d, B.y), undefined] as [Pt?, Pt?, Pt?] } : {}),
   });
   if (!fig) return null;
 

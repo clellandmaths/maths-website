@@ -133,6 +133,34 @@ function drawRate(up: boolean): { rate: number; multiplier: number } {
  */
 const COMPOUND_2017 = 'percentages.compound-2017';
 
+/**
+ * **2015 P2 Q1 is money that rises, to the penny, at a price that fits.** — 2026-09-25
+ *
+ * A house valued at £240 000, up 2.8% a year, answer £253 628.16 with no
+ * rounding line. Measured on the 2015 P2 sheet, 400 draws of its id: a fall in
+ * 240, a rounding line in 243, and houses at £2,000 to £30,000. The owner:
+ * *"Yes I'd key but also make sure in the contexts the number make sense. Ie
+ * scale for a context is right"*.
+ *
+ * So this id draws only money that gains value, works it to the penny (which
+ * goes unsaid), and prices each thing from its own band rather than the shared
+ * £2,000-£30,000. The bands belong to this id alone: every other paper on the
+ * routine keeps the shared one.
+ */
+const COMPOUND_2015 = 'percentages.compound-2015';
+const BAND_2015: Record<string, [number, number, number]> = {   // [lo, hi, step]
+  'the profit': [50000, 900000, 5000],
+  'the house': [120000, 450000, 5000],
+  'the investment': [1000, 20000, 500],
+  'the bond': [1000, 25000, 500],
+  'the flat': [80000, 300000, 5000],
+  'the guitar': [2000, 40000, 500],
+  'the donations': [10000, 500000, 5000],
+  'the cottage': [100000, 400000, 5000],
+  'the account': [500, 10000, 100],
+  'the woodland': [50000, 600000, 5000],
+};
+
 function compound(wanted?: string, asked?: string): Q {
   // Pick the shape, then a context that fits it — not a context and whatever
   // shape it implies.
@@ -156,12 +184,17 @@ function compound(wanted?: string, asked?: string): Q {
   // mirror of 2017's key, and it reads a filtered list the same way, so no
   // other id's draws move.
   const is2016 = asked === 'percentages.compound-2016';
+  const is2015 = asked === COMPOUND_2015;
   const drawn = pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
-    && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)));
+    && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)
+    && (!is2015 || (c.appreciates && c.unit === '£'))));
   // A copy, never the shared context: money to the penny becomes the nearest
   // pound for this paper alone. Counts already round to the whole number.
+  // 2015 goes the other way: whatever the context usually rounds to, this
+  // paper works it to the penny and says nothing.
   const ctx = is2017 && drawn.rounding === 'money'
-    ? { ...drawn, rounding: 'nearest-pound' as const } : drawn;
+    ? { ...drawn, rounding: 'nearest-pound' as const }
+    : is2015 ? { ...drawn, rounding: 'money' as const } : drawn;
   const up = ctx.appreciates;
   let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
   // **The fourth mark is for the rounding, so there has to be something to
@@ -172,9 +205,12 @@ function compound(wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 200; tries++) {
     ({ rate, multiplier } = drawRate(up));
     years = getRandomInt(2, 4);
-    start = ctx.unit === '£'
-      ? getRandomInt(4, 60) * 500
-      : getRandomInt(20, 260) * 500;
+    const band = is2015 ? BAND_2015[ctx.subject] : undefined;
+    start = band
+      ? getRandomInt(band[0] / band[2], band[1] / band[2]) * band[2]
+      : ctx.unit === '£'
+        ? getRandomInt(4, 60) * 500
+        : getRandomInt(20, 260) * 500;
     value = start * Math.pow(multiplier, years);
     if (!threeSf || toSigFigs(value, 3) !== value) break;
   }

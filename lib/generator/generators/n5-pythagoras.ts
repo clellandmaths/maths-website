@@ -268,9 +268,20 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
     : askedId === 'pythagoras.chord-whole-2015' ? askedId
     : 'pythagoras.chord-whole';
   const forPaper2018 = stampedId === 'pythagoras.chord-whole';
+  /**
+   * **2015 P2 Q12 is a liquid in a container, with its dot and its depth
+   * arrow — 2026-09-25.** Measured on the 2015 P2 sheet over 400 draws of its
+   * id: a speed bump (2018's unshaded shape above a road) in 140, and no dot
+   * at O or depth arrow in any. The paper draws the milk shaded below ML, a
+   * dot at O and "Depth of milk" bracketed down the side, and gives ML's
+   * length in the words only. The owner: *"Yes key it"*. Keyed on 2015's alias
+   * alone; 2018 keeps its own branch.
+   */
+  const forPaper2015 = stampedId === 'pythagoras.chord-whole-2015';
   for (let tries = 0; tries < 400; tries++) {
     const ctx = pick(CHORD_CONTEXTS.filter(c => c.family === family
-      && (c.only === undefined || c.only === stampedId)));
+      && (c.only === undefined || c.only === stampedId)
+      && (!forPaper2015 || c.only === stampedId)));
     const [lo, hi] = ctx.band;
     let r: number, chord: number, d: number;
     if (exact) {
@@ -376,7 +387,7 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
      * owner, 2026-09-23: *"Key them to 2018 only for now"*. It had reached
      * 2015 unkeyed, declared on the sheet but never approved for that paper.
      */
-    const spanWord = forPaper2018
+    const spanWord = forPaper2018 || forPaper2015
       ? (ctx.asks.split(' ')[1] ?? 'height')
       : (ctx.sideways ? 'width' : 'height');
 
@@ -442,13 +453,15 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
        * sheet: *"Add height arrow, out dot in centre of circle"*. Keyed on
        * 2016's asked id, so LOCKED 2022 P2 Q8 on the same family is untouched.
        */
-      centreDot: forPaper2018 || askedId === 'pythagoras.chord-pre2022',
+      centreDot: forPaper2018 || forPaper2015 || askedId === 'pythagoras.chord-pre2022',
       askedSpan: forPaper2018 ? spanWord
+        : forPaper2015 ? ctx.asks.replace(/^the /, '')
         : askedId === 'pythagoras.chord-pre2022' ? ctx.asks.replace(/^the /, '') : undefined,
       names: { a: A, b: B, centre: O },
       labels: {
         radius: `${num(r)} ${abbrev(ctx.unit)}`,
-        chord: `${num(chord)} ${abbrev(ctx.unit)}`,
+        // 2015's paper gives ML's length in the words only.
+        chord: forPaper2015 ? '' : `${num(chord)} ${abbrev(ctx.unit)}`,
         height: '',
       },
     });

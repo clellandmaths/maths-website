@@ -489,15 +489,16 @@ function divide(wanted?: string, asked?: string): Q {
    * 2015` and an alias resolves `wanted` to its target — both papers arrive
    * with the same `wanted`.
    *
-   * **2015 is deliberately left tossing.** The owner: *"Yes key it and we
-   * will get to 2015 in it's revew."* So its alias still picks between the
-   * two shapes and will be settled when 2015 is reviewed; `one-form` lists it
-   * under NOT YET REVIEWED, where it does not fail.
+   * **2015 is keyed to its own shape — 2026-09-25.** It was left tossing
+   * until its review, and measured there over 400 draws of its id: 183
+   * monomial, 217 handing out 2018's factorising question. The owner, on the
+   * 2015 P2 sheet: *"Yes key to own shape"*. Read from `asked`, as 2018's is.
    */
   // Taught: `powers` is the only shape that makes `-simple`; the other two
   // both make `divide`, so asking for it keeps the choice between them.
   const shape = wanted === 'alg-fractions.divide-simple' ? 'powers' as const
     : asked === 'alg-fractions.divide' ? 'factorise' as const
+    : asked === 'alg-fractions.divide-2015' ? 'monomial' as const
     : wanted === 'alg-fractions.divide' ? pick(['monomial', 'factorise'] as const)
     : pick(['monomial', 'factorise', 'powers'] as const);
 

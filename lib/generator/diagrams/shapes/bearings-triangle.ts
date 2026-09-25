@@ -61,6 +61,17 @@ export interface BearingsTriangleSpec {
   sides: [string, string, string];
   /** "N" as most papers draw it, or "North" as 2014 does. */
   northLabel?: string;
+  /**
+   * Opt-in: push a vertex's letter away from this point instead of from the
+   * triangle's centre.
+   *
+   * On a thin triangle whose top vertex sits on its own north line, "away
+   * from the centre" is straight up the line, and the letter lands on it.
+   * 2015 P2 Q13 marks no angle at that vertex (the paper marks only the one
+   * at P), so nothing else was there to move it; it asks for its north
+   * vertex's letter to go west, away from R. Unset for every other caller.
+   */
+  nameAway?: [Pt?, Pt?, Pt?];
 }
 
 /** An upward arrow with a barbed head, built from plain segments. */
@@ -93,9 +104,9 @@ export function bearingsTriangle(spec: BearingsTriangleSpec): Figure | null {
 
   const elements: Element[] = [
     { kind: 'polygon', points: [P, Q, R] },
-    { kind: 'label', text: nP, anchor: P, away: inside },
-    { kind: 'label', text: nQ, anchor: Q, away: inside },
-    { kind: 'label', text: nR, anchor: R, away: inside },
+    { kind: 'label', text: nP, anchor: P, away: spec.nameAway?.[0] ?? inside },
+    { kind: 'label', text: nQ, anchor: Q, away: spec.nameAway?.[1] ?? inside },
+    { kind: 'label', text: nR, anchor: R, away: spec.nameAway?.[2] ?? inside },
   ];
   spec.sides.forEach((text, i) => {
     if (text) elements.push(sideLabel(legs[i][0], legs[i][1], text, inside));
