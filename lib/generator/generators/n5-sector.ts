@@ -564,9 +564,13 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         subTopic: 'Area of a Sector',
         difficulty: 'exam',
         variationId: paper1 ? 'sector.area-angle-pi314' : 'sector.area-angle',
+        // 2025 P2 Q6, this id's only paper, asks "Calculate the area of the
+        // sector." and no more: its scheme takes 333.79... as it comes. The
+        // rounding line was in every draw. The owner, on the 2025 re-review
+        // sheet: "Yes" to dropping it. The answer is still shown to 1 d.p.
         questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.angle,
           `Calculate the area of the sector.`,
-          paper1 ? 'Take $\\pi = 3\\cdot 14$.' : 'Give your answer correct to one decimal place.'],
+          ...(paper1 ? ['Take $\\pi = 3\\cdot 14$.'] : [])],
         boardQuestionLines: [`Sector radius ${r}, angle ${Math.round(angle)}°. Area?`],
         solutionSteps: [
           share,

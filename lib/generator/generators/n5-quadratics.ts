@@ -141,8 +141,11 @@ function completeSquare(_wanted?: string, asked?: string): Q {
     subTopic: 'Completing the Square',
     difficulty: 'skill',
     variationId: 'quadratics.complete-square',
+    // 2025 P2 Q5 ends "in the form (x + a)^2 + b." with the stop inside the
+    // maths. The owner, 2026-09-25: "if the only fixes is putting full stops
+    // just do that without asking me". Its own id only; words, no random.
     questionLines: [
-      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}$`,
+      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${asked === 'quadratics.complete-square' ? '.' : ''}$`,
     ],
     boardQuestionLines: [`$${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}$`],
     // Two marks in all four papers — •¹ correct bracket with square, •² complete

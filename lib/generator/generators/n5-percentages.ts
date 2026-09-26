@@ -447,8 +447,16 @@ function reverse(): Q {
  * The owner: *"Yes key it to the year."*
  */
 function compoundBetweenYears(asked?: string): Q {
+  /**
+   * **2025 P2 Q1 is two years, and says so**: "… each year over the next two
+   * years". Its own id drew three or four in 19 of 400 and never printed the
+   * phrase. The owner, on the 2025 re-review sheet: "Yes". 2019's alias keeps
+   * its three and its own wording.
+   */
+  const is2025 = asked === 'percentages.compound-between-years';
   const pinnedYears = asked === 'percentages.compound-between-years-pre2023'
     ? 3        // 2019 P2 Q1 — 2018 to 2021
+    : is2025 ? 2        // 2025 P2 Q1 — 2024 to 2026
     : 0;
   const ctx = pick(BETWEEN_YEARS_CONTEXTS);
   const [lo, hi] = ctx.band;
@@ -476,7 +484,7 @@ function compoundBetweenYears(asked?: string): Q {
     variationId: 'percentages.compound-between-years',
     questionLines: [
       ctx.opening(plain(start), from),
-      `This number is expected to increase by ${rate}% each year.`,
+      `This number is expected to increase by ${rate}% each year${is2025 ? ' over the next two years' : ''}.`,
       ctx.ask(from + years),
     ],
     boardQuestionLines: [`${plain(start)} in ${from}, up ${rate}% a year. How many in ${from + years}?`],

@@ -511,6 +511,18 @@ export function similarAreaQuestion(): Q {
     const areaSmall = k * a * a, areaLarge = k * b * b;
     if (!Number.isInteger(areaSmall * 10) || !Number.isInteger(areaLarge * 10)) continue;
     if (areaSmall < 8 || areaLarge > 3000) continue;
+    /**
+     * **A part no bigger than its object could hold, on an object its story
+     * allows.** 2025 P2 Q11's wing is 24 cm² on a 14 cm model, about an eighth
+     * of 14². This drew a 5 cm dart with a 44 cm² panel and a 4.5 cm kite with
+     * 54 cm² of fabric - over the square of the length in 88 of the 288
+     * centimetre draws - and flags outside a hotel 4 cm wide. The owner, on
+     * the 2025 re-review sheet: "Yes" to at most half the square of the small
+     * length, and at least 10 cm for the centimetre stories. Alone on its
+     * clone.
+     */
+    if (areaSmall > 0.5 * lSmall * lSmall) continue;
+    if (c.unit === 'cm' && lSmall < 10) continue;
 
     // **Small given, large wanted.** 2025 P2 Q11 is this variation's only paper
     // and it scales up: a 14 cm model with a 24 cm wing, a 31.5 cm model, find

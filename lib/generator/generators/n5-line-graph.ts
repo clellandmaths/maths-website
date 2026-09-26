@@ -933,6 +933,14 @@ export function lineThroughMarkedPointsQuestion(): Q | null {
   if (!Number.isInteger(y1) || !Number.isInteger(y2)) return null;
   if (Math.abs(y1) > 20 || Math.abs(y2) > 20) return null;
   if (y1 === y2) return null;                    // a horizontal line is a different question
+  /**
+   * **Neither point on an axis**, as 2025 P1 Q6's A(1, 12) and B(6, 2). A
+   * point at (0, c) hands over the intercept, and the scheme's second mark,
+   * substituting a point to find it, costs nothing. It was 120 of 400 draws.
+   * The owner, on the 2025 re-review sheet: "Yes". A rejection after every
+   * draw, and this variation is alone on its clone.
+   */
+  if (x1 === 0 || x2 === 0 || y1 === 0 || y2 === 0) return null;
 
   const eq = equation('y', 'x', p, q, c);
   const prose = [

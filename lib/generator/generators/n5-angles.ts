@@ -85,6 +85,15 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
      */
     const given = getRandomInt(17, interior - 20);
     const answer = interior - given;
+    /**
+     * **A clear bend at E, as 2025 P2 Q7's 151°.** The asked angle and the
+     * interior angle meet along the next side, and when they add to nearly
+     * 180 the line from the outside point seems to run straight on into it -
+     * F, E and D in a line the question never states. 50 of 400 draws, all
+     * pentagons at 30° to 42°. The owner, on the 2025 re-review sheet: "Yes".
+     * 2025's id only, a rejection after the draw; 2018 is untouched.
+     */
+    if (asked === 'angles.polygon-produced' && Math.abs(answer + interior - 180) <= 6) continue;
 
     const names = LETTERS.slice(0, n).split('');
     const point = LETTERS[n];
@@ -172,7 +181,13 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
       difficulty: 'exam',
       variationId: 'angles.polygon-produced',
       stepMarks: [1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2025 P2 Q7 ends each bullet with a stop, "Angle EFA is 65°." inside
+      // the maths. The owner, 2026-09-25: "if the only fixes is putting full
+      // stops just do that without asking me". Its own id only, and after
+      // verifyFigure, so no draw passes or fails differently.
+      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2).map(l =>
+        asked !== 'angles.polygon-produced' || !l.startsWith('&bull;') ? l
+          : l.endsWith('$') ? `${l.slice(0, -1)}.$` : `${l}.`)],
       boardQuestionLines: [`Regular ${WORD[n]}, side produced, angle ${given}° outside. Third angle?`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,

@@ -918,7 +918,11 @@ function drawResultant(): Q | null {
   const p: [number, number] = [nonZeroInt(-5, 5), nonZeroInt(-5, 5)];
   const q: [number, number] = [nonZeroInt(-5, 5), nonZeroInt(-5, 5)];
   const sum: [number, number] = [p[0] + q[0], p[1] + q[1]];
-  if (sum[0] === 0 && sum[1] === 0) return null;
+  // **No zero component in the resultant**, as 2025 P1 Q13's (6, -1). A
+  // vector straight up, down or across was 60 of 400 draws - the same kind of
+  // degenerate draw as "+ 0". The owner, on the 2025 re-review sheet: "Yes".
+  // A rejection, and this variation is alone on its clone.
+  if (sum[0] === 0 || sum[1] === 0) return null;
   if (Math.abs(sum[0]) > GRID || Math.abs(sum[1]) > GRID) return null;
   // The resultant has to be visibly its own vector, not a near-copy of either.
   if (p[0] * q[1] === p[1] * q[0]) return null;

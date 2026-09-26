@@ -196,8 +196,31 @@ function parabolaFromTurningPoint(sort: FromTurningPoint): Q | null {
     id = 'quadratics.parabola-y-intercept';
   }
 
+  let view = windowFor(h, k, sort === 'intercept' ? [{ x: 0, y: c }] : []);
+  /**
+   * **The curve crosses the y-axis and runs on past it**, as 2025 P1 Q9's
+   * does. Sized from the turning point alone, the frame ended at the y-axis
+   * whenever the turning point sat well to one side, so one arm stopped dead
+   * on the axis - 225 of 400 draws. The owner, on the 2025 re-review sheet:
+   * "Yes". So the frame reaches a little past the axis, and up far enough to
+   * hold the curve there.
+   *
+   * **Both arms alike, about the turning point.** Reaching past the axis on
+   * the axis side alone left one arm long and the other short. The owner, on
+   * the rebuilt card: "need to make it look more symmetrical". So the frame
+   * is widened by the same amount either side of x = h. Only this id, and no
+   * random is drawn.
+   */
+  if (sort === 'plain') {
+    const past = Math.max(0.8, (view.xMax - view.xMin) * 0.08);
+    const half = Math.max(h - view.xMin, view.xMax - h, Math.abs(h) + past);
+    const xMin = h - half, xMax = h + half;
+    const top = half * half + k;
+    const yPad = Math.max(1.5, (top - view.yMin) * 0.08);
+    view = { ...view, xMin, xMax, yMax: Math.max(view.yMax, top + yPad) };
+  }
   return assemble({
-    view: windowFor(h, k, sort === 'intercept' ? [{ x: 0, y: c }] : []),
+    view,
     plot: { kind: 'parabola', a: 1, h, k },
     points,
   }, subTopic, id, prose,

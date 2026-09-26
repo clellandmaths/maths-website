@@ -438,6 +438,12 @@ function twoSides(c: BearingContext, side: number): Q | null {
   const ab = getRandomInt(c.band[0], c.band[1]);
   const alpha = getRandomInt(28, 72);
   const bcLen = Math.round(ab * (getRandomInt(70, 145) / 100));
+  // **No equal sides.** 10 km and 10 km make the triangle isosceles, and the
+  // angle at C then comes without the sine rule the paper's four marks are
+  // for - 67 of 400 draws. The owner, on the 2025 re-review sheet: "Yes", as
+  // on 2014 P2's bearings. The kind is fixed before the loop, so only this id
+  // ever reaches it.
+  if (bcLen === ab) return null;
   const ratio = ab * sin(alpha) / bcLen;
   if (ratio > 0.985) return null;
   const gamma = Math.asin(ratio) / DEG;
@@ -490,7 +496,11 @@ function twoSides(c: BearingContext, side: number): Q | null {
     difficulty: 'exam',
     variationId: 'bearings.two-sides',
     stepMarks: [1, 1, 1, 1],
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    // The three facts bulleted, as 2025 P2 Q12 prints them - "• B is 250
+    // metres east of A." The owner: "Yes". After verifyFigure, so no draw
+    // passes or fails differently.
+    questionLines: [prose[0], renderScene(fig.scene),
+      ...prose.slice(1, 4).map(l => `&bull;&nbsp; ${l}`), ...prose.slice(4)],
     boardQuestionLines: [`${nB} is ${ab} ${c.short} due ${CARDINAL[base]} of ${nA}. Bearing of ${nC} from ${nA} is ${brgPlain(bC)}. ${nB}${nC} = ${bcLen} ${c.short}. Bearing of ${nC} from ${nB}?`],
     solutionSteps: steps,
     finalAnswer: `$${brg(answer)}$`,

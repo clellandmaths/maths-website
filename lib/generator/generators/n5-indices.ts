@@ -72,8 +72,10 @@ function laws(): Q {
       subTopic: 'Laws of Indices',
       difficulty: 'skill',
       variationId: 'indices.laws',
+      // The stop goes inside the maths, as 2025 P1 Q10 prints it. The owner,
+      // 2026-09-25: "if the only fixes is putting full stops just do that".
       questionLines: [
-        `Simplify $\\frac{${pow(v, a)} \\times (${pow(v, b)})^{${c}}}{${pow(v, d)}}$`,
+        `Simplify $\\frac{${pow(v, a)} \\times (${pow(v, b)})^{${c}}}{${pow(v, d)}}.$`,
       ],
       boardQuestionLines: [`$\\frac{${pow(v, a)} \\times (${pow(v, b)})^{${c}}}{${pow(v, d)}}$`],
       solutionSteps: [

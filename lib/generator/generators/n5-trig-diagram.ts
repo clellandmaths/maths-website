@@ -569,6 +569,19 @@ export const TRIG_DIAGRAM_GENERATORS: Record<string, Gen> = {
     ? cosineSide2026() : trigDiagramQuestion(['side', 'angle'], w),
   'Sine Rule from a Diagram': (w, asked) => asked === 'trig-diagram.sine-angle-pre2023'
     ? stepladder() : trigDiagramQuestion(['sine-angle'], w),
-  'Area of a Triangle from a Diagram': (w) =>
-    trigDiagramQuestion(['area', 'area-exact'], w),
+  /**
+   * **2025 P1 Q5 ends each bullet with a stop** — "AB = BC = 6 centimetres."
+   * and "sin B = 2/3." — inside the maths where the line ends in it. The
+   * owner, 2026-09-25: *"if the only fixes is putting full stops just do that
+   * without asking me"*. Keyed on 2025's own id, after the draw, so no random
+   * moves and 2017 P1 Q7 (`-pre2023`, its own wording) is untouched.
+   */
+  'Area of a Triangle from a Diagram': (w, asked) => {
+    const q = trigDiagramQuestion(['area', 'area-exact'], w);
+    return asked !== 'trig-diagram.area-exact' ? q : {
+      ...q,
+      questionLines: q.questionLines.map(l => !l.startsWith('&bull;') ? l
+        : l.endsWith('$') ? `${l.slice(0, -1)}.$` : `${l}.`),
+    };
+  },
 };

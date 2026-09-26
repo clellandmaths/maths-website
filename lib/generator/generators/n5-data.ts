@@ -619,10 +619,26 @@ function meanStdevConsistency(): Q {
 // 1 + 3 + 1 and asks a single judgement, not 4 + 2 with two comparisons.
 // `data.mean-sd-consistency` above is that question.
 
-function meanStdevCompare(): Q {
+/**
+ * **Each paper's own number of values.** Every id drew five, six or seven, a
+ * third each, where 2016 P2 Q6 has six waits, 2018 P2 Q5 six stalls, 2022 P2
+ * Q5 seven players and 2025 P2 Q4 seven weights. The owner, on the 2025
+ * re-review sheet: "Yes" to keying each paper to its count, as on 2026 P1 Q3.
+ * The count is still drawn, so the stream is unchanged; only what these four
+ * ids read is replaced. A topic sheet asks for none of them and keeps the mix.
+ */
+const MEAN_SD_COUNT: Record<string, number> = {
+  'data.mean-sd-compare-2016': 6,      // 2016 P2 Q6
+  'data.mean-sd-compare-pre2022': 6,   // 2018 P2 Q5
+  'data.mean-sd-compare-pre2023': 7,   // 2022 P2 Q5
+  'data.mean-sd-compare': 7,           // 2025 P2 Q4
+};
+
+function meanStdevCompare(_wanted?: string, asked?: string): Q {
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(DATA_CONTEXTS);
-    const n = pick([5, 6, 7]);
+    const drawnN = pick([5, 6, 7]);
+    const n = MEAN_SD_COUNT[asked ?? ''] ?? drawnN;
     const vals = sampleWithWholeMean(ctx, n);
     if (!vals) continue;
     const { mean, ssq, s } = stdev(vals);

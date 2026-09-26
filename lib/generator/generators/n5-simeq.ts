@@ -536,7 +536,12 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
         `${ctx.people[1]} ${ctx.verb} ${q3} ${ctx.plural[0]} and ${q4} ${ctx.plural[1]}. ${ctx.total} ${amount(t2, ctx.kind)}.`,
         noLetters ? '(b) Write down an equation to illustrate this information.'
           : `(b) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
-        combine
+        // 2025 P2 Q10 asks "(c) Calculate the total weight of the stacks on
+        // Beth's lorry." - no "algebraically", which 2026 P2 Q4 (the base id)
+        // does print. The owner, on the 2025 re-review sheet: "Yes". Words only.
+        combine && asked === 'simeq.construct-combine-2025'
+          ? `(c) Calculate the total ${unit} ${unit === 'amount of material' ? 'for' : 'of'} ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}.`
+          : combine
           ? `(c) Calculate, algebraically, the total for ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}.`
           : noAlgebraically ? `(c) Calculate ${ctx.asks}.` : `(c) Calculate, algebraically, ${ctx.asks}.`,
       ],
@@ -571,5 +576,7 @@ export const SIMEQ_GENERATORS: Record<string, (wanted?: string, asked?: string) 
   'Constructing Simultaneous Equations': (_w, asked) => constructSolve(false, false, asked),
   // 2019 P1 Q8: the same question without a calculator, so no money contexts.
   'Constructing Simultaneous Equations without a Calculator': () => constructSolve(false, true),
-  'Simultaneous Equations Used Again': () => constructSolve(true),
+  // `asked` reaches only the (c) wording on the combine path: every other use
+  // of it inside is behind `!combine`.
+  'Simultaneous Equations Used Again': (_w, asked) => constructSolve(true, false, asked),
 };

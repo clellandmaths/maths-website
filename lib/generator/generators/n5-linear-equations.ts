@@ -339,9 +339,13 @@ function clearDenominators(shape: 1 | 2 | 3): Q {
       // 2016 P1 Q8 asks for the simplest form; 2019 P1 Q14 and 2025 P2 Q13 do
       // not. Now that each paper has its own id, that is exact rather than one
       // draw in three.
+      //
+      // 2025 P2 Q13, the linear-top shape and that paper's alone, ends with a
+      // stop inside the maths. The owner, 2026-09-25: "if the only fixes is
+      // putting full stops just do that without asking me".
       questionLines: shape === 1
         ? [`Solve the equation $${question}$`, 'Give your answer in its simplest form.']
-        : [`Solve the equation $${question}$`],
+        : [`Solve the equation $${question}${shape === 3 ? '.' : ''}$`],
       boardQuestionLines: [`Solve $${question}$`],
       solutionSteps: [
         `<strong>1.</strong> The denominators are $${m}$ and $${n}$, so multiply <strong>every</strong> term by $${L}$:<br><br>$${cleared}$`,

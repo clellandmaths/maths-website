@@ -324,18 +324,15 @@ function triangleAgainstRectangle(): Q | null {
 
 // ── a rectangle against a square — 2025 P1 Q15 ───────────────────────────
 
-const AREA_PAIRS = [
-  { a: 'rug', b: 'rug', unit: 'centimetres' },
-  { a: 'patio', b: 'lawn', unit: 'metres' },
-  { a: 'panel', b: 'panel', unit: 'centimetres' },
-  { a: 'noticeboard', b: 'noticeboard', unit: 'centimetres' },
-  { a: 'flower bed', b: 'flower bed', unit: 'metres' },
-  { a: 'tray', b: 'tray', unit: 'centimetres' },
-  { a: 'window', b: 'window', unit: 'centimetres' },
-  { a: 'sail', b: 'sail', unit: 'metres' },
-  { a: 'plot', b: 'plot', unit: 'metres' },
-  { a: 'mat', b: 'mat', unit: 'centimetres' },
-];
+/**
+ * **No story, as the paper has none.** 2025 P1 Q15 says only "The diagrams of
+ * a rectangle and square are shown below." and answers in centimetres. This
+ * drew one of ten stories in every draw, and the sizes the algebra allows - 9
+ * by 4 up to 27 by 12 - made a rug or a window 9 cm by 4 cm. The owner, on
+ * the 2025 re-review sheet: "Ok remove the story." That leaves the 22 sets of
+ * numbers the quadratic allows. Alone on its clone.
+ */
+const UNIT = 'centimetres';
 
 /**
  * Answer-first, and it is the only way this one works.
@@ -347,7 +344,6 @@ const AREA_PAIRS = [
  * discriminant comes out square. Most draws fail; that is what the loop is for.
  */
 function rectangleAgainstSquare(): Q | null {
-  const c = pick(AREA_PAIRS);
   // Widely, because the constraint is severe: a discriminant has to come out
   // square, and over m up to 7 there were eleven usable questions in the whole
   // topic. Over these ranges there are forty, which is what a worksheet needs
@@ -393,7 +389,7 @@ function rectangleAgainstSquare(): Q | null {
   const [B, C] = [n - m, -m * n];
 
   const prose = [
-    `The diagrams of a rectangular ${c.a} and a square ${c.b} are shown below.`,
+    'The diagrams of a rectangle and square are shown below.',
     `<strong>(a)</strong> Find an expression for the area of the rectangle.`,
     `<strong>(b)</strong> Given that the area of the rectangle is equal to the area of the square, show that $${quadratic(1, B, C)}$.`,
     `<strong>(c)</strong> Hence find, algebraically, the length and breadth of the rectangle.`,
@@ -406,7 +402,7 @@ function rectangleAgainstSquare(): Q | null {
     `<strong>4.</strong> Factorise:<br><br>$(x ${sgn(-m)})(x ${sgn(n)}) = 0$`,
     `<strong>5.</strong> Solve:<br><br>$x = ${m}$ or $x = ${-n}$`,
     `<strong>6.</strong> A length cannot be negative, so $x = ${m}$, and the rectangle is` +
-    `<br><br>$${2 * m + q}$ by $${m + r}$ ${c.unit}`,
+    `<br><br>$${2 * m + q}$ by $${m + r}$ ${UNIT}`,
   ];
   return assemble(
     shapePair(
@@ -420,7 +416,7 @@ function rectangleAgainstSquare(): Q | null {
     'A Rectangle Against a Square', 'form-equation.rectangle-square', prose,
     `Rectangle $(2x + ${q})(x + ${r})$ equals square $(x + ${s})^{2}$. Find its sides.`,
     steps, [1, 1, 1, 1, 1, 1],
-    `Length ${2 * m + q} ${c.unit}, breadth ${m + r} ${c.unit}`);
+    `Length ${2 * m + q} ${UNIT}, breadth ${m + r} ${UNIT}`);
 }
 
 // ── a cuboid of given volume — 2023 P2 Q14 ───────────────────────────────
