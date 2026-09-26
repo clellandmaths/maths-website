@@ -60,7 +60,35 @@ function frac(n: number, d: number): string {
 
 // ── combine two vectors — 2014 P1 Q4, 2016 P1 Q1, 2024 P1 Q4 ─────────────
 
+/**
+ * **What each paper fixes about the components question**, one row per paper
+ * id. Nothing asked (a topic sheet) fixes nothing and keeps the coin.
+ *
+ * - `minus`: adding and subtracting are two different questions (the owner,
+ *   2024 P1 sheet: *"Agreed"*, against a coin that handed a pupil the wrong
+ *   paper's arithmetic in 141 of 300 draws). 2024 P1 Q4 is 3a + b, 2014 P1 Q4
+ *   is 2u - v, and 2016 P1 Q1 is 1/2 p + q (*"Yes key"*, against 196 of 400
+ *   draws subtracting). Every mechanical check reads these as one form (same
+ *   layout, instruction and LaTeX; only the operation differs), which is why
+ *   the coin went unnoticed.
+ * - `noZero`: never a zero component in the answer. Their papers answer
+ *   (-4, 10, 3) and (-3, -4); these drew a zero in 8 and 21 of 200. The owner,
+ *   on the 2018-2014 light pass: "Yes". A rejection on those ids only.
+ * - `asksFirst`: 2014 P1 Q4 asks first and gives the vectors after: "Find the
+ *   resultant vector 2u - v when u = ... and v = ... ." (light pass: "Yes").
+ *
+ * `asked` and not `wanted`: 2014's id is an alias of 2024's, so both arrive
+ * with the same `wanted` and only the asked id tells them apart.
+ */
+interface ComponentsPaper { minus: boolean; noZero?: true; asksFirst?: true }
+const COMPONENTS_PAPERS: Record<string, ComponentsPaper> = {
+  'vectors.components': { minus: false },                                    // 2024 P1 Q4
+  'vectors.components-pre2023': { minus: true, noZero: true, asksFirst: true }, // 2014 P1 Q4
+  'vectors.components-half': { minus: false, noZero: true },                 // 2016 P1 Q1
+};
+
 function components(wanted?: string, asked?: string): Q {
+  const paper: ComponentsPaper | undefined = COMPONENTS_PAPERS[asked ?? ''];
   // Taught for docs/one-question-one-generator.md: the id the caller
   // asked for decides this, and the draw is only the fallback for a
   // topic sheet, which names none.
@@ -108,34 +136,8 @@ function components(wanted?: string, asked?: string): Q {
     // before the loop, so the mix is even rather than whatever survives.
     const k1 = half ? 0.5 : getRandomInt(2, 4);
     const k2 = 1;
-    /**
-     * **Adding and subtracting are two different questions.** The owner, on
-     * the 2024 P1 sheet: *"Agreed"*, against the measurement that the coin
-     * toss here handed a pupil the wrong paper's arithmetic in 141 draws of
-     * 300.
-     *
-     *   2024 P1 Q4   3a + b    -> `vectors.components`
-     *   2014 P1 Q4   2u - v    -> `vectors.components-pre2023`
-     *   2016 P1 Q1   1/2 p + q -> `vectors.components-half`
-     *
-     * Every mechanical check reads these as one form - same layout, same
-     * instruction, the same LaTeX - and only the operation differs. That is
-     * the 2025 P2 Q3 fault, and this is the same repair: the id the caller
-     * asked for decides it, and the draw survives only as the fallback for a
-     * topic sheet, which names no id.
-     *
-     * `asked` and not `wanted`: 2014's id is an ALIAS of 2024's, so both
-     * arrive here with the same `wanted` and only the asked id tells them
-     * apart.
-     *
-     * **2016 P1 Q1 adds too.** The owner, on the 2016 P1 sheet: *"Yes key"*,
-     * against 196 of 400 draws of `vectors.components-half` subtracting where
-     * the paper asks for ½p + q. That id had kept the toss.
-     */
-    const minus = asked === 'vectors.components' ? false        // 2024 P1 Q4
-      : asked === 'vectors.components-pre2023' ? true           // 2014 P1 Q4
-      : asked === 'vectors.components-half' ? false             // 2016 P1 Q1
-      : getRandomInt(0, 1) === 0;
+    // Adding and subtracting are two different questions: see COMPONENTS_PAPERS.
+    const minus = paper ? paper.minus : getRandomInt(0, 1) === 0;
 
     // a half scalar needs even components, or the answer is not whole
     const step = half ? 2 : 1;
@@ -146,22 +148,14 @@ function components(wanted?: string, asked?: string): Q {
     const R = A.map((v, i) => k1 * v + (minus ? -1 : 1) * k2 * B[i]);
     if (R.some(v => !Number.isInteger(v) || Math.abs(v) > 40)) continue;
     if (R.every(v => v === 0)) continue;
-    // **Never a zero component in the answer, on 2014's and 2016's —
-    // 2026-09-26.** Their papers answer (−4, 10, 3) and (−3, −4); these drew a
-    // zero in 8 and 21 of 200. The owner, on the 2018-2014 light pass: "Yes".
-    // A rejection on those two ids only, so 2024 P1 Q4 draws as before.
-    if ((asked === 'vectors.components-pre2023' || asked === 'vectors.components-half')
-      && R.some(v => v === 0)) continue;
+    if (paper?.noZero && R.some(v => v === 0)) continue;
 
     const expr = `${scaled(k1, n1)} ${minus ? '-' : '+'} ${scaled(k2, n2)}`;
     return {
       subTopic: 'Vector Components',
       difficulty: 'skill',
       variationId: half ? 'vectors.components-half' : 'vectors.components',
-      // 2014 P1 Q4 asks first and gives the vectors after: "Find the resultant
-      // vector 2u - v when u = … and v = … ." The owner, on the 2018-2014
-      // light pass: "Yes". Its own alias; the others keep their order.
-      questionLines: asked === 'vectors.components-pre2023'
+      questionLines: paper?.asksFirst
         ? [`Find the resultant vector $${expr}$`,
            `when $${bold(n1)} = ${col(A)}$ and $${bold(n2)} = ${col(B)}.$`,
            `Express your answer in component form.`]

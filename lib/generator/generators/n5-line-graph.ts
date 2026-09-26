@@ -688,13 +688,62 @@ function bestFitOnGridQuestion(_wanted?: string, asked?: string): Q | null {
  * the prose already says "line of best fit" or "the line" according to the
  * context's own `scatter`.
  */
-/** The four scattergraph papers whose letters are kept clear of the cloud. */
-const LETTERS_CLEAR_OF_DOTS = new Set([
-  'straight-line.best-fit-2014',      // 2014 P1 Q6
-  'straight-line.best-fit-pre2023',   // 2016 P1 Q5
-  'straight-line.best-fit-2024',      // 2024 P1 Q9
-  'straight-line.best-fit',           // 2026 P1 Q6
-]);
+/**
+ * **What each paper fixes about the line-graph question**, one row per paper
+ * id. Nothing asked (a topic sheet) fixes nothing. No row draws a random of
+ * its own: every coin is still drawn and only read differently, so the papers
+ * sharing this routine never move each other.
+ *
+ * - `gradient`: `fraction` is 2018 P1 Q7, whose points (8, 14) and (12, 20)
+ *   give 6/4 = 3/2; its markscheme pays for 6/4 and refuses the last mark for a
+ *   decimal. The clone gave a whole gradient in 344 of 400 draws. The owner:
+ *   *"Yea make is always fractional for this question. But ensure that C
+ *   always comes out as a whole number."* (c is drawn whole, and y1 = m x1 + c
+ *   must be whole below, so it is.) `whole` is 2014 P1 Q6, C = 15F + 125,
+ *   against a fractional gradient in 64 of 400 draws. The owner: *"Yes"*.
+ * - `slope`: 2024 P1 Q9 falls (distance still to run against time driven,
+ *   gradient -2); the clone rose in 252 of 300. The owner: *"Yes pin to a
+ *   falling line, leave the 1 3% of the time. Ensure it only affects this
+ *   paper."* 2014 P1 Q6 rises (64 of 400 draws fell).
+ * - `letters`: the marked points' letters. 2016 P1 Q5 calls them D and E
+ *   because its variable is A, the age; naming every point A and B put one
+ *   letter on two things in 87 of 400 draws of 2016's id, 107 of 2026 P1 Q6's
+ *   and 144 of 2024 P1 Q9's. The owner, on the 2016 P1 sheet: *"Yes. But will
+ *   have to fix other locked papers as well"*. Where the pair clashes with the
+ *   story's letters, the first free consecutive pair is used.
+ * - `clearOfDots`: each letter tries the four sides until both are clear of
+ *   the scatter's dots; below them a letter sat on a dot in 152 of 400 draws of
+ *   2024 P1 Q9 and about half of the other three. The owner, on the 2024
+ *   re-review sheet: *"Yes and fix letters on other papers"*.
+ * - `partB`: how part (b) is asked, in each paper's own words. `equation`:
+ *   "Use your equation from part (a) to estimate ..." (2024 P1 Q9, 2016 P1 Q5).
+ *   `plain`: "(b) Calculate the cost of a journey of 5 miles." (2018 P1 Q7).
+ *   `answer`: "Use your answer to part (a) to estimate ..." (2014 P1 Q6).
+ *   Nothing: "Use your answer to part (a). Estimate ...". The owner, on the
+ *   2024 re-review and the 2018-2014 light pass: "Yes".
+ * - `simplest: false`: 2014 P1 Q6 asks only for the equation "in terms of F
+ *   and C", with no simplest-form line (light pass: "Yes").
+ */
+interface BestFitPaper {
+  gradient?: 'fraction' | 'whole';
+  slope?: 'rising' | 'falling';
+  letters?: string[];
+  clearOfDots?: true;
+  partB?: 'equation' | 'plain' | 'answer';
+  simplest?: false;
+}
+const BEST_FIT_PAPERS: Record<string, BestFitPaper> = {
+  // 2026 P1 Q6
+  'straight-line.best-fit': { letters: ['A', 'B'], clearOfDots: true },
+  // 2024 P1 Q9
+  'straight-line.best-fit-2024': { slope: 'falling', letters: ['A', 'B'], clearOfDots: true, partB: 'equation' },
+  // 2016 P1 Q5
+  'straight-line.best-fit-pre2023': { letters: ['D', 'E'], clearOfDots: true, partB: 'equation' },
+  // 2014 P1 Q6
+  'straight-line.best-fit-2014': { gradient: 'whole', slope: 'rising', clearOfDots: true, partB: 'answer', simplest: false },
+  // 2018 P1 Q7
+  'straight-line.exact-line': { gradient: 'fraction', partB: 'plain' },
+};
 
 /** Does either marked point's letter sit over one of the cloud's small dots, as rendered? */
 function letterOnDot(svg: string, letters: string[]): boolean {
@@ -712,34 +761,9 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   // refuses the last mark for a gradient turned into a decimal, so the
   // fractional case has to be generated and carried as a fraction.
   const qDraw = pick([1, 1, 1, 2, 3]);
-  /**
-   * **2018 P1 Q7's gradient is always a fraction — 2026-09-22.**
-   *
-   * The paper's points are (8, 14) and (12, 20), so `m = 6/4 = 3/2`, and its
-   * markscheme pays a mark for `6/4` and refuses the last one if the gradient
-   * is turned into a decimal. The clone gave a WHOLE gradient in **344 of 400
-   * draws**, which removes exactly the step the scheme is buying. The owner:
-   * *"Yea make is always fractional for this question. But ensure that C
-   * always comes out as a whole number."*
-   *
-   * `c` is drawn as an integer and `y1 = m*x1 + c` is required to be an
-   * integer below, so the intercept is whole by construction — measured at
-   * 400 of 400 after this change, not assumed.
-   *
-   * **No extra random is drawn**: the pick above still happens and its value
-   * is mapped, so the scatter side — `straight-line.best-fit`, which is
-   * 2026 P1 Q6 and signed off — reads exactly the stream it always read.
-   * Keyed on `asked` for the same reason the falling pin below is.
-   */
-  /**
-   * **2014 P1 Q6 rises with a whole-number gradient** (C = 15F + 125). The
-   * owner, on the 2014 P1 sheet: *"Yes"*, against a fractional gradient in 64
-   * of 400 draws and a falling line in 66. The denominator is still drawn and
-   * read as 1, and only rising contexts are offered, for this asked id alone.
-   */
-  const rising2014 = asked === 'straight-line.best-fit-2014';
-  const q = asked === 'straight-line.exact-line' ? (qDraw === 3 ? 3 : 2)
-    : rising2014 ? 1 : qDraw;
+  const paper: BestFitPaper | undefined = BEST_FIT_PAPERS[asked ?? ''];
+  const q = paper?.gradient === 'fraction' ? (qDraw === 3 ? 3 : 2)
+    : paper?.gradient === 'whole' ? 1 : qDraw;
 
   // **The denominator is chosen before the context, because it decides which
   // contexts can carry it.** `p` is drawn across the context's own slope band,
@@ -749,26 +773,10 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   // fractional gradient; one clone in twenty did, because the fractional
   // attempts nearly all landed on a context that could not hold one. Picking
   // the context from those that can makes the rate the papers' rate.
-  /**
-   * **2024 P1 Q9's line falls.** The owner, on the 2024 P1 sheet: *"Yes pin to
-   * a falling line, leave the 1 3% of the time. Ensure it only affects this
-   * paper."*
-   *
-   * It asks for the distance still to run against time driven, so D drops as
-   * T rises and the gradient is -2. Read off the answers of 300 draws the
-   * clone rose in 252 of them: the other three papers on this routine all
-   * rise, and the clone had settled into their shape.
-   *
-   * Keyed on the ASKED id, because `straight-line.best-fit-2024` is an alias
-   * of `straight-line.best-fit` and both reach here with the same `wanted` -
-   * and `straight-line.best-fit` is 2026 P1 Q6, which is signed off. Its pool
-   * is untouched, as are 2014 P1 Q6's and 2016 P1 Q5's.
-   */
-  const falling = asked === 'straight-line.best-fit-2024';
   const kind = CONTEXTS.filter(c => c.scatter === scatter
     && (c.only === undefined || c.only === asked)
-    && (!falling || Math.max(c.slope[0], c.slope[1]) < 0)
-    && (!rising2014 || Math.min(c.slope[0], c.slope[1]) > 0));
+    && (paper?.slope !== 'falling' || Math.max(c.slope[0], c.slope[1]) < 0)
+    && (paper?.slope !== 'rising' || Math.min(c.slope[0], c.slope[1]) > 0));
   const pool = q === 1 ? kind : kind.filter(c =>
     Math.min(Math.abs(c.slope[0]), Math.abs(c.slope[1])) * q <= 8);
   if (!pool.length) return null;
@@ -822,23 +830,7 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   if (!ctx.money && !Number.isInteger(y3)) return null;
   if (ctx.money && !Number.isInteger(y3 * 2)) return null;
 
-  /**
-   * **A marked point never shares a letter with a variable — 2026-09-24.**
-   *
-   * 2016 P1 Q5 calls its points D and E because its variable is A, the age.
-   * The routine named every point A and B, so "the age, A months … Point A
-   * represents a foal" put one letter on two things: 87 of 400 draws of
-   * 2016's id, 107 of 2026 P1 Q6's, 144 of 2024 P1 Q9's (whose own falling
-   * contexts use A for a car's age and B for a battery's charge). The owner,
-   * on the 2016 P1 sheet: *"Yes. But will have to fix other locked papers as
-   * well"*.
-   *
-   * 2016 takes the paper's D and E; 2026 and 2024 keep their papers' A and B.
-   * Where the preferred pair clashes, the first pair of consecutive letters
-   * the story leaves free. Keyed on the asked id, so 2014 P1 Q6 (on `-2014`,
-   * not asked about), the exact line and topic draws are untouched, and no
-   * random is drawn.
-   */
+  // A marked point never shares a letter with a variable: see `letters` on BEST_FIT_PAPERS.
   const taken = [ctx.x.letter, ctx.y.letter];
   const free = (pair: string[]) => !pair.some(l => taken.includes(l));
   const firstFree = (): string[] => {
@@ -848,9 +840,7 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     }
     return ['A', 'B'];
   };
-  const preferred = asked === 'straight-line.best-fit-pre2023' ? ['D', 'E']       // 2016 P1 Q5
-    : asked === 'straight-line.best-fit' || asked === 'straight-line.best-fit-2024'  // 2026 P1 Q6, 2024 P1 Q9
-      ? ['A', 'B'] : undefined;
+  const preferred = paper?.letters;
   const [A, B] = preferred === undefined ? ['A', 'B']
     : free(preferred) ? preferred : firstFree();
   const spread = Math.abs(m) * (x2 - x1) * 0.22;
@@ -878,21 +868,13 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     ctx.point(A, `${x1}`, value(y1)),
     ctx.point(B, `${x2}`, value(y2)),
     '',
-    // 2014 P1 Q6 asks only for the equation "in terms of F and C", with no
-    // simplest-form line. The owner, on the 2018-2014 light pass: "Yes".
-    `<b>(a)</b>&nbsp;&nbsp;Find the equation of the ${ctx.scatter ? 'line of best fit' : 'line'} in terms of $${ctx.x.letter}$ and $${ctx.y.letter}$.${rising2014 ? '' : ' Give the equation in its simplest form.'}`,
-    // 2024 P1 Q9: "(b) Use your equation from part (a) to estimate …". The
-    // owner, on the 2024 re-review sheet: "Yes". Its own id; words only.
-    //
-    // And each of three more papers in its own words - 2026-09-26, the owner
-    // on the 2018-2014 light pass: "Yes". 2016 P1 Q5 as 2024's; 2018 P1 Q7
-    // "(b) Calculate the cost of a journey of 5 miles."; 2014 P1 Q6 "Use your
-    // answer to part (a) to estimate …". Words only, on each paper's own id.
-    falling || asked === 'straight-line.best-fit-pre2023'
+    // parts (a) and (b) in each paper's own words: see BEST_FIT_PAPERS
+    `<b>(a)</b>&nbsp;&nbsp;Find the equation of the ${ctx.scatter ? 'line of best fit' : 'line'} in terms of $${ctx.x.letter}$ and $${ctx.y.letter}$.${paper?.simplest === false ? '' : ' Give the equation in its simplest form.'}`,
+    paper?.partB === 'equation'
       ? `<b>(b)</b>&nbsp;&nbsp;Use your equation from part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
-      : asked === 'straight-line.exact-line'
+      : paper?.partB === 'plain'
       ? `<b>(b)</b>&nbsp;&nbsp;${ctx.estimate(`${x3}`)}`
-      : rising2014
+      : paper?.partB === 'answer'
       ? `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
       : `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a). ${ctx.estimate(`${x3}`)}`,
   ];
@@ -921,18 +903,8 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   };
   const text = [...prose, ...steps].join(' ');
   let fig = sketchAxes(spec);
-  /**
-   * **The letters clear of the scatter.** With both letters always below
-   * their points, a letter sat on one of the cloud's dots in 152 of 400 draws
-   * of 2024 P1 Q9, and in about half of 2014 P1 Q6's, 2016 P1 Q5's and 2026
-   * P1 Q6's, so a pupil could not tell which dot was the point. The owner, on
-   * the 2024 re-review sheet: "Yes and fix letters on other papers".
-   *
-   * For those four ids each letter tries the four sides, below first, and the
-   * first layout that keeps both clear of every dot and still verifies is
-   * drawn. No random is drawn, and the exact line (no cloud) is untouched.
-   */
-  if (ctx.scatter && asked !== undefined && LETTERS_CLEAR_OF_DOTS.has(asked)) {
+  // The letters clear of the scatter: see `clearOfDots` on BEST_FIT_PAPERS.
+  if (ctx.scatter && paper?.clearOfDots) {
     const sides = ['below', 'above', 'right', 'left'] as const;
     const layouts = sides.flatMap(s1 => sides.map(s2 => [s1, s2] as const));
     const clear = layouts.map(([s1, s2]) => sketchAxes({ ...spec, points: [

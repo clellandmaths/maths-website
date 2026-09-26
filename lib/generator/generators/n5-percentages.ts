@@ -411,9 +411,52 @@ function compound2018(): Q {
   };
 }
 
+/**
+ * **What each paper fixes about the compound question**, one row per paper id.
+ * The reasons are on each id's constant above. Nothing asked (a topic sheet)
+ * fixes nothing. Two papers set a different enough question to have their own
+ * routine; the rest share one and only narrow what it may draw:
+ *
+ * - `own`: the paper's own list of stories, drawn from in place of the shared one.
+ * - `fits`: which shared stories this paper may draw. Every id filters the same
+ *   list in the same order, so no other id's draws move.
+ * - `rounding`: how this paper rounds the story it drew. Always a copy, never
+ *   the shared context.
+ * - `silent`: print no rounding line, whatever the story.
+ * - `toTen`: keep drawing until there is something to round to the nearest ten.
+ */
+interface CompoundPaper {
+  routine?: () => Q;
+  own?: AssetContext[];
+  fits?: (c: AssetContext) => boolean;
+  rounding?: (c: AssetContext) => Rounding;
+  silent?: true;
+  toTen?: true;
+}
+const COMPOUND_PAPERS: Record<string, CompoundPaper> = {
+  [COMPOUND_2022]: { routine: compound2022 },                          // 2022 P2 Q2
+  [COMPOUND_2018]: { routine: compound2018 },                          // 2018 P2 Q1
+  // 2024 P2 Q1: money to the penny, which goes unsaid. Dougie's laptop,
+  // (£)186.40; other stories printed a rounding line in 269 of 400 draws.
+  // The owner, on the 2024 re-review sheet: "Yes".
+  'percentages.compound': { fits: c => c.rounding === 'money' },
+  // 2017 P2 Q2: an increase, to the nearest pound. Money to the penny becomes
+  // the nearest pound; counts already round to the whole number.
+  [COMPOUND_2017]: { fits: c => c.appreciates,
+    rounding: c => c.rounding === 'money' ? 'nearest-pound' : c.rounding },
+  // 2016 P2 Q1: a decrease, sugar down 8% a year (151 of 400 draws rose). The
+  // owner: "Yes key". And no rounding line, as the paper has none (on the
+  // 2018-2014 light pass: "Yes"); the answer is still worked to the same rounding.
+  'percentages.compound-2016': { fits: c => !c.appreciates, silent: true },
+  // 2015 P2 Q1: money that rises, worked to the penny whatever the story does.
+  [COMPOUND_2015]: { fits: c => c.appreciates && c.unit === '£', rounding: () => 'money' },
+  // 2014 P2 Q1: a count that falls, to the nearest ten.
+  [COMPOUND_2014]: { own: FALLING_COUNTS_2014, toTen: true },
+};
+
 function compound(wanted?: string, asked?: string): Q {
-  if (asked === COMPOUND_2022) return compound2022();
-  if (asked === COMPOUND_2018) return compound2018();
+  const paper: CompoundPaper | undefined = COMPOUND_PAPERS[asked ?? ''];
+  if (paper?.routine) return paper.routine();
   // Pick the shape, then a context that fits it — not a context and whatever
   // shape it implies.
   //
@@ -430,33 +473,10 @@ function compound(wanted?: string, asked?: string): Q {
   const threeSf = wanted !== undefined
     ? wanted === 'percentages.compound-3sf'
     : getRandomInt(0, 1) === 0;
-  const is2017 = asked === COMPOUND_2017;
-  // **2016 P2 Q1 is a decrease** — sugar down 8% a year. The owner, on the
-  // 2016 P2 sheet: *"Yes key"*, against 151 of 400 draws that increased. The
-  // mirror of 2017's key, and it reads a filtered list the same way, so no
-  // other id's draws move.
-  const is2016 = asked === 'percentages.compound-2016';
-  const is2015 = asked === COMPOUND_2015;
-  const is2014 = asked === COMPOUND_2014;
-  // **2024 P2 Q1 is money to the penny, with no rounding line** - Dougie's
-  // laptop, (£)186.40. The other stories printed "to the nearest pound" or
-  // "to the nearest whole number" in 269 of 400 draws. The owner, on the
-  // 2024 re-review sheet: "Yes". Its own id reads a filtered list, as 2015's
-  // and 2016's do, so no other id's draws move.
-  const is2024 = asked === 'percentages.compound';
-  const drawn: AssetContext & { band?: [number, number] } = is2014
-    ? pick(FALLING_COUNTS_2014)
-    : pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
-      && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)
-      && (!is2015 || (c.appreciates && c.unit === '£'))
-      && (!is2024 || c.rounding === 'money')));
-  // A copy, never the shared context: money to the penny becomes the nearest
-  // pound for this paper alone. Counts already round to the whole number.
-  // 2015 goes the other way: whatever the context usually rounds to, this
-  // paper works it to the penny and says nothing.
-  const ctx = is2017 && drawn.rounding === 'money'
-    ? { ...drawn, rounding: 'nearest-pound' as const }
-    : is2015 ? { ...drawn, rounding: 'money' as const } : drawn;
+  const drawn: AssetContext & { band?: [number, number] } = paper?.own
+    ? pick(paper.own)
+    : pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf && (paper?.fits?.(c) ?? true)));
+  const ctx = paper?.rounding ? { ...drawn, rounding: paper.rounding(drawn) } : drawn;
   const up = ctx.appreciates;
   let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
   // **The fourth mark is for the rounding, so there has to be something to
@@ -479,7 +499,7 @@ function compound(wanted?: string, asked?: string): Q {
     value = start * Math.pow(multiplier, years);
     // 2014 pays for rounding to the nearest ten, so the answer must not
     // already be one.
-    if (is2014) { if (Math.abs(value - Math.round(value / 10) * 10) > 1e-6) break; continue; }
+    if (paper?.toTen) { if (Math.abs(value - Math.round(value / 10) * 10) > 1e-6) break; continue; }
     if (!threeSf || toSigFigs(value, 3) !== value) break;
   }
 
@@ -526,7 +546,7 @@ function compound(wanted?: string, asked?: string): Q {
       // 2018-2014 light pass: "Yes". Words only, on its own id; the answer is
       // still worked to the same rounding. (2018 P2 Q1 now has its own
       // branch, `compound2018`, which never rounds.)
-      ...(ctx.rounding === 'money' || is2016 ? [] : [roundingPhrase(ctx.rounding)]),
+      ...(ctx.rounding === 'money' || paper?.silent ? [] : [roundingPhrase(ctx.rounding)]),
     ],
     boardQuestionLines: [
       `${ctx.format(start)}, ${up ? 'up' : 'down'} ${rate}% each year for ${years} years. Find the value.`,

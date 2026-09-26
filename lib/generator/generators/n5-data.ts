@@ -220,25 +220,42 @@ function quartilesOnly(semi: boolean): Q {
  * specifically, and 2019's notes refuse it to a candidate who halves the range
  * instead.
  */
+/**
+ * **What each paper fixes about the median-and-spread comparison**, one row
+ * per paper id. Nothing asked (a topic sheet) fixes nothing. Every coin is
+ * still drawn whatever the row says, so no paper moves another.
+ *
+ * - `n`: how many values. 2026 P1 Q3 and 2023 P1 Q9 list ten, 2024 P1 Q5 six;
+ *   each id drew six or ten at random (the owner, 2026 re-review: *"Yes key
+ *   each paper to it's number"*). 2015 P1 Q10 is ten scores and 2019 P1 Q5 nine
+ *   temperatures, 4 7 4 3 6 10 9 5 3.
+ * - `small`: every value, and the second group's median, under 100. 2015 P1
+ *   Q10 is on a non-calculator paper; its clone gave three-digit data in 187 of
+ *   400 draws (*"Yes key"*). 2019 P1 Q5 had values of 100 or more in 155 of
+ *   400 (*"Yes"*); its answers to 2 dp stay, because the paper's own is 2.25.
+ * - `inOrder`: 2024 P1 Q5 lists its six prices in order, 155 160 190 210 230
+ *   240, and says "Six" where 51 draws opened a sentence with "6 adults"
+ *   (2024 re-review: "Yes").
+ * - `given`: the second group in the paper's own words. Both printed "A sample
+ *   taken from ... has a median of ..." in 400 of 400; neither paper says it.
+ *   2019: "Over the same nine day period the midday temperatures in Endoch
+ *   were also recorded. The median temperature was 8 °C, and the
+ *   semi-interquartile range was 1.5 °C." 2015, inside part (b): "In the
+ *   second round, the median was 26 and the semi-interquartile range was
+ *   2.5." The owner, on the 2019 re-review sheet: "Yes and fix in 2015".
+ */
+interface MedianPaper { n: number; small?: true; inOrder?: true; given?: 'alsoRecorded' | 'insideB' }
+const MEDIAN_PAPERS: Record<string, MedianPaper> = {
+  'data.median-iqr-compare': { n: 10 },                                              // 2026 P1 Q3
+  'data.median-iqr-compare-2023': { n: 10 },                                         // 2023 P1 Q9
+  'data.median-iqr-compare-2024': { n: 6, inOrder: true },                           // 2024 P1 Q5
+  'data.median-siqr-compare': { n: 9, small: true, given: 'alsoRecorded' },          // 2019 P1 Q5
+  'data.median-siqr-compare-pre2019p1': { n: 10, small: true, given: 'insideB' },    // 2015 P1 Q10
+};
+
 function medianCompare(semi: boolean, asked?: string): Q {
-  /**
-   * **2015 P1 Q10 is ten two-digit scores, on a non-calculator paper.** The
-   * clone gave nine values in 196 of 400 draws (2019's split, quartiles found
-   * differently) and three-digit data in 187 - "£551 £315 £491 ...". The
-   * owner, on the 2015 P1 sheet: *"Yes key"*. Ten values, every one of them
-   * and the second group's median under 100. Read by 2015's alias alone, and
-   * every coin is still drawn, so LOCKED 2019 P1 Q5 draws exactly as before.
-   */
-  const paper2015 = asked === 'data.median-siqr-compare-pre2019p1';
-  /**
-   * **2019 P1 Q5 is nine temperatures, 4 7 4 3 6 10 9 5 3**, and had the
-   * same scale fault: values of 100 or more in 155 of 400 draws, and nine
-   * values in only 183. Put to the owner at the foot of the 2015 P1 sheet:
-   * *"Yes"*. Nine values under 100. Its answers to 2 dp stay, because the
-   * paper's own is 2.25.
-   */
-  const paper2019 = asked === 'data.median-siqr-compare';
-  const small = paper2015 || paper2019;
+  const paper: MedianPaper | undefined = MEDIAN_PAPERS[asked ?? ''];
+  const small = !!paper?.small;
   for (let tries = 0; tries < (small ? 600 : 300); tries++) {
     const ctx = pick(DATA_CONTEXTS);
     // **How many values is part of the question.** With an odd count the median
@@ -249,14 +266,7 @@ function medianCompare(semi: boolean, asked?: string): Q {
     // quartiles of 3.5 and 8 come out of that odd split. So each variation
     // takes the counts its own papers use, rather than all four.
     const drawnN = pick(semi ? [9, 10] : [6, 10]);
-    // **Each interquartile paper at its own count.** — 2026-09-25, the 2026
-    // re-review. 2026 P1 Q3 and 2023 P1 Q9 list ten values and 2024 P1 Q5 six;
-    // each id drew six or ten at random. The owner: *"Yes key each paper to
-    // it's number"*. The pick is still drawn, so the stream reads the same.
-    const n = paper2015 ? 10 : paper2019 ? 9
-      : asked === 'data.median-iqr-compare' || asked === 'data.median-iqr-compare-2023' ? 10
-      : asked === 'data.median-iqr-compare-2024' ? 6
-      : drawnN;
+    const n = paper?.n ?? drawnN;
     const [lo, hi] = ctx.band;
     if (hi - lo < n + 4) continue;
     const vals: number[] = [];
@@ -297,32 +307,14 @@ function medianCompare(semi: boolean, asked?: string): Q {
     if (otherSpread < grain || otherSpread === spread) continue;
     if (small && (Math.max(...vals) > 99 || otherMed > 99)) continue;
 
-    /**
-     * **2024 P1 Q5 lists its six prices in order** - 155 160 190 210 230 240 -
-     * where 2023 P1 Q9 and 2026 P1 Q3 list theirs as they came. This listed
-     * them unsorted in 400 of 400, and 51 draws opened a sentence with a
-     * numeral, "6 adults were timed". The owner, on the 2024 re-review sheet:
-     * "Yes". Its own id only; nothing is drawn differently.
-     */
-    const is2024 = asked === 'data.median-iqr-compare-2024';
     const lead = ctx.lead(n);
-    /**
-     * **2019 P1 Q5 and 2015 P1 Q10 in their papers' words — 2026-09-26.** Both
-     * printed "A sample taken from … has a median of …" in 400 of 400; neither
-     * paper says it. 2019: "Over the same nine day period the midday
-     * temperatures in Endoch were also recorded. The median temperature was
-     * 8 °C, and the semi-interquartile range was 1.5 °C." 2015, inside part
-     * (b): "In the second round, the median was 26 and the semi-interquartile
-     * range was 2.5." The owner, on the 2019 re-review sheet: "Yes and fix in
-     * 2015". Words only, on each paper's own id; nothing is drawn differently.
-     */
     const stated = `${semi ? 'a' : 'an'} ${name} of ${amount(otherSpread, ctx)}`;
     const compare = `Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`;
-    const given = paper2019
+    const given = paper?.given === 'alsoRecorded'
       ? [`The ${ctx.quantity} for ${ctx.groupB} were also recorded.`,
          `The median was ${amount(otherMed, ctx)}, and the ${name} was ${amount(otherSpread, ctx)}.`,
          `(b) ${compare}`]
-      : paper2015
+      : paper?.given === 'insideB'
         ? [`(b) For ${ctx.groupB}, the median was ${amount(otherMed, ctx)} and the ${name} was ${amount(otherSpread, ctx)}. ${compare}`]
         : [`A sample taken from ${ctx.groupB} has a median of ${amount(otherMed, ctx)} and ${stated}.`,
            `(b) ${compare}`];
@@ -331,8 +323,8 @@ function medianCompare(semi: boolean, asked?: string): Q {
       difficulty: 'exam',
       variationId: semi ? 'data.median-siqr-compare' : 'data.median-iqr-compare',
       questionLines: [
-        is2024 ? lead.replace(/^6 /, 'Six ') : lead,
-        row(is2024 ? sorted : vals, ctx),
+        paper?.inOrder ? lead.replace(/^6 /, 'Six ') : lead,
+        row(paper?.inOrder ? sorted : vals, ctx),
         `(a) Calculate the median and the ${name} of these ${ctx.quantity}.`,
         // The unit goes on both figures, as 2019 P1 Q5 puts it on both: "The
         // median temperature was 8 °C, and the semi-interquartile range was
@@ -649,25 +641,39 @@ function meanStdevConsistency(): Q {
 // `data.mean-sd-consistency` above is that question.
 
 /**
- * **Each paper's own number of values.** Every id drew five, six or seven, a
- * third each, where 2016 P2 Q6 has six waits, 2018 P2 Q5 six stalls, 2022 P2
- * Q5 seven players and 2025 P2 Q4 seven weights. The owner, on the 2025
- * re-review sheet: "Yes" to keying each paper to its count, as on 2026 P1 Q3.
- * The count is still drawn, so the stream is unchanged; only what these four
- * ids read is replaced. A topic sheet asks for none of them and keeps the mix.
+ * **What each paper fixes about the mean-and-deviation comparison**, one row
+ * per paper id. Nothing asked (a topic sheet) fixes nothing, and every coin is
+ * still drawn, so no paper moves another.
+ *
+ * - `n`: each paper's own number of values. Every id drew five, six or seven,
+ *   a third each, where 2016 P2 Q6 has six waits, 2018 P2 Q5 six stalls, 2022
+ *   P2 Q5 seven players and 2025 P2 Q4 seven weights. The owner, on the 2025
+ *   re-review sheet: "Yes".
+ * - `given`: the second group in the paper's own words, where the default is
+ *   "A sample taken from ... has a mean of ...". `alsoRecorded` is 2022 P2 Q5,
+ *   "Some players in the school's hockey team also recorded ... Their numbers
+ *   gave a mean of 29 and a standard deviation of 3.2." ("Some of Aberdour"
+ *   cannot be written, so it takes the paper's two moves in a form every
+ *   context can carry; 2022 re-review: "Yes".) `forGroup` is 2018 P2 Q5, "The
+ *   mean number of customers who visited these six stalls on Sunday was 117
+ *   and the standard deviation was 6.2." `insideB` is 2016 P2 Q6, where the
+ *   same sentence opens part (b): "Her mean waiting time was 15 minutes and the
+ *   standard deviation was 4.3 minutes." (2018-2014 light pass: "Yes".)
  */
-const MEAN_SD_COUNT: Record<string, number> = {
-  'data.mean-sd-compare-2016': 6,      // 2016 P2 Q6
-  'data.mean-sd-compare-pre2022': 6,   // 2018 P2 Q5
-  'data.mean-sd-compare-pre2023': 7,   // 2022 P2 Q5
-  'data.mean-sd-compare': 7,           // 2025 P2 Q4
+interface MeanSdPaper { n: number; given?: 'alsoRecorded' | 'forGroup' | 'insideB' }
+const MEAN_SD_PAPERS: Record<string, MeanSdPaper> = {
+  'data.mean-sd-compare-2016': { n: 6, given: 'insideB' },        // 2016 P2 Q6
+  'data.mean-sd-compare-pre2022': { n: 6, given: 'forGroup' },    // 2018 P2 Q5
+  'data.mean-sd-compare-pre2023': { n: 7, given: 'alsoRecorded' }, // 2022 P2 Q5
+  'data.mean-sd-compare': { n: 7 },                               // 2025 P2 Q4
 };
 
 function meanStdevCompare(_wanted?: string, asked?: string): Q {
+  const paper: MeanSdPaper | undefined = MEAN_SD_PAPERS[asked ?? ''];
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(DATA_CONTEXTS);
     const drawnN = pick([5, 6, 7]);
-    const n = MEAN_SD_COUNT[asked ?? ''] ?? drawnN;
+    const n = paper?.n ?? drawnN;
     const vals = sampleWithWholeMean(ctx, n);
     if (!vals) continue;
     const { mean, ssq, s } = stdev(vals);
@@ -680,6 +686,8 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
                          : +Math.max(0.4, s - 0.6 - random() * 2).toFixed(1);
     if (otherMean < ctx.band[0] || otherMean > ctx.band[1]) continue;
     if (Math.abs(otherS - s) < 0.3) continue;
+    const otherSd = `${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}`;
+    const compare = `Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`;
 
     return {
       subTopic: 'Comparing Mean and Standard Deviation',
@@ -691,35 +699,22 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
         `(a) Calculate the mean and standard deviation of these ${ctx.quantity}.`,
         // The unit goes on both figures, as 2025 P2 Q4 puts it on both: "a mean
         // weight of 105 kilograms and a standard deviation of 5.9 kilograms".
-        // 2022 P2 Q5 brings its second group in as "Some players in the
-        // school's hockey team also recorded … Their numbers gave a mean of 29
-        // and a standard deviation of 3.2." The owner, on the 2022 re-review:
-        // "Yes". "Some of Aberdour" cannot be written, so its id takes the
-        // paper's two moves, also recorded and gave a mean of, in a form
-        // every context can carry. Keyed on 2022's alias; the rest keep theirs.
-        ...(asked === 'data.mean-sd-compare-pre2023'
+        ...(paper?.given === 'alsoRecorded'
           ? [`The ${ctx.quantity} for ${ctx.groupB} were also recorded.`,
-             `They gave a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]
-          // **2018 P2 Q5 and 2016 P2 Q6 in their papers' words — 2026-09-26.**
-          // 2018: "The mean number of customers who visited these six stalls on
-          // Sunday was 117 and the standard deviation was 6.2."; 2016, inside
-          // part (b): "Her mean waiting time was 15 minutes and the standard
-          // deviation was 4.3 minutes." Both printed "A sample taken from …"
-          // in 200 of 200. The owner, on the 2018-2014 light pass: "Yes".
-          // Words only, on each paper's own alias.
-          : asked === 'data.mean-sd-compare-pre2022'
-          ? [`For ${ctx.groupB}, the mean was ${amount(otherMean, ctx)} and the standard deviation was ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]
-          : asked === 'data.mean-sd-compare-2016' ? []
-          : [`A sample taken from ${ctx.groupB} has a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]),
+             `They gave a mean of ${amount(otherMean, ctx)} and a standard deviation of ${otherSd}.`]
+          : paper?.given === 'forGroup'
+          ? [`For ${ctx.groupB}, the mean was ${amount(otherMean, ctx)} and the standard deviation was ${otherSd}.`]
+          : paper?.given === 'insideB' ? []
+          : [`A sample taken from ${ctx.groupB} has a mean of ${amount(otherMean, ctx)} and a standard deviation of ${otherSd}.`]),
         // Both groups named, as all four papers name them - 2025 P2 Q4 asks for
         // comments "comparing the weights of the rugby players in the samples
         // from Scotland and France". The scheme refuses a comment that does not
         // say whose values are whose, so a question that never names them is
         // asking for something it has not set up. Same fault, and same fix, as
         // `data.median-iqr-compare` above.
-        asked === 'data.mean-sd-compare-2016'
-          ? `(b) For ${ctx.groupB}, the mean was ${amount(otherMean, ctx)} and the standard deviation was ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}. Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`
-          : `(b) Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`,
+        paper?.given === 'insideB'
+          ? `(b) For ${ctx.groupB}, the mean was ${amount(otherMean, ctx)} and the standard deviation was ${otherSd}. ${compare}`
+          : `(b) ${compare}`,
       ],
       boardQuestionLines: [`Mean and s.d. of ${row(vals, ctx)}, then compare with ${show(otherMean, ctx)} and ${otherS}`],
       // Six marks, 4 + 2, in all four papers that ask it this way: •¹ the mean,

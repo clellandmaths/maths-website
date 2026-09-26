@@ -94,30 +94,34 @@ function completeSquare(_wanted?: string, asked?: string): Q {
    * on 2025's. 2019 is (x + p)^2 + q and 2025 is (x + a)^2 + b.
    *
    * The letters are still drawn for every id, so the stream is unchanged;
-   * only what these three ids read is replaced. A topic sheet asks for none
-   * of them and keeps the mix.
+   * only what these ids read is replaced. A topic sheet asks for none of them
+   * and keeps the mix.
+   *
+   * `middle`: the middle term is drawn as ever and each keyed paper reads it
+   * with its own sign. 2014 is x^2 - 14x + 44; 2019 P2 Q10 (+10x) and 2025 P2
+   * Q5 (+10x) are plus. The owner, on the 2014 P1 sheet: "Yes just ensure we
+   * never get a q to be 0" and "Ok again check we never get b = 0". 2016 P2 Q9
+   * was not answered on its sign, so it keeps both.
+   *
+   * `stop`: the paper ends "in the form (x + a)^2 + b." with the stop inside
+   * the maths. The owner, 2026-09-25: "if the only fixes is putting full stops
+   * just do that without asking me". Words only, no random.
    */
-  const KEYED: Record<string, { p?: string; q?: string }> = {
-    'quadratics.complete-square-2016': {},                         // 2016 P2 Q9
-    'quadratics.complete-square-pre2023': { p: 'p', q: 'q' },      // 2019 P2 Q10
-    'quadratics.complete-square': { p: 'a', q: 'b' },              // 2025 P2 Q5
+  const KEYED: Record<string, { p?: string; q?: string; middle?: 'plus' | 'minus'; stop?: true }> = {
+    'quadratics.complete-square-2016': { stop: true },                                     // 2016 P2 Q9
+    'quadratics.complete-square-pre2023': { p: 'p', q: 'q', middle: 'plus', stop: true },  // 2019 P2 Q10
+    'quadratics.complete-square': { p: 'a', q: 'b', middle: 'plus', stop: true },          // 2025 P2 Q5
     // 2014 P1 Q3, x^2 - 14x + 44 in the form (x - a)^2 + b. The owner, on the
     // 2014 P1 sheet: "Yes" to x, a minus middle term, and a and b. Measured
     // before: x in 176, a minus middle term in 205, a and b in 215 of 400.
-    'quadratics.complete-square-2014': { p: 'a', q: 'b' },
+    'quadratics.complete-square-2014': { p: 'a', q: 'b', middle: 'minus' },
   };
   const key = KEYED[asked ?? ''];
   const pName = key?.p ?? form.p, qName = key?.q ?? form.q;
   const v = key ? 'x' : form.v;
-  // The middle term is drawn as ever; each keyed paper reads it with its own
-  // sign. 2014 is x^2 - 14x + 44; 2019 P2 Q10 (+10x) and 2025 P2 Q5 (+10x)
-  // are plus - the owner, on the 2014 P1 sheet: "Yes just ensure we never get
-  // a q to be 0" and "Ok again check we never get b = 0". 2016 P2 Q9 was not
-  // answered on its sign, so it keeps both.
   const drawnHalf = nonZeroInt(-8, 8);
-  const PLUS = asked === 'quadratics.complete-square-pre2023' || asked === 'quadratics.complete-square';
-  const half = asked === 'quadratics.complete-square-2014' ? -Math.abs(drawnHalf)
-    : PLUS ? Math.abs(drawnHalf) : drawnHalf;
+  const half = key?.middle === 'minus' ? -Math.abs(drawnHalf)
+    : key?.middle === 'plus' ? Math.abs(drawnHalf) : drawnHalf;
   const b = 2 * half;
   let c = nonZeroInt(-40, 40);
   /**
@@ -127,7 +131,7 @@ function completeSquare(_wanted?: string, asked?: string): Q {
    * papers' ids the constant moves up one instead, so no draw is spent and
    * no other draw changes.
    */
-  if (asked !== undefined && asked in KEYED && 4 * c === b * b) c += 1;
+  if (key && 4 * c === b * b) c += 1;
   const expr: Poly = [c, b, 1];
 
   // p = b/2, q = c - b^2/4, both over a denominator of 4 at worst
@@ -141,12 +145,8 @@ function completeSquare(_wanted?: string, asked?: string): Q {
     subTopic: 'Completing the Square',
     difficulty: 'skill',
     variationId: 'quadratics.complete-square',
-    // 2025 P2 Q5 ends "in the form (x + a)^2 + b." with the stop inside the
-    // maths. The owner, 2026-09-25: "if the only fixes is putting full stops
-    // just do that without asking me". Its own id only; words, no random.
-    // 2019 P2 Q10 ends the same way, on its own alias, and so does 2016 P2 Q9.
     questionLines: [
-      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${PLUS || asked === 'quadratics.complete-square-2016' ? '.' : ''}$`,
+      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${key?.stop ? '.' : ''}$`,
     ],
     boardQuestionLines: [`$${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}$`],
     // Two marks in all four papers — •¹ correct bracket with square, •² complete

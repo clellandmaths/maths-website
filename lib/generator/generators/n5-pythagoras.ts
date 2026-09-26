@@ -13,7 +13,7 @@ import { twoTrianglesApart } from '../diagrams/shapes/two-triangles-apart';
 import type { Figure } from '../diagrams/scene';
 import {
   PYTHAGORAS_CONTEXTS, CHORD_CONTEXTS, CONVERSE_CONTEXTS, BOX_CONTEXTS, abbrev,
-  withUnit, type ConverseContext,
+  withUnit, type ConverseContext, type ChordContext,
 } from './n5-contexts';
 
 /**
@@ -220,6 +220,82 @@ export function pythagorasFindSide(): Q {
 // Answer-first on the geometry: the radius and chord are chosen, the distance
 // from the centre follows, and the height is r + d or r - d depending on which
 // piece of the circle the object is.
+
+/** What a chord question's wording is built from. */
+interface ChordWords {
+  ctx: ChordContext; O: string; A: string; B: string;
+  r: number; chord: number;
+  /** The answer is exact, so there is nothing to round. */
+  exact: boolean;
+  /** No rounding line: exact, or a paper that asks and stops (2015 P2 Q12). */
+  noRounding: boolean;
+}
+
+/**
+ * **Each paper's words for the chord question**, one function per paper.
+ * `pythagorasChord` chooses which, in the order 2023, 2022, 2018, 2016, then
+ * the shared wording.
+ */
+const CHORD_WORDS: Record<'2023' | '2022' | '2018' | '2016' | 'shared', (w: ChordWords) => string[]> = {
+  // 2023 P1 Q10 gives the two lengths as sentences, with their stops, and
+  // never says "chord": "The circle, centre C, has a radius of 50
+  // centimetres. Length AB is 60 centimetres." The owner: "Yes".
+  '2023': ({ ctx, O, A, B, r, chord }) => [
+    // The doorstep's scene says "is the chord AB"; the list is shared with
+    // `pythagorasChordReverse`, so the word comes out here, not there.
+    ctx.scene(O, A, B).replace(' is the chord ', ' is '),
+    `The circle, centre $${O}$, has a radius of ${withUnit(Number(num(r)), ctx.unit)}.`,
+    `Length $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
+    `Calculate ${ctx.asks}.`,
+  ],
+  // 2022 P2 Q8's three bullets, in its order, with its stops: "• The centre
+  // of the circle is O. • Chord AB is 4 metres. • The radius OA is 2.9
+  // metres." The owner, on the 2022 re-review: "Yes". The centre is a
+  // bullet, so it comes out of the shared scene here, not in the list.
+  '2022': ({ ctx, O, A, B, r, chord, exact }) => [
+    ctx.scene(O, A, B)
+      .replace(` The centre of the circle is ${O} and the base is the chord ${A}${B}.`, '')
+      .replace(`, centre ${O},`, '').replace(` with centre ${O}`, ''),
+    `&bull;&nbsp; The centre of the circle is $${O}$.`,
+    `&bull;&nbsp; Chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
+    `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
+    `Calculate ${ctx.asks}.${exact ? '' : ' Give your answer correct to one decimal place.'}`,
+  ],
+  // **2018 P2 Q12's two sentences, and no rounding line — 2026-09-26.** "The
+  // circle has radius 13 centimetres. AB is a chord of length 20 centimetres.
+  // Calculate the width of the shape." Its scheme takes the width as it
+  // comes. The owner, on the 2018-2014 light pass: "Yes" to both.
+  '2018': ({ ctx, O, A, B, r, chord }) => [
+    ctx.scene(O, A, B),
+    `The circle has radius ${withUnit(Number(num(r)), ctx.unit)}.`,
+    `$${A}${B}$ is a chord of length ${num(chord)} ${ctx.unit}.`,
+    `Calculate ${ctx.asks}.`,
+  ],
+  // **2016 P2 Q15's three sentences, and no rounding line — 2026-09-26.** "The
+  // centre of the circle is O. The chord AB is 9 centimetres. The radius OB
+  // is 6.6 centimetres. Find the height of the label." The owner, on the
+  // light pass: "Yes" to both. The centre is its own sentence, so it comes
+  // out of the shared scene here, as 2022's does.
+  '2016': ({ ctx, O, A, B, r, chord }) => [
+    ctx.scene(O, A, B)
+      .replace(` The centre of the circle is ${O} and the base is the chord ${A}${B}.`, '')
+      .replace(`, centre ${O},`, '').replace(` with centre ${O}`, '').replace(`, centre $${O}$,`, '').replace(` with centre $${O}$`, ''),
+    `The centre of the circle is $${O}$.`,
+    `The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
+    `The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
+    `Find ${ctx.asks}.`,
+  ],
+  'shared': ({ ctx, O, A, B, r, chord, noRounding }) => [
+    ctx.scene(O, A, B),
+    `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}`,
+    `&bull;&nbsp; The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}`,
+    // No rounding instruction on the Paper 1 branch: the triple makes the
+    // answer exact, and not one of the 160 Paper 1 questions in the corpus
+    // asks for a rounded answer. Nor on 2015 P2 Q12's, whose paper asks for
+    // the depth and stops - the owner, on the light pass: "Yes".
+    `Calculate ${ctx.asks}.${noRounding ? '' : ' Give your answer correct to one decimal place.'}`,
+  ],
+};
 
 /**
  * **One variation per figure family, because the family is the paper's.**
@@ -481,61 +557,9 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
       },
     });
 
-    // 2023 P1 Q10 gives the two lengths as sentences, with their stops, and
-    // never says "chord": "The circle, centre C, has a radius of 50
-    // centimetres. Length AB is 60 centimetres." The owner: "Yes".
-    const prose = for2023 ? [
-      // The doorstep's scene says "is the chord AB"; the list is shared with
-      // `pythagorasChordReverse`, so the word comes out here, not there.
-      ctx.scene(O, A, B).replace(' is the chord ', ' is '),
-      `The circle, centre $${O}$, has a radius of ${withUnit(Number(num(r)), ctx.unit)}.`,
-      `Length $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
-      `Calculate ${ctx.asks}.`,
-    ] : for2022 ? [
-      // 2022 P2 Q8's three bullets, in its order, with its stops: "• The
-      // centre of the circle is O. • Chord AB is 4 metres. • The radius OA is
-      // 2.9 metres." The owner, on the 2022 re-review: "Yes". The centre is a
-      // bullet, so it comes out of the shared scene here, not in the list.
-      ctx.scene(O, A, B)
-        .replace(` The centre of the circle is ${O} and the base is the chord ${A}${B}.`, '')
-        .replace(`, centre ${O},`, '').replace(` with centre ${O}`, ''),
-      `&bull;&nbsp; The centre of the circle is $${O}$.`,
-      `&bull;&nbsp; Chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
-      `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
-      `Calculate ${ctx.asks}.${exact ? '' : ' Give your answer correct to one decimal place.'}`,
-    ] : forPaper2018 ? [
-      // **2018 P2 Q12's two sentences, and no rounding line — 2026-09-26.**
-      // "The circle has radius 13 centimetres. AB is a chord of length 20
-      // centimetres. Calculate the width of the shape." Its scheme takes the
-      // width as it comes. The owner, on the 2018-2014 light pass: "Yes" to
-      // both. Keyed on 2018's own id.
-      ctx.scene(O, A, B),
-      `The circle has radius ${withUnit(Number(num(r)), ctx.unit)}.`,
-      `$${A}${B}$ is a chord of length ${num(chord)} ${ctx.unit}.`,
-      `Calculate ${ctx.asks}.`,
-    ] : askedId === 'pythagoras.chord-pre2022' ? [
-      // **2016 P2 Q15's three sentences, and no rounding line — 2026-09-26.**
-      // "The centre of the circle is O. The chord AB is 9 centimetres. The
-      // radius OB is 6.6 centimetres. Find the height of the label." The
-      // owner, on the light pass: "Yes" to both. The centre is its own
-      // sentence, so it comes out of the shared scene here, as 2022's does.
-      ctx.scene(O, A, B)
-        .replace(` The centre of the circle is ${O} and the base is the chord ${A}${B}.`, '')
-        .replace(`, centre ${O},`, '').replace(` with centre ${O}`, '').replace(`, centre $${O}$,`, '').replace(` with centre $${O}$`, ''),
-      `The centre of the circle is $${O}$.`,
-      `The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
-      `The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
-      `Find ${ctx.asks}.`,
-    ] : [
-      ctx.scene(O, A, B),
-      `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}`,
-      `&bull;&nbsp; The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}`,
-      // No rounding instruction on the Paper 1 branch: the triple makes the
-      // answer exact, and not one of the 160 Paper 1 questions in the corpus
-      // asks for a rounded answer. Nor on 2015 P2 Q12's, whose paper asks for
-      // the depth and stops - the owner, on the light pass: "Yes".
-      `Calculate ${ctx.asks}.${exact || forPaper2015 ? '' : ' Give your answer correct to one decimal place.'}`,
-    ];
+    const words = for2023 ? '2023' : for2022 ? '2022' : forPaper2018 ? '2018'
+      : askedId === 'pythagoras.chord-pre2022' ? '2016' : 'shared';
+    const prose = CHORD_WORDS[words]({ ctx, O, A, B, r, chord, exact, noRounding: exact || forPaper2015 });
     const steps = [
       `<strong>1.</strong> The perpendicular from the centre to a chord bisects it, so drop it from $${O}$ to the midpoint $M$ of $${A}${B}$. That makes a right-angled triangle $${O}M${B}$, with $${O}${B}$ as its hypotenuse.`,
       `<strong>2.</strong> Half the chord is $${num(chord)} \\div 2 = ${num(chord / 2)}$ ${ctx.unit}. Now use Pythagoras to find $${O}M$:<br><br>$${O}M^{2} = ${num(r)}^{2} - ${num(chord / 2)}^{2} = ${num(Number((r * r - (chord / 2) ** 2).toFixed(4)))}$`,

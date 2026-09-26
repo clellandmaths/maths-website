@@ -758,57 +758,61 @@ const INEQ_WORD = ['inequality', 'inequation'];
 const INEQ_LEAD = ['Solve algebraically the', 'Solve, algebraically, the'];
 
 /**
- * **Which way each paper points.** Four of the five say `<` and 2017 P1 Q8
- * says `>`, so pinning the lot to `<` - which is what was first recommended,
- * from having read two of them - would have made 2017 P1 Q8 wrong. Read all
- * the cited papers before capping anything: that rule is in CLAUDE.md and
- * this is the second time it has earned its place.
+ * **What each paper fixes about this question**, one row per paper id. Nothing
+ * asked (a topic sheet) fixes nothing, so browsing still meets every form.
+ *
+ * - `rel`: which way it points. Four of the five say `<` and 2017 P1 Q8 says
+ *   `>`, so pinning the lot to `<`, as was first recommended from reading two
+ *   of them, would have made 2017 P1 Q8 wrong. Read every cited paper before
+ *   capping anything. The owner, on the 2026 P1 sheet: *"Agree"*.
+ * - `bracket`: which side the bracket sits. 2024 P2 Q4 `5(x - 2) + 4 < 7x + 8`
+ *   has it on the left; the clone put it on the right in 181 of 400 draws
+ *   (*"Left and right side opposite of what paper is"*). 2017 P1 Q8, 2018 P2
+ *   Q4 and 2026 P1 Q4 have it on the right; each clone put it on the left in
+ *   about half its draws (*"Yes key"* on each card).
+ * - `subtracted`: 2015 P1 Q2's own shape, `11 - 2(1 + 3x) < 39`. A number
+ *   minus a bracket on the left, a bare number on the right, so collecting
+ *   leaves `-6x < 30` and the sign has to turn. The clone put an x on both
+ *   sides in 400 of 400 draws (*"Yes key the shape for this question."*).
+ * - `words` and `stop`: each paper's own instruction, with its full stop
+ *   inside the maths where it has one. 2015 on *"Pin the wording"*, 2026 and
+ *   2024 on their re-reviews, 2018 and 2017 on the 2018-2014 light pass.
+ *
+ * **Every coin is still drawn** whatever the row says, so each paper reads the
+ * same random stream the others do and fixing one never moved another.
  */
-const REL_OF: Record<string, string> = {
-  'inequalities.brackets': '\\lt',            // 2026 P1 Q4
-  'inequalities.brackets-2024': '\\lt',       // 2024 P2 Q4
-  'inequalities.brackets-pre2023': '\\lt',    // 2018 P2 Q4
-  'inequalities.brackets-2017': '\\gt',       // 2017 P1 Q8
-  'inequalities.brackets-2015': '\\lt',       // 2015 P1 Q2
+interface BracketsPaper {
+  rel: '\\lt' | '\\gt';
+  bracket: 'left' | 'right';
+  words: string;
+  stop: boolean;
+  subtracted?: true;
+}
+const BRACKETS_PAPERS: Record<string, BracketsPaper> = {
+  'inequalities.brackets':         // 2026 P1 Q4  x + 8 < 3(x - 2) + 20
+    { rel: '\\lt', bracket: 'right', words: 'Solve, algebraically, the inequation', stop: true },
+  'inequalities.brackets-2024':    // 2024 P2 Q4  5(x - 2) + 4 < 7x + 8
+    { rel: '\\lt', bracket: 'left', words: 'Solve, algebraically, the inequation', stop: true },
+  'inequalities.brackets-pre2023': // 2018 P2 Q4  3x < 6(x - 1) - 12
+    { rel: '\\lt', bracket: 'right', words: 'Solve, algebraically, the inequation', stop: true },
+  'inequalities.brackets-2017':    // 2017 P1 Q8  19 + x > 15 + 3(x - 2)
+    { rel: '\\gt', bracket: 'right', words: 'Solve, algebraically, the inequality', stop: true },
+  'inequalities.brackets-2015':    // 2015 P1 Q2  11 - 2(1 + 3x) < 39
+    { rel: '\\lt', bracket: 'left', words: 'Solve algebraically the inequality', stop: false, subtracted: true },
 };
 
 function inequalityBrackets(wanted?: string, asked?: string): Q {
+  const paper: BracketsPaper | undefined = BRACKETS_PAPERS[asked ?? ''];
   for (let tries = 0; tries < 500; tries++) {
     // x in all ten *Linear equations and inequations* papers; `y` and `p` in
     // none. An inequality is solved for x for the same reason an equation is.
     const v = 'x';
-    // Taught: a paper points one way and the clone should point that way
-    // too. The owner, on the 2026 P1 sheet: *"Agree"*. Nothing asked - a
-    // topic sheet - keeps the even draw, so browsing still meets both.
-    const rel = REL_OF[asked ?? ''] ?? pick(['\\lt', '\\gt']);
-    /**
-     * **2015 P1 Q2's own shape: `11 - 2(1 + 3x) < 39`.** A number minus a
-     * bracket on the left, a bare number on the right, so collecting leaves
-     * `-6x < 30` and the sign has to turn. The clone put an x on both sides
-     * in 400 of 400 draws. The owner, on the 2015 P1 sheet: *"Yes key the
-     * shape for this question."* Every coin below is still drawn; 2015's id
-     * only reads them differently, so the four LOCKED papers on this routine
-     * see the same stream as before.
-     */
-    const paper2015 = asked === 'inequalities.brackets-2015';
-    // **2024 P2 Q4's bracket is on the left, `5(x - 2) + 4 < 7x + 8`**, and
-    // the clone put it on the right in 181 of 400 draws. The owner, at the
-    // foot of the 2015 P1 sheet: *"Left and right side opposite of what paper
-    // is"*. The coin is still drawn.
-    //
-    // **The other three papers put the bracket on the right**: 2017 P1 Q8
-    // `19 + x > 15 + 3(x - 2)`, 2018 P2 Q4 `3x < 6(x - 1) - 12`, 2026 P1 Q4
-    // `x + 8 < 3(x - 2) + 20`, and each clone put it on the left in about
-    // half its draws. The owner, on each card: *"Yes key"*.
-    const paper2024 = asked === 'inequalities.brackets-2024';
-    const bracketRight = asked === 'inequalities.brackets-2017'      // 2017 P1 Q8
-      || asked === 'inequalities.brackets-pre2023'                    // 2018 P2 Q4
-      || asked === 'inequalities.brackets';                           // 2026 P1 Q4
+    const rel = paper?.rel ?? pick(['\\lt', '\\gt']);
     const coinLeft = getRandomInt(0, 1) === 0;
-    const bracketLeft = paper2015 || paper2024 ? true : bracketRight ? false : coinLeft;
+    const bracketLeft = paper ? paper.bracket === 'left' : coinLeft;
     // one in five should end with a negative x coefficient, so the sign flips —
     // that is 2015 P1 Q2, and it is where the marks are lost
-    const wantFlip = getRandomInt(1, 5) === 1 || paper2015;
+    const wantFlip = getRandomInt(1, 5) === 1 || !!paper?.subtracted;
 
     const k = nonZeroInt(-6, 6);                // multiplier on the bracket
     const inner = nonZeroInt(-9, 9);            // constant inside the bracket
@@ -818,7 +822,7 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
     // negative there opened the question on a negative variable term, '-x - 8',
     // and put two sign reversals in a three-mark question.
     const drawnCoef = getRandomInt(1, 6);       // v coefficient on the other side
-    const otherCoef = paper2015 ? 0 : drawnCoef;
+    const otherCoef = paper?.subtracted ? 0 : drawnCoef;
     const otherConst = nonZeroInt(-20, 20);
 
     // **The bracket has a multiplier.** The five papers use 2, 3, 5, 6 and 3;
@@ -831,7 +835,7 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
     // Written the other way round the question opened on a negative bracket,
     // `-3(x - 5) - 3`, which none of the five does.
     if (k < 0 && outside < 0) continue;
-    if (paper2015 && k > 0) continue;           // the bracket is subtracted
+    if (paper?.subtracted && k > 0) continue;   // the bracket is subtracted
 
     const bracketTex = `${Math.abs(k)}(${term(innerCoef, v)}${tail(inner)})`;
     const withBracket = k < 0
@@ -863,32 +867,12 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
       subTopic: 'Solving Inequalities',
       difficulty: 'skill',
       variationId: 'inequalities.brackets',
-      // 2015 P1 Q2's own words, on the owner's "Pin the wording". Both are
-      // still drawn, so the four LOCKED papers keep their stream.
       questionLines: [(() => {
+        // both still drawn, so every paper keeps its stream
         const lead = pick(INEQ_LEAD), word = pick(INEQ_WORD);
-        // 2026 P1 Q4's own words and its stop: "Solve, algebraically, the
-        // inequation x + 8 < 3(x − 2) + 20." The owner, 2026 re-review: "Yes".
-        // Its id is the base one; the picks above are still drawn.
-        return paper2015
-          ? `Solve algebraically the inequality $${lhs} ${rel} ${rhs}$`
-          : asked === 'inequalities.brackets'
-            ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
-            // 2024 P2 Q4: "Solve, algebraically, the inequation 5(x − 2) + 4 <
-            // 7x + 8." with the stop inside the maths. The owner, on the 2024
-            // re-review sheet: "do the full stop fix", then "Yes" to its words
-            // too. The picks above are still drawn.
-            : asked === 'inequalities.brackets-2024'
-            ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
-            // 2018 P2 Q4, "Solve, algebraically, the inequation … .", and 2017
-            // P1 Q8, "Solve, algebraically, the inequality … .", each with its
-            // stop. The owner, on the 2018-2014 light pass: "Yes". Each on its
-            // own alias; the picks above are still drawn.
-            : asked === 'inequalities.brackets-pre2023'
-            ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
-            : asked === 'inequalities.brackets-2017'
-            ? `Solve, algebraically, the inequality $${lhs} ${rel} ${rhs}.$`
-            : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
+        return paper
+          ? `${paper.words} $${lhs} ${rel} ${rhs}${paper.stop ? '.' : ''}$`
+          : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
       })()],
       boardQuestionLines: [`Solve $${lhs} ${rel} ${rhs}$`],
       solutionSteps: [

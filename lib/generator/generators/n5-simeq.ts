@@ -417,30 +417,54 @@ const PRICES_2014: Record<string, [number, number, number, number]> = {
   'train tickets': [1500, 4500, 300, 1000],
 };
 
+/**
+ * **What each paper fixes about constructing and solving**, one row per paper
+ * id. `paper1` (2019 P1 Q8) and `combine` (2025 P2 Q10, 2026 P2 Q4) are not
+ * rows: each is a subTopic with its own draw loop, so they are parameters.
+ * Nothing asked (a topic sheet) fixes nothing, and no row draws differently
+ * from another except 2014's own prices, drawn only on its id.
+ *
+ * - `noLetters`, `noAlgebraically`: the papers' own words (2026-09-25). Every
+ *   draw said "an equation in x and y", and all but 2022's said "Calculate,
+ *   algebraically", on papers that print neither: 2016 P1 Q4 and 2019 P1 Q8
+ *   have no letters and no "algebraically"; 2022 P2 Q4 has "algebraically" but
+ *   no letters. Shown LOCKED on the 2014 P2 sheet at the owner's request, 400
+ *   of 400 each; the owner: *"Agreed"* on each card. The combine papers print
+ *   their letters, so they keep them.
+ * - `money`, `prices`: 2014 P2 Q3 prices its two items as a pair that makes
+ *   sense (the paper's are £22.50 an adult and £15.25 a child). The shared
+ *   draw priced the second item at up to 80% of the first, so theatre tickets
+ *   came with a £24.70 programme. The owner: *"Ok any way to fix odd price
+ *   pairings?"*, answered on the thread as a fix for 2014 alone.
+ * - `tenths`: 2016 P1 Q4 is non-calculator and its paper keeps a tenth (9.6
+ *   and 13.3 square metres, answers 1.5 and 2.2). On the shared calculator
+ *   scale it drew pennies in 241 of 400 and totals past 1000 kilograms in 16.
+ *   So totals of 100 or under, and every number to at most one decimal place.
+ *   The owner, on the 2016 P1 sheet: *"Yes do it"*. A rejection, on its id.
+ * - `plainC`: 2025 P2 Q10 asks "(c) Calculate the total weight of the stacks
+ *   on Beth's lorry." with no "algebraically", which 2026 P2 Q4 does print.
+ *   The owner, on the 2025 re-review sheet: "Yes".
+ */
+interface ConstructPaper {
+  noLetters?: true; noAlgebraically?: true;
+  money?: true; prices?: Record<string, [number, number, number, number]>;
+  tenths?: true; plainC?: true;
+}
+const CONSTRUCT_PAPERS: Record<string, ConstructPaper> = {
+  [CONSTRUCT_2014]: { noLetters: true, noAlgebraically: true, money: true, prices: PRICES_2014 },  // 2014 P2 Q3
+  'simeq.construct-solve-pre2022': { noLetters: true, noAlgebraically: true, tenths: true },        // 2016 P1 Q4
+  'simeq.construct-solve': { noLetters: true },                                                    // 2022 P2 Q4
+  'simeq.construct-combine-2025': { plainC: true },                                                // 2025 P2 Q10
+};
+
 function constructSolve(combine = false, paper1 = false, asked?: string): Q {
-  const is2014 = asked === CONSTRUCT_2014;
-  /**
-   * **The papers' own words, keyed per paper.** — 2026-09-25
-   *
-   * Every draw said "an equation in x and y", and all but 2022's said
-   * "Calculate, algebraically", on papers that print neither: 2016 P1 Q4
-   * and 2019 P1 Q8 have no letters and no "algebraically"; 2022 P2 Q4 has
-   * "algebraically" but no letters. Shown LOCKED on the 2014 P2 sheet at the
-   * owner's request, 400 of 400 each; the owner: *"Agreed"* on each card.
-   *
-   * Each on its own paper's id: `-pre2022` is 2016 alone, `paper1` is 2019
-   * P1 Q8's own loop, the base id is 2022's. A topic draw, which asks for
-   * no id, keeps the old wording, and the combine papers (2025 P2 Q10, 2026
-   * P2 Q4) print their letters, so they keep them. Words only - no random
-   * is drawn differently.
-   */
-  const noLetters = !combine && (is2014 || paper1
-    || asked === 'simeq.construct-solve-pre2022' || asked === 'simeq.construct-solve');
-  const noAlgebraically = !combine && (is2014 || paper1 || asked === 'simeq.construct-solve-pre2022');
+  const paper: ConstructPaper | undefined = CONSTRUCT_PAPERS[asked ?? ''];
+  const noLetters = !combine && (paper1 || !!paper?.noLetters);
+  const noAlgebraically = !combine && (paper1 || !!paper?.noAlgebraically);
   for (let tries = 0; tries < 300; tries++) {
     const ctx = pick(paper1
       ? TWO_ITEM_CONTEXTS.filter(c => c.kind !== 'money')
-      : is2014 ? TWO_ITEM_CONTEXTS.filter(c => c.kind === 'money')
+      : paper?.money ? TWO_ITEM_CONTEXTS.filter(c => c.kind === 'money')
       : TWO_ITEM_CONTEXTS);
     const [v1, v2] = ctx.vars;
     if (v1 === v2) continue;
@@ -464,7 +488,7 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
       : paper1 ? (ctx.kind === 'm2' ? 10 : 1)
       : 1;
     const round = (x: number) => Math.round(x / step) * step;
-    const pair = is2014 ? PRICES_2014[ctx.plural[0]] : undefined;
+    const pair = paper?.prices ? paper.prices[ctx.plural[0]] : undefined;
     const u1 = round(pair ? getRandomInt(pair[0], pair[1]) : getRandomInt(lo, hi));
     const u2 = round(pair ? getRandomInt(pair[2], pair[3])
       : getRandomInt(Math.max(step, Math.round(lo * 0.5)), Math.round(u1 * 0.8)));
@@ -508,20 +532,8 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
      * keeps the money it should have as a calculator paper.
      */
     if (paper1 && [d1, d2, dt1, dt2].some(v => !Number.isInteger(v))) continue;
-    /**
-     * **2016 P1 Q4 is non-calculator too, and its paper keeps a tenth.** The
-     * owner, on the 2016 P1 sheet: *"Yes do it"*, to holding it to the paper's
-     * scale - 9.6 and 13.3 square metres, answers 1.5 and 2.2. On the shared
-     * calculator scale it drew pennies in 241 of 400 draws and totals past
-     * 1000 kilograms in 16. So: totals of 100 or under, and every number a
-     * pupil sees to at most one decimal place.
-     *
-     * `simeq.construct-solve-pre2022` cites 2016 P1 Q4 alone (2014 P2 Q3 is
-     * on `-2014`), so keying on the asked id moves nothing else; a rejection,
-     * so the draws of `simeq.construct-solve` (2022 P2 Q4, SIGNED OFF) are
-     * untouched.
-     */
-    if (asked === 'simeq.construct-solve-pre2022'
+    // 2016 P1 Q4 keeps a tenth: see `tenths` on CONSTRUCT_PAPERS.
+    if (paper?.tenths
       && ([dt1, dt2].some(v => v > 100)
         || [d1, d2, dt1, dt2].some(v => Math.abs(v * 10 - Math.round(v * 10)) > 1e-9))) continue;
     const p = { a1: q1, b1: q2, c1: dt1, a2: q3, b2: q4, c2: dt2 };
@@ -547,10 +559,7 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
         `${ctx.people[1]} ${ctx.verb} ${q3} ${ctx.plural[0]} and ${q4} ${ctx.plural[1]}. ${ctx.total} ${amount(t2, ctx.kind)}.`,
         noLetters ? '(b) Write down an equation to illustrate this information.'
           : `(b) Write down an equation in $${v1}$ and $${v2}$ to illustrate this information.`,
-        // 2025 P2 Q10 asks "(c) Calculate the total weight of the stacks on
-        // Beth's lorry." - no "algebraically", which 2026 P2 Q4 (the base id)
-        // does print. The owner, on the 2025 re-review sheet: "Yes". Words only.
-        combine && asked === 'simeq.construct-combine-2025'
+        combine && paper?.plainC
           ? `(c) Calculate the total ${unit} ${unit === 'amount of material' ? 'for' : 'of'} ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}.`
           : combine
           ? `(c) Calculate, algebraically, the total for ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}.`
