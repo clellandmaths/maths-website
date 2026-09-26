@@ -247,7 +247,14 @@ function cosineRuleAngleExact(): Q {
       subTopic: 'Cosine Rule: Finding an Angle',
       difficulty: 'exam',
       variationId: 'cosine-rule.angle-exact',
-      questionLines: [...givens, renderScene(fig.scene), ask],
+      // 2022 P1 Q9's own opening and order: the triangle named, the diagram,
+      // the three bullets, then the ask and the simplest-form line on their
+      // own lines. The owner, on the 2022 re-review: "Yes". Built after
+      // verifyFigure, so no draw passes or fails differently.
+      questionLines: [
+        `The diagram shows triangle $${A}${B}${C}$.`, renderScene(fig.scene), ...givens.slice(1),
+        `Calculate the value of $\\cos ${B}.$`, 'Give your answer in its simplest form.',
+      ],
       boardQuestionLines: [`Sides ${AB}, ${BC}, ${AC}. Find $\\cos ${B}$`],
       // 2022 P1 Q9 is two marks, not three: •¹ correct substitution into the
       // cosine rule, •² calculate cos B in simplest form. Working the fraction

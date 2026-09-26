@@ -117,6 +117,15 @@ export interface CircleChordSpec {
    */
   askedSpan?: string;
   /**
+   * **2022 P2 Q8's layout — opt-in, 2026-09-26.** Its paper stands the chord's
+   * arrow right under AB, and the "height" arrow down the RIGHT side. The
+   * chord arrow otherwise clears the arc on the far side of the chord, which a
+   * `rest: 'none'` figure does not draw; the span arrow otherwise stands on
+   * the left. The owner, on the 2022 re-review: "Yes". Off by default, so
+   * every other chord figure draws as it did.
+   */
+  paper2022?: true;
+  /**
    * Put the piece being asked about **below** the chord instead of above it.
    *
    * 2015 P2 Q12 is a container of liquid: the surface is the chord, the liquid
@@ -288,7 +297,7 @@ export function circleChord(spec: CircleChordSpec): Figure {
      * arrow stands that far out and a little more. No side to choose and no
      * depth of cut it stops working at.
      */
-    const clearArc = Math.abs(k + r) + r * 0.16;
+    const clearArc = spec.paper2022 ? r * 0.16 : Math.abs(k + r) + r * 0.16;
     // Built in the upright frame and turned with everything else: the chord's
     // midpoint is (0, k*m) before rotation, so reading M.x/M.y here would mix
     // a rotated point into an unrotated calculation.
@@ -312,7 +321,7 @@ export function circleChord(spec: CircleChordSpec): Figure {
    * point into an unrotated calculation.
    */
   if (spec.askedSpan) {
-    elements.push(...dimensionArrow(M, T, at(-2 * r, 0), r * 1.15, spec.askedSpan));
+    elements.push(...dimensionArrow(M, T, at(spec.paper2022 ? 2 * r : -2 * r, 0), r * 1.15, spec.askedSpan));
   }
   if (spec.centreDot) elements.push({ kind: 'dot', at: O, small: true });
   if (spec.endDots) elements.push({ kind: 'dot', at: A, small: true }, { kind: 'dot', at: B, small: true });

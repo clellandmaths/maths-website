@@ -271,7 +271,9 @@ function triangleAgainstRectangle(): Q | null {
   if (x < 1 || x >= k) return null;
 
   const prose = [
-    `A triangular ${c.a} and a rectangular ${c.b} are shown in the diagram.`,
+    // The paper's own opening, with no story: the owner, on the 2022
+    // re-review, "Yes". The pair still sets the unit.
+    'A triangle and rectangle are shown in the diagram.',
     `<strong>(a)</strong> Find an expression for the area of the triangle.`,
     `<strong>(b)</strong> Given that the area of the triangle is equal to the area of the rectangle, find algebraically the value of $x$.`,
   ];
@@ -312,10 +314,13 @@ function triangleAgainstRectangle(): Q | null {
        *
        * Drawn tall and narrow, as the scan is: the base is the short side.
        */
-      { kind: 'triangle-upright', base: 44, height: 104,
+      // Both arrows on the right, with no leaders, as the scan draws them;
+      // the triangle's arrow and label stand in the gap, so it is wider.
+      { kind: 'triangle-upright', base: 44, height: 104, arrowRight: true,
         labels: { base: `${hTri} ${u}`, height: `(x + ${b}) ${u}` } },
-      { kind: 'rectangle', w: 52, h: 68,
+      { kind: 'rectangle', w: 52, h: 68, arrow: true,
         labels: { w: `(${k} - x) ${u}`, h: `${r} ${u}` } } as PlaneShape,
+      { gap: 1.6 },
     ),
     'A Triangle Against a Rectangle', 'form-equation.triangle-rectangle', prose,
     `Triangle base $x + ${b}$, height ${hTri}; rectangle ${r} by $${k} - x$. Equal areas — find $x$.`,

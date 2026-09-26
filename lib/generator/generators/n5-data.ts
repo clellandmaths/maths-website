@@ -671,7 +671,16 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
         `(a) Calculate the mean and standard deviation of these ${ctx.quantity}.`,
         // The unit goes on both figures, as 2025 P2 Q4 puts it on both: "a mean
         // weight of 105 kilograms and a standard deviation of 5.9 kilograms".
-        `A sample taken from ${ctx.groupB} has a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`,
+        // 2022 P2 Q5 brings its second group in as "Some players in the
+        // school's hockey team also recorded … Their numbers gave a mean of 29
+        // and a standard deviation of 3.2." The owner, on the 2022 re-review:
+        // "Yes". "Some of Aberdour" cannot be written, so its id takes the
+        // paper's two moves, also recorded and gave a mean of, in a form
+        // every context can carry. Keyed on 2022's alias; the rest keep theirs.
+        ...(asked === 'data.mean-sd-compare-pre2023'
+          ? [`The ${ctx.quantity} for ${ctx.groupB} were also recorded.`,
+             `They gave a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]
+          : [`A sample taken from ${ctx.groupB} has a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]),
         // Both groups named, as all four papers name them - 2025 P2 Q4 asks for
         // comments "comparing the weights of the rugby players in the samples
         // from Scotland and France". The scheme refuses a comment that does not

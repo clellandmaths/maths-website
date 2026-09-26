@@ -65,9 +65,19 @@ export type Piece =
    * sphere is a circle and a word, which is what this drew while the paper
    * printed a figure for each part of the question.
    */
-  | { kind: 'sphere'; r: number; radius?: string }
-  /** Square base of side `w`. */
-  | { kind: 'box'; w: number; h: number }
+  | { kind: 'sphere'; r: number; radius?: string;
+      /**
+       * A shaded ball with no equator, as 2022 P2 Q3 prints its gatepost's.
+       * The owner, on the 2022 re-review: "shade the shapes as per the
+       * question". Opt-in; every other sphere draws as it did.
+       */
+      shaded?: true }
+  /**
+   * Square base of side `w`. `shaded` greys its three visible faces and drops
+   * the dashed hidden edges, as 2022 P2 Q3's solid gatepost is printed.
+   * Opt-in, for that question; every other box draws as it did.
+   */
+  | { kind: 'box'; w: number; h: number; shaded?: true }
   | { kind: 'pyramid'; w: number; h: number }
   /**
    * A pyramid with its tip cut off — `wTop` is the side of the cut.
@@ -303,6 +313,17 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
       // a dashed circle, and a dashed equator across a dashed circle inside a
       // solid one with *its* equator made four curves of a coated sweet where
       // two say it.
+      if (p.shaded && !dashed) {
+        const ball: Pt[] = [];
+        for (let k = 0; k < 72; k++) {
+          const t = 2 * Math.PI * k / 72;
+          ball.push(pt(centre.x + p.r * Math.cos(t), centre.y + p.r * Math.sin(t)));
+        }
+        return [
+          { kind: 'shadedShape', points: ball, tone: 2 },
+          { kind: 'circle', centre, r: p.r, dashed },
+        ];
+      }
       return [
         { kind: 'circle', centre, r: p.r, dashed },
         ...(dashed ? [] : rim(centre, p.r, false, dashed)),
@@ -324,6 +345,18 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
       // box is an L of five edges, and closing it as a quadrilateral runs a
       // line from the top-left-front corner to the bottom-right-back one,
       // straight through the middle of the solid. It looked like a fold.
+      if (p.shaded && !dashed) {
+        // A solid block, as the paper prints it: three greys, front lightest,
+        // and no hidden edges, since nothing can be seen through it.
+        return [
+          { kind: 'shadedShape', points: F, tone: 1 },
+          { kind: 'shadedShape', points: [F[1], B[1], B[2], F[2]], tone: 2.4 },
+          { kind: 'shadedShape', points: [F[3], F[2], B[2], B[3]], tone: 1.6 },
+          { kind: 'polygon', points: F, dashed },
+          seg(F[1], B[1]), seg(F[2], B[2]), seg(F[3], B[3]),
+          seg(B[1], B[2]), seg(B[2], B[3]),
+        ];
+      }
       return [
         { kind: 'polygon', points: F, dashed },
         seg(F[1], B[1]), seg(F[2], B[2]), seg(F[3], B[3]),
@@ -424,7 +457,7 @@ function extent(elements: Element[]): { x0: number; x1: number; y0: number; y1: 
  * The parts of segment a-b that lie outside a convex polygon: none, one or
  * two pieces. Cyrus-Beck against each edge; the polygon may wind either way.
  */
-function outsideConvex(a: Pt, b: Pt, poly: Pt[]): [Pt, Pt][] {
+function outsideConvex(a: Pt, b: Pt, poly: Pt[], minLen = 0.5): [Pt, Pt][] {
   const d = pt(b.x - a.x, b.y - a.y);
   let area = 0;
   for (let i = 0; i < poly.length; i++) {
@@ -444,7 +477,7 @@ function outsideConvex(a: Pt, b: Pt, poly: Pt[]): [Pt, Pt][] {
   }
   const at = (t: number) => pt(a.x + t * d.x, a.y + t * d.y);
   const len = Math.hypot(d.x, d.y);
-  return ([[0, t0], [t1, 1]] as const).filter(([u, v]) => (v - u) * len > 0.5)
+  return ([[0, t0], [t1, 1]] as const).filter(([u, v]) => (v - u) * len > minLen)
     .map(([u, v]) => [at(u), at(v)] as [Pt, Pt]);
 }
 
@@ -456,7 +489,43 @@ export function solidFigure(spec: SolidSpec): Figure {
   const seats: Pt[] = [];
   for (const piece of spec.stack) {
     seats.push(o);
-    elements.push(...drawPiece(piece, o, false));
+    const drawn = drawPiece(piece, o, false);
+    // A shaded ball is solid, so the edges of what it sits on stop behind it,
+    // as 2022 P2 Q3's gatepost is printed. Only a `shaded` sphere does this.
+    if (piece.kind === 'sphere' && piece.shaded) {
+      const ball = (drawn.find(e => e.kind === 'shadedShape') as { points: Pt[] }).points;
+      const rim = drawn.find(e => e.kind === 'circle') as { centre: Pt; r: number };
+      for (let i = elements.length - 1; i >= 0; i--) {
+        const e = elements[i];
+        // And the greys behind it stop at its edge, so the two fills never
+        // overlap into a darker band. The owner, on the 2022 re-review:
+        // "Don't like the shadow". Each face's outline is walked finely and
+        // any part inside the ball is pushed out to the ball's rim.
+        if (e.kind === 'shadedShape') {
+          const walked: Pt[] = [];
+          for (let k = 0; k < e.points.length; k++) {
+            const a = e.points[k], b = e.points[(k + 1) % e.points.length];
+            for (let s = 0; s < 40; s++) {
+              const p = pt(a.x + (b.x - a.x) * s / 40, a.y + (b.y - a.y) * s / 40);
+              const dx = p.x - rim.centre.x, dy = p.y - rim.centre.y, dd = Math.hypot(dx, dy);
+              walked.push(dd < rim.r && dd > 1e-9
+                ? pt(rim.centre.x + dx * rim.r / dd, rim.centre.y + dy * rim.r / dd) : p);
+            }
+          }
+          elements[i] = { ...e, points: walked };
+          continue;
+        }
+        const edges: [Pt, Pt, boolean][] = e.kind === 'segment' && !e.decoration ? [[e.from, e.to, !!e.dashed]]
+          : e.kind === 'polygon' ? e.points.map((p, k) => [p, e.points[(k + 1) % e.points.length], !!e.dashed] as [Pt, Pt, boolean])
+          : [];
+        if (!edges.length) continue;
+        // A threshold in proportion to the ball: this figure is drawn in
+        // metres, where the dome's fixed 0.5 would drop every edge.
+        elements.splice(i, 1, ...edges.flatMap(([a, b, dash]) => outsideConvex(a, b, ball, piece.r * 0.02)
+          .map(([p, q]): Element => ({ kind: 'segment', from: p, to: q, dashed: dash }))));
+      }
+    }
+    elements.push(...drawn);
     o = topOf(piece, o);
   }
   const foot = baseCentreOf(spec.stack[0], pt(0, 0));

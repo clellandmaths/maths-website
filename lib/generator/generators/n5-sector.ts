@@ -691,7 +691,18 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
           ? 'Finding the Reflex Angle of a Sector' : 'Finding the Angle of a Sector',
         difficulty: 'exam',
         variationId: reflexOnly ? 'sector.angle-arc-reflex' : 'sector.angle-arc',
-        questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.arc,
+        // 2022 P2 Q10's two bullets, with their stops: "• The length of the
+        // arm, CB, is 15 metres. • The length of the major arc, AB, is 69.4
+        // metres. Calculate the size of the reflex angle ACB." The owner, on
+        // the 2022 re-review: "Yes". An arm story keeps the arm; any other
+        // names the radius by its letters. Only its own kind; 2017 unchanged.
+        questionLines: reflexOnly
+          ? [c.intro(nO, nA, nB), '',
+             // The radius the figure labels, which is the one to A.
+             `&bull;&nbsp; The ${/ arm /.test(c.intro(nO, nA, nB)) ? 'length of the arm' : 'radius'}, $${nO}${nA}$, is ${r} ${c.unit}.`,
+             `&bull;&nbsp; The length of the major arc, $${nA}${nB}$, is ${trim(arc)} ${c.unit}.`,
+             `Calculate the size of the reflex angle $${nA}${nO}${nB}$.`]
+          : [c.intro(nO, nA, nB), '', facts.radius, facts.arc,
           `Calculate the size of ${angle > 180 ? 'reflex ' : ''}angle $${nA}${nO}${nB}$.`],
         boardQuestionLines: [`Radius ${r}, arc ${trim(arc)}. Angle?`],
         // •¹ an expression for the arc length, or the arc-to-circumference
@@ -713,7 +724,9 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
             labels: { radius: shown.radius, angle: '', arc: '' },
             bareAngleMark: true, centreInWedge: true,
           }) ?? undefined
-          : built({ radius: shown.radius, angle: '', arc: shown.arc }),
+          // 2022's paper writes only the radius on its figure; the arc length
+          // is in the words. The owner: "Yes".
+          : built({ radius: shown.radius, angle: '', arc: reflexOnly ? '' : shown.arc }),
       };
     } else {
       q = {

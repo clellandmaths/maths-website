@@ -327,7 +327,9 @@ function quadraticFormula(wanted?: string, asked?: string): Q {
     // 2024 P2 Q8, this rounding's only paper, writes the numeral: "correct to
     // 2 decimal places". The owner, on the 2024 re-review sheet: "Yes".
     { dp: 2, phrase: 'Give your answers correct to 2 decimal places.' },
-    { sf: 2, phrase: 'Give your answers correct to two significant figures.' },
+    // 2022 P2 Q7, likewise: "correct to 2 significant figures". The owner, on
+    // the 2022 re-review sheet: "Yes".
+    { sf: 2, phrase: 'Give your answers correct to 2 significant figures.' },
   ] as const;
   // Taught: the rounding instruction IS the id. 2022 P2 Q7 asks for two
   // significant figures and 2024 P2 Q8 for two decimal places — a pupil meets

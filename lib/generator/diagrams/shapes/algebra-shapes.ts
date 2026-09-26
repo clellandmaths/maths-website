@@ -209,7 +209,13 @@ export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
 // ── two shapes side by side ───────────────────────────────────────────────
 
 export type PlaneShape =
-  | { kind: 'rectangle'; w: number; h: number; labels: { w: string; h: string } }
+  | { kind: 'rectangle'; w: number; h: number; labels: { w: string; h: string };
+      /**
+       * The height on a double-headed arrow standing off the outward side, as
+       * 2022 P1 Q15's scan draws its `6 cm`. The owner, on the 2022 re-review:
+       * "Yes". Opt-in, so every other rectangle keeps its bare label.
+       */
+      arrow?: true }
   | { kind: 'square'; s: number; label: string }
   /**
    * Right-angled, with the perpendicular height as its left side.
@@ -255,7 +261,14 @@ export type PlaneShape =
        * the 2016 P1 sheet: *"Yes"*, to drawing it as the paper does. Off by
        * default, so 2022 P1 Q15 draws exactly as it did.
        */
-      droppedHeight?: boolean };
+      droppedHeight?: boolean;
+      /**
+       * **2022 P1 Q15's own arrow — opt-in, 2026-09-26.** Its scan stands the
+       * `(x + 12) cm` arrow to the triangle's RIGHT, from the base line to the
+       * apex's level, with no dashed leaders. The owner, on the 2022
+       * re-review: "Yes". Off by default, so 2016 P1 Q12 draws as it did.
+       */
+      arrowRight?: true };
 
 const shapeWidth = (s: PlaneShape): number =>
   s.kind === 'rectangle' ? s.w : s.kind === 'square' ? s.s : s.base;
@@ -317,6 +330,16 @@ function drawShape(s: PlaneShape, at: Pt, side: 'left' | 'right'): Element[] {
         ),
       ];
     }
+    if (s.arrowRight) {
+      return [
+        { kind: 'polygon', points: [a, b, apex] },
+        sideLabel(a, b, s.labels.base, above),
+        ...dimensionArrow(
+          P(s.base, 0), P(s.base, s.height), P(w * 2, h / 2),
+          Math.max(w * 0.3, 14), s.labels.height,
+        ),
+      ];
+    }
     const armX = side === 'left' ? 0 : s.base;
     return [
       { kind: 'polygon', points: [a, b, apex] },
@@ -340,7 +363,11 @@ function drawShape(s: PlaneShape, at: Pt, side: 'left' | 'right'): Element[] {
     ? [sideLabel(c0, c1, s.label, above)]
     : [
       sideLabel(c0, c1, s.labels.w, above),
-      { kind: 'label', text: s.labels.h, anchor: mid(vertical[0], vertical[1]), away: outward },
+      ...(s.kind === 'rectangle' && s.arrow
+        ? dimensionArrow(vertical[0], vertical[1],
+            side === 'left' ? P(-w, h / 2) : P(w * 2, h / 2),
+            Math.max(w * 0.3, 14), s.labels.h)
+        : [{ kind: 'label', text: s.labels.h, anchor: mid(vertical[0], vertical[1]), away: outward } as Element]),
     ];
   return [{ kind: 'polygon', points: [c0, c1, c2, c3] }, ...labels];
 }
@@ -363,9 +390,17 @@ export function shapePair(
    * only ever the caption here: this figure claims no lengths, because every
    * side is an expression, so there is no length-ratio check for it to waive.
    */
-  opts: { notToScale?: boolean } = {},
+  opts: {
+    notToScale?: boolean;
+    /**
+     * The gap between the shapes, as a multiple of the wider one's width.
+     * 2022 P1 Q15 stands its triangle's arrow and label in the gap, so it
+     * needs more room than `PAIR_GAP`. Opt-in; every other pair keeps it.
+     */
+    gap?: number;
+  } = {},
 ): Figure {
-  const gap = Math.max(shapeWidth(left), shapeWidth(right)) * PAIR_GAP;
+  const gap = Math.max(shapeWidth(left), shapeWidth(right)) * (opts.gap ?? PAIR_GAP);
   const elements = [
     ...drawShape(left, pt(0, 0), 'left'),
     ...drawShape(right, pt(shapeWidth(left) + gap, 0), 'right'),

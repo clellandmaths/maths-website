@@ -343,7 +343,9 @@ function sketchFactorised(wanted?: string): Q | null {
    * it has its own `onAxes` and cites 2026 P1 Q12, which is signed off.
    */
   const prose = [
-    `${onAxes ? 'On the axes below, sketch' : 'Sketch'} the graph of $${equation}$.`,
+    // 2022 P1 Q14's own first sentence. The owner, on the 2022 re-review: "Yes".
+    onAxes ? `Sketch the graph of $${equation}$ using the axes provided below.`
+      : `Sketch the graph of $${equation}$.`,
     'On your sketch, show clearly the points of intersection with the x-axis and the y-axis, and the coordinates of the turning point.',
     ...(onAxes ? [blank] : []),
   ];

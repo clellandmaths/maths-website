@@ -938,17 +938,20 @@ function boxPlusSphere(): Q | null {
     `The sphere has diameter ${num(dia)} metres. The cuboid has a square base of length ${num(w)} metres.`,
     `The total height of the ${c.thing} is ${num(total)} metres.`,
     `Calculate the volume of ${c.material} needed to make one ${c.thing}.`,
-    `Give your answer correct to two decimal places.`,
+    // No rounding line: 2022 P2 Q3 prints none, and its scheme takes
+    // 0.49(4...). The owner, on the 2022 re-review: "Yes", as Q6 was.
   ];
   const steps = [
     `<strong>1.</strong> The sphere has radius ${num(dia / 2)}:` +
     `<br><br>$\\frac{4}{3} \\times \\pi \\times ${num(dia / 2)}^{3} = ${sphere3.toFixed(4)}\\ldots$`,
     `<strong>2.</strong> The sphere takes up ${num(dia)} m of the height, so the cuboid is $${num(total)} - ${num(dia)} = ${num(boxH)}$ m tall. Add its volume to the sphere's:` +
     `<br><br>$${sphere3.toFixed(4)}\\ldots + ${num(w)} \\times ${num(w)} \\times ${num(boxH)}$`,
-    `<strong>3.</strong> Work it out and state the units:<br><br>$V = ${exact.toFixed(2)}$ ${cubic('m')}`,
+    `<strong>3.</strong> Work it out and state the units:<br><br>$V = ${exact.toFixed(4)}\\ldots \\approx ${exact.toFixed(2)}$ ${cubic('m')}`,
   ];
   return assemble({
-    stack: [{ kind: 'box', w, h: boxH }, { kind: 'sphere', r: dia / 2 }],
+    // Shaded, as the paper's solid gatepost is. The owner, on the 2022
+    // re-review: "shade the shapes as per the question".
+    stack: [{ kind: 'box', w, h: boxH, shaded: true }, { kind: 'sphere', r: dia / 2, shaded: true }],
     /*
      * **Three arrows, because the paper draws three arrows.**
      *

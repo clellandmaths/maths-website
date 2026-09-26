@@ -395,6 +395,7 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
      * as one asked for by id.
      */
     const for2023 = family === 'cut';
+    const for2022 = askedId === 'pythagoras.chord';
     const spanWord = forPaper2018 || forPaper2015 || for2023
       ? (ctx.asks.split(' ')[1] ?? 'height')
       : (ctx.sideways ? 'width' : 'height');
@@ -462,9 +463,13 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
        * 2016's asked id, so LOCKED 2022 P2 Q8 on the same family is untouched.
        */
       centreDot: forPaper2018 || forPaper2015 || askedId === 'pythagoras.chord-pre2022',
+      // 2022 P2 Q8: the chord's arrow right under AB and a "height" arrow down
+      // the right, as its paper's second diagram. The owner, on the 2022
+      // re-review: "Yes". Keyed on its own id; 2016 rides the -pre2022 alias.
+      ...(for2022 ? { paper2022: true as const } : {}),
       // 2018's paper dots A and B too — the owner: "Put the dots in for A and B".
       endDots: forPaper2018,
-      askedSpan: forPaper2018 || for2023 ? spanWord
+      askedSpan: forPaper2018 || for2023 || for2022 ? spanWord
         : forPaper2015 ? ctx.asks.replace(/^the /, '')
         : askedId === 'pythagoras.chord-pre2022' ? ctx.asks.replace(/^the /, '') : undefined,
       names: { a: A, b: B, centre: O },
@@ -486,6 +491,18 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
       `The circle, centre $${O}$, has a radius of ${withUnit(Number(num(r)), ctx.unit)}.`,
       `Length $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
       `Calculate ${ctx.asks}.`,
+    ] : for2022 ? [
+      // 2022 P2 Q8's three bullets, in its order, with its stops: "• The
+      // centre of the circle is O. • Chord AB is 4 metres. • The radius OA is
+      // 2.9 metres." The owner, on the 2022 re-review: "Yes". The centre is a
+      // bullet, so it comes out of the shared scene here, not in the list.
+      ctx.scene(O, A, B)
+        .replace(` The centre of the circle is ${O} and the base is the chord ${A}${B}.`, '')
+        .replace(`, centre ${O},`, '').replace(` with centre ${O}`, ''),
+      `&bull;&nbsp; The centre of the circle is $${O}$.`,
+      `&bull;&nbsp; Chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
+      `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
+      `Calculate ${ctx.asks}.${exact ? '' : ' Give your answer correct to one decimal place.'}`,
     ] : [
       ctx.scene(O, A, B),
       `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}`,
@@ -1348,6 +1365,10 @@ export function pythagorasSpaceDiagonal(wanted?: string): Q {
       ? (wantsFit && ctx.fits !== null)
       : (ctx.fits !== null && getRandomInt(0, 1) === 0);
     if (wantsFit && !asksFit) continue;
+    // 2022 P2 Q11's 24, 6 and 8 are three different edges; a cube was 10 draws
+    // in 400 and two equal edges 107. The owner, on the 2022 re-review:
+    // "never 2 equal edges". Its own id only, so 2018 P2 Q16 draws as it did.
+    if (wanted === 'pythagoras.space-diagonal' && (L === B || B === H || L === H)) continue;
 
     // ── the two papers draw two different boxes ──────────────────────────────
     //
@@ -1413,7 +1434,10 @@ export function pythagorasSpaceDiagonal(wanted?: string): Q {
          ctx.fits.asks(`${objectLen} ${ctx.unit}`).replace(
            ' Justify your answer.',
            ` It would have to lie from corner $${from}$ to corner $${to}$. Justify your answer.`)]
-      : [`The diagram shows a cuboid, $${corners.join('')}$.`,
+      // Named in alphabetical order, as the paper's "cuboid, ABCDEFGH" is; the
+      // corners in storage order read EHDAFGCB in 137 of 400 draws. The owner,
+      // on the 2022 re-review: "Yes".
+      : [`The diagram shows a cuboid, $${[...corners].sort().join('')}$.`,
          `&bull;&nbsp; The length of the cuboid, $${corners[0]}${corners[1]}$, is ${L} ${ctx.unit}.`,
          `&bull;&nbsp; The breadth of the cuboid, $${corners[1]}${corners[5]}$, is ${B} ${ctx.unit}.`,
          `&bull;&nbsp; The height of the cuboid, $${corners[1]}${corners[2]}$, is ${H} ${ctx.unit}.`,

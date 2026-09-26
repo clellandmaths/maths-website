@@ -180,6 +180,10 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
       // 2019 P2 Q3, 2022 P2 Q6: two sides and the angle between, find the area
       const area = 0.5 * p * q * Math.sin(angA * Math.PI / 180);
       if (area < 20) continue;
+      // Never two equal given sides: both papers give two different ones
+      // (25 and 32, 45 and 70), and 13 draws in 400 were isosceles. The
+      // owner, on the 2022 re-review: "Yes", for 2022 P2 Q6 and 2019 P2 Q3.
+      if (p === q) continue;
       const fig = triangleFromSides({
         sides, vertices: [A, B, C], turn,
         labels: { ab: `${q} ${u}`, bc: '', ca: `${p} ${u}` },
@@ -218,7 +222,16 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
         subTopic: 'Area of a Triangle from a Diagram',
         difficulty: 'exam',
         variationId: 'trig-diagram.area',
-        questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+        // Both papers list the three values after the diagram, as bullets with
+        // no stops: "• FG = 25 centimetres • FH = 32 centimetres • Angle GFH =
+        // 58°", and 2019's "• PR = 45 … • PQ = 70 … • Angle QPR = 129°". The
+        // owner, on the 2022 re-review: "Yes", for both. Built after
+        // verifyFigure, so no draw passes or fails differently.
+        questionLines: [prose[0], renderScene(fig.scene),
+          `&bull;&nbsp; $${A}${B} = ${q}$ ${unit}`,
+          `&bull;&nbsp; $${A}${C} = ${p}$ ${unit}`,
+          `&bull;&nbsp; Angle $${B}${A}${C} = ${angA}^{\\circ}$`,
+          ...prose.slice(1)],
         boardQuestionLines: [`Area, sides ${q} and ${p}, included angle ${angA}`],
         solutionSteps: steps,
         // •¹ correct substitution into the area formula, •² calculate the area

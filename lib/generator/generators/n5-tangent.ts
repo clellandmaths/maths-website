@@ -64,12 +64,22 @@ export function tangentQuestion(): Q {
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
 
+    // The paper's four sentences, each with its stop, all before the diagram.
+    // The owner, on the 2022 re-review sheet: "Yes". Built after verifyFigure,
+    // so no draw passes or fails differently.
+    const sentences = [
+      `The diagram below shows a circle with centre $${n.centre}$.`,
+      `$${n.tangentA}${n.tangentB}$ is a tangent to the circle at the point $${n.contact}$.`,
+      `$${n.contact}${n.far}$ is a diameter of the circle.`,
+      `Angle $${n.third}${n.centre}${n.far}$ is $${given}^{\\circ}.$`,
+    ];
+
     return {
       subTopic: 'A Tangent and a Diameter',
       difficulty: 'exam',
       variationId: 'angles.tangent-diameter',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      questionLines: [...sentences, renderScene(fig.scene), prose[prose.length - 1]],
       boardQuestionLines: [`Tangent at ${n.contact}, diameter ${n.contact}${n.far}, angle ${n.third}${n.centre}${n.far} = ${given}°. Find ${n.tangentA}${n.contact}${n.third}.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,

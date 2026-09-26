@@ -279,12 +279,24 @@ function twoElevations(): Q | null {
   ];
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
+  // 2022 P2 Q14's four bullets, with their stops, after the diagram: "• From
+  // C, the angle of elevation to A is 28°. • From D … 12°. • The distance from
+  // C to D is 15 metres. • BCD is a straight line." The owner, on the 2022
+  // re-review: "Yes". The straight-line sentence comes out of the opening and
+  // is the fourth. Built after verifyFigure, so no draw passes or fails
+  // differently.
+  const lineAt = prose[0].indexOf(` $${nB}${nC}${nD}$ is a straight line`);
+  const opening = lineAt > 0 ? prose[0].slice(0, lineAt) : prose[0];
+  const straight = lineAt > 0 ? prose[0].slice(lineAt + 1) : '';
+  const bullet = (s: string) => `&bull;&nbsp; ${s}`;
+
   return {
     subTopic: 'Two Angles of Elevation',
     difficulty: 'exam',
     variationId: 'composite.two-elevations',
     stepMarks: [1, 1, 1, 1, 1],
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    questionLines: [opening, renderScene(fig.scene), ...prose.slice(1, 4).map(bullet),
+      ...(straight ? [bullet(straight)] : []), prose[4]],
     boardQuestionLines: [`Elevations ${near}° and ${far}° from two points ${d} m apart. Nearer distance?`],
     solutionSteps: steps,
     finalAnswer: `$${dp1(b1)}$ metres`,

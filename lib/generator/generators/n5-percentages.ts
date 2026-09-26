@@ -243,7 +243,83 @@ const BANDS: Record<string, [number, number, number]> = {
   'A bee colony contains % bees.': [20000, 80000, 500],
 };
 
+/**
+ * **2022 P2 Q2 counts its own years, to the nearest thousand pounds.** — 2026-09-26
+ *
+ * "A company's annual profit at the end of 2021 was £215,000. The profit is
+ * expected to increase by 3% each year. Calculate the company's expected annual
+ * profit by the end of 2025. Give your answer correct to the nearest thousand
+ * pounds." Two of its three marks are the shape: •² "know how to calculate
+ * expected profit after 4 years" (the pupil counts 2021 to 2025) and •³
+ * "evaluate to nearest thousand pounds". Measured on the 2022 re-review, 400
+ * draws of its id: "after n years" in all 400, the nearest thousand in none.
+ * The owner: "Yes".
+ *
+ * Its own list, not a filter of `ASSET_CONTEXTS`, so no shared context and no
+ * other paper's draws move: every entry is money that grows and is worth
+ * hundreds of thousands, where the nearest thousand is a real instruction.
+ * Taken before any random is drawn, on 2022's alias alone.
+ */
+const COMPOUND_2022 = 'percentages.compound-pre2023';
+const YEAR_END_CONTEXTS_2022: { opening: (y: number, v: string) => string; grows: string;
+  ask: (y: number) => string }[] = [
+  { opening: (y, v) => `A company's annual profit at the end of ${y} was ${v}.`,
+    grows: 'The profit is', ask: y => `Calculate the company's expected annual profit by the end of ${y}.` },
+  { opening: (y, v) => `A charity's annual income at the end of ${y} was ${v}.`,
+    grows: 'Its income is', ask: y => `Calculate the charity's expected annual income by the end of ${y}.` },
+  { opening: (y, v) => `A football club's annual turnover at the end of ${y} was ${v}.`,
+    grows: 'The turnover is', ask: y => `Calculate the club's expected annual turnover by the end of ${y}.` },
+  { opening: (y, v) => `A shop's annual sales at the end of ${y} were ${v}.`,
+    grows: 'Sales are', ask: y => `Calculate the shop's expected annual sales by the end of ${y}.` },
+  { opening: (y, v) => `The value of a house at the end of ${y} was ${v}.`,
+    grows: 'Its value is', ask: y => `Calculate the expected value of the house by the end of ${y}.` },
+  { opening: (y, v) => `The value of a holiday cottage at the end of ${y} was ${v}.`,
+    grows: 'Its value is', ask: y => `Calculate the expected value of the cottage by the end of ${y}.` },
+  { opening: (y, v) => `A hotel's annual profit at the end of ${y} was ${v}.`,
+    grows: 'The profit is', ask: y => `Calculate the hotel's expected annual profit by the end of ${y}.` },
+  { opening: (y, v) => `The value of a woodland at the end of ${y} was ${v}.`,
+    grows: 'Its value is', ask: y => `Calculate the expected value of the woodland by the end of ${y}.` },
+];
+
+function compound2022(): Q {
+  const ctx = pick(YEAR_END_CONTEXTS_2022);
+  let rate = 0, multiplier = 0, years = 0, start = 0, value = 0;
+  for (let tries = 0; tries < 200; tries++) {
+    ({ rate, multiplier } = drawRate(true));
+    years = getRandomInt(2, 5);                       // the paper's is 4
+    start = getRandomInt(20, 180) * 5000;             // £100,000 to £900,000; the paper's is £215,000
+    value = start * Math.pow(multiplier, years);
+    // The third mark is the rounding, so there has to be some to do.
+    if (Math.abs(value / 1000 - Math.round(value / 1000)) > 0.01) break;
+  }
+  const from = getRandomInt(2015, 2023);
+  const to = from + years;
+  const rounded = Math.round(value / 1000) * 1000;
+  return {
+    subTopic: 'Compound Appreciation & Depreciation',
+    difficulty: 'skill',
+    variationId: 'percentages.compound',
+    questionLines: [
+      ctx.opening(from, `£${money(start, 0)}`),
+      `${ctx.grows} expected to increase by ${rate}% each year.`,
+      ctx.ask(to),
+      'Give your answer correct to the nearest thousand pounds.',
+    ],
+    boardQuestionLines: [`£${money(start, 0)} at the end of ${from}, up ${rate}% each year. Value by the end of ${to}?`],
+    solutionSteps: [
+      `<strong>1.</strong> Find the multiplier for an increase of ${rate}%:<br><br>$100\\% + ${rate}\\% = ${Math.round((100 + rate) * 10) / 10}\\% = ${multiplier}$`,
+      `<strong>2.</strong> From the end of ${from} to the end of ${to} is ${years} years, so apply it ${timesWord(years)}:<br><br>$${money(start, 0)} \\times ${multiplier}^{${years}}$`,
+      `<strong>3.</strong> Evaluate, and round to the nearest thousand pounds:<br><br>$= £${money(value, 2)} = £${money(rounded, 0)}$`,
+    ],
+    // •¹ know how to increase by the rate, •² after the right number of years,
+    // •³ evaluate to the nearest thousand pounds
+    stepMarks: [1, 1, 1],
+    finalAnswer: `£${money(rounded, 0)}`,
+  };
+}
+
 function compound(wanted?: string, asked?: string): Q {
+  if (asked === COMPOUND_2022) return compound2022();
   // Pick the shape, then a context that fits it — not a context and whatever
   // shape it implies.
   //
@@ -800,7 +876,13 @@ const POUND = '\u00a3';
  * **2025 P1 Q4 still has the fault**, and is signed off, so it is left exactly
  * as it is and flagged rather than quietly fixed.
  */
-function reverseNonCalculator(): Q {
+function reverseNonCalculator(asked?: string): Q {
+  // 2022 P1 Q10 pays £16.10 for a £23 original, so its non-calculator step is
+  // dividing pence by 7. A step of 10 or 50 made every price paid whole: 0 of
+  // 400. The owner, on the 2022 re-review: "Yes" to letting about half the
+  // originals be any whole pound. Keyed on 2022's own alias, and the extra toss
+  // is drawn only there, so 2025 P1 Q4 draws exactly as it did.
+  const for2022 = asked === 'percentages.reverse-non-calculator-2022';
   for (let tries = 0; tries < 400; tries++) {
     // A discount, because 2022 P1 Q10 is a discount, and a rate whose divisor
     // is a multiple of ten so that 10% is one short division away.
@@ -810,7 +892,7 @@ function reverseNonCalculator(): Q {
     // form reaches.
     const ctx = pick(REVERSE_CONTEXTS.filter(c => !c.up && c.band[1] <= 1200));
     const [lo, hi] = ctx.band;
-    const step = hi > 400 ? 50 : 10;
+    const step = for2022 && getRandomInt(0, 1) === 0 ? 1 : hi > 400 ? 50 : 10;
     const original = getRandomInt(Math.ceil(lo / step), Math.floor(hi / step)) * step;
     const given = original * (1 - rate / 100);
     // Exact pence, and the 10% step a pupil actually takes has to be exact
@@ -845,7 +927,7 @@ export const PERCENTAGE_GENERATORS: Record<string, Gen> = {
   // share its target id. See the note above `compound`.
   'Compound Appreciation & Depreciation': (w, asked) => compound(w, asked),
   'Reverse Percentages': reverse,
-  'Reverse Percentages without a Calculator': reverseNonCalculator,
+  'Reverse Percentages without a Calculator': (_w, asked) => reverseNonCalculator(asked),
   'Percentage Change': percentageChange,
   'Two-Stage Depreciation': twoStage,
   // `asked` is passed through so 2019 P2 Q1 can be pinned to its own
