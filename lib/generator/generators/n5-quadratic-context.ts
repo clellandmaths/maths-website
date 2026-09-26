@@ -215,7 +215,7 @@ function landsBelow(): Q | null {
     `<strong>4.</strong> Factorise:<br><br>$(${d}t - ${m})(t + 1) = 0$`,
     `<strong>5.</strong> So $t = \\frac{${m}}{${d}}$ or $t = -1$. Time cannot be negative, so:<br><br>$t = \\frac{${m}}{${d}} = ${decimal}$ seconds`,
   ];
-  return assemble({
+  const q = assemble({
     view,
     plot: { kind: 'parabola', a: -d, h: up / (2 * d), k: peak },
     domain: [0, t],
@@ -230,6 +230,24 @@ function landsBelow(): Q | null {
     // factorise, solve and select — 4.
     steps, [1, 1, 1, 1, 1],
     `(a) ${withUnit(at, 'metres')}<br>(b) $\\frac{${m}}{${d}} = ${decimal}$ seconds`);
+  if (!q) return null;
+  /**
+   * **The graph after part (a), with the paper's own sentence — 2026-09-26.**
+   * 2019 P1 Q15 prints its cliff picture at the top and the graph after (a):
+   * "The graph below represents the height, h metres, of the ball relative to
+   * the clifftop after t seconds." This put the graph at the top and never
+   * printed that sentence. The owner, on the 2019 re-review sheet: "Yes". The
+   * picture stays out by the owner's ruling. `assemble` is shared with 2014
+   * P1 Q13, so the lines are reordered here, after `verifyFigure`, and no draw
+   * passes or fails differently.
+   */
+  const graph = q.questionLines[1];
+  q.questionLines = [
+    prose[0], '', prose[2], '', prose[4], '',
+    `The graph below represents the height, $h$ metres, of the ${c.noun} relative to the ${c.from} after $t$ seconds.`,
+    graph, '', prose[6], '', prose[8],
+  ];
+  return q;
 }
 
 // ── dispatch ─────────────────────────────────────────────────────────────

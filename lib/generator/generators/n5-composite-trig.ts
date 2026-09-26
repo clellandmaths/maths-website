@@ -217,7 +217,13 @@ function heightOverBase(bare: boolean): Q | null {
     subTopic: bare ? 'A Perpendicular Inside a Triangle' : 'Two Angles of Elevation',
     difficulty: 'exam',
     variationId: bare ? 'composite.perpendicular-in-triangle' : 'composite.height-from-two-angles',
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    // 2019 P2 Q19 gives its three facts as bullets without stops: "• The
+    // angle of elevation of the balloon from Katy is 52°" and the next two.
+    // The owner, on the 2019 re-review sheet: "Yes". The watchers' branch is
+    // that paper's alone, and this is after verifyFigure.
+    questionLines: bare
+      ? [prose[0], renderScene(fig.scene), ...prose.slice(1)]
+      : [prose[0], renderScene(fig.scene), ...prose.slice(1, 4).map(l => `&bull;&nbsp; ${l}`), ...prose.slice(4)],
     boardQuestionLines: [`Base ${L} ${short}, base angles ${alpha}° and ${gamma}°. Height?`],
     solutionSteps: steps,
     stepMarks: [1, 1, 1, 1, 1],

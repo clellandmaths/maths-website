@@ -77,7 +77,15 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
           { kind: 'dot', at: O, small: true },
           ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: O })),
           // no diameter here, so the letter can sit straight below the centre
-          { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start), r * 0.4) },
+          //
+          // **Except that a nonagon's gap there is only 40 degrees**, and the
+          // letter pushed off O sat on the dashed radii in every nonagon draw.
+          // The owner, on the 2019 re-review sheet: "Just move the O". So for
+          // more than five sides it sits further out, centred in the gap where
+          // it has widened; the pentagon, whose gap is 72, is drawn as before.
+          n > 5
+            ? { kind: 'label', text: spec.centre, anchor: scale(dir(start + 180), r * 0.3), away: O, centred: true }
+            : { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start), r * 0.4) },
         ],
       },
       claims: [

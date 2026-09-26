@@ -308,7 +308,13 @@ function clearDenominators(shape: 1 | 2 | 3): Q {
       const c = nonZeroInt(-6, 6), r = nonZeroInt(-3, 3), s = nonZeroInt(-9, 9);
       // v/m carries an implied 1 and is always in lowest terms; the other is not.
       if (!lowestTerms(r, s, n)) continue;
-      question = `\\frac{${v}}{${m}} ${c < 0 ? '-' : '+'} ${Math.abs(c)} = \\frac{${lin(r, s, v)}}{${n}}`;
+      // **The paper's order, "3 - x" — 2026-09-26.** 2019 P1 Q14's numerator
+      // opens with its number; this printed "-2x + 3". The owner, on the 2019
+      // re-review sheet: "Yes". Only how it is printed, and this shape serves
+      // 2019 P1 Q14 alone. With a negative constant too there is no order that
+      // does not open with a minus, so that case is left as it was.
+      const top = r < 0 && s > 0 ? `${s} - ${term(-r, v)}` : lin(r, s, v);
+      question = `\\frac{${v}}{${m}} ${c < 0 ? '-' : '+'} ${Math.abs(c)} = \\frac{${top}}{${n}}`;
       cleared = `${lin(L / m, L * c, v)} = ${lin(L / n * r, L / n * s, v)}`;
       a = L / m - L / n * r;
       b = L / n * s - L * c;
@@ -342,10 +348,11 @@ function clearDenominators(shape: 1 | 2 | 3): Q {
       //
       // 2025 P2 Q13, the linear-top shape and that paper's alone, ends with a
       // stop inside the maths. The owner, 2026-09-25: "if the only fixes is
-      // putting full stops just do that without asking me".
+      // putting full stops just do that without asking me". 2019 P1 Q14, the
+      // each-side shape and that paper's alone, ends the same way.
       questionLines: shape === 1
         ? [`Solve the equation $${question}$`, 'Give your answer in its simplest form.']
-        : [`Solve the equation $${question}${shape === 3 ? '.' : ''}$`],
+        : [`Solve the equation $${question}.$`],
       boardQuestionLines: [`Solve $${question}$`],
       solutionSteps: [
         `<strong>1.</strong> The denominators are $${m}$ and $${n}$, so multiply <strong>every</strong> term by $${L}$:<br><br>$${cleared}$`,

@@ -478,7 +478,17 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
       : majorOnly ? CONTEXTS.filter(x => x.sweep !== 'minor') : CONTEXTS);
     const sweep = minorOnly || minor2023 ? 'minor' as const
       : majorOnly ? 'major' as const : c.sweep;
-    const [nO, nA, nB] = c.letters;
+    /**
+     * **2019 P1 Q4 in the paper's words — 2026-09-26.** "The diagram below
+     * shows a sector of a circle, centre C." No story, the 240 degrees on the
+     * diagram only, the points C, A and B, and a dot at the centre. The clone
+     * told a story in 340 of 400 draws and stated the angle in 400. The owner,
+     * on the 2019 re-review sheet: "Confirm". The context is still drawn, for
+     * its radius band and unit; only its words and letters are not read, so
+     * REFLEX_CONTEXTS, shared with 2017 P2 Q14 and 2022 P2 Q10, is untouched.
+     * This kind has its own subTopic and draw loop, so nothing else moves.
+     */
+    const [nO, nA, nB] = majorArc ? ['C', 'A', 'B'] : c.letters;
     const r = getRandomInt(c.band[0], c.band[1]);
     const start = getRandomInt(0, 11) * 30;
 
@@ -559,7 +569,8 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
     // is optional rather than nullable. Both mean the same thing to the retry
     // below - `if (!q.figure) continue` - so the conversion loses nothing.
     const built = (labels: { radius: string; angle: string; arc: string }) =>
-      sector({ radius: r, angle, start, names: { centre: nO, a: nA, b: nB }, labels })
+      sector({ radius: r, angle, start, names: { centre: nO, a: nA, b: nB }, labels,
+        ...(majorArc ? { centreDot: true } : {}) })
       ?? undefined;
 
     const facts = {
@@ -628,9 +639,12 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         subTopic: majorArc ? 'Length of a Major Arc' : 'Length of an Arc',
         difficulty: 'exam',
         variationId: paper1 ? 'sector.arc-angle-pi314' : 'sector.arc-angle',
-        questionLines: [c.intro(nO, nA, nB), '', facts.radius,
-          ...(minor2023 ? [] : [facts.angle]),
-          `Calculate the length of ${angle > 180 ? 'major ' : ''}arc $${nA}${nB}$.`,
+        questionLines: [
+          majorArc ? `The diagram below shows a sector of a circle, centre $${nO}$.` : c.intro(nO, nA, nB),
+          '', facts.radius,
+          ...(minor2023 || majorArc ? [] : [facts.angle]),
+          majorArc ? `Calculate the length of the major arc $${nA}${nB}$.`
+            : `Calculate the length of ${angle > 180 ? 'major ' : ''}arc $${nA}${nB}$.`,
           // **Neither arc paper asks for a decimal place.** 2018 P2 Q2 and
           // 2023 P2 Q3 both stop at "Calculate the length of the arc", and
           // 2023's scheme takes "16.9(27...) or 17" as it comes. The Paper 1

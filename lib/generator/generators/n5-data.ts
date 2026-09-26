@@ -306,6 +306,26 @@ function medianCompare(semi: boolean, asked?: string): Q {
      */
     const is2024 = asked === 'data.median-iqr-compare-2024';
     const lead = ctx.lead(n);
+    /**
+     * **2019 P1 Q5 and 2015 P1 Q10 in their papers' words — 2026-09-26.** Both
+     * printed "A sample taken from … has a median of …" in 400 of 400; neither
+     * paper says it. 2019: "Over the same nine day period the midday
+     * temperatures in Endoch were also recorded. The median temperature was
+     * 8 °C, and the semi-interquartile range was 1.5 °C." 2015, inside part
+     * (b): "In the second round, the median was 26 and the semi-interquartile
+     * range was 2.5." The owner, on the 2019 re-review sheet: "Yes and fix in
+     * 2015". Words only, on each paper's own id; nothing is drawn differently.
+     */
+    const stated = `${semi ? 'a' : 'an'} ${name} of ${amount(otherSpread, ctx)}`;
+    const compare = `Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`;
+    const given = paper2019
+      ? [`The ${ctx.quantity} for ${ctx.groupB} were also recorded.`,
+         `The median was ${amount(otherMed, ctx)}, and the ${name} was ${amount(otherSpread, ctx)}.`,
+         `(b) ${compare}`]
+      : paper2015
+        ? [`(b) For ${ctx.groupB}, the median was ${amount(otherMed, ctx)} and the ${name} was ${amount(otherSpread, ctx)}. ${compare}`]
+        : [`A sample taken from ${ctx.groupB} has a median of ${amount(otherMed, ctx)} and ${stated}.`,
+           `(b) ${compare}`];
     return {
       subTopic: 'Comparing Median and Interquartile Range',
       difficulty: 'exam',
@@ -317,12 +337,12 @@ function medianCompare(semi: boolean, asked?: string): Q {
         // The unit goes on both figures, as 2019 P1 Q5 puts it on both: "The
         // median temperature was 8 °C, and the semi-interquartile range was
         // 1.5 °C." And "a interquartile range" was printing in every draw.
-        `A sample taken from ${ctx.groupB} has a median of ${amount(otherMed, ctx)} and ${semi ? 'a' : 'an'} ${name} of ${amount(otherSpread, ctx)}.`,
+        //
         // Both groups are named, as all five papers name them - "comparing the
         // midday temperatures of Grantford and Endoch". The scheme refuses a
         // comment that does not say whose values are whose, so a question that
         // never names them is asking for something it has not set up.
-        `(b) Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`,
+        ...given,
       ],
       boardQuestionLines: [`Median and ${semi ? 'SIQR' : 'IQR'} of ${row(sorted, ctx)}, then compare with ${show(otherMed, ctx)} and ${show(otherSpread, ctx)}`],
       // Five marks, 3 + 2: •¹ the median, •² the quartiles, •³ the IQR, then

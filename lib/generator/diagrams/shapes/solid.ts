@@ -53,7 +53,14 @@ const DEPTH_DIR = pt(Math.cos(Math.PI / 6), Math.sin(Math.PI / 6));
  * step, not the diagram's.
  */
 export type Piece =
-  | { kind: 'cylinder'; r: number; h: number }
+  | { kind: 'cylinder'; r: number; h: number;
+      /**
+       * Something sits on the top, so the back half of the top rim is hidden
+       * and dashed, as 2019 P2 Q8 draws the rim under its bollard's dome. The
+       * owner, on the 2019 re-review sheet: "Yes". Opt-in; every other
+       * cylinder draws its open top whole, as it did.
+       */
+      capped?: true }
   | { kind: 'cone'; r: number; h: number }
   /** A cone with its tip cut off — `rTop` is the radius of the cut. */
   | { kind: 'frustum'; r: number; rTop: number; h: number }
@@ -279,7 +286,7 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
       return [
         seg(at(-p.r, 0), at(-p.r, p.h)),
         seg(at(p.r, 0), at(p.r, p.h)),
-        ...rim(at(0, p.h), p.r, true, dashed),
+        ...rim(at(0, p.h), p.r, !p.capped, dashed),
         ...rim(at(0, 0), p.r, false, dashed),
       ];
     }

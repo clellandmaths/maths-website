@@ -178,7 +178,15 @@ export function twoCircles(spec: TwoCirclesSpec): Figure | null {
   const C = pt(0, r), D = pt(0, -r - bodyR);
   elements.push(
     { kind: 'circle', centre: S, r },
-    { kind: 'circle', centre: T, r: bodyR },
+    /**
+     * **The body is "part of a larger circle", and only that part is drawn.**
+     * — 2026-09-26. 2019 P2 Q18 draws the body from A round the bottom to B
+     * and stops where it meets the head; this drew the whole circle, arc
+     * inside the head and all. The owner, on the 2019 re-review sheet: "Yes".
+     * Anticlockwise from A (135 degrees about T) to B (45), which is the long
+     * way round, through D. Snowman branch only, which is that paper's alone.
+     */
+    { kind: 'arc', centre: T, r: bodyR, from: bearing(T, A), to: bearing(T, B) },
     { kind: 'segment', from: A, to: B, dashed: true },
     // **One solid line the whole way down, C through S and T to D** — which is
     // how 2019 P2 Q18 draws it, and CD is what its question asks for. This drew

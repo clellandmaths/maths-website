@@ -243,9 +243,22 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
 
     if (kind === 'angle') {
       // 2019 P2 Q7, 2024 P2 Q3: three sides, find an angle
-      const whole = { ab: q, bc: Math.round(bc), ca: p };
-      if (!drawable(whole.ab, whole.bc, whole.ca)) continue;
       const smallest = smallestAngle;
+      /**
+       * **2019 P2 Q7's sides have one decimal place — 2026-09-26.** 6·3, 8·5
+       * and 7·2 cm, and its scheme works with them: cos Z = 84·4/122·4. This
+       * printed whole sides in 400 of 400. The owner, on the 2019 re-review
+       * sheet: "Yes". The tenths are drawn only on the smallest-angle branch,
+       * which is 2019's id, so 2024 P2 Q3's draws are exactly as before.
+       */
+      let whole = { ab: q, bc: Math.round(bc), ca: p };
+      if (smallest) {
+        const t1 = getRandomInt(1, 9), t2 = getRandomInt(1, 9);
+        const third = Number(bc.toFixed(1));
+        if (Number.isInteger(third)) continue;
+        whole = { ab: Number((q + t1 / 10).toFixed(1)), bc: third, ca: Number((p + t2 / 10).toFixed(1)) };
+      }
+      if (!drawable(whole.ab, whole.bc, whole.ca)) continue;
       /**
        * **2024 P2 Q3's shaded angle is OBTUSE, and that is the question.**
        *
@@ -291,7 +304,9 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
       });
       if (!fig) continue;
       const prose = [
-        `The diagram shows triangle $${A}${B}${C}$.`,
+        // 2019 P2 Q7 opens "Triangle XYZ is shown below." The owner, on the
+        // 2019 re-review sheet: "Yes". Its own branch only.
+        smallest ? `Triangle $${A}${B}${C}$ is shown below.` : `The diagram shows triangle $${A}${B}${C}$.`,
         /**
          * **Neither paper asks for a decimal place, and neither shades
          * nothing.**

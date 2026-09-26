@@ -827,11 +827,23 @@ export function pythagorasConverse(wanted?: string, asked?: string): Q {
       ? `Yes — the angle at ${corner} is a right angle`
       : `No — the angle at ${corner} is not a right angle`;
 
+    /**
+     * **2019 P2 Q11 names each length — 2026-09-26.** "• B is 600 metres from
+     * A" and "• C is 650 metres from A", without stops. This printed "Two of
+     * them are … and …" in 400 of 400 and left the figure to say which. The
+     * owner, on the 2019 re-review sheet: "Yes". The from-total shape is that
+     * paper's alone; each story keeps its own ask.
+     */
+    const [nA, nB, nC] = names;
+    const shownBullet = missing === 0
+      ? `&bull;&nbsp; ${nC} is ${q} ${ctx.unit} from ${nB}`
+      : `&bull;&nbsp; ${nB} is ${p} ${ctx.unit} from ${nA}`;
     const prose = fromTotal
       ? [
           ctx.scene(names[0], names[1], names[2]),
           `The total of the three distances is ${total} ${ctx.unit}.`,
-          `Two of them are ${shownShort} ${ctx.unit} and ${r} ${ctx.unit}.`,
+          shownBullet,
+          `&bull;&nbsp; ${nC} is ${r} ${ctx.unit} from ${nA}`,
           ctx.asks(corner, names[0], names[1], names[2]),
         ]
       : [
@@ -1712,15 +1724,22 @@ export function pythagorasTwoCircles(wanted?: string): Q {
         labels: { radius: '', chord: '' },
       });
       if (!fig) continue;
+      /**
+       * **The paper's four bullets and no rounding line — 2026-09-26.** 2019
+       * P2 Q18's scheme takes 25.6... as it comes, and its bullets are the
+       * four below; this reworded them and asked for one decimal place in 400
+       * of 400. The owner, on the 2019 re-review sheet: "Yes". The snowman is
+       * that paper's alone. The answer is still shown to 1 d.p.
+       */
       const prose = [
         `The diagram represents a cartoon snowman.`,
-        `&bull;&nbsp; The head is a circle, centre $S$, with diameter ${num(diameter)} centimetres`,
-        `&bull;&nbsp; The body is a larger circle, centre $T$`,
-        `&bull;&nbsp; $T$ lies on the circumference of the head, and $AB$ is a chord of the body`,
-        `&bull;&nbsp; $C$ is the top of the head and $D$ is the foot of the body`,
+        `&bull;&nbsp; The head is a small circle, centre $S$, with diameter ${num(diameter)} centimetres`,
+        `&bull;&nbsp; The body is part of a larger circle, centre $T$`,
+        `&bull;&nbsp; The point $T$ lies on the circumference of the small circle`,
+        `&bull;&nbsp; The points $A$ and $B$ lie on the circumferences of both circles`,
         // 2019 P2 Q18 asks for "CD, the height of the snowman" — by the letters
         // it puts on the figure, not for "the total height".
-        `Calculate $CD$, the height of the snowman. Give your answer correct to one decimal place.`,
+        `Calculate $CD$, the height of the snowman.`,
       ];
       // Four marks, as every Pythagoras-in-context question in these papers is:
       // •¹ marshal the facts and recognise the right-angled triangle, •² a

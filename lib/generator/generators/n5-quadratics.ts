@@ -144,8 +144,9 @@ function completeSquare(_wanted?: string, asked?: string): Q {
     // 2025 P2 Q5 ends "in the form (x + a)^2 + b." with the stop inside the
     // maths. The owner, 2026-09-25: "if the only fixes is putting full stops
     // just do that without asking me". Its own id only; words, no random.
+    // 2019 P2 Q10 ends the same way, on its own alias.
     questionLines: [
-      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${asked === 'quadratics.complete-square' ? '.' : ''}$`,
+      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${PLUS ? '.' : ''}$`,
     ],
     boardQuestionLines: [`$${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}$`],
     // Two marks in all four papers — •¹ correct bracket with square, •² complete
@@ -356,6 +357,15 @@ function quadraticFormula(wanted?: string, asked?: string): Q {
     const r = Math.sqrt(d);
     if (Number.isInteger(r)) continue;              // a perfect square would factorise
 
+    /**
+     * **No common factor in a, b and c on 2019's and 2017's — 2026-09-26.**
+     * 3x^2 - 3x - 9 = 0 in 38 of 400 of 2019 P2 Q6's draws and 36 of 2017 P2
+     * Q4's; their papers, 3x^2 + 9x - 2 and 2x^2 + 5x - 4, have none. The
+     * owner, on the 2019 re-review sheet: "Yes and fix 2017". A rejection on
+     * those two ids only, so 2022 P2 Q7 and 2024 P2 Q8 draw exactly as before.
+     */
+    if ((asked === 'quadratics.formula' || asked === 'quadratics.formula-2017')
+      && gcd(gcd(a, Math.abs(b)), Math.abs(c)) > 1) continue;
     const x1 = (-b + r) / (2 * a), x2 = (-b - r) / (2 * a);
     // a root just below zero rounds to the string "-0.0", which looks like a mistake
     if (Math.abs(x1) < 0.15 || Math.abs(x2) < 0.15) continue;
@@ -400,7 +410,10 @@ function quadraticFormula(wanted?: string, asked?: string): Q {
          * is forced either way - the pupil just has to make it.
          */
         `Solve the equation $${fmt([c, b, a], v)} = 0$.`,
-        rounding.phrase,
+        // 2019 P2 Q6 writes the numeral, "correct to 1 decimal place"; 2017
+        // P2 Q4, on its own alias, says "one". The owner, on the 2019
+        // re-review sheet: "Yes". Words only, on 2019's id.
+        asked === 'quadratics.formula' ? 'Give your answers correct to 1 decimal place.' : rounding.phrase,
       ],
       boardQuestionLines: [`Solve $${fmt([c, b, a], v)} = 0$ by formula. ${rounding.phrase}`],
       // •¹ correct substitution into the formula, •² evaluate the discriminant,

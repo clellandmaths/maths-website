@@ -41,6 +41,11 @@ export interface SectorSpec {
    */
   bareAngleMark?: boolean;
   centreInWedge?: boolean;
+  /**
+   * **2019 P1 Q4's picture — opt-in, 2026-09-26.** The paper marks the centre
+   * C with a dot. Off for every other caller, so no other figure moves.
+   */
+  centreDot?: boolean;
 }
 
 const dir = (deg: number): Pt =>
@@ -95,6 +100,7 @@ export function sector(spec: SectorSpec): Figure | null {
     { kind: 'label', text: nB, anchor: B, away: O },
   ];
 
+  if (spec.centreDot) elements.push({ kind: 'dot', at: O, small: true });
   if (L.radius) elements.push(sideLabel(O, A, L.radius, crowdedForRadius));
   if (L.angle) {
     // The angle mark sweeps the same way as the sector, so a reflex angle is

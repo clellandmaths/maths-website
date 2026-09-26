@@ -877,9 +877,20 @@ function cylinderPlusHemisphere(): Q | null {
   const cyl = Math.PI * r * r * straight;
   const exact = hemi + cyl;
 
+  /**
+   * **2019 P2 Q8 in its paper's layout — 2026-09-26.** "The bollard has" and
+   * two bullets, "• diameter 24 centimetres" and "• height 70 centimetres.";
+   * the figure draws both as arrows, the height on the right, and dashes the
+   * back of the rim hidden by the dome. This ran the two into one sentence
+   * and drew plain dashed lines with the height on the left. The owner, on
+   * the 2019 re-review sheet: "Yes". This routine is that paper's alone, and
+   * the rim is an opt-in on the shared cylinder.
+   */
   const prose = [
     `${c.intro}.`,
-    `The ${c.thing} has diameter ${dia} ${c.unit} and height ${total} ${c.unit}.`,
+    `The ${c.thing} has`,
+    `&bull;&nbsp; diameter ${dia} ${c.unit}`,
+    `&bull;&nbsp; height ${total} ${c.unit}.`,
     `Calculate the volume of the ${c.thing}.`,
     `Give your answer correct to ${sf} significant figures.`,
   ];
@@ -893,10 +904,10 @@ function cylinderPlusHemisphere(): Q | null {
     rounded(5, exact, sf, c.short),
   ];
   return assemble({
-    stack: [{ kind: 'cylinder', r, h: straight }, { kind: 'hemisphere', r }],
+    stack: [{ kind: 'cylinder', r, h: straight, capped: true }, { kind: 'hemisphere', r }],
     dims: [
-      { along: 'width', halfWidth: r, side: 'below', value: dia, text: `${dia} ${c.short}` },
-      { along: 'height', from: 0, to: total, side: 'left', value: total, text: `${total} ${c.short}` },
+      { along: 'width', halfWidth: r, side: 'below', value: dia, text: `${dia} ${c.short}`, arrow: true },
+      { along: 'height', from: 0, to: total, side: 'right', value: total, text: `${total} ${c.short}`, arrow: true },
     ],
   }, 'A Cylinder with a Dome on Top', 'volume.cylinder-plus-hemisphere', prose,
     `Cylinder with a hemisphere on top, diameter ${dia}, height ${total}. Volume?`,

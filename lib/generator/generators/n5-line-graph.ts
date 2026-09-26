@@ -201,10 +201,14 @@ export const CONTEXTS: LineContext[] = [
   //
   // THE FIRST IS THE PAPER'S OWN CONTEXT, which the clone did not have at all:
   // 2019 P1 Q6 is fuel consumption against engine size, F = -3E + 18.5.
+  // It names them in that order, "between the fuel consumption, F kilometres
+  // per litre, and the engine size, E litres"; this had them the other way
+  // round. The owner, on the 2019 re-review sheet: "Yes". Read by 2019's
+  // alias alone (`only`), so nothing else moves.
   //
   // Each base is the value at x = 0 — the largest the quantity gets — and each
   // band keeps the line above zero at the far end of the plotted range.
-  { story: 'The fuel consumption of a group of cars is recorded. The scattergraph shows the relationship between the engine size, $E$ litres, and the fuel consumption, $F$ kilometres per litre, of the cars.',
+  { story: 'The fuel consumption of a group of cars is recorded. The scattergraph shows the relationship between the fuel consumption, $F$ kilometres per litre, and the engine size, $E$ litres, of the cars.',
     scatter: true, only: 'straight-line.best-fit-grid-pre2023',
     x: { letter: 'E', caption: 'Engine size (litres)' },
     y: { letter: 'F', caption: 'Fuel consumption (km/l)' },

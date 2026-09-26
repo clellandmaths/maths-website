@@ -501,7 +501,12 @@ function componentsMidpoint(): Q {
     const whole = first.map((v, i) => v + second[i]);
     const half = first.map(v => v / 2);
     const toEnd = half.map((v, i) => v + second[i]);
-    if (whole.every(v => v === 0) || toEnd.every(v => v === 0)) continue;
+    // **Never a zero component in either answer — 2026-09-26.** The paper's
+    // are (5, 4) and (2, 6); 68 of 400 draws had a zero in PQ or MQ, which
+    // lets a pupil get one component right by accident. The owner, on the
+    // 2019 re-review sheet: "Yes", as on 2025 P1 Q13. 2019 P1 Q10 is this
+    // routine's only paper.
+    if (whole.some(v => v === 0) || toEnd.some(v => v === 0)) continue;
 
     // The three corners must make a real triangle. Collinear vectors give a
     // straight line and a nearly-collinear pair gives a sliver that cannot be

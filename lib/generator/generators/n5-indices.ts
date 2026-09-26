@@ -434,7 +434,9 @@ function rootInDenominator(): Q {
       subTopic: 'A Root in the Denominator',
       difficulty: 'exam',
       variationId: 'indices.root-denominator',
-      questionLines: [`Simplify $\\frac{${numerator}}{\\sqrt{${v}}}$`],
+      // 2019 P2 Q16 ends with a stop inside the maths. The owner, 2026-09-25:
+      // "if the only fixes is putting full stops just do that without asking me".
+      questionLines: [`Simplify $\\frac{${numerator}}{\\sqrt{${v}}}.$`],
       boardQuestionLines: [`$\\frac{${numerator}}{\\sqrt{${v}}}$`],
       solutionSteps: [
         `<strong>1.</strong> Multiply out the numerator, adding the powers:<br><br>$${numerator} = ${k}${pow(v, a + b)}$`,

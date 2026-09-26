@@ -309,7 +309,10 @@ export function polygonDiameterQuestion(): Q {
       '',
       `The design is then completed as shown below.`,
       '',
-      `&bull;&nbsp; $${A}${far}$ is a diameter of the circle`,
+      // The paper's sentence, "AF is a diameter of the circle.", not a bullet
+      // with no stop. The owner, on the 2019 re-review sheet: "Yes do the
+      // full stop". This routine is 2019 P1 Q11's alone.
+      `$${A}${far}$ is a diameter of the circle.`,
       `Calculate the size of angle $O${far}${B}$.`,
     ];
     const steps = [
