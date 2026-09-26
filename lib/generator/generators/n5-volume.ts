@@ -1129,7 +1129,9 @@ const WEIGHTS = [
   { thing: 'jelly mould', inner: 'cream', outer: 'set jelly' },
   { thing: 'chocolate bar', inner: 'caramel', outer: 'dark chocolate' },
   // No paving slab: at 2 to 12 centimetres it was a slab a few centimetres
-  // across. The owner, on the 2024 re-review sheet: "Yes".
+  // across. The owner, on the 2024 re-review sheet: "Yes". In its place the
+  // paper's own paperweight, on the owner's "Yes".
+  { thing: 'paperweight', inner: 'red glass', outer: 'clear glass' },
   { thing: 'packing block', inner: 'dense foam', outer: 'light foam' },
   { thing: 'butter block', inner: 'herb butter', outer: 'plain butter' },
 ];

@@ -158,10 +158,13 @@ function addSubtract(minus: boolean, bareDraw = false, wanted?: string, asked?: 
      * 2/(x + 5) + 3/(x - 4) = (5x + 7)/.... Equal numerators came up in 44 of
      * 400 draws, and with opposite constants the answer's constant cancelled
      * to nothing in 13 - 9/(x + 6) + 9/(x - 6) = 18x/.... The owner, on the
-     * 2024 re-review sheet: "Yes". Keyed on 2024's id; 2016 P2 Q13, on
-     * `-pre2023`, keeps its draw.
+     * 2024 re-review sheet: "Yes". 2016 P2 Q13, on `-pre2023`, is
+     * 3/(x - 2) + 5/(x + 1) and had the same two faults (equal numerators
+     * in 40-58 of 400, a zero constant in 4-8); the owner: "Yes" to the
+     * same fix there. Keyed on those two ids.
      */
-    if (asked === 'alg-fractions.add' && (p === q || (minus ? p * n - q * m : p * n + q * m) === 0)) continue;
+    if ((asked === 'alg-fractions.add' || asked === 'alg-fractions.add-pre2023')
+      && (p === q || (minus ? p * n - q * m : p * n + q * m) === 0)) continue;
     // **Positive, as all four subtraction papers are**: 7 - 3, 4 - 3, 7 - 2 and
     // 5 - 4 leave 4x, x, 5x and x on the numerator. With the smaller numerator
     // first it came out `90 - x` and `-x - 12`, which is a sign to carry that
