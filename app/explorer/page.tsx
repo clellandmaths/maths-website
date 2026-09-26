@@ -40,7 +40,7 @@ import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
 import { byPaperLabel, withParentVideo, courseHasHints, variationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
-import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
+import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
 
@@ -363,9 +363,10 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
    * markscheme, and the sheet is portaled to the body so that rule cannot be
    * broken by rearranging the worksheet.
    *
-   * The attribute is cleared in `finally`. Leaving it set would mean the next
-   * Print / Save PDF silently produced the markscheme instead of the paper,
-   * which is the one failure here that hands a class the answers.
+   * `printMarkscheme` sets and clears that attribute, and waits for the sheet
+   * to be on the page before the dialog opens; see there. Leaving it set would
+   * mean the next Print / Save PDF silently produced the markscheme instead of
+   * the paper, which is the one failure here that hands a class the answers.
    */
   const handlePrintMarkscheme = async () => {
     if (markschemeBusy || !worksheetItems.length) return;
@@ -373,18 +374,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     try {
       const { PAPER_MARKSCHEME } = await import('@/lib/generator/generators/paper-markscheme');
       setSchemes(PAPER_MARKSCHEME);
-      document.body.dataset.print = 'markscheme';
-      // One frame for the portal to mount before the print dialog reads the
-      // page. Raced, never awaited alone: a backgrounded tab fires no frame,
-      // and the same unguarded wait once turned a Print button into a button
-      // that did nothing at all.
-      await Promise.race([
-        new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))),
-        new Promise<void>(r => setTimeout(r, 300)),
-      ]);
-      await printWorksheet();
+      await printMarkscheme();
     } finally {
-      delete document.body.dataset.print;
       setMarkschemeBusy(false);
     }
   };

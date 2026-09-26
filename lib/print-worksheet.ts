@@ -161,6 +161,15 @@ const BUDGET_MS = 3500;
  * this does not wait at all.
  */
 export async function printWorksheet(root: ParentNode = document): Promise<void> {
+  // The paper's own button always prints the paper. A markscheme print that
+  // has not yet cleared its flag (see `printMarkscheme`) must never turn this
+  // into the answers.
+  clearMarkschemeFlag();
+  await printPage(root);
+}
+
+/** The shared tail of both prints: images in, then the dialog. */
+async function printPage(root: ParentNode): Promise<void> {
   // Everything that will reach the paper, not merely the worksheet's own —
   // see `printableImages`.
   const imgs = printableImages(root);
@@ -193,6 +202,72 @@ export async function printWorksheet(root: ParentNode = document): Promise<void>
   }
 
   window.print();
+}
+
+/**
+ * How long the click may wait for the markscheme sheet to be on the page.
+ *
+ * Short, because it comes out of the same iOS window as `BUDGET_MS`: the tap
+ * has to still count as recent when `window.print()` runs. The sheet is
+ * normally there within a frame or two; on the practice paper its component is
+ * loaded on demand, and the first press used to print before it arrived.
+ */
+const SHEET_BUDGET_MS = 1500;
+
+let flagCleanup: (() => void) | null = null;
+
+/** Take the "print the markscheme" flag off the page, and stop listening. */
+function clearMarkschemeFlag(): void {
+  if (typeof document === 'undefined') return;
+  delete document.body.dataset.print;
+  flagCleanup?.();
+  flagCleanup = null;
+}
+
+/**
+ * Print the markscheme, once it is actually on the page.
+ *
+ * **Waits for the sheet, not a fixed time**, as `printPage` waits for images.
+ * The caller has just set the state that mounts `MarkschemeSheet`; this polls
+ * for its questions, a frame at a time, capped by `SHEET_BUDGET_MS`. Two fixed
+ * frames used to stand in for that, and on the practice paper, whose sheet
+ * component loads on demand, the first press printed before the sheet existed,
+ * every time (measured 2026-09-26: 3 of 3 first presses, 0 of 3 second).
+ *
+ * If the sheet never arrives it does not print at all: a blank page, or the
+ * paper where the markscheme was asked for, is worse than a second press.
+ * Returns whether it printed.
+ *
+ * **The flag outlives `window.print()`.** Where print does not block (iPhone,
+ * iPad, Android), the browser takes its snapshot after the call returns, and a
+ * flag removed straight away printed the paper instead. So it is cleared on
+ * `afterprint`, or on the next tap or key press, whichever is first. The
+ * paper's own Print button clears it too (see `printWorksheet`), so the answers
+ * can never go out in the paper's place.
+ */
+export async function printMarkscheme(root: ParentNode = document): Promise<boolean> {
+  clearMarkschemeFlag();
+  document.body.dataset.print = 'markscheme';
+  const present = () => Boolean(document.querySelector('.markscheme-doc .markscheme-question'));
+  const until = Date.now() + SHEET_BUDGET_MS;
+  while (!present() && Date.now() < until) {
+    // A frame where there is one, a short timer where there is not (a
+    // backgrounded tab fires no frames; see `printPage`).
+    await Promise.race([
+      new Promise<void>(resolve => requestAnimationFrame(() => resolve())),
+      after(50),
+    ]);
+  }
+  if (!present()) {
+    clearMarkschemeFlag();
+    return false;
+  }
+  await printPage(root);
+  const events = ['afterprint', 'pointerdown', 'keydown'] as const;
+  const clear = () => clearMarkschemeFlag();
+  for (const e of events) window.addEventListener(e, clear, { capture: true });
+  flagCleanup = () => { for (const e of events) window.removeEventListener(e, clear, { capture: true }); };
+  return true;
 }
 
 /**

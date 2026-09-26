@@ -1,7 +1,11 @@
 'use client';
 
 import { createPortal } from 'react-dom';
-import MathRenderer from '@/components/MathRenderer';
+// Rendered in the same pass as the sheet, not in an effect after it: the
+// sheet exists only to be printed, and `MathRenderer` fills its maths after
+// mount, so a print that came quickly enough caught the marks with the
+// working still empty.
+import MathHtml from '@/components/MathHtml';
 import { variationLabel } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
@@ -72,7 +76,11 @@ export default function MarkschemeSheet({
         const generated = Boolean(q.uid?.startsWith('g:'));
         const label = variationLabel(q.question);
         const parent = q.basedOn?.[q.parentIndex ?? 0];
-        const scheme = !generated && label ? schemes[label] : undefined;
+        // **National 5's table, so National 5's questions only.** It is keyed
+        // by label, and every course labels its questions the same way: a
+        // Higher "2019 P1 Q5" looked up National 5's 2019 P1 Q5 and printed
+        // its marking instructions under the Higher question.
+        const scheme = courseId === 'n5' && !generated && label ? schemes[label] : undefined;
         const steps = generated ? (q.steps ?? []) : [];
         const marks = (q.marks ?? []).reduce((a, b) => a + b, 0);
 
@@ -97,7 +105,7 @@ export default function MarkschemeSheet({
 
             {scheme?.subject && (
               <p className="markscheme-subject">
-                <MathRenderer html={scheme.subject} className="inline" />
+                <MathHtml html={scheme.subject} className="inline" />
               </p>
             )}
 
@@ -112,8 +120,8 @@ export default function MarkschemeSheet({
                       <td className="markscheme-bullet">
                         {row.part ? `${row.part} ` : ''}&bull;<sup>{n + 1}</sup>
                       </td>
-                      <td><MathRenderer html={row.for} className="inline" /></td>
-                      <td><MathRenderer html={row.shows} className="inline" /></td>
+                      <td><MathHtml html={row.for} className="inline" /></td>
+                      <td><MathHtml html={row.shows} className="inline" /></td>
                     </tr>
                   ))}
                 </tbody>
@@ -128,7 +136,7 @@ export default function MarkschemeSheet({
                     <tr key={n}>
                       <td className="markscheme-bullet">&bull;<sup>{n + 1}</sup></td>
                       <td colSpan={2}>
-                        <MathRenderer html={step} className="answer-content" />
+                        <MathHtml html={step} className="answer-content" />
                         {q.stepMarks?.[n] !== undefined && (
                           <span className="markscheme-step-mark">
                             {q.stepMarks[n]} mark{q.stepMarks[n] === 1 ? '' : 's'}
@@ -152,7 +160,7 @@ export default function MarkschemeSheet({
             {q.answer && (
               <p className="markscheme-answer">
                 <strong>Answer: </strong>
-                <MathRenderer html={q.answer} className="inline answer-content" />
+                <MathHtml html={q.answer} className="inline answer-content" />
               </p>
             )}
 
@@ -161,7 +169,7 @@ export default function MarkschemeSheet({
                 <strong>Notes</strong>
                 <ul>
                   {scheme.notes.map((note, n) => (
-                    <li key={n}><MathRenderer html={note} className="inline" /></li>
+                    <li key={n}><MathHtml html={note} className="inline" /></li>
                   ))}
                 </ul>
               </div>

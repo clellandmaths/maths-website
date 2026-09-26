@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Loader2, Printer, Share2, Dices, ArrowLeft, ClipboardCheck } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
-import { printWorksheet } from '@/lib/print-worksheet';
+import { printMarkscheme, printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
@@ -111,24 +111,21 @@ export default function PracticePaperClient({
   const [schemes, setSchemes] = useState<Record<string, PaperScheme> | null>(null);
   const [markschemeBusy, setMarkschemeBusy] = useState(false);
 
-  const printMarkscheme = async () => {
+  const handlePrintMarkscheme = async () => {
     if (markschemeBusy || !drawn.length) return;
     setMarkschemeBusy(true);
     try {
-      const { PAPER_MARKSCHEME } = await import('@/lib/generator/generators/paper-markscheme');
-      setSchemes(PAPER_MARKSCHEME);
-      document.body.dataset.print = 'markscheme';
-      // One frame for the portal to mount before the dialog reads the page.
-      // Raced, never awaited alone: a backgrounded tab fires no frame, and the
-      // same unguarded wait once turned a Print button into one that did
-      // nothing at all.
-      await Promise.race([
-        new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))),
-        new Promise<void>(r => setTimeout(r, 300)),
+      // The sheet's component loads on demand too, so fetch it alongside the
+      // table rather than after it; `printMarkscheme` then waits for it to be
+      // on the page. (The handler is not called `printMarkscheme`: it did call
+      // itself for ever under that name, which froze the page on 2026-09-26.)
+      const [{ PAPER_MARKSCHEME }] = await Promise.all([
+        import('@/lib/generator/generators/paper-markscheme'),
+        import('@/components/Explorer/MarkschemeSheet'),
       ]);
-      await printWorksheet();
+      setSchemes(PAPER_MARKSCHEME);
+      await printMarkscheme();
     } finally {
-      delete document.body.dataset.print;
       setMarkschemeBusy(false);
     }
   };
@@ -265,7 +262,7 @@ export default function PracticePaperClient({
                 click, one dialog, one file, so the paper goes to a class
                 without the answers behind it. */}
             <button
-              onClick={printMarkscheme}
+              onClick={handlePrintMarkscheme}
               disabled={markschemeBusy}
               title="Print the marking instructions for this paper"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 disabled:opacity-60 transition-colors"
