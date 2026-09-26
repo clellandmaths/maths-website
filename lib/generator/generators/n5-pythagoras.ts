@@ -387,7 +387,15 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
      * owner, 2026-09-23: *"Key them to 2018 only for now"*. It had reached
      * 2015 unkeyed, declared on the sheet but never approved for that paper.
      */
-    const spanWord = forPaper2018 || forPaper2015
+    /**
+     * **2023 P1 Q10 joins them — 2026-09-26.** Its paper marks "width" on an
+     * arrow under the slab, and the owner said yes to drawing the measured
+     * line labelled with the question's own word. The `cut` family is 2023's
+     * alone, so keying on the family keeps a by-topic draw the same question
+     * as one asked for by id.
+     */
+    const for2023 = family === 'cut';
+    const spanWord = forPaper2018 || forPaper2015 || for2023
       ? (ctx.asks.split(' ')[1] ?? 'height')
       : (ctx.sideways ? 'width' : 'height');
 
@@ -456,7 +464,7 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
       centreDot: forPaper2018 || forPaper2015 || askedId === 'pythagoras.chord-pre2022',
       // 2018's paper dots A and B too — the owner: "Put the dots in for A and B".
       endDots: forPaper2018,
-      askedSpan: forPaper2018 ? spanWord
+      askedSpan: forPaper2018 || for2023 ? spanWord
         : forPaper2015 ? ctx.asks.replace(/^the /, '')
         : askedId === 'pythagoras.chord-pre2022' ? ctx.asks.replace(/^the /, '') : undefined,
       names: { a: A, b: B, centre: O },
@@ -468,7 +476,17 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
       },
     });
 
-    const prose = [
+    // 2023 P1 Q10 gives the two lengths as sentences, with their stops, and
+    // never says "chord": "The circle, centre C, has a radius of 50
+    // centimetres. Length AB is 60 centimetres." The owner: "Yes".
+    const prose = for2023 ? [
+      // The doorstep's scene says "is the chord AB"; the list is shared with
+      // `pythagorasChordReverse`, so the word comes out here, not there.
+      ctx.scene(O, A, B).replace(' is the chord ', ' is '),
+      `The circle, centre $${O}$, has a radius of ${withUnit(Number(num(r)), ctx.unit)}.`,
+      `Length $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
+      `Calculate ${ctx.asks}.`,
+    ] : [
       ctx.scene(O, A, B),
       `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}`,
       `&bull;&nbsp; The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}`,

@@ -443,6 +443,15 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
    * to minor would move it. That is why this reads `asked` and not `kind`.
    */
   const majorOnly = askedId === 'sector.arc-angle-pre2023';
+  /**
+   * **And 2023 P2 Q3 is now MINOR only — 2026-09-26.** Its arc is 106 degrees
+   * at a penalty spot, and it drew a reflex, major arc in 123 of 400. The note
+   * above kept its mix only because 2023 was locked; the owner, on the 2023
+   * re-review, said yes to minor only, and to the angle on the diagram only,
+   * as the paper gives it. Every Calculator arc-angle draw that is not
+   * 2018's alias is 2023's, so a by-topic draw is keyed the same way.
+   */
+  const minor2023 = kind === 'arc-angle' && !paper1 && !majorOnly;
   // The reflex question reads its own list, so no other kind's `pick` moves.
   const reflexOnly = kind === 'angle-arc-reflex';
   /**
@@ -465,9 +474,9 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
   const reflex2017 = kind === 'angle-arc';
   for (let tries = 0; tries < 3000; tries++) {
     const c = pick(reflexOnly || majorArc || reflex2017 ? REFLEX_CONTEXTS
-      : minorOnly ? CONTEXTS.filter(x => x.sweep !== 'major')
+      : minorOnly || minor2023 ? CONTEXTS.filter(x => x.sweep !== 'major')
       : majorOnly ? CONTEXTS.filter(x => x.sweep !== 'minor') : CONTEXTS);
-    const sweep = minorOnly ? 'minor' as const
+    const sweep = minorOnly || minor2023 ? 'minor' as const
       : majorOnly ? 'major' as const : c.sweep;
     const [nO, nA, nB] = c.letters;
     const r = getRandomInt(c.band[0], c.band[1]);
@@ -619,7 +628,8 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         subTopic: majorArc ? 'Length of a Major Arc' : 'Length of an Arc',
         difficulty: 'exam',
         variationId: paper1 ? 'sector.arc-angle-pi314' : 'sector.arc-angle',
-        questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.angle,
+        questionLines: [c.intro(nO, nA, nB), '', facts.radius,
+          ...(minor2023 ? [] : [facts.angle]),
           `Calculate the length of ${angle > 180 ? 'major ' : ''}arc $${nA}${nB}$.`,
           // **Neither arc paper asks for a decimal place.** 2018 P2 Q2 and
           // 2023 P2 Q3 both stop at "Calculate the length of the arc", and

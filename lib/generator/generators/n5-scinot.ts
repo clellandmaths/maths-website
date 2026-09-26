@@ -211,8 +211,16 @@ function calculate(wanted?: string, asked?: string): Q {
      * draws of this id. The owner, on the 2016 P2 sheet: *"Key it"*. A
      * filtered list read only for this id, so no other id's draws move.
      */
+    /**
+     * **2023 P2 Q2 goes the other way: one atom's size given, how MANY asked**
+     * — 300 grams over 6.64 x 10^-24 grams an atom. The paper's direction came
+     * up in 149 of 400 draws. The owner, on the 2023 re-review: *"Yes"*. Keyed
+     * on the rounding, which is 2023's shape alone, so a by-topic draw of the
+     * 3 s.f. question is the same question as one asked for by id.
+     */
     const ctx = pick(SCI_CONTEXTS.filter(c => c.op === (wantRounding ? 'divide' : exactOp)
-      && (asked !== 'sci-notation.calculate-2016' || c.unit !== '')));
+      && (asked !== 'sci-notation.calculate-2016' || c.unit !== '')
+      && (!wantRounding || c.unit === '')));
     const m = wantRounding
       ? Number((getRandomInt(101, 989) / 100).toFixed(2))
       : Number((getRandomInt(11, 98) / 10).toFixed(1));

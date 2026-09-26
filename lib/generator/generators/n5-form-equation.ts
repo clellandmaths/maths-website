@@ -1,5 +1,5 @@
 import { GeneratedQuestion } from './types';
-import { getRandomInt } from './utils';
+import { gcd, getRandomInt } from './utils';
 import { abbrev, article } from './n5-contexts';
 import {
   algebraicCuboid, borderedRectangle, shapePair, type PlaneShape,
@@ -439,6 +439,10 @@ function cuboidVolume(): Q | null {
   const k = getRandomInt(3, 12);
   const hh = getRandomInt(2, 5);
   const vol = getRandomInt(hh * 6, hh * 90);
+  // 2023 P2 Q14's 2x^2 + 14x - 45 has no common factor to divide through by;
+  // a volume sharing one with the height gave, say, 3x^2 + 12x - 24 in 132 of
+  // 400 draws. The owner, on the 2023 re-review: "Yes". Its only paper.
+  if (gcd(hh, vol) > 1) return null;
   // h·x(x + k) = vol  ->  h·x^2 + h·k·x - vol = 0
   const [A, B, C] = [hh, hh * k, -vol];
   const disc = B * B - 4 * A * C;
@@ -452,7 +456,8 @@ function cuboidVolume(): Q | null {
     `It has length $(x + ${k})$ metres, breadth $x$ metres and height $${hh}$ metres.`,
     `The volume of this ${c.thing} is $${vol}$ cubic metres.`,
     `<strong>(a)</strong> Show that $${quadratic(A, B, C)}$.`,
-    `<strong>(b)</strong> Calculate $x$, the breadth of the ${c.thing}. Give your answer correct to one decimal place.`,
+    // "1 decimal place", as 2023 P2 Q14 prints it. The owner: "Yes".
+    `<strong>(b)</strong> Calculate $x$, the breadth of the ${c.thing}. Give your answer correct to 1 decimal place.`,
   ];
   const steps = [
     `<strong>1.</strong> Volume is length times breadth times height:<br><br>$(x + ${k}) \\times x \\times ${hh}$`,

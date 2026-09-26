@@ -363,22 +363,30 @@ export function barPolygonQuestion(): Q {
     const answer = 90 + exterior;
 
     const names = { corner: 'B', barEnd: 'A', next: 'C' };
+    /**
+     * **The paper's words and the paper's unlettered figure — 2026-09-26.**
+     * 2023 P2 Q5: "A logo consists of an H shape and a regular decagon. The
+     * diagram represents the logo. … Calculate the size of the shaded angle."
+     * This added two bullets saying what the picture shows and lettered the
+     * angle ABC, which the paper does not. The owner, on the 2023 re-review:
+     * "Yes". The note above chose letters over the shading; the paper and the
+     * owner choose the shading. Its only paper, and the mirror toss is kept.
+     */
     const fig = barAndPolygon({
       sides: n, side: 1, reach: 1.8, mirror: getRandomInt(0, 1) === 1, names,
+      unlettered: true,
     });
     if (!fig) continue;
 
     const prose = [
-      `A badge is made from an H shape joined to a regular ${WORD[n]}, as the diagram shows.`,
-      '',
-      `&bull;&nbsp; One side of the ${WORD[n]} lies along the upright of the H`,
-      `&bull;&nbsp; The crossbar of the H meets that upright at $${names.corner}$`,
-      `Calculate the size of the shaded angle $${names.barEnd}${names.corner}${names.next}$.`,
+      `A logo consists of an H shape and a regular ${WORD[n]}.`,
+      `The diagram represents the logo.`,
+      `Calculate the size of the shaded angle.`,
     ];
     const steps = [
       `<strong>1.</strong> The exterior angle of a regular ${WORD[n]}:<br><br>$\\frac{360}{${n}} = ${exterior}^{\\circ}$`,
       // Two marks: the exterior angle of the polygon, then the shaded angle.
-      `<strong>2.</strong> The side $${names.corner}${names.next}$ turns through that exterior angle from the upright, and the crossbar meets the upright at a right angle, so the two parts add:<br><br>$${names.barEnd}${names.corner}${names.next} = 90 + ${exterior} = ${answer}^{\\circ}$`,
+      `<strong>2.</strong> The next side of the ${WORD[n]} turns through that exterior angle from the upright, and the crossbar meets the upright at a right angle, so the two parts add:<br><br>$\\text{shaded angle} = 90 + ${exterior} = ${answer}^{\\circ}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
 
@@ -387,7 +395,7 @@ export function barPolygonQuestion(): Q {
       difficulty: 'exam',
       variationId: 'angles.bar-polygon',
       stepMarks: [1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      questionLines: [prose[0], prose[1], renderScene(fig.scene), prose[2]],
       boardQuestionLines: [`H shape with a regular ${WORD[n]} on one upright. Find the angle between the crossbar and the next side.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,

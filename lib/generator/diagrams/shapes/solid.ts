@@ -69,8 +69,14 @@ export type Piece =
   /** Square base of side `w`. */
   | { kind: 'box'; w: number; h: number }
   | { kind: 'pyramid'; w: number; h: number }
-  /** A pyramid with its tip cut off — `wTop` is the side of the cut. */
-  | { kind: 'pyramidFrustum'; w: number; wTop: number; h: number };
+  /**
+   * A pyramid with its tip cut off — `wTop` is the side of the cut.
+   *
+   * `shaded` greys its three visible faces, darker as they turn from the
+   * front, the way 2023 P2 Q9 prints its concrete block. Opt-in, for that
+   * question only; every other caller draws the outline it always has.
+   */
+  | { kind: 'pyramidFrustum'; w: number; wTop: number; h: number; shaded?: true };
 
 export const pieceHeight = (p: Piece): number =>
   p.kind === 'sphere' ? 2 * p.r : p.kind === 'hemisphere' ? p.r : p.h;
@@ -351,6 +357,12 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
       const tl = at(-t + lift.x, p.h + lift.y), tr = at(t + lift.x, p.h + lift.y);
       const tB = [tl, tr].map(q => pt(q.x + backTop.x, q.y + backTop.y));
       return [
+        // Filled first, so every edge is drawn over the grey.
+        ...(p.shaded && !dashed ? [
+          { kind: 'shadedShape' as const, points: [bl, br, tr, tl], tone: 1 },
+          { kind: 'shadedShape' as const, points: [br, bB[1], tB[1], tr], tone: 2 },
+          { kind: 'shadedShape' as const, points: [tl, tr, tB[1], tB[0]], tone: 3 },
+        ] : []),
         { kind: 'polygon', points: [bl, br, bB[1], bB[0]], dashed },
         { kind: 'polygon', points: [tl, tr, tB[1], tB[0]], dashed },
         seg(bl, tl), seg(br, tr), seg(bB[1], tB[1]),

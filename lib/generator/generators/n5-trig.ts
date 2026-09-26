@@ -301,6 +301,7 @@ function inFormula(wanted?: string, asked?: string): Q {
       : (['solve', 'evaluate', 'whole'] as const)[getRandomInt(0, 2)];
     const whole = shape === 'whole';
     const form = FORM_OF[whole ? WHOLE : asked ?? ''];
+    const is2025 = !whole && asked === 'trig-equations.in-formula';
     const minus = form ? form.minus : drawnMinus;
     /**
      * **Cosine-first is always `+ B`, and that is the world's constraint
@@ -335,10 +336,13 @@ function inFormula(wanted?: string, asked?: string): Q {
           subTopic: 'Trigonometric Equations in a Formula',
           difficulty: 'exam',
           variationId: 'trig-equations.in-formula-pre2023',
+          // 2017 P2 Q15 ends its formula line "0 ≤ x < 360." and has no
+          // "where" line: part (a) says what x is. The owner, on the 2023
+          // re-review: "change the 2 new cards with your recommendation". This
+          // branch is 2017's alone.
           questionLines: [
             `${ctx.scene}`,
-            `The height, $h$ ${ctx.unit}, of ${ctx.thing} above the ground is given by $${formula}$, $0 \\le x < 360$,`,
-            `where $x^{\\circ}$ is ${ctx.angle}.`,
+            `The height, $h$ ${ctx.unit}, of ${ctx.thing} above the ground is given by $${formula}$, $0 \\le x < 360.$`,
             `(a) Calculate the height of ${ctx.thing} after it has turned through an angle of $${at}^{\\circ}$.`,
             `(b) Find the minimum height of ${ctx.thing} above the ground.`,
             `(c) Calculate the values of $x$ for which ${ctx.thing} is ${target} ${ctx.unit} above the ground.`,
@@ -363,11 +367,29 @@ function inFormula(wanted?: string, asked?: string): Q {
         subTopic: 'Trigonometric Equations in a Formula',
         difficulty: 'exam',
         variationId: 'trig-equations.in-formula',
-        questionLines: [
+        /**
+         * **2025 P2 Q14 closes its formula with a full stop and asks for the
+         * height "above the ground"**: "h = 10 − 8cos x°. Calculate the two
+         * values of x for which the height of car A is 13 metres above the
+         * ground." Its diagram shows where the car starts; with no diagram
+         * here, the line saying what x measures stays, as its own sentence.
+         * The owner, on the 2023 re-review: "change the 2 new cards with your
+         * recommendation". Keyed on 2025's asked id, as FORM_OF is.
+         */
+        questionLines: is2025 ? [
+          `${ctx.scene}`,
+          `The height, $h$ ${ctx.unit}, of ${ctx.thing} above the ground is given by $${formula}.$`,
+          `$x^{\\circ}$ is ${ctx.angle}.`,
+          `Calculate the two values of $x$ for which the height of ${ctx.thing} is ${target} ${ctx.unit} above the ground.`,
+        ] : [
           `${ctx.scene}`,
           `The height, $h$ ${ctx.unit}, of ${ctx.thing} above the ground is given by $${formula}$,`,
           `where $x^{\\circ}$ is ${ctx.angle}.`,
-          `Calculate the two values of $x$ for which the height of ${ctx.thing} is ${target} ${ctx.unit}.`,
+          // 2023 P2 Q11 asks for "the first two values": the hand keeps
+          // turning and no domain is given. The owner, on the 2023
+          // re-review: "Yes". Its form alone is cosine-first, so 2025 P2
+          // Q14's "the two values" is untouched.
+          `Calculate the ${form?.cosFirst ? 'first ' : ''}two values of $x$ for which the height of ${ctx.thing} is ${target} ${ctx.unit}.`,
         ],
         boardQuestionLines: [`$${formula}$. Find $x$ when $h = ${target}$`],
         // •¹ substitute the height into the formula, •² rearrange, •³ one value

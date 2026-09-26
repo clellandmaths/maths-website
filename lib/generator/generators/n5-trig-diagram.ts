@@ -406,6 +406,10 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
     if (sinB >= 1) continue;
     const answerB = Math.asin(sinB) * 180 / Math.PI;
     if (answerB >= 89.95) continue;
+    // Two equal sides make the triangle isosceles, and the answer is then the
+    // given angle, readable straight off the figure: 15 of 400 draws. The
+    // owner, on the 2023 re-review: "Yes". This kind is 2023 P2 Q4's alone.
+    if (whole.bc === whole.ca) continue;
     const fig = triangleFromSides({
       sides: whole, vertices: [A, B, C], turn,
       labels: { ab: '', bc: `${whole.bc} ${u}`, ca: `${whole.ca} ${u}` },
@@ -428,7 +432,19 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
       subTopic: 'Sine Rule from a Diagram',
       difficulty: 'exam',
       variationId: 'trig-diagram.sine-angle',
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+      /**
+       * **2023 P2 Q4 lists the givens in words, before the figure**: "The
+       * diagram shows triangle JKL. • Angle KJL = 25° • JL = 10 metres • KL =
+       * 7 metres". This printed the figure alone in 400 of 400. The owner, on
+       * the 2023 re-review: "Yes", as on 2024 P2 Q3. After verifyFigure, so
+       * no draw passes or fails differently; 2016's stepladder is its own
+       * routine.
+       */
+      questionLines: [prose[0],
+        `&bull;&nbsp; Angle $${B}${A}${C} = ${shownA}^{\\circ}$`,
+        `&bull;&nbsp; $${A}${C} = ${whole.ca}$ ${unit}`,
+        `&bull;&nbsp; $${B}${C} = ${whole.bc}$ ${unit}`,
+        renderScene(fig.scene), ...prose.slice(1)],
       boardQuestionLines: [`Angle ${shownA}, sides ${whole.bc} and ${whole.ca}. Find the other angle.`],
       solutionSteps: steps,
       stepMarks: [1, 1, 1],

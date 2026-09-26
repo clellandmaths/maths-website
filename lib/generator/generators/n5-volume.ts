@@ -1042,7 +1042,9 @@ function pyramidMinusPyramid(): Q | null {
     `<strong>4.</strong> Carry out the subtraction and state the units:<br><br>$V = ${big} - ${small} = ${big - small}$ ${cubic('cm')}`,
   ];
   return assemble({
-    stack: [{ kind: 'pyramidFrustum', w: bigW, wTop: smallW, h: blockH }],
+    // Shaded as 2023 P2 Q9 shades its block. The owner, on the 2023
+    // re-review: "Yes". This routine's only paper.
+    stack: [{ kind: 'pyramidFrustum', w: bigW, wTop: smallW, h: blockH, shaded: true }],
     ghosts: [{ piece: { kind: 'pyramid', w: smallW, h: smallH }, on: 'top' }],
     /**
      * **Four arrows, and the top face measured across itself.**

@@ -421,7 +421,21 @@ function splitSideArea(): Q | null {
     // formula, •³ form the equation, •⁴ solve it for the length
     variationId: 'composite.split-side-area',
     stepMarks: [1, 1, 1, 1],
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    /**
+     * **The paper's four bullets, before the figure — 2026-09-26.** 2023 P2
+     * Q15: "In the diagram: • AC is perpendicular to BC • AB = 18 centimetres
+     * • BD = 6 centimetres • BC = 8 centimetres." It names the right angle at
+     * the foot, between the height and the part of the base it stands on. The
+     * owner, on the 2023 re-review: "Yes". After verifyFigure, so no draw
+     * passes or fails differently; its only paper.
+     */
+    questionLines: [
+      'In the diagram:',
+      `&bull;&nbsp; $${A}${M}$ is perpendicular to $${set.on}${M}$`,
+      `&bull;&nbsp; $${A}${set.on} = ${p}$ ${unit}`,
+      `&bull;&nbsp; $${set.on}${set.far} = ${q}$ ${unit}`,
+      `&bull;&nbsp; $${set.on}${M} = ${h}$ ${unit}.`,
+      renderScene(fig.scene), ...prose.slice(3)],
     boardQuestionLines: [`Slant ${p} then ${q}, perpendicular ${h}, area ${Math.round(area)}. Base?`],
     solutionSteps: steps,
     finalAnswer: `$${base}$ ${unit}`,

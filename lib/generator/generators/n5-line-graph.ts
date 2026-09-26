@@ -636,11 +636,26 @@ function bestFitOnGridQuestion(_wanted?: string, asked?: string): Q | null {
   const fig = sketchAxes(spec);
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
+  /**
+   * **Part (b) in both papers' own words — 2026-09-26.** 2023 P1 Q7: "(b) Use
+   * your equation from part (a) to estimate the salary of …"; 2019 P1 Q6 sets
+   * the scene first, "Amaar's car has an engine size of 1.1 litres.", then
+   * "(b) Use your equation from part (a) to estimate …". This printed "Use your
+   * answer to part (a). Estimate …" on every draw of both. The owner: "Yes".
+   * Both papers are this routine's only two, and it is rewritten after
+   * `verifyFigure`, so no draw passes or fails differently.
+   */
+  const estimate = ctx.estimate(`${x3}`);
+  const askAt = estimate.search(/(?:^|\. )(?:Estimate|Calculate) /);
+  const scene = askAt > 0 ? estimate.slice(0, askAt + 1) : '';
+  const ask = estimate.slice(askAt > 0 ? askAt + 2 : 0);
+  const partB = `<b>(b)</b>&nbsp;&nbsp;Use your equation from part (a) to ${ask[0].toLowerCase()}${ask.slice(1)}`;
+
   return {
     subTopic: 'A Line of Best Fit on a Grid',
     difficulty: 'exam',
     variationId: 'straight-line.best-fit-grid',
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2, -1), ...(scene ? [scene] : []), partB],
     boardQuestionLines: [
       `A line of best fit through (${x1}, ${y1}) and (${x2}, ${y2}). Find its equation, then its value at ${x3}.`,
     ],

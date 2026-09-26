@@ -28,6 +28,12 @@ export interface BarAndPolygonSpec {
   /** Put the polygon on the left of the left upright instead. */
   mirror: boolean;
   names: { corner: string; barEnd: string; next: string };
+  /**
+   * Draw no letters. 2023 P2 Q5's figure carries none and names the angle
+   * only by its shading; the owner, on the 2023 re-review, said yes to
+   * matching it. Opt-in, so any other caller keeps its letters.
+   */
+  unlettered?: true;
 }
 
 export function barAndPolygon(spec: BarAndPolygonSpec): Figure | null {
@@ -84,9 +90,11 @@ export function barAndPolygon(spec: BarAndPolygonSpec): Figure | null {
     { kind: 'rightAngle', at: P, arms: [Q, at(-w, hi)] },
     // the corner's letter goes in the quarter the bar and the upright leave
     // empty below it, which is the direction away from the polygon
-    { kind: 'label', text: n_.corner, anchor: Q, away: C },
-    { kind: 'label', text: n_.barEnd, anchor: P, away: Q },
-    { kind: 'label', text: n_.next, anchor: next, away: C },
+    ...(spec.unlettered ? [] : [
+      { kind: 'label' as const, text: n_.corner, anchor: Q, away: C },
+      { kind: 'label' as const, text: n_.barEnd, anchor: P, away: Q },
+      { kind: 'label' as const, text: n_.next, anchor: next, away: C },
+    ]),
   ];
 
   const interior = 180 - 360 / n;
