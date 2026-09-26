@@ -81,6 +81,19 @@ export function courseHasHints(courseId: string | undefined): boolean {
 }
 
 /**
+ * Does this course have past paper hint ladders (authored moves beside the
+ * marking instructions' working)?
+ *
+ * **Not the same question as `courseHasHints`.** That one says the course has
+ * the N5 generator behind it (variations, "more like this", generated steps).
+ * Higher has ladders for all 267 past paper questions and no generator, so it
+ * gets the ladder and none of the rest.
+ */
+export function courseHasPaperLadder(courseId: string | undefined): boolean {
+  return courseId === 'n5' || courseId === 'higher';
+}
+
+/**
  * Papers we hold questions from but hold no marking instructions for.
  *
  * **2021 is the only one, and it is the whole year.** Every other year in
@@ -142,8 +155,10 @@ export function hasHintLadder(
   question: { skill?: string; method?: string; label?: string | null; question?: string },
   given?: string | null,
 ): boolean {
-  if (!courseHasHints(courseId)) return false;
-  if (question.skill && question.method) return true;
+  // A generated question brings its own steps, which only the generator's
+  // courses have; a past paper question needs its course's ladder table.
+  if (question.skill && question.method) return courseHasHints(courseId);
+  if (!courseHasPaperLadder(courseId)) return false;
   return ladderLabel(given ?? question.label, question.question) !== null;
 }
 

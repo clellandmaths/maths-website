@@ -14,7 +14,7 @@ import MathRenderer from '@/components/MathRenderer';
  * question. It also keeps Hints off the static graph that reaches the engine.
  */
 const HintPanel = dynamic(() => import('@/components/HintPanel'), { ssr: false });
-import { ladderLabel, courseHasHints } from '@/lib/similar-questions';
+import { ladderLabel, courseHasHints, courseHasPaperLadder } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -160,7 +160,7 @@ export default function Hints({
   const label = ladderLabel(given ?? question.label, question.question);
   // A generated question brings its own; a paper one needs the table.
   const own = question.skill && question.method;
-  const possible = courseHasHints(courseId) && (own || label !== null);
+  const possible = own ? courseHasHints(courseId) : courseHasPaperLadder(courseId) && label !== null;
 
   // Reset when the question in this slot changes — a re-rolled question must
   // not arrive with the previous one's hints already open.
@@ -211,7 +211,24 @@ export default function Hints({
          * are not. Still one table with no imports, so this costs a fetch
          * rather than the engine.
          */
-        const { PLANS, PLAN_OF } = await import('@/lib/generator/generators/paper-plan');
+        if (courseId === 'higher') {
+          // Higher's ladders are keyed by label directly: authored per question,
+          // with no variation to share a method through. Its own table, because
+          // a Higher "2019 P1 Q5" is not N5's.
+          const { PLAN_HIGHER } = await import('@/lib/generator/generators/paper-plan-higher');
+          const p = PLAN_HIGHER[label];
+          if (p) {
+            next = {
+              skill: p.skill,
+              method: p.method,
+              rungs: p.moves.map((move, i) => ({ move, marks: p.marks[i], shows: p.shows[i] })),
+              heldBack: false,
+            };
+          }
+        }
+        const { PLANS, PLAN_OF } = courseId === 'higher'
+          ? { PLANS: {} as Record<string, never>, PLAN_OF: {} as Record<string, never> }
+          : await import('@/lib/generator/generators/paper-plan');
         const of = PLAN_OF[label];
         const plan = of ? PLANS[of.v] : undefined;
         if (plan) {
