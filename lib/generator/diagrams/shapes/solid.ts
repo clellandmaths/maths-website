@@ -78,14 +78,29 @@ export type Piece =
        * The owner, on the 2022 re-review: "shade the shapes as per the
        * question". Opt-in; every other sphere draws as it did.
        */
-      shaded?: true }
+      shaded?: true;
+      /**
+       * A ball lit from the upper right, pale there and darker to the rim, as
+       * 2018 P2 Q7 prints its ball. `shaded`'s flat grey read as a disc. The
+       * owner, on the 2018-2014 light pass contact sheet: "Looks like a circle
+       * shading needed to make more sphere". Opt-in; `shaded` and every other
+       * sphere draw as they did.
+       */
+      lit?: true }
   /**
    * Square base of side `w`. `shaded` greys its three visible faces and drops
    * the dashed hidden edges, as 2022 P2 Q3's solid gatepost is printed.
    * Opt-in, for that question; every other box draws as it did.
    */
   | { kind: 'box'; w: number; h: number; shaded?: true }
-  | { kind: 'pyramid'; w: number; h: number }
+  | { kind: 'pyramid'; w: number; h: number;
+      /**
+       * Write the base's length on its front and right edges, as 2018 P1 Q17
+       * writes "6 cm" on both, rather than on a dimension line under the
+       * solid. The owner, on the 2018-2014 light pass: "Yes". Opt-in; every
+       * other pyramid draws as it did.
+       */
+      edgeLabel?: string }
   /**
    * A pyramid with its tip cut off — `wTop` is the side of the cut.
    *
@@ -331,6 +346,31 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
           { kind: 'circle', centre, r: p.r, dashed },
         ];
       }
+      // The renderer has only flat fills, so the gradient is built from them:
+      // each layer is the ball with a smaller disc cut out, the discs shrinking
+      // toward the highlight. A point is under more layers the further it is
+      // from the highlight, so the ink deepens toward the rim.
+      if (p.lit && !dashed) {
+        const ring = (c: Pt, r: number, back: boolean): Pt[] => {
+          const out: Pt[] = [];
+          for (let k = 0; k <= 72; k++) {
+            const t = 2 * Math.PI * (back ? -k : k) / 72;
+            out.push(pt(c.x + r * Math.cos(t), c.y + r * Math.sin(t)));
+          }
+          return out;
+        };
+        // where 2018 P2 Q7's highlight sits, measured off the scan
+        const light = pt(centre.x + 0.22 * p.r, centre.y + 0.2 * p.r);
+        const layers: Element[] = [];
+        // forty thin layers rather than twenty: at full size twenty showed rings
+        for (let k = 1; k <= 40; k++) {
+          const r = p.r * (1 - Math.pow(k / 41, 0.8));
+          const s = 1 - r / p.r;
+          const hole = pt(centre.x + (light.x - centre.x) * s, centre.y + (light.y - centre.y) * s);
+          layers.push({ kind: 'shadedShape', points: [...ring(centre, p.r, false), ...ring(hole, r, true)], tone: 0.15 });
+        }
+        return [...layers, { kind: 'circle', centre, r: p.r, dashed }];
+      }
       return [
         { kind: 'circle', centre, r: p.r, dashed },
         ...(dashed ? [] : rim(centre, p.r, false, dashed)),
@@ -380,10 +420,23 @@ function drawPiece(p: Piece, o: Pt, dashed: boolean): Element[] {
       const bl = at(-w, 0), br = at(w, 0);
       const B = [bl, br].map(q => pt(q.x + back.x, q.y + back.y));
       const apex = pt(o.x + back.x / 2, o.y + back.y / 2 + p.h);
+      // The front label goes straight below its edge. The side edge slants, so
+      // its label is pushed square off it, on the side away from the base.
+      const front = pt((bl.x + br.x) / 2, (bl.y + br.y) / 2);
+      const side = pt((br.x + B[1].x) / 2, (br.y + B[1].y) / 2);
+      const ex = B[1].x - br.x, ey = B[1].y - br.y, el = Math.hypot(ex, ey) || 1;
+      const centre = pt(o.x + back.x / 2, o.y + back.y / 2);
+      let nx = ey / el, ny = -ex / el;                    // one of the two normals
+      if ((side.x + nx - centre.x) ** 2 + (side.y + ny - centre.y) ** 2
+        < (side.x - nx - centre.x) ** 2 + (side.y - ny - centre.y) ** 2) { nx = -nx; ny = -ny; }
       return [
         { kind: 'polygon', points: [bl, br, B[1], B[0]], dashed },
         seg(bl, apex), seg(br, apex), seg(B[1], apex),
         { kind: 'segment', from: B[0], to: apex, dashed: true },
+        ...(p.edgeLabel && !dashed ? [
+          { kind: 'label' as const, text: p.edgeLabel, anchor: front, away: pt(front.x, front.y + 1) },
+          { kind: 'label' as const, text: p.edgeLabel, anchor: side, away: pt(side.x - nx, side.y - ny) },
+        ] : []),
       ];
     }
     case 'pyramidFrustum': {

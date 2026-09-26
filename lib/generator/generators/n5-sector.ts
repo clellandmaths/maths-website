@@ -280,7 +280,22 @@ function segmentArea(wanted?: string): Q | null {
     subTopic: 'Area of a Segment of a Circle',
     difficulty: 'exam',
     variationId: c.shade === 'minor' ? 'sector.segment-minor' : 'sector.segment-major',
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+    /**
+     * **2014 P2 Q13's four bullets, before the diagram, and no rounding line
+     * — 2026-09-26.** "• The centre of the circle is O. • MN is a chord of
+     * the circle. • Angle MON is 50°. • The radius of the circle is 7
+     * metres." then the diagram, then the ask; its scheme takes the area as it
+     * comes. The owner, on the 2018-2014 light pass: "Yes" to both. `paper`
+     * is 2014's id alone, and this is after verifyFigure.
+     */
+    questionLines: paper
+      ? [c.plain!.intro(nO, nA, nB).split(', centre')[0] + '.',
+         `&bull;&nbsp; The centre of the circle is $${nO}$.`,
+         `&bull;&nbsp; $${nA}${nB}$ is a chord of the circle.`,
+         `&bull;&nbsp; Angle $${nA}${nO}${nB}$ is $${angle}^{\\circ}$.`,
+         `&bull;&nbsp; The radius of the circle is ${r} ${c.unit}.`,
+         renderScene(fig.scene), prose[4]]
+      : [prose[0], renderScene(fig.scene), ...prose.slice(2)],
     boardQuestionLines: [`Circle radius ${r}, chord subtending ${angle}°. ${c.shade === 'minor' ? 'Smaller' : 'Larger'} piece?`],
     solutionSteps: steps,
     stepMarks: [1, 1, 1, 1, 1],
@@ -488,8 +503,18 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
      * REFLEX_CONTEXTS, shared with 2017 P2 Q14 and 2022 P2 Q10, is untouched.
      * This kind has its own subTopic and draw loop, so nothing else moves.
      */
-    const [nO, nA, nB] = majorArc ? ['C', 'A', 'B'] : c.letters;
-    const r = getRandomInt(c.band[0], c.band[1]);
+    //
+    // **2018 P2 Q2 the same way — 2026-09-26.** "The diagram below shows a
+    // sector of a circle, centre C." with a dot at C, the radius to one
+    // decimal place (7.4 cm), and "the major arc AB". The owner, on the
+    // 2018-2014 light pass: "Yes". `majorOnly` is 2018's alias alone; the
+    // tenth is drawn only there, so 2023 P2 Q3's draws are exactly as before.
+    const [nO, nA, nB] = majorArc || majorOnly || askedId === 'sector.area-angle-pi314'
+      ? ['C', 'A', 'B'] : c.letters;
+    const drawnR = getRandomInt(c.band[0], c.band[1]);
+    // 2017 P2 Q14's radius has a tenth as well, 6.4 cm; the owner, on the
+    // light pass: "Yes". `reflex2017` is that paper's kind alone.
+    const r = majorOnly || reflex2017 ? Number((drawnR + getRandomInt(1, 9) / 10).toFixed(1)) : drawnR;
     const start = getRandomInt(0, 11) * 30;
 
     // Where the arc is a *given*, it is chosen first and the angle follows from
@@ -570,7 +595,7 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
     // below - `if (!q.figure) continue` - so the conversion loses nothing.
     const built = (labels: { radius: string; angle: string; arc: string }) =>
       sector({ radius: r, angle, start, names: { centre: nO, a: nA, b: nB }, labels,
-        ...(majorArc ? { centreDot: true } : {}) })
+        ...(majorArc || majorOnly ? { centreDot: true } : {}) })
       ?? undefined;
 
     const facts = {
@@ -592,7 +617,15 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         // sector." and no more: its scheme takes 333.79... as it comes. The
         // rounding line was in every draw. The owner, on the 2025 re-review
         // sheet: "Yes" to dropping it. The answer is still shown to 1 d.p.
-        questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.angle,
+        // 2016 P1 Q3 has no story: "The diagram shows a sector of a circle,
+        // centre C." then "The radius of the circle is 20 centimetres and
+        // angle ACB is 45°." The owner, on the 2018-2014 light pass: "Yes".
+        // Its own id; words and letters only, so nothing is drawn differently.
+        questionLines: askedId === 'sector.area-angle-pi314'
+          ? [`The diagram shows a sector of a circle, centre $${nO}$.`, '',
+             `The radius of the circle is ${r} ${c.unit} and angle $${nA}${nO}${nB}$ is $${Math.round(angle)}^{\\circ}$.`,
+             `Calculate the area of the sector.`, 'Take $\\pi = 3\\cdot 14$.']
+          : [c.intro(nO, nA, nB), '', facts.radius, facts.angle,
           `Calculate the area of the sector.`,
           ...(paper1 ? ['Take $\\pi = 3\\cdot 14$.'] : [])],
         boardQuestionLines: [`Sector radius ${r}, angle ${Math.round(angle)}°. Area?`],
@@ -640,10 +673,10 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         difficulty: 'exam',
         variationId: paper1 ? 'sector.arc-angle-pi314' : 'sector.arc-angle',
         questionLines: [
-          majorArc ? `The diagram below shows a sector of a circle, centre $${nO}$.` : c.intro(nO, nA, nB),
+          majorArc || majorOnly ? `The diagram below shows a sector of a circle, centre $${nO}$.` : c.intro(nO, nA, nB),
           '', facts.radius,
           ...(minor2023 || majorArc ? [] : [facts.angle]),
-          majorArc ? `Calculate the length of the major arc $${nA}${nB}$.`
+          majorArc || majorOnly ? `Calculate the length of the major arc $${nA}${nB}$.`
             : `Calculate the length of ${angle > 180 ? 'major ' : ''}arc $${nA}${nB}$.`,
           // **Neither arc paper asks for a decimal place.** 2018 P2 Q2 and
           // 2023 P2 Q3 both stop at "Calculate the length of the arc", and
@@ -747,9 +780,10 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         subTopic: 'Finding the Radius from an Arc',
         difficulty: 'exam',
         variationId: 'sector.radius-arc',
+        // No rounding line: 2015 P2 Q10, this id's only paper, asks for the
+        // length and stops. The owner, on the 2018-2014 light pass: "Yes".
         questionLines: [c.intro(nO, nA, nB), '', facts.angle, facts.arc,
-          'Calculate the radius of the circle.',
-          'Give your answer correct to one decimal place.'],
+          'Calculate the radius of the circle.'],
         boardQuestionLines: [`Angle ${Math.round(angle)}°, arc ${trim(arc)}. Radius?`],
         // 2015 P2 Q10 is four marks, not three: •¹ the correct fraction of the
         // circle, •² construct the equation, •³ know how to solve it, •⁴ solve

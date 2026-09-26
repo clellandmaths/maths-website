@@ -503,14 +503,38 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
       `&bull;&nbsp; Chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
       `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
       `Calculate ${ctx.asks}.${exact ? '' : ' Give your answer correct to one decimal place.'}`,
+    ] : forPaper2018 ? [
+      // **2018 P2 Q12's two sentences, and no rounding line — 2026-09-26.**
+      // "The circle has radius 13 centimetres. AB is a chord of length 20
+      // centimetres. Calculate the width of the shape." Its scheme takes the
+      // width as it comes. The owner, on the 2018-2014 light pass: "Yes" to
+      // both. Keyed on 2018's own id.
+      ctx.scene(O, A, B),
+      `The circle has radius ${withUnit(Number(num(r)), ctx.unit)}.`,
+      `$${A}${B}$ is a chord of length ${num(chord)} ${ctx.unit}.`,
+      `Calculate ${ctx.asks}.`,
+    ] : askedId === 'pythagoras.chord-pre2022' ? [
+      // **2016 P2 Q15's three sentences, and no rounding line — 2026-09-26.**
+      // "The centre of the circle is O. The chord AB is 9 centimetres. The
+      // radius OB is 6.6 centimetres. Find the height of the label." The
+      // owner, on the light pass: "Yes" to both. The centre is its own
+      // sentence, so it comes out of the shared scene here, as 2022's does.
+      ctx.scene(O, A, B)
+        .replace(` The centre of the circle is ${O} and the base is the chord ${A}${B}.`, '')
+        .replace(`, centre ${O},`, '').replace(` with centre ${O}`, '').replace(`, centre $${O}$,`, '').replace(` with centre $${O}$`, ''),
+      `The centre of the circle is $${O}$.`,
+      `The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}.`,
+      `The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}.`,
+      `Find ${ctx.asks}.`,
     ] : [
       ctx.scene(O, A, B),
       `&bull;&nbsp; The radius $${O}${B}$ is ${withUnit(Number(num(r)), ctx.unit)}`,
       `&bull;&nbsp; The chord $${A}${B}$ is ${num(chord)} ${ctx.unit}`,
       // No rounding instruction on the Paper 1 branch: the triple makes the
       // answer exact, and not one of the 160 Paper 1 questions in the corpus
-      // asks for a rounded answer.
-      `Calculate ${ctx.asks}.${exact ? '' : ' Give your answer correct to one decimal place.'}`,
+      // asks for a rounded answer. Nor on 2015 P2 Q12's, whose paper asks for
+      // the depth and stops - the owner, on the light pass: "Yes".
+      `Calculate ${ctx.asks}.${exact || forPaper2015 ? '' : ' Give your answer correct to one decimal place.'}`,
     ];
     const steps = [
       `<strong>1.</strong> The perpendicular from the centre to a chord bisects it, so drop it from $${O}$ to the midpoint $M$ of $${A}${B}$. That makes a right-angled triangle $${O}M${B}$, with $${O}${B}$ as its hypotenuse.`,
@@ -1443,9 +1467,21 @@ export function pythagorasSpaceDiagonal(wanted?: string): Q {
          // so the letters do work rather than decorate. Naming them gives
          // nothing away: that the object lies along the space diagonal is what
          // the first mark is for either way.
-         ctx.fits.asks(`${objectLen} ${ctx.unit}`).replace(
-           ' Justify your answer.',
-           ` It would have to lie from corner $${from}$ to corner $${to}$. Justify your answer.`)]
+         //
+         // **The paper's own ask, with a named person — 2026-09-26.** "He
+         // thinks it will fit into the locker from corner P to corner M. Is he
+         // correct? Justify your answer." The owner, on the 2018-2014 light
+         // pass: "Yes", with a named person and "Is [name] correct?". The
+         // shared contexts are not edited: their sentence is rebuilt here.
+         // This branch is 2018 P2 Q16's alone.
+         ((): string => {
+           const said = ctx.fits!.asks(`${objectLen} ${ctx.unit}`);
+           const m = said.match(/^(.*? long\.) Determine whether it will fit (.+?)\. Justify your answer\.$/);
+           const who = pick(['Chris', 'Amira', 'Ruaridh', 'Mei', 'Callum', 'Isla']);
+           return m
+             ? `${m[1]} ${who} thinks it will fit ${m[2]} from corner $${from}$ to corner $${to}$. Is ${who} correct? Justify your answer.`
+             : said.replace(' Justify your answer.', ` It would have to lie from corner $${from}$ to corner $${to}$. Justify your answer.`);
+         })()]
       // Named in alphabetical order, as the paper's "cuboid, ABCDEFGH" is; the
       // corners in storage order read EHDAFGCB in 137 of 400 draws. The owner,
       // on the 2022 re-review: "Yes".
@@ -1658,9 +1694,14 @@ export function pythagorasCoordinates(wanted?: string): Q {
 
     const prose = [
       `The diagram shows a rectangular-based pyramid, relative to the coordinate axes.`,
-      `$A$ is the point $(${sA.x}, ${sA.y}, ${sA.z})$ and the apex $V$ is the point $(${sV.x}, ${sV.y}, ${sV.z})$.`,
-      `(a) Write down the coordinates of $B$, the base corner opposite $A$.`,
-      `(b) Calculate the length of the edge $AV$.` + (exact ? '' : ' Give your answer correct to one decimal place.'),
+      // 2016 P1 Q7's own words: "A is the point (2,0,0). V is the point
+      // (5,2,6). (a) Write down the coordinates of B. (b) Calculate the length
+      // of edge AV of the pyramid." The owner, on the 2018-2014 light pass:
+      // "Yes". Its only paper.
+      `$A$ is the point $(${sA.x}, ${sA.y}, ${sA.z})$.`,
+      `$V$ is the point $(${sV.x}, ${sV.y}, ${sV.z})$.`,
+      `(a) Write down the coordinates of $B$.`,
+      `(b) Calculate the length of edge $AV$ of the pyramid.` + (exact ? '' : ' Give your answer correct to one decimal place.'),
     ];
     // 2016 P1 Q7 is 1 + 3: •¹ the coordinates of B, then •² know how to find
     // AM², •³ know how to find AV, •⁴ find the length of AV.
@@ -1854,9 +1895,24 @@ export function pythagorasTwoCircles(wanted?: string): Q {
       variationId: kind === 'overlap'
         ? 'pythagoras.two-circles-overlap' : 'pythagoras.two-circles-half-turn',
       // The paper draws its figure after "AB is a chord to both circles."
+      //
+      // **2017 P2 Q13's own lines, no bullets and no rounding line —
+      // 2026-09-26.** "Two identical shapes are used to form a logo. Each
+      // shape is part of a circle. The circles have centres C1 and C2. The
+      // radius of each circle is 14 cm. The logo has half-turn symmetry about
+      // the mid-point of AB. AB is 48 cm long." then the figure. The owner, on
+      // the 2018-2014 light pass: "Yes" to both. The half-turn is that paper's
+      // alone; written after verifyFigure.
       questionLines: kind === 'overlap'
         ? [prose[0], prose[1], renderScene(fig.scene), ...prose.slice(2)]
-        : [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+        : [`Two identical shapes are used to form a badge.`,
+           `Each shape is part of a circle.`,
+           `The circles have centres $C_{1}$ and $C_{2}$.`,
+           `The radius of each circle is ${num(r)} centimetres.`,
+           `The badge has half-turn symmetry about the mid-point of $AB$.`,
+           `$AB$ is ${num(chord)} centimetres long.`,
+           renderScene(fig.scene),
+           `Calculate the height of the badge.`],
       boardQuestionLines: [`${kind === 'overlap' ? 'Two circles' : 'Two segments'}, radius ${num(r)}, $AB$ ${num(chord)}. Find the ${kind === 'overlap' ? 'width' : 'height'}.`],
       solutionSteps: steps,
       stepMarks: [1, 1, 1, 1],

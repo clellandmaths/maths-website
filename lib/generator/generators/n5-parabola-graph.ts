@@ -257,7 +257,7 @@ function parabolaFromAxis(): Q | null {
     `<strong>2. (b)</strong> The point is on the curve, so substitute it into $y = (x ${sign(a)})^{2} + b$:<br><br>$${py} = (${px} ${sign(a)})^{2} + b = (${d})^{2} + b = ${d * d} + b$`,
     `<strong>3. (b)</strong> Solve for $b$:<br><br>$b = ${py} - ${d * d} = ${k}$`,
   ];
-  return assemble({
+  const q = assemble({
     view: windowFor(h, k, [{ x: px, y: py }]),
     plot: { kind: 'parabola', a: 1, h, k },
     points: [{ x: px, y: py, text: plainCoord(px, py), side: d > 0 ? 'right' : 'left' }],
@@ -268,6 +268,13 @@ function parabolaFromAxis(): Q | null {
     `Parabola $y = (x + a)^{2} + b$, axis $x = ${h}$, through $${coord(px, py)}$. Find $a$ and $b$.`,
     // 2017 P1 Q14 is 1 + 2: •¹ state a, •² substitute the point, •³ state b
     steps, [1, 1, 1], `(a) $a = ${a}$<br>(b) $b = ${k}$`);
+  if (!q) return null;
+  // 2017 P1 Q14 states the axis before the diagram. The owner, on the
+  // 2018-2014 light pass: "Yes". `assemble` is shared, so the lines are
+  // swapped here, after verifyFigure.
+  const [first, figure, axis, ...rest] = q.questionLines;
+  q.questionLines = [first, axis, figure, ...rest];
+  return q;
 }
 
 // ── a maximum turning point, axis first — 2019 P1 Q9 ────────────────────

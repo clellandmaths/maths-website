@@ -72,7 +72,10 @@ const ID_KIND: Record<string, Kind> = {
   'trig-diagram.area-exact': 'area-exact',
 };
 
-export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
+export function trigDiagramQuestion(kinds: Kind[], wanted?: string, askedId?: string): Q {
+  // 2017 P2 Q3 and 2015 P2 Q3 ride aliases of the side kind; see there.
+  const land2017 = askedId === 'trig-diagram.cosine-side-pre2023';
+  const tenths2015 = askedId === 'trig-diagram.cosine-side-2015';
   // The branch is chosen once, before the retry loop, not inside it.
   //
   // Choosing inside means a rejected layout re-enters the lottery rather than
@@ -139,15 +142,41 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
 
     if (kind === 'side') {
       // 2017 P2 Q3, 2026 P2 Q2: two sides and the included angle, find the third
-      const answer = bc;
+      /**
+       * **2015 P2 Q3's sides have a tenth \u2014 2026-09-26.** 1\u00b72 km and 1\u00b735 km;
+       * this printed whole sides in 200 of 200. The owner, on the 2018-2014
+       * light pass: "Yes". One decimal place, drawn on 2015's alias only.
+       *
+       * **2017 P2 Q3 is a piece of land, in metres, with its values in the
+       * words.** "A piece of land is in the shape of a triangle as shown. PQ =
+       * 250 m, PR = 180 m, angle QPR = 147\u00b0. The owner wishes to build a fence
+       * along the side QR." The owner: "Happy to vary angle, yes to rest", so
+       * the angle is drawn as ever. Its own alias.
+       */
+      let [sp, sq, sbc, sSides] = [p, q, bc, sides];
+      if (tenths2015) {
+        sp = Number((p + getRandomInt(1, 9) / 10).toFixed(1));
+        sq = Number((q + getRandomInt(1, 9) / 10).toFixed(1));
+        sbc = Math.sqrt(sp * sp + sq * sq - 2 * sp * sq * Math.cos(angA * Math.PI / 180));
+        sSides = { ab: sq, bc: Number(sbc.toFixed(4)), ca: sp };
+        if (!drawable(sSides.ab, sSides.bc, sSides.ca)) continue;
+      }
+      const sUnit = land2017 ? 'metres' : unit;
+      const su = land2017 ? 'm' : u;
+      const answer = sbc;
       const fig = triangleFromSides({
-        sides, vertices: [A, B, C], turn,
-        labels: { ab: `${q} ${u}`, bc: '', ca: `${p} ${u}` },
+        sides: sSides, vertices: [A, B, C], turn,
+        labels: { ab: `${sq} ${su}`, bc: '', ca: `${sp} ${su}` },
         angles: [{ at: 'a', label: `${angA}\u00b0` }],
       });
       if (!fig) continue;
-      const prose = [
-        `The diagram shows triangle $${A}${B}${C}$.`,
+      const prose = land2017 ? [
+        `A piece of land is in the shape of a triangle as shown.`,
+        `$${A}${B} = ${sq}$ m, $${A}${C} = ${sp}$ m, angle $${B}${A}${C} = ${angA}^{\\circ}$.`,
+        `The owner wishes to build a fence along the side $${B}${C}$.`,
+        `Calculate the length of the fence.`,
+      ] : [
+        tenths2015 ? `Triangle $${A}${B}${C}$ is shown below.` : `The diagram shows triangle $${A}${B}${C}$.`,
         // **No rounding line.** 2026 P2 Q2, 2017 P2 Q3 and 2015 P2 Q3 all stop
         // at "calculate the length" and their schemes take 7.2..., 412.7...
         // and 0.78... as they come. The cosine-rule ANGLE branch of this same
@@ -156,22 +185,24 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
         `Calculate the length of $${B}${C}$.`,
       ];
       const steps = [
-        `<strong>1.</strong> The angle at $${A}$ lies between the two known sides, so the cosine rule applies directly:<br><br>$${B}${C}^{2} = ${q}^{2} + ${p}^{2} - 2 \\times ${q} \\times ${p} \\times \\cos ${angA}^{\\circ}$`,
-        `<strong>2.</strong> Evaluate the right hand side:<br><br>$${B}${C}^{2} = ${num(Number((bc * bc).toFixed(3)))}$`,
-        `<strong>3.</strong> Take the square root:<br><br>$${B}${C} = ${dp1(answer)}$ ${unit}`,
+        `<strong>1.</strong> The angle at $${A}$ lies between the two known sides, so the cosine rule applies directly:<br><br>$${B}${C}^{2} = ${sq}^{2} + ${sp}^{2} - 2 \\times ${sq} \\times ${sp} \\times \\cos ${angA}^{\\circ}$`,
+        `<strong>2.</strong> Evaluate the right hand side:<br><br>$${B}${C}^{2} = ${num(Number((sbc * sbc).toFixed(3)))}$`,
+        `<strong>3.</strong> Take the square root:<br><br>$${B}${C} = ${dp1(answer)}$ ${sUnit}`,
       ];
       if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
       return {
         subTopic: 'Cosine Rule from a Diagram',
         difficulty: 'exam',
         variationId: 'trig-diagram.cosine-side',
-        questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+        questionLines: land2017
+          ? [prose[0], prose[1], prose[2], renderScene(fig.scene), prose[3]]
+          : [prose[0], renderScene(fig.scene), ...prose.slice(1)],
         boardQuestionLines: [`Two sides ${q} and ${p}, angle ${angA}. Third side?`],
         solutionSteps: steps,
         // •¹ correct substitution into the cosine rule, •² evaluate the square,
         // •³ take the root
         stepMarks: [1, 1, 1],
-        finalAnswer: `$${dp1(answer)}$ ${unit}`,
+        finalAnswer: `$${dp1(answer)}$ ${sUnit}`,
         figure: fig,
       };
     }
@@ -404,7 +435,15 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
         subTopic: 'Area of a Triangle from a Diagram',
         difficulty: 'exam',
         variationId: 'trig-diagram.area-exact',
-        questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+        // 2017 P1 Q7's own layout, before the diagram and without bullets:
+        // "In triangle DEF: DE = 8 cm, EF = 12 cm, sin E = 2/3." The owner, on
+        // the 2018-2014 light pass: "Yes". Its own alias; 2025 P1 Q5 keeps its
+        // bullets. After verifyFigure.
+        questionLines: askedId === 'trig-diagram.area-exact-pre2023'
+          ? [`In triangle $${A}${B}${C}$:`,
+             `$${A}${B} = ${q}$ ${u}, $${C}${A} = ${p}$ ${u}, $\\sin ${A} = \\frac{${sa}}{${sb}}.$`,
+             renderScene(fig.scene), prose[3]]
+          : [prose[0], renderScene(fig.scene), ...prose.slice(1)],
         boardQuestionLines: [`Sides ${q} and ${p}, sin = ${sa}/${sb}. Area?`],
         solutionSteps: steps,
         // •¹ correct substitution into the area formula, •² calculate the area
@@ -623,7 +662,7 @@ function cosineSide2026(): Q {
 
 export const TRIG_DIAGRAM_GENERATORS: Record<string, Gen> = {
   'Cosine Rule from a Diagram': (w, asked) => asked === 'trig-diagram.cosine-side'
-    ? cosineSide2026() : trigDiagramQuestion(['side', 'angle'], w),
+    ? cosineSide2026() : trigDiagramQuestion(['side', 'angle'], w, asked),
   'Sine Rule from a Diagram': (w, asked) => asked === 'trig-diagram.sine-angle-pre2023'
     ? stepladder() : trigDiagramQuestion(['sine-angle'], w),
   /**
@@ -634,7 +673,7 @@ export const TRIG_DIAGRAM_GENERATORS: Record<string, Gen> = {
    * moves and 2017 P1 Q7 (`-pre2023`, its own wording) is untouched.
    */
   'Area of a Triangle from a Diagram': (w, asked) => {
-    const q = trigDiagramQuestion(['area', 'area-exact'], w);
+    const q = trigDiagramQuestion(['area', 'area-exact'], w, asked);
     return asked !== 'trig-diagram.area-exact' ? q : {
       ...q,
       questionLines: q.questionLines.map(l => !l.startsWith('&bull;') ? l

@@ -338,7 +338,13 @@ function splitSideCosine(): Q | null {
   const m = getRandomInt(2, p - 1);         // corner to the foot
   if (m / p < 0.28 || m / p > 0.85) return null;
   const q = getRandomInt(3, 18);            // the rest of the slant
-  const e = getRandomInt(2, 14);            // foot to the far end of the base
+  // **The foot is the midpoint of the base — 2026-09-26.** 2016 P2 Q16 has
+  // AE = EC = 3 cm; this drew the two halves equal in 35 of 400. The owner,
+  // on the 2018-2014 light pass: "Yes". The far half is still drawn, so the
+  // stream is unchanged, and it is set equal to the near one. This routine
+  // is that paper's alone.
+  getRandomInt(2, 14);                      // the far half, drawn and not used
+  const e = m;                              // foot to the far end of the base
   const height = Math.sqrt(p * p - m * m);
   const AQ = p + q, AE = m + e;
   if (AQ / AE > 3 || AE / AQ > 3) return null;
@@ -379,7 +385,15 @@ function splitSideCosine(): Q | null {
     difficulty: 'exam',
     variationId: 'composite.split-side-cosine',
     stepMarks: [1, 1, 1, 1],
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    // 2016 P2 Q16's own lines, one fact to a line after the diagram: "DE is
+    // perpendicular to AC. AD = 4 cm. DB = 6 cm. AE = EC = 3 cm." The owner,
+    // on the light pass: "Yes". Written after verifyFigure.
+    questionLines: ['In the diagram below:', renderScene(fig.scene),
+      `$${set.on}${M}$ is perpendicular to $${A}${E}$.`,
+      `$${A}${set.on} = ${p}$ ${u}.`,
+      `$${set.on}${set.far} = ${q}$ ${u}.`,
+      `$${A}${M} = ${M}${E} = ${m}$ ${u}.`,
+      prose[3], prose[4]],
     boardQuestionLines: [`Slant ${p} then ${q}, base ${m} then ${e}, perpendicular between. Far side?`],
     solutionSteps: steps,
     finalAnswer: `$${dp1(answer)}$ ${unit}`,
@@ -519,7 +533,12 @@ function straightLineAngle(): Q | null {
     difficulty: 'exam',
     variationId: 'composite.straight-line-angle',
     stepMarks: [1, 1, 1],
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    // 2018 P2 Q9: the three bullets before the diagram, the last "• BC = 20
+    // centimetres.", and no rounding line - its scheme takes the length as it
+    // comes. The owner, on the light pass: "Yes" to both. After verifyFigure.
+    questionLines: [prose[0], prose[1], prose[2],
+      `&bull;&nbsp; $${B}${C} = ${L}$ ${unit}.`,
+      renderScene(fig.scene), prose[4]],
     boardQuestionLines: [`Straight line ${A}${B}${C}. Angle ${A}${B}${D} = ${theta}, angle ${B}${D}${C} = ${phi}, ${B}${C} = ${L}. Find ${D}${C}.`],
     solutionSteps: steps,
     finalAnswer: `$${dp1(DC)}$ ${unit}`,
@@ -607,7 +626,9 @@ function hexagonArea(): Q | null {
     difficulty: 'exam',
     variationId: 'composite.hexagon-area',
     stepMarks: [1, 1, 1, 1],
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    // No rounding line: 2015 P2 Q11 asks for the area and stops. The owner,
+    // on the light pass: "Yes". After verifyFigure.
+    questionLines: [prose[0], renderScene(fig.scene), prose[1]],
     boardQuestionLines: [`Regular hexagon, diagonals ${d} ${u}. Area?`],
     solutionSteps: steps,
     finalAnswer: `$${dp1(area)}$ ${u}$^{2}$`,

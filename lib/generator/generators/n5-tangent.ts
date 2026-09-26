@@ -154,7 +154,14 @@ export function tangentSemicircleQuestion(): Q {
       difficulty: 'exam',
       variationId: 'angles.tangent-semicircle',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2015 P1 Q3's three sentences, before the diagram: "... with point of
+      // contact B. DE is a diameter of the circle and F is a point on the
+      // circumference. Angle ABD is 77° and angle DEF is 64°." The owner, on
+      // the 2018-2014 light pass: "Yes". Its only paper; after verifyFigure.
+      questionLines: [prose[0],
+        `$${n.near}${n.far}$ is a diameter of the circle and $${n.fourth}$ is a point on the circumference.`,
+        `Angle $${n.tangentA}${n.contact}${n.near}$ is $${x}^{\\circ}$ and angle $${n.near}${n.far}${n.fourth}$ is $${y}^{\\circ}$.`,
+        renderScene(fig.scene), prose[prose.length - 1]],
       boardQuestionLines: [`Tangent at ${n.contact}, diameter ${n.near}${n.far}, ${n.fourth} on the circle. Angle ${n.tangentA}${n.contact}${n.near} = ${x}°, angle ${n.near}${n.far}${n.fourth} = ${y}°. Find ${n.contact}${n.near}${n.fourth}.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,
@@ -245,7 +252,16 @@ export function tangentMeetsDiameterQuestion(): Q {
       difficulty: 'exam',
       variationId: 'angles.tangent-meets-diameter',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2017 P1 Q9's own lines, before the diagram: "In the diagram: ABE is a
+      // tangent to the circle centre O. Angle DBE is 58°." and then "Calculate
+      // the size of angle CAB." The diagram carries the diameter, the
+      // straight line and the shading, as the paper's does. The owner, on the
+      // 2018-2014 light pass: "Yes". Its only paper; after verifyFigure.
+      questionLines: ['In the diagram:',
+        `$${n.outside}${n.contact}${n.tangentEnd}$ is a tangent to the circle centre $${n.centre}$.`,
+        `Angle $${n.far}${n.contact}${n.tangentEnd}$ is $${t}^{\\circ}$.`,
+        renderScene(fig.scene),
+        `Calculate the size of angle $${n.near}${n.outside}${n.contact}$.`],
       boardQuestionLines: [`Tangent at ${n.contact} meets diameter ${n.far}${n.near} produced at ${n.outside}. Angle ${n.far}${n.contact}${n.tangentEnd} = ${t}°. Find ${n.near}${n.outside}${n.contact}.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,
@@ -315,7 +331,15 @@ export function twoTangentsChordQuestion(): Q {
       difficulty: 'exam',
       variationId: 'angles.two-tangents-chord',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2016 P2 Q5's plain lines, with stops, and "angle ABC" without
+      // "shaded": "AB and CB are tangents to the circle. AC and ED are
+      // parallel. Angle AOD is 143°." The owner, on the 2018-2014 light pass:
+      // "Yes". Its only paper; after verifyFigure.
+      questionLines: [prose[0], renderScene(fig.scene),
+        `$${n.touchA}${n.outside}$ and $${n.touchC}${n.outside}$ are tangents to the circle.`,
+        `$${n.touchA}${n.touchC}$ and $${n.farEnd}${n.markedEnd}$ are parallel.`,
+        `Angle $${n.touchA}${n.centre}${n.markedEnd}$ is $${g}^{\\circ}$.`,
+        `Calculate the size of angle $${n.touchA}${n.outside}${n.touchC}$.`],
       boardQuestionLines: [`Tangents ${n.touchA}${n.outside} and ${n.touchC}${n.outside}, chord ${n.touchA}${n.touchC} parallel to diameter ${n.farEnd}${n.markedEnd}, angle ${n.touchA}${n.centre}${n.markedEnd} = ${g}°. Find ${n.touchA}${n.outside}${n.touchC}.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,

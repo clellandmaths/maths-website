@@ -144,9 +144,9 @@ function completeSquare(_wanted?: string, asked?: string): Q {
     // 2025 P2 Q5 ends "in the form (x + a)^2 + b." with the stop inside the
     // maths. The owner, 2026-09-25: "if the only fixes is putting full stops
     // just do that without asking me". Its own id only; words, no random.
-    // 2019 P2 Q10 ends the same way, on its own alias.
+    // 2019 P2 Q10 ends the same way, on its own alias, and so does 2016 P2 Q9.
     questionLines: [
-      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${PLUS ? '.' : ''}$`,
+      `Express $${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}${PLUS || asked === 'quadratics.complete-square-2016' ? '.' : ''}$`,
     ],
     boardQuestionLines: [`$${fmt(expr, v)}$ in the form $(${v} ${sign} ${pName})^{2} + ${qName}$`],
     // Two marks in all four papers — •¹ correct bracket with square, •² complete

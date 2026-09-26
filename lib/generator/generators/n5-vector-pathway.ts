@@ -297,9 +297,17 @@ function extendedSide(): Q | null {
   return {
     subTopic: 'A Pathway with an Extended Side', difficulty: 'exam',
     variationId: 'vectors.pathway-extended',
+    // 2017 P2 Q8's own layout for part (b): "The line QP is extended to T."
+    // then the second diagram, then "• TP = PQ • V is the midpoint of PR" and
+    // "Give your answer in simplest form." The owner, on the 2018-2014 light
+    // pass: "Yes". Its only paper; `prose` still carries the old wording for
+    // the board line and the check.
     questionLines: [
       prose[0], renderScene(fig1.scene), prose[1],
-      prose[2], renderScene(fig2.scene), prose[3],
+      `The line $${B}${A}$ is extended to $${T}$.`, renderScene(fig2.scene),
+      `&bull;&nbsp; $${T}${A} = ${k === 1 ? '' : k}${A}${B}$`,
+      `&bull;&nbsp; $${V}$ is the midpoint of $${m1}${m2}$`,
+      `<strong>(b)</strong> Express $${ray(T, V)}$ in terms of $${vec(nc)}$ and $${vec(nd)}$. Give your answer in simplest form.`,
     ],
     boardQuestionLines: [`$${cRay} = ${vec(nc)}$, $${dRay} = ${vec(nd)}$, $${T}${A} = ${k === 1 ? '' : k}${A}${B}$, $${V}$ midpoint of $${m1}${m2}$. Find $${ray(A, D)}$ and $${ray(T, V)}$.`],
     solutionSteps: steps, stepMarks: [1, 1, 1],

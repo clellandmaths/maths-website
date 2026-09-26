@@ -146,13 +146,26 @@ function components(wanted?: string, asked?: string): Q {
     const R = A.map((v, i) => k1 * v + (minus ? -1 : 1) * k2 * B[i]);
     if (R.some(v => !Number.isInteger(v) || Math.abs(v) > 40)) continue;
     if (R.every(v => v === 0)) continue;
+    // **Never a zero component in the answer, on 2014's and 2016's —
+    // 2026-09-26.** Their papers answer (−4, 10, 3) and (−3, −4); these drew a
+    // zero in 8 and 21 of 200. The owner, on the 2018-2014 light pass: "Yes".
+    // A rejection on those two ids only, so 2024 P1 Q4 draws as before.
+    if ((asked === 'vectors.components-pre2023' || asked === 'vectors.components-half')
+      && R.some(v => v === 0)) continue;
 
     const expr = `${scaled(k1, n1)} ${minus ? '-' : '+'} ${scaled(k2, n2)}`;
     return {
       subTopic: 'Vector Components',
       difficulty: 'skill',
       variationId: half ? 'vectors.components-half' : 'vectors.components',
-      questionLines: [
+      // 2014 P1 Q4 asks first and gives the vectors after: "Find the resultant
+      // vector 2u - v when u = … and v = … ." The owner, on the 2018-2014
+      // light pass: "Yes". Its own alias; the others keep their order.
+      questionLines: asked === 'vectors.components-pre2023'
+        ? [`Find the resultant vector $${expr}$`,
+           `when $${bold(n1)} = ${col(A)}$ and $${bold(n2)} = ${col(B)}.$`,
+           `Express your answer in component form.`]
+        : [
         `Given $${bold(n1)} = ${col(A)}$ and $${bold(n2)} = ${col(B)}$,`,
         `find the resultant vector $${expr}$.`,
         `Express your answer in component form.`,
@@ -180,9 +193,16 @@ function missingVector(): Q {
   // paper, one form, so there is nothing here to toss for either.
   const dim = 3;
   const [n1, n2] = pick([['u', 'v'], ['p', 'q'], ['a', 'b']]);
-  const A = Array.from({ length: dim }, () => nonZeroInt(-9, 9));
-  const V = Array.from({ length: dim }, () => nonZeroInt(-9, 9));
-  const sum = A.map((v, i) => v + V[i]);
+  // **Never a zero in the given u + v — 2026-09-26.** The paper's are (1, 5,
+  // 1) and (6, −4, 3); this drew a zero in 33 of 200. The owner, on the
+  // 2018-2014 light pass: "Yes". Redrawn until there is none; this routine is
+  // 2018 P1 Q4's alone.
+  let A: number[], V: number[], sum: number[];
+  do {
+    A = Array.from({ length: dim }, () => nonZeroInt(-9, 9));
+    V = Array.from({ length: dim }, () => nonZeroInt(-9, 9));
+    sum = A.map((v, i) => v + V[i]);
+  } while (sum.some(v => v === 0));
 
   return {
     subTopic: 'Finding a Missing Vector',
@@ -869,6 +889,10 @@ function addFromGrid(): Q | null {
   // A zero resultant has no arrow to draw and no direction to name, and neither
   // paper sets one.
   if (sum[0] === 0 && sum[1] === 0) return null;
+  // Nor a zero in either component: 2015 P2 Q5's answer has none, and this
+  // drew one in 26 of 200. The owner, on the 2018-2014 light pass: "Yes".
+  // This routine is that paper's alone.
+  if (sum[0] === 0 || sum[1] === 0) return null;
 
   const a = seat(...p), b = seat(...q);
   if (!a || !b) return null;

@@ -254,7 +254,12 @@ function binomialTrinomial(_wanted?: string, asked?: string): Q {
       // The papers' full stop, inside the maths - five of the six print one;
       // 2015 P1 Q4 ("Multiply out the brackets …: (x−4)(x²+x−2)") does not.
       // The owner, on the 2026 re-review: "Yes on all papers".
-      questionLines: [`${EXPAND} $${bracket([b, a], v)}${bracket([e, d, c], v)}${asked === 'expanding.binomial-trinomial-2015' ? '' : '.'}$`],
+      // And 2015 P1 Q4 has its own instruction, "Multiply out the brackets
+      // and collect like terms:". The owner, on the 2018-2014 light pass:
+      // "Yes". Its own alias; every other paper keeps "Expand and simplify".
+      questionLines: [asked === 'expanding.binomial-trinomial-2015'
+        ? `Multiply out the brackets and collect like terms: $${bracket([b, a], v)}${bracket([e, d, c], v)}$`
+        : `${EXPAND} $${bracket([b, a], v)}${bracket([e, d, c], v)}.$`],
       boardQuestionLines: [`$${bracket([b, a], v)}${bracket([e, d, c], v)}$`],
       solutionSteps: [
         `<strong>1.</strong> Multiply the trinomial by $${fmt([0, a], v)}$:<br><br>$${fmt(mulP([0, a], [e, d, c]), v)}$`,
@@ -330,8 +335,11 @@ function productPlusBracket(wanted?: string): Q {
       variationId: shape === 1 ? 'expanding.product-plus-square'
         : shape === 2 ? 'expanding.product-plus-linear'
         : 'expanding.product-plus',
+      // 2018 P1 Q2 ends with a stop inside the maths; 2023's and 2025's shapes
+      // are left as they are. The owner, 2026-09-25: "if the only fixes is
+      // putting full stops just do that without asking me".
       questionLines: [
-        `${EXPAND} $${first} ${k < 0 ? '-' : '+'} ${coeffTex(Math.abs(k))}${bracket(second, v)}$`,
+        `${EXPAND} $${first} ${k < 0 ? '-' : '+'} ${coeffTex(Math.abs(k))}${bracket(second, v)}${shape === 0 ? '.' : ''}$`,
       ],
       boardQuestionLines: [
         `$${first} ${k < 0 ? '-' : '+'} ${coeffTex(Math.abs(k))}${bracket(second, v)}$`,

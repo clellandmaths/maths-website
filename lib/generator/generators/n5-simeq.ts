@@ -202,7 +202,11 @@ function solveGiven(_wanted?: string, asked?: string): Q {
       difficulty: 'skill',
       variationId: 'simeq.solve-given',
       questionLines: [
-        `Solve, algebraically, the system of equations`,
+        // 2015 P1 Q11 has no commas: "Solve algebraically the system of
+        // equations". The owner, on the 2018-2014 light pass: "Yes". Its own
+        // alias; 2018 P1 Q3's paper has them and keeps them.
+        asked === 'simeq.solve-given-2015' ? `Solve algebraically the system of equations`
+          : `Solve, algebraically, the system of equations`,
         `$${equation(p.a1, v1, p.b1, v2, p.c1)}$`,
         `$${equation(p.a2, v1, p.b2, v2, p.c2)}$`,
       ],
@@ -294,7 +298,14 @@ function intersection(): Q {
       subTopic: 'Intersection of Two Lines',
       difficulty: 'exam',
       variationId: 'simeq.intersection',
-      questionLines: [prose[0], prose[1], renderScene(fig.scene), prose[2]],
+      // 2017 P1 Q13's own two sentences: "The graph shows two straight lines
+      // with equations 3x - y = 2 and x + 3y = 19. The lines intersect at the
+      // point P." The owner, on the 2018-2014 light pass: "Yes". Its only
+      // paper; after verifyFigure.
+      questionLines: [
+        `The graph shows two straight lines with equations $${eq1}$ and $${eq2}.$`,
+        `The lines intersect at the point $${point}$.`,
+        renderScene(fig.scene), prose[2]],
       figure: fig,
       boardQuestionLines: [
         `Where do $${equation(p.a1, 'x', p.b1, 'y', p.c1)}$ and $${equation(p.a2, 'x', p.b2, 'y', p.c2)}$ meet?`,

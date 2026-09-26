@@ -102,7 +102,7 @@ const validTriangle = (a: number, b: number, c: number): boolean =>
 // the result is a perfect square, which is what makes the question sit in the
 // non-calculator paper.
 
-function cosineRuleSideExact(): Q {
+function cosineRuleSideExact(asked?: string): Q {
   for (let tries = 0; tries < 900; tries++) {
     const [A, B, C] = pick(TRIANGLES);
     const unit = pick(UNITS);
@@ -151,7 +151,13 @@ function cosineRuleSideExact(): Q {
       subTopic: 'Cosine Rule: Finding a Side',
       difficulty: 'exam',
       variationId: 'cosine-rule.side-exact',
-      questionLines: [...givens, renderScene(fig.scene), ask],
+      // 2018 P1 Q10 gives its three facts as plain lines, with no bullets:
+      // "XZ = 10 centimetres / YZ = 8 centimetres / cos Z = 1/8". The owner,
+      // on the 2018-2014 light pass: "Yes". Its own alias; 2023 P1 Q6 keeps
+      // its bullets. After verifyFigure.
+      questionLines: asked === 'cosine-rule.side-exact-pre2023'
+        ? [...givens.map(g => g.replace('&bull;&nbsp; ', '')), renderScene(fig.scene), ask]
+        : [...givens, renderScene(fig.scene), ask],
       boardQuestionLines: [`$${A}${C}=${b}$, $${B}${C}=${a}$, $\\cos ${C} = ${cosTex}$. Find $${A}${B}$`],
       solutionSteps: [
         `<strong>1.</strong> $${A}${B}$ is opposite the angle at $${C}$, so use the cosine rule in the form $${A}${B}^{2} = ${A}${C}^{2} + ${B}${C}^{2} - 2(${A}${C})(${B}${C})\\cos ${C}$:<br><br>$${A}${B}^{2} = ${b}^{2} + ${a}^{2} - 2 \\times ${b} \\times ${a} \\times ${cosTex}$`,
@@ -461,7 +467,7 @@ function triangleArea(): Q {
 }
 
 export const TRIANGLE_TRIG_GENERATORS: Record<string, () => Q> = {
-  'Cosine Rule: Finding a Side': cosineRuleSideExact,
+  'Cosine Rule: Finding a Side': (_w?: string, asked?: string) => cosineRuleSideExact(asked),
   'Cosine Rule: Finding an Angle': cosineRuleAngleExact,
   'Sine Rule: Finding a Side': sineRuleSideExact,
   'Cosine Rule with a Given Angle': cosineRuleSideDegrees,

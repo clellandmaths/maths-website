@@ -95,13 +95,26 @@ const BALLS = [
 ];
 
 /** 2018 P2 Q7, 2025 P2 Q2 — substitute, calculate, round. */
-function sphere(): Q | null {
+function sphere(asked?: string): Q | null {
+  /**
+   * **2018 P2 Q7 is two significant figures, and its ball is shaded —
+   * 2026-09-26.** The clone asked for three in 96 of 200 and drew a plain
+   * ball with an equator. The owner, on the 2018-2014 light pass: "Yes".
+   * Keyed on 2018's alias: the figures are still drawn, so LOCKED 2025 P2 Q2
+   * on `volume.sphere` draws exactly as before.
+   *
+   * **And lit, not flat.** The 2022 P2 Q3 flat grey read as a disc. The owner,
+   * on the contact sheet: "Looks like a circle shading needed to make more
+   * sphere". So the ball is `lit`, pale at the upper right as the paper's is.
+   */
+  const for2018 = asked === 'volume.sphere-pre2023';
   const c = pick(BALLS);
   // a diameter, sometimes to one decimal place as the papers set it
   const d = getRandomInt(c.band[0] * 2, c.band[1] * 2) / (getRandomInt(0, 1) ? 1 : 2) / 2;
   const dia = Math.round(d * 10) / 10;
   const r = dia / 2;
-  const sf = pick([2, 3]);
+  const drawnSf = pick([2, 3]);
+  const sf = for2018 ? 2 : drawnSf;
   const exact = 4 / 3 * Math.PI * r ** 3;
   if (Number(toSigFigs(exact, sf)) === 0) return null;
 
@@ -117,7 +130,7 @@ function sphere(): Q | null {
     rounded(3, exact, sf, c.short),
   ];
   return assemble({
-    stack: [{ kind: 'sphere', r }],
+    stack: [for2018 ? { kind: 'sphere', r, lit: true } : { kind: 'sphere', r }],
     // Both papers draw the diameter as a double-headed arrow across the ball.
     dims: [{ along: 'width', halfWidth: r, side: 'below', value: dia, text: `${num(dia)} ${c.short}`, arrow: true }],
   }, 'Volume of a Sphere', 'volume.sphere', prose,
@@ -376,8 +389,11 @@ function pyramidHeight(): Q | null {
     `<strong>3.</strong> Divide to find the height:<br><br>$h = \\frac{3 \\times ${v}}{${w * w}} = ${num(h)}$ cm`,
   ];
   return assemble({
-    stack: [{ kind: 'pyramid', w, h }],
-    dims: [{ along: 'width', halfWidth: w / 2, side: 'below', value: w, text: `${w} cm` }],
+    // 2018 P1 Q17 writes the base length on two of its edges, not on a line
+    // under the solid. The owner, on the 2018-2014 light pass: "Yes". This
+    // routine is that paper's alone.
+    stack: [{ kind: 'pyramid', w, h, edgeLabel: `${w} cm` }],
+    dims: [],
   }, 'The Height of a Pyramid', 'volume.pyramid-height', prose,
     `Square pyramid, base ${w} cm, volume ${v} cm³. Height?`,
     steps, [1, 1, 1], `$${num(h)}$ cm`);
@@ -1229,7 +1245,8 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
 };
 
 export const VOLUME_GENERATORS: Record<string, () => Q> = {
-  'Volume of a Sphere': tried('volume.sphere', sphere),
+  // The asked id is passed through for 2018 P2 Q7's alias.
+  'Volume of a Sphere': (_w?: string, asked?: string) => tried('volume.sphere', () => sphere(asked))(),
   'A Volume in Scientific Notation': tried('volume.sphere-scientific', sphereScientific),
   'Volume of a Cone': tried('volume.cone-approx-pi', conePi),
   'The Height of a Pyramid': tried('volume.pyramid-height', pyramidHeight),

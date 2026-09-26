@@ -225,7 +225,10 @@ function evaluateFractional(): Q {
       subTopic: 'Fractional Indices',
       difficulty: 'skill',
       variationId: 'indices.evaluate',
-      questionLines: [`Evaluate $${n}^{\\frac{${p}}{${root}}}$`],
+      // 2015 P1 Q14, this id's only paper, ends with a stop inside the maths.
+      // The owner, 2026-09-25: "if the only fixes is putting full stops just
+      // do that without asking me".
+      questionLines: [`Evaluate $${n}^{\\frac{${p}}{${root}}}.$`],
       boardQuestionLines: [`$${n}^{\\frac{${p}}{${root}}}$`],
       solutionSteps: [
         `<strong>1.</strong> The denominator of the power is the root and the numerator is the power:<br><br>$${n}^{\\frac{${p}}{${root}}} = \\left(${nthRoot(root, n)}\\right)^{${p}}$`,
@@ -259,7 +262,10 @@ function withCoefficient(asFraction: boolean): Q {
         difficulty: 'exam',
         variationId: 'indices.coefficient',
         questionLines: [
-          `Remove the brackets and simplify $\\left(\\frac{${num}}{${den}}${pow(v, a)}\\right)^{${b}}$`,
+          // 2018 P1 Q15, this id's only paper, ends with a stop inside the
+          // maths. The owner, 2026-09-25: "if the only fixes is putting full
+          // stops just do that without asking me".
+          `Remove the brackets and simplify $\\left(\\frac{${num}}{${den}}${pow(v, a)}\\right)^{${b}}.$`,
         ],
         boardQuestionLines: [`$\\left(\\frac{${num}}{${den}}${pow(v, a)}\\right)^{${b}}$`],
         solutionSteps: [
@@ -391,6 +397,11 @@ function cancelCoefficients(): Q {
     // P2 sheet. The paper's is 5 + 1 − 2. The owner: *"Do both"* - this, and
     // the paper's full stop below, inside the maths. Alone on its clone.
     if (c === b) continue;
+    // Nor on the first factor: with the denominator's power equal to it the
+    // answer keeps the second factor's power, a^3 x 24a^2 / 4a^3, and again no
+    // powers are combined - 29 of 400. The owner, on the 2018-2014 light
+    // pass: "Yes", as "Do both" before.
+    if (c === a) continue;
 
     const numerator = `${pow(v, a)} \\times ${k}${pow(v, b)}`;
     return {

@@ -880,6 +880,14 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
             // too. The picks above are still drawn.
             : asked === 'inequalities.brackets-2024'
             ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
+            // 2018 P2 Q4, "Solve, algebraically, the inequation … .", and 2017
+            // P1 Q8, "Solve, algebraically, the inequality … .", each with its
+            // stop. The owner, on the 2018-2014 light pass: "Yes". Each on its
+            // own alias; the picks above are still drawn.
+            : asked === 'inequalities.brackets-pre2023'
+            ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
+            : asked === 'inequalities.brackets-2017'
+            ? `Solve, algebraically, the inequality $${lhs} ${rel} ${rhs}.$`
             : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
       })()],
       boardQuestionLines: [`Solve $${lhs} ${rel} ${rhs}$`],

@@ -193,7 +193,10 @@ function fully(): Q {
       subTopic: 'Factorising Fully',
       difficulty: 'exam',
       variationId: 'factorising.fully',
-      questionLines: [`Factorise fully $${fmt(expanded, v)}$`],
+      // 2016 P2 Q4, this id's only paper, ends with a stop inside the maths.
+      // The owner, 2026-09-25: "if the only fixes is putting full stops just
+      // do that without asking me".
+      questionLines: [`Factorise fully $${fmt(expanded, v)}.$`],
       boardQuestionLines: [`$${fmt(expanded, v)}$`],
       // 2016 P2 Q4 is two marks — •¹ begin to factorise, •² factorise fully —
       // so "put it together" was a third step earning nothing, and it was the
@@ -267,6 +270,10 @@ function solveByFactorising(wanted?: string): Q {
     if (!hard) {
       return {
         ...shared,
+        // 2018 P1 Q5 says only "Solve x^2 - 11x + 24 = 0." - no method named,
+        // and a stop inside the maths. The owner, on the 2018-2014 light pass:
+        // "Yes". The unitary form is that paper's alone.
+        questionLines: [`Solve $${fmt(expanded, v)} = 0.$`],
         variationId: 'factorising.solve',
         // 2018 P1 Q5 is two marks: •¹ correct factorisation, •² solve for x.
         // Setting each bracket to zero is part of solving, not a mark of its own.

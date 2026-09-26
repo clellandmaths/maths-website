@@ -179,7 +179,10 @@ function twoBearings(c: BearingContext, side: number, eastWest = false, paper201
     `From ${rA}, the bearing of ${rC} is $${brg(bA)}$.`,
     `From ${rB}, the bearing of ${rC} is $${brg(bB)}$.`,
     `Calculate the distance between ${rA} and ${rC}.`,
-    'Do not use a scale drawing.',
+    // 2017 P2 Q10 says nothing about a scale drawing; 2015 P2 Q13 does. The
+    // owner, on the 2018-2014 light pass: "Yes" to dropping it for 2017.
+    // `eastWest` is 2017's own id.
+    ...(eastWest ? [] : ['Do not use a scale drawing.']),
   ];
   // Four marks in both papers: •¹ calculate the angles of the triangle,
   // •² correct substitution into the sine rule, •³ rearrange it, •⁴ calculate
@@ -408,7 +411,13 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
     subTopic: kind === 'angle' ? 'Bearings with the Cosine Rule' : 'Finding a Bearing',
     difficulty: 'exam',
     variationId: kind === 'angle' ? 'bearings.three-sides-angle' : 'bearings.three-sides-bearing',
-    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    // 2018 P2 Q13 gives its four facts as bullets, each with its stop: "• FY is
+    // 7.2 kilometres. … • F is on a bearing of 240° from T." The owner, on the
+    // 2018-2014 light pass: "Yes". The bearing kind is that paper's alone, and
+    // this is after verifyFigure.
+    questionLines: kind === 'bearing'
+      ? [prose[0], renderScene(fig.scene), ...facts.map(f => `&bull;&nbsp; ${f}`), ...ask]
+      : [prose[0], renderScene(fig.scene), ...prose.slice(1)],
     boardQuestionLines: [`${nA}${nB} = ${show(ba)}, ${nB}${nC} = ${show(bcLen)}, ${nC}${nA} = ${show(ca)} ${c.short}. ${setup.replace(/\$/g, '')} ${ask.join(' ').replace(/<[^>]+>|&nbsp;|\$/g, '')}`],
     solutionSteps: steps,
     stepMarks: steps.map(() => 1),

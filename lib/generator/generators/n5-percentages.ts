@@ -318,8 +318,102 @@ function compound2022(): Q {
   };
 }
 
+/**
+ * **2018 P2 Q1 counts its own years between two dates.** — 2026-09-26
+ *
+ * "Households in a city produced a total of 125 000 tonnes of waste in 2017.
+ * The total amount of waste is expected to fall by 2% each year. Calculate the
+ * total amount of waste these households are expected to produce in 2020." No
+ * rounding line, and none needed: 125 000 x 0.98^3 is 117 649 exactly. The
+ * clone said "after n years". The owner, on the 2018-2014 light pass contact
+ * sheet: "Ah so it should go between 2 years as the paper question but can be
+ * more or less than 4 years".
+ *
+ * So the span is drawn from 2 to 5 FIRST, and the rate and starting figure are
+ * then chosen so the answer comes out whole: the start is a multiple of the
+ * multiplier's denominator to that power, as the paper's 125 000 is 50^3. Only
+ * rates that can do that inside the context's band are offered, so every span
+ * is reachable (checked for every context) and none thins out the way 2019
+ * P2 Q1's three did behind a rejection loop.
+ *
+ * Its own list, taken before any random is drawn, on 2018's alias alone.
+ */
+const COMPOUND_2018 = 'percentages.compound-pre2022';
+const DATED_COUNTS_2018: { opening: (v: string, y: number) => string; subject: string;
+  ask: (y: number) => string; unit: string; band: [number, number] }[] = [
+  { opening: (v, y) => `Households in a city produced a total of ${v} tonnes of waste in ${y}.`,
+    subject: 'The total amount of waste', unit: 'tonnes', band: [20000, 500000],
+    ask: y => `Calculate the total amount of waste these households are expected to produce in ${y}.` },
+  { opening: (v, y) => `A town had a population of ${v} in ${y}.`,
+    subject: 'The population', unit: 'people', band: [5000, 90000],
+    ask: y => `Calculate the expected population of the town in ${y}.` },
+  { opening: (v, y) => `A ferry company carried ${v} passengers in ${y}.`,
+    subject: 'The number of passengers', unit: 'passengers', band: [50000, 900000],
+    ask: y => `Calculate the number of passengers the company is expected to carry in ${y}.` },
+  { opening: (v, y) => `A wind farm generated ${v} megawatt hours of electricity in ${y}.`,
+    subject: 'The amount generated', unit: 'megawatt hours', band: [20000, 400000],
+    ask: y => `Calculate how many megawatt hours the wind farm is expected to generate in ${y}.` },
+  { opening: (v, y) => `A library lent out ${v} books in ${y}.`,
+    subject: 'The number of loans', unit: 'books', band: [10000, 200000],
+    ask: y => `Calculate the number of books the library is expected to lend out in ${y}.` },
+  { opening: (v, y) => `A colony of seabirds on an island numbered ${v} in ${y}.`,
+    subject: 'The size of the colony', unit: 'seabirds', band: [2000, 60000],
+    ask: y => `Calculate the expected size of the colony in ${y}.` },
+  { opening: (v, y) => `A recycling centre collected ${v} tonnes of glass in ${y}.`,
+    subject: 'The amount collected', unit: 'tonnes', band: [5000, 120000],
+    ask: y => `Calculate the amount of glass the centre is expected to collect in ${y}.` },
+  { opening: (v, y) => `A museum had ${v} visitors in ${y}.`,
+    subject: 'The number of visitors', unit: 'visitors', band: [20000, 600000],
+    ask: y => `Calculate the expected number of visitors to the museum in ${y}.` },
+  { opening: (v, y) => `A school canteen served ${v} meals in ${y}.`,
+    subject: 'The number of meals', unit: 'meals', band: [10000, 120000],
+    ask: y => `Calculate the number of meals the canteen is expected to serve in ${y}.` },
+];
+const RATES_2018 = [2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25];
+
+function compound2018(): Q {
+  const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
+  const ctx = pick(DATED_COUNTS_2018);
+  const years = getRandomInt(2, 5);                   // the paper's is 3
+  const up = getRandomInt(0, 1) === 1;                 // the paper's falls
+  const fits = RATES_2018.map(rate => {
+    const top = 100 + (up ? rate : -rate), g = gcd(top, 100);
+    const den = (100 / g) ** years;
+    const step = den / gcd(den, 100) * 100;            // a whole number of hundreds, too
+    return { rate, num: top / g, den, step,
+      k0: Math.ceil(ctx.band[0] / step), k1: Math.floor(ctx.band[1] / step) };
+  }).filter(f => f.k1 >= f.k0);
+  const f = pick(fits);
+  const start = getRandomInt(f.k0, f.k1) * f.step;
+  const value = start / f.den * f.num ** years;       // exact: den divides start
+  const multiplier = Math.round((1 + (up ? f.rate : -f.rate) / 100) * 100) / 100;
+  const from = getRandomInt(2014, 2022);
+  const to = from + years;
+  return {
+    subTopic: 'Compound Appreciation & Depreciation',
+    difficulty: 'skill',
+    variationId: 'percentages.compound',
+    questionLines: [
+      ctx.opening(plain(start), from),
+      `${ctx.subject} is expected to ${up ? 'rise' : 'fall'} by ${f.rate}% each year.`,
+      ctx.ask(to),
+    ],
+    boardQuestionLines: [`${plain(start)} in ${from}, ${up ? 'up' : 'down'} ${f.rate}% each year. How many in ${to}?`],
+    solutionSteps: [
+      `<strong>1.</strong> Find the multiplier for ${up ? 'an increase' : 'a decrease'} of ${f.rate}%:<br><br>$100\\% ${up ? '+' : '-'} ${f.rate}\\% = ${100 + (up ? f.rate : -f.rate)}\\% = ${multiplier}$`,
+      `<strong>2.</strong> From ${from} to ${to} is ${years} years, so apply it ${timesWord(years)}:<br><br>$${plain(start)} \\times ${multiplier}^{${years}}$`,
+      `<strong>3.</strong> Evaluate:<br><br>$= ${plain(value)}$ ${ctx.unit}`,
+    ],
+    // •¹ know how to decrease by the rate, •² know how to calculate the amount
+    // after the right number of years, •³ evaluate
+    stepMarks: [1, 1, 1],
+    finalAnswer: `${plain(value)} ${ctx.unit}`,
+  };
+}
+
 function compound(wanted?: string, asked?: string): Q {
   if (asked === COMPOUND_2022) return compound2022();
+  if (asked === COMPOUND_2018) return compound2018();
   // Pick the shape, then a context that fits it — not a context and whatever
   // shape it implies.
   //
@@ -425,7 +519,14 @@ function compound(wanted?: string, asked?: string): Q {
        * is exactly what 2024 P2 Q1 does on its way to (£) 186.40. Everything
        * else still says so.
        */
-      ...(ctx.rounding === 'money' ? [] : [roundingPhrase(ctx.rounding)]),
+      //
+      // **And 2016 P2 Q1 says nothing whatever the story — 2026-09-26.** The
+      // paper asks for the amount after the years and stops; the clone added
+      // "to the nearest pound / whole number" in 117 of 200. The owner, on the
+      // 2018-2014 light pass: "Yes". Words only, on its own id; the answer is
+      // still worked to the same rounding. (2018 P2 Q1 now has its own
+      // branch, `compound2018`, which never rounds.)
+      ...(ctx.rounding === 'money' || is2016 ? [] : [roundingPhrase(ctx.rounding)]),
     ],
     boardQuestionLines: [
       `${ctx.format(start)}, ${up ? 'up' : 'down'} ${rate}% each year for ${years} years. Find the value.`,

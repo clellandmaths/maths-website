@@ -103,7 +103,15 @@ export function similarTrianglePartQuestion(): Q {
       // •¹ the scale factor, •² form the equation, •³ solve it for x
       variationId: 'similarity.triangle-part',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2017 P1 Q15's own lines, before the diagram: "In the diagram: TS is
+      // parallel to QR. TS = 5 cm, QR = 7 cm, SR = 2.6 cm. The length of PS is
+      // x cm." The owner, on the 2018-2014 light pass: "Yes". Its only paper;
+      // after verifyFigure.
+      questionLines: ['In the diagram:',
+        `$${n.nearLeft}${n.nearRight}$ is parallel to $${n.left}${n.right}$.`,
+        `$${n.nearLeft}${n.nearRight} = ${near}$ cm, $${n.left}${n.right} = ${far}$ cm, $${n.nearLeft}${n.left} = ${num(outer)}$ cm.`,
+        `The length of $${n.apex}${n.nearLeft}$ is $x$ cm.`,
+        renderScene(fig.scene), prose[prose.length - 1]],
       boardQuestionLines: [`${n.nearLeft}${n.nearRight} = ${near} cm is parallel to ${n.left}${n.right} = ${far} cm, and ${n.nearLeft}${n.left} = ${num(outer)} cm. Find ${n.apex}${n.nearLeft}.`],
       solutionSteps: steps,
       finalAnswer: `$x = ${num(inner)}$`,
@@ -292,7 +300,18 @@ export function similarTriangleAreaQuestion(): Q {
       difficulty: 'exam',
       variationId: 'similarity.triangle-area',
       stepMarks: [1, 1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2015 P2 Q9's sentences, around the diagram: "Triangle QRT represents
+      // the red section. PQTS represents the blue section." then the diagram,
+      // then "Triangles PRS and QRT are mathematically similar. The area of
+      // triangle QRT is 400 square centimetres." The owner, on the 2018-2014
+      // light pass: "Yes". Its only paper; after verifyFigure.
+      questionLines: [prose[0],
+        `Triangle $${n.nearRight}${n.apex}${n.nearLeft}$ represents the ${c.near} section.`,
+        `$${n.left}${n.nearLeft}${n.nearRight}${n.right}$ represents the ${c.far} section.`,
+        renderScene(fig.scene),
+        `Triangles $${n.left}${n.apex}${n.right}$ and $${n.nearRight}${n.apex}${n.nearLeft}$ are mathematically similar.`,
+        `The area of triangle $${n.nearRight}${n.apex}${n.nearLeft}$ is $${small}$ square centimetres.`,
+        prose[prose.length - 1]],
       boardQuestionLines: [`Heights ${near} cm and ${far} cm, small triangle ${small} cm². Area of the rest?`],
       solutionSteps: steps,
       finalAnswer: `$${answer}$ cm$^{2}$`,
@@ -719,7 +738,10 @@ export function notSimilarQuestion(): Q {
         `The ${c.small} ${c.noun} is ${dSmall} cm ${c.measure} and has a volume of ${vSmall} cubic centimetres.`,
         `The ${c.large} ${c.noun} is ${dLarge} cm ${c.measure} and has a volume of ${vLarge} cubic centimetres.`,
         `<b>(a)</b>&nbsp;&nbsp;Show that the two ${c.noun}s are <em>not</em> mathematically similar.`,
-        `<b>(b)</b>&nbsp;&nbsp;The ${c.large} ${c.noun} is redesigned so that the two ${c.noun}s are now mathematically similar. The volume of the redesigned ${c.large} ${c.noun} is ${vNew} cubic centimetres.<br>Calculate the ${c.dimension} of the redesigned ${c.large} ${c.noun}. Give your answer correct to one decimal place.`,
+        `<b>(b)</b>&nbsp;&nbsp;The ${c.large} ${c.noun} is redesigned so that the two ${c.noun}s are now mathematically similar. The volume of the redesigned ${c.large} ${c.noun} is ${vNew} cubic centimetres.<br>Calculate the ${c.dimension} of the redesigned ${c.large} ${c.noun}.`,
+        // No rounding line: 2018 P2 Q18, this id's only paper, stops at
+        // "Calculate the depth of the redesigned large carton." The owner, on
+        // the 2018-2014 light pass: "Yes". The answer is still shown to 1 d.p.
       ],
       boardQuestionLines: [
         `${dSmall} cm holds ${vSmall} cm³; ${dLarge} cm holds ${vLarge} cm³. Similar? Then find the ${c.dimension} for ${vNew} cm³.`,

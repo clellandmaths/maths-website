@@ -700,6 +700,16 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
         ...(asked === 'data.mean-sd-compare-pre2023'
           ? [`The ${ctx.quantity} for ${ctx.groupB} were also recorded.`,
              `They gave a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]
+          // **2018 P2 Q5 and 2016 P2 Q6 in their papers' words — 2026-09-26.**
+          // 2018: "The mean number of customers who visited these six stalls on
+          // Sunday was 117 and the standard deviation was 6.2."; 2016, inside
+          // part (b): "Her mean waiting time was 15 minutes and the standard
+          // deviation was 4.3 minutes." Both printed "A sample taken from …"
+          // in 200 of 200. The owner, on the 2018-2014 light pass: "Yes".
+          // Words only, on each paper's own alias.
+          : asked === 'data.mean-sd-compare-pre2022'
+          ? [`For ${ctx.groupB}, the mean was ${amount(otherMean, ctx)} and the standard deviation was ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]
+          : asked === 'data.mean-sd-compare-2016' ? []
           : [`A sample taken from ${ctx.groupB} has a mean of ${amount(otherMean, ctx)} and a standard deviation of ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}.`]),
         // Both groups named, as all four papers name them - 2025 P2 Q4 asks for
         // comments "comparing the weights of the rugby players in the samples
@@ -707,7 +717,9 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
         // say whose values are whose, so a question that never names them is
         // asking for something it has not set up. Same fault, and same fix, as
         // `data.median-iqr-compare` above.
-        `(b) Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`,
+        asked === 'data.mean-sd-compare-2016'
+          ? `(b) For ${ctx.groupB}, the mean was ${amount(otherMean, ctx)} and the standard deviation was ${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}. Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`
+          : `(b) Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`,
       ],
       boardQuestionLines: [`Mean and s.d. of ${row(vals, ctx)}, then compare with ${show(otherMean, ctx)} and ${otherS}`],
       // Six marks, 4 + 2, in all four papers that ask it this way: •¹ the mean,

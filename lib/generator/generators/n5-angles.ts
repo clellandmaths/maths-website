@@ -185,7 +185,17 @@ export function polygonAngleQuestion(_wanted?: string, asked?: string): Q {
       // the maths. The owner, 2026-09-25: "if the only fixes is putting full
       // stops just do that without asking me". Its own id only, and after
       // verifyFigure, so no draw passes or fails differently.
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2).map(l =>
+      //
+      // 2018 P1 Q9 puts its two bullets, with stops, before the diagram: "In
+      // the diagram shown below, ABCDEFGHJK is a regular decagon. • Angle KLJ
+      // is 17°. • AKL is a straight line." The owner, on the 2018-2014 light
+      // pass: "Yes". Its own alias, after verifyFigure.
+      questionLines: forPaper2018
+        ? [`In the diagram shown below, $${names.join('')}$ is a regular ${WORD[n]}.`,
+           `&bull;&nbsp; Angle $${E}${point}${A}$ is $${given}^{\\circ}.$`,
+           `&bull;&nbsp; $${point}${A}${B}$ is a straight line.`,
+           renderScene(fig.scene), prose[4]]
+        : [prose[0], renderScene(fig.scene), ...prose.slice(2).map(l =>
         asked !== 'angles.polygon-produced' || !l.startsWith('&bull;') ? l
           : l.endsWith('$') ? `${l.slice(0, -1)}.$` : `${l}.`)],
       boardQuestionLines: [`Regular ${WORD[n]}, side produced, angle ${given}° outside. Third angle?`],

@@ -320,8 +320,10 @@ function simplifyFraction(wanted?: string): Q {
       difficulty: 'exam',
       variationId: id,
       // 2023 P2 Q12 and 2022 P2 Q12 close on a full stop, inside the maths.
-      // Keyed on the shape, so 2015 P1 Q12 prints as it did.
-      questionLines: [`Simplify $${frac(s.numTex, s.denTex)}${shape !== 'common' ? '.' : ''}$`],
+      // So does 2015 P1 Q12, which was left without one while 2015 was not
+      // under review; the owner, 2026-09-25: "if the only fixes is putting
+      // full stops just do that without asking me". Every shape now has it.
+      questionLines: [`Simplify $${frac(s.numTex, s.denTex)}.$`],
       boardQuestionLines: [`Simplify $${frac(s.numTex, s.denTex)}$`],
       solutionSteps: [
         `<strong>1.</strong> Factorise the numerator:<br><br>$${s.numTex} = ${s.numFactors}$`,

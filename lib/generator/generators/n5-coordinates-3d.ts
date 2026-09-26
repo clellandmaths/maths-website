@@ -174,7 +174,11 @@ function prism(): Q | null {
 
   const prose = [
     `The diagram shows a triangular prism $ABCDEF$, relative to the coordinate axes.`,
-    `$A${coord(A)}$ and $E${coord(E)}$, with $AD = AE$ and $DC = ${L}$ units.`,
+    // 2018 P1 Q13's two lines: "A(4,0,5), E(2,0,0)." and "AD=AE, DC=8
+    // units." The owner, on the 2018-2014 light pass: "Yes". Its only paper;
+    // the figure is verified without the words.
+    `$A${coord(A)}$, $E${coord(E)}.$`,
+    `$AD = AE$, $DC = ${L}$ units.`,
     `Edges $EF$, $DC$ and $AB$ are parallel to the $y$-axis.`,
     ask('B', 'C'),
   ];

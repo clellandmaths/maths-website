@@ -878,11 +878,22 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     ctx.point(A, `${x1}`, value(y1)),
     ctx.point(B, `${x2}`, value(y2)),
     '',
-    `<b>(a)</b>&nbsp;&nbsp;Find the equation of the ${ctx.scatter ? 'line of best fit' : 'line'} in terms of $${ctx.x.letter}$ and $${ctx.y.letter}$. Give the equation in its simplest form.`,
+    // 2014 P1 Q6 asks only for the equation "in terms of F and C", with no
+    // simplest-form line. The owner, on the 2018-2014 light pass: "Yes".
+    `<b>(a)</b>&nbsp;&nbsp;Find the equation of the ${ctx.scatter ? 'line of best fit' : 'line'} in terms of $${ctx.x.letter}$ and $${ctx.y.letter}$.${rising2014 ? '' : ' Give the equation in its simplest form.'}`,
     // 2024 P1 Q9: "(b) Use your equation from part (a) to estimate …". The
     // owner, on the 2024 re-review sheet: "Yes". Its own id; words only.
-    falling
+    //
+    // And each of three more papers in its own words - 2026-09-26, the owner
+    // on the 2018-2014 light pass: "Yes". 2016 P1 Q5 as 2024's; 2018 P1 Q7
+    // "(b) Calculate the cost of a journey of 5 miles."; 2014 P1 Q6 "Use your
+    // answer to part (a) to estimate …". Words only, on each paper's own id.
+    falling || asked === 'straight-line.best-fit-pre2023'
       ? `<b>(b)</b>&nbsp;&nbsp;Use your equation from part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
+      : asked === 'straight-line.exact-line'
+      ? `<b>(b)</b>&nbsp;&nbsp;${ctx.estimate(`${x3}`)}`
+      : rising2014
+      ? `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
       : `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a). ${ctx.estimate(`${x3}`)}`,
   ];
 

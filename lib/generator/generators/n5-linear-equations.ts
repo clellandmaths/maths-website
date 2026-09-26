@@ -350,8 +350,10 @@ function clearDenominators(shape: 1 | 2 | 3): Q {
       // stop inside the maths. The owner, 2026-09-25: "if the only fixes is
       // putting full stops just do that without asking me". 2019 P1 Q14, the
       // each-side shape and that paper's alone, ends the same way.
+      // 2016 P1 Q8, the first shape and that paper's alone, closes its
+      // equation line with a stop too.
       questionLines: shape === 1
-        ? [`Solve the equation $${question}$`, 'Give your answer in its simplest form.']
+        ? [`Solve the equation $${question}.$`, 'Give your answer in its simplest form.']
         : [`Solve the equation $${question}.$`],
       boardQuestionLines: [`Solve $${question}$`],
       solutionSteps: [
