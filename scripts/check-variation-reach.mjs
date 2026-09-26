@@ -76,7 +76,8 @@ function readRegistry(text) {
       const m = new RegExp(`${name}:\\s*\\[([^\\]]*)\\]`, 's').exec(block);
       return m ? [...m[1].matchAll(/'([^']*)'/g)].map(x => x[1]) : [];
     };
-    out.push({ id: ids[i][1], tier, basedOn: list('basedOn'), webTopics: list('webTopics') });
+    const aliasOf = /aliasOf:\s*'([a-z0-9-]+\.[a-z0-9-]+)'/.exec(block)?.[1] ?? null;
+    out.push({ id: ids[i][1], tier, aliasOf, basedOn: list('basedOn'), webTopics: list('webTopics') });
   }
   return out;
 }
@@ -86,6 +87,21 @@ if (!fs.existsSync(REGISTRY)) {
   process.exit(1);
 }
 const variations = readRegistry(fs.readFileSync(REGISTRY, 'utf8'));
+
+/**
+ * **An alias takes its target's tier.** Locking a year moves each paper still
+ * under review onto an alias - one line, `{ aliasOf, basedOn }`, no
+ * `difficulty` - and the engine resolves it to its target at runtime
+ * (`aliasTarget`, one level). Read as text, an alias has no tier, so from the
+ * first lock on 2026-09-19 every question cited only by an alias looked
+ * uncovered: 62 that day, 88 by 2026-09-21. Nothing was wrong on the page -
+ * `questionsLike` answered for all 328 - but `npm run build` stopped here, and
+ * nobody built for a week. Resolved the way the engine resolves it.
+ */
+const byId = new Map(variations.map(v => [v.id, v]));
+for (const v of variations) {
+  if (v.aliasOf && v.tier === null) v.tier = byId.get(v.aliasOf)?.tier ?? null;
+}
 
 // The parse is the risk. Refuse rather than report zeros.
 if (variations.length < 200) {
