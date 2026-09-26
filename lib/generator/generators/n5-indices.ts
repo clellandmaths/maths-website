@@ -283,7 +283,8 @@ function withCoefficient(asFraction: boolean): Q {
       subTopic: 'Indices in a Quotient',
       difficulty: 'exam',
       variationId: 'indices.coefficient-quotient',
-      questionLines: [`Simplify $\\frac{${pow(v, m)}}{(${k}${pow(v, n)})^{${p}}}$`],
+      // 2026 P2 Q11's full stop, inside the maths. The owner, 2026 re-review: "Yes".
+      questionLines: [`Simplify $\\frac{${pow(v, m)}}{(${k}${pow(v, n)})^{${p}}}.$`],
       boardQuestionLines: [`$\\frac{${pow(v, m)}}{(${k}${pow(v, n)})^{${p}}}$`],
       solutionSteps: [
         `<strong>1.</strong> Apply $(ab)^{m} = a^{m}b^{m}$ to the denominator — the power goes to the number as well as the letter:<br><br>$(${k}${pow(v, n)})^{${p}} = ${kp}${pow(v, n * p)}$`,

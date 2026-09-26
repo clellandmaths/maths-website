@@ -52,8 +52,12 @@ export function polygonInCircle(spec: PolygonInCircleSpec): Figure | null {
     // part of the shape and left the other three unexplained.
     ...V.map((p): Element => ({ kind: 'segment', from: O, to: p, dashed: true })),
     // the centre's name goes away from the shaded piece, which is where the
-    // two radii and the arc all crowd together
-    { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start + step / 2), r * 0.4) },
+    // two radii and the arc all crowd together - and into the gap between two
+    // spokes on the far side. Straight away from the shaded piece is, on an
+    // odd polygon, straight down a spoke: the pentagon's O sat on a dashed
+    // radius in six draws of six. The owner, 2026 re-review: "Yes".
+    { kind: 'label', text: spec.centre, anchor: O,
+      away: scale(dir(start + (Math.floor(180 / step) + 0.5) * step + 180), r * 0.4) },
     ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: O })),
   ];
   if (spec.radiusLabel) {

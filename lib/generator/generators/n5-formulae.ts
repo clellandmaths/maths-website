@@ -867,9 +867,14 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
       // still drawn, so the four LOCKED papers keep their stream.
       questionLines: [(() => {
         const lead = pick(INEQ_LEAD), word = pick(INEQ_WORD);
+        // 2026 P1 Q4's own words and its stop: "Solve, algebraically, the
+        // inequation x + 8 < 3(x − 2) + 20." The owner, 2026 re-review: "Yes".
+        // Its id is the base one; the picks above are still drawn.
         return paper2015
           ? `Solve algebraically the inequality $${lhs} ${rel} ${rhs}$`
-          : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
+          : asked === 'inequalities.brackets'
+            ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
+            : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
       })()],
       boardQuestionLines: [`Solve $${lhs} ${rel} ${rhs}$`],
       solutionSteps: [

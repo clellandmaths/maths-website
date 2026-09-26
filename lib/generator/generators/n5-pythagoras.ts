@@ -1255,15 +1255,19 @@ export function pythagorasChordReverse(findChord: boolean): Q {
       // is untouched — the owner's condition was "only affect this
       // question".
       chordExtensions: true,
+      // 2026 P2 Q5 marks the centre with a dot. The owner, 2026 re-review: "Yes".
+      centreDot: true,
       radius: answer, chord, major: true, rest: 'solid', radiusLine: 'none',
       names: { a: A, b: B, centre: O, mid: M },
       labels: { radius: '', chord: `${num(chord)} ${abbrev(ctx.unit)}`, height: '',
                 centreToChord: `${num(dShown)} ${abbrev(ctx.unit)}` },
     });
+    // Each fact ends with a stop, as the paper's: "AC is 25 centimetres. B is
+    // the midpoint of AC. OB is 9 centimetres." The owner: "Yes".
     const prose = [
       `The diagram shows a circle with centre $${O}$ and chord $${A}${B}$.`,
-      `&bull;&nbsp; $${A}${B}$ is ${withUnit(chord, ctx.unit)}`,
-      `&bull;&nbsp; $${M}$ is the midpoint of $${A}${B}$, and $${O}${M}$ is ${withUnit(dShown, ctx.unit)}`,
+      `&bull;&nbsp; $${A}${B}$ is ${withUnit(chord, ctx.unit)}.`,
+      `&bull;&nbsp; $${M}$ is the midpoint of $${A}${B}$, and $${O}${M}$ is ${withUnit(dShown, ctx.unit)}.`,
       // **No rounding line.** 2026 P2 Q5 asks for no particular accuracy and
       // its scheme takes 15.4(02...) as it comes. Owner's word, 2026-09-20.
       `Calculate the radius of the circle.`,

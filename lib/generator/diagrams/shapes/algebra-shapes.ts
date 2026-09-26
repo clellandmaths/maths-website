@@ -56,6 +56,28 @@ export interface BorderedRectangleSpec {
    * caller asks, so the three-sided figure (LOCKED 2026 P2 Q13) cannot move.
    */
   paperMarks?: boolean;
+  /**
+   * Three-sided only, and opt-in: the paper's own marks. — 2026-09-25
+   *
+   * 2026 P2 Q13 arrows the floor's two measurements and each x m wall, and
+   * writes "floor" and "wall". The owner, on the 2026 re-review, to drawing
+   * it as the paper does: *"Yes"*. Here the floor's measurements go on
+   * arrows along its edges, which leaves the middle free for the word the
+   * earlier attempt could not seat. `floor` and `wall` are the words to write.
+   */
+  paperDims?: { floor: string; wall: string };
+}
+
+/** A double-headed measuring line: the shaft and four barbs. */
+function measured(a: Pt, b: Pt, size: number): Element[] {
+  const len = Math.hypot(b.x - a.x, b.y - a.y);
+  const ux = (b.x - a.x) / len, uy = (b.y - a.y) / len;
+  const s = Math.min(len * 0.2, size), px = -uy, py = ux;
+  const barb = (p: Pt, dir: number, side: number): Element => ({
+    kind: 'segment', decoration: true, from: p,
+    to: pt(p.x + dir * s * ux + side * 0.45 * s * px, p.y + dir * s * uy + side * 0.45 * s * py) });
+  return [{ kind: 'segment', from: a, to: b },
+    barb(a, 1, 1), barb(a, 1, -1), barb(b, -1, 1), barb(b, -1, -1)];
 }
 
 export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
@@ -71,6 +93,39 @@ export function borderedRectangle(spec: BorderedRectangleSpec): Figure {
   const o1 = pt(w + t, -t);
   const o2 = pt(w + t, sides === 4 ? h + t : h);
   const o3 = pt(-t, sides === 4 ? h + t : h);
+
+  if (sides === 3 && spec.paperDims) {
+    const barb = t * 0.3;
+    const els: Element[] = [
+      { kind: 'shadedShape', points: [o0, o1, o2, i2, i1, i0, i3, o3] },
+      { kind: 'polygon', points: [o0, o1, o2, o3] },
+      { kind: 'polygon', points: [i0, i1, i2, i3] },
+      // the floor's width, arrowed across it low down; its height up the right
+      ...measured(pt(0, h * 0.28), pt(w, h * 0.28), barb),
+      { kind: 'label', text: spec.labels.width, anchor: pt(w * 0.5, h * 0.28), away: pt(w * 0.5, -h) },
+      ...measured(pt(w * 0.9, 0), pt(w * 0.9, h), barb),
+      { kind: 'label', text: spec.labels.height, anchor: pt(w * 0.77, h * 0.62), away: pt(w * 0.77, h * 0.62), centred: true },
+      // each wall measured across itself
+      ...measured(pt(-t, h * 0.8), pt(0, h * 0.8), barb),
+      { kind: 'label', text: spec.labels.border, anchor: pt(-t / 2, h * 0.3), away: pt(-t / 2, h * 0.3), centred: true },
+      ...measured(pt(w, h * 0.8), pt(w + t, h * 0.8), barb),
+      { kind: 'label', text: spec.labels.border, anchor: pt(w + t / 2, h * 0.3), away: pt(w + t / 2, h * 0.3), centred: true },
+      ...measured(pt(w * 0.3, -t), pt(w * 0.3, 0), barb),
+      { kind: 'label', text: spec.labels.border, anchor: pt(w * 0.3, -t / 2), away: pt(-w, -t / 2) },
+      // the paper's two words
+      { kind: 'label', text: spec.paperDims.floor, anchor: pt(w * 0.2, h * 0.72), away: pt(w * 0.2, h * 0.72), centred: true },
+      // a long word ("timber edge") is set small, or the strip cannot hold it
+      { kind: 'label', text: spec.paperDims.wall, anchor: pt(w * 0.72, -t / 2), away: pt(w * 0.72, -t / 2), centred: true,
+        ...(spec.paperDims.wall.length > 9 ? { small: true } : {}) },
+      ...dimensionArrow(pt(-t, h), pt(w + t, h), pt(w / 2, h * 3), t * 0.9, spec.labels.length ?? 'length', true),
+    ];
+    const claims: Claim[] = [
+      { kind: 'angle', at: i0, arms: [i1, i3], value: 90, shown: false },
+      { kind: 'angle', at: i2, arms: [i1, i3], value: 90, shown: false },
+      { kind: 'angle', at: o0, arms: [o1, o3], value: 90, shown: false },
+    ];
+    return { scene: { elements: els, notToScale: true }, claims };
+  }
 
   const elements: Element[] = [
     { kind: 'polygon', points: [o0, o1, o2, o3] },

@@ -507,8 +507,66 @@ function stepladder(): Q {
   throw new Error('trig-diagram.sine-angle-pre2023: no valid question found');
 }
 
+/**
+ * **2026 P2 Q2 in its own shape.** — 2026-09-25, the 2026 re-review.
+ *
+ * The paper: "In triangle XYZ: • XZ = 5 centimetres • YZ = 4 centimetres
+ * • angle XZY = 106°", the figure, then "Calculate the length of XY." The
+ * shared side branch put the numbers on the figure only, was obtuse in 47 of
+ * 400 draws, and wrote mm, m, km or cm. The owner: *"Yes"* to the paper's
+ * words, an obtuse angle and centimetres.
+ *
+ * Its own routine, entered from the dispatch on the asked id before anything
+ * is drawn, so LOCKED 2015 P2 Q3 and 2017 P2 Q3, which arrive on their own
+ * ids, read the shared stream exactly as before.
+ */
+function cosineSide2026(): Q {
+  for (let tries = 0; tries < 4000; tries++) {
+    const [A, B, C] = pick(TRIANGLES);
+    const turn = pick([0, 1, 2, 3] as const);
+    const p = getRandomInt(3, 15), q = getRandomInt(3, 15);   // AC and AB, cm
+    if (p === q) continue;
+    const angA = getRandomInt(95, 150);
+    const bc = Math.sqrt(p * p + q * q - 2 * p * q * Math.cos(angA * Math.PI / 180));
+    const sides = { ab: q, bc: Number(bc.toFixed(4)), ca: p };
+    if (!drawable(sides.ab, sides.bc, sides.ca)) continue;
+    const fig = triangleFromSides({
+      sides, vertices: [A, B, C], turn,
+      labels: { ab: `${q} cm`, bc: '', ca: `${p} cm` },
+      angles: [{ at: 'a', label: `${angA}°` }],
+    });
+    if (!fig) continue;
+    const prose = [
+      `In triangle $${A}${B}${C}$:`,
+      `&bull;&nbsp; $${A}${C} = ${p}$ centimetres`,
+      `&bull;&nbsp; $${A}${B} = ${q}$ centimetres`,
+      `&bull;&nbsp; angle $${B}${A}${C} = ${angA}^{\\circ}$`,
+      `Calculate the length of $${B}${C}.$`,
+    ];
+    const steps = [
+      `<strong>1.</strong> The angle at $${A}$ lies between the two known sides, so the cosine rule applies directly:<br><br>$${B}${C}^{2} = ${q}^{2} + ${p}^{2} - 2 \\times ${q} \\times ${p} \\times \\cos ${angA}^{\\circ}$`,
+      `<strong>2.</strong> The angle is obtuse, so its cosine is negative and the last term adds:<br><br>$${B}${C}^{2} = ${num(Number((bc * bc).toFixed(3)))}$`,
+      `<strong>3.</strong> Take the square root:<br><br>$${B}${C} = ${dp1(bc)}$ centimetres`,
+    ];
+    if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    return {
+      subTopic: 'Cosine Rule from a Diagram',
+      difficulty: 'exam',
+      variationId: 'trig-diagram.cosine-side',
+      questionLines: [...prose.slice(0, 4), renderScene(fig.scene), prose[4]],
+      boardQuestionLines: [`${A}C = ${p} cm, ${A}B = ${q} cm, angle ${angA}°. Find ${B}${C}.`],
+      solutionSteps: steps,
+      stepMarks: [1, 1, 1],
+      finalAnswer: `$${dp1(bc)}$ centimetres`,
+      figure: fig,
+    };
+  }
+  throw new Error('trig-diagram.cosine-side (2026): no valid question found');
+}
+
 export const TRIG_DIAGRAM_GENERATORS: Record<string, Gen> = {
-  'Cosine Rule from a Diagram': (w) => trigDiagramQuestion(['side', 'angle'], w),
+  'Cosine Rule from a Diagram': (w, asked) => asked === 'trig-diagram.cosine-side'
+    ? cosineSide2026() : trigDiagramQuestion(['side', 'angle'], w),
   'Sine Rule from a Diagram': (w, asked) => asked === 'trig-diagram.sine-angle-pre2023'
     ? stepladder() : trigDiagramQuestion(['sine-angle'], w),
   'Area of a Triangle from a Diagram': (w) =>

@@ -251,7 +251,10 @@ function binomialTrinomial(_wanted?: string, asked?: string): Q {
       subTopic: 'Expanding a Trinomial',
       difficulty: 'exam',
       variationId: 'expanding.binomial-trinomial',
-      questionLines: [`${EXPAND} $${bracket([b, a], v)}${bracket([e, d, c], v)}$`],
+      // The papers' full stop, inside the maths - five of the six print one;
+      // 2015 P1 Q4 ("Multiply out the brackets …: (x−4)(x²+x−2)") does not.
+      // The owner, on the 2026 re-review: "Yes on all papers".
+      questionLines: [`${EXPAND} $${bracket([b, a], v)}${bracket([e, d, c], v)}${asked === 'expanding.binomial-trinomial-2015' ? '' : '.'}$`],
       boardQuestionLines: [`$${bracket([b, a], v)}${bracket([e, d, c], v)}$`],
       solutionSteps: [
         `<strong>1.</strong> Multiply the trinomial by $${fmt([0, a], v)}$:<br><br>$${fmt(mulP([0, a], [e, d, c]), v)}$`,

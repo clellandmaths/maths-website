@@ -445,9 +445,11 @@ export function tangentReflexQuestion(): Q {
     const prose = [
       `The diagram shows a circle with centre $${n.centre}$.`,
       '',
-      `&bull;&nbsp; $${n.tangentD}${n.tangentE}$ is a tangent to the circle at the point $${n.contact}$`,
-      `&bull;&nbsp; Angle $${n.centre}${n.contact}${n.far}$ is $${p}^{\\circ}$`,
-      `&bull;&nbsp; Angle $${n.near}${n.contact}${n.tangentE}$ is $${q}^{\\circ}$`,
+      // 2026 P1 Q10 ends each fact with a stop: "…at the point B. Angle OBC
+      // is 40°. Angle ABE is 63°." The owner, 2026 re-review: "Yes".
+      `&bull;&nbsp; $${n.tangentD}${n.tangentE}$ is a tangent to the circle at the point $${n.contact}.$`,
+      `&bull;&nbsp; Angle $${n.centre}${n.contact}${n.far}$ is $${p}^{\\circ}.$`,
+      `&bull;&nbsp; Angle $${n.near}${n.contact}${n.tangentE}$ is $${q}^{\\circ}.$`,
       `Calculate the size of the reflex angle $${n.near}${n.centre}${n.far}$.`,
     ];
     const steps = [

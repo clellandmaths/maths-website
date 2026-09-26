@@ -284,6 +284,10 @@ function solveByFactorising(wanted?: string): Q {
     // wrong has earned something. Inferred, and flagged as such in the registry.
     return {
       ...shared,
+      // 2026 P1 Q14's full stop, inside the maths: "10x² + 11x − 6 = 0."
+      // The owner, on the 2026 re-review: "Yes". The unitary form (2018 P1 Q5)
+      // keeps its own line.
+      questionLines: [`Solve the equation by factorising $${fmt(expanded, v)} = 0.$`],
       variationId: 'factorising.solve-non-unitary',
       solutionSteps: [
         `<strong>1.</strong> The $${v}^{2}$ term is not on its own, so start with a pair that multiplies to give it:<br><br>$${a} = ${m} \\times ${n}$, so the brackets open $(${m === 1 ? '' : m}${v} \\ldots)(${n === 1 ? '' : n}${v} \\ldots)$`,

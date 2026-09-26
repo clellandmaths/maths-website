@@ -228,9 +228,12 @@ function wallOnThreeSides(): Q | null {
     ...formulaSteps(A, B, C, 2, 4),
   ];
   return assemble(
+    // 2026 P2 Q13's own marks: arrowed measurements, "floor" and the wall's
+    // word. The owner, 2026 re-review: "Yes".
     borderedRectangle({ innerW: len * 10, innerH: wid * 10, sides: 3,
       labels: { width: `${len} m`, height: `${wid} m`, border: 'x m',
-        length: 'length' } }),
+        length: 'length' },
+      paperDims: { floor: c.wall === 'wall' ? 'floor' : 'base', wall: c.wall } }),
     'A Wall on Three Sides', 'form-equation.three-sided', prose,
     `Floor ${len} by ${wid}, wall $x$ thick on three sides, total area ${area}. Find $x$.`,
     steps, [1, 1, 1, 1, 1, 1, 1], `$x = ${x.toFixed(2)}$ m`);

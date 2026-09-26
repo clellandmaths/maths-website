@@ -98,7 +98,16 @@ function sketchCompletedSquare(wanted?: string, asked?: string): Q | null {
       { x: 0, y: c, text: coord(0, c), side: h > 0 ? 'left' : 'right' },
     ],
   });
-  const blank = onAxes ? figureFor({ view, plot: { kind: 'none' } }) : '';
+  /**
+   * **The blank axes are centred, as the paper's are.** — 2026-09-25, the
+   * 2026 re-review. Drawn on the curve's own window, the origin sat towards
+   * the side the turning point is NOT on, so the empty axes told the pupil
+   * which quadrant to sketch in. 2026 P1 Q12 centres them, with equal room
+   * all round. The owner: *"Yes"*. The worked sketches keep the fitted window.
+   */
+  const X = Math.max(Math.abs(view.xMin), Math.abs(view.xMax));
+  const Y = Math.max(Math.abs(view.yMin), Math.abs(view.yMax));
+  const blank = onAxes ? figureFor({ view: { xMin: -X, xMax: X, yMin: -Y, yMax: Y }, plot: { kind: 'none' } }) : '';
   if (!partial || !complete || blank === null) return null;
 
   // **The axes sit under the whole question, not between its two sentences.**

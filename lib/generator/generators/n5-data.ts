@@ -249,7 +249,14 @@ function medianCompare(semi: boolean, asked?: string): Q {
     // quartiles of 3.5 and 8 come out of that odd split. So each variation
     // takes the counts its own papers use, rather than all four.
     const drawnN = pick(semi ? [9, 10] : [6, 10]);
-    const n = paper2015 ? 10 : paper2019 ? 9 : drawnN;
+    // **Each interquartile paper at its own count.** — 2026-09-25, the 2026
+    // re-review. 2026 P1 Q3 and 2023 P1 Q9 list ten values and 2024 P1 Q5 six;
+    // each id drew six or ten at random. The owner: *"Yes key each paper to
+    // it's number"*. The pick is still drawn, so the stream reads the same.
+    const n = paper2015 ? 10 : paper2019 ? 9
+      : asked === 'data.median-iqr-compare' || asked === 'data.median-iqr-compare-2023' ? 10
+      : asked === 'data.median-iqr-compare-2024' ? 6
+      : drawnN;
     const [lo, hi] = ctx.band;
     if (hi - lo < n + 4) continue;
     const vals: number[] = [];

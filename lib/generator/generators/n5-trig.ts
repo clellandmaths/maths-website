@@ -709,8 +709,10 @@ function commonFactor(wanted?: string): Q {
     // The marks are the same either way - the first is for factorising or
     // substituting, which a bare answer cannot earn whichever way it is asked.
     questionLines: odd && !practice
+      // 2026 P2 Q12's full stop, inside the maths. The owner, 2026 re-review:
+      // "Add full stop and keep 12".
       ? ['Express the following in its simplest form:',
-         `$${co}${product} + ${co}${cubed}$`]
+         `$${co}${product} + ${co}${cubed}.$`]
       : [`Simplify $${co}${product} + ${co}${cubed}$.`, WORKING],
     boardQuestionLines: [`Simplify $${co}${product} + ${co}${cubed}$`],
     solutionSteps: [
