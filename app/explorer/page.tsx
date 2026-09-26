@@ -35,7 +35,7 @@ import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
 import DataBookletSheet from '@/components/DataBookletSheet';
 import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
-import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
+import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
 import { byPaperLabel, withParentVideo, courseHasHints, variationLabel } from '@/lib/similar-questions';
@@ -128,7 +128,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   // The markscheme table is fetched on demand; holding it here keeps the
   // portal mounted for the print and lets a second press reuse it.
   const [markschemeBusy, setMarkschemeBusy] = useState(false);
-  const [schemes, setSchemes] = useState<Record<string, PaperScheme> | null>(null);
+  const [schemes, setSchemes] = useState<CourseSchemes | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, replaceItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
 
@@ -372,8 +372,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
     if (markschemeBusy || !worksheetItems.length) return;
     setMarkschemeBusy(true);
     try {
-      const { PAPER_MARKSCHEME } = await import('@/lib/generator/generators/paper-markscheme');
-      setSchemes(PAPER_MARKSCHEME);
+      setSchemes(await loadCourseSchemes(course));
       await printMarkscheme();
     } finally {
       setMarkschemeBusy(false);

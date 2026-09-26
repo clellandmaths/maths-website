@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 import MathHtml from '@/components/MathHtml';
 import { variationLabel } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
-import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
+import type { CourseSchemes } from '@/lib/course-markschemes';
 
 /**
  * The markscheme for one worksheet, as its own printed document.
@@ -38,7 +38,8 @@ interface Props {
   courseId: string;
   courseLabel: string;
   questions: QuestionWithMetadata[];
-  schemes: Record<string, PaperScheme>;
+  /** The course's table, tagged with its course: see `lib/course-markschemes`. */
+  schemes: CourseSchemes;
   totalMarks: number;
 }
 
@@ -76,11 +77,11 @@ export default function MarkschemeSheet({
         const generated = Boolean(q.uid?.startsWith('g:'));
         const label = variationLabel(q.question);
         const parent = q.basedOn?.[q.parentIndex ?? 0];
-        // **National 5's table, so National 5's questions only.** It is keyed
+        // **A course's table, so that course's questions only.** It is keyed
         // by label, and every course labels its questions the same way: a
-        // Higher "2019 P1 Q5" looked up National 5's 2019 P1 Q5 and printed
-        // its marking instructions under the Higher question.
-        const scheme = courseId === 'n5' && !generated && label ? schemes[label] : undefined;
+        // Higher "2019 P1 Q5" once looked up National 5's 2019 P1 Q5 and
+        // printed its marking instructions under the Higher question.
+        const scheme = schemes.courseId === courseId && !generated && label ? schemes.table[label] : undefined;
         const steps = generated ? (q.steps ?? []) : [];
         const marks = (q.marks ?? []).reduce((a, b) => a + b, 0);
 

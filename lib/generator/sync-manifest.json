@@ -1,8 +1,8 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "dfd491b5ce0d6f1036aa21e0810b271e6deb848a",
+  "sourceCommit": "b0f5967bd49240e52cbc5c12910b4df50709acf6",
   "sourceDirty": false,
-  "count": 97,
+  "count": 98,
   "files": {
     "diagrams/render.ts": "2f0be7df2264fc93",
     "diagrams/scene.ts": "3c4d3d252e8c0ce5",
@@ -46,7 +46,7 @@
     "generators/functions.ts": "8b005bbd41c981b7",
     "generators/integration.ts": "7f9ca1a247d7da5f",
     "generators/logs.ts": "5a3f8dd2ac80876d",
-    "generators/markscheme-source.ts": "22799ede4d1792df",
+    "generators/markscheme-source.ts": "6c5171f124112a35",
     "generators/n5-alg-fractions.ts": "7d77dec40d18fa58",
     "generators/n5-angles.ts": "e325ada999de0458",
     "generators/n5-bearings.ts": "a5edf7fabfe902a1",
@@ -86,6 +86,7 @@
     "generators/n5-volume.ts": "b3d5c99c7069d09c",
     "generators/n5.ts": "be3402e3e4c42e72",
     "generators/paper-hints.ts": "8cae511f1f595796",
+    "generators/paper-markscheme-higher.ts": "0421cbf5a46adac9",
     "generators/paper-markscheme.ts": "c505b9c52b91748d",
     "generators/paper-plan.ts": "9ffceaf0bec8249c",
     "generators/paper-steps.ts": "9068ead8c4157c82",

@@ -113,10 +113,11 @@ function readRow(line: string): MarkRow | null {
  * correction simply stops firing rather than corrupting a good value.
  */
 export const MARKSCHEME_CORRECTIONS: {
-  label: string; mark: number; was: string; is: string; why: string;
+  /** Which course's scheme. Every course labels alike, so a label alone is not enough. */
+  course: string; label: string; mark: number; was: string; is: string; why: string;
 }[] = [
   {
-    label: '2019 P1 Q5', mark: 0, was: '$15$', is: '$5$',
+    course: 'n5', label: '2019 P1 Q5', mark: 0, was: '$15$', is: '$5$',
     why: 'The nine temperatures are 4 7 4 3 6 10 9 5 3, which sort to '
        + '3 3 4 4 5 6 7 9 10 and have a median of 5. 15 is not in the data at '
        + 'all. The scheme\'s own next two marks settle it: the quartiles it '
@@ -132,7 +133,7 @@ export const MARKSCHEME_CORRECTIONS: {
  * Null when the folder is absent, so a caller can say so rather than report
  * that it found nothing wrong.
  */
-export function readSchemes(dir?: string): Map<string, SchemeQuestion> | null {
+export function readSchemes(dir?: string, course = 'n5'): Map<string, SchemeQuestion> | null {
   const DIR = dir ?? join(process.cwd(), '..', 'reference', 'N5_Markschemes');
   if (!existsSync(DIR)) return null;
 
@@ -219,7 +220,7 @@ export function readSchemes(dir?: string): Map<string, SchemeQuestion> | null {
         // because narrowing does not reach inside the callback.
         const q = current;
         const fix = MARKSCHEME_CORRECTIONS.find(
-          c => c.label === q.label && c.mark === q.rows.length
+          c => c.course === course && c.label === q.label && c.mark === q.rows.length
                && c.was === row.illustrative);
         if (fix) row.illustrative = fix.is;
         current.rows.push(row);

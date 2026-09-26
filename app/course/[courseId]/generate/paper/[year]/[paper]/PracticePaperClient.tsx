@@ -10,7 +10,7 @@ import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
-import type { PaperScheme } from '@/lib/generator/generators/paper-markscheme';
+import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 
 /**
  * The marking instructions, as their own printed document.
@@ -102,13 +102,13 @@ export default function PracticePaperClient({
    * second branch that does the work — the answers are for the numbers actually
    * printed, which regenerate from the seed in the sheet.
    *
-   * `PAPER_MARKSCHEME` is loaded anyway rather than passing an empty table. It
+   * The course's table is loaded anyway rather than passing an empty one. It
    * is 189KB, and on a page of nothing but generated questions it will not be
    * read — but it is imported at the press, never on load, and a page that
    * silently lacked a scheme if a real question ever appeared here would be a
    * worse trade than one lazy fetch a teacher asked for.
    */
-  const [schemes, setSchemes] = useState<Record<string, PaperScheme> | null>(null);
+  const [schemes, setSchemes] = useState<CourseSchemes | null>(null);
   const [markschemeBusy, setMarkschemeBusy] = useState(false);
 
   const handlePrintMarkscheme = async () => {
@@ -119,11 +119,11 @@ export default function PracticePaperClient({
       // table rather than after it; `printMarkscheme` then waits for it to be
       // on the page. (The handler is not called `printMarkscheme`: it did call
       // itself for ever under that name, which froze the page on 2026-09-26.)
-      const [{ PAPER_MARKSCHEME }] = await Promise.all([
-        import('@/lib/generator/generators/paper-markscheme'),
+      const [table] = await Promise.all([
+        loadCourseSchemes(courseId),
         import('@/components/Explorer/MarkschemeSheet'),
       ]);
-      setSchemes(PAPER_MARKSCHEME);
+      setSchemes(table);
       await printMarkscheme();
     } finally {
       setMarkschemeBusy(false);
