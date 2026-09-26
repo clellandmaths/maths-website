@@ -669,6 +669,24 @@ function bestFitOnGridQuestion(_wanted?: string, asked?: string): Q | null {
  * the prose already says "line of best fit" or "the line" according to the
  * context's own `scatter`.
  */
+/** The four scattergraph papers whose letters are kept clear of the cloud. */
+const LETTERS_CLEAR_OF_DOTS = new Set([
+  'straight-line.best-fit-2014',      // 2014 P1 Q6
+  'straight-line.best-fit-pre2023',   // 2016 P1 Q5
+  'straight-line.best-fit-2024',      // 2024 P1 Q9
+  'straight-line.best-fit',           // 2026 P1 Q6
+]);
+
+/** Does either marked point's letter sit over one of the cloud's small dots, as rendered? */
+function letterOnDot(svg: string, letters: string[]): boolean {
+  const dots = [...svg.matchAll(/<circle cx="([\d.-]+)" cy="([\d.-]+)" r="([\d.]+)"/g)]
+    .map(m => ({ x: +m[1], y: +m[2], r: +m[3] })).filter(d => d.r <= 2.5);
+  const marks = [...svg.matchAll(/<text x="([\d.-]+)" y="([\d.-]+)" font-size="(\d+)"[^>]*>([A-Z])<\/text>/g)]
+    .filter(m => letters.includes(m[4]) && +m[3] >= 13).map(m => ({ x: +m[1], y: +m[2] }));
+  // a letter is about nine wide and eleven tall about its centre
+  return marks.some(l => dots.some(d => Math.abs(d.x - l.x) < 4.5 + d.r && Math.abs(d.y - l.y) < 5.5 + d.r));
+}
+
 export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   // The gradient, as a fraction in lowest terms. Mostly whole, because most of
   // the papers are — but 2018 is 3/2 and 2026 is 2/3, and the 2018 scheme
@@ -842,7 +860,11 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     ctx.point(B, `${x2}`, value(y2)),
     '',
     `<b>(a)</b>&nbsp;&nbsp;Find the equation of the ${ctx.scatter ? 'line of best fit' : 'line'} in terms of $${ctx.x.letter}$ and $${ctx.y.letter}$. Give the equation in its simplest form.`,
-    `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a). ${ctx.estimate(`${x3}`)}`,
+    // 2024 P1 Q9: "(b) Use your equation from part (a) to estimate …". The
+    // owner, on the 2024 re-review sheet: "Yes". Its own id; words only.
+    falling
+      ? `<b>(b)</b>&nbsp;&nbsp;Use your equation from part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
+      : `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a). ${ctx.estimate(`${x3}`)}`,
   ];
 
   const eq = equation(ctx.y.letter, ctx.x.letter, p, q, c);
@@ -867,8 +889,29 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     axisNames: { x: ctx.x.letter, y: ctx.y.letter },
     axisTitles: { x: ctx.x.caption, y: ctx.y.caption },
   };
-  const fig = sketchAxes(spec);
-  if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
+  const text = [...prose, ...steps].join(' ');
+  let fig = sketchAxes(spec);
+  /**
+   * **The letters clear of the scatter.** With both letters always below
+   * their points, a letter sat on one of the cloud's dots in 152 of 400 draws
+   * of 2024 P1 Q9, and in about half of 2014 P1 Q6's, 2016 P1 Q5's and 2026
+   * P1 Q6's, so a pupil could not tell which dot was the point. The owner, on
+   * the 2024 re-review sheet: "Yes and fix letters on other papers".
+   *
+   * For those four ids each letter tries the four sides, below first, and the
+   * first layout that keeps both clear of every dot and still verifies is
+   * drawn. No random is drawn, and the exact line (no cloud) is untouched.
+   */
+  if (ctx.scatter && asked !== undefined && LETTERS_CLEAR_OF_DOTS.has(asked)) {
+    const sides = ['below', 'above', 'right', 'left'] as const;
+    const layouts = sides.flatMap(s1 => sides.map(s2 => [s1, s2] as const));
+    const clear = layouts.map(([s1, s2]) => sketchAxes({ ...spec, points: [
+      { ...spec.points![0], side: s1 }, { ...spec.points![1], side: s2 }] }))
+      .find(f => !letterOnDot(renderScene(f.scene), [A, B]) && !verifyFigure(f, text).length);
+    if (!clear) return null;
+    fig = clear;
+  }
+  if (verifyFigure(fig, text).length) return null;
 
   return {
     subTopic: scatter ? 'The Equation of a Line of Best Fit'

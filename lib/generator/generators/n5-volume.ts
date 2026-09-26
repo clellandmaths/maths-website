@@ -1128,7 +1128,8 @@ const WEIGHTS = [
   { thing: 'ice lolly', inner: 'fruit puree', outer: 'plain ice' },
   { thing: 'jelly mould', inner: 'cream', outer: 'set jelly' },
   { thing: 'chocolate bar', inner: 'caramel', outer: 'dark chocolate' },
-  { thing: 'paving slab', inner: 'red resin', outer: 'grey concrete' },
+  // No paving slab: at 2 to 12 centimetres it was a slab a few centimetres
+  // across. The owner, on the 2024 re-review sheet: "Yes".
   { thing: 'packing block', inner: 'dense foam', outer: 'light foam' },
   { thing: 'butter block', inner: 'herb butter', outer: 'plain butter' },
 ];
@@ -1164,7 +1165,12 @@ function boxMinusHemisphere(): Q | null {
   ];
   return assemble({
     stack: [{ kind: 'box', w, h }],
-    ghosts: [{ piece: { kind: 'hemisphere', r: dia / 2 }, on: 'base' }],
+    // **Shaded, as the paper draws its red glass**: 2024 P2 Q7's hemisphere
+    // is a filled grey dome inside the clear box. The owner, on the 2024
+    // re-review sheet: "Could also do with shading on sphere like real
+    // question". The `seen` opt-in 2014 P2 Q7 added, and `hides` so the box's
+    // back edges stop behind the dome as the paper's do.
+    ghosts: [{ piece: { kind: 'hemisphere', r: dia / 2 }, on: 'base', seen: true, hides: true }],
     /**
      * **Arrows, and the diameter drawn across the hemisphere itself.**
      *

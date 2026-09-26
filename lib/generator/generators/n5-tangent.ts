@@ -391,7 +391,12 @@ export function twoTangentsDiametersQuestion(): Q {
       difficulty: 'exam',
       variationId: 'angles.two-tangents-diameters',
       stepMarks: [1, 1, 1],
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2)],
+      // 2024 P1 Q10 ends each bullet with a stop, "Angle DFE is 125°." inside
+      // the maths. The owner, 2026-09-25: "if the only fixes is putting full
+      // stops just do that without asking me". After verifyFigure, and this
+      // variation is alone on its clone.
+      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2).map(l =>
+        !l.startsWith('&bull;') ? l : l.endsWith('$') ? `${l.slice(0, -1)}.$` : `${l}.`)],
       boardQuestionLines: [`Tangents at ${n.touchB} and ${n.touchD} meet at ${n.outside}; ${n.touchB}${n.oppB} and ${n.touchD}${n.oppD} are diameters. Angle ${n.touchD}${n.oppB}${n.endE} = ${given}°. Find ${n.touchB}${n.outside}${n.touchD}.`],
       solutionSteps: steps,
       finalAnswer: `$${answer}^{\\circ}$`,

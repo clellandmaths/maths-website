@@ -133,6 +133,11 @@ export function similarTriangleRestQuestion(): Q {
     const outer = whole - inner;
     if (whole < 5 || whole > 18 || outer < 1.5) continue;
     if (!Number.isInteger(outer * 10) || !Number.isInteger(whole * 10)) continue;
+    // **No two given lengths equal**, as 2024 P1 Q14's 3, 7 and 10.5. The
+    // whole side came out equal to the base in 47 of 400 draws - DE = 6, AD
+    // = 6 - which reads as a misprint. The owner, on the 2024 re-review
+    // sheet: "Yes". A rejection, and this variation is alone on its clone.
+    if (whole === far || whole === near) continue;
 
     const { angleLeft, angleRight, rotate } = shape();
     const fig = nestedTriangles({

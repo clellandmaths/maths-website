@@ -344,8 +344,10 @@ function expandBracket(): Q {
     subTopic: 'Expanding with Indices',
     difficulty: 'exam',
     variationId: 'indices.expand',
+    // The stop inside the maths, as 2024 P1 Q13 prints it. The owner,
+    // 2026-09-25: "if the only fixes is putting full stops just do that".
     questionLines: [
-      `Expand and simplify fully $${outTex}\\left(${rootTex} + ${innerTex}\\right)$`,
+      `Expand and simplify fully $${outTex}\\left(${rootTex} + ${innerTex}\\right).$`,
     ],
     boardQuestionLines: [`$${outTex}\\left(${rootTex} + ${innerTex}\\right)$`],
     solutionSteps: [

@@ -1756,11 +1756,15 @@ export function pythagorasTwoCircles(wanted?: string): Q {
     });
     if (!fig) continue;
 
+    // 2024 P2 Q10's own words and stops, and no rounding line - its scheme
+    // takes 33.2... as it comes. The owner, on the 2024 re-review sheet: "Yes".
+    // The overlap is that paper's alone; the badge keeps its words.
     const prose = kind === 'overlap'
-      ? [`A door-number sign is made from parts of two identical circles.`,
-         `&bull;&nbsp; $AB$ is a chord of both circles, of length ${num(chord)} centimetres`,
-         `&bull;&nbsp; The radius $AC$ is ${num(r)} centimetres`,
-         `Calculate the width of the sign. Give your answer correct to one decimal place.`]
+      ? [`Karen buys a door-number sign for her house. The sign consists of parts of two identical circles.`,
+         `$AB$ is a chord to both circles.`,
+         `&bull;&nbsp; $AB$ has length ${num(chord)} centimetres.`,
+         `&bull;&nbsp; The radius $AC$ has length ${num(r)} centimetres.`,
+         `Calculate the width of the sign.`]
       : [`A badge is made from two identical shapes, each part of a circle.`,
          `&bull;&nbsp; The circles have centres $C_{1}$ and $C_{2}$, each of radius ${num(r)} centimetres`,
          `&bull;&nbsp; The badge has half-turn symmetry about the midpoint of $AB$`,
@@ -1788,7 +1792,10 @@ export function pythagorasTwoCircles(wanted?: string): Q {
       difficulty: 'exam',
       variationId: kind === 'overlap'
         ? 'pythagoras.two-circles-overlap' : 'pythagoras.two-circles-half-turn',
-      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+      // The paper draws its figure after "AB is a chord to both circles."
+      questionLines: kind === 'overlap'
+        ? [prose[0], prose[1], renderScene(fig.scene), ...prose.slice(2)]
+        : [prose[0], renderScene(fig.scene), ...prose.slice(1)],
       boardQuestionLines: [`${kind === 'overlap' ? 'Two circles' : 'Two segments'}, radius ${num(r)}, $AB$ ${num(chord)}. Find the ${kind === 'overlap' ? 'width' : 'height'}.`],
       solutionSteps: steps,
       stepMarks: [1, 1, 1, 1],

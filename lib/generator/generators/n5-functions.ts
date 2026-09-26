@@ -167,6 +167,11 @@ function evaluate(wanted?: string): Q {
     // reached by more than one wrong route as easily as by the right one, so it
     // tells a pupil least about whether their substitution was sound.
     if (out === 0) continue;
+    // **Nor 1 on 2024's square.** (x + c)^2 at x = -c +/- 1 squares a 1 and
+    // leaves nothing to evaluate - 67 of 400 draws were 0 or 1. The owner, on
+    // the 2024 re-review sheet: "Negative input is fine never answer 0 or 1".
+    // Only this shape, read straight off the asked id.
+    if (ids[which] === 'functions.evaluate-square' && out === 1) continue;
 
     const sub = input < 0 ? `(${input})` : `${input}`;
     return {

@@ -297,13 +297,22 @@ function medianCompare(semi: boolean, asked?: string): Q {
     if (otherSpread < grain || otherSpread === spread) continue;
     if (small && (Math.max(...vals) > 99 || otherMed > 99)) continue;
 
+    /**
+     * **2024 P1 Q5 lists its six prices in order** - 155 160 190 210 230 240 -
+     * where 2023 P1 Q9 and 2026 P1 Q3 list theirs as they came. This listed
+     * them unsorted in 400 of 400, and 51 draws opened a sentence with a
+     * numeral, "6 adults were timed". The owner, on the 2024 re-review sheet:
+     * "Yes". Its own id only; nothing is drawn differently.
+     */
+    const is2024 = asked === 'data.median-iqr-compare-2024';
+    const lead = ctx.lead(n);
     return {
       subTopic: 'Comparing Median and Interquartile Range',
       difficulty: 'exam',
       variationId: semi ? 'data.median-siqr-compare' : 'data.median-iqr-compare',
       questionLines: [
-        ctx.lead(n),
-        row(vals, ctx),
+        is2024 ? lead.replace(/^6 /, 'Six ') : lead,
+        row(is2024 ? sorted : vals, ctx),
         `(a) Calculate the median and the ${name} of these ${ctx.quantity}.`,
         // The unit goes on both figures, as 2019 P1 Q5 puts it on both: "The
         // median temperature was 8 °C, and the semi-interquartile range was

@@ -839,8 +839,15 @@ function splitFraction(): Q {
 function givenForm(): Q {
   const k = getRandomInt(2, 6);
   const minus = getRandomInt(0, 1) === 0;
+  /**
+   * **Only the paper's shape, a multiple of cos^2 x and a constant** - 2024
+   * P2 Q16's 3cos^2 x - 1. The other shape, cos^2 x plus or minus k sin^2 x,
+   * already carries a sin^2 term, so the pupil collects two of them: a step
+   * the paper's two marks do not ask for. It was 211 of 400 draws. The owner,
+   * on the 2024 re-review sheet: "Yes". This variation is alone on its clone.
+   */
   // The constant shape: a·cos^2 x + c = a(1 - sin^2 x) + c = (a + c) - a sin^2 x
-  if (getRandomInt(0, 1) === 0) {
+  {
     const a = 1 + k;                       // 2..7, so the multiple is never bare
     // The constant left over has to be worth stating: a + c = 0 gives
     // "0 - 3 sin^2 x", which is not the form a + b sin^2 x as anyone writes it.
@@ -864,25 +871,6 @@ function givenForm(): Q {
       finalAnswer: `$${const0} - ${a}${S2}$`,
     };
   }
-
-  // cos^2 ± k sin^2 = 1 - sin^2 ± k sin^2 = 1 + (±k - 1) sin^2
-  const b = (minus ? -k : k) - 1;
-  return {
-    subTopic: 'Writing in a Given Trigonometric Form',
-    difficulty: 'exam',
-    variationId: 'trig-identities.given-form',
-    questionLines: [
-      `Express $${C2} ${minus ? '-' : '+'} ${k}${S2}$ in the form $a + b${S2}$.`,
-      WORKING,
-    ],
-    boardQuestionLines: [`$${C2} ${minus ? '-' : '+'} ${k}${S2}$ as $a + b${S2}$`],
-    solutionSteps: [
-      `<strong>1.</strong> Rearranging $${S2} + ${C2} = 1$ gives $${C2} = 1 - ${S2}$. Substitute it in:<br><br>$1 - ${S2} ${minus ? '-' : '+'} ${k}${S2}$`,
-      `<strong>2.</strong> Collect the $${S2}$ terms:<br><br>$1 ${b < 0 ? '-' : '+'} ${times(Math.abs(b), S2)}$`,
-    ],
-    stepMarks: [1, 1],
-    finalAnswer: `$1 ${b < 0 ? '-' : '+'} ${times(Math.abs(b), S2)}$`,
-  };
 }
 
 // ── a related angle — 2018 P1 Q12, 2023 P1 Q11 ──────────────────────────

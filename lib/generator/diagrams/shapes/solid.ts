@@ -218,7 +218,16 @@ export interface SolidSpec {
      * the shading. Opt-in: every other ghost in the course is a cut-out or a
      * removed tip, and stays dashed and unfilled.
      */
-    seen?: true }[];
+    seen?: true;
+    /**
+     * **And it hides what is behind it.** 2024 P2 Q7's red glass dome sits
+     * inside a clear box, and the box's back edges stop where the dome is in
+     * front of them. Without this, the dashed back edge ran through the
+     * middle of the dome and through the diameter's number written there, so
+     * every draw failed verification. Opt-in, with `seen`: 2014 P2 Q7's cone
+     * has no hidden edge behind its dome, and keeps its figure exactly.
+     */
+    hides?: true }[];
   dims: Dim[];
 }
 
@@ -399,6 +408,34 @@ function extent(elements: Element[]): { x0: number; x1: number; y0: number; y1: 
   return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
 }
 
+/**
+ * The parts of segment a-b that lie outside a convex polygon: none, one or
+ * two pieces. Cyrus-Beck against each edge; the polygon may wind either way.
+ */
+function outsideConvex(a: Pt, b: Pt, poly: Pt[]): [Pt, Pt][] {
+  const d = pt(b.x - a.x, b.y - a.y);
+  let area = 0;
+  for (let i = 0; i < poly.length; i++) {
+    const p = poly[i], q = poly[(i + 1) % poly.length];
+    area += p.x * q.y - q.x * p.y;
+  }
+  const s = area < 0 ? -1 : 1;
+  let t0 = 0, t1 = 1;
+  for (let i = 0; i < poly.length; i++) {
+    const p = poly[i], q = poly[(i + 1) % poly.length];
+    const n = pt(-s * (q.y - p.y), s * (q.x - p.x));   // points inwards
+    const N = n.x * (a.x - p.x) + n.y * (a.y - p.y), D = n.x * d.x + n.y * d.y;
+    if (Math.abs(D) < 1e-12) { if (N < 0) return [[a, b]]; continue; }
+    const t = -N / D;
+    if (D > 0) t0 = Math.max(t0, t); else t1 = Math.min(t1, t);
+    if (t0 >= t1) return [[a, b]];
+  }
+  const at = (t: number) => pt(a.x + t * d.x, a.y + t * d.y);
+  const len = Math.hypot(d.x, d.y);
+  return ([[0, t0], [t1, 1]] as const).filter(([u, v]) => (v - u) * len > 0.5)
+    .map(([u, v]) => [at(u), at(v)] as [Pt, Pt]);
+}
+
 export function solidFigure(spec: SolidSpec): Figure {
   const elements: Element[] = [];
   let o = pt(0, 0);
@@ -411,6 +448,8 @@ export function solidFigure(spec: SolidSpec): Figure {
     o = topOf(piece, o);
   }
   const foot = baseCentreOf(spec.stack[0], pt(0, 0));
+  // Everything drawn so far is the stack; a `hides` ghost clips only these.
+  const stackCount = elements.length;
   for (const g of spec.ghosts ?? []) {
     /**
      * **A seat is a face's centre; a flat-faced piece is drawn from its front
@@ -447,6 +486,16 @@ export function solidFigure(spec: SolidSpec): Figure {
         pts.push(pt(at0.x + r * Math.cos(t), at0.y + ry * Math.sin(t)));
       }
       elements.push({ kind: 'shadedShape', points: pts, tone: 3 });
+      // `hides`: the stack's hidden edges stop behind the dome. Only the
+      // stack's own dashed lines, which are everything before the ghosts.
+      if (g.hides) {
+        for (let i = stackCount - 1; i >= 0; i--) {
+          const e = elements[i];
+          if (e.kind !== 'segment' || !e.dashed || e.decoration) continue;
+          elements.splice(i, 1, ...outsideConvex(e.from, e.to, pts)
+            .map(([a, b]): Element => ({ kind: 'segment', from: a, to: b, dashed: true })));
+        }
+      }
     }
     // A seen hemisphere is opaque, so the far half of its own flat face is
     // behind it, and so is the far half of the base it sits on: the paper

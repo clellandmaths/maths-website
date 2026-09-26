@@ -314,7 +314,20 @@ export function trigDiagramQuestion(kinds: Kind[], wanted?: string): Q {
         difficulty: 'exam',
         variationId: smallest ? 'trig-diagram.cosine-angle-smallest'
           : 'trig-diagram.cosine-angle',
-        questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+        /**
+         * **2024 P2 Q3 gives the three sides in words, before the figure**:
+         * "In triangle ABC: • AB = 25 metres • AC = 18 metres • BC = 34
+         * metres." This printed only "The diagram shows triangle PQR." in 400
+         * of 400. The owner, on the 2024 re-review sheet: "Yes", as on 2026
+         * P2 Q2. After verifyFigure, and 2019's smallest-angle id is untouched.
+         */
+        questionLines: smallest
+          ? [prose[0], renderScene(fig.scene), ...prose.slice(1)]
+          : [`In triangle $${A}${B}${C}$:`,
+             `&bull;&nbsp; $${A}${B} = ${whole.ab}$ ${unit}`,
+             `&bull;&nbsp; $${A}${C} = ${whole.ca}$ ${unit}`,
+             `&bull;&nbsp; $${B}${C} = ${whole.bc}$ ${unit}.`,
+             renderScene(fig.scene), ...prose.slice(1)],
         boardQuestionLines: [`Sides ${whole.ab}, ${whole.bc}, ${whole.ca}. Angle at ${name}?`],
         solutionSteps: steps,
         stepMarks: [1, 1, 1],

@@ -324,7 +324,9 @@ function discriminant(wanted?: string, asked?: string): Q {
 function quadraticFormula(wanted?: string, asked?: string): Q {
   const ROUNDINGS = [
     { dp: 1, phrase: 'Give your answers correct to one decimal place.' },
-    { dp: 2, phrase: 'Give your answers correct to two decimal places.' },
+    // 2024 P2 Q8, this rounding's only paper, writes the numeral: "correct to
+    // 2 decimal places". The owner, on the 2024 re-review sheet: "Yes".
+    { dp: 2, phrase: 'Give your answers correct to 2 decimal places.' },
     { sf: 2, phrase: 'Give your answers correct to two significant figures.' },
   ] as const;
   // Taught: the rounding instruction IS the id. 2022 P2 Q7 asks for two

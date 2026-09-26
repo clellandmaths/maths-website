@@ -268,11 +268,18 @@ function compound(wanted?: string, asked?: string): Q {
   const is2016 = asked === 'percentages.compound-2016';
   const is2015 = asked === COMPOUND_2015;
   const is2014 = asked === COMPOUND_2014;
+  // **2024 P2 Q1 is money to the penny, with no rounding line** - Dougie's
+  // laptop, (£)186.40. The other stories printed "to the nearest pound" or
+  // "to the nearest whole number" in 269 of 400 draws. The owner, on the
+  // 2024 re-review sheet: "Yes". Its own id reads a filtered list, as 2015's
+  // and 2016's do, so no other id's draws move.
+  const is2024 = asked === 'percentages.compound';
   const drawn: AssetContext & { band?: [number, number] } = is2014
     ? pick(FALLING_COUNTS_2014)
     : pick(ASSET_CONTEXTS.filter(c => (c.rounding === '3sf') === threeSf
       && (!is2017 || c.appreciates) && (!is2016 || !c.appreciates)
-      && (!is2015 || (c.appreciates && c.unit === '£'))));
+      && (!is2015 || (c.appreciates && c.unit === '£'))
+      && (!is2024 || c.rounding === 'money')));
   // A copy, never the shared context: money to the penny becomes the nearest
   // pound for this paper alone. Counts already round to the whole number.
   // 2015 goes the other way: whatever the context usually rounds to, this

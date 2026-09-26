@@ -212,8 +212,14 @@ function amplitudeAndCycles(wanted?: string): Q | null {
   const eq = `y = ${a}\\${fn} ${b}x^{\\circ}`;
   const shown = `y = a\\${fn} bx^{\\circ}`;
 
+  // 2024 P1 Q8 draws the whole of 0 to 360 and says so: "The graph of
+  // y = a cos bx°, 0 ≤ x ≤ 360, is shown." The owner, on the 2024 re-review
+  // sheet: "Yes". Its own id; words only.
+  const lead = wanted === 'trig-graphs.amplitude-cycles'
+    ? `The graph of $${shown}$, $0 \\le x \\le 360$, is shown.`
+    : `Part of the graph of $${shown}$ is shown in the diagram.`;
   const prose = askInParts
-    ? [`Part of the graph of $${shown}$ is shown in the diagram.`, '',
+    ? [lead, '',
        '<b>(a)</b>&nbsp;&nbsp;State the value of $a$.',
        '<b>(b)</b>&nbsp;&nbsp;State the value of $b$.']
     : [`Part of the graph of $${shown}$ is shown in the diagram.`, '',

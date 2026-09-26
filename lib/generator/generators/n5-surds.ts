@@ -173,7 +173,11 @@ function addSubtract(add: boolean): Q {
       subTopic: add ? 'Adding Surds' : 'Subtracting Surds',
       difficulty: 'skill',
       variationId: add ? 'surds.add' : 'surds.subtract',
-      questionLines: [`Simplify $${rootTex(n1, c1)} ${sign} ${rootTex(n2, c2)}$`],
+      // 2024 P1 Q6, the subtraction's only paper, ends "√75 − √3." with the
+      // stop inside the maths. The owner, 2026-09-25: "if the only fixes is
+      // putting full stops just do that". The addition has no paper and is
+      // left as it was.
+      questionLines: [`Simplify $${rootTex(n1, c1)} ${sign} ${rootTex(n2, c2)}${add ? '' : '.'}$`],
       boardQuestionLines: [`$${rootTex(n1, c1)} ${sign} ${rootTex(n2, c2)}$`],
       solutionSteps: [
         `<strong>1.</strong> Simplify each surd so they share the same root:<br><br>${simplifyShown(rootTex(n1, c1), tex(t1))} and ${simplifyShown(rootTex(n2, c2), tex(t2))}`,

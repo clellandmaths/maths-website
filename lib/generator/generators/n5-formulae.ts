@@ -874,6 +874,11 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
           ? `Solve algebraically the inequality $${lhs} ${rel} ${rhs}$`
           : asked === 'inequalities.brackets'
             ? `Solve, algebraically, the inequation $${lhs} ${rel} ${rhs}.$`
+            // 2024 P2 Q4 ends "5(x − 2) + 4 < 7x + 8." with the stop inside the
+            // maths. The owner, on the 2024 re-review sheet: "do the full stop
+            // fix" - the stop only, so its words keep the draw they had.
+            : asked === 'inequalities.brackets-2024'
+            ? `${lead} ${word} $${lhs} ${rel} ${rhs}.$`
             : `${lead} ${word} $${lhs} ${rel} ${rhs}$`;
       })()],
       boardQuestionLines: [`Solve $${lhs} ${rel} ${rhs}$`],

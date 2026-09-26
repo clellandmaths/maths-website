@@ -492,6 +492,10 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
       const rough = drawAngle(sweep) / 360 * 2 * Math.PI * r;
       arc = kind === 'area-arc' ? Math.round(rough) : Math.round(rough * 10) / 10;
       if (arc <= 0) continue;
+      // 2024 P2 Q15's 12 and 15 differ; an arc equal to the radius - 14 and
+      // 14 - was 10 of 400 draws. The owner, on the 2024 re-review sheet:
+      // "Yes". Only the area-from-arc kind, which is that paper's alone.
+      if (kind === 'area-arc' && arc === r) continue;
       angle = arc * 360 / (2 * Math.PI * r);
       if (angle < 15 || angle > 345) continue;
       // The arc is rounded to a tenth before the angle is read back off it, so
