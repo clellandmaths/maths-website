@@ -319,7 +319,9 @@ function simplifyFraction(wanted?: string): Q {
       subTopic: 'Simplifying Algebraic Fractions',
       difficulty: 'exam',
       variationId: id,
-      questionLines: [`Simplify $${frac(s.numTex, s.denTex)}$`],
+      // 2023 P2 Q12 closes on a full stop, inside the maths. Keyed on the
+      // shape, so 2015 P1 Q12 and 2022 P2 Q12 print as they did.
+      questionLines: [`Simplify $${frac(s.numTex, s.denTex)}${shape === 'squares' ? '.' : ''}$`],
       boardQuestionLines: [`Simplify $${frac(s.numTex, s.denTex)}$`],
       solutionSteps: [
         `<strong>1.</strong> Factorise the numerator:<br><br>$${s.numTex} = ${s.numFactors}$`,

@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "a469ea950b850c8a9290f76104e52c12b049ef16",
+  "sourceCommit": "f46a517edefede18fb5621b2c1b19258c3900010",
   "sourceDirty": false,
   "count": 97,
   "files": {
@@ -47,7 +47,7 @@
     "generators/integration.ts": "7f9ca1a247d7da5f",
     "generators/logs.ts": "5a3f8dd2ac80876d",
     "generators/markscheme-source.ts": "22799ede4d1792df",
-    "generators/n5-alg-fractions.ts": "7b9482c692d0e054",
+    "generators/n5-alg-fractions.ts": "81fddfb4d2357ccc",
     "generators/n5-angles.ts": "a159df71688f7c1e",
     "generators/n5-bearings.ts": "d355719440ba5302",
     "generators/n5-composite-trig.ts": "e4202e2645702b4b",
@@ -59,7 +59,7 @@
     "generators/n5-form-equation.ts": "eaabc3c5738c7845",
     "generators/n5-formulae.ts": "11caa7faf6931bc3",
     "generators/n5-functions.ts": "3ad24a6dec0aba9b",
-    "generators/n5-indices.ts": "32a03906a2fe0fa3",
+    "generators/n5-indices.ts": "24d3703da6b35da6",
     "generators/n5-line-graph.ts": "496699e3bee0b787",
     "generators/n5-linear-equations.ts": "796e15a7490cb6ab",
     "generators/n5-measure.ts": "5971e7a321f5388b",

@@ -188,7 +188,9 @@ function negativePowerFraction(): Q {
       subTopic: 'Negative Indices',
       difficulty: 'skill',
       variationId: 'indices.negative-power-fraction',
-      questionLines: [`Simplify $${expr}$`, POSITIVE_POWER],
+      // The paper's full stop, inside the maths - 2023 P1 Q12 is this
+      // routine's only paper.
+      questionLines: [`Simplify $${expr}.$`, POSITIVE_POWER],
       boardQuestionLines: [`$${expr}$`],
       solutionSteps: [
         `<strong>1.</strong> Add the powers on the bottom:<br><br>$${denTex} = ${pow(v, b + c)}$`,
