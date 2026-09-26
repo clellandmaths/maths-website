@@ -3,6 +3,8 @@
  *
  *   npm run build && node scripts/check-engine-isolation.mjs
  *   node scripts/check-engine-isolation.mjs --baseline   record, don't compare
+ *   node scripts/check-engine-isolation.mjs --accept-growth "<why>"
+ *                                                        record a bigger engine, with the reason
  *
  * **Two things, and the second was missing for months.** The engine must be on
  * no page — that is what this was written for — and it must not grow without
@@ -60,7 +62,13 @@ const BASELINE = path.join(root, 'scripts', 'engine-size-baseline.json');
  * import of something real moves the total by far more than this.
  */
 const HEADROOM = 64 * 1024;
-const recording = process.argv.includes('--baseline');
+const acceptAt = process.argv.indexOf('--accept-growth');
+const acceptWhy = acceptAt >= 0 ? (process.argv[acceptAt + 1] ?? '').trim() : '';
+const recording = process.argv.includes('--baseline') || acceptAt >= 0;
+if (acceptAt >= 0 && !acceptWhy) {
+  console.error('\n  --accept-growth needs a reason: what grew, and why it is earned.\n');
+  process.exit(1);
+}
 
 /**
  * Variation ids, which appear as object keys in the registry and nowhere else
@@ -157,10 +165,18 @@ const current = { chunks: engine.size, bytes: engineBytes };
 if (recording) {
   if (fs.existsSync(BASELINE)) {
     const old = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
-    if (current.bytes > old.bytes + HEADROOM) {
+    // **Growth is recorded only on purpose, with its reason.** `--baseline`
+    // alone may only replace a baseline with one no worse. The engine can
+    // legitimately grow (the 2026-09 review added each paper question's own
+    // plan and wording), so `--accept-growth "<why>"` records it, and keeps
+    // the reason in the file where the next person to see the number will
+    // read it. The 2026-09-26 run found this message pointing at a command
+    // that refused, with no way through but editing the JSON by hand.
+    if (current.bytes > old.bytes + HEADROOM && !acceptWhy) {
       console.error(`\n  REFUSING to record — the engine is ${kb(old.bytes)} in the ` +
         `baseline and ${kb(current.bytes)} now.\n  A baseline may only be replaced ` +
-        `by one that is no worse. Find the growth first.\n`);
+        `by one that is no worse. Find the growth first; if it is earned, record it\n` +
+        `  with --accept-growth "<what grew and why>".\n`);
       process.exit(1);
     }
   }
@@ -169,6 +185,7 @@ if (recording) {
     headroomBytes: HEADROOM,
     note: 'Total bytes of every out/_next/static/chunks/*.js carrying a variation id. '
         + 'Lazy — on no page — but it is what the first press of Variation fetches.',
+    ...(acceptWhy ? { acceptedGrowth: acceptWhy } : {}),
     ...current,
   }, null, 2)}\n`);
   console.log(`  baseline recorded: ${kb(current.bytes)} in ${current.chunks} chunks` +
@@ -191,8 +208,8 @@ if (delta > HEADROOM) {
     `of headroom.\n`);
   console.error(`  This is the download a pupil waits through on the first press of` +
     `\n  Variation. Either something was imported that need not be, or the registry` +
-    `\n  has genuinely earned the weight — in which case record it deliberately:` +
-    `\n\n    node scripts/check-engine-isolation.mjs --baseline\n`);
+    `\n  has genuinely earned the weight — in which case record it deliberately, with the reason:` +
+    `\n\n    node scripts/check-engine-isolation.mjs --accept-growth "<what grew and why>"\n`);
   process.exit(1);
 }
 
