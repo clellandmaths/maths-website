@@ -523,7 +523,8 @@ function brackets(): Q {
       difficulty: 'exam',
       variationId: 'fractions.brackets',
       questionLines: [
-        `Evaluate $${show(out)}\\left(${show(p)} + ${show(q)}\\right)$`, SIMPLEST,
+        // Both papers close on a stop inside the maths (2016 P1 Q2, 2022 P1 Q1).
+        `Evaluate $${show(out)}\\left(${show(p)} + ${show(q)}\\right).$`, SIMPLEST,
       ],
       boardQuestionLines: [`$${show(out)}\\left(${show(p)} + ${show(q)}\\right)$`],
       solutionSteps: [

@@ -141,7 +141,8 @@ function negativePower(asked?: string): Q {
       difficulty: 'skill',
       variationId: 'indices.negative-power',
       questionLines: [
-        `Simplify $(${insideTex})^{${b}} \\times ${v}^{${c}}$`, POSITIVE_POWER,
+        // Both papers close on a stop inside the maths (2016 P2 Q10, 2022 P1 Q11).
+        `Simplify $(${insideTex})^{${b}} \\times ${v}^{${c}}.$`, POSITIVE_POWER,
       ],
       boardQuestionLines: [`$(${insideTex})^{${b}} \\times ${v}^{${c}}$`],
       solutionSteps: [

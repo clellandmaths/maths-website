@@ -333,7 +333,8 @@ function expandBracket(): Q {
       difficulty: 'exam',
       variationId: 'surds.expand-bracket',
       questionLines: [
-        `Expand and simplify $\\sqrt{${a}}\\left(\\sqrt{${a}} - \\sqrt{${b}}\\right) + ${c}\\sqrt{${inner.r}}$`,
+        // 2022 P1 Q13 closes on a stop inside the maths.
+        `Expand and simplify $\\sqrt{${a}}\\left(\\sqrt{${a}} - \\sqrt{${b}}\\right) + ${c}\\sqrt{${inner.r}}.$`,
       ],
       boardQuestionLines: [
         `$\\sqrt{${a}}\\left(\\sqrt{${a}} - \\sqrt{${b}}\\right) + ${c}\\sqrt{${inner.r}}$`,

@@ -1414,9 +1414,9 @@ export function pythagorasSpaceDiagonal(wanted?: string): Q {
            ' Justify your answer.',
            ` It would have to lie from corner $${from}$ to corner $${to}$. Justify your answer.`)]
       : [`The diagram shows a cuboid, $${corners.join('')}$.`,
-         `&bull;&nbsp; The length of the cuboid, $${corners[0]}${corners[1]}$, is ${L} ${ctx.unit}`,
-         `&bull;&nbsp; The breadth of the cuboid, $${corners[1]}${corners[5]}$, is ${B} ${ctx.unit}`,
-         `&bull;&nbsp; The height of the cuboid, $${corners[1]}${corners[2]}$, is ${H} ${ctx.unit}`,
+         `&bull;&nbsp; The length of the cuboid, $${corners[0]}${corners[1]}$, is ${L} ${ctx.unit}.`,
+         `&bull;&nbsp; The breadth of the cuboid, $${corners[1]}${corners[5]}$, is ${B} ${ctx.unit}.`,
+         `&bull;&nbsp; The height of the cuboid, $${corners[1]}${corners[2]}$, is ${H} ${ctx.unit}.`,
          `Calculate the length of $${from}${to}$, the space diagonal of the cuboid.`,
          exact ? '' : 'Give your answer correct to one decimal place.'].filter(Boolean);
 
