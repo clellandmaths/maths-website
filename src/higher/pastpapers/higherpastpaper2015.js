@@ -102,7 +102,7 @@ export const higherPastPaper2015 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2015 P1 Q13</span></strong></small><p>The function \\(f(x)=2^{x}+3\\)<br>is defined on \\(\\mathbb{R}\\), the set of real numbers.<br>The graph with equation \\(y=f(x)\\) passes through the point \\(P(1,b)\\) and cuts the y-axis at Q as shown in the diagram.</p><img src="/img/Higher_Past_Papers/2015/2015_P1_Q13.png" alt="Exponential graph y=f(x)"><p><b>(a)</b>&nbsp;&nbsp;What is the value of \\(b\\)?<br><br><b>(b)</b>&nbsp;&nbsp;(i) Copy the above diagram. On the same diagram, sketch the graph with equation<br>\\(y=f^{-1}(x)\\)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ii) Write down the coordinates of the images of P and Q.<br><br><b>(c)</b>&nbsp;&nbsp;\\(R(3,11)\\) also lies on the graph with equation \\(y=f(x).\\)<br>Find the coordinates of the image of R on the graph with equation<br>\\(y=4-f(x+1)\\)<br></p>`,
-          answer: `(a) \\(b=5\\)<br>(b) (ii) P'(5,1), Q'(4,0)<br>(c) (2, -7)`,
+          answer: `(a) \\(b=5\\)<br>(b) (i) Sketch of the reflection of \\(y=f(x)\\) in the line \\(y=x\\), not cutting the y-axis<br>(b) (ii) P'(5,1), Q'(4,0)<br>(c) (2, -7)`,
           videoId: "Pmo4iSGoBnk",
           timestamp: "23m44s",
                     marks: [1, 1, 3, 2],

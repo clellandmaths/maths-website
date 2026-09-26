@@ -38,7 +38,7 @@ export const higherPastPaper2025 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q5</span></strong></small><p>The diagram shows the graph of \\(y=f(x)\\), with stationary points at (0, 3) and (4, 0).</p><img src="/img/Higher_Past_Papers/2025/2025_P1_Q5.png" alt="Graph of y=f(x) with stationary points at (0,3) and (4,0)"><p>On the diagram in your answer booklet, sketch the graph of \\(y=f(-x)+3\\).</p>`,
-          answer: `Sketch showing graph reflected in y-axis and translated 3 units up. Stationary points at (0,6) and (-4,3).`,
+          answer: `Sketch showing graph reflected in y-axis and translated 3 units up. Stationary points at (0,6) and (-4,3), and passing through (2,3).`,
           videoId: "t1_htB2awtg",
           timestamp: "385s",
                     marks: [2],

@@ -86,7 +86,7 @@ export const higherPastPaper2018 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 P1 Q11</span></strong></small><p>The diagram shows the curve with equation \\(y=\\log_{3}x\\).</p><img src="/img/Higher_Past_Papers/2018/2018_P1_Q11.png" alt="Graph of y=log3(x) passing through (1,0) and (3,1)"><p><b>(a)</b>&nbsp;&nbsp;On the diagram in your answer booklet, sketch the curve with equation \\(y=1-\\log_{3}x\\).<br><b>(b)</b>&nbsp;&nbsp;Determine the exact value of the x-coordinate of the point of intersection of the two curves.</p>`,
-          answer: `(a) Sketch showing reflection in x-axis and translation 1 unit up.<br>(b) \\(x=\\sqrt{3}\\)`,
+          answer: `(a) Sketch showing reflection in x-axis and translation 1 unit up: asymptote x = 0, passing through (1, 1) and (3, 0), and decreasing.<br>(b) \\(x=\\sqrt{3}\\)`,
           videoId: "anlLalFtifo",
           timestamp: "948s",
                     marks: [2, 3],

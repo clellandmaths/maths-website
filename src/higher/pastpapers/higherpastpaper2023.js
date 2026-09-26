@@ -86,7 +86,7 @@ export const higherPastPaper2023 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q11</span></strong></small><p>(a) Evaluate<br>\\(\\int_{\\frac{\\pi}{2}}^{\\pi}(5\\sin x-3\\cos x)dx\\)<br>The diagram in your answer booklet shows the graphs with equations \\(y=5\\sin x\\) and \\(y=3\\cos x\\), \\(0\\le x\\le2\\pi\\).</p><img src="/img/Higher_Past_Papers/2023/2023_P1_Q11.webp" alt="Graphs of y = 5 sin x and y = 3 cos x for x from 0 to 2 pi"><p>(b) On the diagram in your answer booklet, shade the area represented by the integral in (a).</p>`,
-          answer: `(a) 8<br>(b) Area shaded between \\(x=\\frac{\\pi}{2}\\) and \\(x=\\pi\\)`,
+          answer: `(a) 8<br>(b) Area shaded between the curves \\(y=5\\sin x\\) and \\(y=3\\cos x\\), from \\(x=\\frac{\\pi}{2}\\) to \\(x=\\pi\\)`,
           videoId: "uHHQrgtXh7w",
           timestamp: "1515s",
                     marks: [3, 1],
@@ -139,7 +139,7 @@ export const higherPastPaper2023 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2023 P2 Q4</span></strong></small><p>The diagram shows the cubic graph of \\(y=f(x)\\) with stationary points at (2, 0) and (0,-2).</p><img src="/img/Higher_Past_Papers/2023/2023_P2_Q4.png" alt="Cubic graph y=f(x)"><p>On the diagram in your answer booklet, sketch the graph of \\(y=2f(-x)\\).</p>`,
-          answer: `Sketch showing graph reflected in y-axis and scaled vertically by 2. Points: (-2, 0) and (0, -4).`,
+          answer: `Sketch showing graph reflected in y-axis and scaled vertically by 2. Points: maximum at (-2, 0), minimum at (0, -4), and crossing the x-axis at (1, 0).`,
           videoId: "nbwGH7tXPm8",
           timestamp: "271s",
                     marks: [2],

@@ -86,7 +86,7 @@ export const higherPastPaper2024 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2024 P1 Q11</span></strong></small><p><b>(a)</b>&nbsp;&nbsp;Express \\(\\cos x^{\\circ}+\\sqrt{3}\\sin x^{\\circ}\\) in the form \\(k\\cos(x-a)^{\\circ}\\), where \\(k \\gt 0\\) and \\(0 \\lt a \\lt 360.\\)<br><b>(b)</b>&nbsp;&nbsp;Hence, or otherwise, sketch the graph with equation<br>\\(y=\\cos x^{\\circ}+\\sqrt{3}\\sin x^{\\circ}\\)<br>for \\(0\\le x\\le360\\).</p>`,
-          answer: `(a) \\(2\\cos(x-60)^{\\circ}\\)<br>(b) Sketch of cosine wave with max at (60, 2) and min at (240, -2)`,
+          answer: `(a) \\(2\\cos(x-60)^{\\circ}\\)<br>(b) Sketch of cosine wave through (0, 1), with max at (60, 2), roots at (150, 0) and (330, 0), min at (240, -2), and ending at (360, 1)`,
           videoId: "Vkp2t9gy3DA",
           timestamp: "843s",
                     marks: [4, 3],
@@ -139,7 +139,7 @@ export const higherPastPaper2024 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q4</span></strong></small><p>The diagram shows the graph of a quartic function \\(y=f(x)\\).<br>A maximum turning point occurs at (-1, 3).<br>The graph of \\(y=f(x)\\) also has a point of inflection at \\(x=2\\).</p><img src="/img/Higher_Past_Papers/2024/2024_P2_Q4.png" alt="Graph of quartic function y=f(x)"><p><b>(a)</b>&nbsp;&nbsp;Determine the coordinates of the maximum turning point on the graph of \\(y=f(x-4)+2\\).<br><b>(b)</b>&nbsp;&nbsp;On the diagram in your answer booklet, sketch the graph of \\(y=f^{\\prime}(x)\\).</p>`,
-          answer: `(a) (3, 5)<br>(b) Sketch showing cubic curve with roots at x = -1 and x = 2 (touching axis)`,
+          answer: `(a) (3, 5)<br>(b) Sketch showing cubic curve with roots at x = -1 and x = 2, and a maximum turning point at (2, 0) where it touches the axis`,
           videoId: "rhI1Qw2DjkE",
           timestamp: "635s",
                     marks: [2, 3],
