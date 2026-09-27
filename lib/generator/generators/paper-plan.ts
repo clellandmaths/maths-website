@@ -440,7 +440,7 @@ export const PLAN_OF: Record<string, PlanOf> = {
   "2016 P2 Q2": {"v":"sci-notation.calculate-2016","marks":[1,1],"shows":["\\(12 \\div (1.5 \\times 10^9)\\)",null]},
   "2016 P2 Q3": {"v":"vectors.pathway-parallelogram","marks":[0,1],"shows":[null,null]},
   "2016 P2 Q4": {"v":"factorising.fully","marks":[1,1],"shows":["\\(3(x^2 - 16)\\)",null]},
-  "2016 P2 Q5": {"v":"angles.two-tangents-chord","marks":[1,1,1],"shows":["\\(137\\)","\\(53\\)",null]},
+  "2016 P2 Q5": {"v":"angles.two-tangents-chord","marks":[1,1,1],"shows":["\\(37\\)","\\(53\\)",null]},
   "2016 P2 Q6": {"v":"data.mean-sd-compare-2016","marks":[2,2,1,1],"shows":["\\(13\\) (minutes)","\\(\\sqrt{\\frac{164}{5}}\\)",null,null]},
   "2016 P2 Q7": {"v":"volume.cone-minus-cone","marks":[1,1,1,2],"shows":["difference in two volumes","\\(\\frac{1}{3} \\times \\pi \\times 16^2 \\times 24 (= 6433.98...)\\)","\\(\\frac{1}{3} \\times \\pi \\times 9^2 \\times 13.5 (= 1145.11...)\\)","\\(5288.87...\\)"]},
   "2016 P2 Q8": {"v":"trig-diagram.sine-angle-pre2023","marks":[1,1,1],"shows":["\\(\\frac{\\sin x}{150} = \\frac{\\sin 66}{140}\\)","\\(\\sin x = \\frac{150 \\sin 66}{140}\\)",null]},
