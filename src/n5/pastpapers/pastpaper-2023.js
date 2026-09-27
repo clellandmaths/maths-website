@@ -78,7 +78,7 @@ export const pastpaper2023 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q10</span></strong></small><p>Alan buys some identical paving slabs to make a path.<br>Each slab is part of a circle.</p><img src="/img/N5_Past_Papers/2023/2023_P1_Q10_1.png" alt="Path made of paving slabs"><p>The diagram below shows a single slab.</p><img src="/img/N5_Past_Papers/2023/2023_P1_Q10_2.png" alt="Single paving slab diagram"><p>The circle, centre C, has a radius of 50 centimetres.<br>Length AB is 60 centimetres.<br>Calculate the width of the paving slab.</p>`,
-                    answer: `10 cm`,
+                    answer: `90 cm`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1156s",
                     marks: [4],
