@@ -42,6 +42,8 @@ export interface Question {
   attachments?: QuestionAttachment[];
   dataBookletSection?: number;
   dataBookletLabel?: string;
+  /** Several sections, where a question needs more than one. */
+  dataBooklets?: { section: number; label: string }[];
   /**
    * Set on guided practice questions owned by maths.scot. Linking to his
    * written solution is a condition of using them, so it travels with the

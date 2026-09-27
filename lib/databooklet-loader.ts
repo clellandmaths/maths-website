@@ -48,6 +48,27 @@ export function loadBooklet(key: string): Promise<Booklet> {
   return (bookletFiles[key] ?? bookletFiles[LATEST])();
 }
 
+/** The booklet sections a question says it needs, by number ("2. E10 Petrol" is 2). */
+export function bookletSectionsOf(q: {
+  dataBooklets?: { section: number }[];
+  dataBookletSection?: number;
+}): number[] {
+  if (q.dataBooklets?.length) return q.dataBooklets.map(d => d.section);
+  return q.dataBookletSection ? [q.dataBookletSection] : [];
+}
+
+/** A section by its number: its title begins "2. ". */
+export function sectionOf(booklet: Booklet, n: number): BookletSection | undefined {
+  return booklet.sections.find(s => s.title.startsWith(`${n}.`));
+}
+
+/**
+ * "Some helpful R commands" closes every booklet. It is reference for the
+ * RStudio questions, the same whichever question uses it, so a printed sheet
+ * puts it once at the front rather than above each question.
+ */
+export const isRCommands = (section: BookletSection) => /R commands/i.test(section.title);
+
 /**
  * The distinct booklets a set of questions needs, in a stable order.
  *
