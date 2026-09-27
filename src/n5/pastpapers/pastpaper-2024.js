@@ -62,7 +62,7 @@ export const pastpaper2024 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2024 P1 Q8</span></strong></small><p>The graph of \\(y=a\\cos bx^{\\circ}\\), \\(0\\le x\\le360\\), is shown.</p><img src="/img/N5_Past_Papers/2024/2024_P1_Q8.png" alt="Graph of y=a cos bx"><p><b>(a)</b>&nbsp;&nbsp;State the value of \\(a.\\)<br><b>(b)</b>&nbsp;&nbsp;State the value of \\(b.\\)</p>`,
-                    answer: `(a) 7, (b) 3`,
+                    answer: `(a) 7, (b) 2`,
                     videoId: "DL-cJTghJVw",
                     timestamp: "509s",
                     marks: [1, 1],
