@@ -24,7 +24,7 @@ export const advHigherMaths2024P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q3</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Use Gaussian elimination to express \\(z\\) in terms of \\(\\lambda\\) for the system of equations:</p><p>\\(x - y - 3z = 1\\)<br>\\(2x - 3y - 5z = 8\\)<br>\\(x + 2y + \\lambda z = -7\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>State the value of \\(\\lambda\\) for which this system is inconsistent.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Determine the solution of this system when \\(\\lambda = -1.\\)</p>`,
-          answer: `(a) \\(z = \\frac{10}{\\lambda + 6}\\)<br>(b) \\(\\lambda = -6\\)<br>(c) \\(x = 3, y = 4, z = 2\\)`,
+          answer: `(a) \\(z = \\frac{10}{\\lambda + 6}\\)<br>(b) \\(\\lambda = -6\\)<br>(c) \\(x = 3, y = -4, z = 2\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "3m37s",
           topics: ["Systems of Equations"],

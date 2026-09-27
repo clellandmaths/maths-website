@@ -123,7 +123,7 @@ export const advHigherMaths2018 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 Q12</span></strong></small><p>Prove by induction that, for all positive integers \\(n\\),</p><p>\\(\\sum_{r=1}^n 3^{r-1} = \\frac{1}{2}(3^n - 1).\\)</p>`,
-          answer: `Proof by induction showing true for \\(n=1\\) (LHS = RHS = 1), assuming true for \\(n=k\\), and showing the sum to \\(k+1\\) simplifies to \\(\\frac{1}{2}(3^{k+1} - 1)\\), concluding the proof for all positive integers \\(n.\\)`,
+          answer: `When \\(n=1\\), LHS \\(=3^{0}=1\\) and RHS \\(=\\frac{1}{2}(3-1)=1\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(\\sum_{r=1}^{k}3^{r-1}=\\frac{1}{2}(3^{k}-1).\\)<br>Then \\(\\sum_{r=1}^{k+1}3^{r-1}=\\frac{1}{2}(3^{k}-1)+3^{k}=\\frac{3}{2}\\times3^{k}-\\frac{1}{2}=\\frac{1}{2}(3^{k+1}-1).\\)<br>True for \\(n=1\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds for all positive integers \\(n.\\)`,
           videoId: "",
           timestamp: "",
           topics: ["Methods of Proof"],
@@ -168,7 +168,7 @@ export const advHigherMaths2018 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 Q17</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Given \\(f(x) = e^{2x}\\) obtain the Maclaurin expansion for \\(f(x)\\) up to, and including, the term in \\(x^3.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>On a suitable domain, let \\(g(x) = \\tan x.\\)<br>(i) Show that the third derivative of \\(g(x)\\) is given by<br>\\(g'''(x) = 2 \\sec^4 x + 4 \\tan^2 x \\sec^2 x.\\)<br>(ii) Hence obtain the Maclaurin expansion for \\(g(x)\\) up to and including the term in \\(x^3.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Hence, or otherwise, obtain the Maclaurin expansion for \\(e^{2x} \\tan x\\) up to, and including, the term in \\(x^3.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(d)</span>Write down the first three non-zero terms in the Maclaurin expansion for<br>\\(2e^{2x} \\tan x + e^{2x} \\sec^2 x.\\)</p>`,
-          answer: `(a) \\(1 + 2x + 2x^2 + \\frac{4}{3}x^3\\)<br>(b)(i) Proof using product/chain rule on \\(g''(x) = 2\\sec^2 x \\tan x.\\)<br>(b)(ii) \\(x + \\frac{1}{3}x^3\\)<br>(c) \\(x + 2x^2 + \\frac{7}{3}x^3\\)<br>(d) \\(1 + 4x + 7x^2\\)`,
+          answer: `(a) \\(1 + 2x + 2x^2 + \\frac{4}{3}x^3\\)<br>(b)(i) \\(g'(x) = \\sec^2 x\\), so \\(g''(x) = 2\\sec x \\times \\sec x\\tan x = 2\\sec^2 x\\tan x.\\) By the product rule, \\(g'''(x) = 2\\sec^2 x \\times \\sec^2 x + 4\\sec^2 x\\tan x \\times \\tan x = 2\\sec^4 x + 4\\tan^2 x\\sec^2 x.\\)<br>(b)(ii) \\(x + \\frac{1}{3}x^3\\)<br>(c) \\(x + 2x^2 + \\frac{7}{3}x^3\\)<br>(d) \\(1 + 4x + 7x^2\\)`,
           videoId: "",
           timestamp: "",
           topics: ["Maclaurin Series", "Differentiation"],

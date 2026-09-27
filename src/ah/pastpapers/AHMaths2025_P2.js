@@ -132,7 +132,7 @@ export const advHigherMaths2025P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q15</span></strong></small><p>Prove by induction that, for all positive integers \\(n\\),</p><p>\\(\\sum_{r=1}^{n} \\frac{1}{(2r + 1)(2r - 1)} = \\frac{n}{2n + 1}.\\)</p>`,
-          answer: `Proof by induction showing true for \\(n=1\\) (LHS = RHS = \\(\\frac{1}{3}\\)), assuming true for \\(n=k\\), and showing the sum to \\(k+1\\) simplifies to \\(\\frac{k+1}{2(k+1)+1}\\), concluding the proof for all positive integers \\(n.\\)`,
+          answer: `When \\(n=1\\), LHS \\(=\\frac{1}{3\\times1}=\\frac{1}{3}\\) and RHS \\(=\\frac{1}{2+1}=\\frac{1}{3}\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(\\sum_{r=1}^{k}\\frac{1}{(2r+1)(2r-1)}=\\frac{k}{2k+1}.\\)<br>Then \\(\\sum_{r=1}^{k+1}\\frac{1}{(2r+1)(2r-1)}=\\frac{k}{2k+1}+\\frac{1}{(2k+3)(2k+1)}=\\frac{(2k+3)k+1}{(2k+1)(2k+3)}=\\frac{(k+1)(2k+1)}{(2k+1)(2k+3)}=\\frac{k+1}{2(k+1)+1}.\\)<br>True for \\(n=1\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds for all positive integers \\(n.\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "46m29s",
           topics: ["Methods of Proof"],

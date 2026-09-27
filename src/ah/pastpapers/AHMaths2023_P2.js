@@ -105,7 +105,7 @@ export const advHigherMaths2023P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2023 P2 Q12</span></strong></small><p>Prove by induction that, for all positive integers \\(n\\),</p><p>\\(\\sum_{r=1}^{n} 2^{r-1}r = 2^n(n-1)+1.\\)</p>`,
-          answer: `Proof by induction showing true for \\(n=1\\) (LHS = RHS = 1), assuming true for \\(n=k\\), and showing the sum to \\(k+1\\) simplifies to \\(2^{k+1}(k+1-1)+1\\), concluding the proof for all positive integers \\(n.\\)`,
+          answer: `When \\(n=1\\), LHS \\(=2^{0}\\times1=1\\) and RHS \\(=2^{1}(1-1)+1=1\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(\\sum_{r=1}^{k}2^{r-1}r=2^{k}(k-1)+1.\\)<br>Then \\(\\sum_{r=1}^{k+1}2^{r-1}r=2^{k}(k-1)+1+2^{k}(k+1)=2^{k}\\cdot2k+1=2^{k+1}\\left((k+1)-1\\right)+1.\\)<br>True for \\(n=1\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds for all positive integers \\(n.\\)`,
           videoId: "l5hreoPcQZQ",
           timestamp: "34m15s",
           topics: ["Methods of Proof"],

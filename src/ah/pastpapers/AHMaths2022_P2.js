@@ -78,7 +78,7 @@ export const advHigherMaths2022P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q9</span></strong></small><p>The matrix \\(A\\) is given by \\(A=\\begin{pmatrix}3&-2\\\\0&1\\end{pmatrix}.\\)<br>Prove by induction that \\(A^{n}=\\begin{pmatrix}3^{n}&1-3^{n}\\\\0&1\\end{pmatrix}, \\forall n\\in \\mathbb{N}.\\)</p>`,
-          answer: `Proof by induction: show true for \\(n=1\\); assume true for \\(n=k\\); use \\(A^{k+1} = A \\cdot A^k\\) to show it holds for \\(n=k+1.\\) Conclude it is true \\(\\forall n \\in \\mathbb{N}.\\)`,
+          answer: `When \\(n=1\\), \\(\\begin{pmatrix}3^{1}&1-3^{1}\\\\0&1\\end{pmatrix}=\\begin{pmatrix}3&-2\\\\0&1\\end{pmatrix}=A\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(A^{k}=\\begin{pmatrix}3^{k}&1-3^{k}\\\\0&1\\end{pmatrix}.\\)<br>Then \\(A^{k+1}=A\\,A^{k}=\\begin{pmatrix}3&-2\\\\0&1\\end{pmatrix}\\begin{pmatrix}3^{k}&1-3^{k}\\\\0&1\\end{pmatrix}=\\begin{pmatrix}3\\times3^{k}&3(1-3^{k})-2\\\\0&1\\end{pmatrix}=\\begin{pmatrix}3^{k+1}&1-3^{k+1}\\\\0&1\\end{pmatrix}.\\)<br>True for \\(n=1\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds \\(\\forall n\\in\\mathbb{N}.\\)`,
           videoId: "uYs7eC7VBfI",
           timestamp: "27m14s",
           topics: ["Methods of Proof", "Matrices"],

@@ -24,7 +24,7 @@ export const advHigherMaths2021P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2021 P2 Q3</span></strong></small><p>Use integration by parts to find \\(\\int (2x + 3)\\cos 4x \\,dx.\\)</p>`,
-          answer: `\\(\\frac{1}{4}(2x + 3)\\sin 4x + \\frac{1}{16}\\cos 4x + c\\)`,
+          answer: `\\(\\frac{1}{4}(2x + 3)\\sin 4x + \\frac{1}{8}\\cos 4x + c\\)`,
           videoId: "",
           timestamp: "",
           topics: ["Integration"],
@@ -87,7 +87,7 @@ export const advHigherMaths2021P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2021 P2 Q10</span></strong></small><p>Prove by induction that</p><p>\\(\\sum_{r=2}^{n} \\frac{1}{r(r - 1)} = \\frac{n - 1}{n}\\)</p><p>for all positive integers \\(n \\ge 2.\\)</p>`,
-          answer: `Proof by induction showing true for \\(n=2\\) (LHS = RHS = \\(\\frac{1}{2}\\)), assuming true for \\(n=k\\), and showing the sum to \\(k+1\\) simplifies to \\(\\frac{k}{k+1}\\), concluding the proof for all integers \\(n \\ge 2.\\)`,
+          answer: `When \\(n=2\\), LHS \\(=\\frac{1}{2(2-1)}=\\frac{1}{2}\\) and RHS \\(=\\frac{2-1}{2}=\\frac{1}{2}\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(\\sum_{r=2}^{k}\\frac{1}{r(r-1)}=\\frac{k-1}{k}.\\)<br>Then \\(\\sum_{r=2}^{k+1}\\frac{1}{r(r-1)}=\\frac{k-1}{k}+\\frac{1}{(k+1)k}=\\frac{(k-1)(k+1)+1}{k(k+1)}=\\frac{k^{2}}{k(k+1)}=\\frac{(k+1)-1}{k+1}.\\)<br>True for \\(n=2\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds for all integers \\(n\\ge2.\\)`,
           videoId: "",
           timestamp: "",
           topics: ["Methods of Proof"],
