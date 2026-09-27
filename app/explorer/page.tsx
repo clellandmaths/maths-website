@@ -33,7 +33,7 @@ import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import ShareWorksheet from '@/components/Explorer/ShareWorksheet';
-import DataBookletSheet from '@/components/DataBookletSheet';
+import DataBookletSheet, { BookletExtract } from '@/components/DataBookletSheet';
 import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
@@ -1174,7 +1174,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       />
                     )}
                     {course === 'higher-apps' && (
-                      <DataBookletSheet years={worksheetItems.map(q => q.year)} />
+                      <DataBookletSheet questions={worksheetItems} />
                     )}
                   </div>
 
@@ -1318,6 +1318,8 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           )}
                         </div>
 
+                        {/* Its own data booklet sections, on paper only. */}
+                        {course === 'higher-apps' && <BookletExtract question={q} />}
                         <MathRenderer
                           html={q.question}
                           className="text-foreground-2 question-content text-lg leading-relaxed"

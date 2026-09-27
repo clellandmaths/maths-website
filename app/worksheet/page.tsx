@@ -13,7 +13,7 @@ import {
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import FormulaeSheet from '@/components/FormulaeSheet';
-import DataBookletSheet from '@/components/DataBookletSheet';
+import DataBookletSheet, { BookletExtract } from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
@@ -215,10 +215,11 @@ function SharedWorksheet() {
       {courseId && (
         <div className="print-only">
           <FormulaeSheet courseId={courseId} />
-          {/* Higher Apps gets a data booklet rather than a formulae list, and
-              its questions say "refer to the data booklet" outright. */}
+          {/* Higher Apps gets a data booklet rather than a formulae list. Only
+              the R commands print here; each question's own sections print
+              above it (see DataBookletSheet). */}
           {courseId === 'higher-apps' && (
-            <DataBookletSheet years={questions.map(q => q.year)} />
+            <DataBookletSheet questions={questions} />
           )}
         </div>
       )}
@@ -280,6 +281,7 @@ function SharedWorksheet() {
                 )}
               </div>
 
+              {courseId === 'higher-apps' && <BookletExtract question={q} />}
               <MathRenderer html={q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
 
               {/* Whatever the maker granted, offered here on the card as well as
