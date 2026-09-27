@@ -90,7 +90,7 @@ export function courseHasHints(courseId: string | undefined): boolean {
  * gets the ladder and none of the rest.
  */
 export function courseHasPaperLadder(courseId: string | undefined): boolean {
-  return courseId === 'n5' || courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah';
+  return courseId === 'n5' || courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps';
 }
 
 /**
@@ -105,6 +105,13 @@ const AH_LABEL = /^\d{4}(?: P[12])? Q\d+(?:\([a-z]\))*$/;
  * "Specimen Q5", which `N5_PAPER_LABEL` rightly refuses. Accepted for that
  * course only, so nothing changes for N5 or Higher.
  */
+/**
+ * N5 Apps' badges: "2024 P2 Q7", and cards that are one part or a run of parts,
+ * written many ways: "Q7(a)", "Q8(a) & (b)", "Q9(a) and (b)", "Q4 (a) - (d)".
+ * Its hints are keyed by the whole badge, as printed. Accepted for that course only.
+ */
+const N5APPS_LABEL = /^\d{4} P[12] Q\d+(?:[ (][^<]*)?$/;
+
 const ONE_PAPER_LABEL = /^(\d{4}|Specimen) Q\d+$/;
 
 /**
@@ -156,7 +163,12 @@ export function ladderLabel(
     const ref = questionHtml ? paperRef(questionHtml) : null;
     return ref && ONE_PAPER_LABEL.test(ref) ? ref : null;
   }
-  // Before the N5 rule below: AH 2021 does have marking instructions.
+  // Before the N5 rule below: N5 Apps and AH 2021 do have marking instructions.
+  if (courseId === 'n5-apps') {
+    if (explicit && N5APPS_LABEL.test(explicit)) return explicit;
+    const ref = questionHtml ? paperRef(questionHtml) : null;
+    return ref && N5APPS_LABEL.test(ref) ? ref : null;
+  }
   if (courseId === 'ah') {
     if (explicit && AH_LABEL.test(explicit)) return explicit;
     const ref = questionHtml ? paperRef(questionHtml) : null;

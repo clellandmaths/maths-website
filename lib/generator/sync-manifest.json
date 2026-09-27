@@ -1,8 +1,8 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "509c230f43e5eb10d34fe4726919368d7dc35d09",
+  "sourceCommit": "40fedead902201c7d68477b48c56de3ff2ea6c78",
   "sourceDirty": false,
-  "count": 103,
+  "count": 104,
   "files": {
     "diagrams/render.ts": "2f0be7df2264fc93",
     "diagrams/scene.ts": "3c4d3d252e8c0ce5",
@@ -93,6 +93,7 @@
     "generators/paper-plan-ah.ts": "f6617ec404597ea2",
     "generators/paper-plan-higher.ts": "10e31719b25e337d",
     "generators/paper-plan-higherapps.ts": "542bda7b69c45e47",
+    "generators/paper-plan-n5apps.ts": "a312a20301318d0f",
     "generators/paper-plan.ts": "7e1f53623536a80e",
     "generators/paper-steps.ts": "9068ead8c4157c82",
     "generators/quadratics.ts": "892aff1b7bb0d069",

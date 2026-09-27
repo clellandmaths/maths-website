@@ -250,16 +250,18 @@ export default function Hints({
          * are not. Still one table with no imports, so this costs a fetch
          * rather than the engine.
          */
-        if (courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah') {
-          // Higher's, Higher Apps' and Advanced Higher's ladders are keyed by
-          // label directly: authored per question (per card, for AH), with no
-          // variation to share a method through. Each course has its own
-          // table, because a Higher "2019 P1 Q5" is not N5's.
+        if (courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps') {
+          // Higher's, Higher Apps', Advanced Higher's and N5 Apps' ladders are
+          // keyed by label directly: authored per question (per card, for AH
+          // and N5 Apps), with no variation to share a method through. Each
+          // course has its own table, because a Higher "2019 P1 Q5" is not N5's.
           const p = courseId === 'higher'
             ? (await import('@/lib/generator/generators/paper-plan-higher')).PLAN_HIGHER[label]
             : courseId === 'higher-apps'
               ? (await import('@/lib/generator/generators/paper-plan-higherapps')).PLAN_HIGHERAPPS[label]
-              : (await import('@/lib/generator/generators/paper-plan-ah')).PLAN_AH[label];
+              : courseId === 'n5-apps'
+                ? (await import('@/lib/generator/generators/paper-plan-n5apps')).PLAN_N5APPS[label]
+                : (await import('@/lib/generator/generators/paper-plan-ah')).PLAN_AH[label];
           if (p) {
             next = {
               skill: p.skill,
@@ -272,7 +274,7 @@ export default function Hints({
             };
           }
         }
-        const { PLANS, PLAN_OF } = courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah'
+        const { PLANS, PLAN_OF } = courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps'
           ? { PLANS: {} as Record<string, never>, PLAN_OF: {} as Record<string, never> }
           : await import('@/lib/generator/generators/paper-plan');
         const of = PLAN_OF[label];
@@ -330,7 +332,7 @@ export default function Hints({
           ...next,
           rungs: own
             ? [{ move: general ?? question.method!, marks: 0 }]
-            : shorten(next.rungs, courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || nudged),
+            : shorten(next.rungs, courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps' || nudged),
           short: true,
         };
       }
