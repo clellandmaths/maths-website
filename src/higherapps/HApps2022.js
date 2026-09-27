@@ -120,7 +120,7 @@ export const higherAppsMaths2022 = {
 <p>Forward scan values:<br>A: 0, 3<br>B: 3, 7<br>C: 10, 4<br>D: 14, 1<br>E: 14, 2<br>F: 15, 1<br>G: 16, 4<br>H: 20, 6<br>I: 26, 3<br>J: 26, 2</p>
 <p>Backward scan values:<br>I: 26, 3, 29<br>J: 26, 2, 29<br>H: 20, 6, 26<br>F: 15, 1, 20<br>G: 16, 4, 20<br>D: 14, 1, 19<br>E: 14, 2, 16<br>C: 10, 4, 14<br>B: 3, 7, 10<br>A: 0, 3, 3</p>
 <p>(b) 4 days</p>
-<p>(c) Gantt chart plotted correctly. Critical path A-B-C-E-G-H-I.</p>`,
+<p>(c) Bars drawn from the earliest start times, in hours: A 0–3, B 3–10, C 10–14, D 14–15, E 14–16, F 15–16, G 16–20, H 20–26, I 26–29, J 26–28. Critical path A-B-C-E-G-H-I.</p>`,
           videoId: "NPRdKZ-fHI8",
           timestamp: "196s",
           marks: [6, 1, 3],
@@ -203,7 +203,7 @@ export const higherAppsMaths2022 = {
           answer: `<p>(a)(i) 761 (pupils)</p>
 <p>(a)(ii) e.g., the number of pupils leaving each year is approximate.</p>
 <p>(b) the school roll gradually increases each year.</p>
-<p>(c)(i) Evidence of extending spreadsheet to at least August 2042 and constructing an appropriate graph.</p>
+<p>(c)(i) Evidence of extending spreadsheet to at least August 2042 and constructing an appropriate graph: the roll levels off at about 776 pupils (cell C32).</p>
 <p>(c)(ii) Yes, the population is not expected to exceed 800 pupils.</p>`,
           videoId: "NPRdKZ-fHI8",
           timestamp: "1000s",

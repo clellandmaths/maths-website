@@ -238,7 +238,7 @@ Parts (b) (ii), (c) and (d) must be completed in the answer space provided.</str
 <p>The three diagrams below show how the depth of petrol varies with the volume of petrol in the tank.</p>
 <img src="/img/Higherapps_Past_Papers/2023/2023_Q10_2.png" alt="Graph A, Graph B, and Graph C showing volume versus depth">
 <p>(c) Explain which graph could model the depth of petrol in the tank.</p>`,
-          answer: `<p>(a)(i) 1,155,000 (tonnes a year).<br>
+          answer: `<p>(a)(i) 1 178 571 (tonnes a year), or 1,155,000 if the tonnes per car is rounded to 2.1.<br>
 (a)(ii) E.g., unconfirmed source, possible newspaper bias, or information in the article may not be accurate.<br>
 (b)(i) (additional) load or \\(m.\\)<br>
 (b)(ii) 68.8 (mpg).<br>

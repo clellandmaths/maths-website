@@ -124,7 +124,7 @@ G: 26, 12, 40<br>
 H: 26, 8, 40<br>
 I: 40, 6, 46<br>
 J: 46, 8, 54</p>
-<p>(b) Gantt chart constructed consistently with the task times and dependencies.</p>
+<p>(b) Bars drawn from the earliest start times, in hours: A 0–2, B 2–14, C 2–26, D 2–10, E 10–14, F 26–40, G 26–38, H 26–34, I 40–46, J 46–54.</p>
 <p>(c) Critical path: ACFIJ. Minimum time: 54 hours.</p>
 <p>(d) 14 hours.</p>`,
           videoId: "tpAnZSEkKgU",
