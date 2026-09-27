@@ -192,7 +192,7 @@ export default function Hints({
    * that never delivered any. The note under the card says where the help
    * actually is, and it reads the same function.
    */
-  const label = ladderLabel(given ?? question.label, question.question);
+  const label = ladderLabel(given ?? question.label, question.question, courseId);
   // A generated question brings its own; a paper one needs the table.
   const own = question.skill && question.method;
   const possible = own ? courseHasHints(courseId) : courseHasPaperLadder(courseId) && label !== null;
@@ -250,12 +250,14 @@ export default function Hints({
          * are not. Still one table with no imports, so this costs a fetch
          * rather than the engine.
          */
-        if (courseId === 'higher') {
-          // Higher's ladders are keyed by label directly: authored per question,
-          // with no variation to share a method through. Its own table, because
-          // a Higher "2019 P1 Q5" is not N5's.
-          const { PLAN_HIGHER } = await import('@/lib/generator/generators/paper-plan-higher');
-          const p = PLAN_HIGHER[label];
+        if (courseId === 'higher' || courseId === 'higher-apps') {
+          // Higher's and Higher Apps' ladders are keyed by label directly:
+          // authored per question, with no variation to share a method
+          // through. Each course has its own table, because a Higher
+          // "2019 P1 Q5" is not N5's.
+          const p = courseId === 'higher'
+            ? (await import('@/lib/generator/generators/paper-plan-higher')).PLAN_HIGHER[label]
+            : (await import('@/lib/generator/generators/paper-plan-higherapps')).PLAN_HIGHERAPPS[label];
           if (p) {
             next = {
               skill: p.skill,
@@ -268,7 +270,7 @@ export default function Hints({
             };
           }
         }
-        const { PLANS, PLAN_OF } = courseId === 'higher'
+        const { PLANS, PLAN_OF } = courseId === 'higher' || courseId === 'higher-apps'
           ? { PLANS: {} as Record<string, never>, PLAN_OF: {} as Record<string, never> }
           : await import('@/lib/generator/generators/paper-plan');
         const of = PLAN_OF[label];
@@ -320,13 +322,13 @@ export default function Hints({
           const source = (question.basedOn ?? []).map((l) => PLAN_OF[l]).find(Boolean);
           general = source ? PLANS[source.v]?.moves[0] : undefined;
         }
-        // Higher writes nudges; N5's first 0-mark move is part of a two-move
+        // Higher (and Higher Apps) write nudges; N5's first 0-mark move is part of a two-move
         // method, not a nudge.
         next = {
           ...next,
           rungs: own
             ? [{ move: general ?? question.method!, marks: 0 }]
-            : shorten(next.rungs, courseId === 'higher' || nudged),
+            : shorten(next.rungs, courseId === 'higher' || courseId === 'higher-apps' || nudged),
           short: true,
         };
       }

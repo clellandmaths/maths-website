@@ -90,8 +90,15 @@ export function courseHasHints(courseId: string | undefined): boolean {
  * gets the ladder and none of the rest.
  */
 export function courseHasPaperLadder(courseId: string | undefined): boolean {
-  return courseId === 'n5' || courseId === 'higher';
+  return courseId === 'n5' || courseId === 'higher' || courseId === 'higher-apps';
 }
+
+/**
+ * Higher Apps sits one paper a year, so its badges read "2024 Q5" and
+ * "Specimen Q5", which `N5_PAPER_LABEL` rightly refuses. Accepted for that
+ * course only, so nothing changes for N5 or Higher.
+ */
+const ONE_PAPER_LABEL = /^(\d{4}|Specimen) Q\d+$/;
 
 /**
  * Papers we hold questions from but hold no marking instructions for.
@@ -135,7 +142,13 @@ export const NO_MARKSCHEME_PAPERS: readonly string[] = [...NO_MARKSCHEME];
 export function ladderLabel(
   explicit: string | null | undefined,
   questionHtml?: string,
+  courseId?: string,
 ): string | null {
+  if (courseId === 'higher-apps') {
+    if (explicit && ONE_PAPER_LABEL.test(explicit)) return explicit;
+    const ref = questionHtml ? paperRef(questionHtml) : null;
+    return ref && ONE_PAPER_LABEL.test(ref) ? ref : null;
+  }
   const label = paperLabelOf(explicit, questionHtml);
   if (label === null) return null;
   // "2021 P1 Q2" -> "2021 P1". The label shape is fixed by N5_PAPER_LABEL.
@@ -159,7 +172,7 @@ export function hasHintLadder(
   // courses have; a past paper question needs its course's ladder table.
   if (question.skill && question.method) return courseHasHints(courseId);
   if (!courseHasPaperLadder(courseId)) return false;
-  return ladderLabel(given ?? question.label, question.question) !== null;
+  return ladderLabel(given ?? question.label, question.question, courseId) !== null;
 }
 
 export function canAddVariation(

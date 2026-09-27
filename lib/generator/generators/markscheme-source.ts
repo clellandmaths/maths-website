@@ -71,7 +71,7 @@ export interface SchemeQuestion {
  * methods. The first is taken: both describe the same mark, and the generic
  * scheme column already names what the mark is for either way.
  */
-function readRow(line: string): MarkRow | null {
+function readRow(line: string, subParts = false): MarkRow | null {
   if (!line.startsWith('|')) return null;
   const cells = line.split('|').slice(1, -1).map(c => c.trim());
   if (cells.length < 3) return null;
@@ -85,7 +85,10 @@ function readRow(line: string): MarkRow | null {
   const row: MarkRow = { for: scheme, illustrative: cells[at + 2] ?? '' };
   // The part column, where this shape carries one: "(i)", "(a)".
   const before = at > 0 ? cells[0] : '';
-  const part = /^\(([a-z]|[ivx]+)\)$/.exec(before);
+  // Higher and the Apps courses also write a sub-part, "(a)(i)". Read only for
+  // them: N5's one "(a)(i)" row has always been read as having no part, and its
+  // printed tables are held byte-identical.
+  const part = subParts ? /^\(([a-z]|[ivx]+)\)(\([ivx]+\))?$/.exec(before) : /^\(([a-z]|[ivx]+)\)$/.exec(before);
   if (part) row.part = before;
   return row;
 }
@@ -127,6 +130,9 @@ export const MARKSCHEME_CORRECTIONS: {
   },
 ];
 
+/** Courses with one paper a year, whose labels carry no paper number. */
+const SINGLE_PAPER = new Set(['higherapps']);
+
 /**
  * Every question in the corpus, keyed by its paper label.
  *
@@ -138,9 +144,12 @@ export function readSchemes(dir?: string, course = 'n5'): Map<string, SchemeQues
   if (!existsSync(DIR)) return null;
 
   const out = new Map<string, SchemeQuestion>();
+  // Higher Apps sits one paper a year, so its cards read "2024 Q5", and the
+  // site also carries the specimen paper, "Specimen Q5".
+  const single = SINGLE_PAPER.has(course);
 
   for (const file of readdirSync(DIR).filter(f => f.endsWith('.md'))) {
-    const year = file.match(/(20\d\d)/)?.[1];
+    const year = file.match(/(20\d\d)/)?.[1] ?? (single && /specimen/i.test(file) ? 'Specimen' : undefined);
     if (!year) continue;
 
     // Two naming shapes: "mi_..._Paper-1_2024.md" and "N5_2023_P1_MS.md".
@@ -159,9 +168,9 @@ export function readSchemes(dir?: string, course = 'n5'): Map<string, SchemeQues
       // "## Q7 — 2 marks ✓", "### Q19 — 7 marks ✓ (2 + 1 + 4)". Singular too:
       // requiring the plural made every one-mark question invisible.
       const head = /^#+\s+Q(\d+)\s*\D*?(\d+)\s+marks?\b/.exec(line);
-      if (head && paper) {
+      if (head && (paper || single)) {
         current = {
-          label: `${year} P${paper} Q${head[1]}`,
+          label: single ? `${year} Q${head[1]}` : `${year} P${paper} Q${head[1]}`,
           marks: Number(head[2]),
           subject: '',
           rows: [],
@@ -213,7 +222,7 @@ export function readSchemes(dir?: string, course = 'n5'): Map<string, SchemeQues
         continue;
       }
 
-      const row = readRow(line);
+      const row = readRow(line, course !== 'n5');
       if (row) {
         // A transcription slip is corrected here rather than in the untracked
         // file it came from - see MARKSCHEME_CORRECTIONS above. `q` is a local
