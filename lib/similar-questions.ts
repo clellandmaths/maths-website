@@ -90,8 +90,15 @@ export function courseHasHints(courseId: string | undefined): boolean {
  * gets the ladder and none of the rest.
  */
 export function courseHasPaperLadder(courseId: string | undefined): boolean {
-  return courseId === 'n5' || courseId === 'higher' || courseId === 'higher-apps';
+  return courseId === 'n5' || courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah';
 }
+
+/**
+ * Advanced Higher's badges: "2024 P1 Q5" from 2021, "2019 Q5" before, and a
+ * card that is one part of a question, "2019 Q1(b)" or "2021 P2 Q11(c)(d)".
+ * Its hints are keyed by the whole badge. Accepted for that course only.
+ */
+const AH_LABEL = /^\d{4}(?: P[12])? Q\d+(?:\([a-z]\))*$/;
 
 /**
  * Higher Apps sits one paper a year, so its badges read "2024 Q5" and
@@ -148,6 +155,12 @@ export function ladderLabel(
     if (explicit && ONE_PAPER_LABEL.test(explicit)) return explicit;
     const ref = questionHtml ? paperRef(questionHtml) : null;
     return ref && ONE_PAPER_LABEL.test(ref) ? ref : null;
+  }
+  // Before the N5 rule below: AH 2021 does have marking instructions.
+  if (courseId === 'ah') {
+    if (explicit && AH_LABEL.test(explicit)) return explicit;
+    const ref = questionHtml ? paperRef(questionHtml) : null;
+    return ref && AH_LABEL.test(ref) ? ref : null;
   }
   const label = paperLabelOf(explicit, questionHtml);
   if (label === null) return null;

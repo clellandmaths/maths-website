@@ -144,7 +144,11 @@ export default function HintPanel({
                   ? 'That is as far as a hint goes. The video on the card works through the past paper question this one is based on.'
                   : courseHasHints(courseId)
                     ? 'That is as far as a hint goes. The video on the card works this question through, or see a similar one worked below.'
-                    : 'That is as far as a hint goes. The video on the card works this question through.'
+                    // AH's 2016-2019 and 2021 papers have no videos: the card
+                    // offers the marking instructions instead.
+                    : courseId === 'ah' && !question.videoId
+                      ? 'That is as far as a hint goes. The marking instructions on the card show every mark.'
+                      : 'That is as far as a hint goes. The video on the card works this question through.'
                 : staged.heldBack
                 ? 'That is as far as a hint goes — the last step is the answer itself.'
                 : staged.rungs.length
