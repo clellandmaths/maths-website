@@ -282,7 +282,9 @@ export default function Hints({
             rungs: [
               ...(of.nudge ? [{ move: of.nudge, marks: 0 }] : []),
               ...plan.moves.map((move, i) => ({
-                move,
+                // This question's own first step, where written, in place of
+                // the variation's shared one (owner, 2026-09-27).
+                move: i === 0 && of.step ? of.step : move,
                 marks: of.marks[i],
                 shows: of.shows[i],
                 ...(i === 0 && of.watch ? { watch: of.watch } : {}),
