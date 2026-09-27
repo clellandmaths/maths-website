@@ -95,6 +95,37 @@ interface Props {
   size?: 'page' | 'stage';
 }
 
+/**
+ * **Short hints (owner, 2026-09-27: "Let's try short hints").**
+ *
+ * Clelland Maths is a video resource, and a ladder that walks every mark with
+ * the scheme's working beside it is the video's worked solution in text. So a
+ * hint is what a pupil stuck at one step needs to keep going on their own: the
+ * nudge where one is written, the first step without its working, and the one
+ * trap the marking instructions name. The rest is the video on the card, and
+ * for a past paper question a similar one worked through.
+ *
+ * The long ladders are still built and shipped; this decides how much of them
+ * is shown. `false` restores the full ladder. Nothing had gone live either way:
+ * hints first reach `master` with the generated questions.
+ */
+export const SHORT_HINTS = true;
+
+/**
+ * The short ladder from a long one: the nudge (a leading 0-mark move, and only
+ * where the course writes them), the first move that earns a mark with no
+ * working, then the watch-out on a rung of its own.
+ */
+function shorten(rungs: Rung[], nudges: boolean): Rung[] {
+  const out: Rung[] = [];
+  if (nudges && rungs[0]?.marks === 0) out.push({ move: rungs[0].move });
+  const first = rungs.find((r, i) => !(nudges && i === 0 && r.marks === 0));
+  if (first) out.push({ move: first.move, marks: first.marks });
+  const watch = rungs.find(r => r.watch)?.watch;
+  if (watch) out.push({ move: '', watch });
+  return out;
+}
+
 /** One press of the ladder, once the two prose lines are past. */
 export interface Rung {
   /** What to do next. */
@@ -113,6 +144,8 @@ export interface Staged {
   rungs: Rung[];
   /** True when a final step was withheld because it lands the answer. */
   heldBack: boolean;
+  /** Cut down to a short hint (`SHORT_HINTS`), so the end says where the rest is. */
+  short?: boolean;
 }
 
 export default function Hints({
@@ -250,6 +283,19 @@ export default function Hints({
             heldBack: false,
           };
         }
+      }
+      if (next && SHORT_HINTS) {
+        // A generated question's steps are its worked solution: the first one
+        // is the hint, and only when there is more than one (a single step is
+        // the answer). Higher writes nudges; N5's first 0-mark move is part of
+        // a two-move method, not a nudge.
+        next = {
+          ...next,
+          rungs: own
+            ? next.rungs.slice(0, 1)
+            : shorten(next.rungs, courseId === 'higher'),
+          short: true,
+        };
       }
       if (next) {
         setStaged(next);

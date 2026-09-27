@@ -6,6 +6,7 @@ import MathRenderer from '@/components/MathRenderer';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 import type { Staged } from '@/components/Hints';
+import { courseHasHints } from '@/lib/similar-questions';
 
 const WorkedExample = dynamic(() => import('@/components/WorkedExample'), { ssr: false });
 
@@ -99,7 +100,8 @@ export default function HintPanel({
         )}
         {staged.rungs.slice(0, Math.max(0, shown - 2)).map((rung, i) => (
           <div key={i} className="border-t border-border pt-2">
-            <div className="flex items-start gap-2">
+            {/* A short hint's watch-out stands on a rung of its own, with no move. */}
+            {rung.move && <div className="flex items-start gap-2">
               <MathRenderer
                 html={rung.move}
                 className={`answer-content flex-1 ${body} text-foreground-2`}
@@ -114,7 +116,7 @@ export default function HintPanel({
                   {rung.marks} mark{rung.marks === 1 ? '' : 's'}
                 </span>
               )}
-            </div>
+            </div>}
             {/* This question's own working as the move begins — the concrete
                 half. Absent where showing it would hand over an answer. */}
             {rung.shows && (
@@ -137,7 +139,13 @@ export default function HintPanel({
         {!more && (
           <div className="border-t border-border pt-2">
             <p className="text-xs text-muted-foreground">
-              {staged.heldBack
+              {staged.short
+                ? own
+                  ? 'That is as far as a hint goes. The video on the card works through the past paper question this one is based on.'
+                  : courseHasHints(courseId)
+                    ? 'That is as far as a hint goes. The video on the card works this question through, or see a similar one worked below.'
+                    : 'That is as far as a hint goes. The video on the card works this question through.'
+                : staged.heldBack
                 ? 'That is as far as a hint goes — the last step is the answer itself.'
                 : staged.rungs.length
                   ? 'That is the whole method. The working for the last move is the answer, so it is not here.'
@@ -162,7 +170,10 @@ export default function HintPanel({
               used to deny the *paper* half a video; it just took the JS budget
               check failing on `explorer.html` to notice it applied to both.
             */}
-            {!own && (
+            {/* **Only where the course has the generator.** The draw is keyed by
+                paper label, and labels collide across courses: on Higher this
+                offered the N5 clone of N5's question with the same label. */}
+            {!own && courseHasHints(courseId) && (
               <WorkedExample
                 question={question}
                 theme={theme}
