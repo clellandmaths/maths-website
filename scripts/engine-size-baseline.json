@@ -1,8 +1,8 @@
 {
-  "recorded": "2026-09-26",
+  "recorded": "2026-09-27",
   "headroomBytes": 65536,
   "note": "Total bytes of every out/_next/static/chunks/*.js carrying a variation id. Lazy — on no page — but it is what the first press of Variation fetches.",
-  "acceptedGrowth": "N5 review 2026-09-18 to 09-26, owner-approved: paper-plan.ts +69 KB (each paper question's marks and steps), the registry +31 KB (per-question ids and year-lock aliases), per-paper wording and contexts in the generators. No new imports. On no page; 285 KB gzipped; dev pages within 1-3% of live master.",
+  "acceptedGrowth": "N5 short hints 2026-09-27, owner-approved (\"Let's try short hints\", \"Ok N5\", \"rewrite to avoid using shared\"): paper-plan.ts carries a nudge, an own first step, a watch-out and a marks line for all 328 N5 past paper questions, about +110 KB. That table is its own lazy chunk (no engine code), fetched only when a pupil opens an N5 hint, not by Variation; it is counted here only because it is keyed by variation id. No new imports.",
   "chunks": 6,
-  "bytes": 1165626
+  "bytes": 1279162
 }
