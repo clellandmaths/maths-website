@@ -260,7 +260,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     <Play className="h-4 w-4" />
                     {q.videoOf ? 'Watch a worked example' : 'Watch Solution'}
                   </button>
-                ) : hasMarkscheme(q.year, q.paperNumber) ? (
+                ) : courseId === 'ah' && hasMarkscheme(q.year, q.paperNumber) ? (
                   <button
                     onClick={() => setMarkschemeQ(q)}
                     className={`inline-flex items-center gap-2 px-4 py-2 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}

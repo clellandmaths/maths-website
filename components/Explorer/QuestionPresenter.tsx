@@ -403,7 +403,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                       sends a pupil to check an answer that is not theirs. */}
                   {shown.videoOf ? 'Watch a worked example' : 'Watch Solution'}
                 </button>
-              ) : allowVideo && hasMarkscheme(shown.year, shown.paperNumber) ? (
+              ) : allowVideo && courseId === 'ah' && hasMarkscheme(shown.year, shown.paperNumber) ? (
                 <button
                   onClick={() => setShowMarkscheme(true)}
                   className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
