@@ -103,6 +103,8 @@ export interface Rung {
   marks?: number;
   /** This question's own working as the move begins, where any is safe to show. */
   shows?: string | null;
+  /** One thing pupils get wrong at this move, from the scheme's notes. */
+  watch?: string;
 }
 
 export interface Staged {
@@ -221,7 +223,10 @@ export default function Hints({
             next = {
               skill: p.skill,
               method: p.method,
-              rungs: p.moves.map((move, i) => ({ move, marks: p.marks[i], shows: p.shows[i] })),
+              rungs: p.moves.map((move, i) => ({
+                move, marks: p.marks[i], shows: p.shows[i],
+                ...(p.watch?.at === i ? { watch: p.watch.text } : {}),
+              })),
               heldBack: false,
             };
           }

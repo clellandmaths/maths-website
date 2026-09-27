@@ -123,6 +123,15 @@ export default function HintPanel({
                 className={`answer-content mt-1 ${aside} text-muted-foreground`}
               />
             )}
+            {/* One trap at this move, from the scheme's notes: the thing that
+                loses the mark. Set apart from the working, which is what to
+                write, by its colour and its label. */}
+            {rung.watch && (
+              <div className={`mt-1 flex gap-1.5 border-l-2 border-amber-600 pl-2 dark:border-amber-400 ${aside} text-amber-800 dark:text-amber-300/90`}>
+                <span className="shrink-0 font-medium">Watch out:</span>
+                <MathRenderer html={rung.watch} className="answer-content flex-1" />
+              </div>
+            )}
           </div>
         ))}
         {!more && (
