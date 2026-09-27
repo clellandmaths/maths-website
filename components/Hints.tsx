@@ -300,14 +300,32 @@ export default function Hints({
         }
       }
       if (next && SHORT_HINTS) {
-        // A generated question's steps are its worked solution: the first one
-        // is the hint, and only when there is more than one (a single step is
-        // the answer). Higher writes nudges; N5's first 0-mark move is part of
-        // a two-move method, not a nudge.
+        /**
+         * **A generated question's short hint is its generator's first move,
+         * not the first line of its worked solution** (owner, 2026-09-27). A
+         * worked line carries this draw's working ("3x - 6"), so it gave the
+         * first mark away. The generator's plan move is written to fit every
+         * draw and carries none. It is reached through `basedOn`, the past
+         * paper question this was modelled on: each N5 paper question has its
+         * own generator, and `PLAN_OF` names it. Nudges and watch-outs are
+         * not used here - they are written for one paper's numbers, and some
+         * describe that draw in words ("cos is negative") that another draw
+         * contradicts. A generator with no paper plan falls back to its own
+         * one-line method, which carries no working either. Worth 0, so no
+         * chip: the paper's marks for the move are not this draw's.
+         */
+        let general: string | undefined;
+        if (own) {
+          const { PLANS, PLAN_OF } = await import('@/lib/generator/generators/paper-plan');
+          const source = (question.basedOn ?? []).map((l) => PLAN_OF[l]).find(Boolean);
+          general = source ? PLANS[source.v]?.moves[0] : undefined;
+        }
+        // Higher writes nudges; N5's first 0-mark move is part of a two-move
+        // method, not a nudge.
         next = {
           ...next,
           rungs: own
-            ? next.rungs.slice(0, 1)
+            ? [{ move: general ?? question.method!, marks: 0 }]
             : shorten(next.rungs, courseId === 'higher' || nudged),
           short: true,
         };
