@@ -65,11 +65,12 @@ interface FocusModeProps {
    * May a pupil draw another question like one of these?
    *
    * Default true — a past paper and a practice topic both want it. **The
-   * Explorer's own worksheet passes false**: it already offers *Variation* on
-   * every card, *Add a variation of each* and *Generate on N topics*, and a
-   * twin drawn here would be the only one of the four that does not end up on
-   * the sheet. See `QuestionPresenter`, which carries the same prop and the
-   * shared-worksheet rule that goes with it.
+   * Explorer's own worksheet passes it for N5 only** (the owner, 2026-09-27),
+   * and false for other courses: it already offers *Variation* on every card,
+   * *Add a variation of each* and *Generate on N topics*, and a twin drawn here
+   * is the only one of the four that does not end up on the sheet. See
+   * `QuestionPresenter`, which carries the same prop and the shared-worksheet
+   * rule that goes with it.
    */
   allowAnother?: boolean;
 }

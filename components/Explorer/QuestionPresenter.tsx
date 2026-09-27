@@ -70,10 +70,11 @@ interface QuestionPresenterProps {
    * already granted a generated twin worked end to end — that is what the
    * bottom of the ladder is — so this hands over nothing new.
    *
-   * **The Explorer's own worksheet passes false.** It has *Variation* on every
-   * card, *Add a variation of each* and *Generate on N topics*, and a twin drawn
-   * in full screen would be the only one of the four that does not end up on
-   * the sheet.
+   * **The Explorer's own worksheet passes it for N5 only** (the owner,
+   * 2026-09-27: a teacher projecting a sheet wants another like the one on the
+   * board). Other courses pass false: that page has *Variation* on every card,
+   * *Add a variation of each* and *Generate on N topics*, and a twin drawn in
+   * full screen is the only one of the four that does not end up on the sheet.
    */
   allowAnother?: boolean;
 }
