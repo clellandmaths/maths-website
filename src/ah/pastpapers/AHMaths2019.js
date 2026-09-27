@@ -42,7 +42,7 @@ export const advHigherMaths2019 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2019 Q3</span></strong></small><p>The function \\(f(x)\\) is defined by \\(f(x) = x^2 - a^2.\\) The graph of \\(y = f(x)\\) is shown in the diagram.</p><img src="/img/Adv_Higher_Maths_Past_Papers/2019/2019_Q3.png" alt="Graph of y = x^2 - a^2"><p><span class="text-cyan-400 font-bold mr-1">(a)</span>State whether \\(f(x)\\) is odd, even or neither. Give a reason for your answer.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Sketch the graph of \\(y = |f(x)|.\\)</p>`,
-          answer: `(a) Even. The graph is symmetrical about the \\(y\\)-axis (or \\(f(-x) = f(x)\\)).<br>(b) A curve with \\(x\\)-intercepts at \\(-a\\) and \\(a\\), a local maximum at \\((0, a^2)\\) on the \\(y\\)-axis, and exhibiting line symmetry about the \\(y\\)-axis.`,
+          answer: `(a) Even. The graph is symmetrical about the \\(y\\)-axis (or \\(f(-x) = f(x)\\)).<br>(b) A curve meeting the \\(x\\)-axis in sharp points at \\(-a\\) and \\(a\\), with a local maximum at \\((0, a^2)\\) on the \\(y\\)-axis, the parts for \\(|x| > a\\) unchanged, and line symmetry about the \\(y\\)-axis.`,
           videoId: "",
           timestamp: "",
           topics: ["Functions & Graphs"],
@@ -141,7 +141,7 @@ export const advHigherMaths2019 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2019 Q14</span></strong></small><p>Prove by induction that</p><p>\\(\\sum_{r=1}^{n}r!r = (n+1)! - 1\\)</p><p>for all positive integers \\(n.\\)</p>`,
-          answer: `Proof by induction showing true for \\(n=1\\) (LHS = RHS = 1), assuming true for \\(n=k\\), and showing the sum to \\(k+1\\) yields \\(((k+1)+1)! - 1\\), concluding the proof for all positive integers \\(n.\\)`,
+          answer: `When \\(n=1\\), LHS \\(=1!\\times1=1\\) and RHS \\(=2!-1=1\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(\\sum_{r=1}^{k}r!\\,r=(k+1)!-1.\\)<br>Then \\(\\sum_{r=1}^{k+1}r!\\,r=(k+1)!-1+(k+1)!(k+1)=(k+1)!(k+2)-1=\\left((k+1)+1\\right)!-1.\\)<br>True for \\(n=1\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds for all positive integers \\(n.\\)`,
           videoId: "",
           timestamp: "",
           topics: ["Methods of Proof"],

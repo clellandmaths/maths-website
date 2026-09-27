@@ -60,7 +60,7 @@ export const advHigherMaths2016 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2016 Q5</span></strong></small><p>Prove by induction that \\(\\sum_{r=1}^{n}r(3r - 1) = n^2(n + 1)\\) , \\(\\forall n \\in \\mathbb{N}.\\)</p>`,
-          answer: `Proof by induction showing true for \\(n=1\\) (LHS = RHS = 2), assuming true for \\(n=k\\), and showing the sum to \\(k+1\\) simplifies to \\((k+1)^2((k+1) + 1)\\), concluding the proof for all \\(n \\in \\mathbb{N}.\\)`,
+          answer: `When \\(n=1\\), LHS \\(=1(3-1)=2\\) and RHS \\(=1^{2}(1+1)=2\\), so the statement is true.<br>Assume true for \\(n=k\\): \\(\\sum_{r=1}^{k}r(3r-1)=k^{2}(k+1).\\)<br>Then \\(\\sum_{r=1}^{k+1}r(3r-1)=k^{2}(k+1)+(k+1)(3k+2)=(k+1)(k^{2}+3k+2)=(k+1)(k+1)(k+2)=(k+1)^{2}\\left((k+1)+1\\right).\\)<br>True for \\(n=1\\), and true for \\(n=k\\) implies true for \\(n=k+1\\), so by induction the statement holds \\(\\forall n\\in\\mathbb{N}.\\)`,
           videoId: "",
           timestamp: "",
           topics: ["Methods of Proof"],
@@ -123,7 +123,7 @@ export const advHigherMaths2016 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2016 Q12</span></strong></small><p>Below is a diagram showing the graph of a linear function, \\(y = f(x).\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2016/2016_Q12.png" alt="Graph of y = f(x)"><p>On separate diagrams show:</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>\\(y = |f(x) - c|\\)<br>(b) \\(y = |2f(x)|\\)</p>`,
-          answer: `(a) V-shaped graph meeting the positive x-axis at \\(c\\) and passing through \\(2c\\) on the positive y-axis.<br>(b) Symmetrical V-shaped graph meeting the origin at \\((c, 0)\\) and passing through \\(2c\\) on the positive y-axis.`,
+          answer: `(a) V-shaped graph with its vertex on the x-axis at \\(2c\\), passing through \\(2c\\) on the positive y-axis.<br>(b) Symmetrical V-shaped graph with its vertex on the x-axis at \\(c\\), passing through \\(2c\\) on the positive y-axis.`,
           videoId: "",
           timestamp: "",
           topics: ["Functions & Graphs"],
