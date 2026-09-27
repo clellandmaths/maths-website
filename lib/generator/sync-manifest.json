@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "e937a610f0618b975a80f76398b11e0950a501b5",
+  "sourceCommit": "66294e489f92b5c2ee79712f544fad573340d898",
   "sourceDirty": false,
   "count": 99,
   "files": {
@@ -89,7 +89,7 @@
     "generators/paper-markscheme-higher.ts": "0421cbf5a46adac9",
     "generators/paper-markscheme.ts": "c505b9c52b91748d",
     "generators/paper-plan-higher.ts": "25e539d0ad0b61f1",
-    "generators/paper-plan.ts": "9ffceaf0bec8249c",
+    "generators/paper-plan.ts": "10870c768286a309",
     "generators/paper-steps.ts": "9068ead8c4157c82",
     "generators/quadratics.ts": "892aff1b7bb0d069",
     "generators/sequences.ts": "da6e13b9f7f65e2b",

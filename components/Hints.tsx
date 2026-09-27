@@ -214,6 +214,9 @@ export default function Hints({
     setLoading(true);
     try {
       let next: Staged | null = null;
+      // Whether this question's ladder opens with a written nudge (N5 has them
+      // per question, not for every one; Higher has them throughout).
+      let nudged = false;
       if (own) {
         // All but the last step. The steps ARE the worked solution, so the
         // final one lands the answer — and a hint that finishes the question is
@@ -270,14 +273,21 @@ export default function Hints({
         const of = PLAN_OF[label];
         const plan = of ? PLANS[of.v] : undefined;
         if (plan) {
+          // A nudge, where one is written for this question, goes first as a
+          // move worth nothing; the watch-out rides on the first real move.
+          nudged = !!of.nudge;
           next = {
             skill: plan.skill,
             method: plan.method,
-            rungs: plan.moves.map((move, i) => ({
-              move,
-              marks: of.marks[i],
-              shows: of.shows[i],
-            })),
+            rungs: [
+              ...(of.nudge ? [{ move: of.nudge, marks: 0 }] : []),
+              ...plan.moves.map((move, i) => ({
+                move,
+                marks: of.marks[i],
+                shows: of.shows[i],
+                ...(i === 0 && of.watch ? { watch: of.watch } : {}),
+              })),
+            ],
             // Every move is shown; it is the *working* on the last one that is
             // withheld, because that working is the answer.
             heldBack: false,
@@ -293,7 +303,7 @@ export default function Hints({
           ...next,
           rungs: own
             ? next.rungs.slice(0, 1)
-            : shorten(next.rungs, courseId === 'higher'),
+            : shorten(next.rungs, courseId === 'higher' || nudged),
           short: true,
         };
       }

@@ -34,6 +34,10 @@ export interface PlanOf {
   marks: number[];
   /** This question's working as each move begins, or null where it is withheld. */
   shows: (string | null)[];
+  /** A question to start from, naming no method: the short hint's first step. */
+  nudge?: string;
+  /** One trap the marking instructions name for this question. */
+  watch?: string;
 }
 
 /** One payload per exam-tier variation. */
@@ -671,20 +675,20 @@ export const PLAN_OF: Record<string, PlanOf> = {
   "2025 P2 Q13": {"v":"linear-equations.clear-denominators-linear-top","marks":[1,1,1],"shows":["\\(3(5x + 1) = 8x + 6\\)","\\(7x = 3\\)",null]},
   "2025 P2 Q14": {"v":"trig-equations.in-formula","marks":[1,1,1,1],"shows":["\\(13 = 10 - 8 \\cos x\\)","\\(\\cos x = -\\frac{3}{8}\\)","\\(112(.024...)\\)",null]},
   "2025 P2 Q15": {"v":"vectors.pathway-running-on","marks":[1,1],"shows":["\\(\\overrightarrow{GE} + \\frac{1}{3}\\overrightarrow{DE}\\) or \\(s + \\frac{1}{3}(r+s)\\)",null]},
-  "2026 P1 Q1": {"v":"expanding.binomial-trinomial","marks":[1,1,1],"shows":["\\(y^3 - 3y^2 + 2y \\dots\\)","\\(y^3 - 3y^2 + 2y + 4y^2 - 12y + 8\\)",null]},
-  "2026 P1 Q2": {"v":"percentages.part-of-whole","marks":[1,1,1],"shows":["\\(60\\% = 180\\)","\\((10\\% =) \\frac{180}{6}\\) or \\((1\\% =) \\frac{180}{60}\\)",null]},
-  "2026 P1 Q3": {"v":"data.median-iqr-compare","marks":[1,2,1,1],"shows":[null,"\\(4\\) and \\(15\\)","on average, the waiting times in the restaurant are longer",null]},
-  "2026 P1 Q4": {"v":"inequalities.brackets","marks":[1,1,1],"shows":["\\(3x - 6 + 20\\)","\\(-6 < 2x\\) or \\(-2x < 6\\)",null]},
-  "2026 P1 Q5": {"v":"fractions.context","marks":[1,1],"shows":["\\(\\frac{\\dots}{12} + \\frac{\\dots}{12}\\) or \\(2\\frac{\\dots}{12} + 1\\frac{\\dots}{12}\\)",null]},
-  "2026 P1 Q6": {"v":"straight-line.best-fit","marks":[1,1,1,1],"shows":["\\(\\frac{40}{60}\\)","\\(y - 54 = \\frac{40}{60}(x - 30)\\) or \\(y - 94 = \\frac{40}{60}(x - 90)\\)","\\(F = \\frac{2}{3}P + 34\\) or \\(3F = 2P + 102\\)",null]},
-  "2026 P1 Q7": {"v":"vectors.magnitude-surd","marks":[1,1,1],"shows":["\\(4^2 + (-5)^2 + 7^2\\)","\\(\\sqrt{90}\\)",null]},
-  "2026 P1 Q8": {"v":"change-subject.root-two-step","marks":[1,1],"shows":["\\(P^2 = T - 3L\\)",null]},
-  "2026 P1 Q9": {"v":"quadratics.parabola-scale-k","marks":[1,1],"shows":["\\(24 = k \\times 2^2\\)",null]},
-  "2026 P1 Q10": {"v":"angles.tangent-reflex","marks":[1,1,1],"shows":["\\(27\\)","\\(\\text{COB} = 100\\) **or** \\(\\text{AOB} = 126\\)",null]},
-  "2026 P1 Q11": {"v":"coords.lettered-cuboid","marks":[0,1,1],"shows":[null,null,null]},
-  "2026 P1 Q12": {"v":"quadratics.sketch-completed-square","marks":[1,1,1],"shows":[null,"a minimum parabola annotated \\((-2, 3)\\)",null]},
-  "2026 P1 Q13": {"v":"functions.evaluate-trig","marks":[1,1],"shows":["\\(5 \\times \\cos(2 \\times 90)\\)",null]},
-  "2026 P1 Q14": {"v":"factorising.solve-non-unitary","marks":[1,1,1],"shows":["\\((5x \\dots 2)(2x \\dots 3)\\) or \\(5x(2x + 3) - 2(2x + 3)\\) or \\(2x(5x - 2) + 3(5x - 2)\\)","\\((5x - 2)(2x + 3)\\)",null]},
+  "2026 P1 Q1": {"v":"expanding.binomial-trinomial","marks":[1,1,1],"shows":["\\(y^3 - 3y^2 + 2y \\dots\\)","\\(y^3 - 3y^2 + 2y + 4y^2 - 12y + 8\\)",null],"nudge":"Every term in the first bracket multiplies every term in the second. How many products should you have before you collect like terms?","watch":"Keep each sign with its term when you collect like terms: there are negatives to combine."},
+  "2026 P1 Q2": {"v":"percentages.part-of-whole","marks":[1,1,1],"shows":["\\(60\\% = 180\\)","\\((10\\% =) \\frac{180}{6}\\) or \\((1\\% =) \\frac{180}{60}\\)",null],"nudge":"180 miles is \\(60\\%\\) of the full distance. How could you get from \\(60\\%\\) to \\(100\\%\\)?","watch":"180 is \\(60\\%\\) of the answer, not the amount to take \\(60\\%\\) of."},
+  "2026 P1 Q3": {"v":"data.median-iqr-compare","marks":[1,2,1,1],"shows":[null,"\\(4\\) and \\(15\\)","on average, the waiting times in the restaurant are longer",null],"nudge":"What must you do to the list before you can pick out the middle value?","watch":"In (b), talk about waiting times: \"on average the waiting times at the restaurant are longer\", not just \"the median is bigger\"."},
+  "2026 P1 Q4": {"v":"inequalities.brackets","marks":[1,1,1],"shows":["\\(3x - 6 + 20\\)","\\(-6 < 2x\\) or \\(-2x < 6\\)",null],"nudge":"How would you solve this if it were an equation? What is different about an inequation?","watch":"If you divide by a negative number, turn the inequality sign round."},
+  "2026 P1 Q5": {"v":"fractions.context","marks":[1,1],"shows":["\\(\\frac{\\dots}{12} + \\frac{\\dots}{12}\\) or \\(2\\frac{\\dots}{12} + 1\\frac{\\dots}{12}\\)",null],"nudge":"What do you need to do to \\(2\\frac{3}{4}\\) and \\(1\\frac{2}{3}\\) before you can add them?","watch":"Add the fractions, do not multiply them, and check the fraction part of your answer is less than \\(1\\)."},
+  "2026 P1 Q6": {"v":"straight-line.best-fit","marks":[1,1,1,1],"shows":["\\(\\frac{40}{60}\\)","\\(y - 54 = \\frac{40}{60}(x - 30)\\) or \\(y - 94 = \\frac{40}{60}(x - 90)\\)","\\(F = \\frac{2}{3}P + 34\\) or \\(3F = 2P + 102\\)",null],"nudge":"A straight line needs a gradient and a starting point. How can points A and B give you both?","watch":"The gradient is the change in \\(F\\) over the change in \\(P\\), not the other way up."},
+  "2026 P1 Q7": {"v":"vectors.magnitude-surd","marks":[1,1,1],"shows":["\\(4^2 + (-5)^2 + 7^2\\)","\\(\\sqrt{90}\\)",null],"nudge":"How do you find the length of a vector from its components?","watch":"Square the negative component too: \\((-5)^2 = 25\\)."},
+  "2026 P1 Q8": {"v":"change-subject.root-two-step","marks":[1,1],"shows":["\\(P^2 = T - 3L\\)",null],"nudge":"What has been done to \\(T\\) on the right, and in what order? Undo it in reverse.","watch":"Square both sides first: the \\(3L\\) can only move once the square root has gone."},
+  "2026 P1 Q9": {"v":"quadratics.parabola-scale-k","marks":[1,1],"shows":["\\(24 = k \\times 2^2\\)",null],"nudge":"A point on the curve fits its equation. Which point on the diagram can you use?","watch":"Put the point's \\(x\\) into \\(x^2\\) and its \\(y\\) on the left, not the other way round."},
+  "2026 P1 Q10": {"v":"angles.tangent-reflex","marks":[1,1,1],"shows":["\\(27\\)","\\(\\text{COB} = 100\\) **or** \\(\\text{AOB} = 126\\)",null],"nudge":"What do you know about the angle between a tangent and a radius, and about a triangle with two radii as sides?","watch":"The question asks for the reflex angle AOC: take your angle at the centre from \\(360^\\circ\\)."},
+  "2026 P1 Q11": {"v":"coords.lettered-cuboid","marks":[0,1,1],"shows":[null,null,null],"nudge":"What do the coordinates of B and H tell you about the cuboid's length, width and height?","watch":"Write each answer as coordinates in brackets, \\((x, y, z)\\), not as a list or a column."},
+  "2026 P1 Q12": {"v":"quadratics.sketch-completed-square","marks":[1,1,1],"shows":[null,"a minimum parabola annotated \\((-2, 3)\\)",null],"nudge":"For what value of \\(x\\) is \\((x + 2)^2\\) as small as it can be?","watch":"Label both points on your sketch: the turning point and where the curve meets the \\(y\\)-axis."},
+  "2026 P1 Q13": {"v":"functions.evaluate-trig","marks":[1,1],"shows":["\\(5 \\times \\cos(2 \\times 90)\\)",null],"nudge":"Which do you work out first: the \\(2x\\), the \\(\\cos\\), or the \\(5 \\times\\)?","watch":"This is the non-calculator paper: you need \\(\\cos 180^\\circ = -1\\) from the graph of \\(\\cos\\)."},
+  "2026 P1 Q14": {"v":"factorising.solve-non-unitary","marks":[1,1,1],"shows":["\\((5x \\dots 2)(2x \\dots 3)\\) or \\(5x(2x + 3) - 2(2x + 3)\\) or \\(2x(5x - 2) + 3(5x - 2)\\)","\\((5x - 2)(2x + 3)\\)",null],"nudge":"The question says factorise. What two brackets multiply to give \\(10x^2 + 11x - 6\\)?","watch":"Use factorising, not the quadratic formula: the question sets the method, and the formula scores nothing."},
   "2026 P2 Q1": {"v":"percentages.compound-3sf","marks":[1,1,1,1],"shows":["\\(\\times 0 \\cdot 72\\)","\\(22600 \\times 0 \\cdot 72^3\\)","\\(8435(\\cdot 4048)\\)",null]},
   "2026 P2 Q2": {"v":"trig-diagram.cosine-side","marks":[1,1,1],"shows":["\\(4^2 + 5^2 - 2 \\times 4 \\times 5 \\times \\cos 106\\)","\\(52 \\cdot 0 \\dots\\)",null]},
   "2026 P2 Q3": {"v":"similarity.volume-scale-down","marks":[1,1,1],"shows":["\\(\\frac{8}{12}\\ (= 0 \\cdot 66\\dots)\\)","\\(\\left(\\frac{8}{12}\\right)^3 \\times 540\\)",null]},
