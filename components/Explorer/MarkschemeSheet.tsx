@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 // mount, so a print that came quickly enough caught the marks with the
 // working still empty.
 import MathHtml from '@/components/MathHtml';
-import { variationLabel } from '@/lib/similar-questions';
+import { ladderLabel, variationLabel } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseSchemes } from '@/lib/course-markschemes';
 
@@ -75,7 +75,9 @@ export default function MarkschemeSheet({
 
       {questions.map((q, i) => {
         const generated = Boolean(q.uid?.startsWith('g:'));
-        const label = variationLabel(q.question);
+        // Higher Apps labels its questions "2024 Q5", which the N5-shaped
+        // pattern refuses; every other course keeps the pattern it had.
+        const label = courseId === 'higher-apps' ? ladderLabel(null, q.question, courseId) : variationLabel(q.question);
         const parent = q.basedOn?.[q.parentIndex ?? 0];
         // **A course's table, so that course's questions only.** It is keyed
         // by label, and every course labels its questions the same way: a

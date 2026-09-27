@@ -18,7 +18,7 @@ export interface CourseSchemes {
 }
 
 /** Courses with a published marking-instructions table. */
-export const COURSES_WITH_SCHEMES = ['n5', 'higher'] as const;
+export const COURSES_WITH_SCHEMES = ['n5', 'higher', 'higher-apps'] as const;
 
 export async function loadCourseSchemes(courseId: string): Promise<CourseSchemes> {
   switch (courseId) {
@@ -29,6 +29,10 @@ export async function loadCourseSchemes(courseId: string): Promise<CourseSchemes
     case 'higher': {
       const { PAPER_MARKSCHEME_HIGHER } = await import('@/lib/generator/generators/paper-markscheme-higher');
       return { courseId, table: PAPER_MARKSCHEME_HIGHER };
+    }
+    case 'higher-apps': {
+      const { PAPER_MARKSCHEME_HIGHERAPPS } = await import('@/lib/generator/generators/paper-markscheme-higherapps');
+      return { courseId, table: PAPER_MARKSCHEME_HIGHERAPPS };
     }
     default:
       // No table for this course yet: the sheet prints each question's own
