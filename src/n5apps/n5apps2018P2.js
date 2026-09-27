@@ -363,7 +363,7 @@ export const n5AppsMaths2018P2 = {
 <img src="/img/N5_Apps_Past_Papers/2018/2018_P2_Q9_1.webp" alt="Precedence diagram structure">
 <p>The factory manager thinks that the whole process can be completed in less than 25 minutes.</p>
 <p>(b) Based on the times given, is the factory manager correct?<br>Use your working to justify your answer.</p>`,
-          answer: `<p>(a) Correctly completed diagram.</p><p>(b) Yes, it takes 20 minutes 15 seconds, which is less than 25 minutes.</p>`,
+          answer: `<p>(a) C (300) leads to A (500), then H (2). F (900) leads to E (2). H and E both lead to B (3), then I (300), D (5) and G (5).</p><p>(b) Yes, it takes 20 minutes 15 seconds, which is less than 25 minutes.</p>`,
           topics: ['Measurement'],
           subtopics: ['Task Planning and Precedence Tables'],
           marks: [1, 2],

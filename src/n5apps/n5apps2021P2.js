@@ -114,7 +114,7 @@ export const n5AppsMaths2021P2 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2021 P2 Q8(b)</span></strong></small><p>The local orienteering club set up a course at the event. Participants leave the start point and run on a bearing of \\(055^\\circ\\) for 140 m to flag A. They then run on a bearing of \\(170^\\circ\\) for 252 m to flag B.</p><p>(b) (i) Construct a scale drawing to illustrate the route. Use a scale of 1 cm: 40 m</p><img src="/img/N5_Apps_Past_Papers/2021/2021_P2_Q8.webp" alt="Compass drawing at start point"><p>(ii) The pupils then return to the start point. Use the scale drawing to determine the bearing and distance of the start point from flag B.</p>`,
-          answer: `<p>(i) Drawing showing lines of 3.5cm (bearing 055°) and 6.3cm (bearing 170°).<br>(ii) Distance: ~172 m (4.3cm on diagram), Bearing: ~\\(320^\\circ.\\)</p>`,
+          answer: `<p>(i) Drawing showing lines of 3.5cm (bearing 055°) and 6.3cm (bearing 170°).<br>(ii) Measuring from flag B back to the start gives about 5.8 cm, so the distance is approximately 230 m, on a bearing of approximately \\(317^\\circ.\\)</p>`,
           topics: ['Measurement'],
           subtopics: ['Scale Drawing'],
           marks: [3, 2],

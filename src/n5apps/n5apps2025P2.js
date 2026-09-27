@@ -114,7 +114,7 @@ export const n5AppsMaths2025P2 = {
     },
     {
      question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q9(b)</span></strong></small><p>The shop sells lemonade.<br>There are two options.</p><ul class="list-disc pl-6"><li>Option A - 24 pack of 250 ml cans of lemonade cost £7.50.</li><li>Option B - 10 pack of 330 ml cans of lemonade cost £3.89.</li></ul><p>(b) Determine which option offers the best value for money.</p>`,
-     answer: `<p>Option B offers the best value.</p>`,
+     answer: `<p>Option A: \\(24\\times250=6000\\) ml for £7.50, so \\(7.50\\div6=£1.25\\) per litre.<br>Option B: \\(10\\times330=3300\\) ml for £3.89, so \\(3.89\\div3.3=£1.178\\ldots\\) per litre.<br><strong>Option B</strong> offers the best value.</p>`,
      topics: ['Finance'],
      subtopics: ['Best Deal and Comparing Products'],
      marks: [2],

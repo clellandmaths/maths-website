@@ -32,7 +32,7 @@ export const n5AppsMaths2025P1 = {
             </tbody>
           </table>
           <p>Determine the website which offers the best deal to buy the picture and get it posted to Laura.<br>Use your working to justify your answer.</p>`,
-          answer: `<p>Website B</p>`,
+          answer: `<p>Website A: £21.50 + £3.49 = £24.99<br>Website B: 30% of £35 = £10.50, so £35 − £10.50 = £24.50 (postage free)<br>Website C: \\(\\frac{1}{4}\\) of £30 = £7.50, so £30 − £7.50 + £2.80 = £25.30<br><strong>Website B</strong> is the best deal, at £24.50.</p>`,
           topics: ['Finance'],
           subtopics: ['Best Deal and Comparing Products'],
           marks: [3],
@@ -65,7 +65,7 @@ export const n5AppsMaths2025P1 = {
           <p>(a) Complete the diagram below to show the tasks and times.</p>
           <img src="/img/N5_Apps_Past_Papers/2025/2025_P1_Q3.webp" alt="Incomplete activity network diagram with node H starting">
           <p>(b) Calculate the minimum time taken to manufacture and package a chocolate egg.</p>`,
-          answer: `<p>(a) Correctly completed diagram.</p><p>(b) 2700 seconds</p>`,
+          answer: `<p>(a) H (120) splits into A (600), I (180) and G (240). A leads to D (105), then C (1800). G leads to E (60). C and I lead to B (30). B and E lead to F (45).</p><p>(b) 2700 seconds</p>`,
           topics: ['Measurement'],
           subtopics: ['Task Planning and Precedence Tables'],
           marks: [2, 1],
@@ -76,7 +76,7 @@ export const n5AppsMaths2025P1 = {
           question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q4 (a) - (d)</span></strong></small><p>Harris recorded the time, in minutes, that it took him to drive to work over eight days.<br>22, 21, 37, 25, 32, 28, 36, 24<br>(a) For this data, calculate: the median, the lower quartile, the upper quartile.<br>(b) Construct a box plot for this set of data.</p>
           <img src="/img/N5_Apps_Past_Papers/2025/2025_P1_Q4_1.webp" alt="Grid with axis for driving time in minutes from 15 to 45">
           <p>(c) Calculate the interquartile range for the number of minutes it took Harris to drive to work.<br>His colleague Lewis also recorded the number of minutes it took him to drive to work over eight days.<br>The interquartile range for the number of minutes that Lewis took is 9 minutes.<br>(d) Make one valid comment comparing the number of minutes Harris and Lewis took to drive to work.</p>`,
-          answer: `<p>(a) Median = 26.5, Lower Quartile = 23, Upper Quartile = 34</p><p>(b) Box plot correctly drawn displaying the 5-figure summary.</p><p>(c) 11</p><p>(d) The number of minutes Lewis took to drive to work was more consistent.</p>`,
+          answer: `<p>(a) Median = 26.5, Lower Quartile = 23, Upper Quartile = 34</p><p>(b) A box plot from the five-figure summary: whiskers to 21 and 37, and a box from 23 to 34 with the median at 26.5.</p><p>(c) 11</p><p>(d) The number of minutes Lewis took to drive to work was more consistent.</p>`,
           topics: ['Statistics'],
           subtopics: ['Median, Quartiles and Interquartile Range', 'Boxplots', 'Comparing Statistics'],
           marks: [2, 2, 1, 1],
@@ -94,7 +94,7 @@ export const n5AppsMaths2025P1 = {
           <p>(e) On the grid below draw a scattergraph to show this data.</p>
           <img src="/img/N5_Apps_Past_Papers/2025/2025_P1_Q4_2.webp" alt="Grid for drawing scattergraph showing departure time against journey time">
           <p>(f) Draw a line of best fit on your scattergraph.<br>(g) Tomorrow, Harris plans to depart at 7:55 am. Use your line of best fit to estimate his journey time.</p>`,
-          answer: `<p>(e) Scattergraph correctly plotted.</p><p>(f) Line of best fit drawn correctly.</p><p>(g) Answer should be consistent with the line of best fit drawn.</p>`,
+          answer: `<p>(e) Plot (7:32, 22), (7:36, 21), (7:40, 25), (7:45, 24), (7:50, 28), (8:02, 32), (8:04, 36) and (8:10, 37).</p><p>(f) A straight line through the middle of the points, with roughly as many points above it as below.</p><p>(g) From 7:55 on the departure time axis, go to your line, then read off the journey time. Any answer consistent with your line, approximately <strong>30 minutes</strong>.</p>`,
           topics: ['Probability and Graphical Data'],
           subtopics: ['Scatter Graphs'],
           marks: [2, 1, 1],
@@ -103,7 +103,7 @@ export const n5AppsMaths2025P1 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q5</span></strong></small><p>Julie scored 78% in her science test.<br>She also scored 32 out of 40 in her maths test.<br>Determine which subject she performed better in. Justify your answer.</p>`,
-          answer: `<p>Maths</p>`,
+          answer: `<p>Maths: \\(\\frac{32}{40}\\times100=80\\%.\\) 80% is more than 78%, so she performed better in <strong>Maths</strong>.</p>`,
           topics: ['Numeracy'],
           subtopics: ['Comparing Fractions and Percentages'],
           marks: [2],
@@ -150,7 +150,7 @@ export const n5AppsMaths2025P1 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q8 (b)</span></strong></small><p>Catriona runs a different game at the gala.<br>Players who win receive a £5 prize.<br>When playing this game, the probability of a player winning a prize is 0.15.<br>The game was played 80 times.<br>Catriona gave out a total of £70 in prizes.<br>(b) Determine if this is more or less than expected.</p>`,
-          answer: `<p>More</p>`,
+          answer: `<p>Expected wins \\(=0.15\\times80=12\\), so expected prizes \\(=12\\times£5=£60.\\) £70 is <strong>more</strong> than expected.</p>`,
           topics: ['Probability and Graphical Data'],
           subtopics: ['Expected Frequency'],
           marks: [3],

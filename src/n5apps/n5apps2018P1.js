@@ -6,7 +6,7 @@ export const n5AppsMaths2018P1 = {
       questions: [
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 P1 Q1</span></strong></small><p>A baking company will reject cakes if they do not weigh 400g \\(\\pm 3\\%.\\)</p><p>The weights of a sample of 13 cakes are shown below.<br>385, 391, 409, 403, 386, 412, 413, 407, 400, 390, 387, 405, 388</p><p>Calculate the fraction of cakes that will be rejected.<br>Use your working to justify your answer.</p>`,
-          answer: `<p>\\(\\frac{4}{13}\\)</p>`,
+          answer: `<p>3% of 400 g = 12 g, so the limits are 388 g and 412 g.<br>385, 386, 387 and 413 are outside the limits, so \\(\\frac{4}{13}\\) of the cakes will be rejected.</p>`,
           topics: ['Measurement'],
           subtopics: ['Tolerance'],
           marks: [3],
@@ -24,7 +24,7 @@ export const n5AppsMaths2018P1 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 P1 Q3</span></strong></small><p>The heights and weights of 8 children aged six are recorded in the table below.</p><table class="table-auto border-collapse border border-slate-400 mx-auto my-4 text-sm"><tbody><tr><th class="border border-slate-300 p-2 text-center">Height in centimetres</th><td class="border border-slate-300 p-2 text-center">104</td><td class="border border-slate-300 p-2 text-center">107</td><td class="border border-slate-300 p-2 text-center">120</td><td class="border border-slate-300 p-2 text-center">124</td><td class="border border-slate-300 p-2 text-center">99</td><td class="border border-slate-300 p-2 text-center">127</td><td class="border border-slate-300 p-2 text-center">104</td><td class="border border-slate-300 p-2 text-center">130</td></tr><tr><th class="border border-slate-300 p-2 text-center">Weight in kilograms</th><td class="border border-slate-300 p-2 text-center">18</td><td class="border border-slate-300 p-2 text-center">19</td><td class="border border-slate-300 p-2 text-center">24</td><td class="border border-slate-300 p-2 text-center">22</td><td class="border border-slate-300 p-2 text-center">17</td><td class="border border-slate-300 p-2 text-center">25</td><td class="border border-slate-300 p-2 text-center">19</td><td class="border border-slate-300 p-2 text-center">24</td></tr></tbody></table><p>(a) On the grid below draw a scattergraph to show this data.</p><img src="/img/N5_Apps_Past_Papers/2018/2018_P1_Q3.webp" alt="Scattergraph grid for height and weight"><p>(b) Draw a line of best fit on the scattergraph.</p><p>(c) Use your line of best fit to estimate the height of a child who weighs 20 kilograms.</p>`,
-          answer: `<p>(a) 8 points correctly plotted on the scattergraph.</p><p>(b) Consistent line of best fit drawn.</p><p>(c) Answer must be consistent with the candidate's drawn line of best fit.</p>`,
+          answer: `<p>(a) Plot (104, 18), (107, 19), (120, 24), (124, 22), (99, 17), (127, 25), (104, 19) and (130, 24).</p><p>(b) A straight line through the middle of the points, with roughly as many points above it as below.</p><p>(c) From 20 kg on the weight axis, go to your line, then read off the height. Any answer consistent with your line, approximately 110 cm.</p>`,
           topics: ['Probability and Graphical Data'],
           subtopics: ['Scatter Graphs'],
           marks: [2, 1, 1],
@@ -105,7 +105,7 @@ export const n5AppsMaths2018P1 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2018 P1 Q12</span></strong></small><p>A helicopter flew from Aberdeen airport to transport workers to oil rig 1 and then continued on to oil rig 2.<br>It flew 82 km on a bearing of \\(042^{\\circ}\\) to oil rig 1.<br>It then flew 46 km on a bearing of \\(194^{\\circ}\\) to oil rig 2.</p><p>(a) Construct a scale drawing to illustrate this journey.<br>Use a scale of 1 cm : 10 km.</p><img src="/img/N5_Apps_Past_Papers/2018/2018_P1_Q12.webp" alt="Starting point marked Airport with North line"><p>The helicopter then returns to Aberdeen airport from oil rig 2.</p><p>(b) Use the scale drawing to determine the distance and bearing of the airport from oil rig 2.</p>`,
-          answer: `<p>(a) Scale drawing showing bearing of \\(042^{\\circ}\\) drawn to 8.2 cm, followed by a bearing of \\(194^{\\circ}\\) drawn to 4.6 cm.</p><p>(b) Distance and bearing must be consistent with the candidate's drawing.</p>`,
+          answer: `<p>(a) Scale drawing showing bearing of \\(042^{\\circ}\\) drawn to 8.2 cm, followed by a bearing of \\(194^{\\circ}\\) drawn to 4.6 cm.</p><p>(b) Measuring from oil rig 2 back to the airport gives about 4.7 cm, so the distance is approximately 47 km, on a bearing of approximately \\(250^{\\circ}.\\)</p>`,
           topics: ['Measurement'],
           subtopics: ['Scale Drawing'],
           marks: [3, 2],

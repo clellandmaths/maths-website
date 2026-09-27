@@ -60,7 +60,7 @@ export const n5AppsMaths2019P1 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2019 P1 Q6</span></strong></small><p>Write the following values in order from greatest to least.</p><p>Justify your answer.</p><p>\\(0.388\\), \\(\\frac{3}{8}\\), \\(38.38\\%\\), \\(0.39\\)</p>`,
-          answer: `<p>\\(0.39\\), \\(0.388\\), \\(38.38\\%\\), \\(\\frac{3}{8}\\)</p>`,
+          answer: `<p>\\(\\frac{3}{8}=0.375\\) and \\(38.38\\%=0.3838\\), so from greatest to least:<br>\\(0.39\\), \\(0.388\\), \\(38.38\\%\\), \\(\\frac{3}{8}\\)</p>`,
           topics: ['Numeracy'],
           subtopics: ['Fraction, Decimal and Percentage Equivalences'],
           marks: [2],
