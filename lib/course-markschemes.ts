@@ -19,7 +19,7 @@ export interface CourseSchemes {
 }
 
 /** Courses with a published marking-instructions table. */
-export const COURSES_WITH_SCHEMES = ['n5', 'higher', 'higher-apps', 'ah'] as const;
+export const COURSES_WITH_SCHEMES = ['n5', 'higher', 'higher-apps', 'ah', 'n5-apps'] as const;
 
 /**
  * An Advanced Higher card: its question's label, and the parts it carries.
@@ -36,6 +36,28 @@ export function ahCard(questionHtml: string | undefined): { label: string; ref: 
   const m = ref ? AH_CARD.exec(ref) : null;
   if (!ref || !m) return null;
   return { label: m[1], ref, parts: [...m[2].matchAll(/\(([a-z])\)/g)].map(p => p[1]) };
+}
+
+/**
+ * An N5 Applications card: its question's label, and the parts it carries.
+ *
+ * Its part labels come in many forms, "2024 P2 Q7(a)", "Q8(a) & (b)",
+ * "Q9(a) and (b)", "Q7 (b), (c), (d)", and ranges, "Q4 (a) - (d)" and
+ * "Q6(b)-(c)", which carry every part between. The same reading as the
+ * generator's `scripts/card-parts.ts`, which keys the hint ladders.
+ */
+const N5APPS_CARD = /^(\d{4} P[12] Q\d+)(.*)$/;
+
+export function n5appsCard(questionHtml: string | undefined): { label: string; ref: string; parts: string[] } | null {
+  const ref = questionHtml ? paperRef(questionHtml) : null;
+  const m = ref ? N5APPS_CARD.exec(ref) : null;
+  if (!ref || !m) return null;
+  let parts = [...m[2].matchAll(/\(([a-z])\)/g)].map(p => p[1]);
+  if (parts.length === 2 && /\)\s*-\s*\(/.test(m[2])) {
+    const [a, b] = parts.map(l => l.charCodeAt(0));
+    parts = Array.from({ length: b - a + 1 }, (_, i) => String.fromCharCode(a + i));
+  }
+  return { label: m[1], ref, parts };
 }
 
 /**
@@ -74,6 +96,10 @@ export async function loadCourseSchemes(courseId: string): Promise<CourseSchemes
     case 'ah': {
       const { PAPER_MARKSCHEME_AH } = await import('@/lib/generator/generators/paper-markscheme-ah');
       return { courseId, table: PAPER_MARKSCHEME_AH };
+    }
+    case 'n5-apps': {
+      const { PAPER_MARKSCHEME_N5APPS } = await import('@/lib/generator/generators/paper-markscheme-n5apps');
+      return { courseId, table: PAPER_MARKSCHEME_N5APPS };
     }
     default:
       // No table for this course yet: the sheet prints each question's own

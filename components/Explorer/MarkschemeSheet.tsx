@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 import MathHtml from '@/components/MathHtml';
 import { ladderLabel, variationLabel } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
-import { ahCard, cardScheme, type CourseSchemes } from '@/lib/course-markschemes';
+import { ahCard, cardScheme, n5appsCard, type CourseSchemes } from '@/lib/course-markschemes';
 
 /**
  * The markscheme for one worksheet, as its own printed document.
@@ -80,7 +80,9 @@ export default function MarkschemeSheet({
         // Advanced Higher reads "2019 Q5" before 2021, and some of its cards
         // are one part of a question, "2019 Q1(a)": looked up by the question,
         // they print only their own parts.
-        const card = courseId === 'ah' ? ahCard(q.question) : null;
+        // N5 Applications cards are parts too, "2024 P2 Q7(a)", "Q4 (a) - (d)".
+        const card = courseId === 'ah' ? ahCard(q.question)
+          : courseId === 'n5-apps' ? n5appsCard(q.question) : null;
         const label = card ? card.label
           : courseId === 'higher-apps' ? ladderLabel(null, q.question, courseId) : variationLabel(q.question);
         const parent = q.basedOn?.[q.parentIndex ?? 0];
