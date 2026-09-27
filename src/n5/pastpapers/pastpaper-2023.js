@@ -102,7 +102,7 @@ export const pastpaper2023 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q13</span></strong></small><p>Part of the graph of \\(y=\\cos(x+a)^\\circ + b\\) is shown.</p><img src="/img/N5_Past_Papers/2023/2023_P1_Q13.png" alt="Graph of y=cos(x+a)+b"><p>(a)&nbsp;&nbsp;State the value of \\(a.\\)<br>(b)&nbsp;&nbsp;State the value of \\(b.\\)</p>`,
-                    answer: `(a) \\(a=-45\\)<br>(b) \\(b=1\\)`,
+                    answer: `(a) \\(a=-30\\)<br>(b) \\(b=1\\)`,
                     videoId: "N9_IJSsn3y8",
                     timestamp: "1382s",
                     marks: [1, 1],

@@ -227,7 +227,7 @@ export const pastpaper2024 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q14</span></strong></small><p>The diagram shows a rhombus WXYZ with a diagonal ZX drawn.</p><img src="/img/N5_Past_Papers/2024/2024_P2_Q14.png" alt="Rhombus vector diagram"><p>\\(\\vec{ZW}\\) represents vector \\(\\mathbf{a}\\) and \\(\\vec{ZX}\\) represents vector \\(\\mathbf{b}\\).<br><b>(a)</b>&nbsp;&nbsp;Express \\(\\vec{WX}\\) in terms of \\(\\mathbf{a}\\) and \\(\\mathbf{b}\\).<br><br>M is the mid-point of XY.<br><b>(b)</b>&nbsp;&nbsp;Express \\(\\vec{WM}\\) in terms of \\(\\mathbf{a}\\) and \\(\\mathbf{b}\\). Give your answer in its simplest form.</p>`,
-                    answer: `(a) \\(\\mathbf{b}-\\mathbf{a}\\), (b) \\(\\mathbf{b}-\\frac{1}{2}\\mathbf{a}\\)`,
+                    answer: `(a) \\(\\mathbf{b}-\\mathbf{a}\\), (b) \\(\\mathbf{b}-\\frac{3}{2}\\mathbf{a}\\)`,
                     videoId: "zGQ9vkMS91A",
                     timestamp: "1228s",
                     marks: [1, 2],
