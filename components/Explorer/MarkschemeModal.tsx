@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { X, ClipboardCheck } from 'lucide-react';
-import { getMarkschemeEntries, type MarkschemeEntry } from '@/lib/ah-markschemes';
-import { renderMathHtml } from '@/components/MathHtml';
+import { getCardScheme } from '@/lib/ah-markschemes';
+import SchemeTable from '@/components/SchemeTable';
 import type { CourseTheme } from '@/lib/course-theme';
 
-// Full Qualifications Scotland marking instructions for an AH question without a video solution.
+// Qualifications Scotland marking instructions for an AH question without a
+// video solution, from the transcribed table (see lib/ah-markschemes).
 
 interface Props {
   theme: CourseTheme;
@@ -17,12 +18,13 @@ interface Props {
   onClose: () => void;
 }
 
-export default function MarkschemeModal({ theme, year, paperNumber, questionHtml, title, onClose }: Props) {
-  const [entries, setEntries] = useState<MarkschemeEntry[] | null>(null);
+export default function MarkschemeModal({ theme, questionHtml, title, onClose }: Props) {
+  // undefined while loading; null when the question has no transcription.
+  const [card, setCard] = useState<Awaited<ReturnType<typeof getCardScheme>> | undefined>(undefined);
 
   useEffect(() => {
-    getMarkschemeEntries(year, paperNumber, questionHtml).then(setEntries);
-  }, [year, paperNumber, questionHtml]);
+    getCardScheme(questionHtml).then(setCard);
+  }, [questionHtml]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -55,26 +57,16 @@ export default function MarkschemeModal({ theme, year, paperNumber, questionHtml
           </button>
         </div>
         <div className="overflow-y-auto p-5 space-y-6">
-          {entries === null ? (
+          {card === undefined ? (
             <div className="flex items-center justify-center py-12">
               <div className={`h-8 w-8 border-4 ${theme.border} border-t-transparent rounded-full animate-spin`} />
             </div>
-          ) : entries.length === 0 ? (
+          ) : card === null || card.rows.length === 0 ? (
             <p className="text-muted-foreground text-center py-8">
               No marking instructions found for this question.
             </p>
           ) : (
-            entries.map(entry => (
-              <section key={entry.questionNumber}>
-                <h3 className={`font-mono text-xs font-semibold uppercase tracking-widest ${theme.text} mb-2`}>
-                  Question {entry.questionNumber}
-                </h3>
-                <div
-                  className="text-foreground/85 text-sm leading-relaxed space-y-2"
-                  dangerouslySetInnerHTML={{ __html: renderMathHtml(entry.answer) }}
-                />
-              </section>
-            ))
+            <SchemeTable rows={card.rows} notes={card.notes} accent={theme.text} />
           )}
         </div>
       </div>

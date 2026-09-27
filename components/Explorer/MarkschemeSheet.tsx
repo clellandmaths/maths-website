@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 import MathHtml from '@/components/MathHtml';
 import { ladderLabel, variationLabel } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
-import type { CourseSchemes } from '@/lib/course-markschemes';
+import { ahCard, cardScheme, type CourseSchemes } from '@/lib/course-markschemes';
 
 /**
  * The markscheme for one worksheet, as its own printed document.
@@ -77,13 +77,19 @@ export default function MarkschemeSheet({
         const generated = Boolean(q.uid?.startsWith('g:'));
         // Higher Apps labels its questions "2024 Q5", which the N5-shaped
         // pattern refuses; every other course keeps the pattern it had.
-        const label = courseId === 'higher-apps' ? ladderLabel(null, q.question, courseId) : variationLabel(q.question);
+        // Advanced Higher reads "2019 Q5" before 2021, and some of its cards
+        // are one part of a question, "2019 Q1(a)": looked up by the question,
+        // they print only their own parts.
+        const card = courseId === 'ah' ? ahCard(q.question) : null;
+        const label = card ? card.label
+          : courseId === 'higher-apps' ? ladderLabel(null, q.question, courseId) : variationLabel(q.question);
         const parent = q.basedOn?.[q.parentIndex ?? 0];
         // **A course's table, so that course's questions only.** It is keyed
         // by label, and every course labels its questions the same way: a
         // Higher "2019 P1 Q5" once looked up National 5's 2019 P1 Q5 and
         // printed its marking instructions under the Higher question.
         const scheme = schemes.courseId === courseId && !generated && label ? schemes.table[label] : undefined;
+        const own = scheme ? cardScheme(scheme, card?.parts) : null;
         const steps = generated ? (q.steps ?? []) : [];
         const marks = (q.marks ?? []).reduce((a, b) => a + b, 0);
 
@@ -101,7 +107,7 @@ export default function MarkschemeSheet({
                   // uid carries, so the teacher's markscheme names the paper
                   // their pupils' video points at.
                   ? `Generated${parent ? ` — based on ${parent}` : ''}`
-                  : label ?? `${q.year} Paper ${q.paperNumber}`}
+                  : card?.ref ?? label ?? `${q.year} Paper ${q.paperNumber}`}
               </span>
               {marks > 0 && <span className="markscheme-marks">{marks} marks</span>}
             </h2>
@@ -112,13 +118,13 @@ export default function MarkschemeSheet({
               </p>
             )}
 
-            {scheme ? (
+            {own ? (
               <table className="markscheme-table">
                 <thead>
                   <tr><th>Mark</th><th>Awarded for</th><th>Illustrative answer</th></tr>
                 </thead>
                 <tbody>
-                  {scheme.rows.map((row, n) => (
+                  {own.rows.map(({ row, n }) => (
                     <tr key={n}>
                       <td className="markscheme-bullet">
                         {row.part ? `${row.part} ` : ''}&bull;<sup>{n + 1}</sup>
@@ -167,11 +173,11 @@ export default function MarkschemeSheet({
               </p>
             )}
 
-            {scheme?.notes?.length ? (
+            {own?.notes.length ? (
               <div className="markscheme-notes">
                 <strong>Notes</strong>
                 <ul>
-                  {scheme.notes.map((note, n) => (
+                  {own.notes.map((note, n) => (
                     <li key={n}><MathHtml html={note} className="inline" /></li>
                   ))}
                 </ul>

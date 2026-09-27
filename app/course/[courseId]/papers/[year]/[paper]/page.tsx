@@ -21,7 +21,8 @@ import {
 } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
 import { questionNumber } from '@/lib/question-number.mjs';
-import { hasMarkscheme, getMarkschemeEntries } from '@/lib/ah-markschemes';
+import { hasMarkscheme, getCardScheme } from '@/lib/ah-markschemes';
+import SchemeTable from '@/components/SchemeTable';
 import CourseTabs from '@/components/CourseTabs';
 import { notesEntryHref } from '@/lib/notes-loader';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -144,9 +145,9 @@ export default async function PaperPage(
   // marking instructions are in the HTML
   const markschemes = await Promise.all(
     questions.map(q =>
-      !q.videoId && hasMarkscheme(q.year, q.paperNumber)
-        ? getMarkschemeEntries(q.year, q.paperNumber, q.question)
-        : Promise.resolve([])
+      courseId === 'ah' && !q.videoId && hasMarkscheme(q.year, q.paperNumber)
+        ? getCardScheme(q.question)
+        : Promise.resolve(null)
     )
   );
 
@@ -303,24 +304,14 @@ export default async function PaperPage(
             </details>
 
             {/* AH no-video years: full marking instructions, crawlable */}
-            {markschemes[idx].length > 0 && (
+            {(markschemes[idx]?.rows.length ?? 0) > 0 && (
               <details className="group border-t border-border">
                 <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-foreground/5 transition-colors flex items-center gap-2`}>
                   <span className="group-open:hidden">Show marking instructions</span>
                   <span className="hidden group-open:inline">Hide marking instructions</span>
                 </summary>
-                <div className="px-5 sm:px-6 pb-5 space-y-5">
-                  {markschemes[idx].map(entry => (
-                    <section key={entry.questionNumber}>
-                      <h3 className={`font-mono text-xs font-semibold uppercase tracking-widest ${theme.text} mb-2`}>
-                        Question {entry.questionNumber}
-                      </h3>
-                      <MathHtml
-                        html={entry.answer}
-                        className="answer-content text-foreground/85 text-sm leading-relaxed"
-                      />
-                    </section>
-                  ))}
+                <div className="px-5 sm:px-6 pb-5">
+                  <SchemeTable rows={markschemes[idx]!.rows} notes={markschemes[idx]!.notes} accent={theme.text} />
                 </div>
               </details>
             )}

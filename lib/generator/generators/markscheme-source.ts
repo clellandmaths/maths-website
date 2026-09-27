@@ -73,7 +73,9 @@ export interface SchemeQuestion {
  */
 function readRow(line: string, subParts = false): MarkRow | null {
   if (!line.startsWith('|')) return null;
-  const cells = line.split('|').slice(1, -1).map(c => c.trim());
+  // "\|" is a pipe inside a cell, as in Markdown: AH's augmented matrices,
+  // `{ccc\|c}`. No other course's transcription writes one.
+  const cells = line.split(/(?<!\\)\|/).slice(1, -1).map(c => c.trim().replace(/\\\|/g, '|'));
   if (cells.length < 3) return null;
 
   const at = cells.findIndex((c, i) => i < 2 && /•/.test(c));
@@ -146,11 +148,13 @@ export function readSchemes(dir?: string, course = 'n5'): Map<string, SchemeQues
   const out = new Map<string, SchemeQuestion>();
   // Higher Apps sits one paper a year, so its cards read "2024 Q5", and the
   // site also carries the specimen paper, "Specimen Q5".
-  const single = SINGLE_PAPER.has(course);
+  // AH was one paper a year until 2019 too, so its cards read "2019 Q5".
+  const alwaysSingle = SINGLE_PAPER.has(course);
 
   for (const file of readdirSync(DIR).filter(f => f.endsWith('.md'))) {
-    const year = file.match(/(20\d\d)/)?.[1] ?? (single && /specimen/i.test(file) ? 'Specimen' : undefined);
+    const year = file.match(/(20\d\d)/)?.[1] ?? (alwaysSingle && /specimen/i.test(file) ? 'Specimen' : undefined);
     if (!year) continue;
+    const single = alwaysSingle || (course === 'ah' && Number(year) <= 2019);
 
     // Two naming shapes: "mi_..._Paper-1_2024.md" and "N5_2023_P1_MS.md".
     // Reading only the first left ten citations reporting no markscheme when
