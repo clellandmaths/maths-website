@@ -10,7 +10,7 @@ export const n5AppsMaths2024P1 = {
 <p>Ella's temperature on Thursday was \\(98^\\circ\\text{F}.\\)</p>
 <img src="/img/N5_Apps_Past_Papers/2024/2024_P1_Q1.webp" alt="Thermometer scale showing Celsius and Fahrenheit">
 <p>Mark both temperatures on the thermometer and determine on which day she had the higher temperature.</p>`,
-          answer: `<p>137.5 or 98 marked correctly on the scale.<br>37.5 or 98 marked on the scale and conclusion: Wednesday.</p>`,
+          answer: `<p>Mark 37.5 on the °C scale and 98 on the °F scale.<br>98 °F is about 36.7 °C, which is lower than 37.5 °C, so her temperature was higher on <strong>Wednesday</strong>.</p>`,
           topics: ['Measurement'],
           subtopics: ['Reading Measurement Scales'],
           marks: [2],

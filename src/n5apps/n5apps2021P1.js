@@ -68,7 +68,7 @@ export const n5AppsMaths2021P1 = {
 <img src="/img/N5_Apps_Past_Papers/2021/2021_P1_Q2.webp" alt="Grid for scattergraph plotting shoulder height against age of elephant">
 <p>(b) Draw a line of best fit on your scattergraph.</p>
 <p>(c) Use your line of best fit to estimate the age of an African elephant that is 260 cm tall.</p>`,
-          answer: `<p>(a) Scattergraph correctly plotted.<br>(b) Consistent line of best fit drawn.<br>(c) Estimate consistent with drawn line of best fit (e.g., 23 years).</p>`,
+          answer: `<p>(a) Plot (12, 230), (17, 250), (28, 270), (35, 275) and (43, 300).<br>(b) A straight line through the middle of the points, with roughly as many points above it as below.<br>(c) From 260 cm on the height axis, go to your line, then read off the age. Any answer consistent with your line, approximately 23 to 26 years.</p>`,
           topics: ['Probability and Graphical Data'],
           subtopics: ['Scatter Graphs'],
           marks: [2, 1, 1],
@@ -204,7 +204,7 @@ export const n5AppsMaths2021P1 = {
 <p>(a) Complete the diagram below to show the tasks and times in the boxes.</p>
 <img src="/img/N5_Apps_Past_Papers/2021/2021_P1_Q10.webp" alt="Activity Network Diagram to complete">
 <p>(b) Sarah claims she can make this chilli con carne in 55 minutes. Based on the times given, determine if she is correct.</p>`,
-          answer: `<p>(a) Diagram correctly completed based on precedents and times.<br>(b) No, the critical path is 60 minutes.</p>`,
+          answer: `<p>(a) A (3) leads to B (5), then C (2). C splits into D (6) then E (5), and F (2) then G (1), H (1) and I (2). E and I lead to J (2). J splits into K (35) and L (3), which both lead to M (2).<br>(b) No, the critical path is 60 minutes.</p>`,
           topics: ['Measurement'],
           subtopics: ['Task Planning and Precedence Tables'],
           marks: [2, 2],

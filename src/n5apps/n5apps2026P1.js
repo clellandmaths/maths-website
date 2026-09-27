@@ -115,7 +115,7 @@ export const n5AppsMaths2026P1 = {
             </tbody>
           </table>
           <p>(a) On the grid below draw a scattergraph to show this data.</p><img src="/img/N5_Apps_Past_Papers/2026/2026_P1_Q8.webp" alt="Blank grid titled distances and times of David's flights, with distance in miles from 500 to 4000 across and flight time in hours from 0 to 9 up"><p>(b) Draw a line of best fit on your scattergraph.</p><p>(c) David's next flight is expected to last 3.4 hours.<br>Use your line of best fit to estimate the distance of this flight.</p>`,
-          answer: `<p>(a) Plot (600, 1.8), (700, 2.4), (1100, 2.6), (1800, 4.2), (2000, 4.4), (2100, 5.6), (3300, 8.0) and (3600, 7.2).</p><p>(b) A straight line through the middle of the points, with roughly as many points above it as below.</p><p>(c) Read across from 3.4 hours to the line, then down to the distance axis. Any answer consistent with your line, approximately <strong>1450 to 1550 miles</strong>.</p>`,
+          answer: `<p>(a) Plot (600, 1.8), (700, 2.4), (1100, 2.6), (1800, 4.2), (2000, 4.4), (2100, 5.6), (3300, 8.0) and (3600, 7.2).</p><p>(b) A straight line through the middle of the points, with roughly as many points above it as below.</p><p>(c) Read across from 3.4 hours to the line, then down to the distance axis. Any answer consistent with your line, approximately <strong>1300 to 1450 miles</strong>.</p>`,
           videoId: "y8NNGijXZ3o",
           timestamp: "828s",
           marks: [2, 1, 1],

@@ -246,7 +246,7 @@ export const n5AppsMaths2023P1 = {
   <li>Option 2: 45 kiwi fruit for £8.10</li>
 </ul>
 <p>Determine which option offers the best value for money. Use your working to justify your answer.</p>`,
-          answer: `<p>Option 1</p>`,
+          answer: `<p>Option 1: £5.95 ÷ 35 = £0.17 per kiwi fruit.<br>Option 2: £8.10 ÷ 45 = £0.18 per kiwi fruit.<br><strong>Option 1</strong> offers the best value.</p>`,
           topics: ['Finance'],
           subtopics: ['Best Deal and Comparing Products'],
           marks: [2],
@@ -281,7 +281,7 @@ export const n5AppsMaths2023P1 = {
 <p>The students sell 180 candles in total.</p>
 <p>They sold 65 vanilla scented candles.</p>
 <p>Determine if this is more or less than expected.</p>`,
-          answer: `<p>More</p>`,
+          answer: `<p>Expected vanilla sales \\(=35\\%\\) of \\(180=63.\\) They sold 65, which is <strong>more</strong> than expected.</p>`,
           topics: ['Probability and Graphical Data'],
           subtopics: ['Expected Frequency'],
           marks: [2],
