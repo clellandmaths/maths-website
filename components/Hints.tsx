@@ -225,9 +225,10 @@ export default function Hints({
         // separately.
         const all = question.steps ?? [];
         const marks = question.stepMarks ?? [];
+        const worth = marks.reduce((a, b) => a + b, 0);
         next = {
           skill: question.skill!,
-          method: question.method!,
+          method: SHORT_HINTS && worth ? `${worth} mark${worth === 1 ? '' : 's'}` : question.method!,
           rungs: all.slice(0, -1).map((move, i) => ({ move, marks: marks[i] })),
           heldBack: all.length > 0,
         };
@@ -278,7 +279,9 @@ export default function Hints({
           nudged = !!of.nudge;
           next = {
             skill: plan.skill,
-            method: plan.method,
+            // Short hints say how many marks, as Higher does, not the method
+            // in words: that gave the approach away before the nudge.
+            method: SHORT_HINTS && of.marksLine ? of.marksLine : plan.method,
             rungs: [
               ...(of.nudge ? [{ move: of.nudge, marks: 0 }] : []),
               ...plan.moves.map((move, i) => ({
