@@ -1571,14 +1571,18 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
           startIndex={presentStartIndex}
-          /* Not here. This page already offers "another like this one" three
-             ways — Variation on every card, Add a variation of each, and
-             Generate new on N topics — and all three put the question ON the
-             sheet. A twin drawn inside a full-screen mode would be the only one
-             that vanishes when the mode closes, which on the one surface built
-             for assembling a worksheet reads as a bug rather than a feature.
-             Every other caller takes the default. */
-          allowAnother={false}
+          /* **N5 only, for now (the owner, 2026-09-27).** In class a teacher
+             makes a sheet quickly, puts it up full screen and wants another
+             like the one on the board, without leaving the sheet. The twin
+             swaps in with "Back to the question" beside it, and Next and
+             Previous put it away, so the sheet is always one press back.
+
+             It was off here until then: this page's Variation, Add a
+             variation of each and Generate new on N topics all put the
+             question ON the sheet, and a twin drawn in full screen vanishes
+             when the mode closes. The owner's call is that projecting one
+             is worth that. Other courses keep it off until asked. */
+          allowAnother={course === 'n5'}
           onClose={() => setPresentStartIndex(null)}
         />
       )}
@@ -1590,8 +1594,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           courseId={course}
           hasDataBooklet={config.hasDataBooklet}
           questions={worksheetItems}
-          /* See the presenter above: this page's own controls do it better. */
-          allowAnother={false}
+          /* As the presenter above: N5 only. Here the twin opens below its
+             question and never replaces it. */
+          allowAnother={course === 'n5'}
           onClose={() => setShowFocusMode(false)}
         />
       )}
