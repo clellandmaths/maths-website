@@ -179,7 +179,7 @@ export const higherPastPaper2019 = {
         },
         {
           question: `<small><strong><span style="white-space: nowrap;">2019 P2 Q5</span></strong></small><p>The diagram below shows the graph of a cubic function \\(y=g(x)\\), with stationary points at \\(x=-2\\) and \\(x=4.\\)</p><img src="/img/Higher_Past_Papers/2019/2019_P2_Q5.png" alt="Graph of cubic function g(x)"><p>On the diagram in your answer booklet, sketch the graph of \\(y=g^{\\prime}(x).\\)</p>`,
-          answer: `Sketch of a upward opening parabola (U Shape) crossing x-axis at -2 and 4.`,
+          answer: `Sketch of an upward opening parabola (U Shape) crossing x-axis at -2 and 4, with a minimum turning point at \\(x=1.\\)`,
           videoId: "Enrov8kIzeQ",
           timestamp: "635s",
                     marks: [2],

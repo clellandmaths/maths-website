@@ -147,7 +147,7 @@ export const higherPastPaper2026 = {
                 },
                 {
                     question: `<small><strong><span style="white-space: nowrap;">2026 P2 Q6</span></strong></small><p>The diagram shows the graph of a cubic function \\(y=f(x)\\) with stationary points at \\((-1,0)\\) and \\((1,-4).\\)</p><img src="/img/Higher_Past_Papers/2026/2026_P2_Q6.webp" alt="Graph of a cubic function with stationary points at (-1, 0) and (1, -4)"><p>On the diagram in your answer booklet, sketch the graph of \\(y=-f(x)+1.\\)</p>`,
-                    answer: `The graph of \\(y=f(x)\\) reflected in the x-axis and then translated \\(1\\) unit upwards.<br>Stationary points at \\((-1,1)\\), now a minimum, and \\((1,5)\\), now a maximum.`,
+                    answer: `The graph of \\(y=f(x)\\) reflected in the x-axis and then translated \\(1\\) unit upwards.<br>Stationary points at \\((-1,1)\\), now a minimum, and \\((1,5)\\), now a maximum.<br>The graph passes through \\((2,1).\\)`,
                     videoId: "szSfvfyDP3M",
                     timestamp: "718s",
                     marks: [3],
