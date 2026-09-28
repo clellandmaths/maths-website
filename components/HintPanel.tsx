@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { Lightbulb, X } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
@@ -41,6 +42,23 @@ export default function HintPanel({
   question, theme, courseId, given, staged, shown, total, more, loading, own,
   body, aside, onReveal, onClose,
 }: Props) {
+  /**
+   * Each press brings what it revealed into view (the owner, 2026-09-28). The
+   * ladder grows downwards under the question, so on a phone the new step
+   * landed below the fold and the press looked like it had done nothing. The
+   * newest thing is always the last child: a rung, or the closing note.
+   */
+  const ladderRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (shown < 2) return;
+    const frame = requestAnimationFrame(() => {
+      const last = ladderRef.current?.lastElementChild;
+      const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      last?.scrollIntoView({ block: 'nearest', behavior: still ? 'auto' : 'smooth' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [shown]);
+
   return (
       <div
         className="no-print fixed inset-0 z-[60] flex items-end justify-center bg-black/70 sm:items-center sm:p-6"
@@ -78,7 +96,7 @@ export default function HintPanel({
             </div>
 
             {staged && (
-              <div className="space-y-2">
+              <div ref={ladderRef} className="space-y-2">
         {/*
           Both prose lines go through the renderer, not just the steps.
           They are mostly words, but a dozen of them name the thing they are
