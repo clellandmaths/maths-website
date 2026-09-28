@@ -309,14 +309,72 @@ export interface ToWorksheetOptions {
   parentIndex?: number;
 }
 
-/** A lettered part opens a question line. `(a + b)` is algebra, not a part. */
-const QUESTION_PART = /(?:^|<br>\s*)\(([a-h])\)/g;
+/**
+ * A lettered part opens a question line, bare or in bold: `(a)`, `<b>(a)</b>`,
+ * `<strong>(a)</strong>`. `(a + b)` is algebra, not a part.
+ *
+ * **Bold used to be missed.** This matched a bare `(a)` only, and most
+ * variations set their parts in bold, so 36 of the 58 that ask lettered parts
+ * were read as single-part questions and printed a total alone (the owner,
+ * 2026-09-28: "multipart questions should always break down marks into parts
+ * like the real exam questions do").
+ */
+const QUESTION_PART = /(?:^|<br>)\s*(?:<(?:b|strong)>\s*)?\(([a-h])\)/g;
+
+/** A roman sub-part, `(i)` to `(v)`, anywhere after its letter. */
+const SUB_PART = /\((i{1,3}|iv|v)\)/g;
 
 /**
  * A step names the part it belongs to in a leading `<strong>`, sometimes
- * numbered within it: `<strong>(c) 2.</strong>`.
+ * numbered within it and sometimes down to a sub-part: `<strong>(a)</strong>`,
+ * `<strong>1. (a)</strong>`, `<strong>2. (b)(ii)</strong>`.
  */
-const STEP_PART = /^\s*<strong>\(([a-h])\)/;
+const STEP_PART = /^\s*<strong>\s*(?:\d+\.\s*)?\(([a-h])\)(?:\((i{1,3}|iv|v)\))?/;
+
+/**
+ * The parts a paper would print marks beside, in order: `a`, `b`, or `a.i`,
+ * `a.ii`, `b` where a letter is split into romans. One roman alone is not a
+ * split. Fewer than two means the question has no parts.
+ */
+export function markedParts(questionLines: readonly string[]): string[] {
+  const text = questionLines.join('<br>');
+  // A letter repeated on each of its sub-parts' lines (`(a) (i)`, `(a) (ii)`)
+  // is one part: keep only where each letter first appears.
+  const letters = [...text.matchAll(QUESTION_PART)]
+    .filter((m, i, all) => i === 0 || all[i - 1][1] !== m[1]);
+  const out: string[] = [];
+  letters.forEach((m, i) => {
+    const end = i + 1 < letters.length ? letters[i + 1].index! : text.length;
+    const romans = [...new Set([...text.slice(m.index!, end).matchAll(SUB_PART)].map(r => r[1]))];
+    if (romans.length >= 2) romans.forEach(r => out.push(`${m[1]}.${r}`));
+    else if (!out.includes(m[1])) out.push(m[1]);
+  });
+  return out;
+}
+
+/**
+ * The split a variation's `route` states, if it states one that fits.
+ *
+ * The route is the markscheme's own account, written when the scheme was read,
+ * and it gives the split three ways: in figures (`3 + 1 - …`, or `the 1 + 2 + 4
+ * the question data gives`), clause by clause (`3 for the volume…, 2 for the
+ * division`, `1 for …, then 2: …`), or as `a mark each`. Each reading is taken
+ * only if it has one number per marked part, none below 1, and they add up to
+ * the question's total; otherwise the next is tried, and none fitting is null.
+ */
+export function routeSplit(route: string | undefined, parts: number, total: number): number[] | null {
+  const text = route ?? '';
+  const fits = (s: number[] | null) =>
+    s !== null && s.length === parts && s.every(n => n >= 1) && s.reduce((a, b) => a + b, 0) === total;
+
+  const figures = text.match(/\b\d+(?:\s*\+\s*\d+)+\b/)?.[0];
+  const readings: (number[] | null)[] = [
+    figures ? figures.split('+').map(n => Number(n.trim())) : null,
+    [...text.matchAll(/\b(\d+) for\b|\bthen (\d+):/g)].map(m => Number(m[1] ?? m[2])),
+    /\b(?:a|one) mark each\b/i.test(text) ? Array(parts).fill(1) : null,
+  ];
+  return readings.find(fits) ?? null;
+}
 
 /**
  * What each lettered part is worth, or null if the question has no parts.
@@ -328,54 +386,61 @@ const STEP_PART = /^\s*<strong>\(([a-h])\)/;
  * paper prints beside `(a)`, `(b)`, `(c)`, and they are what the website's
  * `Marks` renders as a breakdown.
  *
- * Only the total used to travel, which was right for the 187 single-part
- * variations and wrong for the ten that ask lettered parts: those printed
- * `6 Marks` where the paper they clone prints `(1, 1, 4) 6 Marks`, so a pupil
- * budgeting time could not see that part (c) carried four of the six.
+ * **From the working where it can, from the route where it cannot.** Where
+ * every worked step opens by naming its part, grouping the step marks by that
+ * label *is* the split, and it cannot fall out of step with the steps it is
+ * made from. Where the steps are only numbered, the variation's `route` (the
+ * markscheme's own split, see `routeSplit`) is the source. `multipart.ts`
+ * compares the two wherever both exist.
  *
- * **Derived, not authored.** Every worked step already opens by naming its
- * part, because the solution is written to be read against the question, so
- * grouping the step marks by that label *is* the per-part split. Ten
- * hand-written arrays would be ten more things to keep in step with a
- * markscheme; this cannot fall out of step with the steps it is made from.
- *
- * The derivation is checked against a fact written independently of it: each
- * variation's `route` records the markscheme's own split in prose, and for all
- * ten this reproduces it exactly — `2 + 1`, `1 + 2`, `1 + 1 + 4`, `3 + 2`,
- * `4 + 2`, `1 + 3`. `multipart.ts` is where that comparison lives.
- *
- * Returns null rather than guessing, and every condition below is a way the
- * split could be wrong rather than merely absent: an unlabelled step means
- * marks would silently vanish from whichever part it belonged to; a part with
- * nothing against it means the labels and the question disagree about how many
- * parts there are; a sum that misses the total means the two disagree about the
- * size of the question. In each case the total alone is the honest answer, and
- * that is what the caller falls back to.
+ * Returns null rather than guessing: a step labelled for a part never asked, a
+ * part with nothing against it, or a sum that misses the total each mean the
+ * split could be wrong rather than merely absent, and the total alone is then
+ * the honest answer, which is what the caller falls back to.
  */
 export function partMarks(q: GeneratedQuestion): number[] | null {
+  const asked = markedParts(q.questionLines);
+  if (asked.length < 2) return null;
+
   const steps = q.solutionSteps ?? [];
   const stepMarks = q.stepMarks;
   if (!steps.length || !stepMarks?.length || steps.length !== stepMarks.length) return null;
-
-  const asked = [...new Set(
-    [...q.questionLines.join('<br>').matchAll(QUESTION_PART)].map(m => m[1]),
-  )];
-  if (asked.length < 2) return null;
+  const total = stepMarks.reduce((a, b) => a + b, 0);
 
   const byPart = new Map<string, number>();
+  let labelled = true;
   for (const [i, step] of steps.entries()) {
-    const letter = step.match(STEP_PART)?.[1];
-    if (!letter) return null;                       // a step belonging to nothing
-    byPart.set(letter, (byPart.get(letter) ?? 0) + stepMarks[i]);
+    const m = step.match(STEP_PART);
+    if (!m) { labelled = false; break; }
+    // A step for (a)(i) counts to `a.i` if the paper splits (a), else to `a`.
+    const key = m[2] && asked.includes(`${m[1]}.${m[2]}`) ? `${m[1]}.${m[2]}` : m[1];
+    byPart.set(key, (byPart.get(key) ?? 0) + stepMarks[i]);
   }
 
-  const split = asked.map(letter => byPart.get(letter) ?? 0);
-  if (split.some(n => n <= 0)) return null;         // a part nothing was awarded for
-  if (byPart.size !== asked.length) return null;    // a step labelled for a part never asked
-  const total = stepMarks.reduce((a, b) => a + b, 0);
-  if (split.reduce((a, b) => a + b, 0) !== total) return null;
+  if (labelled) {
+    const split = asked.map(p => byPart.get(p) ?? 0);
+    const unasked = [...byPart.keys()].some(k => !asked.includes(k));
+    if (!unasked && split.every(n => n > 0) && split.reduce((a, b) => a + b, 0) === total) return split;
+  }
 
-  return split;
+  const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
+  return routeSplit(meta?.route, asked.length, total);
+}
+
+/**
+ * Each part's answer on a line of its own, as a marking scheme sets them out:
+ * `(a) G(7, 9, 0), (b) 11 units` becomes two lines. Only an answer that opens
+ * with `(a)` is touched, so a `(b)` mentioned in prose is left alone, and one
+ * already on its own line is not given a second break.
+ */
+export function answerPartsOnLines(answer: string): string {
+  if (!/^\s*(?:<(?:b|strong)>\s*)?\(a\)/.test(answer)) return answer;
+  // `&nbsp;` counts as a space: several answers space their parts with two,
+  // and reading its `;` as a separator left a broken `&nbsp<br>` behind.
+  return answer.replace(
+    /(?<!<br>)(?:(?:\s|&nbsp;)*[,;](?:\s|&nbsp;)*|(?:\s|&nbsp;)+and(?:\s|&nbsp;)+|(?:\s|&nbsp;)+)(?=(?:<(?:b|strong)>\s*)?\([b-h]\))/g,
+    '<br>',
+  );
 }
 
 /**
@@ -431,7 +496,7 @@ export function toWorksheetQuestion(
 
   return {
     question,
-    answer: toSiteMaths(q.finalAnswer),
+    answer: answerPartsOnLines(toSiteMaths(q.finalAnswer)),
     steps: q.solutionSteps?.map(toSiteMaths),
     stepMarks: q.stepMarks,
     ...(parts ? { marks: parts } : total ? { marks: [total] } : {}),
