@@ -944,7 +944,7 @@ function ExplorerContent({ course }: { course: Course }) {
                 <div className="browse-grid">
                   {filteredQuestions.map((q) => (
                     <QuestionCard
-                      key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
+                      key={q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}
                       theme={theme}
                       courseId={course}
                       paperIndex={paperIndex}
@@ -1145,7 +1145,15 @@ function ExplorerContent({ course }: { course: Course }) {
                   <div className="space-y-6 max-w-4xl worksheet-container pb-20 lg:pb-0">
                     {worksheetItems.map((q, index) => (
                       <div
-                        key={`ws-${q.year}-${q.paperNumber}-${q.questionIndex}`}
+                        /* **The question's own id, not where it came from.** A
+                           generated question has no year or paper, so every one
+                           keyed `ws--0-0` and React could not tell them apart:
+                           a reorder or a re-roll rebuilt those rows instead of
+                           moving them, which the owner saw as the sheet
+                           freezing (2026-09-28; 34 of 68 rows on one sheet
+                           shared the key). `uid` is what the worksheet itself
+                           uses to tell questions apart. */
+                        key={`ws-${q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}`}
                         className={`worksheet-question bg-card border border-border rounded-xl p-4 sm:p-6${index === lastMovedIndex ? ' card-just-moved' : ''}`}
                       >
                         {/* **One wrapping row, and the controls pinned to the top.**
