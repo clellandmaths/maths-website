@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, Paperclip, Share2, Dices, Loader2 } from 'lucide-react';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, Paperclip, Share2, Dices, Loader2, Lock } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -117,6 +117,16 @@ function ExplorerContent({ course }: { course: Course }) {
   // Numbers and marks only on each card: no paper, topic or variation name to
   // give a test question away. Carried into a shared handout as `o=t`.
   const [testMode, setTestMode] = useState(false);
+  /**
+   * Test mode locks out what would give a test away (the owner, 2026-09-28:
+   * it "should lock out the other options and make it clear they are locked
+   * out until test mode unlocked"). Turning it on clears them, and they stay
+   * greyed with a lock until it is turned off.
+   */
+  const turnTestMode = (on: boolean) => {
+    setTestMode(on);
+    if (on) { setShowAnswersInView(false); setShowQRCodes(false); setShowHints(false); }
+  };
   const [presentStartIndex, setPresentStartIndex] = useState<number | null>(null);
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -1020,32 +1030,38 @@ function ExplorerContent({ course }: { course: Course }) {
                         </button>
                       </div>
                       <div className="flex flex-wrap items-center gap-3">
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className={`flex items-center gap-2 ${testMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} title={testMode ? 'Locked by Test mode. Turn Test mode off to use this.' : undefined}>
                           <input
                             type="checkbox"
                             checked={showAnswersInView}
+                            disabled={testMode}
                             onChange={(e) => setShowAnswersInView(e.target.checked)}
                             className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
+                          {testMode && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />}
                           <span className="text-sm text-muted-foreground">Show answers</span>
                         </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className={`flex items-center gap-2 ${testMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} title={testMode ? 'Locked by Test mode. Turn Test mode off to use this.' : undefined}>
                           <input
                             type="checkbox"
                             checked={showQRCodes}
+                            disabled={testMode}
                             onChange={(e) => setShowQRCodes(e.target.checked)}
                             className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
+                          {testMode && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />}
                           <span className="text-sm text-muted-foreground">QR codes</span>
                         </label>
                         {courseHasPaperLadder(course) && (
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className={`flex items-center gap-2 ${testMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} title={testMode ? 'Locked by Test mode. Turn Test mode off to use this.' : undefined}>
                           <input
                             type="checkbox"
                             checked={showHints}
+                            disabled={testMode}
                             onChange={(e) => setShowHints(e.target.checked)}
                             className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
+                          {testMode && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />}
                           <span className="text-sm text-muted-foreground">Hints</span>
                         </label>
                         )}
@@ -1053,11 +1069,17 @@ function ExplorerContent({ course }: { course: Course }) {
                           <input
                             type="checkbox"
                             checked={testMode}
-                            onChange={(e) => setTestMode(e.target.checked)}
+                            onChange={(e) => turnTestMode(e.target.checked)}
                             className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
                           <span className="text-sm text-muted-foreground">Test mode</span>
                         </label>
+                        {testMode && (
+                          <span role="status" className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                            <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                            Answers, QR codes and hints are locked in Test mode
+                          </span>
+                        )}
                         <button
                           onClick={() => setPresentStartIndex(0)}
                           className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
@@ -1419,22 +1441,26 @@ function ExplorerContent({ course }: { course: Course }) {
                   <div className="fixed bottom-0 left-0 right-0 lg:hidden no-print z-10 bg-background/90 backdrop-blur-sm border-t border-border px-4 py-3">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className={`flex items-center gap-2 ${testMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} title={testMode ? 'Locked by Test mode. Turn Test mode off to use this.' : undefined}>
                           <input
                             type="checkbox"
                             checked={showAnswersInView}
+                            disabled={testMode}
                             onChange={(e) => setShowAnswersInView(e.target.checked)}
                             className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
+                          {testMode && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />}
                           <span className="text-sm text-muted-foreground">Answers</span>
                         </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className={`flex items-center gap-2 ${testMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} title={testMode ? 'Locked by Test mode. Turn Test mode off to use this.' : undefined}>
                           <input
                             type="checkbox"
                             checked={showQRCodes}
+                            disabled={testMode}
                             onChange={(e) => setShowQRCodes(e.target.checked)}
                             className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                           />
+                          {testMode && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />}
                           <span className="text-sm text-muted-foreground">QR</span>
                         </label>
                         {/* **Hints belong here too.** The toolbar that carries
@@ -1445,13 +1471,15 @@ function ExplorerContent({ course }: { course: Course }) {
                             sheet someone is sitting and working through is
                             exactly where they would want them. */}
                         {courseHasPaperLadder(course) && (
-                          <label className="flex items-center gap-2 cursor-pointer">
+                          <label className={`flex items-center gap-2 ${testMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} title={testMode ? 'Locked by Test mode. Turn Test mode off to use this.' : undefined}>
                             <input
                               type="checkbox"
                               checked={showHints}
+                            disabled={testMode}
                               onChange={(e) => setShowHints(e.target.checked)}
                               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                             />
+                          {testMode && <Lock className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />}
                             <span className="text-sm text-muted-foreground">Hints</span>
                           </label>
                         )}
@@ -1459,7 +1487,7 @@ function ExplorerContent({ course }: { course: Course }) {
                             <input
                               type="checkbox"
                               checked={testMode}
-                              onChange={(e) => setTestMode(e.target.checked)}
+                              onChange={(e) => turnTestMode(e.target.checked)}
                               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
                             />
                             <span className="text-sm text-muted-foreground">Test mode</span>
