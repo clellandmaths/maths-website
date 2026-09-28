@@ -97,7 +97,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                 const mainTopic = item.topics?.[0] ? getMainTopic(item.topics[0]) : null;
                 return (
                   <div
-                    key={`${item.year}-${item.paperNumber}-${item.questionIndex}`}
+                    key={item.uid ?? `${item.year}-${item.paperNumber}-${item.questionIndex}`}
                     className={`bg-muted rounded-lg p-3 group${index === lastMovedIndex ? ' card-just-moved' : ''}`}
                   >
                     <div className="flex items-center gap-2">

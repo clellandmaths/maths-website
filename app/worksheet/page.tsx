@@ -229,7 +229,7 @@ function SharedWorksheet() {
           const isOpen = revealed.has(i);
           return (
             <li
-              key={`${q.year}-${q.paperNumber}-${q.questionIndex}`}
+              key={q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}
               className="worksheet-question bg-card border border-border rounded-xl p-5 sm:p-6 break-inside-avoid"
             >
               <div className="flex items-center gap-3 mb-3 flex-wrap">
