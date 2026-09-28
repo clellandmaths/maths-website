@@ -147,6 +147,48 @@ const NO_MARKSCHEME: ReadonlySet<string> = new Set(['2021 P1', '2021 P2']);
 export const NO_MARKSCHEME_PAPERS: readonly string[] = [...NO_MARKSCHEME];
 
 /**
+ * The years each course has hints for: the years whose marking instructions
+ * are transcribed, which is where every ladder is written from.
+ *
+ * **The label's shape is not enough.** The button used to show for any label
+ * shaped like the course's own, and guided practice carries questions from
+ * papers we hold no marking instructions for: Advanced Higher from 2002, 2012,
+ * 2014 and 2015 (the owner found "vectors 2014 Q5", 2026-09-28). Pressing it
+ * looked the label up, found nothing, and opened an empty overlay.
+ * `check-hint-gap.mjs` holds these sets to the plan tables: a year listed here
+ * with no plan fails it, and so does a plan for a year not listed.
+ *
+ * National 5 is the exception, and keeps `NO_MARKSCHEME`: it holds hints for
+ * every year it carries but 2021.
+ */
+export const HINTED_YEARS: Readonly<Record<string, ReadonlySet<string>>> = {
+  higher: new Set(['2015', '2016', '2017', '2018', '2019', '2022', '2023', '2024', '2025', '2026']),
+  ah: new Set(['2016', '2017', '2018', '2019', '2021', '2022', '2023', '2024', '2025', '2026']),
+  'n5-apps': new Set(['2018', '2019', '2021', '2022', '2023', '2024', '2025', '2026']),
+  'higher-apps': new Set(['2022', '2023', '2024', '2025', '2026', 'Specimen']),
+};
+
+/**
+ * Cards that set two parts together where the ladders were written per part,
+ * so the table has one for each part and none for the card. `check-hint-gap`
+ * fails on one that gains a ladder, and on a new card like it.
+ */
+export const NO_LADDER_CARDS: ReadonlySet<string> = new Set(['2022 P2 Q5(a) & (b)']);
+
+/**
+ * A label the course's table can answer, or null: from a hinted year, and not
+ * a declared card. Its "&" is written one way first, as the tables write it:
+ * the same card reads "Q5(a) &amp; (b)" in one source and "Q5(a)&(b)" in
+ * another, and "2024 P2 Q8(a) & (b)" has a ladder under that spelling.
+ */
+function hinted(courseId: string, label: string | null): string | null {
+  if (!label) return null;
+  const card = label.replace(/\s*&(?:amp;)?\s*/g, ' & ');
+  if (NO_LADDER_CARDS.has(card)) return null;
+  return HINTED_YEARS[courseId]?.has(card.split(' ')[0]) ? card : null;
+}
+
+/**
  * The label to ask the hint table about, or null where no ladder can exist.
  *
  * `paperLabelOf` with the papers we hold no marking instructions for taken out.
@@ -158,24 +200,19 @@ export function ladderLabel(
   questionHtml?: string,
   courseId?: string,
 ): string | null {
-  if (courseId === 'higher-apps') {
-    if (explicit && ONE_PAPER_LABEL.test(explicit)) return explicit;
+  // The given label if it has the course's shape, else the question's badge.
+  const shaped = (shape: RegExp) => {
+    if (explicit && shape.test(explicit)) return explicit;
     const ref = questionHtml ? paperRef(questionHtml) : null;
-    return ref && ONE_PAPER_LABEL.test(ref) ? ref : null;
-  }
+    return ref && shape.test(ref) ? ref : null;
+  };
+  if (courseId === 'higher-apps') return hinted(courseId, shaped(ONE_PAPER_LABEL));
   // Before the N5 rule below: N5 Apps and AH 2021 do have marking instructions.
-  if (courseId === 'n5-apps') {
-    if (explicit && N5APPS_LABEL.test(explicit)) return explicit;
-    const ref = questionHtml ? paperRef(questionHtml) : null;
-    return ref && N5APPS_LABEL.test(ref) ? ref : null;
-  }
-  if (courseId === 'ah') {
-    if (explicit && AH_LABEL.test(explicit)) return explicit;
-    const ref = questionHtml ? paperRef(questionHtml) : null;
-    return ref && AH_LABEL.test(ref) ? ref : null;
-  }
+  if (courseId === 'n5-apps') return hinted(courseId, shaped(N5APPS_LABEL));
+  if (courseId === 'ah') return hinted(courseId, shaped(AH_LABEL));
   const label = paperLabelOf(explicit, questionHtml);
   if (label === null) return null;
+  if (courseId === 'higher') return hinted(courseId, label);
   // "2021 P1 Q2" -> "2021 P1". The label shape is fixed by N5_PAPER_LABEL.
   return NO_MARKSCHEME.has(label.slice(0, 7)) ? null : label;
 }

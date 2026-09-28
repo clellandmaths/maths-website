@@ -208,15 +208,18 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
       'and with hints off it is absent — the sheet is the sheet');
   }
 
-  /* ── the Explorer's own worksheet, which opts out ────────────────────────
+  /* ── the Explorer's own worksheet, which opts in for National 5 ──────────
+     It opted out until 2026-09-28 (this page puts variations ON the sheet, and
+     a twin drawn in full screen vanishes when the mode closes). The owner asked
+     for it on N5, for projecting one (a844600), and this check was not moved
+     with it: it went on asserting the absence.
+
      **Past paper references, not the generated sheet's.** The first version of
      this reused the refs from the worksheet above, which are generated
      questions — and `MoreLikeThis` does not pass their parentage through, so
      the control was absent for a reason that had nothing to do with the
-     opt-out. Both assertions passed while the opt-out was mutated away. The
-     badge assertion below is what keeps that from happening again: it says out
-     loud that these questions DO have variations behind them, so an absence
-     here is a decision rather than an empty pool. */
+     opt-out. The badge assertion below says out loud that these questions DO
+     have variations behind them, so the offer is on a real pool. */
   await go('/explorer?c=n5&q=2024-1-0,2024-1-1,2024-1-2', 7000);
   for (const mode of ['Full screen', 'Focus']) {
     await click(buttonNamed(mode));
@@ -225,8 +228,8 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
     await sleep(1500);
     t.check(await evaluate(`/[0-9]{4} P[0-9] Q[0-9]/.test(${OVERLAY}?.innerText ?? '')`),
       `it is showing National 5 past paper questions, which have variations (${mode})`);
-    t.check(!(await evaluate(`!!(${drawButton(OVERLAY)})`)),
-      `and it still offers nothing — this page puts variations ON the sheet (${mode})`);
+    t.check(await evaluate(`!!(${drawButton(OVERLAY)})`),
+      `and it offers another like the question on screen, as the owner asked for N5 (${mode})`);
     await click(`[...(${OVERLAY}?.querySelectorAll('button') ?? [])]
       .find(b => /close/i.test(b.textContent || ''))`);
     await sleep(1500);
@@ -294,9 +297,11 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
   t.check(await evaluate(`(() => {
     const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
     const b = [...document.querySelectorAll('button,summary')].filter(laid).map(x => x.textContent.trim());
+    // Hints, since the short hints from Higher's marking instructions
+    // (hint-quality, 2026-09-26); still no generator, so no twin.
     return b.filter(x => /show answer/i.test(x)).length > 0
-        && b.filter(x => x === 'Hint').length === 0;
-  })()`), 'a Higher paper page has questions and no hints, which is correct there');
+        && b.filter(x => /another like this/i.test(x)).length === 0;
+  })()`), 'a Higher paper page has questions and no twin, which is correct there');
 });
 
 t.done('another like this one is where a pupil gets stuck, and nowhere else');
