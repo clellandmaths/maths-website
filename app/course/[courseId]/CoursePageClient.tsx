@@ -292,7 +292,10 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                               </button>
                               <button
                                 onClick={() => handleFocusMode(paper.year, paper.paperNumber)}
-                                className="flex items-center gap-1.5 px-3 py-2 bg-muted-hover hover:bg-muted-hover text-foreground text-sm font-medium rounded-lg transition-colors"
+                                // Rest and hover were the same colour, so it
+                                // never answered the pointer (80 buttons over
+                                // five courses). Now as Browse Questions.
+                                className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 hover:text-foreground text-sm font-medium rounded-lg transition-colors"
                               >
                                 <List className="h-4 w-4" />
                                 Focus Mode
@@ -333,14 +336,17 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
                                 className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 text-sm font-medium rounded-lg transition-colors ml-auto"
                               >
                                 {isExpanded ? (
+                                  // The label at every width. It was `hidden
+                                  // sm:inline`, and `sm:` is 640px, so no phone
+                                  // in portrait ever saw more than a chevron.
                                   <>
                                     <ChevronUp className="h-4 w-4" />
-                                    <span className="hidden sm:inline">Hide Questions</span>
+                                    <span>Hide Questions</span>
                                   </>
                                 ) : (
                                   <>
                                     <ChevronDown className="h-4 w-4" />
-                                    <span className="hidden sm:inline">Browse Questions</span>
+                                    <span>Browse Questions</span>
                                   </>
                                 )}
                               </button>

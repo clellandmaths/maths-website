@@ -339,6 +339,19 @@ body {
   [class*="bg-card/"] {
     box-shadow: var(--shadow-1);
   }
+
+  /* **A button shows the hand, as a link does.** Tailwind 4 dropped the
+     pointer default for buttons, so every button on the site showed the
+     arrow while every link showed the hand: 90 on the N5 course page alone
+     (measured 2026-09-28). A disabled one keeps the arrow. In the base layer,
+     so a `cursor-*` utility on a component still wins. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  label[for],
+  select:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 /* Question container fixes */
