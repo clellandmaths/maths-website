@@ -15,7 +15,7 @@ import MathRenderer from '@/components/MathRenderer';
  */
 const HintPanel = dynamic(() => import('@/components/HintPanel'), { ssr: false });
 import { ladderLabel, courseHasHints, courseHasPaperLadder } from '@/lib/similar-questions';
-import { splitByPart, shortByPart, partNames, cardParts, partOfMove } from '@/lib/hint-parts';
+import { splitByPart, shortByPart, partNames, cardParts, partOfMove } from '@/lib/hint-parts.mjs';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -360,7 +360,7 @@ export default function Hints({
         // method, not a nudge.
         const nudges = courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps' || nudged;
         // A card in parts is cut part by part, so every part gets a step (see
-        // lib/hint-parts.ts); a card of one part is cut as before.
+        // lib/hint-parts.mjs); a card of one part is cut as before.
         const parts = own ? null : splitByPart(next.rungs, question.marks);
         next = {
           ...next,
