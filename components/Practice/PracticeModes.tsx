@@ -54,7 +54,7 @@ export default function PracticeModes({ courseId, questions, theme, hasDataBookl
    * A pupil sent here from a notes topic goes straight into full screen.
    *
    * **In an effect, and deliberately not in a lazy `useState` initialiser**,
-   * which is how `app/explorer/page.tsx` reads its own `?c=`. This is a static
+   * which is how the Explorer once read its own `?c=`. This is a static
    * export: the HTML for this page is built once, with no query string in
    * existence, so an initialiser that reads `location` makes the client's first
    * render disagree with the HTML it is hydrating. An effect renders the built

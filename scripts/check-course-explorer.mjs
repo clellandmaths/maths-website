@@ -16,9 +16,12 @@
  * docs/navigation.md). The Explorer is a tab of every course page, and the
  * Explorer carries the same bar, whose Overview tab is the way back. It
  * replaced a pair of stop-gap controls ("Open the Topic Explorer" above the
- * archive, "Back to National 5" in the Explorer). Its six tabs do not fit a
- * 320px phone, so they scroll inside the bar, and the overflow assertions at
- * the bottom are what hold the page itself to the phone's width.
+ * archive, "Back to National 5" in the Explorer). Below `lg` its six sections
+ * sit behind one Menu button rather than scrolling sideways, and the overflow
+ * assertions at the bottom hold the page and the bar to the phone's width.
+ *
+ * **The Explorer is `/course/<id>/explorer` since 2026-09-28**, built with its
+ * course. `/explorer?c=<id>` still works: it is forwarded there.
  *
  * One name is checked too. The tool answered to "Explorer" in the navbar,
  * "Topic Explorer" in the footer and its own heading, and "Practise by topic"
@@ -44,15 +47,15 @@ await withPage({ port: 8177, cdp: 9277, width: 1280, height: 900 }, async ({ eva
       return a ? { href: a.getAttribute('href'), y: Math.round(a.getBoundingClientRect().top), vh: innerHeight } : null;
     })()`);
     t.check(!!wayIn, `${page}: the course bar offers the Topic Explorer`);
-    t.check(wayIn?.href === '/explorer?c=n5',
-      `which carries the course rather than trusting localStorage (${wayIn?.href})`);
+    t.check(wayIn?.href === '/course/n5/explorer',
+      `which is that course's own Explorer rather than trusting localStorage (${wayIn?.href})`);
     t.check(wayIn && wayIn.y < wayIn.vh, `and it is on the first screen (${wayIn?.y}px of ${wayIn?.vh}px)`);
   }
 
   await click(barLink('Topic Explorer'));
   await sleep(5000);
 
-  t.check(await evaluate(`location.pathname === '/explorer'`), 'it lands on the Explorer');
+  t.check(await evaluate(`location.pathname === '/course/n5/explorer'`), 'it lands on the Explorer');
   t.check(await evaluate(`(document.querySelector('nav[aria-label$="sections"] summary')?.textContent || '').trim() === 'National 5'`),
     'showing the course it came from, in its own course bar');
 
@@ -91,10 +94,13 @@ await withPage({ port: 8177, cdp: 9277, width: 1280, height: 900 }, async ({ eva
    answers that by scaling the whole page down — which reads as a font bug. */
 for (const width of [320, 390]) {
   await withPage({ port: 8178, cdp: 9278, width, height: 800 }, async ({ evaluate, go }) => {
-    for (const path of ['/course/n5', '/course/n5/papers', '/explorer?c=n5', '/exam-hall?c=n5']) {
+    for (const path of ['/course/n5', '/course/n5/papers', '/course/n5/explorer', '/course/n5/exam-hall', '/explorer?c=n5']) {
       await go(path, 4000);
       const m = await evaluate(`({ doc: Math.round(document.documentElement.scrollWidth), vw: innerWidth })`);
       t.check(m.doc <= m.vw, `${width}px · ${path} still fits the phone (${m.doc}/${m.vw})`);
+      const scrolls = await evaluate(`[...document.querySelectorAll('nav[aria-label$="sections"] *')]
+        .filter(e => e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).overflowX !== 'visible').length`);
+      t.check(scrolls === 0, `and nothing in its course bar scrolls sideways (${scrolls})`);
     }
   });
 }

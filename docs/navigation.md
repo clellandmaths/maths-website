@@ -105,6 +105,38 @@ until happy". It merges after `hint-quality`, on the owner's word only.
   every internal link in the build resolves (22,548 links, 575 addresses); the
   round trip `check-course-explorer.mjs` (rewritten for the course bar) and
   `check-explorer-generate.mjs` pass.
+- **Second pass, the same day.** The owner, testing the preview: "quite a
+  layout shift when in one section and you click to another such as notes to
+  exam hall… it's not at all clear that it scrolls horizontally on phone and I
+  think horizontal scrolling not great for users… in N5 applications if you go
+  to exam hall the writing for that pill starts to get cut off". Three causes,
+  all fixed:
+  - **The bar jumped.** Each page drew it inside its own column: four widths
+    (`max-w-3xl` to `6xl`), above the heading on some pages and below it on
+    others. It is now a band directly under the header, at the header's width,
+    the first thing on every course page. Measured at 375, 1024 and 1280px on
+    all nine kinds of N5 Applications page: the same position and size on
+    every one.
+  - **The Explorer and the Exam Hall flashed a chooser.** They were
+    `/explorer?c=` and `/exam-hall?c=`, read the course in an effect, and so
+    drew the course chooser first and swapped the page in, with the bar
+    arriving late. They are now `/course/[id]/explorer` and
+    `/course/[id]/exam-hall`, built with their course (the code moved to
+    `components/Explorer/ExplorerApp.tsx` and
+    `components/ExamHall/ExamHallApp.tsx`). **The old addresses still work**:
+    `/explorer` and `/exam-hall` are the choosers, and a script in the page
+    forwards `?c=` (keeping `q=`, so shared worksheets still open) or the course
+    last used before anything is drawn. The Exam Hall's countdown is now worked
+    out in the browser, and its date is formatted in UK time, since the page
+    is built in advance.
+  - **The tabs scrolled sideways, and the fade hid the last one.** From `lg`
+    (1024px) all six sections fit in one row, with the longest course name.
+    Below that the bar is one button that says where you are (course, then
+    section) with a visible "Menu", opening the sections and the courses as a
+    list. The menus close on Escape, after a choice, and (the desktop switcher)
+    on a click elsewhere (`components/MenuDismiss.tsx`).
+  - So the note above ("No address changes") is now: no address **breaks**.
+    Two new ones per course, and the old ones forward.
 - Not yet: 3 (a calmer archive) and 4 (the Explorer's first screen).
 - Found: a guided practice question on vectors linked "surd" to `/nat5/surds`,
   a maths.scot path that does not exist here. Link removed in both copies on

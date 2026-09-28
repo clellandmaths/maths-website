@@ -114,64 +114,66 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
-      <Breadcrumbs
-        items={[{ label: 'Home', href: '/' }, { label: courseName, href: `/course/${courseId}` }, { label: 'Practice' }]}
-      />
+    <>
       <CourseBar courseId={courseId} active="practice" />
+      <div className="mx-auto max-w-5xl px-4 py-8">
+        <Breadcrumbs
+          items={[{ label: 'Home', href: '/' }, { label: courseName, href: `/course/${courseId}` }, { label: 'Practice' }]}
+        />
 
-      <div className="mb-10">
-        <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          {courseName} Practice Questions
-        </h1>
-        <p className="text-muted-foreground">
-          {total} questions across {course.sections.reduce((n, s) => n + s.topics.length, 0)} topics.
-          {/* Only claim video where it exists — most Advanced Higher topics
-              have no guided practice filmed yet */}
-          {videos === total
-            ? ' Every question has an answer and a video solution.'
-            : ` Every question has an answer${videos ? `, and ${videos} have a video solution` : ''}.`}
-        </p>
-      </div>
-
-      {isFlat ? (
-        // One grid, no headings — the card already carries the topic name.
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {flatTopics.map(topicCard)}
+        <div className="mb-10">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+            {courseName} Practice Questions
+          </h1>
+          <p className="text-muted-foreground">
+            {total} questions across {course.sections.reduce((n, s) => n + s.topics.length, 0)} topics.
+            {/* Only claim video where it exists — most Advanced Higher topics
+                have no guided practice filmed yet */}
+            {videos === total
+              ? ' Every question has an answer and a video solution.'
+              : ` Every question has an answer${videos ? `, and ${videos} have a video solution` : ''}.`}
+          </p>
         </div>
-      ) : (
-        // Collapsible sections. <details> rather than a JS accordion: the links
-        // stay in the DOM either way, so crawlers still reach every topic page,
-        // and it works before hydration. The first section is open so the page
-        // does not land looking empty.
-        <div className="space-y-3">
-          {course.sections.map((section, i) => {
-            const questions = questionsIn(section.topics);
-            return (
-              <details
-                key={section.id}
-                open={i === 0}
-                className="group rounded-xl border border-border overflow-hidden"
-              >
-                <summary className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer list-none hover:bg-foreground/5 transition-colors">
-                  <span className={`font-mono text-xs uppercase tracking-widest ${theme.text}`}>
-                    {section.title}
-                  </span>
-                  <span className="flex items-center gap-3 shrink-0">
-                    <span className="font-mono text-xs text-muted-dim">
-                      {section.topics.length} topics · {questions} questions
+
+        {isFlat ? (
+          // One grid, no headings — the card already carries the topic name.
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {flatTopics.map(topicCard)}
+          </div>
+        ) : (
+          // Collapsible sections. <details> rather than a JS accordion: the links
+          // stay in the DOM either way, so crawlers still reach every topic page,
+          // and it works before hydration. The first section is open so the page
+          // does not land looking empty.
+          <div className="space-y-3">
+            {course.sections.map((section, i) => {
+              const questions = questionsIn(section.topics);
+              return (
+                <details
+                  key={section.id}
+                  open={i === 0}
+                  className="group rounded-xl border border-border overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer list-none hover:bg-foreground/5 transition-colors">
+                    <span className={`font-mono text-xs uppercase tracking-widest ${theme.text}`}>
+                      {section.title}
                     </span>
-                    <ChevronDown className="h-4 w-4 text-muted-dim transition-transform group-open:rotate-180" />
-                  </span>
-                </summary>
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 p-4 pt-1">
-                  {section.topics.map(topicCard)}
-                </div>
-              </details>
-            );
-          })}
-        </div>
-      )}
-    </div>
+                    <span className="flex items-center gap-3 shrink-0">
+                      <span className="font-mono text-xs text-muted-dim">
+                        {section.topics.length} topics · {questions} questions
+                      </span>
+                      <ChevronDown className="h-4 w-4 text-muted-dim transition-transform group-open:rotate-180" />
+                    </span>
+                  </summary>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 p-4 pt-1">
+                    {section.topics.map(topicCard)}
+                  </div>
+                </details>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

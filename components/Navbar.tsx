@@ -33,11 +33,18 @@ const courses = [
  * did (docs/navigation.md). No Home link: the logo is Home, and the space went
  * to saying where you are (2026-09-28).
  */
-const isIn = (path: string, href: string) => path === href || path.startsWith(href + '/');
+const isIn = (path: string, href: string) =>
+  path === href || path.startsWith(href + '/') || toolOf(path) === href;
+
+/**
+ * The Explorer and the Exam Hall live inside a course (`/course/n5/explorer`)
+ * but have their own item here, which is the one marked there, not Courses.
+ */
+const toolOf = (path: string) => path.match(/^\/course\/[^/]+(\/(?:explorer|exam-hall))\/?$/)?.[1];
 
 export default function Navbar() {
   const pathname = usePathname() ?? '/';
-  const inCourse = pathname.startsWith('/course/');
+  const inCourse = pathname.startsWith('/course/') && !toolOf(pathname);
   const [isOpen, setIsOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
 

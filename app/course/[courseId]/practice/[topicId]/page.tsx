@@ -86,114 +86,116 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
   const attributed = questions.some(q => q.solutionUrl);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <Breadcrumbs
-        items={[
-          { label: 'Home', href: '/' },
-          { label: courseName, href: `/course/${courseId}` },
-          { label: 'Practice', href: `/course/${courseId}/practice` },
-          { label: topic.name },
-        ]}
-      />
+    <>
       <CourseBar courseId={courseId} active="practice" />
-
-      <div className="mb-8">
-        <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
-          {sectionTitle} · Guided Practice
-        </p>
-        <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          {topic.name}
-        </h1>
-        <p className="text-muted-foreground mb-5">
-          {questions.length} question{questions.length === 1 ? '' : 's'} with answers
-          {/* Only promise video where there is video: several Higher topics
-              have no guided practice filmed yet */}
-          {questions.some(q => q.videoId) && ' and video solutions'}. Try each one before
-          revealing the answer.
-        </p>
-        {/* Raw (unrendered) question html — Focus Mode renders maths itself.
-            Higher Apps sits the exam with the data booklet rather than a
-            formulae list, so practice offers the booklet for that course. */}
-        <PracticeModes
-          courseId={courseId}
-          hasDataBooklet={courseId === 'higher-apps'}
-          questions={questions.map((q, i) => ({
-            question: q.question,
-            answer: q.answer,
-            videoId: q.videoId ?? '',
-            timestamp: q.timestamp ? `${q.timestamp}s` : '0s',
-            topics: [topic.name],
-            marks: q.marks,
-            solutionUrl: q.solutionUrl,
-            // Past paper questions keep their paper reference; the rest are
-            // numbered within the topic. Guided practice has no paper number,
-            // so the caption is set explicitly rather than assembled.
-            label: q.paper ?? `${topic.name} · Question ${i + 1}`,
-            year: q.paper ?? topic.name,
-            paperNumber: 0,
-            questionIndex: i,
-            // Practice questions are numbered within the topic, and `label`
-            // above is what actually shows; this only satisfies the shape.
-            questionNumber: String(i + 1),
-          }))}
-          theme={theme}
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: '/' },
+            { label: courseName, href: `/course/${courseId}` },
+            { label: 'Practice', href: `/course/${courseId}/practice` },
+            { label: topic.name },
+          ]}
         />
-      </div>
 
-      <div className="space-y-4">
-        {questions.map((q, i) => (
-          <PracticeQuestion
-            key={i}
-            index={i + 1}
-            questionHtml={q.questionHtml}
-            answerHtml={q.answerHtml}
-            videoId={q.videoId}
-            timestamp={q.timestamp}
-            paper={q.paper}
-            solutionUrl={q.solutionUrl}
-            marks={q.marks}
-            hasDataBooklet={courseId === 'higher-apps'}
+        <div className="mb-8">
+          <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
+            {sectionTitle} · Guided Practice
+          </p>
+          <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+            {topic.name}
+          </h1>
+          <p className="text-muted-foreground mb-5">
+            {questions.length} question{questions.length === 1 ? '' : 's'} with answers
+            {/* Only promise video where there is video: several Higher topics
+                have no guided practice filmed yet */}
+            {questions.some(q => q.videoId) && ' and video solutions'}. Try each one before
+            revealing the answer.
+          </p>
+          {/* Raw (unrendered) question html — Focus Mode renders maths itself.
+              Higher Apps sits the exam with the data booklet rather than a
+              formulae list, so practice offers the booklet for that course. */}
+          <PracticeModes
             courseId={courseId}
+            hasDataBooklet={courseId === 'higher-apps'}
+            questions={questions.map((q, i) => ({
+              question: q.question,
+              answer: q.answer,
+              videoId: q.videoId ?? '',
+              timestamp: q.timestamp ? `${q.timestamp}s` : '0s',
+              topics: [topic.name],
+              marks: q.marks,
+              solutionUrl: q.solutionUrl,
+              // Past paper questions keep their paper reference; the rest are
+              // numbered within the topic. Guided practice has no paper number,
+              // so the caption is set explicitly rather than assembled.
+              label: q.paper ?? `${topic.name} · Question ${i + 1}`,
+              year: q.paper ?? topic.name,
+              paperNumber: 0,
+              questionIndex: i,
+              // Practice questions are numbered within the topic, and `label`
+              // above is what actually shows; this only satisfies the shape.
+              questionNumber: String(i + 1),
+            }))}
             theme={theme}
           />
-        ))}
-      </div>
+        </div>
 
-      {/* Where the topic runs out. National 5 only, and nothing at all where the
-          topic has no exam-tier variations behind it — the map in
-          `lib/generatable-topics.ts` and `scripts/check-topic-maps.mjs` settle
-          which, rather than a guess made here. */}
-      <PracticeGenerate
-        courseId={courseId}
-        subtopics={subtopicsForPractice(courseId, topicId)}
-        topicName={topic.name}
-        theme={theme}
-      />
+        <div className="space-y-4">
+          {questions.map((q, i) => (
+            <PracticeQuestion
+              key={i}
+              index={i + 1}
+              questionHtml={q.questionHtml}
+              answerHtml={q.answerHtml}
+              videoId={q.videoId}
+              timestamp={q.timestamp}
+              paper={q.paper}
+              solutionUrl={q.solutionUrl}
+              marks={q.marks}
+              hasDataBooklet={courseId === 'higher-apps'}
+              courseId={courseId}
+              theme={theme}
+            />
+          ))}
+        </div>
 
-      {attributed && (
-        <p className="mt-10 pt-6 border-t border-border text-sm text-muted-foreground">
-          Practice questions courtesy of{' '}
-          <a
-            href="https://www.maths.scot"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-foreground"
+        {/* Where the topic runs out. National 5 only, and nothing at all where the
+            topic has no exam-tier variations behind it — the map in
+            `lib/generatable-topics.ts` and `scripts/check-topic-maps.mjs` settle
+            which, rather than a guess made here. */}
+        <PracticeGenerate
+          courseId={courseId}
+          subtopics={subtopicsForPractice(courseId, topicId)}
+          topicName={topic.name}
+          theme={theme}
+        />
+
+        {attributed && (
+          <p className="mt-10 pt-6 border-t border-border text-sm text-muted-foreground">
+            Practice questions courtesy of{' '}
+            <a
+              href="https://www.maths.scot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground"
+            >
+              Maths.scot
+            </a>
+            . Full written solutions are on his site — the links above go straight to them.
+          </p>
+        )}
+
+        <div className="mt-8">
+          <Link
+            href={`/course/${courseId}/practice`}
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Maths.scot
-          </a>
-          . Full written solutions are on his site — the links above go straight to them.
-        </p>
-      )}
-
-      <div className="mt-8">
-        <Link
-          href={`/course/${courseId}/practice`}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          All practice topics
-        </Link>
+            <ChevronLeft className="h-4 w-4" />
+            All practice topics
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -30,7 +30,7 @@
  * generator call appears **inside** it. That is deliberately narrower than
  * banning those combinators outright: `Promise.all([import(…), import(…)])` is
  * the legitimate way to load two modules at once and appears in two call sites
- * today, and `app/explorer/page.tsx` uses `Promise.race` for a print timeout
+ * today, and `components/Explorer/ExplorerApp.tsx` uses `Promise.race` for a print timeout
  * that has nothing to do with drawing. A file-level ban would fail both.
  *
  * `scripts/check-share-refs.mjs` still owns the same rule for
@@ -69,7 +69,7 @@ const ALLOWED = new Map([
   ['lib/use-generated-draw.ts', 'the shared hook every on-page control draws through'],
   ['components/Explorer/QuestionCard.tsx', 'a variation of the question on the card'],
   ['components/ExamHall/WarmUp.tsx', 'five more once the daily five are done'],
-  ['app/explorer/page.tsx', 'bulk generate, and re-roll on the worksheet'],
+  ['components/Explorer/ExplorerApp.tsx', 'bulk generate, and re-roll on the worksheet'],
   ['app/course/[courseId]/generate/paper/[year]/[paper]/PracticePaperClient.tsx',
     'a whole practice paper'],
 ]);

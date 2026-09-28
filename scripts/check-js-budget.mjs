@@ -88,7 +88,12 @@ if (!sizes.size) {
 
 /** Fold a page path into the template it was built from. */
 function template(rel) {
-  return rel.split(path.sep).join('/')
+  const p = rel.split(path.sep).join('/');
+  // The Explorer and the Exam Hall, one per course: templates of their own,
+  // not folded in with the notes and practice hubs that share the path's shape.
+  const tool = p.match(/^course\/[^/]+\/(explorer|exam-hall)\.html$/);
+  if (tool) return `course/*/${tool[1]}.html`;
+  return p
     .replace(/\/\d{4}\/paper-\d+\.html$/, '/*/*.html')     // papers/2024/paper-1
     .replace(/\/[^/]+\/[^/]+\.html$/, m => {
       // notes/<section>/<topic>.html — two variable segments

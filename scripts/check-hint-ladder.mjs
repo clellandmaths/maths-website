@@ -326,7 +326,7 @@ await withPage({ port: 8159, cdp: 9259, width: 390, height: 844 }, async ({ eval
    text on the page — on the one surface built for a pupil who is stuck. */
 await withPage({ port: 8158, cdp: 9258, width: 1280, height: 900 }, async ({ evaluate, click, go, sleep }) => {
   const LAID = `(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; })`;
-  await go('/course/n5', 4000);
+  await go('/course/n5/papers', 4000);
   await click(`[...document.querySelectorAll('button')].filter(${LAID}).find(b=>/^Start Paper$/.test(b.textContent.trim()))`);
   await sleep(4000);
 

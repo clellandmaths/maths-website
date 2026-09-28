@@ -45,6 +45,10 @@ const PAGES = [
   ['/explorer?c=n5', 'a shared link naming National 5'],
   ['/explorer?c=higher', 'a shared link naming Higher'],
   ['/explorer', 'no query at all'],
+  // Built with their course since 2026-09-28: the Exam Hall's countdown is the
+  // thing that must not be worked out at build time.
+  ['/course/higher/explorer', 'the Higher Explorer, at its own address'],
+  ['/course/n5-apps/exam-hall', 'the N5 Applications Exam Hall, at its own address'],
   ['/course/n5/practice/3d-coordinates?full=1', 'practice, straight into full screen'],
 ];
 

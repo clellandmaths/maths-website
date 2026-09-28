@@ -94,7 +94,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
         </button>
         {added > 0 && (
           <a
-            href={`/explorer?c=${courseId}`}
+            href={`/course/${courseId}/explorer`}
             className={`inline-flex items-center gap-1.5 text-sm font-medium ${theme.text} hover:opacity-80`}
           >
             {added} on your worksheet

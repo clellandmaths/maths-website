@@ -107,12 +107,21 @@ const BASELINE = join(import.meta.dirname,
  */
 const PAGES = [
   ['/', 'home'],
-  ['/explorer?c=n5', 'explorer'],
+  // The Explorer and the Exam Hall by their own addresses (2026-09-28).
+  // `/exam-hall` was here and only ever measured the course chooser: its
+  // dashboard, drawn once a course was picked, was never seen by this check.
+  // The dashboard's marathon card sits on each course's own gradient, so all five.
+  ['/course/n5/explorer', 'explorer'],
   ['/worksheet', 'worksheet'],
-  ['/exam-hall', 'exam hall'],
+  ['/course/n5/exam-hall', 'exam hall: n5'],
+  ['/course/higher/exam-hall', 'exam hall: higher'],
+  ['/course/ah/exam-hall', 'exam hall: ah'],
+  ['/course/n5-apps/exam-hall', 'exam hall: n5 apps'],
+  ['/course/higher-apps/exam-hall', 'exam hall: higher apps'],
   ['/academy', 'academy'],
   ['/connect', 'connect'],
   ['/course/n5', 'course'],
+  ['/course/n5/papers', 'past papers'],
   ['/course/n5/practice/fractions', 'practice topic'],
   ['/course/n5/papers/2024/paper-1', 'paper'],
   ['/course/n5/notes/algebra/algebraic-fractions', 'notes'],

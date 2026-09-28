@@ -103,56 +103,58 @@ export default async function NotesTopicPage(
     `/course/${courseId}/notes/${t.sectionId}/${t.topicId}`;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: COURSE_NAMES[courseId] ?? course.title, href: `/course/${courseId}` },
-        { label: 'Notes', href: `/course/${courseId}/notes` },
-        { label: section.title },
-        { label: topic.title },
-      ]} />
+    <>
       <CourseBar courseId={courseId} active="notes" />
-      <NotesTopicShell
-        courseId={courseId}
-        nav={nav}
-        sectionId={sectionId}
-        topicId={topicId}
-        topic={topic}
-        sectionTitle={section.title}
-        topicNumber={tIdx + 1}
-        topicCount={section.topics.length}
-        prevHref={prev ? href(prev) : undefined}
-        prevTitle={prev?.title}
-        nextHref={next ? href(next) : undefined}
-        nextTitle={next?.title}
-      />
+      <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: COURSE_NAMES[courseId] ?? course.title, href: `/course/${courseId}` },
+          { label: 'Notes', href: `/course/${courseId}/notes` },
+          { label: section.title },
+          { label: topic.title },
+        ]} />
+        <NotesTopicShell
+          courseId={courseId}
+          nav={nav}
+          sectionId={sectionId}
+          topicId={topicId}
+          topic={topic}
+          sectionTitle={section.title}
+          topicNumber={tIdx + 1}
+          topicCount={section.topics.length}
+          prevHref={prev ? href(prev) : undefined}
+          prevTitle={prev?.title}
+          nextHref={next ? href(next) : undefined}
+          nextTitle={next?.title}
+        />
 
-      {/* Notes teach, practice drills. Send them straight from one to the
-          other rather than making them find it.
+        {/* Notes teach, practice drills. Send them straight from one to the
+            other rather than making them find it.
 
-          `full=1` opens the questions full screen on arrival, so this is one
-          click from reading to working rather than a landing page in between.
-          `from` carries the topic they were reading, and every surface of that
-          practice set then offers the way back — inside full screen and on the
-          page behind it, because closing the mode must not strand them. */}
-      {practice && (
-        <div className="mt-10 pt-6 border-t border-border">
-          <Link
-            href={`/course/${courseId}/practice/${practice.slug}?full=1&from=${sectionId}/${topicId}`}
-            className="group flex items-center justify-between gap-4 rounded-xl border border-border p-5 hover:border-foreground/25 hover:bg-foreground/5 transition-colors"
-          >
-            <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">
-                Ready to practise?
-              </p>
-              <p className="font-medium">
-                {practice.count} {practice.name} questions with answers and video solutions
-              </p>
-            </div>
-            <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-          </Link>
-        </div>
-      )}
-    </div>
+            `full=1` opens the questions full screen on arrival, so this is one
+            click from reading to working rather than a landing page in between.
+            `from` carries the topic they were reading, and every surface of that
+            practice set then offers the way back — inside full screen and on the
+            page behind it, because closing the mode must not strand them. */}
+        {practice && (
+          <div className="mt-10 pt-6 border-t border-border">
+            <Link
+              href={`/course/${courseId}/practice/${practice.slug}?full=1&from=${sectionId}/${topicId}`}
+              className="group flex items-center justify-between gap-4 rounded-xl border border-border p-5 hover:border-foreground/25 hover:bg-foreground/5 transition-colors"
+            >
+              <div>
+                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">
+                  Ready to practise?
+                </p>
+                <p className="font-medium">
+                  {practice.count} {practice.name} questions with answers and video solutions
+                </p>
+              </div>
+              <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+            </Link>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

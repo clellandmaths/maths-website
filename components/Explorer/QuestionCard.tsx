@@ -230,7 +230,7 @@ export default function QuestionCard({
             second line, where they have the whole card: `basis-full` on a
             wrapping row. The first line — identity and controls — is what it
             always was, at every width. The checkout card in
-            `app/explorer/page.tsx` grew the same fault and carries the same
+            `components/Explorer/ExplorerApp.tsx` grew the same fault and carries the same
             fix, and `scripts/check-card-header.mjs` holds both to it at
             320 / 390 / 768 / 1440. */}
         <div className="flex flex-wrap items-start justify-between gap-2 mb-3">

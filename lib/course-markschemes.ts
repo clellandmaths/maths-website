@@ -8,7 +8,7 @@
  * it belongs to, and `MarkschemeSheet` reads it only for that course.
  *
  * Each table is a dynamic import: it arrives with the teacher's press and is
- * never on a pupil's way (see `app/explorer/page.tsx`).
+ * never on a pupil's way (see `components/Explorer/ExplorerApp.tsx`).
  */
 import type { PaperScheme, SchemeMark } from '@/lib/generator/generators/paper-markscheme';
 import { paperRef } from '@/lib/question-number.mjs';

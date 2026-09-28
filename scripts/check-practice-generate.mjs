@@ -276,11 +276,13 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
     await sleep(1500);
   }
 
-  // Neither control on a course with nothing behind it.
+  // No generator behind Higher, so nothing that draws one. Hints it does have
+  // since the short hints from its marking instructions (hint-quality,
+  // 2026-09-26), so they are no longer part of this assertion.
   await go('/course/higher/practice/circle', 2500);
   const higher = await evaluate(`[...document.querySelectorAll('button')]
-    .filter(b => /^Hint$|another like this one|more on /i.test(b.textContent || '')).length`);
-  t.check(higher === 0, 'Higher practice questions offer neither');
+    .filter(b => /another like this one|more on /i.test(b.textContent || '')).length`);
+  t.check(higher === 0, 'Higher practice questions offer no generated twin');
   /* And no explanation either. On the other four courses nothing has a ladder,
      so the absence is the norm and a note on every question would be noise. */
   t.check(await evaluate(`![...document.querySelectorAll('p')]

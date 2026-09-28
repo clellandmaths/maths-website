@@ -76,12 +76,13 @@ if (THEME !== 'dark' && THEME !== 'light') {
 /** Enough of the site to meet every surface, in the order a pupil would. */
 const PAGES = [
   ['/', 'home'],
-  ['/explorer?c=n5', 'explorer'],
+  ['/course/n5/explorer', 'explorer'],
   ['/course/n5', 'course'],
+  ['/course/n5/papers', 'past papers'],
   ['/course/n5/notes/expressions-and-formulae/surds', 'notes'],
   ['/course/n5/practice/3d-coordinates', 'practice'],
   ['/course/n5/papers/2024/paper-1', 'paper'],
-  ['/exam-hall', 'exam hall'],
+  ['/course/n5/exam-hall', 'exam hall'],
   ['/course/higher-apps/notes', 'apps notes'],
 ];
 

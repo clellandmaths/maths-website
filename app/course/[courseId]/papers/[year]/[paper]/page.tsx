@@ -151,184 +151,186 @@ export default async function PaperPage(
   );
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: courseName, href: `/course/${courseId}` },
-        { label: 'Past Papers', href: `/course/${courseId}/papers` },
-        { label: `${year} Paper ${paperNumber}` },
-      ]} />
+    <>
       <CourseBar courseId={courseId} active="papers" />
+      <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: courseName, href: `/course/${courseId}` },
+          { label: 'Past Papers', href: `/course/${courseId}/papers` },
+          { label: `${year} Paper ${paperNumber}` },
+        ]} />
 
-      {/* Paper header */}
-      <div className="mb-10">
-        <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
-          {courseName} · {examBoardFor(year)} past paper
-        </p>
-        <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          {year} Paper {paperNumber}
-        </h1>
-        <div className="flex flex-wrap items-center gap-4">
-          <span className="font-mono text-xs text-muted-foreground">
-            {paperKind(courseId, year, paperNumber)} · {questions.length} questions
-          </span>
-          {paperVideo?.videoId && (
-            <WatchSolutionButton
-              theme={theme}
-              videoId={paperVideo.videoId}
-              timestamp="0"
-              title={`${courseName} ${year} Paper ${paperNumber}`}
-            />
+        {/* Paper header */}
+        <div className="mb-10">
+          <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
+            {courseName} · {examBoardFor(year)} past paper
+          </p>
+          <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+            {year} Paper {paperNumber}
+          </h1>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="font-mono text-xs text-muted-foreground">
+              {paperKind(courseId, year, paperNumber)} · {questions.length} questions
+            </span>
+            {paperVideo?.videoId && (
+              <WatchSolutionButton
+                theme={theme}
+                videoId={paperVideo.videoId}
+                timestamp="0"
+                title={`${courseName} ${year} Paper ${paperNumber}`}
+              />
+            )}
+            {isHigherApps && <BookletButton year={year} theme={theme} />}
+            {/* Renders nothing for Higher Apps, which gets the booklet instead */}
+            <FormulaeButton courseId={courseId} theme={theme} />
+          </div>
+
+          {/* A plain link, and deliberately not a button.
+
+              This used to read "a control here would make every one of them a
+              client surface", and that stood until 2026-09-16, when the hint
+              ladder was added above. The reasoning was sound and the reversal was
+              deliberate: the ladder lived only in the two full-screen modes,
+              which have no URL, so every address a pupil could bookmark, be sent
+              or land on from a search had the version with no help — and in exam
+              season these are the pages people land on.
+
+              What survives is the caution. The help goes through
+              `Papers/QuestionHelp`, which loads both controls with
+              `next/dynamic`, so the cost is +4 KB rather than the +14 KB of
+              importing them here; and the archive is still no closer to the
+              engine, which `check-engine-isolation.mjs` holds at 0 of 542.
+
+              This link stays a link because nothing about it needs the client.
+              National 5 only — it is the only course with audited variations. */}
+          {courseId === 'n5' && (
+            <Link
+              href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}?from=paper`}
+              className={`inline-flex items-center gap-1.5 mt-4 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}
+            >
+              Generate a practice paper like this one
+              <span aria-hidden="true">→</span>
+            </Link>
           )}
-          {isHigherApps && <BookletButton year={year} theme={theme} />}
-          {/* Renders nothing for Higher Apps, which gets the booklet instead */}
-          <FormulaeButton courseId={courseId} theme={theme} />
         </div>
 
-        {/* A plain link, and deliberately not a button.
-
-            This used to read "a control here would make every one of them a
-            client surface", and that stood until 2026-09-16, when the hint
-            ladder was added above. The reasoning was sound and the reversal was
-            deliberate: the ladder lived only in the two full-screen modes,
-            which have no URL, so every address a pupil could bookmark, be sent
-            or land on from a search had the version with no help — and in exam
-            season these are the pages people land on.
-
-            What survives is the caution. The help goes through
-            `Papers/QuestionHelp`, which loads both controls with
-            `next/dynamic`, so the cost is +4 KB rather than the +14 KB of
-            importing them here; and the archive is still no closer to the
-            engine, which `check-engine-isolation.mjs` holds at 0 of 542.
-
-            This link stays a link because nothing about it needs the client.
-            National 5 only — it is the only course with audited variations. */}
-        {courseId === 'n5' && (
-          <Link
-            href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}?from=paper`}
-            className={`inline-flex items-center gap-1.5 mt-4 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}
-          >
-            Generate a practice paper like this one
-            <span aria-hidden="true">→</span>
-          </Link>
-        )}
-      </div>
-
-      {/* Questions — content, answers and markschemes server-rendered */}
-      <div className="space-y-6">
-        {questions.map((q, idx) => (
-          <article
-            key={idx}
-            className="bg-card border border-border rounded-xl overflow-hidden"
-          >
-            <div className="p-5 sm:p-6">
-              <div className="flex items-center gap-3 mb-4 flex-wrap">
-                {/* The exam's number, not the entry's position — a paper split
-                    by part has more entries than questions. */}
-                <span className={`flex items-center justify-center min-w-8 h-8 px-1.5 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
-                  {questionNumber(q.question) ?? idx + 1}
-                </span>
-                <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  Question {questionNumber(q.question) ?? idx + 1}
-                </h2>
-                {q.topics?.slice(0, 2).map(topic => (
-                  <span key={topic} className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded">
-                    {topic}
+        {/* Questions — content, answers and markschemes server-rendered */}
+        <div className="space-y-6">
+          {questions.map((q, idx) => (
+            <article
+              key={idx}
+              className="bg-card border border-border rounded-xl overflow-hidden"
+            >
+              <div className="p-5 sm:p-6">
+                <div className="flex items-center gap-3 mb-4 flex-wrap">
+                  {/* The exam's number, not the entry's position — a paper split
+                      by part has more entries than questions. */}
+                  <span className={`flex items-center justify-center min-w-8 h-8 px-1.5 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
+                    {questionNumber(q.question) ?? idx + 1}
                   </span>
-                ))}
-                <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
-              </div>
-              <MathHtml
-                html={q.question}
-                className="question-content text-xl text-foreground/90 leading-relaxed"
-              />
-              {/* Higher Apps data files */}
-              {q.attachments && q.attachments.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {q.attachments.map(file => (
-                    <a
-                      key={file.url}
-                      href={file.url}
-                      download
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
-                    >
-                      <Paperclip className="h-3 w-3" />
-                      {file.name}
-                    </a>
+                  <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    Question {questionNumber(q.question) ?? idx + 1}
+                  </h2>
+                  {q.topics?.slice(0, 2).map(topic => (
+                    <span key={topic} className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded">
+                      {topic}
+                    </span>
                   ))}
+                  <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
                 </div>
-              )}
-              {/* The reference sheet belongs on every question, not only in the
-                  page header: by question 12 the header has scrolled away, and
-                  a question saying "refer to the data booklet" is unanswerable
-                  without it. Exactly one of these renders per course. */}
-              {/* **Hints belong here, above the answer.** A pupil who is stuck
-                  should meet help before they meet the answer — the same order
-                  the full-screen modes use.
-
-                  This page had neither hints nor "another like this one" while
-                  the same fourteen questions, opened through Start Paper or
-                  Focus Mode on the course page, had both. The ladder existed
-                  only in the two full-screen overlays, and overlays have no
-                  URL — so every address a pupil could bookmark, be sent, or
-                  land on from a search had the version with no help. These 22
-                  pages are in the sitemap precisely so people land on them, and
-                  they are the ones that matter in exam season.
-
-                  Server component rendering client ones: `q` and `theme` are
-                  plain objects, so they serialise. Both render nothing outside
-                  National 5, which is the only course with audited variations —
-                  absent rather than dead, as everywhere else. */}
-              <div className="flex flex-wrap gap-2 mt-4">
-                {isHigherApps && <BookletButton year={year} theme={theme} compact />}
-                <FormulaeButton courseId={courseId} theme={theme} compact />
-                <QuestionHelp question={q} theme={theme} courseId={courseId} />
-              </div>
-
-              {/* Below the controls and above the answer, as on a practice page:
-                  somebody who has given up and read the answer is past wanting
-                  another one. */}
-            </div>
-
-            <details className="group border-t border-border">
-              <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-foreground/5 transition-colors flex items-center gap-2`}>
-                <span className="group-open:hidden">Show answer</span>
-                <span className="hidden group-open:inline">Hide answer</span>
-              </summary>
-              <div className="px-5 sm:px-6 pb-5">
                 <MathHtml
-                  html={q.answer}
-                  className="answer-content text-xl text-foreground/85 leading-relaxed"
+                  html={q.question}
+                  className="question-content text-xl text-foreground/90 leading-relaxed"
                 />
-              </div>
-            </details>
+                {/* Higher Apps data files */}
+                {q.attachments && q.attachments.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {q.attachments.map(file => (
+                      <a
+                        key={file.url}
+                        href={file.url}
+                        download
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-xs font-medium transition-colors`}
+                      >
+                        <Paperclip className="h-3 w-3" />
+                        {file.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
+                {/* The reference sheet belongs on every question, not only in the
+                    page header: by question 12 the header has scrolled away, and
+                    a question saying "refer to the data booklet" is unanswerable
+                    without it. Exactly one of these renders per course. */}
+                {/* **Hints belong here, above the answer.** A pupil who is stuck
+                    should meet help before they meet the answer — the same order
+                    the full-screen modes use.
 
-            {/* AH no-video years: full marking instructions, crawlable */}
-            {(markschemes[idx]?.rows.length ?? 0) > 0 && (
+                    This page had neither hints nor "another like this one" while
+                    the same fourteen questions, opened through Start Paper or
+                    Focus Mode on the course page, had both. The ladder existed
+                    only in the two full-screen overlays, and overlays have no
+                    URL — so every address a pupil could bookmark, be sent, or
+                    land on from a search had the version with no help. These 22
+                    pages are in the sitemap precisely so people land on them, and
+                    they are the ones that matter in exam season.
+
+                    Server component rendering client ones: `q` and `theme` are
+                    plain objects, so they serialise. Both render nothing outside
+                    National 5, which is the only course with audited variations —
+                    absent rather than dead, as everywhere else. */}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {isHigherApps && <BookletButton year={year} theme={theme} compact />}
+                  <FormulaeButton courseId={courseId} theme={theme} compact />
+                  <QuestionHelp question={q} theme={theme} courseId={courseId} />
+                </div>
+
+                {/* Below the controls and above the answer, as on a practice page:
+                    somebody who has given up and read the answer is past wanting
+                    another one. */}
+              </div>
+
               <details className="group border-t border-border">
                 <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-foreground/5 transition-colors flex items-center gap-2`}>
-                  <span className="group-open:hidden">Show marking instructions</span>
-                  <span className="hidden group-open:inline">Hide marking instructions</span>
+                  <span className="group-open:hidden">Show answer</span>
+                  <span className="hidden group-open:inline">Hide answer</span>
                 </summary>
                 <div className="px-5 sm:px-6 pb-5">
-                  <SchemeTable rows={markschemes[idx]!.rows} notes={markschemes[idx]!.notes} accent={theme.text} />
+                  <MathHtml
+                    html={q.answer}
+                    className="answer-content text-xl text-foreground/85 leading-relaxed"
+                  />
                 </div>
               </details>
-            )}
 
-            {q.videoId && (
-              <div className="border-t border-border px-5 sm:px-6 py-3">
-                <WatchSolutionButton
-                  theme={theme}
-                  videoId={q.videoId}
-                  timestamp={q.timestamp}
-                  title={`${courseName} ${year} Paper ${paperNumber} Q${idx + 1}`}
-                />
-              </div>
-            )}
-          </article>
-        ))}
+              {/* AH no-video years: full marking instructions, crawlable */}
+              {(markschemes[idx]?.rows.length ?? 0) > 0 && (
+                <details className="group border-t border-border">
+                  <summary className={`cursor-pointer list-none px-5 sm:px-6 py-3 text-sm font-medium ${theme.text} hover:bg-foreground/5 transition-colors flex items-center gap-2`}>
+                    <span className="group-open:hidden">Show marking instructions</span>
+                    <span className="hidden group-open:inline">Hide marking instructions</span>
+                  </summary>
+                  <div className="px-5 sm:px-6 pb-5">
+                    <SchemeTable rows={markschemes[idx]!.rows} notes={markschemes[idx]!.notes} accent={theme.text} />
+                  </div>
+                </details>
+              )}
+
+              {q.videoId && (
+                <div className="border-t border-border px-5 sm:px-6 py-3">
+                  <WatchSolutionButton
+                    theme={theme}
+                    videoId={q.videoId}
+                    timestamp={q.timestamp}
+                    title={`${courseName} ${year} Paper ${paperNumber} Q${idx + 1}`}
+                  />
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

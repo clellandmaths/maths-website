@@ -48,7 +48,7 @@ await withPage({ port: 8133, cdp: 9233 }, async ({ evaluate, click, send, go, sl
 
   /* The archive is where people actually are, and "Practice Paper" beside
      "Start Paper" and "Focus Mode" read as a third way to sit the same one. */
-  await go('/course/n5', 3500);
+  await go('/course/n5/papers', 3500);
   const onArchive = await evaluate(`(() => {
     const a = [...document.querySelectorAll('a')]
       .find(x => /new paper like this/i.test(x.textContent || ''));

@@ -45,7 +45,7 @@
  * ## Both surfaces, because the fault was in both
  *
  * The browse card (`components/Explorer/QuestionCard.tsx`) and the checkout
- * card (the `.worksheet-question` block in `app/explorer/page.tsx`) are
+ * card (the `.worksheet-question` block in `components/Explorer/ExplorerApp.tsx`) are
  * separate markup that grew the same shape. The first fix went to the browse
  * card while the report was about the checkout, and the sweep that went looking
  * for "anywhere else" only examined `justify-between` rows — which the checkout

@@ -76,73 +76,74 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
   );
 
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-      <RememberCourse courseId={courseId} />
-      <div className="max-w-6xl mx-auto">
-        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: `${name} Maths` }]} />
+    <>
+      <CourseBar courseId={courseId} active="overview" />
+      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+        <RememberCourse courseId={courseId} />
+        <div className="max-w-6xl mx-auto">
+          <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: `${name} Maths` }]} />
 
-        <div className="mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            {name} <span className={theme.text}>Maths</span>
-          </h1>
-          <p className="text-muted-foreground">
-            Everything for {name}: notes, practice, past papers and the tools to revise with.
-          </p>
-        </div>
+          <div className="mb-6">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2">
+              {name} <span className={theme.text}>Maths</span>
+            </h1>
+            <p className="text-muted-foreground">
+              Everything for {name}: notes, practice, past papers and the tools to revise with.
+            </p>
+          </div>
 
-        <CourseBar courseId={courseId} active="overview" />
-
-        <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Learn and practise</h2>
-        <div className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Card href={courseHref(courseId, 'notes')} icon={BookOpen} title="Course Notes"
-            foot={`${noteTopics} topics`}>
-            Every topic explained, with a video lesson and worked examples.
-          </Card>
-          <Card href={courseHref(courseId, 'practice')} icon={PencilLine} title="Practice"
-            foot={`${practiceQuestions} questions · ${practice.length} topics`}>
-            Questions by topic, each with an answer and a video solution.
-          </Card>
-          <Card href={courseHref(courseId, 'papers')} icon={FileText} title="Past Papers"
-            foot={`${paperCount} papers · ${paperYearRange(papers)}`}>
-            {everyPaperFilmed
-              ? 'Every paper worked through on video, question by question.'
-              : 'Every paper, with video solutions or marking instructions.'}
-          </Card>
-        </div>
-
-        <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Revise and build</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Card href={courseHref(courseId, 'explorer')} icon={Compass} title="Topic Explorer"
-            foot={`${paperQuestions} past paper questions`}>
-            Find past paper questions by topic and year, and build a worksheet to print or share.
-          </Card>
-          <Card href={courseHref(courseId, 'exam-hall')} icon={GraduationCap} title="Exam Hall"
-            foot={exam && examLabel ? <DaysToGo iso={exam.date.toISOString()} dateLabel={examLabel} /> : undefined}>
-            The countdown to your exam, a daily warm-up, the revision marathon and your topic checklist.
-          </Card>
-          {hasFormulae(courseId) ? (
-            <div className={card}>
-              <span className={iconBox}><span className="text-lg font-semibold">Σ</span></span>
-              <span className="text-lg font-semibold text-foreground">Formulae</span>
-              <span className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                The formulae list you are given in the exam.
-              </span>
-              <span className="mt-auto pt-4">
-                <FormulaeButton
-                  courseId={courseId}
-                  theme={theme}
-                  className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium ${theme.tint} ${theme.text} hover:bg-foreground/10 transition-colors`}
-                />
-              </span>
-            </div>
-          ) : courseId === 'higher-apps' ? (
-            <Card href="/course/higher-apps/rstudio/" icon={Terminal} title="RStudio"
-              foot="Runs in your browser">
-              Run R for the data analysis questions, with nothing to install.
+          <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Learn and practise</h2>
+          <div className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Card href={courseHref(courseId, 'notes')} icon={BookOpen} title="Course Notes"
+              foot={`${noteTopics} topics`}>
+              Every topic explained, with a video lesson and worked examples.
             </Card>
-          ) : null}
+            <Card href={courseHref(courseId, 'practice')} icon={PencilLine} title="Practice"
+              foot={`${practiceQuestions} questions · ${practice.length} topics`}>
+              Questions by topic, each with an answer and a video solution.
+            </Card>
+            <Card href={courseHref(courseId, 'papers')} icon={FileText} title="Past Papers"
+              foot={`${paperCount} papers · ${paperYearRange(papers)}`}>
+              {everyPaperFilmed
+                ? 'Every paper worked through on video, question by question.'
+                : 'Every paper, with video solutions or marking instructions.'}
+            </Card>
+          </div>
+
+          <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Revise and build</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Card href={courseHref(courseId, 'explorer')} icon={Compass} title="Topic Explorer"
+              foot={`${paperQuestions} past paper questions`}>
+              Find past paper questions by topic and year, and build a worksheet to print or share.
+            </Card>
+            <Card href={courseHref(courseId, 'exam-hall')} icon={GraduationCap} title="Exam Hall"
+              foot={exam && examLabel ? <DaysToGo iso={exam.date.toISOString()} dateLabel={examLabel} /> : undefined}>
+              The countdown to your exam, a daily warm-up, the revision marathon and your topic checklist.
+            </Card>
+            {hasFormulae(courseId) ? (
+              <div className={card}>
+                <span className={iconBox}><span className="text-lg font-semibold">Σ</span></span>
+                <span className="text-lg font-semibold text-foreground">Formulae</span>
+                <span className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  The formulae list you are given in the exam.
+                </span>
+                <span className="mt-auto pt-4">
+                  <FormulaeButton
+                    courseId={courseId}
+                    theme={theme}
+                    className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium ${theme.tint} ${theme.text} hover:bg-foreground/10 transition-colors`}
+                  />
+                </span>
+              </div>
+            ) : courseId === 'higher-apps' ? (
+              <Card href="/course/higher-apps/rstudio/" icon={Terminal} title="RStudio"
+                foot="Runs in your browser">
+                Run R for the data analysis questions, with nothing to install.
+              </Card>
+            ) : null}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
