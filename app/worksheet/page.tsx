@@ -11,7 +11,14 @@ import {
   decodeWorksheet, resolveWorksheet, isGenerated, NO_OPTIONS, type WorksheetOptions,
 } from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
-import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
+import dynamic from 'next/dynamic';
+
+/**
+ * Lazily, as the course pages load it: nothing of full screen is on screen
+ * until the pupil presses it, and the pinned bar (2026-09-28) took this page
+ * to the edge of its 10 KB budget headroom.
+ */
+const QuestionPresenter = dynamic(() => import('@/components/Explorer/QuestionPresenter'), { ssr: false });
 import FormulaeSheet from '@/components/FormulaeSheet';
 import DataBookletSheet, { BookletExtract } from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
