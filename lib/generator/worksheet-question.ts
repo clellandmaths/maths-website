@@ -252,6 +252,54 @@ export function toSiteMaths(html: string): string {
   );
 }
 
+/**
+ * A generated question's lines, laid out the way the past papers are.
+ *
+ * The owner, 2026-09-28: generated questions looked unlike the exam ones,
+ * "often more lines between". They were joined with `<br><br>`, a blank line
+ * between every line, where a paper sets a paragraph's lines one break apart;
+ * and an empty line, which a variation writes to mean "a new paragraph here",
+ * came out as four breaks: a gap that read as a missing figure (2026 P2 Q3).
+ *
+ * So, as the papers do:
+ *   - consecutive lines are one paragraph, one `<br>` apart;
+ *   - an empty line starts a new paragraph;
+ *   - a figure (an inline `<svg>` or `<img>`) stands between paragraphs;
+ *   - a lettered part, `(a)` or `<b>(a)</b>`, starts its own paragraph.
+ *
+ * Presentation only. The lines themselves are what `frozen` fingerprints, so
+ * no signed-off question changes. A full stop straight after the maths moves
+ * inside it (`\(y = kx^2\).` to `\(y = kx^2.\)`), the site's rule for every
+ * question it shows (see `stopsInsideMaths`).
+ */
+export function layoutQuestion(lines: readonly string[]): string {
+  const blocks: string[] = [];
+  let para: string[] = [];
+  const flush = () => {
+    if (para.length) blocks.push(`<p>${para.join('<br>')}</p>`);
+    para = [];
+  };
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { flush(); continue; }
+    if (/^<(svg|img|figure|table|div)\b/i.test(line)) { flush(); blocks.push(line); continue; }
+    if (/^(<b>)?\s*\(([a-h])\)/.test(line)) flush();
+    para.push(line);
+  }
+  flush();
+  return blocks.join('');
+}
+
+/**
+ * A full stop directly after a closing `\)` goes inside it. The site's
+ * punctuation rule, which the past papers already follow: a stop outside the
+ * maths can wrap onto a line of its own, and KaTeX and MathJax set it apart
+ * from the expression it ends.
+ */
+export function stopsInsideMaths(html: string): string {
+  return html.replace(/\\\)\.(?!\.)/g, '.\\)');
+}
+
 export interface ToWorksheetOptions {
   /** The seed this question was generated from. Half of its identity. */
   seed: string;
@@ -364,16 +412,17 @@ export function toWorksheetQuestion(
       'so nothing could regenerate it from a shared link. Only National 5 has codes.');
   }
 
-  // Joined the way this generator's own UI joins them, so what a teacher
-  // previews there and what a pupil gets are the same question. One of these
-  // lines may be an inline <svg>, which carries its own width and needs no
-  // website CSS — see "The display requirement" in the porting plan.
+  // Laid out by `layoutQuestion`, which this generator's own UI uses too, so
+  // what a teacher previews there and what a pupil gets are the same question.
+  // One of these lines may be an inline <svg>, which carries its own width and
+  // needs no website CSS — see "The display requirement" in the porting plan.
   const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
 
   // Delimiters converted on the way out — see `toSiteMaths`. Every field that
   // can carry maths goes through it: the question, the answer and every worked
   // step, which is what a hint shows.
-  const question = toSiteMaths(q.questionLines.join('<br><br>'));
+  // Laid out as the papers are: see `layoutQuestion`.
+  const question = stopsInsideMaths(toSiteMaths(layoutQuestion(q.questionLines)));
 
   // The per-part split where the question has parts, the total where it does
   // not. Never the per-step split, which is a third thing — see `partMarks`.
