@@ -447,7 +447,16 @@ body {
    than adding leading to every line of prose. */
 .katex {
   display: inline-block;
-  vertical-align: middle;
+  /* **On the baseline, not the middle** (the owner, 2026-09-28: angles'
+     "numbers seem to not follow in straight line"). Centring each piece of
+     maths on the line put it up to 3.8px off the words beside it, worst on
+     angles and arrowed vectors, whose ° and arrow make the box taller at the
+     top. Baseline is how KaTeX is built to sit: measured at 0 on every piece.
+     A sweep of 4,291 blocks on 494 pages found no overlap and no sideways
+     scroll; eight blocks grew 2.5 to 5.4px, all fractions or vector arrows
+     getting their room. The collision fix is the inline-block and the
+     margins, which stay. */
+  vertical-align: baseline;
   line-height: 1.2;
   /* Two fractions on consecutive lines sat flush — measured gap 0px — so the
      denominator of one touched the numerator of the next. */
