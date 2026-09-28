@@ -40,6 +40,7 @@ import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
 import { byPaperLabel, withParentVideo, courseHasHints, variationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
+import { withoutPaperBadge } from '@/lib/question-number.mjs';
 import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -117,6 +118,9 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
   const [showAnswersInView, setShowAnswersInView] = useState(false);
   const [showQRCodes, setShowQRCodes] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  // Numbers and marks only on each card: no paper, topic or variation name to
+  // give a test question away. Carried into a shared handout as `o=t`.
+  const [testMode, setTestMode] = useState(false);
   const [presentStartIndex, setPresentStartIndex] = useState<number | null>(null);
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -1081,12 +1085,21 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           <span className="text-sm text-muted-foreground">Hints</span>
                         </label>
                         )}
+                        <label className="flex items-center gap-2 cursor-pointer" title="Each question headed by its number and marks only">
+                          <input
+                            type="checkbox"
+                            checked={testMode}
+                            onChange={(e) => setTestMode(e.target.checked)}
+                            className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
+                          />
+                          <span className="text-sm text-muted-foreground">Test mode</span>
+                        </label>
                         <button
                           onClick={() => setPresentStartIndex(0)}
                           className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                         >
                           <Maximize2 className="h-4 w-4" />
-                          Present
+                          Full screen
                         </button>
                         <button
                           onClick={() => setShowFocusMode(true)}
@@ -1221,21 +1234,17 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
-                            {/* A generated question has no paper, so building
-                                the caption from year and paper number reads
-                                " Paper 0 Q1". `label` is what it carries
-                                instead — the skill it practises. */}
-                            <span className="text-sm text-muted-dim">
-                              {isGenerated(q)
-                                ? q.label
-                                : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`}
-                            </span>
-                            {isGenerated(q) && (
-                              <span className={`q-source px-2 py-1 ${theme.tint} ${theme.text} text-xs font-medium rounded`}>
-                                New question
+                            {/* **The paper reference, and on a generated question nothing.** A
+                                generated card used to carry its variation's name and a "New
+                                question" badge before its topic tags, so the topic read twice
+                                (the owner, 2026-09-28: "once is fine, the grey one"). In test mode
+                                neither this nor the tags: the number and the marks, as on a paper. */}
+                            {!testMode && !isGenerated(q) && (
+                              <span className="text-sm text-muted-dim">
+                                {`${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`}
                               </span>
                             )}
-                            {q.topics?.slice(0, 2).map((topic) => (
+                            {!testMode && q.topics?.slice(0, 2).map((topic) => (
                               <span
                                 key={topic}
                                 className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
@@ -1328,7 +1337,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         {/* Its own data booklet sections, on paper only. */}
                         {course === 'higher-apps' && <BookletExtract question={q} />}
                         <MathRenderer
-                          html={q.question}
+                          html={testMode ? withoutPaperBadge(q.question) : q.question}
                           className="text-foreground-2 question-content text-lg leading-relaxed"
                         />
 
@@ -1482,6 +1491,15 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                             <span className="text-sm text-muted-foreground">Hints</span>
                           </label>
                         )}
+                          <label className="flex items-center gap-2 cursor-pointer" title="Each question headed by its number and marks only">
+                            <input
+                              type="checkbox"
+                              checked={testMode}
+                              onChange={(e) => setTestMode(e.target.checked)}
+                              className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30`}
+                            />
+                            <span className="text-sm text-muted-foreground">Test mode</span>
+                          </label>
                       </div>
                       <button
                         onClick={handleClearAll}
@@ -1507,7 +1525,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                         className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         <Maximize2 className="h-4 w-4" />
-                        Present
+                        Full screen
                       </button>
                       <button
                         onClick={() => setShowFocusMode(true)}
@@ -1568,6 +1586,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
           courseId={course}
           questions={worksheetItems}
           onClose={() => setShowShare(false)}
+          testMode={testMode}
         />
       )}
 
