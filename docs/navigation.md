@@ -18,6 +18,40 @@ Every claim below was verified against the source or the built output on
 
 ---
 
+## Live, 2026-09-28
+
+`master` was fast-forwarded to `navigation` (814da28) on the owner's word
+("let's get this live") and Cloudflare deployed it at 21:39. The previous live
+commit was 5fdb371. After the deploy, all 526 sitemap addresses and all 516 of
+the old sitemap's answered 200 on clellandmaths.com, the old `/explorer?c=` and
+`/exam-hall?c=` links forwarded, and links made with the old site's own encoder
+opened the same questions. Live has never had generated questions, so no
+shared link could be affected by a generator change.
+
+What went live beyond the review below, all measured on a throttled phone
+(CPU 4x, 150 ms, 1.6 Mbit/s) against the old site:
+
+- **Pinned full-screen controls**: Previous, Hint, Answer, Video and Next in one
+  bar at the foot; Formulae or the data booklet in the header.
+- **Worksheet Builder** (was Topic Explorer; addresses unchanged), N5
+  generation announced on its first screen; **Test mode** locks answers,
+  videos, QR codes and hints, in the share link too.
+- **Tutoring** (was Academy) in the menus and one line on pupil pages only;
+  nothing on a page a teacher prints, projects or shares.
+- **No layout jumps**: the hub's countdown chip holds its room (CLS 0.108 to
+  0.002); the Worksheet Builder draws its frame while questions load (0.387 to
+  0, also on the old site).
+- **KaTeX only where it draws** (notes build-time, Formulae on press,
+  MathRenderer on demand): notes 217 to 142 KB of script, hub 215 to 139.
+- **Maths on the text baseline**, not the middle of the line (was up to 3.8px
+  off the words, worst on angles); a 494-page sweep found no overlap.
+- **Scroll boxes holding maths are `position: relative`**, so KaTeX's
+  screen-reader copies cannot escape them (AH 2016 P1 was 408px wide on a
+  320px phone).
+
+The probes that measured all this are kept outside the repo, in `tools/perf/`
+at the workspace root.
+
 ## Review of 2026-09-28: findings and recommendations (not acted on)
 
 The owner: "I get a general feeling that site seems off that getting to where
