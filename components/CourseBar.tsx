@@ -44,6 +44,16 @@ const TABS: { section: CourseSection; label: string; icon: typeof BookOpen }[] =
   { section: 'exam-hall', label: 'Exam Hall', icon: GraduationCap },
 ];
 
+/**
+ * A link that loads the page afresh when the course rides in the query. The
+ * Explorer and the Exam Hall read `?c=` once, as they load, so client-side
+ * navigation to the same route with a new query would leave them showing the
+ * old course.
+ */
+function CourseLink(props: React.ComponentProps<'a'> & { href: string }) {
+  return props.href.includes('?') ? <a {...props} /> : <Link {...props} />;
+}
+
 interface Props {
   courseId: string;
   active: CourseSection;
@@ -67,7 +77,7 @@ export default function CourseBar({ courseId, active, className = 'mb-8' }: Prop
         <div className="absolute left-0 top-full z-50 mt-1 w-60 rounded-xl border border-border bg-card py-2 shadow-xl">
           <p className="px-4 pb-1 pt-0.5 text-xs uppercase tracking-wide text-muted-foreground">Change course</p>
           {Object.keys(COURSE_NAMES).map(id => (
-            <Link
+            <CourseLink
               key={id}
               href={courseHref(id, active)}
               aria-current={id === courseId ? 'true' : undefined}
@@ -77,7 +87,7 @@ export default function CourseBar({ courseId, active, className = 'mb-8' }: Prop
             >
               <span className={`h-2 w-2 rounded-full ${DOTS[id]} shrink-0`} />
               {COURSE_NAMES[id]}
-            </Link>
+            </CourseLink>
           ))}
         </div>
       </details>
@@ -89,7 +99,7 @@ export default function CourseBar({ courseId, active, className = 'mb-8' }: Prop
           {TABS.map(({ section, label, icon: Icon }) => {
             const isActive = section === active;
             return (
-              <Link
+              <CourseLink
                 key={section}
                 href={courseHref(courseId, section)}
                 aria-current={isActive ? 'page' : undefined}
@@ -101,7 +111,7 @@ export default function CourseBar({ courseId, active, className = 'mb-8' }: Prop
               >
                 <Icon className="h-4 w-4 shrink-0" />
                 {label}
-              </Link>
+              </CourseLink>
             );
           })}
         </div>

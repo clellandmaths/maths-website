@@ -91,7 +91,25 @@ will decide what to implement later. Measured in the built site at 1400px and
 4. **The Explorer's first screen**, reached from a course, shows that course's
    papers or topics, not an empty state.
 
-Before building 2: show the owner a mockup of the N5 hub and the course bar.
+**Building, on the branch `navigation` (off `hint-quality`, 2026-09-28).** The
+owner: "let's do this on another new branch… I can easily just not merge it
+until happy". It merges after `hint-quality`, on the owner's word only.
+
+- Done: 1 (the quick fixes; the nav marks the current section, and has no Home
+  link because the logo is Home) and 2 (the course hub at `/course/[id]`, the
+  archive at `/course/[id]/papers`, `CourseBar` on every course page, the
+  Explorer and the Exam Hall included). The Exam Hall reads `?c=`. The phone
+  menu lists the courses first.
+- Checked: full build (the archive now loads Full screen, Focus Mode and the
+  video player when first opened, so it is lighter than the old course page);
+  every internal link in the build resolves (22,548 links, 575 addresses); the
+  round trip `check-course-explorer.mjs` (rewritten for the course bar) and
+  `check-explorer-generate.mjs` pass.
+- Not yet: 3 (a calmer archive) and 4 (the Explorer's first screen).
+- Found, not changed: a guided practice question on vectors
+  (`src/practice/data/national5Maths.ts`) links to `/nat5/surds`, a
+  maths.scot path that does not exist here; and the Exam Hall says "1 hours
+  to go".
 
 ---
 

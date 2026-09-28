@@ -11,6 +11,7 @@ import WarmUp from '@/components/ExamHall/WarmUp';
 import Marathon from '@/components/ExamHall/Marathon';
 import { hasSpecial } from '@/lib/specials-loader';
 import { getCourseTheme } from '@/lib/course-theme';
+import CourseBar from '@/components/CourseBar';
 import { courseExamDates } from '@/lib/exam-dates';
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, n5AppsPaperVideos, higherAppsPaperVideos, paperSummary } from '@/lib/past-paper-videos';
 
@@ -301,7 +302,7 @@ function TopicChecklist({ course, onBack }: { course: Course; onBack: () => void
 
 // --- Main content ---
 
-function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeCourse: () => void }) {
+function ExamHallContent({ course }: { course: Course }) {
   const info = courseInfo[course];
   const theme = getCourseTheme(course);
   const [countdown, setCountdown] = useState(() => getCountdown(info.examDate));
@@ -338,18 +339,10 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={onChangeCourse}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className={`text-sm font-medium px-2 py-1 ${theme.tint} ${theme.text} rounded-md`}>
-              {info.label}
-            </span>
-          </button>
-        </div>
+        {/* The course bar, as on every page of a course. Its switcher replaced
+            a "← National 5" chip that sent you back to the lobby to choose
+            again (docs/navigation.md, 2026-09-28). */}
+        <CourseBar courseId={course} active="exam-hall" />
 
         <div className="text-center mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
@@ -479,29 +472,35 @@ function ExamHallContent({ course, onChangeCourse }: { course: Course; onChangeC
 // --- Page export ---
 
 export default function ExamHallPage() {
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(() => {
-    if (typeof window === 'undefined') return null;
-    const saved = localStorage.getItem('preferredCourse');
-    return saved && saved in courseInfo ? (saved as Course) : null;
-  });
+  // The course in the link first (`?c=`, from a course bar or a course hub),
+  // then the course last used, then the lobby. The link wins so that it
+  // means the same thing on a device that has never been here.
+  // In an effect, as the Explorer does: the page is built without a course,
+  // so reading the browser during the first render made it disagree with its
+  // own prebuilt HTML.
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  useEffect(() => {
+    const fromLink = new URLSearchParams(window.location.search).get('c');
+    if (fromLink && fromLink in courseInfo) {
+      try { localStorage.setItem('preferredCourse', fromLink); } catch { /* private window */ }
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedCourse(fromLink as Course);
+      return;
+    }
+    let saved: string | null = null;
+    try { saved = localStorage.getItem('preferredCourse'); } catch { /* private window */ }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (saved && saved in courseInfo) setSelectedCourse(saved as Course);
+  }, []);
 
   const handleSelectCourse = (course: Course) => {
     localStorage.setItem('preferredCourse', course);
     setSelectedCourse(course);
   };
 
-  const handleChangeCourse = () => {
-    setSelectedCourse(null);
-  };
-
   if (!selectedCourse) {
     return <ExamHallLobby onSelect={handleSelectCourse} />;
   }
 
-  return (
-    <ExamHallContent
-      course={selectedCourse}
-      onChangeCourse={handleChangeCourse}
-    />
-  );
+  return <ExamHallContent course={selectedCourse} />;
 }

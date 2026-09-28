@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Compass, GraduationCap, Home, ChevronDown, Sparkles, Mail } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Menu, X, Compass, GraduationCap, ChevronDown, Sparkles, Mail } from 'lucide-react';
 
 
 const navLinks = [
-  { href: '/', label: 'Home', icon: Home },
   // One name everywhere. The footer, the home hero and the page's own <h1>
   // already said "Topic Explorer"; this said "Explorer" and the course page
   // said "Practise by topic", which is three names for one tool and is why
@@ -28,7 +28,16 @@ const courses = [
   { id: 'higher-apps', name: 'Higher Applications', dot: 'bg-violet-500' },
 ];
 
+/**
+ * Which section a path belongs to, so the nav can mark where you are. It never
+ * did (docs/navigation.md). No Home link: the logo is Home, and the space went
+ * to saying where you are (2026-09-28).
+ */
+const isIn = (path: string, href: string) => path === href || path.startsWith(href + '/');
+
 export default function Navbar() {
+  const pathname = usePathname() ?? '/';
+  const inCourse = pathname.startsWith('/course/');
   const [isOpen, setIsOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
 
@@ -60,7 +69,9 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setCoursesOpen(o => !o)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-foreground-2 hover:text-accent hover:bg-muted/50 transition-all duration-200"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:text-accent hover:bg-muted/50 transition-all duration-200 ${
+                  inCourse ? 'text-foreground bg-muted/50' : 'text-foreground-2'
+                }`}
                 aria-expanded={coursesOpen}
               >
                 <span>Courses</span>
@@ -88,15 +99,17 @@ export default function Navbar() {
 
             {navLinks.map((link) => {
               const Icon = link.icon;
+              const here = isIn(pathname, link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-current={here ? 'page' : undefined}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
                     link.highlight
                       ? 'text-accent font-semibold hover:brightness-110'
-                      : 'text-foreground-2 hover:text-accent'
-                  }`}
+                      : here ? 'text-foreground' : 'text-foreground-2 hover:text-accent'
+                  } ${here ? 'bg-muted/50' : ''}`}
                 >
                   <Icon className="h-4 w-4" />
                   <span>{link.label}</span>
@@ -154,37 +167,48 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden glass border-t border-border/50 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
+            {/* Courses first: choosing one is the first thing most visitors
+                do, and they used to sit below every tool. */}
+            <p className="px-4 pt-1 pb-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              Courses
+            </p>
+            {courses.map(course => {
+              const here = isIn(pathname, `/course/${course.id}`);
+              return (
+                <Link
+                  key={course.id}
+                  href={`/course/${course.id}`}
+                  onClick={() => setIsOpen(false)}
+                  aria-current={here ? 'page' : undefined}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:text-foreground hover:bg-muted/50 transition-all duration-200 ${
+                    here ? 'text-foreground bg-muted/50' : 'text-foreground-2'
+                  }`}
+                >
+                  <span className={`h-2 w-2 rounded-full ${course.dot} shrink-0`} />
+                  <span className="font-medium">{course.name}</span>
+                </Link>
+              );
+            })}
+
+            <div className="my-2 border-t border-border/50" />
             {navLinks.map((link) => {
               const Icon = link.icon;
+              const here = isIn(pathname, link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
+                  aria-current={here ? 'page' : undefined}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
-                    link.highlight ? 'text-accent' : 'text-foreground-2 hover:text-accent'
-                  }`}
+                    link.highlight ? 'text-accent' : here ? 'text-foreground' : 'text-foreground-2 hover:text-accent'
+                  } ${here ? 'bg-muted/50' : ''}`}
                 >
                   <Icon className="h-5 w-5" />
                   <span className="font-medium">{link.label}</span>
                 </Link>
               );
             })}
-
-            <p className="px-4 pt-3 pb-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              Courses
-            </p>
-            {courses.map(course => (
-              <Link
-                key={course.id}
-                href={`/course/${course.id}`}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground-2 hover:text-foreground hover:bg-muted/50 transition-all duration-200"
-              >
-                <span className={`h-2 w-2 rounded-full ${course.dot} shrink-0`} />
-                <span className="font-medium">{course.name}</span>
-              </Link>
-            ))}
           </div>
         </div>
       )}

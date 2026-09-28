@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import Link from 'next/link';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2 } from 'lucide-react';
+import CourseBar from '@/components/CourseBar';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, GraduationCap, Check, Paperclip, Share2, Dices, Loader2 } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -94,7 +94,7 @@ const courseConfig = {
   },
 } as const;
 
-function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeCourse: () => void }) {
+function ExplorerContent({ course }: { course: Course }) {
   const config = courseConfig[course];
   const theme = getCourseTheme(course);
 
@@ -593,38 +593,12 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
         <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
           {/* Header */}
           <div className="mb-6 no-print">
-            {/* **The way back to the course.** This page had none: no
-                breadcrumb, no CourseTabs, and the only course affordance was a
-                chip and "Change Course" — which changes the course rather than
-                leaving it. `docs/navigation.md` records the same thing as
-                "/explorer has no breadcrumb and no course identity".
-
-                `flex-wrap`, because this row now holds three things and a phone
-                is 320px. A row here that cannot wrap pushes `main` past the
-                viewport, which is the fault the comment above this block is
-                about.
-
-                The arrow belongs to the back link. "Change Course" had it and
-                does not go back anywhere, so two controls were sharing one
-                meaning. */}
-            <div className="flex flex-wrap items-center gap-3 mb-2">
-              <Link
-                href={`/course/${course}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-foreground-2 hover:text-accent bg-muted/50 hover:bg-muted rounded-lg transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4 shrink-0" />
-                Back to {config.label}
-              </Link>
-              <button
-                onClick={onChangeCourse}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground bg-muted/50 hover:bg-muted rounded-lg transition-colors"
-              >
-                Change Course
-              </button>
-              <span className={`px-2.5 py-1 ${theme.tint} ${theme.text} text-xs font-semibold rounded-full uppercase tracking-wide`}>
-                {config.label}
-              </span>
-            </div>
+            {/* **The course bar, as on every page of the course**
+                (docs/navigation.md, 2026-09-28). It replaced "Back to
+                <course>", "Change Course" and a course chip: the bar says which
+                course this is, reaches the rest of it, and its switcher opens
+                the same Explorer on another course. */}
+            <CourseBar courseId={course} active="explorer" className="mb-5" />
             <h1 className="text-2xl font-bold mb-2">Topic Explorer</h1>
             <p className="text-muted-foreground">
               Use filters to find questions, then add them to build a custom worksheet.
@@ -1753,10 +1727,6 @@ export default function ExplorerPage() {
     setSelectedCourse(course);
   };
 
-  const handleChangeCourse = () => {
-    setSelectedCourse(null);
-  };
-
   if (!selectedCourse) {
     return <CourseSelector onSelect={handleSelectCourse} />;
   }
@@ -1764,10 +1734,7 @@ export default function ExplorerPage() {
   // Key by course so WorksheetProvider resets when switching courses
   return (
     <WorksheetProvider key={selectedCourse} course={selectedCourse}>
-      <ExplorerContent
-        course={selectedCourse}
-        onChangeCourse={handleChangeCourse}
-      />
+      <ExplorerContent course={selectedCourse} />
     </WorksheetProvider>
   );
 }
