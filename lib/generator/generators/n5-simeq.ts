@@ -582,9 +582,12 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
       // •³ correct scaling, •⁴ a value, •⁵ the other value, •⁶ the answer — in
       // its units for construct-solve, applied to the new quantity for combine
       stepMarks: [1, 1, 1, 1, 1, 1],
-      finalAnswer: combine
+      // Every part's answer, as a marking scheme sets them out: it gave (c)'s
+      // alone, so "Show answers" had nothing for the two equations (the owner,
+      // 2026-09-28). The letters are the working's own, from its step (a).
+      finalAnswer: `(a) $${equation(q1, v1, q2, v2, dt1)}$<br>(b) $${equation(q3, v1, q4, v2, dt2)}$<br>(c) ` + (combine
         ? amount(together, ctx.kind)
-        : `One ${ctx.single[0]} ${verb} ${amount(u1, ctx.kind)} and one ${ctx.single[1]} ${verb} ${amount(u2, ctx.kind)}`,
+        : `One ${ctx.single[0]} ${verb} ${amount(u1, ctx.kind)} and one ${ctx.single[1]} ${verb} ${amount(u2, ctx.kind)}`),
     };
   }
   throw new Error(`simeq.construct-${combine ? 'combine' : 'solve'}: no valid question found`);

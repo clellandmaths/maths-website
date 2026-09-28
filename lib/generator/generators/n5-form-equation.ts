@@ -181,7 +181,11 @@ function borderAllRound(): Q | null {
                 height: `${h} ${c.unit === 'metres' ? 'm' : 'cm'}`, border: 'x' } }),
     'A Border Round a Rectangle', 'form-equation.border', prose,
     `${h} by ${w} with a border $x$; total area ${area}. Find $x$.`,
-    steps, [1, 1, 1, 1, 1, 1, 1], `$x = ${((-B + root) / (2 * A)).toFixed(1)}$`);
+    steps, [1, 1, 1, 1, 1, 1, 1],
+    // Every part's answer, as a marking scheme sets them out. It gave (b)'s
+    // alone, so "Show answers" had nothing for (a) (the owner, 2026-09-28).
+    `(a)(i) $${w} + 2x$<br>(a)(ii) $${quadratic(A, B, C)}$ (shown)` +
+    `<br>(b) $x = ${((-B + root) / (2 * A)).toFixed(1)}$`);
 }
 
 // ── a wall on three sides — 2026 P2 Q13 ──────────────────────────────────
@@ -206,6 +210,12 @@ function wallOnThreeSides(): Q | null {
   const area = getRandomInt(len * wid + 2, Math.round(len * wid * 2.2));
   // (2x + len)(x + wid) = area  ->  2x^2 + (2·wid + len)x + (len·wid - area) = 0
   const [A, B, C] = [2, 2 * wid + len, len * wid - area];
+  // **No common factor to divide out**, as 2026 P2 Q13's 2x² + 10x - 5 has
+  // none. An even length with an even constant halved the whole equation - 2x²
+  // + 18x - 24 - in 103 of 400 draws. The owner, 2026-09-28: "happy to ensure
+  // that no common factor comes up on the quadratic question 2026 P2 Q13", the
+  // rule already held on 2015 P2 Q14 and 2023 P2 Q14.
+  if (gcd(gcd(A, B), Math.abs(C)) > 1) return null;
   const disc = B * B - 4 * A * C;
   const root = Math.sqrt(disc);
   if (Number.isInteger(root)) return null;
@@ -236,7 +246,9 @@ function wallOnThreeSides(): Q | null {
       paperDims: { floor: c.wall === 'wall' ? 'floor' : 'base', wall: c.wall } }),
     'A Wall on Three Sides', 'form-equation.three-sided', prose,
     `Floor ${len} by ${wid}, wall $x$ thick on three sides, total area ${area}. Find $x$.`,
-    steps, [1, 1, 1, 1, 1, 1, 1], `$x = ${x.toFixed(2)}$ m`);
+    steps, [1, 1, 1, 1, 1, 1, 1],
+    // Every part's answer: it gave (c)'s alone (the owner, 2026-09-28).
+    `(a) $2x + ${len}$<br>(b) $${quadratic(A, B, C)}$ (shown)<br>(c) $x = ${x.toFixed(2)}$ m`);
 }
 
 // ── a triangle against a rectangle — 2022 P1 Q15 ─────────────────────────
@@ -324,7 +336,9 @@ function triangleAgainstRectangle(): Q | null {
     ),
     'A Triangle Against a Rectangle', 'form-equation.triangle-rectangle', prose,
     `Triangle base $x + ${b}$, height ${hTri}; rectangle ${r} by $${k} - x$. Equal areas — find $x$.`,
-    steps, [1, 1, 1, 1, 1], `$x = ${x}$`);
+    steps, [1, 1, 1, 1, 1],
+    // Every part's answer: it gave (b)'s alone (the owner, 2026-09-28).
+    `(a) $\\frac{${hTri}}{2}(x + ${b})$<br>(b) $x = ${x}$`);
 }
 
 // ── a rectangle against a square — 2025 P1 Q15 ───────────────────────────
@@ -421,7 +435,10 @@ function rectangleAgainstSquare(): Q | null {
     'A Rectangle Against a Square', 'form-equation.rectangle-square', prose,
     `Rectangle $(2x + ${q})(x + ${r})$ equals square $(x + ${s})^{2}$. Find its sides.`,
     steps, [1, 1, 1, 1, 1, 1],
-    `Length ${2 * m + q} ${UNIT}, breadth ${m + r} ${UNIT}`);
+    // Every part's answer: it gave (c)'s alone, which is how the owner found
+    // this, on 2025 P1 Q15 (2026-09-28).
+    `(a) $(2x + ${q})(x + ${r})$<br>(b) $${quadratic(1, B, C)}$ (shown)` +
+    `<br>(c) Length ${2 * m + q} ${UNIT}, breadth ${m + r} ${UNIT}`);
 }
 
 // ── a cuboid of given volume — 2023 P2 Q14 ───────────────────────────────
@@ -478,7 +495,9 @@ function cuboidVolume(): Q | null {
       labels: { length: `(x + ${k}) m`, breadth: 'x m', height: `${hh} m` } }),
     'A Cuboid of Given Volume', 'form-equation.cuboid', prose,
     `Cuboid $(x + ${k})$ by $x$ by ${hh}, volume ${vol}. Find $x$.`,
-    steps, [1, 1, 1, 1, 1, 1], `$x = ${x.toFixed(1)}$`);
+    steps, [1, 1, 1, 1, 1, 1],
+    // Every part's answer: it gave (b)'s alone (the owner, 2026-09-28).
+    `(a) $${quadratic(A, B, C)}$ (shown)<br>(b) $x = ${x.toFixed(1)}$`);
 }
 
 // ── a rectangle against a triangle, showing the equation — 2016 P1 Q12 ────
@@ -582,7 +601,8 @@ function rectangleAgainstTriangle(): Q | null {
     // 2016 P1 Q12: (a) 1, (b) 3 — expand each and equate, (c) 3 — factorise,
     // solve, reject and state both sides.
     steps, [1, 1, 1, 1, 1, 1, 1],
-    `Length ${long} cm, breadth ${short} cm`);
+    // Every part's answer: it gave (c)'s alone (the owner, 2026-09-28).
+    `(a) $${left}(x + ${C})$<br>(b) $${shown}$ (shown)<br>(c) Length ${long} cm, breadth ${short} cm`);
 }
 
 // ── dispatch ──────────────────────────────────────────────────────────────
