@@ -51,10 +51,17 @@ export interface WorksheetOptions {
    * second, and off by default means neither travels unless it was chosen.
    */
   hints: boolean;
+  /**
+   * t — test mode: each question is headed by its number and its marks and
+   * nothing else. No paper reference, topic or variation name, which on a test
+   * would tell a pupil what the question is about before they have read it
+   * (the owner, 2026-09-28). The questions themselves are unchanged.
+   */
+  test: boolean;
 }
 
 export const NO_OPTIONS: WorksheetOptions = {
-  answers: false, qrCodes: false, video: false, hints: false,
+  answers: false, qrCodes: false, video: false, hints: false, test: false,
 };
 
 const FLAGS: [keyof WorksheetOptions, string][] = [
@@ -62,6 +69,7 @@ const FLAGS: [keyof WorksheetOptions, string][] = [
   ['qrCodes', 'q'],
   ['video', 'v'],
   ['hints', 'h'],
+  ['test', 't'],
 ];
 
 export function encodeOptions(o: WorksheetOptions): string {
@@ -75,6 +83,7 @@ export function decodeOptions(s: string | null): WorksheetOptions {
     qrCodes: set.has('q'),
     video: set.has('v'),
     hints: set.has('h'),
+    test: set.has('t'),
   };
 }
 

@@ -80,7 +80,7 @@ await withPage({ port: 8136, cdp: 9236 }, async ({ evaluate, click, buttonNamed,
     `and it still points at the same paper: ${JSON.stringify(after?.caption)}`);
 
   // ── full screen, where two of the three symptoms showed ─────────────────
-  await click(buttonNamed('Present'));
+  await click(buttonNamed('Full screen'));
   await sleep(2500);
   const presented = await evaluate(`(() => {
     const t = document.body.innerText;

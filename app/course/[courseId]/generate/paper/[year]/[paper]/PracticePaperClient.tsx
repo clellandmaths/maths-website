@@ -196,7 +196,7 @@ export default function PracticePaperClient({
       const { locked } = shareLinks(
         origin, courseId, drawn,
         `Practice paper — modelled on ${courseName} ${year} Paper ${paperNumber}`,
-        { answers: true, hints: true, video: true, qrCodes: true },
+        { answers: true, hints: true, video: true, qrCodes: true, test: false },
       );
       window.location.href = locked;
     });

@@ -218,7 +218,7 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
      loud that these questions DO have variations behind them, so an absence
      here is a decision rather than an empty pool. */
   await go('/explorer?c=n5&q=2024-1-0,2024-1-1,2024-1-2', 7000);
-  for (const mode of ['Present', 'Focus']) {
+  for (const mode of ['Full screen', 'Focus']) {
     await click(buttonNamed(mode));
     await sleep(3500);
     t.check(await evaluate(`!!${OVERLAY}`), `the Explorer worksheet opens in ${mode}`);
