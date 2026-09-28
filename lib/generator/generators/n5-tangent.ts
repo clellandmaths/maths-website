@@ -378,9 +378,16 @@ export function twoTangentsDiametersQuestion(): Q {
   for (let tries = 0; tries < 3000; tries++) {
     const n = pick(DIAM_SETS);
     /**
-     * 104 to 146 even, answers 34 to 76 degrees.
+     * 104 to 122 even, answers 58 to 76 degrees, given 119 to 128 at F.
      *
-     * It was 118 to 136 - ten values - because the angle at the centre decides
+     * **Narrowed from 104 to 146 so the figure can print the given angle**,
+     * as the paper does (the owner, 2026-09-28, on a contact sheet: "ok I
+     * agree with the fix now only touching that question and nothing else").
+     * Drawn to scale, above 122 side DE closes on F and the number has no room
+     * inside the angle; showing it on some draws and not others would be two
+     * questions. The paper's own 125 is k = 110.
+     *
+     * Before that it was 118 to 136 - ten values - because the angle at the centre decides
      * how wide the whole drawing is, and at one shared width a wide drawing
      * means a small circle. The note here recorded that floor as **set by
      * eye**, and it put the paper's own question out of reach: 2024 P1 Q10
@@ -394,13 +401,13 @@ export function twoTangentsDiametersQuestion(): Q {
      * k must stay even, or the given angle - 180 less half of it - is not a
      * whole number of degrees.
      */
-    const k = getRandomInt(52, 73) * 2;     // the angle at the centre, even
+    const k = getRandomInt(52, 61) * 2;     // the angle at the centre, even
     const given = 180 - k / 2;              // the angle printed at F
     const answer = 180 - k;
 
     const fig = twoTangentsDiameters({
       radius: 1, start: getRandomInt(0, 11) * 30, atCentre: k,
-      flip: getRandomInt(0, 1) === 1, names: n,
+      flip: getRandomInt(0, 1) === 1, names: n, written: true,
     });
     if (!fig) continue;
 
