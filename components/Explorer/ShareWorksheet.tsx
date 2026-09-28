@@ -173,9 +173,15 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose, te
               {check('qrCodes', 'QR codes', borrowed > 0
                 ? `Printed beside each question. On the ${borrowed} generated question${borrowed === 1 ? '' : 's'} the code opens a tutorial — the past paper question it was modelled on, worked through with different numbers — not a solution to the question on the sheet`
                 : 'Printed beside each question, linking to its video', withVideo === 0)}
-              {courseHasPaperLadder(courseId) && check('hints', 'Hints', generated > 0
+              {/* The Hints tick also grants "Another like this one" in full
+                  screen (app/worksheet/page.tsx passes allowAnother from it),
+                  and nothing said so: the owner, 2026-09-28, chose to keep the
+                  two together and say it here. National 5 only, the one course
+                  with generated questions. */}
+              {courseHasPaperLadder(courseId) && check('hints', 'Hints', (generated > 0
                 ? `What the question asks, then how the marks are earned, then the working on the ${generated} generated question${generated === 1 ? '' : 's'} — stopping before the step that lands the answer`
-                : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')}
+                : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')
+                + (courseId === 'n5' ? '. Also lets pupils press “Another like this one” for a new question in full screen' : ''))}
             </div>
             {options.test && (
               <p role="status" className={`mt-2 flex items-start gap-2 rounded-lg ${theme.tint} ${theme.text} px-3 py-2 text-sm font-medium`}>
