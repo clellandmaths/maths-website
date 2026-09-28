@@ -1,4 +1,6 @@
-import { type Element, type Figure, type Pt, add, angleMark, dist, mid, pt, scale, shadeAngle, sub } from '../scene';
+import { type Element, type Figure, type Pt, type Scene, add, angleMark, bearing, dist, mid, pt, scale, shadeAngle, sub } from '../scene';
+import { place } from '../render';
+import { verifyFigure } from '../verify';
 
 /**
  * Two tangents meeting outside the circle, each crossing the other's diameter.
@@ -32,6 +34,11 @@ export interface TwoTangentsDiametersSpec {
   frameCap?: number;
   /** Which way round the second point of contact goes. */
   flip: boolean;
+  /**
+   * Write the given angle's size at F, as the paper does. Opt-in; `null` when
+   * this layout has no room for it (see the end of the routine).
+   */
+  written?: boolean;
   names: { centre: string; touchB: string; touchD: string; outside: string;
            oppB: string; oppD: string; endA: string; endE: string };
 }
@@ -143,7 +150,7 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
     // four lines leave the centre; the quarter between the two far ends is the
     // one with no chord in it
     { kind: 'label', text: n.centre, anchor: O, away: scale(dir(start + s * k / 2), r * 0.4) },
-    // The angle is marked but not written.
+    // The angle is marked, and written only when the spec asks (below).
     //
     // A number goes along its own bisector, and this bisector has nowhere to
     // put one. F is on the circle, so close to F the number is on the outline;
@@ -155,7 +162,7 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
     // figure is not drawn to scale. This one is, so the arc says which angle
     // and the question says how big — which is how the papers mark plenty of
     // angles they have no room to write in.
-    ...angleMark(F, [D, E]),
+    ...(spec.written ? [] : angleMark(F, [D, E])),
   ];
 
   /**
@@ -194,10 +201,9 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
 
   const frame = Math.min(spec.frameCap ?? 1.8,
     Math.max(1, roomForTheCircle, roomForSegments));
+  const target = spec.target ?? Math.round(250 * frame);
 
-  return {
-    scene: { elements, target: spec.target ?? Math.round(250 * frame) },
-    claims: [
+  const claims: Figure['claims'] = [
       { kind: 'length', from: O, to: B, value: r, shown: false },
       { kind: 'length', from: O, to: D, value: r, shown: false },
       { kind: 'length', from: O, to: F, value: r, shown: false },
@@ -217,6 +223,70 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
       // the angle at the centre the working finds, and the answer it leads to
       { kind: 'angle', at: O, arms: [B, D], value: k, shown: false },
       { kind: 'angle', at: C, arms: [B, D], value: 180 - k, shown: false },
-    ],
+  ];
+
+  if (!spec.written) return { scene: { elements, target }, claims };
+
+  /**
+   * **The given angle written in, as 2024 P1 Q10 prints its 125°** (the owner,
+   * 2026-09-28: "The original question has the size of the angle printed on
+   * the diagram", then of the first try, "the arc for the angle is a bit big
+   * and is coming out the line of the triangle").
+   *
+   * Still to scale, so the room is what the note above says: a crescent
+   * between chord FD, the diameter produced FE, the circle and side DE. A small
+   * arc sits tight in the corner at F and the number goes just beyond it, and
+   * a spot is kept only when all of this holds:
+   *
+   *   - every corner of the number inside triangle FDE and outside the circle,
+   *     where the renderer actually puts it
+   *   - the number clear of the arc, and the arc short of side DE
+   *   - the figure verifies
+   *
+   * Spots are tried nearest first, a fixed list and no randomness, so the
+   * figure is the same for the same draw. It fits only while the angle at the
+   * centre is 122 or less (119 degrees at F): above that DE closes on F and
+   * there is no room at scale, which is why the generator stops there.
+   */
+  const text = `${180 - k / 2}°`;
+  const ARC_PX = 16;
+  const cross = (o: Pt, a: Pt, b: Pt) => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const inTriangle = (q: Pt, a: Pt, b: Pt, c: Pt) => {
+    const d1 = cross(a, b, q), d2 = cross(b, c, q), d3 = cross(c, a, q);
+    return (d1 >= 0 && d2 >= 0 && d3 >= 0) || (d1 <= 0 && d2 <= 0 && d3 <= 0);
   };
+  // Where the number lands, in pixels, and whether it is inside the angle.
+  const landed = (scene: Scene) => {
+    const p = place(scene);
+    const L = p.labels.find(l => l.text === text)!;
+    const corners = [pt(L.box.x, L.box.y), pt(L.box.x + L.box.w, L.box.y),
+      pt(L.box.x, L.box.y + L.box.h), pt(L.box.x + L.box.w, L.box.y + L.box.h)];
+    const perUnit = dist(p.px(O), p.px(pt(r, 0))) / r;
+    const inside = corners.every(c => inTriangle(c, p.px(F), p.px(D), p.px(E))
+      && dist(c, p.px(O)) > r * perUnit + 2);
+    return { p, corners, perUnit, inside };
+  };
+  const fromE = bearing(F, E), toD = bearing(F, D);
+  let sweep = ((toD - fromE) % 360 + 360) % 360;
+  let turn = 1;
+  if (sweep > 180) { sweep = 360 - sweep; turn = -1; }
+
+  for (const d of [0.08, 0.1, 0.12, 0.14, 0.16, 0.2, 0.24, 0.28, 0.32]) {
+    for (const t of [0.35, 0.25, 0.45, 0.15, 0.55]) {
+      const deg = (fromE + turn * sweep * t) * Math.PI / 180;
+      const label: Element = { kind: 'label', text, anchor: add(F, scale(pt(Math.cos(deg), Math.sin(deg)), d * r)),
+        away: F, small: true };
+      const probe = landed({ elements: [...elements, ...angleMark(F, [D, E]), label], target });
+      if (!probe.inside) continue;
+      const pF = probe.p.px(F), pD = probe.p.px(D), pE = probe.p.px(E);
+      const toDE = Math.abs((pE.x - pD.x) * (pD.y - pF.y) - (pD.x - pF.x) * (pE.y - pD.y)) / dist(pD, pE);
+      if (Math.min(...probe.corners.map(c => dist(c, pF))) < ARC_PX + 6) continue;
+      const a = ARC_PX / probe.perUnit;
+      if (ARC_PX > toDE - 5 || a > 0.85 * Math.min(dist(F, D), dist(F, E))) continue;
+      const out: Figure = { scene: { elements: [...elements, ...angleMark(F, [D, E], undefined, a), label], target }, claims };
+      if (verifyFigure(out).length || !landed(out.scene).inside) continue;
+      return out;
+    }
+  }
+  return null;
 }

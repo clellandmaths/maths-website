@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "340dceeea519b316a0c168c1c646c75fcab727f3",
+  "sourceCommit": "1a18fb1270b43a93ebce87704d8845f74b78b6fc",
   "sourceDirty": false,
   "count": 105,
   "files": {
@@ -34,7 +34,7 @@
     "diagrams/shapes/triangle-sides.ts": "25300f52f7361403",
     "diagrams/shapes/two-circles.ts": "f89a42bb2d66c09b",
     "diagrams/shapes/two-tangents-chord.ts": "7c876ea6949b6809",
-    "diagrams/shapes/two-tangents-diameters.ts": "b2d6697bba9f010e",
+    "diagrams/shapes/two-tangents-diameters.ts": "13d445022102a6e7",
     "diagrams/shapes/two-triangles-apart.ts": "9dbf595e9ba40d9d",
     "diagrams/shapes/vector-figure.ts": "6df852be8fe485b8",
     "diagrams/shapes/vector-grid.ts": "f172ca16f9bc344e",
@@ -75,7 +75,7 @@
     "generators/n5-similarity.ts": "b4d464467a235e98",
     "generators/n5-sketch-parabola.ts": "5fed3ca1e2677316",
     "generators/n5-surds.ts": "18d59128437a1398",
-    "generators/n5-tangent.ts": "5668c3e939339b88",
+    "generators/n5-tangent.ts": "c207128fe8095176",
     "generators/n5-triangle-trig.ts": "b8a52781492b3a8c",
     "generators/n5-trig-diagram.ts": "7dbf313623e5d2cf",
     "generators/n5-trig-graph.ts": "7a561ca8b7bf35d7",
