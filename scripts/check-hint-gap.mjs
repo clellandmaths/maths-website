@@ -170,15 +170,16 @@ console.log('\nevery suppressed question carries the written solution the note p
 // Q5", whose button opened on nothing: its label had the course's shape, and
 // shape was the whole test. 14 such buttons were live across the four courses.
 //
-// The site now asks two things of a label (`ladderLabel` in
-// lib/similar-questions.ts), after writing its "&" one way: that its year is in
-// the course's `HINTED_YEARS`, and that it is not one of the `NO_LADDER_CARDS`
-// (two parts set together, ladders written per part). This reproduces both
-// from the source's own literals and asserts that
-//   a. every label the site would give a button to has a plan behind it
+// The site gives a label a button (`ladderLabel` in lib/similar-questions.ts),
+// after writing its "&" one way, when its year is in the course's
+// `HINTED_YEARS`. It then answers it from the table, or, for a card that sets
+// parts together ("2022 P2 Q5(a) & (b)"), from each part's row (`cardParts` in
+// lib/hint-parts.ts, 2026-09-28: "a card with 3 parts needs to be able to show
+// hints for all parts"). This asserts that
+//   a. every label the site gives a button has a plan behind it: its own, or
+//      one for every part it sets
 //   b. every hinted year has plans, and every year with plans is hinted, so the
 //      sets cannot drift from the tables either way
-//   c. every declared card is still rendered, and still has no plan
 console.log('\nthe other four courses: every Hint button has hints behind it:');
 {
   const literal = name => {
@@ -200,10 +201,14 @@ console.log('\nthe other four courses: every Hint button has hints behind it:');
     'n5-apps': { plan: 'paper-plan-n5apps.ts', shape: literal('N5APPS_LABEL'), archive: 'src/n5apps', practice: 'national5Apps.ts' },
     'higher-apps': { plan: 'paper-plan-higherapps.ts', shape: literal('ONE_PAPER_LABEL'), archive: 'src/higherapps', practice: 'higherApps.ts' },
   };
-  const cardsBlock = libSrc.match(/export const NO_LADDER_CARDS[^=]*=\s*new Set\(\[([^\]]*)\]\)/);
-  if (!cardsBlock) fail('cannot find NO_LADDER_CARDS in lib/similar-questions.ts');
-  const cards = new Set([...(cardsBlock?.[1] ?? '').matchAll(/'([^']+)'/g)].map(m => m[1]));
   const spell = label => label.replace(/\s*&(?:amp;)?\s*/g, ' & ');
+  // `cardParts` from lib/hint-parts.ts, the same pattern: that file is
+  // TypeScript and this is not worth a build step.
+  const cardParts = label => {
+    const m = label.match(/^(.*Q\d+)\s*\(([a-h])\)((?:\s*&\s*\([a-h]\))+)$/);
+    return m ? [m[2], ...[...m[3].matchAll(/\(([a-h])\)/g)].map(x => x[1])].map(p => `${m[1]}(${p})`) : null;
+  };
+  let combined = 0;
   const walk = d => fs.readdirSync(d, { withFileTypes: true })
     .flatMap(e => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
   const yearOf = label => label.split(' ')[0];
@@ -226,27 +231,25 @@ console.log('\nthe other four courses: every Hint button has hints behind it:');
       }
     }
 
-    const buttoned = [...rendered.keys()].filter(l => c.shape.test(l) && !cards.has(l) && years.has(yearOf(l)));
-    const empty = buttoned.filter(l => !plans.has(l));
+    const buttoned = [...rendered.keys()].filter(l => c.shape.test(l) && years.has(yearOf(l)));
+    const answered = l => plans.has(l) || (cardParts(l)?.every(p => plans.has(p)) ?? false);
+    const empty = buttoned.filter(l => !answered(l));
+    combined += buttoned.filter(l => !plans.has(l) && answered(l)).length;
     if (empty.length) {
       fail(`${id}: ${empty.length} Hint button(s) with no plan behind them — they open on nothing: `
          + empty.slice(0, 8).map(l => `${l} (${rendered.get(l)})`).join(', '));
     } else {
       const held = [...rendered.keys()].filter(l => c.shape.test(l)).length - buttoned.length;
-      console.log(`  ok    ${id.padEnd(12)} ${buttoned.length} buttons, all with hints; ${held} withheld (no marking instructions, or a declared card)`);
+      console.log(`  ok    ${id.padEnd(12)} ${buttoned.length} buttons, all with hints; ${held} withheld (no marking instructions)`);
     }
 
     const planYears = new Set([...plans].map(yearOf));
     const unplanned = [...years].filter(y => !planYears.has(y));
     const unlisted = [...planYears].filter(y => !years.has(y));
     if (unplanned.length) fail(`${id}: HINTED_YEARS lists ${unplanned.join(', ')}, which has no plan in ${c.plan}`);
-    for (const card of cards) {
-      if (!card.startsWith(yearOf(card)) || !years.has(yearOf(card))) continue;
-      if (plans.has(card)) fail(`${id}: ${card} now has a ladder of its own — delete it from NO_LADDER_CARDS`);
-      if (id === 'n5-apps' && !rendered.has(card)) fail(`${id}: ${card} is declared but no question renders it — delete it from NO_LADDER_CARDS`);
-    }
     if (unlisted.length) fail(`${id}: ${c.plan} has plans for ${unlisted.join(', ')}, which HINTED_YEARS does not list — those hints are withheld`);
   }
+  console.log(`  ok    ${combined} card(s) that set parts together, answered from every part's ladder`);
 }
 
 console.log(failures ? `\nhint gap: ${failures} FAILED` : '\nhint gap: ok');
