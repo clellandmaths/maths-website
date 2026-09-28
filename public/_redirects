@@ -79,3 +79,10 @@
 /papers                                       /exam-hall                   301
 /past-papers                                  /exam-hall                   301
 /notes                                        /course/n5/notes             301
+
+# ── Removed pages ───────────────────────────────────────────────────
+# The N5 by-skill worksheet builder, removed on the owner's word
+# (2026-09-28). The practice papers under /course/n5/generate/paper/ stay,
+# so these match the builder's own address only.
+/course/n5/generate                           /explorer                    301
+/course/n5/generate/                          /explorer                    301

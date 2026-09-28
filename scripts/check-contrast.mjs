@@ -116,7 +116,6 @@ const PAGES = [
   ['/course/n5/practice/fractions', 'practice topic'],
   ['/course/n5/papers/2024/paper-1', 'paper'],
   ['/course/n5/notes/algebra/algebraic-fractions', 'notes'],
-  ['/course/n5/generate', 'generate'],
   // Three more notes topics, one per remaining course. A sample — see above for
   // why it is not the worst case it was once described as.
   ['/course/higher-apps/notes/planning-decision-making/constructing-pert-charts', 'notes: pert'],

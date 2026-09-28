@@ -29,8 +29,7 @@ Seven surfaces, all National 5 only.
 | where | what it offers |
 |---|---|
 | **Explorer card** | *Variation* — swaps the card to a new question modelled on that one. Shown before it is added |
-| **Explorer toolbar** | *Add a variation of each*, and *Generate new on N topics* with a count per topic |
-| **`/course/n5/generate`** | the by-skill builder — a count per topic, spread across that topic's skills; 30 topics, 174 skills one click down |
+| **Explorer toolbar** | *Add a variation of each*, and *Generate new questions*: a count for one topic, or a count per topic for several |
 | **`/course/n5/generate/paper/…`** | a whole paper, one question modelled on each of a real one's |
 | **Practice topic page** | *Keep practising* at the foot, and *Another like this one* on each question |
 | **Exam Hall Warm Up** | five more, on the completion screen only |

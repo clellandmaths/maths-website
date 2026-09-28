@@ -5,19 +5,17 @@
  *
  * **Not in `build`** — it needs headless Chrome and the Cloudflare image has none.
  *
- * Five things, each one reported as wrong by someone using the site:
+ * Each one reported as wrong by someone using the site:
  *
- *   1. **"Build by skill" showed only when a topic filter was set.** It lived
- *      inside the topic-generate block and inherited its gate, so filtering by
- *      year alone hid the only link on the site to the by-skill builder — a
- *      page that does not care what the filter is.
- *   2. **It was a `text-xs` underline** in a row of buttons: the quietest thing
- *      in the toolbar, and the door to the more capable of the two builders.
- *   3. **The by-skill page was a dead end.** The only ways out were the course
- *      breadcrumb and "Go to your sheet", which does not appear until you have
- *      generated something.
+ *   1. **"Build by skill" is gone** (the owner, 2026-09-28: "Build by skill is
+ *      too much"), and nothing in the toolbar links to it.
+ *   2. **Nothing reads as cut off.** "Generate new on 2 topics…" ended in an
+ *      ellipsis meaning "opens a panel", and it read as a label truncated; the
+ *      filter chips were cut at 25 characters. The button says "Generate new
+ *      questions", with an arrow when it opens a panel, and the chips carry the
+ *      whole name.
  *   4. **A flat count across several topics** is a guess at something the
- *      teacher already knows. Past one topic it now asks how many of each.
+ *      teacher already knows. Past one topic it asks how many of each.
  *   5. **"Add all to worksheet" had no counterpart** that adds a new question
  *      like each one instead of the originals.
  */
@@ -33,7 +31,13 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
         .filter(a => /build by skill/i.test(a.textContent || ''))
         .map(a => a.getAttribute('href')),
       varyEach: /Add a variation of each \\((\\d+)\\)/.exec(t)?.[1] ?? null,
-      generate: /Generate (\\d+) new on this topic|Generate new on (\\d+) topics/.exec(t)?.[0] ?? null,
+      generate: /Generate new questions/.test(t),
+      count: Boolean(document.getElementById('gen-count')),
+      opens: [...document.querySelectorAll('button[aria-expanded]')]
+        .some(b => /Generate new questions/.test(b.textContent || '')),
+      ellipsis: [...document.querySelectorAll('button')]
+        .map(b => (b.textContent || '').trim())
+        .some(s => s.endsWith('…') || s.endsWith('...')),
       addAll: /Add all (\\d+) to worksheet/.exec(t)?.[1] ?? null,
     };
   })()`);
@@ -45,21 +49,9 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
 
   const byYear = await toolbar();
   t.check(byYear?.addAll !== null, `a year filter shows the toolbar (${byYear?.addAll} questions)`);
-  t.check(byYear?.bySkill?.length === 1,
-    'and "Build by skill" is there with no topic picked');
-  t.check(byYear?.bySkill?.[0] === '/course/n5/generate',
-    `pointing at the builder: ${JSON.stringify(byYear?.bySkill?.[0])}`);
+  t.check(byYear?.bySkill?.length === 0, 'and no "Build by skill" link');
   t.check(byYear?.varyEach !== null,
     `"Add a variation of each" offers a count (${byYear?.varyEach})`);
-  // It is a styled control now, not a bare underline.
-  const looksLikeAButton = await evaluate(`(() => {
-    const a = [...document.querySelectorAll('a')].find(x => /build by skill/i.test(x.textContent || ''));
-    if (!a) return null;
-    const s = getComputedStyle(a);
-    return { pad: parseFloat(s.paddingLeft), radius: parseFloat(s.borderRadius), size: parseFloat(s.fontSize) };
-  })()`);
-  t.check((looksLikeAButton?.pad ?? 0) >= 8 && (looksLikeAButton?.size ?? 0) >= 13,
-    `and reads as a control, not a footnote (${looksLikeAButton?.size}px, ${looksLikeAButton?.pad}px padding)`);
 
   // ── 5. a variation of each ──────────────────────────────────────────────
   await click(`[...document.querySelectorAll('label')].find(e => e.textContent.trim() === '2024')`);
@@ -68,8 +60,8 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
   await sleep(2500);
 
   const one = await toolbar();
-  t.check(one?.generate?.includes('on this topic'),
-    `one topic keeps the simple count: ${JSON.stringify(one?.generate)}`);
+  t.check(one?.generate && one?.count && !one?.opens,
+    `one topic keeps the simple count, with no panel: ${JSON.stringify(one)}`);
 
   t.check(await click(buttonMatching(/Add a variation of each/)), 'pressed "Add a variation of each"');
   await sleep(12000);
@@ -92,14 +84,14 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
     await sleep(1500);
   }
   const many = await toolbar();
-  /* **The button counts the topics that were clicked, not the subtopics.**
-     Ticking "Surds" selects two subtopics, so a count of subtopics read
-     "3 topics" for two clicks and looked wrong. The panel below is where the
-     subtopics appear, under the topic they came from. */
-  t.check(many?.generate === 'Generate new on 2 topics',
-    `it counts the topics that were clicked: ${JSON.stringify(many?.generate)}`);
+  t.check(many?.generate && many?.opens && !many?.count,
+    `several topics open a panel instead, marked with an arrow: ${JSON.stringify(many)}`);
+  t.check(!many?.ellipsis, 'no button label ends in an ellipsis');
+  t.check(await evaluate(`[...document.querySelectorAll('button')]
+      .some(b => (b.textContent || '').trim() === 'Rationalising the denominator')`),
+    'the filter chips carry the whole subtopic name');
 
-  await click(buttonMatching(/Generate new on \d+ topics/));
+  await click(buttonMatching(/Generate new questions/));
   await sleep(1200);
   const panel = await evaluate(`(() => {
     const t = document.body.innerText;
@@ -160,13 +152,6 @@ await withPage({ port: 8138, cdp: 9238 }, async ({ evaluate, click, buttonNamed,
   t.check(planned?.n - held === 3,
     `drew exactly what was asked for (${planned?.n} - ${held} = ${planned?.n - held})`);
   t.check(planned?.note, 'and said so');
-
-  // ── 3. the by-skill page has a way back ─────────────────────────────────
-  await go('/course/n5/generate', 3000);
-  const back = await evaluate(`[...document.querySelectorAll('a')]
-    .map(a => a.getAttribute('href')).filter(h => h && h.startsWith('/explorer'))`);
-  t.check((back?.length ?? 0) > 0,
-    `the by-skill page offers a way back without generating first: ${JSON.stringify(back?.[0])}`);
 });
 
-t.done('the Explorer asks before it guesses, and nothing is a dead end');
+t.done('the Explorer asks before it guesses, and no control reads as cut off');
