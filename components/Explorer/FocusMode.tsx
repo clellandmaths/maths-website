@@ -139,10 +139,11 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
     <>
     <div className="fixed inset-0 z-50 bg-background flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border no-print">
+      <div className="flex items-center justify-between gap-2 px-2 py-2 sm:px-4 border-b border-border no-print">
         <button
           onClick={onClose}
-          className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+          aria-label="Close focus mode"
+          className="flex items-center gap-2 min-h-11 px-3 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
         >
           <X className="h-5 w-5" />
           <span className="hidden sm:inline text-sm">Close</span>
@@ -155,6 +156,15 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
             <span className="text-foreground-2">{questions.length} question{questions.length === 1 ? '' : 's'}</span>
           )}
         </p>
+        {/* Once, here, rather than on every question: the formulae belong to
+            the course, as in full screen (the owner, 2026-09-28). */}
+        {courseId && (
+          <FormulaeButton
+            courseId={courseId}
+            theme={theme}
+            className={`inline-flex items-center gap-1.5 whitespace-nowrap min-h-11 px-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r ${theme.gradient} hover:brightness-110 transition-all`}
+          />
+        )}
       </div>
 
       {/* Scrollable Content */}
@@ -241,13 +251,6 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     <BookOpen className="h-4 w-4" />
                     Data Booklet
                   </button>
-                )}
-                {courseId && (
-                  <FormulaeButton
-                    courseId={courseId}
-                    theme={theme}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted-hover text-muted-foreground rounded-lg text-sm font-medium transition-colors"
-                  />
                 )}
                 {q.videoId ? (
                   <button

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, ArrowLeft, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ArrowLeft, Play, Eye, EyeOff, BookOpen, Paperclip, ClipboardCheck, Check } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
@@ -78,6 +78,17 @@ interface QuestionPresenterProps {
    */
   allowAnother?: boolean;
 }
+
+/**
+ * One slot of the pinned bar. Below `md`: an equal share of the width, icon
+ * over label, 48px tall. From `md`: a 44px button sized to its label.
+ */
+const SLOT =
+  'flex flex-1 min-w-0 flex-col items-center justify-center gap-0.5 min-h-12 px-0.5 rounded-lg text-[11px] leading-tight font-medium whitespace-nowrap transition-all [&_svg]:h-5 [&_svg]:w-5 [&_svg]:shrink-0 md:flex-none md:flex-row md:gap-2 md:min-h-11 md:px-5 md:text-sm';
+
+/** The header's course-wide buttons: labelled, and on the course gradient. */
+const COURSE_WIDE = (theme: CourseTheme) =>
+  `inline-flex items-center gap-1.5 whitespace-nowrap min-h-11 px-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r ${theme.gradient} hover:brightness-110 transition-all`;
 
 function extractImageSrcs(html: string): string[] {
   const srcs: string[] = [];
@@ -172,8 +183,11 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
     if (!showAnswer) return;
     const el = answerRef.current;
     if (!el) return;
+    // Against the scroller, not the window: the pinned bar covers the foot of
+    // the window, so an answer under it is off screen while inside innerHeight.
     const box = el.getBoundingClientRect();
-    if (box.bottom > window.innerHeight || box.top < 0) {
+    const view = scrollerRef.current?.getBoundingClientRect();
+    if (box.bottom > (view?.bottom ?? window.innerHeight) || box.top < (view?.top ?? 0)) {
       el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, [showAnswer]);
@@ -201,12 +215,16 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
   return (
     <>
       <div className="fixed inset-0 z-50 bg-background flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center gap-1 min-w-0">
+        {/* Header: leaving, where you are, and what belongs to the whole
+            course. Formulae and the data booklet sit here rather than with the
+            question's own controls (the owner, 2026-09-28), labelled and in the
+            course colour so a phone shows plainly what the button opens. */}
+        <div className="flex items-center justify-between gap-2 px-2 py-2 sm:px-4 border-b border-border">
+          <div className="flex flex-1 items-center gap-1 min-w-0">
             <button
               onClick={onClose}
-              className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+              aria-label="Close full screen"
+              className="flex items-center gap-2 min-h-11 px-3 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
             >
               <X className="h-5 w-5" />
               <span className="hidden sm:inline text-sm">Close</span>
@@ -218,18 +236,38 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             {backTo && (
               <Link
                 href={backTo.href}
-                className="flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors min-w-0"
+                className="flex items-center gap-2 min-h-11 px-3 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors min-w-0"
               >
                 <ArrowLeft className="h-4 w-4 shrink-0" />
                 <span className="text-sm truncate">{backTo.label}</span>
               </Link>
             )}
           </div>
-          <div className="text-right">
-            <p className="text-muted-foreground text-sm">
-              Question <span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
-              <span className="text-foreground-2">{position.total}</span>
-            </p>
+          {/* "Question" goes below `sm`, where the header also holds Close and
+              a labelled Formulae button on a 320px screen. */}
+          <p className="shrink-0 whitespace-nowrap text-muted-foreground text-sm">
+            <span className="hidden sm:inline">Question </span><span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
+            <span className="text-foreground-2">{position.total}</span>
+          </p>
+          <div className="flex sm:flex-1 items-center justify-end gap-2 shrink-0">
+            {hasDataBooklet && (
+              <button
+                onClick={() => setShowBooklet(true)}
+                className={COURSE_WIDE(theme)}
+              >
+                <BookOpen className="h-4 w-4" />
+                Data Booklet
+              </button>
+            )}
+            {courseId && <FormulaeButton courseId={courseId} theme={theme} className={COURSE_WIDE(theme)} />}
+          </div>
+        </div>
+
+        {/* Scrollable Content */}
+        <div ref={scrollerRef} className="flex-1 overflow-y-auto">
+          <div className="min-h-full flex flex-col max-w-4xl lg:max-w-none mx-auto p-4 sm:p-6 md:p-8 lg:px-12 xl:px-16">
+            {/* What this question is, its topics and its marks */}
+            <div className="shrink-0 flex flex-wrap items-center gap-2 mb-4">
             {/* A twin says what it is and where it came from. Leaving the paper
                 question's own label up there would credit this question to a
                 paper it is not in. */}
@@ -244,8 +282,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 Here it costs the row nothing and it sits with the words that
                 say why it exists — this line is where the twin announces it is
                 not the paper question. */}
-            <p className="text-muted-dim text-xs mt-0.5 flex items-center justify-end gap-2">
-              <span>
+              <span className="text-sm text-muted-dim">
                 {twin
                   ? `New question${twin.basedOn?.[twin.parentIndex ?? 0]
                       ? ` · based on ${twin.basedOn[twin.parentIndex ?? 0]}` : ''}`
@@ -254,22 +291,12 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               {twin && (
                 <button
                   onClick={() => { setTwin(null); setShowAnswer(false); }}
-                  className={`inline-flex items-center gap-1 whitespace-nowrap rounded px-2 py-1 font-medium ${theme.text} hover:bg-foreground/10 transition-colors`}
+                  className={`inline-flex items-center gap-1 whitespace-nowrap rounded px-2 py-1 text-sm font-medium ${theme.text} hover:bg-foreground/10 transition-colors`}
                 >
                   <ArrowLeft className="h-3.5 w-3.5" />
                   Back to the question
                 </button>
               )}
-            </p>
-            <Marks marks={shown.marks} theme={theme} className="justify-end mt-1" />
-          </div>
-        </div>
-
-        {/* Scrollable Content */}
-        <div ref={scrollerRef} className="flex-1 overflow-y-auto">
-          <div className="min-h-full flex flex-col max-w-4xl lg:max-w-none mx-auto p-4 sm:p-6 md:p-8 lg:px-12 xl:px-16">
-            {/* Topic Tags */}
-            <div className="shrink-0 flex flex-wrap gap-2 mb-4">
               {shown.topics?.slice(0, 3).map((topic) => (
                 <span
                   key={topic}
@@ -278,6 +305,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   {topic}
                 </span>
               ))}
+              <Marks marks={shown.marks} theme={theme} className="ml-auto" />
             </div>
 
             {/* Question Card — fixed height container between header & footer */}
@@ -337,99 +365,13 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
               </div>
             )}
 
-            {/* Action Buttons */}
-            <div className="shrink-0 flex flex-col sm:flex-row justify-center items-center gap-3 mt-4">
-              {hasDataBooklet && (
-                <button
-                  onClick={() => setShowBooklet(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors"
-                >
-                  <BookOpen className="h-5 w-5" />
-                  Data Booklet
-                </button>
-              )}
-              {courseId && (
-                <FormulaeButton
-                  courseId={courseId}
-                  theme={theme}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium bg-muted hover:bg-muted-hover text-foreground-2 transition-colors"
-                />
-              )}
-              {/* Before the answer button, deliberately: a pupil who is stuck
-                  should meet help before they meet the answer. */}
-              {allowHints && (
-                <Hints
-                  question={shown}
-                  theme={theme}
-                  courseId={courseId}
-                  className="w-full"
-                  size="stage"
-                  /* The same geometry as the four blocks around it. It used to
-                     be 32px tall and 73px wide next to four 48px full-width
-                     ones — the smallest control in the row, and the one a stuck
-                     pupil is looking for. */
-                  buttonClassName={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap rounded-lg px-6 py-3 font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
-                />
-              )}
-              {allowAnswers && (
-              <button
-                onClick={() => setShowAnswer(!showAnswer)}
-                className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 rounded-lg font-medium transition-colors ${
-                  showAnswer
-                    ? 'bg-muted-hover hover:bg-muted-hover text-foreground-2'
-                    : `${theme.bg} ${theme.bgHover} text-white`
-                }`}
-              >
-                {showAnswer ? (
-                  <>
-                    <EyeOff className="h-5 w-5" />
-                    Hide Answer
-                  </>
-                ) : (
-                  <>
-                    <Eye className="h-5 w-5" />
-                    Show Answer
-                  </>
-                )}
-              </button>
-              )}
-              {allowVideo && shown.videoId ? (
-                <button
-                  onClick={() => setShowVideo(true)}
-                  className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
-                >
-                  <Play className="h-5 w-5" />
-                  {/* A generated question's video solves the paper question it
-                      was modelled on, not itself. Calling that "Watch Solution"
-                      sends a pupil to check an answer that is not theirs. */}
-                  {shown.videoOf ? 'Watch a worked example' : 'Watch Solution'}
-                </button>
-              ) : allowVideo && courseId === 'ah' && hasMarkscheme(shown.year, shown.paperNumber) ? (
-                <button
-                  onClick={() => setShowMarkscheme(true)}
-                  className={`w-full sm:w-auto flex items-center justify-center gap-2 whitespace-nowrap px-6 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
-                >
-                  <ClipboardCheck className="h-5 w-5" />
-                  Markscheme
-                </button>
-              ) : (
-                // Neither a video nor marking instructions: say so, rather
-                // than leaving a gap that reads as a missing button
-                <span className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-dashed border-muted text-muted-dim font-medium">
-                  <Play className="h-5 w-5" />
-                  Video solution coming soon
-                </span>
-              )}
-
-              {/* Last in the row, and deliberately after the answer: this is a
-                  what-next control rather than a help-me-now one, and a pupil
-                  should meet the hints and the video before they are offered a
-                  different question.
-
-                  Modelled on the paper question, never on the twin — pressing
-                  it three times stays anchored to what the pupil is stuck on
-                  rather than wandering off down a chain. */}
-              {allowAnother && (
+            {/* Another like this one: a what-next control rather than a
+                help-me-now one, so it stays with the question instead of
+                joining the pinned bar. Modelled on the paper question, never
+                on the twin, so three presses stay anchored to what the pupil
+                is stuck on. */}
+            {allowAnother && (
+              <div className="shrink-0 flex justify-center mt-4">
                 <TwinControls
                   courseId={courseId}
                   question={question}
@@ -440,8 +382,8 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                     setShowAnswer(false);
                   }}
                 />
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Why there is no Hint button in that row.
 
@@ -483,30 +425,96 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
           </div>
         </div>
 
-        {/* Navigation Footer */}
-        <div className="border-t border-border p-4">
-          <div className="max-w-4xl lg:max-w-none mx-auto lg:px-12 xl:px-16 flex justify-between gap-4">
+        {/* **The pinned bar** (the owner, 2026-09-28): Previous, then the
+            question's own help, then Next, fixed to the foot of the screen so
+            a long question never scrolls Hint, the answer or the video away.
+            What each opens is unchanged: the ladder is its overlay, the answer
+            opens under the question, the video is its modal.
+
+            Below `md` it is five equal slots, an icon over a short label, 48px
+            tall, so it fits a 320px screen without a sideways scroll. From
+            `md` it is one row with the help centred between the two moves. */}
+        <nav
+          aria-label="Question controls"
+          className="shrink-0 border-t border-border bg-card px-1 pt-1.5 pb-[calc(0.375rem+env(safe-area-inset-bottom,0px))] md:px-4 md:py-3"
+        >
+          <div className="max-w-4xl lg:max-w-none mx-auto lg:px-12 xl:px-16 flex items-stretch md:items-center gap-1 md:gap-3">
             <button
               onClick={goPrev}
               disabled={isFirst}
-              className="flex items-center gap-2 px-6 py-3 bg-muted hover:bg-muted-hover text-foreground font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className={`${SLOT} bg-muted hover:bg-muted-hover text-foreground disabled:opacity-30 disabled:cursor-not-allowed`}
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft />
               Previous
             </button>
+
+            <div className="contents md:flex md:flex-1 md:justify-center md:gap-2">
+              {/* Before the answer, deliberately: a pupil who is stuck should
+                  meet help before they meet the answer. */}
+              {allowHints && (
+                <Hints
+                  question={shown}
+                  theme={theme}
+                  courseId={courseId}
+                  className="flex flex-1 min-w-0 md:flex-none"
+                  size="stage"
+                  buttonClassName={`${SLOT} w-full disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
+                />
+              )}
+              {allowAnswers && (
+                <button
+                  onClick={() => setShowAnswer(!showAnswer)}
+                  aria-pressed={showAnswer}
+                  className={`${SLOT} ${showAnswer
+                    ? 'bg-muted-hover text-foreground-2'
+                    : `${theme.tint} ${theme.text} hover:bg-foreground/10`}`}
+                >
+                  {showAnswer ? <EyeOff /> : <Eye />}
+                  <span className="md:hidden">Answer</span>
+                  <span className="hidden md:inline">{showAnswer ? 'Hide Answer' : 'Show Answer'}</span>
+                </button>
+              )}
+              {allowVideo && shown.videoId ? (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  className={`${SLOT} bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white`}
+                >
+                  <Play />
+                  <span className="md:hidden">Video</span>
+                  {/* A generated question's video solves the paper question it
+                      was modelled on, not itself. Calling that "Watch Solution"
+                      sends a pupil to check an answer that is not theirs. */}
+                  <span className="hidden md:inline">{shown.videoOf ? 'Watch a worked example' : 'Watch Solution'}</span>
+                </button>
+              ) : allowVideo && courseId === 'ah' && hasMarkscheme(shown.year, shown.paperNumber) ? (
+                <button
+                  onClick={() => setShowMarkscheme(true)}
+                  className={`${SLOT} bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white`}
+                >
+                  <ClipboardCheck />
+                  <span className="md:hidden">Scheme</span>
+                  <span className="hidden md:inline">Markscheme</span>
+                </button>
+              ) : (
+                // Neither a video nor marking instructions: say so, rather
+                // than leaving a gap that reads as a missing button
+                <span className={`${SLOT} border border-dashed border-muted text-muted-dim`}>
+                  <Play />
+                  <span className="md:hidden">No video</span>
+                  <span className="hidden md:inline">Video solution coming soon</span>
+                </span>
+              )}
+            </div>
+
             <button
               onClick={isLast ? onClose : goNext}
-              className={`flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-colors ${
-                isLast
-                  ? 'bg-teal-600 hover:bg-teal-500 text-white'
-                  : 'bg-muted hover:bg-muted-hover text-foreground'
-              }`}
+              className={`${SLOT} ${theme.bg} ${theme.bgHover} text-white`}
             >
+              {isLast ? <Check /> : <ChevronRight />}
               {isLast ? 'Finish' : 'Next'}
-              {!isLast && <ChevronRight className="h-5 w-5" />}
             </button>
           </div>
-        </div>
+        </nav>
       </div>
 
       {/* Video Modal */}
