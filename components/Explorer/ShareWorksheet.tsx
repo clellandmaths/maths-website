@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Copy, Check, Share2 } from 'lucide-react';
-import { shareLinks, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
+import { X, Copy, Check, Share2, Lock } from 'lucide-react';
+import { shareLinks, NO_OPTIONS, LOCKED_BY_TEST, underTest, type WorksheetOptions } from '@/lib/worksheet-share';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 import { courseHasPaperLadder } from '@/lib/similar-questions';
@@ -43,24 +43,38 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose, te
   // granting them on a past paper question, and the maker should be told.
   const generated = questions.filter(q => q.uid?.startsWith('g:')).length;
 
+  // Turning Test mode on clears what it locks, so turning it off again starts
+  // from nothing handed out rather than from what was ticked before.
   const toggle = (key: keyof WorksheetOptions) =>
-    setOptions(o => ({ ...o, [key]: !o[key] }));
+    setOptions(o => underTest({ ...o, [key]: !o[key] }));
 
-  const check = (key: keyof WorksheetOptions, label: string, hint: string, disabled = false) => (
-    <label className={`flex items-start gap-3 p-3 rounded-lg border border-border ${disabled ? 'opacity-50' : 'cursor-pointer hover:bg-foreground/5'} transition-colors`}>
-      <input
-        type="checkbox"
-        checked={options[key]}
-        disabled={disabled}
-        onChange={() => toggle(key)}
-        className="mt-0.5 h-4 w-4 shrink-0 accent-current"
-      />
-      <span>
-        <span className="block text-sm font-medium">{label}</span>
-        <span className="block text-xs text-muted-foreground">{hint}</span>
-      </span>
-    </label>
-  );
+  const check = (key: keyof WorksheetOptions, label: string, hint: string, disabled = false) => {
+    const locked = options.test && LOCKED_BY_TEST.includes(key);
+    const off = disabled || locked;
+    return (
+      <label
+        className={`flex items-start gap-3 p-3 rounded-lg border ${locked ? 'border-dashed border-muted bg-muted/40' : 'border-border'} ${off ? 'opacity-60' : 'cursor-pointer hover:bg-foreground/5'} transition-colors`}
+        title={locked ? 'Locked by Test mode. Turn Test mode off to choose this.' : undefined}
+      >
+        <input
+          type="checkbox"
+          checked={options[key]}
+          disabled={off}
+          onChange={() => toggle(key)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-current"
+        />
+        <span>
+          <span className="flex items-center gap-1.5 text-sm font-medium">
+            {locked && <Lock className="h-3.5 w-3.5" aria-hidden="true" />}
+            {label}
+          </span>
+          <span className="block text-xs text-muted-foreground">
+            {locked ? 'Locked by Test mode' : hint}
+          </span>
+        </span>
+      </label>
+    );
+  };
 
   const copy = async (which: 'editable' | 'locked') => {
     try {
@@ -145,6 +159,8 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose, te
               switched on at the other end. Pupils can always work through it full screen.
             </p>
             <div className="grid sm:grid-cols-3 gap-2">
+              {/* First, because it decides what the rest may be. */}
+              {check('test', 'Test mode', 'Each question headed by its number and marks only: no paper, topic or question name to give it away. Locks out answers, videos, QR codes and hints')}
               {check('answers', 'Answers', 'They can reveal the answer to each question')}
               {check('video', 'Video solutions', !withVideo
                 ? 'None of these questions has a video'
@@ -160,8 +176,13 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose, te
               {courseHasPaperLadder(courseId) && check('hints', 'Hints', generated > 0
                 ? `What the question asks, then how the marks are earned, then the working on the ${generated} generated question${generated === 1 ? '' : 's'} — stopping before the step that lands the answer`
                 : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')}
-              {check('test', 'Test mode', 'Each question headed by its number and marks only: no paper, topic or question name to give it away')}
             </div>
+            {options.test && (
+              <p role="status" className={`mt-2 flex items-start gap-2 rounded-lg ${theme.tint} ${theme.text} px-3 py-2 text-sm font-medium`}>
+                <Lock className="h-4 w-4 mt-0.5 shrink-0" aria-hidden="true" />
+                Test mode is on, so answers, videos, QR codes and hints are locked off. Turn Test mode off to choose them.
+              </p>
+            )}
           </div>
 
           {row('locked', 'Locked handout',

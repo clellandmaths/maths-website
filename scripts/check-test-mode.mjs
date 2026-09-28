@@ -60,8 +60,27 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
   t.check(!!(await evaluate(`!!(${buttonNamed('Full screen')})`)) && !(await evaluate(`!!(${buttonNamed('Present')})`)),
     'the toolbar says "Full screen", not "Present"');
 
+  // Answers on first, so Test mode has something to lock out.
+  await click(labelNamed('Show answers'));
+  await sleep(300);
+  // Each of the switches Test mode locks, as the visible toolbar shows it.
+  const SWITCHES = `(() => Object.fromEntries(['Show answers', 'QR codes', 'Hints'].map(name => {
+    const l = [...document.querySelectorAll('label')].find(x => x.offsetParent && x.textContent.trim() === name);
+    const i = l?.querySelector('input');
+    return [name, i ? { on: i.checked, disabled: i.disabled } : null];
+  })))()`;
+  const unlocked = await evaluate(SWITCHES);
+  t.check(unlocked['Show answers']?.on && !unlocked['Show answers']?.disabled, 'answers switched on before Test mode');
+
   t.check(await click(labelNamed('Test mode')), 'the worksheet offers Test mode');
   await sleep(800);
+  // The owner, 2026-09-28: Test mode "should lock out the other options and
+  // make it clear they are locked out until test mode unlocked".
+  const locks = await evaluate(SWITCHES);
+  for (const [name, s] of Object.entries(locks)) {
+    if (s) t.check(!s.on && s.disabled, `Test mode switches ${name} off and locks it (${JSON.stringify(s)})`);
+  }
+  t.check(await evaluate(`/locked in Test mode/.test(document.body.innerText)`), 'and says so beside the switch');
   const test = await evaluate(GIVEAWAYS);
   t.check(test.tags === 0, `with it on, no topic tags (${test.tags})`);
   t.check(test.captions === 0, `no paper captions (${test.captions})`);
@@ -74,6 +93,20 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
   const locked = await evaluate(`[...document.querySelectorAll('input')]
     .map(i => i.value).find(v => v.includes('/worksheet?')) ?? null`);
   t.check(/[?&]o=[a-z]*t/.test(locked ?? ''), `the handout link carries test mode (${(locked ?? '').replace(/q=[^&]*/, 'q=…')})`);
+  const o = new URL(locked ?? 'http://x/').searchParams.get('o') ?? '';
+  t.check(!/[aqvh]/.test(o), `and nothing Test mode locks out (o=${o})`);
+  const shareLocks = await evaluate(`(() => {
+    const box = [...document.querySelectorAll('h2')].find(h => /Share this worksheet/.test(h.textContent))?.closest('.rounded-2xl');
+    const boxes = [...(box?.querySelectorAll('label') ?? [])].filter(l => l.querySelector('input[type=checkbox]'));
+    const named = n => boxes.find(l => l.textContent.trim().startsWith(n))?.querySelector('input');
+    return {
+      answers: named('Answers')?.disabled ?? null,
+      test: named('Test mode') ? !named('Test mode').disabled && named('Test mode').checked : null,
+      said: /Test mode is on, so answers/.test(box?.innerText ?? ''),
+    };
+  })()`);
+  t.check(shareLocks.answers === true && shareLocks.test === true && shareLocks.said,
+    `the share box locks Answers under Test mode and says so (${JSON.stringify(shareLocks)})`);
 
   if (locked) {
     await go(new URL(locked).pathname + new URL(locked).search, 8000);

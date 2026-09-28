@@ -72,19 +72,36 @@ const FLAGS: [keyof WorksheetOptions, string][] = [
   ['test', 't'],
 ];
 
+/**
+ * **What Test mode switches off, and keeps off** (the owner, 2026-09-28: Test
+ * mode "should lock out the other options and make it clear they are locked
+ * out until test mode unlocked"). A test hands out no answers, no hints and no
+ * way to a worked solution. Held here as well as in the controls, so a handout
+ * link edited by hand cannot carry answers into a test.
+ */
+export const LOCKED_BY_TEST: readonly (keyof WorksheetOptions)[] = ['answers', 'video', 'qrCodes', 'hints'];
+
+export function underTest(o: WorksheetOptions): WorksheetOptions {
+  if (!o.test) return o;
+  const out = { ...o };
+  for (const key of LOCKED_BY_TEST) out[key] = false;
+  return out;
+}
+
 export function encodeOptions(o: WorksheetOptions): string {
-  return FLAGS.filter(([key]) => o[key]).map(([, flag]) => flag).join('');
+  const kept = underTest(o);
+  return FLAGS.filter(([key]) => kept[key]).map(([, flag]) => flag).join('');
 }
 
 export function decodeOptions(s: string | null): WorksheetOptions {
   const set = new Set((s ?? '').toLowerCase());
-  return {
+  return underTest({
     answers: set.has('a'),
     qrCodes: set.has('q'),
     video: set.has('v'),
     hints: set.has('h'),
     test: set.has('t'),
-  };
+  });
 }
 
 export interface SharedWorksheet {
