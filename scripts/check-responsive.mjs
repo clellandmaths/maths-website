@@ -183,7 +183,6 @@ const NOT_BASELINEABLE = [
   '/exam-hall.html',
   '/explorer.html',
   '/worksheet.html',
-  '/course/n5/generate.html',
   // An embedded R runtime with async status text — "Running hidden code
   // cells" is present or absent depending on how far it has got when the
   // measurement is taken.

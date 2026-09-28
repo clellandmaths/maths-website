@@ -18,6 +18,63 @@ Every claim below was verified against the source or the built output on
 
 ---
 
+## Review of 2026-09-28: findings and recommendations (not acted on)
+
+The owner: "I get a general feeling that site seems off that getting to where
+you want to go sometimes doesn't feel intuitive." They are testing `dev` and
+will decide what to implement later. Measured in the built site at 1400px and
+400px.
+
+**Why it feels off: two navigation systems at once.**
+
+- Each course has three tabs (Course Notes, Practice, Past Paper Archive), but
+  the Topic Explorer and the Exam Hall sit in the top nav as if site-wide. Each
+  uses whichever course was last visited (`localStorage.preferredCourse`) and
+  has no course tabs. So stepping into either leaves the course.
+- A course is chosen in four places, which lead to different pages: the nav
+  dropdown, the home cards and the footer go to the archive, and the
+  Explorer's "Change Course" opens its own picker ("Launch Explorer").
+- The course's front page is the archive: on N5, 22 rows of five buttons, 158
+  clickable elements. On a phone each paper is about a screen tall. The home
+  cards list "Guided practice", "Worksheet builder" and "Whole course revision
+  marathon", and none of them is a link.
+- The navbar never marks where you are, and the breadcrumbs are still
+  inconsistent (see below).
+
+**Hover and cursor**, by forcing `:hover` on every visible control on 14 pages
+(scratch `nav/hover.mjs`):
+
+- **Every `<button>` has the arrow cursor**, not the pointer: 90 on
+  `/course/n5`, 23 on `/explorer`. Links have the pointer. Tailwind 4 dropped
+  the pointer default for buttons, and nothing restores it.
+- **Focus Mode on every course page has no hover** (80 buttons over five
+  courses): `bg-muted-hover hover:bg-muted-hover`.
+- Everything else changes on hover, except the current page's own tab, which
+  is correct.
+
+**Recommended, in order:**
+
+1. **Quick fixes:** the pointer cursor on buttons site-wide; Focus Mode's hover;
+   the nav marks the current section; consistent breadcrumbs; the "Browse
+   Questions" label on phones.
+2. **A course hub (the owner's idea).** `/course/[id]` becomes one page with
+   everything for that course as cards: Notes, Practice, Past Papers, Topic
+   Explorer and worksheets, Exam Hall (countdown, warm-up, marathon,
+   checklists), Formulae, and the course's extras. Inside a course, one course
+   bar on every page (the Explorer and Exam Hall included): the course name with
+   a switcher, then Hub, Notes, Practice, Past Papers, Topic Explorer and Exam
+   Hall, with the current page marked. "Change course" keeps you on the same
+   page in the new course. The top nav slims to Courses, Exam Hall, Academy and
+   Connect. The archive moves to its own tab.
+3. **A calmer archive:** one or two main actions per paper, the rest under
+   "More", and compact rows on a phone.
+4. **The Explorer's first screen**, reached from a course, shows that course's
+   papers or topics, not an empty state.
+
+Before building 2: show the owner a mockup of the N5 hub and the course bar.
+
+---
+
 ## The shape of the site
 
 Five courses, and every route statically exported — 542 pages, no server
@@ -32,7 +89,6 @@ Paper Archive), and two sidebars that belong to the notes and the Explorer.
 | `…/notes`, `…/notes/[section]/[topic]` | the hub and 35 N5 topics |
 | `…/practice`, `…/practice/[topic]` | the index and 34 N5 topics |
 | `…/papers/[year]/[paper]` | 22 static N5 paper pages, fully crawlable |
-| `…/generate` | the by-skill worksheet builder, **N5 only** |
 | `…/generate/paper/[year]/[paper]` | a practice paper cloned from a real one, **N5 only** |
 | `/explorer` | browse, filter, and build a worksheet |
 | `/exam-hall` | countdown, checklists, daily warm up, marathon |
@@ -60,23 +116,13 @@ Worth saying first, because the rest of this document is faults.
 
 ## What is hard or impossible to find
 
-### `/course/n5/generate` has one inbound link on the whole site
+### `/course/n5/generate`: removed
 
-**Partly acted on, 2026-09-14** — it was reported here as a `text-xs`
-underlined `by skill…` that appeared only once a subtopic filter was already
-set, so filtering by year alone hid the only route to it. It is a styled
-**Build by skill** control now, gated on the course rather than the filter, with
-a title saying what is behind it. The rest of this finding stands.
-
-It is still not in the navbar, not in the footer, not on the course page, not in
-`CourseTabs`, and not in `app/sitemap.ts` — **one link, from one page**. It is a
-complete page with its own explanatory copy — *"Every question is modelled on a
-past paper question and checked against its marking instructions — so they are
-new questions, not reprints"* — that someone who never opens the Explorer will
-not meet.
-
-**This is the largest single gap on the site**, and it is not a small fix
-dressed up: it is a finished feature with no front door.
+**Closed, 2026-09-28.** This section reported the by-skill builder as a finished
+feature with one inbound link. The owner removed it instead: "Build by skill is
+too much". The page is gone, its one link in the Explorer toolbar is gone, and
+`public/_redirects` sends the old address to the Explorer. The practice-paper
+generator at `/course/n5/generate/paper/…` is separate and stays.
 
 ### The Explorer shows nothing until a filter is set
 

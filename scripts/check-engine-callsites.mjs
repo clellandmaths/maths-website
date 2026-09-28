@@ -16,10 +16,8 @@
  * lines in 932 KB of lazy chunks (the ratcheted figure is in
  * `scripts/engine-size-baseline.json`), on 0 of 542 pages, and one top-level
  * import in a shared component undoes that silently. A *server* component may import it
- * freely: `app/course/[courseId]/generate/page.tsx` calls
- * `offeredTopicGroups()` at build time and ships the result as about 170
- * strings, which is exactly the right thing to do and costs the browser
- * nothing. So the rule is about `'use client'`, not about the path.
+ * freely: it runs at build time and ships only its result, which costs the
+ * browser nothing. So the rule is about `'use client'`, not about the path.
  *
  * **3. No concurrent draws.** The generator's random stream is module-level, so
  * overlapping calls draw from each other. Measured, not assumed: resolving a
@@ -72,7 +70,6 @@ const ALLOWED = new Map([
   ['components/Explorer/QuestionCard.tsx', 'a variation of the question on the card'],
   ['components/ExamHall/WarmUp.tsx', 'five more once the daily five are done'],
   ['app/explorer/page.tsx', 'bulk generate, and re-roll on the worksheet'],
-  ['app/course/[courseId]/generate/GenerateClient.tsx', 'the by-skill builder'],
   ['app/course/[courseId]/generate/paper/[year]/[paper]/PracticePaperClient.tsx',
     'a whole practice paper'],
 ]);

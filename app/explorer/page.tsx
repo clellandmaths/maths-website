@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2, SlidersHorizontal } from 'lucide-react';
+import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, ArrowLeft, GraduationCap, Check, Paperclip, Share2, Dices, Loader2 } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
@@ -722,10 +722,14 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                       <button
                         key={`af-topic-${subtopic}`}
                         onClick={() => removeSubtopic(subtopic)}
-                        className={`shrink-0 px-2.5 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1.5 hover:bg-foreground/10 transition-colors`}
+                        // The whole name: cut at 25 characters, "Rationalising the
+                        // denomin..." read as a control that had been truncated
+                        // (the owner, 2026-09-28). A name too long for a phone
+                        // wraps inside its chip instead.
+                        className={`max-w-full px-2.5 py-1 ${theme.tint} ${theme.text} text-xs text-left rounded-full flex items-center gap-1.5 hover:bg-foreground/10 transition-colors`}
                       >
-                        {subtopic.length > 25 ? subtopic.slice(0, 25) + '...' : subtopic}
-                        <X className="h-3 w-3" />
+                        <span className="min-w-0 break-words">{subtopic}</span>
+                        <X className="h-3 w-3 shrink-0" />
                       </button>
                     ))}
                   </div>
@@ -793,6 +797,7 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     <button
                       onClick={handleVaryEach}
                       disabled={generating}
+                      title="Adds a new question modelled on each of these past paper questions, with new numbers"
                       className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                     >
                       {generating
@@ -812,21 +817,27 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                           ? setShowGenPlan(v => !v)
                           : handleGenerate()}
                         disabled={generating}
+                        title={selectedSubtopics.length > 1
+                          ? 'Choose how many new questions to add on each of these topics'
+                          : 'Adds this many new questions on this topic to your worksheet'}
+                        aria-expanded={selectedSubtopics.length > 1 ? showGenPlan : undefined}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                       >
                         {generating
                           ? <Loader2 className="h-4 w-4 animate-spin" />
                           : <Dices className="h-4 w-4" />}
-                        {generating
-                          ? 'Generating…'
-                          : selectedSubtopics.length > 1
-                            /* **With several topics picked, ask before drawing.**
-                               A flat count spread across them is a guess at
-                               something the teacher already knows — five
-                               questions over four topics is not one each and
-                               not five each, and nothing says which. */
-                            ? `Generate new on ${genGroups.length} ${genGroups.length === 1 ? 'topic' : 'topics'}…`
-                            : `Generate ${genCount} new on this topic`}
+                        {/* **With several topics picked, ask before drawing.**
+                            A flat count spread across them is a guess at
+                            something the teacher already knows — five questions
+                            over four topics is not one each and not five each,
+                            and nothing says which. So it opens a panel, and the
+                            arrow says so. It used to say so with a trailing
+                            "…", which read as a label cut off (the owner,
+                            2026-09-28). */}
+                        {generating ? 'Generating…' : 'Generate new questions'}
+                        {!generating && selectedSubtopics.length > 1 && (
+                          <ChevronDown className={`h-4 w-4 transition-transform ${showGenPlan ? 'rotate-180' : ''}`} />
+                        )}
                       </button>
                       {selectedSubtopics.length <= 1 && (
                         <>
@@ -846,23 +857,11 @@ function ExplorerContent({ course, onChangeCourse }: { course: Course; onChangeC
                     </div>
                   )}
 
-                  {/* **Not inside `canGenerate`.** This went where the topic
-                      controls are and inherited their gate, so filtering by
-                      year alone hid the one link on the site to the by-skill
-                      builder — a page that does not care what the filter is.
-                      It is also no longer a `text-xs` underline: it was the
-                      quietest thing in a toolbar of buttons, and it is the door
-                      to the more capable of the two ways to build a sheet. */}
-                  {courseHasHints(course) && (
-                    <a
-                      href={`/course/${course}/generate`}
-                      title="Choose exact skills — Adding Mixed Numbers rather than Fractions — and how many of each"
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium bg-muted text-foreground-2 hover:bg-muted-hover transition-colors"
-                    >
-                      <SlidersHorizontal className="h-4 w-4" />
-                      Build by skill
-                    </a>
-                  )}
+                  {/* "Build by skill" was here: a separate page listing every
+                      skill under every topic (sixteen under Quadratics alone),
+                      each with its own count. Removed on the owner's word,
+                      2026-09-28: "Build by skill is too much". The topic
+                      generate above covers it. */}
                 </div>
               )}
 

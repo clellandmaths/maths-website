@@ -350,10 +350,13 @@ export default function FilterSidebar({
               <button
                 key={subtopic}
                 onClick={() => toggleSubtopic(subtopic)}
-                className={`px-2 py-1 ${theme.tint} ${theme.text} text-xs rounded-full flex items-center gap-1 hover:bg-foreground/10`}
+                // The whole name, as the Explorer's own chips (the owner,
+                // 2026-09-28: cut-off labels hid what they were). A long one
+                // wraps inside its chip.
+                className={`max-w-full px-2 py-1 ${theme.tint} ${theme.text} text-xs text-left rounded-full flex items-center gap-1 hover:bg-foreground/10`}
               >
-                {subtopic.length > 15 ? subtopic.slice(0, 15) + '...' : subtopic}
-                <X className="h-3 w-3" />
+                <span className="min-w-0 break-words">{subtopic}</span>
+                <X className="h-3 w-3 shrink-0" />
               </button>
             ))}
             {selectedSubtopics.length > 5 && (
