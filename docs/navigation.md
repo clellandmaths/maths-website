@@ -64,8 +64,28 @@ will decide what to implement later. Measured in the built site at 1400px and
    bar on every page (the Explorer and Exam Hall included): the course name with
    a switcher, then Hub, Notes, Practice, Past Papers, Topic Explorer and Exam
    Hall, with the current page marked. "Change course" keeps you on the same
-   page in the new course. The top nav slims to Courses, Exam Hall, Academy and
-   Connect. The archive moves to its own tab.
+   page in the new course. The archive moves to its own tab.
+
+   **The Topic Explorer stays in the top nav** (the owner, 2026-09-28: "I also
+   think explorer shouldn't be hidden from nav bar"). It is what teachers come
+   for, and hiding it would add a click for them. The fault was never that it
+   is in the nav, only that it silently picks a course. So:
+   - the top nav is Courses, Topic Explorer, Exam Hall, Academy and Connect,
+     with the logo as Home (the separate Home link goes);
+   - from the nav, the Explorer opens the course last used, or asks which
+     course if there is none (as its picker does today);
+   - once open, it shows the same course bar as the rest of that course, with a
+     switcher that stays in the Explorer;
+   - the Exam Hall is treated the same way.
+
+   So the Explorer is reached from the top nav and from the course bar, and
+   both land on the same page.
+
+   **No address changes.** `/course/[id]`, `/explorer`, `/exam-hall`, the paper,
+   notes and practice pages, and `/worksheet` links all keep working. The only
+   new address is `/course/[id]/papers`, which has no page today. Before
+   merging, a link check confirms that every address in the live build (the
+   sitemap, internal links and redirect targets) still resolves.
 3. **A calmer archive:** one or two main actions per paper, the rest under
    "More", and compact rows on a phone.
 4. **The Explorer's first screen**, reached from a course, shows that course's
