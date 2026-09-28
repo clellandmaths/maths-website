@@ -3,11 +3,20 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap, Dices } from 'lucide-react';
-import CourseTabs from '@/components/CourseTabs';
+import CourseBar from '@/components/CourseBar';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import VideoModal from '@/components/VideoModal';
-import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
-import FocusMode from '@/components/Explorer/FocusMode';
+import dynamic from 'next/dynamic';
+
+/**
+ * Loaded when first opened, not with the page. Full screen, Focus Mode and
+ * the video player appear only after a press, and each already waits for the
+ * paper's questions to load. Eager, they were most of this page's JavaScript:
+ * the archive moved to `…/papers` (2026-09-28), among the notes and practice
+ * pages, and there it was 63 KB over the budget for its group.
+ */
+const VideoModal = dynamic(() => import('@/components/VideoModal'), { ssr: false });
+const QuestionPresenter = dynamic(() => import('@/components/Explorer/QuestionPresenter'), { ssr: false });
+const FocusMode = dynamic(() => import('@/components/Explorer/FocusMode'), { ssr: false });
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos, n5AppsPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
@@ -15,9 +24,6 @@ import { timestampToSeconds } from '@/lib/timestamp.mjs';
 
 interface CoursePageProps {
   courseId: string;
-  // Direct link into the first notes topic (the all-topics hub is at
-  // /course/[courseId]/notes)
-  notesHref: string;
 }
 
 const courseConfig: Record<string, {
@@ -40,7 +46,7 @@ const courseNames: Record<string, string> = {
   'higher-apps': 'Higher Applications',
 };
 
-export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
+export default function CoursePage({ courseId }: CoursePageProps) {
   // Lazy question loading
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[] | null>(null);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
@@ -153,41 +159,26 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: `${courseName} Maths` }]} />
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: `${courseName} Maths`, href: `/course/${courseId}` },
+          { label: 'Past Papers' },
+        ]} />
 
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            {courseName} <span className={theme.text}>Maths</span>
+            {courseName} Maths <span className={theme.text}>Past Papers</span>
           </h1>
           <p className="text-muted-foreground">
-            Video lessons, practice questions, and past paper archive
+            Every paper, question by question, with worked solutions.
           </p>
         </div>
 
-        {/* Tabs — shared course-context navigation */}
-        <CourseTabs courseId={courseId} active="papers" notesHref={notesHref} />
-
-        {/* **A way into the Explorer that is not at the bottom of the page.**
-            The cross-link card below says the same thing, but it sits beneath
-            the whole paper archive — twenty-odd cards of scrolling — so nobody
-            arriving here finds it. This is deliberately NOT a fourth CourseTabs
-            tab: measured, that row has 32px of slack at 320px and the word
-            "Explorer" cannot wrap, so a fourth tab re-creates the horizontal
-            scroll the comment in CourseTabs.tsx was written about.
-
-            The course rides in the query string rather than relying on
-            `localStorage.preferredCourse`, so the link means the same thing on
-            a device that has never been here. */}
-        {config && (
-          <Link
-            href={`/explorer?c=${courseId}`}
-            className="mb-8 inline-flex items-center gap-2 rounded-lg border border-muted px-3 py-2 text-sm font-medium text-foreground-2 transition-colors hover:bg-foreground/5 hover:text-white"
-          >
-            <Compass className="h-4 w-4 shrink-0" />
-            Open the Topic Explorer
-          </Link>
-        )}
+        {/* The course bar, which carries the Topic Explorer too. It replaced
+            "Open the Topic Explorer", a stop-gap link above the archive from
+            when the three tabs had no room for a fourth. */}
+        <CourseBar courseId={courseId} active="papers" />
 
         {/* Content */}
         {config ? (
@@ -447,7 +438,7 @@ export default function CoursePage({ courseId, notesHref }: CoursePageProps) {
               </div>
             </Link>
             <Link
-              href="/exam-hall"
+              href={`/exam-hall?c=${courseId}`}
               className="group flex items-center gap-4 bg-card border border-border hover:border-foreground/25 rounded-xl p-5 transition-colors"
             >
               <div className={`p-3 ${theme.tint} rounded-lg shrink-0`}>

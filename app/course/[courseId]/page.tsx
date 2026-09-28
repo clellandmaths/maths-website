@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import CoursePageClient from './CoursePageClient';
-import { getNotesForCourse } from '@/lib/notes-loader';
+import CourseHub from './CourseHub';
 
 export function generateStaticParams() {
   return [
@@ -46,17 +45,12 @@ interface Props {
   params: Promise<{ courseId: string }>;
 }
 
+/**
+ * The course hub (see CourseHub). The past paper archive that used to be here
+ * is at `/course/[courseId]/papers`, so this address keeps working and now
+ * leads to everything in the course, the archive included.
+ */
 export default async function CoursePage({ params }: Props) {
   const { courseId } = await params;
-
-  // The Course Notes tab links straight into the first topic — the
-  // all-topics hub lives at /course/[courseId]/notes
-  const course = await getNotesForCourse(courseId);
-  const firstSection = course?.sections[0];
-  const firstTopic = firstSection?.topics[0];
-  const notesHref = firstSection && firstTopic
-    ? `/course/${courseId}/notes/${firstSection.id}/${firstTopic.id}`
-    : `/course/${courseId}/notes`;
-
-  return <CoursePageClient courseId={courseId} notesHref={notesHref} />;
+  return <CourseHub courseId={courseId} />;
 }

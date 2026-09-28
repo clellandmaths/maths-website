@@ -9,8 +9,7 @@ import PracticeQuestion from '@/components/Practice/PracticeQuestion';
 import PracticeModes from '@/components/Practice/PracticeModes';
 import PracticeGenerate from '@/components/Practice/PracticeGenerate';
 import { subtopicsForPractice } from '@/lib/generatable-topics';
-import CourseTabs from '@/components/CourseTabs';
-import { notesEntryHref } from '@/lib/notes-loader';
+import CourseBar from '@/components/CourseBar';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 // A page per topic rather than one page for the whole course: each targets a
@@ -90,12 +89,13 @@ export default async function PracticeTopicPage({ params }: { params: Promise<Pa
     <div className="mx-auto max-w-3xl px-4 py-8">
       <Breadcrumbs
         items={[
+          { label: 'Home', href: '/' },
           { label: courseName, href: `/course/${courseId}` },
           { label: 'Practice', href: `/course/${courseId}/practice` },
           { label: topic.name },
         ]}
       />
-      <CourseTabs courseId={courseId} active="practice" notesHref={await notesEntryHref(courseId)} />
+      <CourseBar courseId={courseId} active="practice" />
 
       <div className="mb-8">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>

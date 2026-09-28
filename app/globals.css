@@ -392,6 +392,17 @@ body {
   overflow-x: auto;
 }
 
+/* The course bar's tabs (components/CourseBar.tsx) scroll sideways on a
+   phone. No scrollbar, and a fade at the right edge, which is what says
+   there is more to scroll to. */
+.course-bar-tabs {
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+}
+.course-bar-tabs::-webkit-scrollbar {
+  display: none;
+}
+
 /* Printing has no viewport to overflow, and a scroll container would
    silently crop columns off the page. Put the table back. */
 @media print {

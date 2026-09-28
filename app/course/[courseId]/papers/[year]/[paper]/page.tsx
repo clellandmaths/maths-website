@@ -23,8 +23,7 @@ import { getCourseTheme } from '@/lib/course-theme';
 import { questionNumber } from '@/lib/question-number.mjs';
 import { hasMarkscheme, getCardScheme } from '@/lib/ah-markschemes';
 import SchemeTable from '@/components/SchemeTable';
-import CourseTabs from '@/components/CourseTabs';
-import { notesEntryHref } from '@/lib/notes-loader';
+import CourseBar from '@/components/CourseBar';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import MathHtml from '@/components/MathHtml';
 import WatchSolutionButton from '@/components/Papers/WatchSolutionButton';
@@ -156,9 +155,10 @@ export default async function PaperPage(
       <Breadcrumbs items={[
         { label: 'Home', href: '/' },
         { label: courseName, href: `/course/${courseId}` },
+        { label: 'Past Papers', href: `/course/${courseId}/papers` },
         { label: `${year} Paper ${paperNumber}` },
       ]} />
-      <CourseTabs courseId={courseId} active="papers" notesHref={await notesEntryHref(courseId)} />
+      <CourseBar courseId={courseId} active="papers" />
 
       {/* Paper header */}
       <div className="mb-10">
