@@ -603,9 +603,14 @@ function ExplorerContent({ course }: { course: Course }) {
         <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
           {/* Header */}
           <div className="mb-6 no-print">
-            <h1 className="text-2xl font-bold mb-2">Topic Explorer</h1>
+            <h1 className="text-2xl font-bold mb-2">Worksheet Builder</h1>
+            {/* Says what can be made here, generating included where the
+                course has it: nothing on the page used to (the owner,
+                2026-09-28). Other courses are not promised it. */}
             <p className="text-muted-foreground">
-              Use filters to find questions, then add them to build a custom worksheet.
+              {course === 'n5'
+                ? 'Find past paper questions by topic, or generate brand-new ones like them, then print or share your worksheet.'
+                : 'Find past paper questions by topic and year, then build a worksheet to print or share.'}
             </p>
           </div>
 
@@ -725,6 +730,16 @@ function ExplorerContent({ course }: { course: Course }) {
                     Use the filters to find questions by topic and year.
                     Click &quot;+ Add&quot; on any question to add it to your worksheet.
                   </p>
+                  {/* The first screen anyone sees here, so it is where
+                      generating has to be mentioned (the owner, 2026-09-28:
+                      "there is nothing on the website that lets people know
+                      they can generate questions there"). */}
+                  {course === 'n5' && (
+                    <p className={`max-w-md mx-auto mb-6 inline-flex items-start gap-2 rounded-lg ${theme.tint} ${theme.text} px-4 py-3 text-sm font-medium text-left`}>
+                      <Dices className="h-5 w-5 shrink-0" aria-hidden="true" />
+                      New: pick a topic and generate brand-new questions on it, modelled on the past papers, with answers and worked steps.
+                    </p>
+                  )}
                   <button
                     onClick={() => setShowMobileFilters(true)}
                     className={`lg:hidden inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg font-medium transition-all`}
@@ -783,6 +798,16 @@ function ExplorerContent({ course }: { course: Course }) {
                         : <Dices className="h-4 w-4" />}
                       {generating ? 'Generating…' : `Add a variation of each (${variableCount})`}
                     </button>
+                  )}
+
+                  {/* Before a topic is picked, say that generating is here and
+                      how to reach it: the button needs a topic to work on, and
+                      until one was picked nothing said it existed. */}
+                  {course === 'n5' && selectedSubtopics.length === 0 && (
+                    <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                      <Dices className={`h-4 w-4 ${theme.text}`} aria-hidden="true" />
+                      Pick a topic in the filters to generate new questions on it
+                    </span>
                   )}
 
                   {/* Generate on the filter already set. National 5 only —
@@ -998,7 +1023,8 @@ function ExplorerContent({ course }: { course: Course }) {
                   </h3>
                   <p className="text-muted-dim max-w-md mx-auto mb-6">
                     Switch to &quot;Browse Questions&quot; and use the filters to find questions.
-                    Click &quot;+ Add&quot; to build your worksheet.
+                    Click &quot;+ Add&quot; to build your worksheet
+                    {course === 'n5' ? ', or pick a topic and generate new questions on it.' : '.'}
                   </p>
                   <button
                     onClick={() => setViewMode('browse')}

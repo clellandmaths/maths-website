@@ -130,9 +130,11 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
 
           <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Revise and build</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Card href={courseHref(courseId, 'explorer')} icon={Compass} title="Topic Explorer"
+            <Card href={courseHref(courseId, 'explorer')} icon={Compass} title="Worksheet Builder"
               foot={`${paperQuestions} past paper questions`}>
-              Find past paper questions by topic and year, and build a worksheet to print or share.
+              {courseId === 'n5'
+                ? 'Build a worksheet from past paper questions by topic, or generate brand-new ones like them.'
+                : 'Find past paper questions by topic and year, and build a worksheet to print or share.'}
             </Card>
             <Card href={courseHref(courseId, 'exam-hall')} icon={GraduationCap} title="Exam Hall"
               foot={exam && examLabel ? <DaysToGo iso={exam.date.toISOString()} dateLabel={examLabel} /> : undefined}>
@@ -161,6 +163,26 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
               </Card>
             ) : null}
           </div>
+
+          {/* The Academy, once, below everything free and quieter than it: a
+              band, not a card competing with the course's own (the owner,
+              2026-09-28, on bringing pupils and parents to the Academy while
+              keeping teachers). */}
+          <Link
+            href="/academy"
+            className="group mt-10 flex flex-col gap-2 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-accent/40 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <span>
+              <span className="block font-semibold text-foreground">Want a teacher alongside all this?</span>
+              <span className="block text-sm text-muted-foreground">
+                Weekly live tutoring for {COURSE_NAMES[courseId] ?? 'your course'}, with every lesson recorded, notes and mock papers.
+              </span>
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-accent">
+              See Tutoring
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </span>
+          </Link>
         </div>
       </div>
     </>

@@ -10,9 +10,12 @@ import { getCourseTheme } from '@/lib/course-theme';
 import { contactHref } from '@/lib/connect';
 
 export const metadata: Metadata = {
-  title: 'Academy — Live Masterclasses',
+  // "Tutoring", the word parents search for (the owner, 2026-09-28: the
+  // Academy is "tutoring plus so much more"). Group, said at once, so nobody
+  // arrives expecting one-to-one.
+  title: 'Online Maths Tutoring for N5, Higher & Advanced Higher — Academy',
   description:
-    'Clelland Maths Academy: weekly live masterclasses for National 5, Higher, Advanced Higher and Applications of Maths, taught by an active Scottish maths teacher. Strictly 25 seats per course.',
+    'Clelland Maths Academy: live group maths tutoring every week for National 5, Higher, Advanced Higher and Applications of Maths, taught by an active Scottish maths teacher, with every lesson recorded, notes, mock papers and support through the week.',
 };
 
 /**
@@ -84,8 +87,14 @@ export default function AcademyPage() {
             Clelland Maths Academy
           </p>
           <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Premium online masterclasses
+            Maths tutoring, and so much more
           </h1>
+          {/* What it is, in one line a parent reads first: group, live,
+              weekly, and what comes with it. The story follows. */}
+          <p className="text-xl font-medium text-foreground leading-relaxed mb-4">
+            Live group tutoring every week with an active Scottish maths teacher, plus every
+            lesson recorded, notes, mock papers and support through the week.
+          </p>
           <p className="text-lg text-foreground/90 leading-relaxed mb-4">
             For the 2026/2027 academic year, taught directly by David Clelland — the Scottish maths
             teacher BBC News turned to for comment on the 2026 Higher Maths exam.

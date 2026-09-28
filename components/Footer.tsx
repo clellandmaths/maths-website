@@ -18,6 +18,12 @@ export default function Footer() {
             <p className="text-sm text-muted-foreground">
               Free maths revision for Scottish students.
             </p>
+            {/* Said openly, so a teacher reads the Academy as what keeps the
+                free site free rather than as a catch (2026-09-28). */}
+            <p className="mt-1 text-sm text-muted-foreground">
+              It stays free because of the{' '}
+              <Link href="/academy" className="text-accent hover:underline underline-offset-4">Academy&rsquo;s live tutoring</Link>.
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-x-12 gap-y-6">
@@ -31,7 +37,7 @@ export default function Footer() {
             </nav>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
               <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Tools</span>
-              <Link href="/explorer" className="py-1 hover:text-foreground transition-colors">Topic Explorer</Link>
+              <Link href="/explorer" className="py-1 hover:text-foreground transition-colors">Worksheet Builder</Link>
               <Link href="/exam-hall" className="py-1 hover:text-foreground transition-colors">Exam Hall</Link>
               <a
                 href="https://app.clellandmaths.com"
@@ -41,7 +47,7 @@ export default function Footer() {
               >
                 Revision App
               </a>
-              <Link href="/academy" className="py-1 hover:text-foreground transition-colors">Academy</Link>
+              <Link href="/academy" className="py-1 hover:text-foreground transition-colors">Tutoring</Link>
               <Link href="/connect" className="py-1 hover:text-foreground transition-colors">Connect</Link>
             </nav>
           </div>

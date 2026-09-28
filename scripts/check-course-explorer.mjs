@@ -43,7 +43,7 @@ await withPage({ port: 8177, cdp: 9277, width: 1280, height: 900 }, async ({ eva
   for (const page of ['/course/n5', '/course/n5/papers']) {
     await go(page, 4000);
     const wayIn = await evaluate(`(() => {
-      const a = ${barLink('Topic Explorer')};
+      const a = ${barLink('Worksheet Builder')};
       return a ? { href: a.getAttribute('href'), y: Math.round(a.getBoundingClientRect().top), vh: innerHeight } : null;
     })()`);
     t.check(!!wayIn, `${page}: the course bar offers the Topic Explorer`);
@@ -52,7 +52,7 @@ await withPage({ port: 8177, cdp: 9277, width: 1280, height: 900 }, async ({ eva
     t.check(wayIn && wayIn.y < wayIn.vh, `and it is on the first screen (${wayIn?.y}px of ${wayIn?.vh}px)`);
   }
 
-  await click(barLink('Topic Explorer'));
+  await click(barLink('Worksheet Builder'));
   await sleep(5000);
 
   t.check(await evaluate(`location.pathname === '/course/n5/explorer'`), 'it lands on the Explorer');
@@ -105,4 +105,4 @@ for (const width of [320, 390]) {
   });
 }
 
-t.done('a course and the Topic Explorer are a round trip');
+t.done('a course and the Worksheet Builder are a round trip');

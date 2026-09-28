@@ -46,7 +46,7 @@ const TABS: { section: CourseSection; label: string; icon: typeof BookOpen }[] =
   { section: 'notes', label: 'Notes', icon: BookOpen },
   { section: 'practice', label: 'Practice', icon: PencilLine },
   { section: 'papers', label: 'Past Papers', icon: FileText },
-  { section: 'explorer', label: 'Topic Explorer', icon: Compass },
+  { section: 'explorer', label: 'Worksheet Builder', icon: Compass },
   { section: 'exam-hall', label: 'Exam Hall', icon: GraduationCap },
 ];
 

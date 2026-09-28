@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 import { Flame, CheckSquare, Clock, ArrowLeft, Check, ChevronDown, ChevronRight, Timer } from 'lucide-react';
 import { n5ChecklistCategories, higherChecklistCategories } from '@/lib/checklist-topics';
@@ -314,6 +315,18 @@ function ExamHallContent({ course }: { course: Course }) {
               <p className={`text-2xl font-bold ${theme.text}`}>
                 {countdown.days} days · {countdown.hours} hours to go
               </p>
+            )}
+            {/* One quiet line, at the moment the date is on a pupil's mind
+                (the owner, 2026-09-28, on bringing pupils and parents to the
+                Academy). Nothing like it goes on a page a teacher prints,
+                projects or shares. */}
+            {!countdown?.passed && (
+              <Link
+                href="/academy"
+                className="mt-1 block text-center text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors"
+              >
+                Want a teacher with you until exam day? <span className="font-semibold text-accent">Weekly live tutoring →</span>
+              </Link>
             )}
           </div>
         </div>

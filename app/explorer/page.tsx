@@ -9,7 +9,7 @@ export default function ExplorerChooser() {
   return (
     <CoursePicker
       section="explorer"
-      title="Topic Explorer"
+      title="Worksheet Builder"
       intro="Browse Qualifications Scotland past paper questions by topic and year, then build a custom maths worksheet with answers, QR-coded video solutions and PDF export — free for students and teachers. Choose your course to start."
       features={['Topic-by-Topic Filtering', 'Instant Worksheet Builder', 'PDF Export']}
       action="Launch Explorer"

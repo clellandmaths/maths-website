@@ -428,9 +428,9 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                   <Compass className={`h-6 w-6 ${theme.text}`} />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-foreground">Topic Explorer</h3>
+                  <h3 className="font-semibold text-foreground">Worksheet Builder</h3>
                   <p className="text-sm text-muted-foreground">
-                    Filter these questions by topic and build a custom worksheet in the Explorer.
+                    Filter these questions by topic and build a custom worksheet.
                   </p>
                 </div>
               </Link>

@@ -7,15 +7,18 @@ import { Menu, X, Compass, GraduationCap, ChevronDown, Sparkles, Mail } from 'lu
 
 
 const navLinks = [
-  // One name everywhere. The footer, the home hero and the page's own <h1>
-  // already said "Topic Explorer"; this said "Explorer" and the course page
-  // said "Practise by topic", which is three names for one tool and is why
+  // One name everywhere, and the name says what it is for (the owner,
+  // 2026-09-28): it was "Topic Explorer", which said nothing about building a
+  // worksheet or generating questions. The address stays /explorer, so no link
+  // moves. It was once three names for one tool, which is why
   // docs/navigation.md lists it as a thing nobody builds a model of.
-  { href: '/explorer', label: 'Topic Explorer', icon: Compass },
+  { href: '/explorer', label: 'Worksheet Builder', icon: Compass },
   { href: '/exam-hall', label: 'Exam Hall', icon: GraduationCap },
   // Carries the accent colour: it is the one paid thing on the site, and four
-  // identically-styled items would bury it among the free ones.
-  { href: '/academy', label: 'Academy', icon: Sparkles, highlight: true },
+  // identically-styled items would bury it among the free ones. "Tutoring",
+  // not "Academy": it is the word parents search for and the Academy is
+  // tutoring and more (the owner, 2026-09-28). The address stays /academy.
+  { href: '/academy', label: 'Tutoring', icon: Sparkles, highlight: true },
   { href: '/connect', label: 'Connect', icon: Mail },
 ];
 
@@ -125,6 +128,18 @@ export default function Navbar() {
             })}
           </div>
 
+          {/* Tutoring in the phone's own bar, not only behind the menu: it
+              was the one paid thing on the site and a phone never saw it
+              without opening the menu (the owner, 2026-09-28). */}
+          <Link
+            href="/academy"
+            aria-current={isIn(pathname, '/academy') ? 'page' : undefined}
+            className="md:hidden ml-auto mr-1 inline-flex items-center gap-1.5 min-h-11 px-3 rounded-lg text-sm font-semibold text-accent hover:bg-muted/50 transition-colors"
+          >
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
+            Tutoring
+          </Link>
+
           {/* **Light or dark, with no React state at all.**
 
               Which icon shows is a fact about the theme, and the theme already
@@ -174,7 +189,21 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden glass border-t border-border/50 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
-            {/* Courses first: choosing one is the first thing most visitors
+            {/* Tutoring first, saying what it is in one line, so the word is
+                not all a parent has to go on. */}
+            <Link
+              href="/academy"
+              onClick={() => setIsOpen(false)}
+              aria-current={isIn(pathname, '/academy') ? 'page' : undefined}
+              className="flex items-start gap-3 px-4 py-3 rounded-lg border border-accent/30 hover:bg-muted/50 transition-colors"
+            >
+              <Sparkles className="h-5 w-5 mt-0.5 text-accent shrink-0" aria-hidden="true" />
+              <span>
+                <span className="block font-semibold text-accent">Tutoring</span>
+                <span className="block text-sm text-foreground-2">Weekly live tutoring with a Scottish maths teacher</span>
+              </span>
+            </Link>
+            {/* Courses next: choosing one is the first thing most visitors
                 do, and they used to sit below every tool. */}
             <p className="px-4 pt-1 pb-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
               Courses
@@ -198,7 +227,7 @@ export default function Navbar() {
             })}
 
             <div className="my-2 border-t border-border/50" />
-            {navLinks.map((link) => {
+            {navLinks.filter(link => link.href !== '/academy').map((link) => {
               const Icon = link.icon;
               const here = isIn(pathname, link.href);
               return (

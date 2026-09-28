@@ -16,7 +16,7 @@ export async function generateMetadata(
   const name = COURSE_NAMES[courseId];
   if (!name) return {};
   return {
-    title: `${name} Topic Explorer — Build Custom Maths Worksheets`,
+    title: `${name} Worksheet Builder — Past Paper Questions by Topic`,
     description: `Filter ${name} Maths past paper questions by topic, year and paper, then build a custom worksheet with answers, QR-coded video solutions and PDF export. Free for students and teachers.`,
   };
 }

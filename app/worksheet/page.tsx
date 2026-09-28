@@ -458,7 +458,7 @@ function SharedWorksheet() {
 
       <div className="mt-10 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4 no-print">
         <p className="text-sm text-muted-foreground">
-          Built with the Clelland Maths Topic Explorer — free for students and teachers.
+          Built with the Clelland Maths Worksheet Builder — free for students and teachers.
         </p>
         <Link href="/explorer" className={`text-sm ${theme.text} hover:opacity-80 transition-opacity`}>
           Build your own →

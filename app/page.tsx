@@ -122,7 +122,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-foreground/25 text-foreground font-semibold rounded-lg transition-colors"
             >
               <Compass className="h-4 w-4" />
-              Topic Explorer
+              Worksheet Builder
             </Link>
           </div>
             <p className="font-mono text-xs sm:text-sm text-muted-foreground">
@@ -180,19 +180,22 @@ export default function Home() {
                   Clelland Maths Academy
                 </p>
                 <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-2">
-                  Want live teaching too?
+                  Want a tutor too?
                 </h2>
+                {/* Tutoring, the owner's wording, and the seat limit kept: "I am
+                    happy for the homepage to have the urgency on it that is the
+                    homepage after all" (2026-09-28). */}
                 <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                  Everything above is free and always will be. The Academy adds a weekly live
-                  masterclass with an active Scottish maths teacher — recorded, with notes, mock
-                  papers and support through the week. Strictly {SEATS_PER_COURSE} seats a course.
+                  Everything above is free and always will be. The Academy adds weekly live
+                  tutoring with an active Scottish maths teacher, with every lesson recorded,
+                  notes, mock papers and support through the week. Strictly {SEATS_PER_COURSE} seats a course.
                 </p>
               </div>
               <Link
                 href="/academy"
                 className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
               >
-                See the Academy
+                See Tutoring
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
