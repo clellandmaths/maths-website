@@ -17,7 +17,12 @@ export function DaysToGo({ iso, dateLabel }: { iso: string; dateLabel: string })
   useEffect(() => {
     setDays(Math.ceil((new Date(iso).getTime() - Date.now()) / 86_400_000));
   }, [iso]);
-  if (days === null || days < 0) return <>{dateLabel}</>;
+  // Until the count is known, its room is held by an invisible stand-in the
+  // width of a three-figure count. Without it the chip grew when the count
+  // arrived, wrapped onto a second line on a phone and pushed the course's
+  // cards down 36px: a layout shift of 0.108, measured 2026-09-28.
+  if (days === null) return <><span aria-hidden="true" className="invisible">000 days to go · </span>{dateLabel}</>;
+  if (days < 0) return <>{dateLabel}</>;
   return <>{days} day{days === 1 ? '' : 's'} to go · {dateLabel}</>;
 }
 

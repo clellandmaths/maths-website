@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { renderMath } from '@/lib/render-math';
 
 // Client-side counterpart to MathHtml, for surfaces that assemble their content
 // in the browser (Explorer, Focus, the presenter, Exam Hall).
@@ -20,10 +19,20 @@ export default function MathRenderer({ html, className = '', displayStyle = true
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
-    // Rendered from the raw string before the browser parses it, so & and <
-    // inside maths cannot be mangled on the way in.
-    ref.current.innerHTML = renderMath(html, { displayStyle });
+    // **KaTeX is fetched here, when there is maths to draw, not with the page.**
+    // Imported at the top, it put 76 KB compressed into every page that could
+    // show this component, including the home page, before anything was drawn
+    // (2026-09-28). The maths was always drawn after the page loaded, in this
+    // effect, so nothing appears later than it did; the file is fetched once
+    // and every later call reuses it.
+    let live = true;
+    import('@/lib/render-math').then(({ renderMath }) => {
+      if (!live || !ref.current) return;
+      // Rendered from the raw string before the browser parses it, so & and <
+      // inside maths cannot be mangled on the way in.
+      ref.current.innerHTML = renderMath(html, { displayStyle });
+    });
+    return () => { live = false; };
   }, [html, displayStyle]);
 
   return <div ref={ref} className={className} />;

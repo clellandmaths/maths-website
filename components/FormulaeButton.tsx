@@ -1,9 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Sigma } from 'lucide-react';
-import FormulaeModal from '@/components/FormulaeModal';
 import { hasFormulae } from '@/lib/formulae-loader';
+
+// The sheet, and the KaTeX it draws with, arrive when the button is pressed.
+// Imported at the top, they put 76 KB compressed into every page carrying the
+// button, the course hub among them, for a sheet most visits never open
+// (2026-09-28). The formulae themselves were already loaded on demand.
+const FormulaeModal = dynamic(() => import('@/components/FormulaeModal'), { ssr: false });
 import type { CourseTheme } from '@/lib/course-theme';
 
 // Opens the course's formulae list. Renders nothing for Higher Applications,

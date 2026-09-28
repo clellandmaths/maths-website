@@ -551,16 +551,23 @@ function ExplorerContent({ course }: { course: Course }) {
     availableYears: config.availableYears,
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className={`w-8 h-8 border-2 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto mb-4`} />
-          <p className="text-muted-foreground">Loading {config.label} questions...</p>
-        </div>
+  /**
+   * **The page's own frame while the questions load, not a screen of its own.**
+   *
+   * It was a centred spinner filling the screen, replaced whole when the data
+   * arrived, so everything jumped from the middle of the screen to its place:
+   * a layout shift of 0.387 on a throttled phone, on live as well (2026-09-28).
+   * Now the heading, tabs and filters are drawn at once and only the list
+   * waits, in a box tall enough that the footer does not move either.
+   */
+  const loadingView = (
+    <div role="status" className="flex min-h-[60vh] items-center justify-center">
+      <div className="text-center">
+        <div className={`w-8 h-8 border-2 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto mb-4`} />
+        <p className="text-muted-foreground">Loading {config.label} questions...</p>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
     <div className="min-h-screen">
@@ -645,8 +652,10 @@ function ExplorerContent({ course }: { course: Course }) {
             </button>
           </div>
 
+          {isLoading && loadingView}
+
           {/* Browse Mode */}
-          {viewMode === 'browse' && (
+          {!isLoading && viewMode === 'browse' && (
             <>
               {/* Mobile Filter Button */}
               <button
@@ -1013,7 +1022,7 @@ function ExplorerContent({ course }: { course: Course }) {
           )}
 
           {/* Worksheet View Mode */}
-          {viewMode === 'worksheet' && (
+          {!isLoading && viewMode === 'worksheet' && (
             <>
               {worksheetItems.length === 0 ? (
                 <div className="text-center py-16">
@@ -1580,7 +1589,7 @@ function ExplorerContent({ course }: { course: Course }) {
       </div>
 
       {/* Worksheet FAB - only show in browse mode, desktop only (tabs handle mobile) */}
-      {viewMode === 'browse' && (
+      {!isLoading && viewMode === 'browse' && (
         <div className="hidden lg:block">
           <WorksheetFAB theme={theme} onClick={() => setViewMode('worksheet')} />
         </div>

@@ -413,6 +413,12 @@ body {
   width: fit-content;
   max-width: 100%;
   overflow-x: auto;
+  /* A scroll box contains an absolutely positioned descendant only when it
+     is that descendant's positioning parent, and KaTeX's screen-reader copy
+     of every formula is absolutely positioned. Without this, the copies of a
+     wide table's maths sit past its edge and widen the whole page: AH 2016
+     P1's marking table made a 320px phone 408px wide (2026-09-28). */
+  position: relative;
 }
 
 /* Printing has no viewport to overflow, and a scroll container would
@@ -620,6 +626,9 @@ body {
   overflow-y: hidden;
   padding: 0.5rem 0;
   margin: 0.5rem 0;
+  /* Holds the formula's screen-reader copy inside this scroll box too; see
+     the tables rule above. */
+  position: relative;
 }
 
 .katex {

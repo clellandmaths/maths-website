@@ -27,8 +27,19 @@ export const metadata: Metadata = {
  * finished — and it tells whoever fills it exactly what to supply.
  */
 function ImageSlot({
-  name, alt, hint, className = '', aspect = 'aspect-[16/9]',
-}: { name: keyof typeof ACADEMY_IMAGES; alt: string; hint: string; className?: string; aspect?: string }) {
+  name, alt, hint, className = '', aspect = 'aspect-[16/9]', priority = false, srcSet, sizes,
+}: {
+  name: keyof typeof ACADEMY_IMAGES; alt: string; hint: string; className?: string; aspect?: string;
+  /**
+   * The page's main image: fetched at once and first, never lazily. The hero
+   * was lazy, so the largest thing on the page was the last thing requested:
+   * it painted 1.8 s after the heading on a throttled phone (2026-09-28).
+   */
+  priority?: boolean;
+  /** Smaller copies for smaller screens, so a phone is not sent the desktop file. */
+  srcSet?: string;
+  sizes?: string;
+}) {
   const src = ACADEMY_IMAGES[name];
   if (src) {
     // Intrinsic sizes from scripts/build-academy-images.mjs, so the browser
@@ -37,11 +48,15 @@ function ImageSlot({
     return (
       <img
         src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt}
         width={dims?.[0]}
         height={dims?.[1]}
         className={`w-full rounded-2xl ${className}`}
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
+        decoding={priority ? 'sync' : 'async'}
       />
     );
   }
@@ -133,6 +148,11 @@ export default function AcademyPage() {
             name="hero"
             alt="David Clelland teaching"
             aspect="aspect-[4/5]"
+            priority
+            // hero-600.webp is the 1000px original at 600px (57 KB against
+            // 199 KB), made with sharp. It is half the page's width from md.
+            srcSet="/img/academy/hero-600.webp 600w, /img/academy/hero.webp 1000w"
+            sizes="(min-width: 768px) 480px, calc(100vw - 32px)"
             hint="Hero photo of David — teaching, holding an iPad, or smiling to camera. Parents need to see the person they are trusting."
           />
         </div>

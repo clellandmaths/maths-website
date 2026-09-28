@@ -21,7 +21,13 @@ export default function SchemeTable({
 }) {
   return (
     <div className="space-y-4">
-      <div className="overflow-x-auto">
+      {/* `relative`, so the table's maths stays inside this scroll box. KaTeX
+          writes each formula a second time for screen readers, absolutely
+          positioned, and an absolute box escapes any scroll box that is not
+          its positioning parent: on AH 2016 P1 those copies sat past the edge
+          of the table and made the whole page 408px wide on a 320px phone
+          (2026-09-28). */}
+      <div className="relative overflow-x-auto">
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className={`text-left font-mono text-xs uppercase tracking-widest ${accent}`}>
