@@ -162,7 +162,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
         <div className="max-w-3xl mx-auto p-4 sm:p-6 md:p-8 space-y-4">
           {questions.map((q, index) => (
             <div
-              key={`focus-${q.year}-${q.paperNumber}-${q.questionIndex}`}
+              key={`focus-${q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}`}
               className="bg-card/50 border border-border rounded-xl p-5 sm:p-6"
             >
               {/* Question header */}
