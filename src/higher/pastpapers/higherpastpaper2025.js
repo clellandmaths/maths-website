@@ -93,7 +93,7 @@ export const higherPastPaper2025 = {
           topics: ["Discriminant and Quadratics", "Quadratic inequations"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q12</span></strong></small><p>Given that:<br>\\(\\frac{dy}{dx}=6~\\cos~x+8~\\sin~2x\\)<br>and \\(y=4\\) when \\(x=\\frac{\\pi}{6}\\)<br>express y in terms of x.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P1 Q12</span></strong></small><p>Given that:<br>\\(\\frac{dy}{dx}=6 \\cos x+8 \\sin 2x\\)<br>and \\(y=4\\) when \\(x=\\frac{\\pi}{6}\\)<br>express y in terms of x.</p>`,
           answer: `\\(y=6\\sin x - 4\\cos 2x + 3\\)`,
           videoId: "t1_htB2awtg",
           timestamp: "1274s",
@@ -154,7 +154,7 @@ export const higherPastPaper2025 = {
           topics: ["Collinearity (in 3d or 2d)", "Ratio in which one point divides two others"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q6</span></strong></small><p>(a) Express \\(5~\\cos~x-9~\\sin~x\\) in the form \\(k~\\cos(x+a)\\) where \\(k \\gt 0\\) and \\(0 \\lt a \\lt 2\\pi.\\)<br>(b) Hence solve<br>\\(5~\\cos~x-9~\\sin~x=7\\)<br>for \\(0\\le x \\lt 2\\pi.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q6</span></strong></small><p>(a) Express \\(5 \\cos x-9 \\sin x\\) in the form \\(k \\cos(x+a)\\) where \\(k \\gt 0\\) and \\(0 \\lt a \\lt 2\\pi.\\)<br>(b) Hence solve<br>\\(5 \\cos x-9 \\sin x=7\\)<br>for \\(0\\le x \\lt 2\\pi.\\)</p>`,
           answer: `(a) \\(\\sqrt{106}\\cos(x+1.06)\\)<br>(b) 4.40, 6.04`,
           videoId: "NNOugVXypYo",
           timestamp: "742s",
@@ -194,7 +194,7 @@ export const higherPastPaper2025 = {
           topics: ["Optimisation"]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q11</span></strong></small><br>Solve<br>\\(3~\\sin~2x^{\\circ}+4~\\cos~x^{\\circ}=0\\)<br>for \\(0\\le x \\lt 360\\).`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q11</span></strong></small><br>Solve<br>\\(3 \\sin 2x^{\\circ}+4 \\cos x^{\\circ}=0\\)<br>for \\(0\\le x \\lt 360\\).`,
           answer: `\\(x=90, 221.8, 270, 318.2\\)`,
           videoId: "NNOugVXypYo",
           timestamp: "1668s",

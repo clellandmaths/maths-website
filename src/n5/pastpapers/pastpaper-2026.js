@@ -101,7 +101,7 @@ export const pastpaper2026 = {
                     topics: ["Sketch a parabola from equation"]
                 },
                 {
-                    question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q13</span></strong></small><br>Given that \\(f(x)=5~\\cos~2x^{\\circ}\\), evaluate \\(f(90).\\)`,
+                    question: `<small><strong><span style="white-space: nowrap;">2026 P1 Q13</span></strong></small><br>Given that \\(f(x)=5 \\cos 2x^{\\circ}\\), evaluate \\(f(90).\\)`,
                     answer: `\\(-5\\)`,
                     videoId: "rCQLNrGQlGk",
                     timestamp: "1070s",
