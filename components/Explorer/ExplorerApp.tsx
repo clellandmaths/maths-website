@@ -36,7 +36,7 @@ import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
-import { byPaperLabel, withParentVideo, courseHasHints, variationLabel } from '@/lib/similar-questions';
+import { byPaperLabel, withParentVideo, courseHasHints, courseHasPaperLadder, variationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { withoutPaperBadge } from '@/lib/question-number.mjs';
 import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
@@ -1038,7 +1038,7 @@ function ExplorerContent({ course }: { course: Course }) {
                           />
                           <span className="text-sm text-muted-foreground">QR codes</span>
                         </label>
-                        {courseHasHints(course) && (
+                        {courseHasPaperLadder(course) && (
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
@@ -1444,7 +1444,7 @@ function ExplorerContent({ course }: { course: Course }) {
                             and focus mode both offer them at any width, and a
                             sheet someone is sitting and working through is
                             exactly where they would want them. */}
-                        {courseHasHints(course) && (
+                        {courseHasPaperLadder(course) && (
                           <label className="flex items-center gap-2 cursor-pointer">
                             <input
                               type="checkbox"

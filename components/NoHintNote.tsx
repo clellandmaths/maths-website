@@ -1,4 +1,4 @@
-import { hasHintLadder, courseHasHints } from '@/lib/similar-questions';
+import { hasHintLadder, courseHasPaperLadder } from '@/lib/similar-questions';
 
 /**
  * Why this question has no Hint button.
@@ -26,9 +26,11 @@ import { hasHintLadder, courseHasHints } from '@/lib/similar-questions';
  * filter — but it is what keeps the sentence from ever claiming a solution that
  * is not there.
  *
- * Only where hints exist at all. On the other four courses no question has them
- * and the absence is the norm, so a note on every card would be noise rather
- * than an explanation.
+ * Only where hints exist at all, which since the short hints is every course
+ * (2026-09-28). A third kind of question lands here on the others: a guided
+ * practice question from a paper older than any whose marking instructions we
+ * hold, such as Advanced Higher 2014 Q5, which used to get a button that opened
+ * on nothing. See `HINTED_YEARS`.
  */
 interface Props {
   courseId: string | undefined;
@@ -57,7 +59,7 @@ interface Props {
 export default function NoHintNote({
   courseId, question, given, solutionUrl, className = '',
 }: Props) {
-  if (!courseHasHints(courseId)) return null;
+  if (!courseHasPaperLadder(courseId)) return null;
   if (hasHintLadder(courseId, question, given)) return null;
   if (!solutionUrl) return null;
 

@@ -5,7 +5,7 @@ import { X, Copy, Check, Share2 } from 'lucide-react';
 import { shareLinks, NO_OPTIONS, type WorksheetOptions } from '@/lib/worksheet-share';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
-import { courseHasHints } from '@/lib/similar-questions';
+import { courseHasPaperLadder } from '@/lib/similar-questions';
 
 interface Props {
   theme: CourseTheme;
@@ -157,7 +157,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose, te
               {check('qrCodes', 'QR codes', borrowed > 0
                 ? `Printed beside each question. On the ${borrowed} generated question${borrowed === 1 ? '' : 's'} the code opens a tutorial — the past paper question it was modelled on, worked through with different numbers — not a solution to the question on the sheet`
                 : 'Printed beside each question, linking to its video', withVideo === 0)}
-              {courseHasHints(courseId) && check('hints', 'Hints', generated > 0
+              {courseHasPaperLadder(courseId) && check('hints', 'Hints', generated > 0
                 ? `What the question asks, then how the marks are earned, then the working on the ${generated} generated question${generated === 1 ? '' : 's'} — stopping before the step that lands the answer`
                 : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')}
               {check('test', 'Test mode', 'Each question headed by its number and marks only: no paper, topic or question name to give it away')}

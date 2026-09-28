@@ -283,11 +283,24 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
   const higher = await evaluate(`[...document.querySelectorAll('button')]
     .filter(b => /another like this one|more on /i.test(b.textContent || '')).length`);
   t.check(higher === 0, 'Higher practice questions offer no generated twin');
-  /* And no explanation either. On the other four courses nothing has a ladder,
-     so the absence is the norm and a note on every question would be noise. */
-  t.check(await evaluate(`![...document.querySelectorAll('p')]
-    .some(p => /no hints on this one/i.test(p.textContent || ''))`),
-    'and do not explain an absence that is the norm there');
+  /* The note under a question with no hints was withheld here while nothing on
+     Higher had a ladder, since the absence was the norm and a note on every
+     question would have been noise. Now most have one, the note is on every
+     course (the owner, 2026-09-28), and what matters is that a question gets
+     the button or the note, not both: between them they can be no more than
+     one per question. */
+  const help = await evaluate(`(() => {
+    const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const b = [...document.querySelectorAll('button')].filter(laid).map(x => x.textContent.trim());
+    return {
+      questions: b.filter(x => /^show answer$/i.test(x)).length,
+      hints: b.filter(x => x === 'Hint').length,
+      notes: [...document.querySelectorAll('p')].filter(p => /no hints on this one/i.test(p.textContent || '')).length,
+    };
+  })()`);
+  t.check(help.hints > 0, `Higher practice offers hints (${help.hints} of ${help.questions})`);
+  t.check(help.hints + help.notes <= help.questions,
+    `and never both a hint and a note on one question (${help.hints} + ${help.notes} of ${help.questions})`);
 
   // ── 4. it draws, and it draws something different the second time ───────
   await go('/course/n5/practice/surds');
