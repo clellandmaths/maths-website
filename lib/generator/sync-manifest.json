@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "50d84e601cd0285b8318efa6fbb943f5736560bc",
+  "sourceCommit": "b0b95603510e69830a7183a26b3b2334526708f0",
   "sourceDirty": false,
   "count": 99,
   "files": {
@@ -56,7 +56,7 @@
     "generators/n5-data.ts": "6d60e86e8dc73f77",
     "generators/n5-expanding.ts": "786871bb9f81a029",
     "generators/n5-factorising.ts": "eabad9432cb4c194",
-    "generators/n5-form-equation.ts": "ae0f35ff3857d40f",
+    "generators/n5-form-equation.ts": "ca86b436ce539d3e",
     "generators/n5-formulae.ts": "d66f0f318fc4f021",
     "generators/n5-functions.ts": "3ad24a6dec0aba9b",
     "generators/n5-indices.ts": "a81cf08226509b53",
@@ -71,7 +71,7 @@
     "generators/n5-rounding.ts": "8faa901ae0a33ef5",
     "generators/n5-scinot.ts": "9ca06fc65a49cc67",
     "generators/n5-sector.ts": "2cce165d86f5ff2a",
-    "generators/n5-simeq.ts": "dda365f5cbd0e34b",
+    "generators/n5-simeq.ts": "fd719657fcb31fef",
     "generators/n5-similarity.ts": "b4d464467a235e98",
     "generators/n5-sketch-parabola.ts": "5fed3ca1e2677316",
     "generators/n5-surds.ts": "18d59128437a1398",
