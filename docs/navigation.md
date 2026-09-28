@@ -148,7 +148,19 @@ until happy". It merges after `hint-quality`, on the owner's word only.
   building a worksheet". The first screen already is that, with the filters
   beside it on a desktop and an "Open Filters" button under "Build Your
   Worksheet" on a phone.
-- Not yet: 3 (a calmer archive).
+- **3 is parked until after launch (the owner, 2026-09-28).** Proposed: group
+  the archive by year with both papers side by side, Start and Video visible,
+  and Focus, Browse, New paper like this and the paper page under a "⋯ More"
+  menu. Not built.
+- **Colour on the hub and the practice index (the owner, the same day: "a bit
+  boring. Could do with some colour accents better hover").** The hub's title
+  sits on the course gradient with chips (days to go, topics, papers, practice
+  questions); every card carries a band of the gradient, its icon on the
+  gradient, and a hover that lifts it and slides its arrow. Practice topic cards
+  are white with a gradient stripe, the same lift, and a "▶ N with video" chip;
+  the heading takes the course colour. White text on the gradients measured
+  AA on all five (the contrast check now includes the N5 Apps hub and a
+  practice index). Not yet: a sticky course bar was discussed and left.
 - Found: a guided practice question on vectors linked "surd" to `/nat5/surds`,
   a maths.scot path that does not exist here. Link removed in both copies on
   the owner's word (website `dev` afa5842, app `dev` 8ba88b5). Not changed: the

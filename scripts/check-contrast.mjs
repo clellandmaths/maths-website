@@ -122,6 +122,10 @@ const PAGES = [
   ['/connect', 'connect'],
   ['/course/n5', 'course'],
   ['/course/n5/papers', 'past papers'],
+  // The hub's header is white on the course gradient (2026-09-28); amber is
+  // the palest of the five, so N5 Applications is the one to measure.
+  ['/course/n5-apps', 'hub: n5 apps'],
+  ['/course/higher/practice', 'practice index'],
   ['/course/n5/practice/fractions', 'practice topic'],
   ['/course/n5/papers/2024/paper-1', 'paper'],
   ['/course/n5/notes/algebra/algebraic-fractions', 'notes'],

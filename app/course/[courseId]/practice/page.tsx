@@ -98,17 +98,27 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
   const topicCard = (topic: (typeof flatTopics)[number]) => {
     const questions = resolved.get(topic.name) ?? [];
     const papers = questions.filter(q => q.paper).length;
+    const filmed = questions.filter(q => q.videoId).length;
+    /* White on the page rather than grey on grey, a stripe of the course
+       gradient down the side, the lift the hub's cards have, and how many
+       come with a video (the owner, 2026-09-28: "a bit boring"). */
     return (
       <Link
         key={topic.name}
         href={`/course/${courseId}/practice/${topicSlug(topic.name)}`}
-        className="block rounded-xl border border-border p-4 hover:border-foreground/25 hover:bg-foreground/5 transition-colors"
+        className="group relative block overflow-hidden rounded-xl border border-border bg-card p-4 pl-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-md"
       >
+        <span aria-hidden="true" className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${theme.gradient} transition-all duration-200 group-hover:w-1.5`} />
         <p className="font-medium mb-1">{topic.name}</p>
         <p className="font-mono text-xs text-muted-dim">
           {questions.length} question{questions.length === 1 ? '' : 's'}
           {papers > 0 && ` · ${papers} past paper${papers === 1 ? '' : 's'}`}
         </p>
+        {filmed > 0 && (
+          <p className={`mt-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${theme.tint} ${theme.text}`}>
+            ▶ {filmed === questions.length ? 'All' : filmed} with video
+          </p>
+        )}
       </Link>
     );
   };
@@ -122,8 +132,9 @@ export default async function PracticeIndexPage({ params }: { params: Promise<Pa
         />
 
         <div className="mb-10">
+          <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Guided practice</p>
           <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-            {courseName} Practice Questions
+            {courseName} <span className={theme.text}>Practice Questions</span>
           </h1>
           <p className="text-muted-foreground">
             {total} questions across {course.sections.reduce((n, s) => n + s.topics.length, 0)} topics.

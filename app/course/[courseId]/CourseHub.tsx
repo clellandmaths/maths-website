@@ -56,15 +56,24 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London',
   });
 
-  const card = `group flex h-full flex-col rounded-xl border border-border bg-card p-5 text-left transition-colors hover:border-foreground/25 hover:bg-foreground/[0.03]`;
-  const iconBox = `mb-4 flex h-10 w-10 items-center justify-center rounded-lg ${theme.tint} ${theme.text}`;
+  /* **The course's own colour, on every card** (the owner, 2026-09-28: "a bit
+     boring. Could do with some colour accents, better hover"). A band of the
+     course gradient along the top, the icon on the gradient, and a hover that
+     lifts the card and slides its arrow. Static classes only: a hover colour
+     built from the theme's class names at run time is one Tailwind never
+     generates. */
+  const card = `group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card p-5 pt-6 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-lg`;
+  const still = `relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card p-5 pt-6 text-left shadow-sm`;
+  const band = `absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${theme.gradient} transition-all duration-200 group-hover:h-1.5`;
+  const iconBox = `mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${theme.gradient} text-white shadow-sm`;
   const stat = 'mt-auto pt-4 font-mono text-xs text-muted-foreground';
-  const arrow = `h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground`;
+  const arrow = `h-4 w-4 shrink-0 ${theme.text} transition-transform duration-200 group-hover:translate-x-1`;
 
   const Card = ({ href, icon: Icon, title, children, foot }: {
     href: string; icon: typeof BookOpen; title: string; children: React.ReactNode; foot?: React.ReactNode;
   }) => (
     <Link href={href} className={card}>
+      <span aria-hidden="true" className={band} />
       <span className={iconBox}><Icon className="h-5 w-5" /></span>
       <span className="flex items-center justify-between gap-3">
         <span className="text-lg font-semibold text-foreground">{title}</span>
@@ -83,13 +92,22 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
         <div className="max-w-6xl mx-auto">
           <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: `${name} Maths` }]} />
 
-          <div className="mb-6">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-              {name} <span className={theme.text}>Maths</span>
-            </h1>
-            <p className="text-muted-foreground">
+          {/* The course's gradient behind the title, with what the course holds
+              as chips. Solid white on it: the gradients are the -700 shades, and
+              white at 90% fell below AA on two of them in the Exam Hall. */}
+          <div className={`mb-8 rounded-2xl bg-gradient-to-r ${theme.gradient} p-6 text-white shadow-md sm:p-8`}>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2">{name} Maths</h1>
+            <p className="max-w-2xl">
               Everything for {name}: notes, practice, past papers and the tools to revise with.
             </p>
+            <div className="mt-5 flex flex-wrap gap-2 text-sm font-medium">
+              {exam && examLabel && (
+                <span className="rounded-full bg-black/25 px-3 py-1"><DaysToGo iso={exam.date.toISOString()} dateLabel={examLabel} /></span>
+              )}
+              <span className="rounded-full bg-black/25 px-3 py-1">{noteTopics} topics</span>
+              <span className="rounded-full bg-black/25 px-3 py-1">{paperCount} past papers</span>
+              <span className="rounded-full bg-black/25 px-3 py-1">{practiceQuestions} practice questions</span>
+            </div>
           </div>
 
           <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Learn and practise</h2>
@@ -121,7 +139,8 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
               The countdown to your exam, a daily warm-up, the revision marathon and your topic checklist.
             </Card>
             {hasFormulae(courseId) ? (
-              <div className={card}>
+              <div className={still}>
+                <span aria-hidden="true" className={band} />
                 <span className={iconBox}><span className="text-lg font-semibold">Σ</span></span>
                 <span className="text-lg font-semibold text-foreground">Formulae</span>
                 <span className="mt-1 text-sm leading-relaxed text-muted-foreground">
