@@ -174,7 +174,7 @@ export const HINTED_YEARS: Readonly<Record<string, ReadonlySet<string>>> = {
  * "Q5(a) &amp; (b)" in one source and "Q5(a)&(b)" in another, and "2024 P2
  * Q8(a) & (b)" has a ladder under that spelling. A card that sets parts
  * together with no ladder of its own, 2022 P2 Q5(a) & (b), is answered from
- * each part's (`cardParts` in `lib/hint-parts.ts`, 2026-09-28), so it gets a
+ * each part's (`cardParts` in `lib/hint-parts.mjs`, 2026-09-28), so it gets a
  * button like any other; `check-hint-gap` holds every such card to having a
  * ladder for each part.
  */

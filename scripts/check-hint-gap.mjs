@@ -35,6 +35,8 @@
 // Run: node scripts/check-hint-gap.mjs
 import fs from 'node:fs';
 import path from 'node:path';
+// The site's own functions, not a copy: see the note at the top of that file.
+import { splitByPart, cardParts } from '../lib/hint-parts.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 let failures = 0;
@@ -174,7 +176,7 @@ console.log('\nevery suppressed question carries the written solution the note p
 // after writing its "&" one way, when its year is in the course's
 // `HINTED_YEARS`. It then answers it from the table, or, for a card that sets
 // parts together ("2022 P2 Q5(a) & (b)"), from each part's row (`cardParts` in
-// lib/hint-parts.ts, 2026-09-28: "a card with 3 parts needs to be able to show
+// lib/hint-parts.mjs, 2026-09-28: "a card with 3 parts needs to be able to show
 // hints for all parts"). This asserts that
 //   a. every label the site gives a button has a plan behind it: its own, or
 //      one for every part it sets
@@ -202,12 +204,6 @@ console.log('\nthe other four courses: every Hint button has hints behind it:');
     'higher-apps': { plan: 'paper-plan-higherapps.ts', shape: literal('ONE_PAPER_LABEL'), archive: 'src/higherapps', practice: 'higherApps.ts' },
   };
   const spell = label => label.replace(/\s*&(?:amp;)?\s*/g, ' & ');
-  // `cardParts` from lib/hint-parts.ts, the same pattern: that file is
-  // TypeScript and this is not worth a build step.
-  const cardParts = label => {
-    const m = label.match(/^(.*Q\d+)\s*\(([a-h])\)((?:\s*&\s*\([a-h]\))+)$/);
-    return m ? [m[2], ...[...m[3].matchAll(/\(([a-h])\)/g)].map(x => x[1])].map(p => `${m[1]}(${p})`) : null;
-  };
   let combined = 0;
   const walk = d => fs.readdirSync(d, { withFileTypes: true })
     .flatMap(e => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
@@ -250,6 +246,74 @@ console.log('\nthe other four courses: every Hint button has hints behind it:');
     if (unlisted.length) fail(`${id}: ${c.plan} has plans for ${unlisted.join(', ')}, which HINTED_YEARS does not list — those hints are withheld`);
   }
   console.log(`  ok    ${combined} card(s) that set parts together, answered from every part's ladder`);
+}
+
+// ------------------------------- 6. a short hint reaches every part of a card
+// Added 2026-09-28. The owner: "I think that a card with 3 parts needs to be
+// able to show hints for all parts?" The short hint is cut from the ladder part
+// by part (`splitByPart` in lib/hint-parts.mjs), and this runs that same
+// function over every multi-part card on the five courses, with the ladder
+// built from the tables as `Hints` builds it. A card whose ladder cannot be
+// split gets one step from the top, which helps with (a) alone.
+//
+// Declared, because its ladder genuinely has no boundary: 2019 P1 Q8's plan
+// takes (a) and (b) in one move worth 2 ("each sentence gives you one
+// equation"), so that one move already covers both. A declared card that
+// starts splitting is named, so the entry cannot outlive its reason.
+console.log('\nevery multi-part card gives a step for every part:');
+{
+  // Keyed by course: a Higher and an N5 Apps 2019 P1 Q8 exist too, and split.
+  const ONE_STEP_FOR_TWO_PARTS = new Set(['n5 2019 P1 Q8']);
+  const rowsOf = file => {
+    const out = {};
+    for (const line of fs.readFileSync(path.join(root, 'lib', 'generator', 'generators', file), 'utf8').split(/\r?\n/)) {
+      const m = line.match(/^ {2}"([^"]+)": (\{.*\}),?$/);
+      if (!m) continue;
+      try { out[m[1]] = JSON.parse(m[2]); } catch { /* not a row */ }
+    }
+    return out;
+  };
+  const byLabel = t => l => t[l] ? t[l].moves.map((move, i) => ({ move, marks: t[l].marks[i] })) : null;
+  const n5 = rowsOf('paper-plan.ts');   // PLANS and PLAN_OF rows together; their keys differ in shape
+  const LADDERS = {
+    n5: ['src/n5/pastpapers', l => {
+      const of = n5[l]; const plan = of?.v ? n5[of.v] : null;
+      return plan ? [...(of.nudge ? [{ move: of.nudge, marks: 0 }] : []),
+        ...plan.moves.map((move, i) => ({ move, marks: of.marks[i] }))] : null;
+    }],
+    higher: ['src/higher/pastpapers', byLabel(rowsOf('paper-plan-higher.ts'))],
+    ah: ['src/ah/pastpapers', byLabel(rowsOf('paper-plan-ah.ts'))],
+    'n5-apps': ['src/n5apps', byLabel(rowsOf('paper-plan-n5apps.ts'))],
+    'higher-apps': ['src/higherapps', byLabel(rowsOf('paper-plan-higherapps.ts'))],
+  };
+  const walk = d => fs.readdirSync(d, { withFileTypes: true })
+    .flatMap(e => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
+  let total = 0;
+  for (const [id, [dir, ladderOf]] of Object.entries(LADDERS)) {
+    let multi = 0;
+    const unsplit = [];
+    for (const f of walk(path.join(root, dir)).filter(f => f.endsWith('.js') && !/databooklet|formula|specials/i.test(f))) {
+      for (const chunk of fs.readFileSync(f, 'utf8').split(/\bquestion:\s*`/).slice(1)) {
+        const label = chunk.match(/^\s*<small>\s*<strong>\s*<span[^>]*>\s*([^<]+?)\s*<\/span>/)?.[1]?.trim();
+        const marks = chunk.match(/\bmarks:\s*\[([^\]]*)\]/)?.[1]?.split(',').map(Number).filter(n => !Number.isNaN(n));
+        if (!label || !marks || marks.length < 2) continue;
+        const ladder = ladderOf(label);
+        if (!ladder) continue;
+        multi++;
+        const split = splitByPart(ladder, marks);
+        const declared = ONE_STEP_FOR_TWO_PARTS.has(`${id} ${label}`);
+        if (!split && !declared) unsplit.push(`${label} (${marks.join(', ')})`);
+        if (split && declared) fail(`${id} ${label} now splits into parts — delete it from ONE_STEP_FOR_TWO_PARTS`);
+      }
+    }
+    total += multi;
+    if (unsplit.length) {
+      fail(`${id}: ${unsplit.length} multi-part card(s) whose short hint helps with the first part only: ${unsplit.slice(0, 8).join(', ')}`);
+    } else {
+      console.log(`  ok    ${id.padEnd(12)} ${multi} multi-part cards, a step for every part`);
+    }
+  }
+  if (total < 400) fail(`only ${total} multi-part cards read, down from 407 — the reader has stopped finding them`);
 }
 
 console.log(failures ? `\nhint gap: ${failures} FAILED` : '\nhint gap: ok');
