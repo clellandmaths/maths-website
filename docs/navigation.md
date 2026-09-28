@@ -143,7 +143,12 @@ until happy". It merges after `hint-quality`, on the owner's word only.
   topic with the whole course in the accordion (`NotesReader`, shared with the
   topic pages), and names that topic's own address as canonical. The accordion's
   "All topics" link, which went to the old grid, is gone (fc02924).
-- Not yet: 3 (a calmer archive) and 4 (the Explorer's first screen).
+- **4 is dropped (the owner, 2026-09-28).** A topic grid in front of the
+  Explorer was offered and turned down: "it should just go straight to
+  building a worksheet". The first screen already is that, with the filters
+  beside it on a desktop and an "Open Filters" button under "Build Your
+  Worksheet" on a phone.
+- Not yet: 3 (a calmer archive).
 - Found: a guided practice question on vectors linked "surd" to `/nat5/surds`,
   a maths.scot path that does not exist here. Link removed in both copies on
   the owner's word (website `dev` afa5842, app `dev` 8ba88b5). Not changed: the
