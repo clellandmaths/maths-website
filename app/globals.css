@@ -367,6 +367,29 @@ body {
   line-height: 1.75;
 }
 
+/* ── Data lists in the question's own type ─────────────────────────
+   The owner, 2026-09-28: in the standard deviation and interquartile range
+   questions "the numbers look big and weird". Fifteen N5 questions carry
+   their data as `text-xl font-mono` (11) or `text-2xl font-mono
+   tracking-widest` (4), markup from the live app: a typewriter face at a
+   fixed size, the second spaced so wide that 33 read as 3 3. Here they take
+   the question's own face and size. Only those two combinations and only
+   inside a question (paper or practice), so the Higher Apps data booklet, whose monospace is
+   deliberate, is untouched; the data itself is not edited, since the
+   generator reads the N5 questions. Tabular figures keep the columns even,
+   and the extra word space keeps the values apart where a list has single
+   spaces between them. */
+.question-content .font-mono.text-xl,
+.question-content .font-mono.text-2xl,
+.prose-practice .font-mono.text-xl,
+.prose-practice .font-mono.text-2xl {
+  font-family: inherit;
+  font-size: 1em;
+  letter-spacing: normal;
+  word-spacing: 0.25em;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Tables on narrow screens ──────────────────────────────────────
    A table is the one piece of content that cannot wrap. A seven-column
    past paper table measures ~455px; on a 345px phone, inside a 271px
