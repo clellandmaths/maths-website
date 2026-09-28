@@ -115,10 +115,21 @@ function SharedWorksheet() {
     );
   }
 
+  // **A screen tall while it loads, and after.** The questions come from the
+  // link once the page's scripts run, so for a moment there was only a small
+  // spinner and the footer sat just under it, on screen. The sheet arriving
+  // pushed it off the bottom: CLS 0.964 from real visitors (Cloudflare,
+  // 2026-09-28), 0.77 on a throttled phone. Holding a screen's height keeps
+  // the footer below the fold throughout, so the sheet fills room already
+  // held and nothing visible moves. Not on paper, where it could add a page.
+  const frame = 'mx-auto max-w-3xl px-4 py-8 min-h-[100svh] print:min-h-0';
+
   if (!questions) {
     return (
-      <div className="flex items-center justify-center py-24">
-        <div className="h-8 w-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+      <div className={frame} aria-busy="true">
+        <div key="loading" className="flex items-center justify-center py-24">
+          <div className="h-8 w-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+        </div>
       </div>
     );
   }
@@ -126,7 +137,7 @@ function SharedWorksheet() {
   const theme = getCourseTheme(courseId ?? 'n5');
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className={frame}>
       <div className="mb-8 no-print">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           {COURSE_NAMES[courseId ?? ''] ?? 'Worksheet'} · shared worksheet
