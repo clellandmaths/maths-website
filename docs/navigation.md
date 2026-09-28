@@ -137,6 +137,12 @@ until happy". It merges after `hint-quality`, on the owner's word only.
     on a click elsewhere (`components/MenuDismiss.tsx`).
   - So the note above ("No address changes") is now: no address **breaks**.
     Two new ones per course, and the old ones forward.
+- **Notes open on the reading (the owner, the same day).** "notes should just
+  open on the whole notes page with accordion at side, the page with start at
+  beginning seems redundant". `/course/[id]/notes` now shows the course's first
+  topic with the whole course in the accordion (`NotesReader`, shared with the
+  topic pages), and names that topic's own address as canonical. The accordion's
+  "All topics" link, which went to the old grid, is gone (fc02924).
 - Not yet: 3 (a calmer archive) and 4 (the Explorer's first screen).
 - Found: a guided practice question on vectors linked "surd" to `/nat5/surds`,
   a maths.scot path that does not exist here. Link removed in both copies on
