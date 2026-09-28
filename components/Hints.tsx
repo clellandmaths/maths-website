@@ -15,6 +15,7 @@ import MathRenderer from '@/components/MathRenderer';
  */
 const HintPanel = dynamic(() => import('@/components/HintPanel'), { ssr: false });
 import { ladderLabel, courseHasHints, courseHasPaperLadder } from '@/lib/similar-questions';
+import { splitByPart, shortByPart, partNames, cardParts, partOfMove } from '@/lib/hint-parts';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -255,23 +256,41 @@ export default function Hints({
           // keyed by label directly: authored per question (per card, for AH
           // and N5 Apps), with no variation to share a method through. Each
           // course has its own table, because a Higher "2019 P1 Q5" is not N5's.
-          const p = courseId === 'higher'
-            ? (await import('@/lib/generator/generators/paper-plan-higher')).PLAN_HIGHER[label]
+          const table = courseId === 'higher'
+            ? (await import('@/lib/generator/generators/paper-plan-higher')).PLAN_HIGHER
             : courseId === 'higher-apps'
-              ? (await import('@/lib/generator/generators/paper-plan-higherapps')).PLAN_HIGHERAPPS[label]
+              ? (await import('@/lib/generator/generators/paper-plan-higherapps')).PLAN_HIGHERAPPS
               : courseId === 'n5-apps'
-                ? (await import('@/lib/generator/generators/paper-plan-n5apps')).PLAN_N5APPS[label]
-                : (await import('@/lib/generator/generators/paper-plan-ah')).PLAN_AH[label];
+                ? (await import('@/lib/generator/generators/paper-plan-n5apps')).PLAN_N5APPS
+                : (await import('@/lib/generator/generators/paper-plan-ah')).PLAN_AH;
+          const rungsOf = (p: (typeof table)[string]): Rung[] => p.moves.map((move, i) => ({
+            move, marks: p.marks[i], shows: p.shows[i],
+            ...(p.watch?.at === i ? { watch: p.watch.text } : {}),
+          }));
+          const p = table[label];
           if (p) {
-            next = {
-              skill: p.skill,
-              method: p.method,
-              rungs: p.moves.map((move, i) => ({
-                move, marks: p.marks[i], shows: p.shows[i],
-                ...(p.watch?.at === i ? { watch: p.watch.text } : {}),
-              })),
-              heldBack: false,
-            };
+            next = { skill: p.skill, method: p.method, rungs: rungsOf(p), heldBack: false };
+          } else {
+            /**
+             * **A card that sets parts together, from each part's ladder.** The
+             * N5 Apps marathon and practice put 2022 P2 Q5 (a) and (b) on one
+             * card, and the ladders were written a part at a time. So the card
+             * takes (a)'s moves and then (b)'s, each part named where its moves
+             * do not name it. The owner, 2026-09-28: "a card with 3 parts needs
+             * to be able to show hints for all parts".
+             */
+            const keys = cardParts(label);
+            const parts = keys?.map(k => table[k]);
+            if (keys && parts?.every(Boolean)) {
+              const worth = parts.reduce((a, q) => a + q!.marks.reduce((x, y) => x + y, 0), 0);
+              next = {
+                skill: parts[0]!.skill,
+                method: `${worth} mark${worth === 1 ? '' : 's'}`,
+                rungs: parts.flatMap((q, i) => rungsOf(q!).map((r, j) => (
+                  j === 0 && !partOfMove(r.move) ? { ...r, move: `${keys[i].slice(keys[i].lastIndexOf('('))} ${r.move}` } : r))),
+                heldBack: false,
+              };
+            }
           }
         }
         const { PLANS, PLAN_OF } = courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps'
@@ -321,18 +340,35 @@ export default function Hints({
          * chip: the paper's marks for the move are not this draw's.
          */
         let general: string | undefined;
+        let generalByPart: Rung[] | null = null;
         if (own) {
           const { PLANS, PLAN_OF } = await import('@/lib/generator/generators/paper-plan');
           const source = (question.basedOn ?? []).map((l) => PLAN_OF[l]).find(Boolean);
-          general = source ? PLANS[source.v]?.moves[0] : undefined;
+          const moves = source ? PLANS[source.v]?.moves : undefined;
+          general = moves?.[0];
+          // A question in parts gets its generator's first move for each part,
+          // split by this question's own per-part marks. Still worth 0 each, for
+          // the reason above.
+          const groups = moves && source
+            ? splitByPart(moves.map((move, i) => ({ move, marks: source.marks[i] })), question.marks)
+            : null;
+          generalByPart = groups
+            ? shortByPart(groups, partNames(question.question ?? ''), false).map(r => ({ ...r, marks: 0 }))
+            : null;
         }
         // Higher (and Higher Apps) write nudges; N5's first 0-mark move is part of a two-move
         // method, not a nudge.
+        const nudges = courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps' || nudged;
+        // A card in parts is cut part by part, so every part gets a step (see
+        // lib/hint-parts.ts); a card of one part is cut as before.
+        const parts = own ? null : splitByPart(next.rungs, question.marks);
         next = {
           ...next,
           rungs: own
-            ? [{ move: general ?? question.method!, marks: 0 }]
-            : shorten(next.rungs, courseId === 'higher' || courseId === 'higher-apps' || courseId === 'ah' || courseId === 'n5-apps' || nudged),
+            ? generalByPart ?? [{ move: general ?? question.method!, marks: 0 }]
+            : parts
+              ? shortByPart(parts, partNames(question.question ?? ''), nudges)
+              : shorten(next.rungs, nudges),
           short: true,
         };
       }

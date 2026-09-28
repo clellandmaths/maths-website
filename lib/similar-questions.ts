@@ -169,22 +169,18 @@ export const HINTED_YEARS: Readonly<Record<string, ReadonlySet<string>>> = {
 };
 
 /**
- * Cards that set two parts together where the ladders were written per part,
- * so the table has one for each part and none for the card. `check-hint-gap`
- * fails on one that gains a ladder, and on a new card like it.
- */
-export const NO_LADDER_CARDS: ReadonlySet<string> = new Set(['2022 P2 Q5(a) & (b)']);
-
-/**
- * A label the course's table can answer, or null: from a hinted year, and not
- * a declared card. Its "&" is written one way first, as the tables write it:
- * the same card reads "Q5(a) &amp; (b)" in one source and "Q5(a)&(b)" in
- * another, and "2024 P2 Q8(a) & (b)" has a ladder under that spelling.
+ * A label the course's table can answer, or null: from a hinted year. Its "&"
+ * is written one way first, as the tables write it: the same card reads
+ * "Q5(a) &amp; (b)" in one source and "Q5(a)&(b)" in another, and "2024 P2
+ * Q8(a) & (b)" has a ladder under that spelling. A card that sets parts
+ * together with no ladder of its own, 2022 P2 Q5(a) & (b), is answered from
+ * each part's (`cardParts` in `lib/hint-parts.ts`, 2026-09-28), so it gets a
+ * button like any other; `check-hint-gap` holds every such card to having a
+ * ladder for each part.
  */
 function hinted(courseId: string, label: string | null): string | null {
   if (!label) return null;
   const card = label.replace(/\s*&(?:amp;)?\s*/g, ' & ');
-  if (NO_LADDER_CARDS.has(card)) return null;
   return HINTED_YEARS[courseId]?.has(card.split(' ')[0]) ? card : null;
 }
 
