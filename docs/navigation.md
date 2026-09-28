@@ -106,10 +106,10 @@ until happy". It merges after `hint-quality`, on the owner's word only.
   round trip `check-course-explorer.mjs` (rewritten for the course bar) and
   `check-explorer-generate.mjs` pass.
 - Not yet: 3 (a calmer archive) and 4 (the Explorer's first screen).
-- Found, not changed: a guided practice question on vectors
-  (`src/practice/data/national5Maths.ts`) links to `/nat5/surds`, a
-  maths.scot path that does not exist here; and the Exam Hall says "1 hours
-  to go".
+- Found: a guided practice question on vectors linked "surd" to `/nat5/surds`,
+  a maths.scot path that does not exist here. Link removed in both copies on
+  the owner's word (website `dev` afa5842, app `dev` 8ba88b5). Not changed: the
+  Exam Hall says "1 hours to go".
 
 ---
 
