@@ -26,6 +26,7 @@ import {
 import { getCourseTheme } from '@/lib/course-theme';
 import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+import { withoutPaperBadge } from '@/lib/question-number.mjs';
 
 // A shared worksheet, locked. Everything comes from the query string, so this
 // page is static and the link works forever without anything stored anywhere.
@@ -239,8 +240,9 @@ function SharedWorksheet() {
                 {/* No paper reference here: a past paper question's own html
                     opens with its "2026 P1 Q1" label, so repeating it prints it
                     twice. A generated question has no such badge and nothing
-                    else on the card says what it is, so its skill goes here. */}
-                {q.label && (
+                    else on the card says what it is, so its skill goes here.
+                    In test mode, neither: the number and the marks only. */}
+                {q.label && !options.test && (
                   <span className="q-source text-sm text-muted-foreground">{q.label}</span>
                 )}
                 <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
@@ -282,7 +284,7 @@ function SharedWorksheet() {
               </div>
 
               {courseId === 'higher-apps' && <BookletExtract question={q} />}
-              <MathRenderer html={q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
+              <MathRenderer html={options.test ? withoutPaperBadge(q.question) : q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
 
               {/* Whatever the maker granted, offered here on the card as well as
                   in full screen — a pupil reading down the page should not have

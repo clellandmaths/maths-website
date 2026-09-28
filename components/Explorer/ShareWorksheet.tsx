@@ -12,6 +12,8 @@ interface Props {
   courseId: string;
   questions: QuestionWithMetadata[];
   onClose: () => void;
+  /** The sheet's own Test mode switch, which the handout starts from. */
+  testMode?: boolean;
 }
 
 /**
@@ -24,9 +26,9 @@ interface Props {
  * Both are just the question references in a query string, so neither expires
  * and nothing is stored anywhere.
  */
-export default function ShareWorksheet({ theme, courseId, questions, onClose }: Props) {
+export default function ShareWorksheet({ theme, courseId, questions, onClose, testMode = false }: Props) {
   const [title, setTitle] = useState('');
-  const [options, setOptions] = useState<WorksheetOptions>(NO_OPTIONS);
+  const [options, setOptions] = useState<WorksheetOptions>({ ...NO_OPTIONS, test: testMode });
   const [copied, setCopied] = useState<'editable' | 'locked' | null>(null);
 
   const origin = typeof window === 'undefined' ? '' : window.location.origin;
@@ -158,6 +160,7 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose }: 
               {courseHasHints(courseId) && check('hints', 'Hints', generated > 0
                 ? `What the question asks, then how the marks are earned, then the working on the ${generated} generated question${generated === 1 ? '' : 's'} — stopping before the step that lands the answer`
                 : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')}
+              {check('test', 'Test mode', 'Each question headed by its number and marks only: no paper, topic or question name to give it away')}
             </div>
           </div>
 
