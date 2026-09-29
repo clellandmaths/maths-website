@@ -31,5 +31,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "worksheet_generator", "Course Notes"]
+  "exclude": ["node_modules", "worksheet_generator", "worksheet_generator_ah", "Course Notes"]
 }

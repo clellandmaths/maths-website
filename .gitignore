@@ -42,6 +42,9 @@ next-env.d.ts
 
 # worksheet generator (separate repo — clellandmaths/clelland-maths-generator)
 /worksheet_generator/
+# its Advanced Higher worktree (branch `ah`), the same repo: kept out of the
+# build's typecheck and Tailwind's scan exactly as the folder above is
+/worksheet_generator_ah/
 
 # third-party reference material — NEVER commit.
 # Heriot-Watt SCHOLAR study guides, "G Whyte 2016" notebooks and textbook units.
