@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { TUTORING_PREFETCH } from '@/lib/academy';
 import { Mail, Youtube, Music2, Smartphone, Star, Shirt, Coffee, Video, Sparkles, type LucideIcon } from 'lucide-react';
 import { FOLLOW_LINKS, SUPPORT_LINKS, CONTACT_EMAIL, type ConnectLink } from '@/lib/connect';
 
@@ -120,7 +121,7 @@ export default function ConnectPage() {
           course. Everything else on this site stays free.
         </p>
         <Link
-          href="/academy"
+          href="/academy" prefetch={TUTORING_PREFETCH}
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
         >
           See the Academy

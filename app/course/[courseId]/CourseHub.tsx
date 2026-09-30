@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TUTORING_PREFETCH } from '@/lib/academy';
 import { ArrowRight, BookOpen, Compass, FileText, GraduationCap, PencilLine, Terminal } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CourseBar from '@/components/CourseBar';
@@ -169,7 +170,7 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
               2026-09-28, on bringing pupils and parents to the Academy while
               keeping teachers). */}
           <Link
-            href="/academy"
+            href="/academy" prefetch={TUTORING_PREFETCH}
             className="group mt-10 flex flex-col gap-2 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-accent/40 sm:flex-row sm:items-center sm:justify-between"
           >
             <span>

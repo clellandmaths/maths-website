@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TUTORING_PREFETCH } from '@/lib/academy';
 import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 
 export default function Footer() {
@@ -22,7 +23,7 @@ export default function Footer() {
                 free site free rather than as a catch (2026-09-28). */}
             <p className="mt-1 text-sm text-muted-foreground">
               It stays free because of the{' '}
-              <Link href="/academy" className="text-accent hover:underline underline-offset-4">Academy&rsquo;s live tutoring</Link>.
+              <Link href="/academy" prefetch={TUTORING_PREFETCH} className="text-accent hover:underline underline-offset-4">Academy&rsquo;s live tutoring</Link>.
             </p>
           </div>
 
@@ -47,7 +48,7 @@ export default function Footer() {
               >
                 Revision App
               </a>
-              <Link href="/academy" className="py-1 hover:text-foreground transition-colors">Tutoring</Link>
+              <Link href="/academy" prefetch={TUTORING_PREFETCH} className="py-1 hover:text-foreground transition-colors">Tutoring</Link>
               <Link href="/connect" className="py-1 hover:text-foreground transition-colors">Connect</Link>
             </nav>
           </div>

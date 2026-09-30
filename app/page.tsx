@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Compass, Sparkles, ChevronRight } from 'lucide-react';
-import { SEATS_PER_COURSE } from '@/lib/academy';
+import { SEATS_PER_COURSE, TUTORING_PREFETCH } from '@/lib/academy';
 import LogoAnimation from '@/components/LogoAnimation';
 import ExamCover, { type CourseCover } from '@/components/Home/ExamCover';
 import TryQuestion from '@/components/Home/TryQuestion';
@@ -192,7 +192,7 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                href="/academy"
+                href="/academy" prefetch={TUTORING_PREFETCH}
                 className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-background font-bold rounded-lg transition-colors"
               >
                 See Tutoring

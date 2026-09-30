@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { TUTORING_PREFETCH } from '@/lib/academy';
 import { useState, useEffect, useMemo } from 'react';
 import { Flame, CheckSquare, Clock, ArrowLeft, Check, ChevronDown, ChevronRight, Timer } from 'lucide-react';
 import { n5ChecklistCategories, higherChecklistCategories } from '@/lib/checklist-topics';
@@ -322,7 +323,7 @@ function ExamHallContent({ course }: { course: Course }) {
                 projects or shares. */}
             {!countdown?.passed && (
               <Link
-                href="/academy"
+                href="/academy" prefetch={TUTORING_PREFETCH}
                 className="mt-1 block text-center text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors"
               >
                 Want a teacher with you until exam day? <span className="font-semibold text-accent">Weekly live tutoring →</span>

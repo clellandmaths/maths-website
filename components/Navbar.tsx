@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { TUTORING_PREFETCH } from '@/lib/academy';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Compass, GraduationCap, ChevronDown, Sparkles, Mail } from 'lucide-react';
 
@@ -114,6 +115,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  prefetch={link.href === '/academy' ? TUTORING_PREFETCH : undefined}
                   aria-current={here ? 'page' : undefined}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted/50 transition-all duration-200 ${
                     link.highlight
@@ -132,7 +134,7 @@ export default function Navbar() {
               was the one paid thing on the site and a phone never saw it
               without opening the menu (the owner, 2026-09-28). */}
           <Link
-            href="/academy"
+            href="/academy" prefetch={TUTORING_PREFETCH}
             aria-current={isIn(pathname, '/academy') ? 'page' : undefined}
             className="md:hidden ml-auto mr-1 inline-flex items-center gap-1.5 min-h-11 px-3 rounded-lg text-sm font-semibold text-accent hover:bg-muted/50 transition-colors"
           >
@@ -192,7 +194,7 @@ export default function Navbar() {
             {/* Tutoring first, saying what it is in one line, so the word is
                 not all a parent has to go on. */}
             <Link
-              href="/academy"
+              href="/academy" prefetch={TUTORING_PREFETCH}
               onClick={() => setIsOpen(false)}
               aria-current={isIn(pathname, '/academy') ? 'page' : undefined}
               className="flex items-start gap-3 px-4 py-3 rounded-lg border border-accent/30 hover:bg-muted/50 transition-colors"

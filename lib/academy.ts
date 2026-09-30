@@ -106,6 +106,21 @@ export const ACADEMY_IMAGES: Record<string, string | null> = {
   youtube: '/img/academy/youtube.webp',
 };
 
+/**
+ * Every link to the Tutoring page passes this as `prefetch`: the page is
+ * fetched when someone clicks, not ahead of time.
+ *
+ * Tutoring is linked from the menu, which is on screen on every page, so the
+ * site fetched its whole page on every visit. The hero photo came with it: an
+ * eager image carries a preload hint, and a prefetched page's hints are acted
+ * on in the page doing the prefetching, so every page downloaded the 57 KB
+ * phone copy and never showed it (Chrome: "preloaded but not used"). Most
+ * visitors never go to Tutoring. The owner, 2026-09-30: "Ok fix", choosing
+ * this over rebuilding the hero as a client component, which only works
+ * because of how the framework builds a prefetch today.
+ */
+export const TUTORING_PREFETCH = false;
+
 /** Intrinsic [width, height] of each built image, so the page can reserve space. */
 export const ACADEMY_IMAGE_SIZES: Record<string, [number, number]> = {
   hero: [1000, 1250],
