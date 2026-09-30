@@ -326,7 +326,11 @@ export default function PracticePaperClient({
                   <span className="font-mono text-xs text-muted-foreground">
                     modelled on {plan[i].label}
                   </span>
-                  <Marks marks={q.marks} theme={theme} calculator={calculatorFor(plan[i].label, courseId)} />
+                  {/* On the right, as on a worksheet card: where a phone has
+                      no room, the picture and the marks drop to the next line
+                      together, flush right, rather than under the number
+                      (the owner, 2026-09-30: "make it so that it looks clean"). */}
+                  <Marks marks={q.marks} theme={theme} calculator={calculatorFor(plan[i].label, courseId)} className="ml-auto" />
                 </>
               ) : (
                 <span className="font-mono text-xs text-amber-800 dark:text-amber-300/90">
