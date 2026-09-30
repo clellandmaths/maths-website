@@ -13,7 +13,9 @@
  * tags, the caption ("2024 Paper 1 Q3"), and the badge a past paper question
  * carries inside its own text ("2024 P1 Q3"). That last one is the easy one to
  * miss, since it is part of the question rather than the header. The number and
- * the marks must stay, or it is not a test paper either.
+ * the marks must stay, or it is not a test paper either, and since 2026-09-30
+ * so must "Calculator" or "Non-calculator", on every card, which gives nothing
+ * away (the owner asked for it, generated questions included).
  *
  * Also held: a generated card no longer repeats its topic as a variation name
  * with a "New question" badge beside the grey tags ("once is fine, the grey
@@ -34,6 +36,9 @@ const GIVEAWAYS = `(() => {
     badges: cards.filter(c => /[0-9]{4} P[0-9] Q[0-9]/.test(c.querySelector('.question-content')?.innerText ?? '')).length,
     newQuestion: cards.filter(c => /New question/.test(c.firstElementChild?.innerText ?? '')).length,
     marks: cards.filter(c => c.querySelector('.q-marks')).length,
+    // "Calculator" or "Non-calculator": whether one is allowed, not which question.
+    calculators: cards.filter(c => /^(Non-calculator|Calculator)$/.test(c.querySelector('.q-calculator')?.innerText.trim() ?? '')).length,
+    generated: cards.filter(c => !/[0-9]{4} P[0-9] Q[0-9]/.test(c.querySelector('.question-content')?.innerText ?? '')).length,
   };
 })()`;
 
@@ -57,6 +62,12 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
     `which, as normal, names its questions (${before.tags} tags, ${before.captions} captions, ${before.badges} badges)`);
   t.check(before.newQuestion === 0,
     'and a generated card no longer says "New question" beside its topic tags');
+  // The owner, 2026-09-30: a generated question did not say which paper it was like.
+  t.check(before.generated > 0 && before.calculators === before.cards,
+    `every card, the ${before.generated} generated ones too, says Calculator or Non-calculator (${before.calculators} of ${before.cards})`);
+  // And a phone can print the marking instructions: the bottom bar, not only the desktop toolbar.
+  t.check(await evaluate(`[...document.querySelectorAll('.fixed.bottom-0 button')].some(b => /Markscheme/.test(b.textContent))`),
+    'the phone toolbar has the Markscheme button');
   t.check(!!(await evaluate(`!!(${buttonNamed('Full screen')})`)) && !(await evaluate(`!!(${buttonNamed('Present')})`)),
     'the toolbar says "Full screen", not "Present"');
 
@@ -86,6 +97,9 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
   t.check(test.captions === 0, `no paper captions (${test.captions})`);
   t.check(test.badges === 0, `and no paper badge inside a question (${test.badges})`);
   t.check(test.marks === test.cards, `but every question keeps its marks (${test.marks} of ${test.cards})`);
+  // The owner, 2026-09-30: test mode took the paper away with the reference.
+  // Which paper says whether a calculator is allowed, not what the question is.
+  t.check(test.calculators === test.cards, `and Calculator or Non-calculator (${test.calculators} of ${test.cards})`);
 
   // Shared: the handout starts in test mode and says so in its link.
   await click(buttonNamed('Share'));
@@ -116,12 +130,14 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
         cards: cards.length,
         badges: cards.filter(c => /[0-9]{4} P[0-9] Q[0-9]/.test(c.innerText)).length,
         marks: cards.filter(c => c.querySelector('.q-marks')).length,
+        calculators: cards.filter(c => /^(Non-calculator|Calculator)$/.test(c.querySelector('.q-calculator')?.innerText.trim() ?? '')).length,
       };
     })()`);
     t.check(shared.cards === test.cards, `the shared sheet holds the same ${test.cards} questions (${shared.cards})`);
-    t.check(shared.badges === 0, `with no paper named on any of them (${shared.badges})`);
+    t.check(shared.badges === 0, `with no paper reference on any of them (${shared.badges})`);
     t.check(shared.marks === shared.cards, `and marks on every one (${shared.marks})`);
+    t.check(shared.calculators === shared.cards, `and Calculator or Non-calculator on every one (${shared.calculators})`);
   }
 });
 
-t.done('a worksheet in test mode heads each question with its number and marks only');
+t.done('a worksheet in test mode heads each question with its number, its marks and whether a calculator is allowed');

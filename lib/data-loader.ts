@@ -2,7 +2,7 @@
 // Aggregates all past paper data for the Explorer
 // Uses dynamic imports so data only loads when a course is selected
 
-import { questionNumber } from '@/lib/question-number.mjs';
+import { paperCaption, questionNumber } from '@/lib/question-number.mjs';
 
 export interface QuestionAttachment {
   name: string;
@@ -134,7 +134,7 @@ export interface QuestionWithMetadata extends Question {
 export function questionLabel(q: QuestionWithMetadata): string {
   // questionNumber, not questionIndex + 1: on a split paper the two differ, and
   // the index is the one that does not appear in the pupil's booklet.
-  return q.label ?? `${q.year} Paper ${q.paperNumber} Q${q.questionNumber ?? q.questionIndex + 1}`;
+  return q.label ?? paperCaption({ ...q, questionNumber: q.questionNumber ?? q.questionIndex + 1 });
 }
 
 function flattenPastPapers(pastPapers: PastPaper[]): QuestionWithMetadata[] {

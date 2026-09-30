@@ -35,10 +35,10 @@ import DataBookletSheet, { BookletExtract } from '@/components/DataBookletSheet'
 import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
-import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
+import { decodeWorksheet, resolveWorksheet, isGenerated, calculatorLabel, questionRef } from '@/lib/worksheet-share';
 import { byPaperLabel, withParentVideo, courseHasHints, courseHasPaperLadder, variationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
-import { withoutPaperBadge } from '@/lib/question-number.mjs';
+import { paperCaption, withoutPaperBadge } from '@/lib/question-number.mjs';
 import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 export type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -1259,11 +1259,17 @@ function ExplorerContent({ course }: { course: Course }) {
                                 generated card used to carry its variation's name and a "New
                                 question" badge before its topic tags, so the topic read twice
                                 (the owner, 2026-09-28: "once is fine, the grey one"). In test mode
-                                neither this nor the tags: the number and the marks, as on a paper. */}
+                                neither this nor the tags: the number and the marks, as on a paper.
+                                **But always Calculator or Non-calculator**, on every card and in
+                                test mode: what a pupil needs before starting, not what the
+                                question is (the owner, 2026-09-30). */}
                             {!testMode && !isGenerated(q) && (
                               <span className="text-sm text-muted-dim">
-                                {`${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`}
+                                {paperCaption(q)}
                               </span>
+                            )}
+                            {calculatorLabel(q, course) && (
+                              <span className="q-calculator text-sm text-muted-dim">{calculatorLabel(q, course)}</span>
                             )}
                             {!testMode && q.topics?.slice(0, 2).map((topic) => (
                               <span
@@ -1432,7 +1438,7 @@ function ExplorerContent({ course }: { course: Course }) {
                                 onClick={() => setActiveVideo({
                                   videoId: q.videoId,
                                   timestamp: timestampToSeconds(q.timestamp),
-                                  title: `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`
+                                  title: paperCaption(q)
                                 })}
                                 className={`inline-flex items-center gap-2 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 rounded-lg text-sm font-medium transition-colors`}
                               >
@@ -1572,6 +1578,19 @@ function ExplorerContent({ course }: { course: Course }) {
                         questions={worksheetItems}
                         className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                       />
+                      {/* The markscheme too, for the same reason as Share: it
+                          was only in the `hidden lg:block` toolbar, so a phone
+                          could print the paper but not its marking
+                          instructions (the owner, 2026-09-30). */}
+                      <button
+                        onClick={handlePrintMarkscheme}
+                        disabled={markschemeBusy}
+                        className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
+                        title="Print the marking instructions for this worksheet"
+                      >
+                        <ClipboardCheck className="h-4 w-4" />
+                        {markschemeBusy ? 'Preparing…' : 'Markscheme'}
+                      </button>
                       <button
                         onClick={() => printWorksheet()}
                         className={`flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white rounded-lg text-sm font-medium transition-all`}
@@ -1661,7 +1680,7 @@ function ExplorerContent({ course }: { course: Course }) {
           year={markschemeQ.year}
           paperNumber={markschemeQ.paperNumber}
           questionHtml={markschemeQ.question}
-          title={`${markschemeQ.year} Paper ${markschemeQ.paperNumber} Q${markschemeQ.questionNumber}`}
+          title={paperCaption(markschemeQ)}
           onClose={() => setMarkschemeQ(null)}
         />
       )}

@@ -8,7 +8,7 @@ import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
 import QRCodeImage from '@/components/QRCodeImage';
 import {
-  decodeWorksheet, resolveWorksheet, isGenerated, NO_OPTIONS, type WorksheetOptions,
+  decodeWorksheet, resolveWorksheet, isGenerated, calculatorLabel, NO_OPTIONS, type WorksheetOptions,
 } from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 import dynamic from 'next/dynamic';
@@ -33,7 +33,7 @@ import {
 import { getCourseTheme } from '@/lib/course-theme';
 import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
-import { withoutPaperBadge } from '@/lib/question-number.mjs';
+import { paperCaption, withoutPaperBadge } from '@/lib/question-number.mjs';
 
 // A shared worksheet, locked. Everything comes from the query string, so this
 // page is static and the link works forever without anything stored anywhere.
@@ -259,9 +259,15 @@ function SharedWorksheet() {
                     opens with its "2026 P1 Q1" label, so repeating it prints it
                     twice. A generated question has no such badge and nothing
                     else on the card says what it is, so its skill goes here.
-                    In test mode, neither: the number and the marks only. */}
+                    In test mode, neither: the number and the marks only.
+                    **But always Calculator or Non-calculator**, on every card
+                    and in test mode: what a pupil needs before starting, not
+                    what the question is (the owner, 2026-09-30). */}
                 {q.label && !options.test && (
                   <span className="q-source text-sm text-muted-foreground">{q.label}</span>
+                )}
+                {calculatorLabel(q, courseId ?? '') && (
+                  <span className="q-calculator text-sm text-muted-foreground">{calculatorLabel(q, courseId ?? '')}</span>
                 )}
                 <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
                 {/* Beside the number rather than under the question, matching
@@ -354,7 +360,7 @@ function SharedWorksheet() {
                         // behind it, so the modal is titled with that one.
                         title: q.videoOf
                           ? `A worked example — ${q.videoOf}`
-                          : `${q.year} Paper ${q.paperNumber} Q${q.questionNumber}`,
+                          : paperCaption(q),
                       })}
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${theme.tint} ${theme.text} hover:bg-foreground/10 text-sm font-medium rounded-lg transition-colors`}
                     >

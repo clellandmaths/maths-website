@@ -8,7 +8,7 @@ import { canAddVariation, variationLabel, withParentVideo } from '@/lib/similar-
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
-import { questionNumber } from '@/lib/question-number.mjs';
+import { paperCaption, questionNumber } from '@/lib/question-number.mjs';
 import MathRenderer from '@/components/MathRenderer';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FormulaeButton from '@/components/FormulaeButton';
@@ -250,7 +250,7 @@ export default function QuestionCard({
               </p>
             ) : (
               <p className="text-foreground font-semibold text-sm">
-                {year} Paper {paperNumber} Q{fullQuestion.questionNumber}
+                {paperCaption({ year, paperNumber, questionNumber: fullQuestion.questionNumber, question: fullQuestion.question })}
               </p>
             )}
           </div>

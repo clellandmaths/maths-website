@@ -5,6 +5,7 @@ import { X, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, FileText, 
 import { useWorksheet } from '@/lib/worksheet-context';
 import { getMainTopic } from '@/lib/n5-topics';
 import type { CourseTheme } from '@/lib/course-theme';
+import { paperCaption } from '@/lib/question-number.mjs';
 
 interface WorksheetDrawerProps {
   theme: CourseTheme;
@@ -108,7 +109,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                             Q{index + 1}
                           </span>
                           <span className="text-xs text-muted-dim">
-                            {item.year} P{item.paperNumber} Q{item.questionNumber}
+                            {paperCaption(item, true)}
                           </span>
                         </div>
                         {mainTopic && (

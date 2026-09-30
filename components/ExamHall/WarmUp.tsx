@@ -11,6 +11,7 @@ import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
 import { courseHasHints } from '@/lib/similar-questions';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+import { paperCaption } from '@/lib/question-number.mjs';
 
 const DAILY_COUNT = 5;
 
@@ -312,7 +313,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
               <span className="text-foreground-2">{questions!.length}</span>
             </p>
             <p className="text-muted-dim text-xs mt-0.5">
-              {question.year} Paper {question.paperNumber} Q{question.questionNumber}
+              {paperCaption(question)}
             </p>
             <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
           </div>
@@ -452,7 +453,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
         onClose={() => setShowVideo(false)}
         videoId={question.videoId}
         timestamp={timestampToSeconds(question.timestamp)}
-        title={`${question.year} Paper ${question.paperNumber} Q${question.questionNumber}`}
+        title={paperCaption(question)}
       />
 
       {/* Data Booklet (Higher Apps) — the booklet is year-specific, so it
