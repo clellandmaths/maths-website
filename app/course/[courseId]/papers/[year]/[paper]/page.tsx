@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { examBoardFor, examBoardWithAlias } from '@/lib/exam-board';
 import Marks from '@/components/Marks';
 import { calculatorLabel } from '@/lib/calculator';
+import CalculatorMark from '@/components/CalculatorMark';
 import { notFound } from 'next/navigation';
 import {
   getAllN5Questions,
@@ -227,18 +228,28 @@ export default async function PaperPage(
                 <div className="flex items-center gap-3 mb-4 flex-wrap">
                   {/* The exam's number, not the entry's position — a paper split
                       by part has more entries than questions. */}
-                  <span className={`flex items-center justify-center min-w-8 h-8 px-1.5 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
+                  <span aria-hidden="true" className={`flex items-center justify-center min-w-8 h-8 px-1.5 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
                     {questionNumber(q.question) ?? idx + 1}
                   </span>
-                  <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                  {/* **A heading for screen readers and search, not for the eye.**
+                      "QUESTION 7" beside a box that says 7 said it twice, and its
+                      90px pushed a phone's marks onto a line of their own once
+                      the calculator picture joined them (the owner, 2026-09-30:
+                      "Yes we can get rid of question 1 question 2 etc"). */}
+                  <h2 className="sr-only">
                     Question {questionNumber(q.question) ?? idx + 1}
                   </h2>
+                  {/* Beside the number here, not the marks: with the heading gone
+                      the first line always has room, while on a phone the marks
+                      share the second with a long topic chip, where the picture
+                      was the 13px that wrapped them (N5 2024 P2 Q6 at 390px). */}
+                  {calculatorLabel(q, courseId) && <CalculatorMark label={calculatorLabel(q, courseId)!} className="-ml-1" />}
                   {q.topics?.slice(0, 2).map(topic => (
                     <span key={topic} className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded">
                       {topic}
                     </span>
                   ))}
-                  <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId)} className="ml-auto shrink-0" />
+                  <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
                 </div>
                 <MathHtml
                   html={q.question}
