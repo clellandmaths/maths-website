@@ -156,7 +156,7 @@ export function isGenerated(q: QuestionWithMetadata): boolean {
  * 2026-09-30: 160 Paper 1 only, 168 Paper 2 only, 44 none), so that label is
  * the variation's paper, not a guess among several.
  */
-export function calculatorLabel(q: QuestionWithMetadata, courseId: string): string | null {
+export function calculatorLabel(q: QuestionWithMetadata, courseId: string): 'Calculator' | 'Non-calculator' | null {
   const ref = isGenerated(q) ? q.basedOn?.[q.parentIndex ?? 0] : paperRef(q.question);
   if (!ref) return null;
   const paper = /\bP([12])\b/.exec(ref)?.[1];

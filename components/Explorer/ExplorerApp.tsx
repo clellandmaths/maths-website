@@ -7,6 +7,7 @@ import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { ClipboardCheck } from 'lucide-react';
 import FilterSidebar from '@/components/Explorer/FilterSidebar';
+import CalculatorMark from '@/components/CalculatorMark';
 import QuestionCard from '@/components/Explorer/QuestionCard';
 import WorksheetFAB from '@/components/Explorer/WorksheetFAB';
 import WorksheetDrawer from '@/components/Explorer/WorksheetDrawer';
@@ -1275,9 +1276,7 @@ function ExplorerContent({ course }: { course: Course }) {
                                 {paperCaption(q)}
                               </span>
                             )}
-                            {calculatorLabel(q, course) && (
-                              <span className="q-calculator text-sm text-muted-dim">{calculatorLabel(q, course)}</span>
-                            )}
+                            {calculatorLabel(q, course) && <CalculatorMark label={calculatorLabel(q, course)!} />}
                             {!testMode && q.topics?.slice(0, 2).map((topic) => (
                               <span
                                 key={topic}

@@ -37,7 +37,8 @@ const GIVEAWAYS = `(() => {
     newQuestion: cards.filter(c => /New question/.test(c.firstElementChild?.innerText ?? '')).length,
     marks: cards.filter(c => c.querySelector('.q-marks')).length,
     // "Calculator" or "Non-calculator": whether one is allowed, not which question.
-    calculators: cards.filter(c => /^(Non-calculator|Calculator)$/.test(c.querySelector('.q-calculator')?.innerText.trim() ?? '')).length,
+    // A picture, named by its data-calculator (and its aria-label and title).
+    calculators: cards.filter(c => /^(Non-calculator|Calculator)$/.test(c.querySelector('.q-calculator')?.dataset.calculator ?? '')).length,
     generated: cards.filter(c => !/[0-9]{4} P[0-9] Q[0-9]/.test(c.querySelector('.question-content')?.innerText ?? '')).length,
   };
 })()`;
@@ -130,7 +131,7 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
         cards: cards.length,
         badges: cards.filter(c => /[0-9]{4} P[0-9] Q[0-9]/.test(c.innerText)).length,
         marks: cards.filter(c => c.querySelector('.q-marks')).length,
-        calculators: cards.filter(c => /^(Non-calculator|Calculator)$/.test(c.querySelector('.q-calculator')?.innerText.trim() ?? '')).length,
+        calculators: cards.filter(c => /^(Non-calculator|Calculator)$/.test(c.querySelector('.q-calculator')?.dataset.calculator ?? '')).length,
       };
     })()`);
     t.check(shared.cards === test.cards, `the shared sheet holds the same ${test.cards} questions (${shared.cards})`);
