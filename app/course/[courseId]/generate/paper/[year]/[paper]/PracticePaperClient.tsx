@@ -8,6 +8,7 @@ import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 import { printMarkscheme, printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import { calculatorFor } from '@/lib/calculator';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
@@ -325,7 +326,7 @@ export default function PracticePaperClient({
                   <span className="font-mono text-xs text-muted-foreground">
                     modelled on {plan[i].label}
                   </span>
-                  <Marks marks={q.marks} theme={theme} />
+                  <Marks marks={q.marks} theme={theme} calculator={calculatorFor(plan[i].label, courseId)} />
                 </>
               ) : (
                 <span className="font-mono text-xs text-amber-800 dark:text-amber-300/90">

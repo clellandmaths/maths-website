@@ -11,6 +11,7 @@ import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import NoHintNote from '@/components/NoHintNote';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -191,7 +192,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     {topic}
                   </span>
                 ))}
-                <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
+                <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId ?? '')} className="ml-auto shrink-0" />
               </div>
 
               {/* Question content */}

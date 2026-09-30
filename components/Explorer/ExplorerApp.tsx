@@ -7,7 +7,7 @@ import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { ClipboardCheck } from 'lucide-react';
 import FilterSidebar from '@/components/Explorer/FilterSidebar';
-import CalculatorMark from '@/components/CalculatorMark';
+import { calculatorLabel } from '@/lib/calculator';
 import QuestionCard from '@/components/Explorer/QuestionCard';
 import WorksheetFAB from '@/components/Explorer/WorksheetFAB';
 import WorksheetDrawer from '@/components/Explorer/WorksheetDrawer';
@@ -36,7 +36,7 @@ import DataBookletSheet, { BookletExtract } from '@/components/DataBookletSheet'
 import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
-import { decodeWorksheet, resolveWorksheet, isGenerated, calculatorLabel, questionRef } from '@/lib/worksheet-share';
+import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
 import { byPaperLabel, withParentVideo, courseHasHints, courseHasPaperLadder, variationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { paperCaption, withoutPaperBadge } from '@/lib/question-number.mjs';
@@ -1276,7 +1276,6 @@ function ExplorerContent({ course }: { course: Course }) {
                                 {paperCaption(q)}
                               </span>
                             )}
-                            {calculatorLabel(q, course) && <CalculatorMark label={calculatorLabel(q, course)!} />}
                             {!testMode && q.topics?.slice(0, 2).map((topic) => (
                               <span
                                 key={topic}
@@ -1288,7 +1287,7 @@ function ExplorerContent({ course }: { course: Course }) {
                             {/* `@media print` sets `margin-left: auto` on
                                 `.q-marks`, so a printed sheet keeps the exam
                                 paper's own convention of marks hard right. */}
-                            <Marks marks={q.marks} theme={theme} className="q-marks" />
+                            <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, course)} className="q-marks" />
                           </div>
                           {/* Reorder buttons — compact horizontal */}
                           <div className="no-print flex items-center gap-0.5 shrink-0">

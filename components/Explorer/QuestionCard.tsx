@@ -13,6 +13,7 @@ import MathRenderer from '@/components/MathRenderer';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import FormulaeButton from '@/components/FormulaeButton';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import type { CourseTheme } from '@/lib/course-theme';
 
 
@@ -322,7 +323,7 @@ export default function QuestionCard({
                 {topic}
               </span>
             ))}
-            <Marks marks={shown.marks} theme={theme} />
+            <Marks marks={shown.marks} theme={theme} calculator={calculatorLabel(shown, courseId ?? '')} />
           </div>
         </div>
 

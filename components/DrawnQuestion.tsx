@@ -5,6 +5,7 @@ import { Eye, Play, X } from 'lucide-react';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import Hints from '@/components/Hints';
 import VideoModal from '@/components/VideoModal';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
@@ -71,7 +72,7 @@ export default function DrawnQuestion({
             based on {question.basedOn[question.parentIndex ?? 0]}
           </span>
         )}
-        <Marks marks={question.marks} theme={theme} />
+        <Marks marks={question.marks} theme={theme} calculator={calculatorLabel(question, courseId ?? '')} />
         <button
           onClick={onClose}
           className="ml-auto p-1 text-muted-dim hover:text-foreground rounded transition-colors"

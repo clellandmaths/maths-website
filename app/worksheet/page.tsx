@@ -6,10 +6,10 @@ import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip, Ar
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
-import CalculatorMark from '@/components/CalculatorMark';
+import { calculatorLabel } from '@/lib/calculator';
 import QRCodeImage from '@/components/QRCodeImage';
 import {
-  decodeWorksheet, resolveWorksheet, isGenerated, calculatorLabel, NO_OPTIONS, type WorksheetOptions,
+  decodeWorksheet, resolveWorksheet, isGenerated, NO_OPTIONS, type WorksheetOptions,
 } from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 import dynamic from 'next/dynamic';
@@ -267,8 +267,7 @@ function SharedWorksheet() {
                 {q.label && !options.test && (
                   <span className="q-source text-sm text-muted-foreground">{q.label}</span>
                 )}
-                {calculatorLabel(q, courseId ?? '') && <CalculatorMark label={calculatorLabel(q, courseId ?? '')!} />}
-                <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
+                <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId ?? '')} className="q-marks ml-auto" />
                 {/* Beside the number rather than under the question, matching
                     the Explorer's sheet — it keeps the QR out of the reading
                     flow, on screen and on paper alike. */}

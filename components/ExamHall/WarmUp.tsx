@@ -5,6 +5,7 @@ import { X, ChevronLeft, ChevronRight, Play, Eye, EyeOff, Flame, ArrowLeft, Book
 import { QuestionWithMetadata, getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions } from '@/lib/data-loader';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
@@ -315,7 +316,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
             <p className="text-muted-dim text-xs mt-0.5">
               {paperCaption(question)}
             </p>
-            <Marks marks={question.marks} theme={theme} className="justify-end mt-1" />
+            <Marks marks={question.marks} theme={theme} calculator={calculatorLabel(question, course)} className="justify-end mt-1" />
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { examBoardFor, examBoardWithAlias } from '@/lib/exam-board';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import { notFound } from 'next/navigation';
 import {
   getAllN5Questions,
@@ -237,7 +238,7 @@ export default async function PaperPage(
                       {topic}
                     </span>
                   ))}
-                  <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
+                  <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId)} className="ml-auto shrink-0" />
                 </div>
                 <MathHtml
                   html={q.question}

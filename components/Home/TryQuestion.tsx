@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Eye, EyeOff, RefreshCw } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import type { PastPaper, QuestionWithMetadata } from '@/lib/data-loader';
 import { questionNumber } from '@/lib/question-number.mjs';
 
@@ -78,7 +79,7 @@ export default function TryQuestion() {
             <span className="font-mono text-xs text-mint-ink">
               {question.course} · {question.year} · P{question.paperNumber} · Q{question.questionNumber}
             </span>
-            <Marks marks={question.marks} />
+            <Marks marks={question.marks} calculator={calculatorLabel(question, question.course === 'Higher' ? 'higher' : 'n5')} />
           </div>
         )}
       </div>

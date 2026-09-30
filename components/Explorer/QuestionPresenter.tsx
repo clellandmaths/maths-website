@@ -13,6 +13,7 @@ import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import NoHintNote from '@/components/NoHintNote';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -305,7 +306,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   {topic}
                 </span>
               ))}
-              <Marks marks={shown.marks} theme={theme} className="ml-auto" />
+              <Marks marks={shown.marks} theme={theme} calculator={calculatorLabel(shown, courseId ?? '')} className="ml-auto" />
             </div>
 
             {/* Question Card — fixed height container between header & footer */}

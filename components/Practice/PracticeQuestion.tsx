@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from 'react';
 import { Eye, Play, ExternalLink, BookOpen } from 'lucide-react';
 import Marks from '@/components/Marks';
+import { calculatorFor } from '@/lib/calculator';
 import Hints from '@/components/Hints';
 import MoreLikeThis from '@/components/MoreLikeThis';
 import NoHintNote from '@/components/NoHintNote';
@@ -109,7 +110,7 @@ export default function PracticeQuestion({
                   {paper}
                 </span>
               )}
-              <Marks marks={marks} theme={theme} />
+              <Marks marks={marks} theme={theme} calculator={calculatorFor(paper, courseId ?? '')} />
             </div>
           )}
           <div

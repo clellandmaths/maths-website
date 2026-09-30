@@ -5,6 +5,7 @@ import { Dices, Eye, Loader2, ArrowRight } from 'lucide-react';
 import { useGeneratedDraw } from '@/lib/use-generated-draw';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import { calculatorLabel } from '@/lib/calculator';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -132,7 +133,7 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
                 based on {question.basedOn[question.parentIndex ?? 0]}
               </span>
             )}
-            <Marks marks={question.marks} theme={theme} />
+            <Marks marks={question.marks} theme={theme} calculator={calculatorLabel(question, courseId)} />
           </div>
 
           <MathRenderer html={question.question} className="question-content text-foreground" />
