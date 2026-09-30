@@ -43,6 +43,9 @@ import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint 
 
 export type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
 
+/** Advanced Higher's paper filter, by calculator: paper 1, then paper 2 and the single papers. */
+const AH_PAPER_NAMES: [string, string] = ['Non-calculator', 'Calculator'];
+
 const courseConfig = {
   n5: {
     label: 'National 5',
@@ -539,6 +542,10 @@ function ExplorerContent({ course }: { course: Course }) {
   const filterSidebarProps = {
     theme,
     showPaperFilter: !config.singlePaper,
+    // Advanced Higher's single papers (2016-2019) are calculator, so its two
+    // boxes are named for the calculator, not the paper, and those years come
+    // under Calculator (the owner, 2026-09-30: "Rename for advanced higher only").
+    paperNames: course === 'ah' ? AH_PAPER_NAMES : undefined,
     selectedSubtopics,
     onSubtopicsChange: setSelectedSubtopics,
     selectedYears,
@@ -705,7 +712,7 @@ function ExplorerContent({ course }: { course: Course }) {
                         onClick={() => removePaper(paper)}
                         className="shrink-0 px-2.5 py-1 bg-amber-600/20 text-amber-800 dark:text-amber-400 text-xs rounded-full flex items-center gap-1.5 hover:bg-amber-600/30 transition-colors"
                       >
-                        Paper {paper}
+                        {course === 'ah' ? AH_PAPER_NAMES[paper - 1] : `Paper ${paper}`}
                         <X className="h-3 w-3" />
                       </button>
                     ))}

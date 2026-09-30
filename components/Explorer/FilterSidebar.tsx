@@ -19,6 +19,8 @@ interface FilterSidebarProps {
   availableYears: (number | string)[];
   // Higher Apps has one paper per year — no paper filter
   showPaperFilter?: boolean;
+  /** The two boxes' names, paper 1 then paper 2; Advanced Higher names them by calculator. */
+  paperNames?: [string, string];
 }
 
 export default function FilterSidebar({
@@ -34,6 +36,7 @@ export default function FilterSidebar({
   topics,
   availableYears,
   showPaperFilter = true,
+  paperNames = ['Paper 1 (Non-Calculator)', 'Paper 2 (Calculator)'],
 }: FilterSidebarProps) {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
   const [topicSearch, setTopicSearch] = useState('');
@@ -160,7 +163,7 @@ export default function FilterSidebar({
               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
             />
             <span className="text-foreground-2 group-hover:text-foreground text-sm">
-              Paper 1 (Non-Calculator)
+              {paperNames[0]}
             </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer group py-1">
@@ -171,7 +174,7 @@ export default function FilterSidebar({
               className={`w-4 h-4 rounded border-muted bg-muted ${theme.text} focus:ring-foreground/30 focus:ring-offset-background`}
             />
             <span className="text-foreground-2 group-hover:text-foreground text-sm">
-              Paper 2 (Calculator)
+              {paperNames[1]}
             </span>
           </label>
         </div>

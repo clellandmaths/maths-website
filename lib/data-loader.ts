@@ -2,7 +2,7 @@
 // Aggregates all past paper data for the Explorer
 // Uses dynamic imports so data only loads when a course is selected
 
-import { paperCaption, questionNumber } from '@/lib/question-number.mjs';
+import { paperCaption, paperRef, questionNumber } from '@/lib/question-number.mjs';
 
 export interface QuestionAttachment {
   name: string;
@@ -359,9 +359,15 @@ export function filterQuestions(
       return false;
     }
 
-    // Filter by paper number (if any selected)
-    if (selectedPapers.length > 0 && !selectedPapers.includes(q.paperNumber)) {
-      return false;
+    // Filter by paper number (if any selected). A single paper, whose badge
+    // names no paper ("2019 Q4"), is stored as paper 1 but is a calculator
+    // paper, so it answers to paper 2, the calculator box (the owner,
+    // 2026-09-30, on Advanced Higher 2016-2019; Higher Apps, the other
+    // one-paper course, has no paper filter).
+    if (selectedPapers.length > 0) {
+      const ref = paperRef(q.question);
+      const paper = ref !== null && !/\bP\d\b/.test(ref) ? 2 : q.paperNumber;
+      if (!selectedPapers.includes(paper)) return false;
     }
 
     // Filter by topics (if any topics selected) — N5/Higher tag subtopic
