@@ -13,6 +13,7 @@ import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import NoHintNote from '@/components/NoHintNote';
 import Marks from '@/components/Marks';
+import CalculatorMark from '@/components/CalculatorMark';
 import { calculatorLabel } from '@/lib/calculator';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
@@ -246,10 +247,20 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
           </div>
           {/* "Question" goes below `sm`, where the header also holds Close and
               a labelled Formulae button on a 320px screen. */}
-          <p className="shrink-0 whitespace-nowrap text-muted-foreground text-sm">
-            <span className="hidden sm:inline">Question </span><span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
-            <span className="text-foreground-2">{position.total}</span>
-          </p>
+          {/* The calculator picture just below the count, not beside the
+              marks, where on a phone it could push them onto a second line
+              (the owner, 2026-09-30). The count and the picture together are
+              40px, inside the 44px the Close button already gives this bar. */}
+          <div className="shrink-0 flex flex-col items-center">
+            <p className="whitespace-nowrap text-muted-foreground text-sm">
+              <span className="hidden sm:inline">Question </span><span className={`${theme.text} font-medium`}>{position.current}</span> of{' '}
+              <span className="text-foreground-2">{position.total}</span>
+            </p>
+            {(() => {
+              const calculator = calculatorLabel(shown, courseId ?? '');
+              return calculator && <CalculatorMark label={calculator} />;
+            })()}
+          </div>
           <div className="flex sm:flex-1 items-center justify-end gap-2 shrink-0">
             {hasDataBooklet && (
               <button
@@ -306,7 +317,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   {topic}
                 </span>
               ))}
-              <Marks marks={shown.marks} theme={theme} calculator={calculatorLabel(shown, courseId ?? '')} className="ml-auto" />
+              <Marks marks={shown.marks} theme={theme} className="ml-auto" />
             </div>
 
             {/* Question Card — fixed height container between header & footer */}

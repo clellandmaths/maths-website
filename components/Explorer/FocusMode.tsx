@@ -11,6 +11,7 @@ import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import NoHintNote from '@/components/NoHintNote';
 import Marks from '@/components/Marks';
+import CalculatorMark from '@/components/CalculatorMark';
 import { calculatorLabel } from '@/lib/calculator';
 import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
@@ -178,9 +179,22 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
             >
               {/* Question header */}
               <div className="flex items-center gap-3 mb-4 flex-wrap">
-                <span className={`flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full shrink-0`}>
-                  {index + 1}
-                </span>
+                {/* The calculator picture sits on the number's corner, not
+                    beside the marks: here it takes no width from a row that
+                    already wraps on a phone (the owner, 2026-09-30). */}
+                {(() => {
+                  const calculator = calculatorLabel(q, courseId ?? '');
+                  return (
+                    <span className={`relative flex items-center justify-center w-8 h-8 ${theme.tint} ${theme.text} text-sm font-bold rounded-full shrink-0`}>
+                      {index + 1}
+                      {calculator && (
+                        <span className="absolute -bottom-1.5 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-card ring-1 ring-border">
+                          <CalculatorMark label={calculator} />
+                        </span>
+                      )}
+                    </span>
+                  );
+                })()}
                 <span className="text-sm text-muted-dim shrink-0">
                   {questionLabel(q)}
                 </span>
@@ -192,7 +206,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     {topic}
                   </span>
                 ))}
-                <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId ?? '')} className="ml-auto shrink-0" />
+                <Marks marks={q.marks} theme={theme} className="ml-auto shrink-0" />
               </div>
 
               {/* Question content */}
