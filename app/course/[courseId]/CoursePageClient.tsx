@@ -21,6 +21,8 @@ import { n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos,
 import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+import { paperName } from '@/lib/paper-name';
+import { paperCaption } from '@/lib/question-number.mjs';
 
 interface CoursePageProps {
   courseId: string;
@@ -226,7 +228,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                      stays lazy, which is what `lazy` is for. */
                                   <img
                                     src={`https://img.youtube.com/vi/${paper.videoId}/mqdefault.jpg`}
-                                    alt={`${courseName} ${paper.year} Paper ${paper.paperNumber}`}
+                                    alt={`${courseName} ${paperName(courseId, paper.year, paper.paperNumber)}`}
                                     className="w-full h-full object-cover"
                                     loading={firstOnPage ? 'eager' : 'lazy'}
                                     fetchPriority={firstOnPage ? 'high' : 'auto'}
@@ -246,9 +248,12 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                 <h4 className="text-lg font-semibold text-foreground">
                                   <Link
                                     href={`/course/${courseId}/papers/${paper.year}/paper-${paper.paperNumber}`}
-                                    className="hover:text-white transition-colors"
+                                    // Underlined on hover. It was `hover:text-white`, from the
+                                    // dark-only design, and on a light card the name vanished
+                                    // under the pointer (the owner, 2026-09-30).
+                                    className="hover:underline underline-offset-4 decoration-2"
                                   >
-                                    {year} Paper {paper.paperNumber}
+                                    {paperName(courseId, year, paper.paperNumber)}
                                   </Link>
                                 </h4>
                                 <p className="text-sm text-muted-dim">
@@ -263,7 +268,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                     onClick={() => setActiveVideo({
                                       videoId: paper.videoId,
                                       timestamp: 0,
-                                      title: `${courseName} ${paper.year} Paper ${paper.paperNumber}`,
+                                      title: `${courseName} ${paperName(courseId, paper.year, paper.paperNumber)}`,
                                     })}
                                     className={`flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white text-sm font-medium rounded-lg transition-all`}
                                   >
@@ -379,7 +384,7 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                       onClick={() => setActiveVideo({
                                         videoId: q.videoId,
                                         timestamp: timestampToSeconds(q.timestamp),
-                                        title: `${courseName} ${q.year} P${q.paperNumber} Q${q.questionNumber}`,
+                                        title: `${courseName} ${paperCaption(q)}`,
                                       })}
                                       className={`shrink-0 flex items-center gap-1 px-2 py-1 ${theme.text} hover:opacity-80 text-xs font-medium transition-opacity`}
                                     >

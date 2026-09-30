@@ -32,7 +32,8 @@ const GIVEAWAYS = `(() => {
   return {
     cards: cards.length,
     tags: cards.reduce((n, c) => n + c.querySelectorAll('.topic-tag').length, 0),
-    captions: cards.filter(c => /[0-9]{4} Paper [0-9] Q[0-9]/.test(c.firstElementChild?.innerText ?? '')).length,
+    // "2024 P1 Q3" since 2026-09-30 (it was "2024 Paper 1 Q3"), in the card's header row.
+    captions: cards.filter(c => /[0-9]{4} (Paper [0-9]|P[0-9]) Q[0-9]/.test(c.firstElementChild?.innerText ?? '')).length,
     badges: cards.filter(c => /[0-9]{4} P[0-9] Q[0-9]/.test(c.querySelector('.question-content')?.innerText ?? '')).length,
     newQuestion: cards.filter(c => /New question/.test(c.firstElementChild?.innerText ?? '')).length,
     marks: cards.filter(c => c.querySelector('.q-marks')).length,

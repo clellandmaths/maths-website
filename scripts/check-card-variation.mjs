@@ -63,7 +63,8 @@ await withPage({ port: 8132, cdp: 9232 }, async ({ evaluate, click, buttonNamed,
   })()`);
 
   const exam = await card();
-  t.check(/\d{4} Paper \d Q/.test(exam?.first ?? ''),
+  // "2026 P1 Q5" since 2026-09-30 (the owner: "Yes change to 2028 P1 Q1").
+  t.check(/\d{4} P\d Q/.test(exam?.first ?? ''),
     `exam face shows a paper label: ${JSON.stringify(exam?.first)}`);
 
   // ── the swap ────────────────────────────────────────────────────────────

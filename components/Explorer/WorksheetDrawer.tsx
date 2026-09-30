@@ -109,7 +109,7 @@ export default function WorksheetDrawer({ theme, isOpen, onClose, onViewOnWeb }:
                             Q{index + 1}
                           </span>
                           <span className="text-xs text-muted-dim">
-                            {paperCaption(item, true)}
+                            {paperCaption(item)}
                           </span>
                         </div>
                         {mainTopic && (

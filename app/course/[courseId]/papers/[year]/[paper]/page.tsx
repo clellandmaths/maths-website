@@ -4,6 +4,7 @@ import { examBoardFor, examBoardWithAlias } from '@/lib/exam-board';
 import Marks from '@/components/Marks';
 import { calculatorLabel } from '@/lib/calculator';
 import CalculatorMark from '@/components/CalculatorMark';
+import { isSinglePaper, paperName } from '@/lib/paper-name';
 import { notFound } from 'next/navigation';
 import {
   getAllN5Questions,
@@ -114,12 +115,12 @@ export async function generateMetadata(
     : `full ${board} marking instructions`;
 
   return {
-    title: `${courseName} ${year} Paper ${paperNumber} — Questions & ${withVideo ? 'Video Solutions' : 'Marking Instructions'}`,
+    title: `${courseName} ${paperName(courseId, year, paperNumber)} — Questions & ${withVideo ? 'Video Solutions' : 'Marking Instructions'}`,
     // Kept under ~160 characters: past that, Google truncates mid-sentence and
     // the call to action is the part that gets cut. examBoardFor rather than
     // examBoardWithAlias here — the parenthesised alias was the longest thing
     // in the line and the page body already carries both names for search.
-    description: `All ${paperQuestions.length} questions from the ${year} ${courseName} Paper ${paperNumber}, with answers and ${solutions}. Free ${examBoardFor(year)} past paper practice.`,
+    description: `All ${paperQuestions.length} questions from the ${year} ${courseName} ${isSinglePaper(courseId, year) ? 'paper' : `Paper ${paperNumber}`}, with answers and ${solutions}. Free ${examBoardFor(year)} past paper practice.`,
   };
 }
 
@@ -160,7 +161,7 @@ export default async function PaperPage(
           { label: 'Home', href: '/' },
           { label: courseName, href: `/course/${courseId}` },
           { label: 'Past Papers', href: `/course/${courseId}/papers` },
-          { label: `${year} Paper ${paperNumber}` },
+          { label: paperName(courseId, year, paperNumber) },
         ]} />
 
         {/* Paper header */}
@@ -169,7 +170,7 @@ export default async function PaperPage(
             {courseName} · {examBoardFor(year)} past paper
           </p>
           <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-            {year} Paper {paperNumber}
+            {paperName(courseId, year, paperNumber)}
           </h1>
           <div className="flex flex-wrap items-center gap-4">
             <span className="font-mono text-xs text-muted-foreground">
@@ -180,7 +181,7 @@ export default async function PaperPage(
                 theme={theme}
                 videoId={paperVideo.videoId}
                 timestamp="0"
-                title={`${courseName} ${year} Paper ${paperNumber}`}
+                title={`${courseName} ${paperName(courseId, year, paperNumber)}`}
               />
             )}
             {isHigherApps && <BookletButton year={year} theme={theme} />}
@@ -335,7 +336,7 @@ export default async function PaperPage(
                     theme={theme}
                     videoId={q.videoId}
                     timestamp={q.timestamp}
-                    title={`${courseName} ${year} Paper ${paperNumber} Q${idx + 1}`}
+                    title={`${courseName} ${isSinglePaper(courseId, year) ? year : `${year} Paper ${paperNumber}`} Q${idx + 1}`}
                   />
                 </div>
               )}
