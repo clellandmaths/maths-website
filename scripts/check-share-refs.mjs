@@ -16,6 +16,13 @@
 // classes; a sheet shared last term must still open. decodeRefs sniffs on "-",
 // and that sniff is easy to break by accident.
 //
+// And the short format of 2026-10-01 ("the short format" below): 300 links
+// recorded before it, and 200 short links recorded when it was made, must read
+// exactly as they did, every paper question and variation must pack, and no
+// link may spell anything on LINK_WORDS. scripts/verify-share-fixtures.mts
+// re-makes the questions behind the recorded links; check-short-links.mjs
+// opens them on the built site.
+//
 // Run: node scripts/check-share-refs.mjs
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,7 +31,9 @@ import {
   packRef, unpackRef, decodeRefs, TOKEN_LENGTH, SPECIAL_YEARS,
   packGenerated, unpackGenerated, generatedRef, parseGeneratedRef,
   GENERATED_MARK, GENERATED_TOKEN_LENGTH, CODE_LENGTH, SEED_LENGTH,
+  encodeShortRefs, spellsInLink, SHORT_MARK, SHORT_SEED_LENGTH, LINK_ALPHABET,
 } from '../lib/worksheet-refs.mjs';
+import { LINK_ID_CODES } from '../lib/link-ids.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 let failures = 0;
@@ -255,6 +264,131 @@ console.log('\nthe identity is spelled the same on both sides:');
   } else {
     console.log(`  ok  ${literals.length} variation codes, all ${CODE_LENGTH} characters, seed ${SEED_LENGTH}`);
   }
+}
+
+// ------------------------------------------------ the short format (2026-10-01)
+// The owner, 2026-10-01: shorter links, none that spells a word or a number
+// read as one, every link already shared still opening the same sheet, and
+// "Another like this one" and the way back to the original unchanged.
+console.log('\nthe short format:');
+{
+  const before = failures;
+  // 1. Every link recorded before the change still reads the same. (The
+  //    questions behind them: npx tsx scripts/verify-share-fixtures.mts.)
+  const recorded = JSON.parse(fs.readFileSync(path.join(root, 'scripts/fixtures/share-links-2026-10-01.json'), 'utf8')).sheets;
+  let oldBad = 0;
+  for (const s of recorded) {
+    if (JSON.stringify(decodeRefs(s.q)) !== JSON.stringify(s.refs)) { oldBad++; if (oldBad <= 3) fail(`a recorded ${s.format} link no longer reads the same: ${s.q.slice(0, 40)}…`); }
+  }
+  if (!oldBad) console.log(`  ok  ${recorded.length} links recorded before the change read exactly as they did`);
+
+  // 2. Short links recorded when the format was made: pinned, so a later change
+  //    to the alphabet, the paper slots or a link id cannot move them either.
+  const shortFile = path.join(root, 'scripts/fixtures/share-links-short-2026-10-01.json');
+  if (!fs.existsSync(shortFile)) fail('scripts/fixtures/share-links-short-2026-10-01.json is missing');
+  else {
+    const pinned = JSON.parse(fs.readFileSync(shortFile, 'utf8')).sheets;
+    let pinBad = 0;
+    for (const s of pinned) {
+      if (JSON.stringify(decodeRefs(s.q)) !== JSON.stringify(s.refs)) { pinBad++; if (pinBad <= 3) fail(`a pinned short link no longer reads the same: ${s.q.slice(0, 40)}…`); }
+    }
+    if (!pinBad) console.log(`  ok  ${pinned.length} short links pinned in 2026-10-01 read exactly as they did`);
+  }
+
+  // 3. Every paper question on the site packs short and comes back.
+  const allPaper = [];
+  for (const d of dirs) {
+    const dir = path.join(root, d);
+    if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.js'))) {
+      let mod;
+      try { mod = await import(pathToFileURL(path.join(dir, f)).href); } catch { continue; }
+      for (const v of Object.values(mod)) {
+        if (!v?.papers) continue;
+        for (const p of v.papers) p.questions.forEach((_, i) => allPaper.push(`${v.year}-${p.paperNumber}-${i}`));
+      }
+    }
+  }
+  const shortSeen = new Map();
+  for (const ref of allPaper) {
+    const q = encodeShortRefs([ref]);
+    if (!q) { fail(`${ref} does not pack in the short format`); continue; }
+    const back = decodeRefs(q);
+    if (back.length !== 1 || back[0] !== ref) fail(`${ref} → "${q}" → ${JSON.stringify(back)}`);
+    const token = q.slice(1).split(SHORT_MARK).join('');
+    const prev = shortSeen.get(token);
+    if (prev && prev !== ref) fail(`short token "${token}" is used by both ${prev} and ${ref}`);
+    shortSeen.set(token, ref);
+  }
+  console.log(`  ok  ${new Set(allPaper).size} paper questions pack short and come back`);
+
+  // 4. Every variation code has a link id, append only, none that spells.
+  const codesSrc = fs.readFileSync(path.join(root, 'lib/generator/generators/variation-codes.ts'), 'utf8');
+  // The table itself, not the comment above it, which names both.
+  const table = codesSrc.slice(codesSrc.indexOf('export const VARIATION_CODES'), codesSrc.indexOf('export const CODE_EXCEPTIONS'));
+  const engineCodes = [...table.matchAll(/:\s*'([0-9a-z]{5})',/g)].map(m => m[1]);
+  const idOf = new Map();
+  LINK_ID_CODES.forEach((c, i) => {
+    if (!c) return;
+    if (idOf.has(c)) fail(`lib/link-ids.mjs lists ${c} twice`);
+    idOf.set(c, i);
+  });
+  for (const c of engineCodes) {
+    if (!idOf.has(c)) fail(`variation code ${c} has no link id: append '${c}', to LINK_ID_CODES in lib/link-ids.mjs (an empty '' first for any position whose characters spell, as the file says)`);
+  }
+  LINK_ID_CODES.forEach((c, i) => {
+    const chars = [Math.floor(i / 625), Math.floor(i / 25) % 25, i % 25].map(k => LINK_ALPHABET[k]).join('');
+    if (c && spellsInLink(chars)) fail(`link id ${i} ("${chars}") spells something, but carries ${c}: it should have been skipped`);
+  });
+  if (!engineCodes.length) fail('no variation codes found in the engine — has the table moved?');
+  else console.log(`  ok  ${engineCodes.length} variation codes, each with a link id`);
+
+  // 5. Mixed sheets, thousands of them, from a fixed stream: paper questions,
+  //    new short seeds, and old six-character seeds kept from a re-shared
+  //    sheet (some of which spell words). Each must come back exactly, carry
+  //    no listed word, and a sheet of new questions must be shorter than today.
+  let state = 7;
+  const rand = () => { state = (state * 1103515245 + 12345) % 2147483648; return state / 2147483648; };
+  const pick = xs => xs[Math.floor(rand() * xs.length)];
+  const B36 = '0123456789abcdefghijklmnopqrstuvwxyz';
+  const usable = engineCodes.filter(c => idOf.has(c));
+  const shortSeed = () => { for (;;) { const s = Array.from({ length: SHORT_SEED_LENGTH }, () => pick(LINK_ALPHABET)).join(''); if (!spellsInLink(s)) return s; } };
+  const oldSeed = () => (rand() < 0.1 ? pick(['sexabc', 'fuck00', 'a69b88', 'xxx123', 'nazi12']) : Array.from({ length: SEED_LENGTH }, () => pick(B36)).join(''));
+  let sheets = 0, worded = 0, longer = 0, savedNew = 0, savedOld = 0;
+  for (let n = 0; n < 4000; n++) {
+    const kind = n % 4; // 0 paper, 1 new generated, 2 mixed, 3 mixed with kept old seeds
+    const refs = Array.from({ length: 1 + Math.floor(rand() * 25) }, () => {
+      const r = rand();
+      if (kind === 0 || (kind >= 2 && r < 0.4)) return pick(allPaper);
+      const seed = kind === 3 && r > 0.7 ? oldSeed() : shortSeed();
+      return generatedRef(pick(usable), seed, Math.floor(rand() * 3));
+    });
+    const q = encodeShortRefs(refs);
+    sheets++;
+    if (!q) { fail(`a sheet did not pack short: ${refs.slice(0, 3)}`); continue; }
+    const back = decodeRefs(q);
+    if (JSON.stringify(back) !== JSON.stringify(refs)) { fail(`a short sheet did not come back: ${q.slice(0, 50)}…`); continue; }
+    if (spellsInLink(q)) { worded++; if (worded <= 3) fail(`a short link spells something: ${q}`); }
+    if (new URLSearchParams({ q }).toString() !== `q=${q}`) fail(`a short link is percent-encoded: ${q.slice(0, 30)}`);
+    // Vowels only ever inside a kept old token ("__" and twelve base36).
+    const outsideKept = q.replace(/_\.?_(?:[0-9a-z]\.?){12}/g, '');
+    if (/[aeiou013451]/.test(outsideKept.replace(/^\./, ''))) fail(`a short link has a vowel or a vowel-like digit outside a kept old question: ${q.slice(0, 60)}`);
+    if (kind !== 3) {
+      const old = refs.map(r => { const g = parseGeneratedRef(r); if (g) return packGenerated(g.code, g.seed.padEnd(6, '0'), g.parentIndex); const m = /^(.+)-(\d+)-(\d+)$/.exec(r); return packRef({ year: m[1], paperNumber: Number(m[2]), questionIndex: Number(m[3]) }); }).join('');
+      if (kind === 1) { savedNew += old.length; savedOld += q.length; }
+      if (kind === 1 && q.length >= old.length) { longer++; if (longer <= 3) fail(`a sheet of new questions is not shorter than today: ${q.length} against ${old.length}`); }
+    }
+  }
+  if (failures === before) console.log(`  ok  ${sheets} mixed sheets come back exactly, none spells anything; new generated questions take ${savedOld} characters where today's links take ${savedNew}`);
+
+  // 6. Re-sharing: every recorded old link, read and written again short, comes
+  //    back with the same questions.
+  let reBad = 0;
+  for (const s of recorded) {
+    const q = encodeShortRefs(s.refs);
+    if (!q || JSON.stringify(decodeRefs(q)) !== JSON.stringify(s.refs) || spellsInLink(q)) { reBad++; if (reBad <= 3) fail(`a recorded link re-shared short does not come back clean: ${s.q.slice(0, 40)}…`); }
+  }
+  if (!reBad) console.log(`  ok  all ${recorded.length} recorded links, re-shared, come back with the same questions and no word`);
 }
 
 // --------------------------------------- a sheet is resolved one at a time

@@ -40,6 +40,7 @@
     "check:paperhelp": "node scripts/check-new-years-help.mjs",
     "check:practicepaper": "node scripts/check-practice-paper.mjs",
     "check:sharedsheet": "node scripts/check-shared-sheet.mjs",
+    "check:shortlinks": "node scripts/check-short-links.mjs",
     "check:notespractice": "node scripts/check-notes-to-practice.mjs",
     "check:warmup": "node scripts/check-warmup-more.mjs",
     "check:genvideo": "node scripts/check-generated-video.mjs",

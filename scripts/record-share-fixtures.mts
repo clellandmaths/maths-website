@@ -31,7 +31,7 @@ const root = path.resolve(import.meta.dirname, '..');
 // A fixed stream, so the file is reproducible from this script and this commit.
 let state = 20261001;
 const rand = () => { state = (state * 1103515245 + 12345) % 2147483648; return state / 2147483648; };
-const pick = <T>(xs: readonly T[]): T => xs[Math.floor(rand() * xs.length)];
+const pick = <T,>(xs: readonly T[]): T => xs[Math.floor(rand() * xs.length)];
 const B36 = '0123456789abcdefghijklmnopqrstuvwxyz';
 const seed6 = () => Array.from({ length: 6 }, () => B36[Math.floor(rand() * 36)]).join('');
 

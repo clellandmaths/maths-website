@@ -8,7 +8,7 @@ import {
   keysOfQuestion,
   type ToWorksheetOptions,
 } from './generator/worksheet-question';
-import { SEED_LENGTH } from './worksheet-refs.mjs';
+import { LINK_ALPHABET, SHORT_SEED_LENGTH, spellsInLink } from './worksheet-refs.mjs';
 
 /**
  * The boundary: a generated question becomes a question this site can show.
@@ -118,25 +118,29 @@ export function worksheetKeys(
   return questions.flatMap(keysOfQuestion);
 }
 
-const BASE36 = '0123456789abcdefghijklmnopqrstuvwxyz';
-
 /**
  * A fresh seed for a new question.
  *
- * `SEED_LENGTH` comes from the link format rather than being chosen here: the
- * seed has to survive a round trip through a URL as a fixed-width token, so its
- * length is the link's business and this follows it.
+ * Its length and its characters come from the link format rather than being
+ * chosen here: the seed has to survive a round trip through a URL as a
+ * fixed-width token, so it is the link's business and this follows it. Since
+ * 2026-10-01 that is four characters of the short link alphabet (no vowels,
+ * none of 0, 1, 3, 4, 5), and a seed that spells a listed string is drawn
+ * again, so the link it travels in starts clean. Seeds made before then, six
+ * base36 characters, still make exactly the question they always did.
  *
  * Built a character at a time rather than from `Math.random().toString(36)`,
  * which yields a short string whenever the draw happens to be small — and a
  * short seed is one the link cannot carry.
  */
 export function newSeed(): string {
-  let s = '';
-  for (let i = 0; i < SEED_LENGTH; i++) {
-    s += BASE36[Math.floor(Math.random() * BASE36.length)];
+  for (;;) {
+    let s = '';
+    for (let i = 0; i < SHORT_SEED_LENGTH; i++) {
+      s += LINK_ALPHABET[Math.floor(Math.random() * LINK_ALPHABET.length)];
+    }
+    if (!spellsInLink(s)) return s;
   }
-  return s;
 }
 
 export { GENERATED_UID_PREFIX, generatedUid } from './generator/worksheet-question';

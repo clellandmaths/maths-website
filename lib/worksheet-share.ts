@@ -1,6 +1,6 @@
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import {
-  packRef, decodeRefs, packGenerated, parseGeneratedRef,
+  packRef, decodeRefs, packGenerated, parseGeneratedRef, encodeShortRefs,
 } from '@/lib/worksheet-refs.mjs';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 
@@ -137,6 +137,14 @@ export function isGenerated(q: QuestionWithMetadata): boolean {
 export function encodeWorksheet(courseId: string, questions: QuestionWithMetadata[]): string {
   const params = new URLSearchParams();
   params.set('c', courseId);
+  // The short format first (2026-10-01): vowel-free, no listed word, about a
+  // third shorter. It takes every question the site has (check-share-refs);
+  // the two older formats below stay as the fallback.
+  const short = encodeShortRefs(questions.map(questionRef));
+  if (short) {
+    params.set('q', short);
+    return params.toString();
+  }
   // Anything that will not pack falls back to its spelled-out reference, so a
   // question outside the ranges costs length rather than dropping out of the
   // sheet. The build gate exists so this never actually happens.

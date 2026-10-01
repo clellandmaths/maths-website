@@ -15,10 +15,10 @@ import { createHash } from 'node:crypto';
 import { decodeRefs } from '../lib/worksheet-refs.mjs';
 import { questionFromCode } from '../lib/generated-question';
 
-const file = path.join(import.meta.dirname, 'fixtures', 'share-links-2026-10-01.json');
-const { sheets } = JSON.parse(fs.readFileSync(file, 'utf8')) as {
-  sheets: { format: string; q: string; refs: string[]; questions: Record<string, string | null> }[];
-};
+// The links made before the short format, and the short ones pinned the day it was made.
+type Sheet = { format: string; q: string; refs: string[]; questions: Record<string, string | null> };
+const sheets: Sheet[] = ['share-links-2026-10-01.json', 'share-links-short-2026-10-01.json']
+  .flatMap(f => (JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'fixtures', f), 'utf8')) as { sheets: Sheet[] }).sheets);
 
 /** The same fingerprint the recorder took. */
 async function fingerprint(ref: string): Promise<string | null> {
