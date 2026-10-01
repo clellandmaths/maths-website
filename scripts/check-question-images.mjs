@@ -62,6 +62,10 @@ const UNUSED_IS_FINE = new Map([
     'superseded by 2023_P1_Q10_1 and _2, which the question does reference'],
   ['/img/N5_Past_Papers/2022/2022_P1_Q14.png',
     'blank axes for a sketch; reviewed against the paper and deliberately not shown'],
+  ['/img/Adv_Higher_Maths_Past_Papers/2021/2021_P1_Q7_b.svg',
+    'the finished (b) sketch, shown in the printed markscheme (paper-markscheme-ah.ts), which this check does not read; the owner, 2026-10-01'],
+  ['/img/Adv_Higher_Maths_Past_Papers/2021/2021_P1_Q7_ci.svg',
+    'the finished (c)(i) sketch, shown in the printed markscheme (paper-markscheme-ah.ts), which this check does not read; the owner, 2026-10-01'],
 ]);
 
 /** Questions that promise a picture and deliberately have none. */
@@ -69,7 +73,6 @@ const NO_PICTURE_IS_FINE = new Map([
   ['N5 2022 P1 Q14', 'sketch on blank axes — reviewed and left as text'],
   ['Higher 2018 P1 Q15', 'sketch on the answer booklet axes — reviewed and left as text'],
   ['Higher 2025 P1 Q13', 'sketch on the answer booklet axes — reviewed and left as text'],
-  ['AH 2021 P1 Q7', 'sketch on the diagram provided — reviewed and left as text'],
 ]);
 
 const COURSE_OF = {
