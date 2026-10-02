@@ -118,7 +118,10 @@ function eliminationSteps(
 
   return [
     `<strong>1.</strong> Scale each equation so the $${v1}$ terms match. Multiply the first by $${m1}$ and the second by $${m2}$:<br><br>$${equation(A1, v1, B1, v2, C1)}$<br>$${equation(A2, v1, B2, v2, C2)}$`,
-    `<strong>2.</strong> ${op} to eliminate $${v1}$:<br><br>$${term(bAfter, v2)} = ${cAfter}$, so $${v2} = ${num(y0)}$`,
+    // When the subtraction leaves the letter on its own there is nothing left
+    // to divide, so the value is written once: it printed "y = 5, so y = 5"
+    // (the owner, 2026-10-02, "Yes").
+    `<strong>2.</strong> ${op} to eliminate $${v1}$:<br><br>${bAfter === 1 ? `$${v2} = ${num(y0)}$` : `$${term(bAfter, v2)} = ${cAfter}$, so $${v2} = ${num(y0)}$`}`,
     `<strong>3.</strong> Substitute $${v2} = ${num(y0)}$ back into $${equation(a1, v1, b1, v2, c1)}$:<br><br>$${v1} = ${num(x0)}$`,
   ];
 }

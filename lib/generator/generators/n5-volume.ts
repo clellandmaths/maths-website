@@ -385,7 +385,9 @@ function pyramidHeight(): Q | null {
   const steps = [
     `<strong>1.</strong> Substitute what is known into the volume of a pyramid:` +
     `<br><br>$V = \\frac{1}{3}Ah \\Rightarrow \\frac{1}{3} \\times ${w}^{2} \\times h = ${v}$`,
-    `<strong>2.</strong> Work out the base area and simplify:<br><br>$\\frac{${w * w}}{3}h = ${v}$, so $${w * w / 3 === Math.round(w * w / 3) ? w * w / 3 : `\\frac{${w * w}}{3}`}h = ${v}$`,
+    // "…, so" only when the third simplifies; otherwise the line said the same
+    // thing twice (the owner, 2026-10-02, "Yes").
+    `<strong>2.</strong> Work out the base area and simplify:<br><br>$\\frac{${w * w}}{3}h = ${v}$${w * w % 3 === 0 ? `, so $${w * w / 3}h = ${v}$` : ''}`,
     `<strong>3.</strong> Divide to find the height:<br><br>$h = \\frac{3 \\times ${v}}{${w * w}} = ${num(h)}$ cm`,
   ];
   return assemble({

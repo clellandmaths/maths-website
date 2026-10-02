@@ -262,7 +262,9 @@ function extendedSide(): Q | null {
     `<strong>1.</strong> Go from $${A}$ to $${B}$ and then back along the other vector:` +
     `<br><br>$${ray(A, D)} = ${ray(A, B)} + ${ray(B, D)} = ${ans1}$`,
     `<strong>2.</strong> $${T}${A}$ is ${k === 1 ? 'the same as' : `${k} times`} $${A}${B}$, and $${V}$ is halfway along $${m1}${m2}$, so build the pathway from $${T}$ to $${V}$:` +
-    `<br><br>$${ray(T, V)} = ${ray(T, A)} + ${ray(A, m1)} + \\frac{1}{2}${ray(m1, m2)}$`,
+    // No middle leg when the midpoint's line starts at A: it printed the zero
+    // vector, "SA + AA + ½AC" (the owner, 2026-10-02, "Yes"; the scheme's TP + ½PR).
+    `<br><br>$${ray(T, V)} = ${ray(T, A)}${A === m1 ? '' : ` + ${ray(A, m1)}`} + \\frac{1}{2}${ray(m1, m2)}$`,
     `<strong>3.</strong> Multiply out and collect:<br><br>$${ray(T, V)} = ${ans2}$`,
   ];
   // No equal-length marks. **Not one of the five papers draws them** -

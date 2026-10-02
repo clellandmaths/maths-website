@@ -5640,6 +5640,13 @@ const ALIASES: Record<string, {
    */
   marksDiffer?: VariationMeta['marksDiffer'];
   planMarksDiffer?: VariationMeta['planMarksDiffer'];
+  /**
+   * The paper's own hint plan, where the target's does not fit it (2015 P2
+   * Q7: the target's move looks for a difference of two squares, and this
+   * paper's single terms have none; the owner, 2026-10-02, "Yes"). Opt-in:
+   * an alias without it keeps the target's plan.
+   */
+  plan?: VariationMeta['plan'];
 }> = {
   // lock-year: aliases begin
   'fractions.subtract-mixed-pre2023': { aliasOf: 'fractions.subtract-mixed', basedOn: ['2015 P1 Q1'] },
@@ -5736,7 +5743,7 @@ const ALIASES: Record<string, {
   'vectors.magnitude-2018': { aliasOf: 'vectors.magnitude', basedOn: ['2018 P2 Q3'] },   // one paper, one variation
   'vectors.magnitude-2017': { aliasOf: 'vectors.magnitude', basedOn: ['2017 P2 Q1'] },   // one paper, one variation
   'vectors.magnitude-2015': { aliasOf: 'vectors.magnitude', basedOn: ['2015 P2 Q4'] },   // one paper, one variation
-  'alg-fractions.divide-2015': { aliasOf: 'alg-fractions.divide', basedOn: ['2015 P2 Q7'] },   // one paper, one variation
+  'alg-fractions.divide-2015': { aliasOf: 'alg-fractions.divide', basedOn: ['2015 P2 Q7'], plan: ['Flip the second fraction upside down, then multiply by it instead of dividing', 'Cancel the letters and numbers that appear on the top and the bottom', 'Multiply what is left across the top and across the bottom, and give it in its simplest form'] },   // one paper, one variation
   'percentages.reverse-2015': { aliasOf: 'percentages.reverse', basedOn: ['2015 P2 Q8'] },   // one paper, one variation
   'pythagoras.chord-whole-2015': { aliasOf: 'pythagoras.chord-whole', basedOn: ['2015 P2 Q12'] },   // one paper, one variation
   'bearings.two-bearings-2015': { aliasOf: 'bearings.two-bearings', basedOn: ['2015 P2 Q13'] },   // one paper, one variation
@@ -5769,6 +5776,7 @@ for (const [id, a] of Object.entries(ALIASES)) {
   N5_VARIATIONS[id] = {
     ...target, basedOn: a.basedOn, source: 'paper', aliasOf: a.aliasOf,
     marksDiffer: a.marksDiffer, planMarksDiffer: a.planMarksDiffer,
+    ...(a.plan ? { plan: a.plan } : {}),
   };
 }
 
