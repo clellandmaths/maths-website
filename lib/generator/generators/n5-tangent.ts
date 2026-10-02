@@ -179,8 +179,9 @@ export function tangentSemicircleQuestion(): Q {
  *
  *   1. a radius meets a tangent at right angles
  *   2. OB and OD are radii, so that triangle is isosceles
- *   3. the diameter produced is still a straight line
- *   4. the angles of the right-angled triangle OBA add to 180
+ *   3. ABE is a straight line, and the angles of triangle ABD add to 180
+ *
+ * (the scheme's first method; it was the angle at the centre and triangle OBA)
  *
  * The answer works out as twice the given angle less 90, so it is even
  * whatever is chosen — as the paper's 26 is. What the range really controls is
@@ -240,10 +241,13 @@ export function tangentMeetsDiameterQuestion(): Q {
       `&bull;&nbsp; Angle $${n.far}${n.contact}${n.tangentEnd}$ is $${t}^{\\circ}$`,
       `Calculate the size of the shaded angle $${n.near}${n.outside}${n.contact}$.`,
     ];
+    // The scheme's first method (the owner, 2026-10-02, "Yes"): •¹ OBD, •² ODB,
+    // •³ CAB from triangle ABD. It went by the angle at the centre and the
+    // right-angled triangle OBA, a valid route the scheme does not list.
     const steps = [
       `<strong>1.</strong> A radius meets a tangent at right angles, so angle $${n.centre}${n.contact}${n.tangentEnd}$ is $90^{\\circ}$:<br><br>$${n.far}${n.contact}${n.centre} = 90 - ${t} = ${90 - t}^{\\circ}$`,
-      `<strong>2.</strong> $${n.centre}${n.contact}$ and $${n.centre}${n.far}$ are both radii, so triangle $${n.centre}${n.contact}${n.far}$ is isosceles:<br><br>$${n.contact}${n.centre}${n.far} = 180 - 2 \\times ${90 - t} = ${2 * t}^{\\circ}$`,
-      `<strong>3.</strong> $${n.far}${n.centre}${n.outside}$ is a straight line, so the angles at $${n.centre}$ add to $180^{\\circ}$:<br><br>$${n.contact}${n.centre}${n.outside} = 180 - ${2 * t} = ${atCentre}^{\\circ}$<br><br>The angles of triangle $${n.centre}${n.contact}${n.outside}$ add to $180^{\\circ}$, and the angle at $${n.contact}$ is the right angle:<br><br>$${n.near}${n.outside}${n.contact} = 180 - 90 - ${atCentre} = ${answer}^{\\circ}$`,
+      `<strong>2.</strong> $${n.centre}${n.contact}$ and $${n.centre}${n.far}$ are both radii, so triangle $${n.centre}${n.contact}${n.far}$ is isosceles and its angles at $${n.contact}$ and $${n.far}$ are equal:<br><br>$${n.centre}${n.far}${n.contact} = ${90 - t}^{\\circ}$`,
+      `<strong>3.</strong> $${n.outside}${n.contact}${n.tangentEnd}$ is a straight line, so $${n.outside}${n.contact}${n.far} = 180 - ${t} = ${180 - t}^{\\circ}$. The angles of triangle $${n.outside}${n.contact}${n.far}$ add to $180^{\\circ}$:<br><br>$${n.near}${n.outside}${n.contact} = 180 - ${180 - t} - ${90 - t} = ${answer}^{\\circ}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
 
@@ -279,9 +283,10 @@ export function tangentMeetsDiameterQuestion(): Q {
  * other tangent question:
  *
  *   1. AC is parallel to ED, so the angle at A is what is left of 180
- *   2. OA and OC are radii, so triangle OAC is isosceles
- *   3. a radius meets a tangent at right angles, twice
- *   4. the angles of quadrilateral OABC add to 360
+ *   2. a radius meets a tangent at right angles, so CAB is 90 less it
+ *   3. the tangents from B are equal, so triangle ABC is isosceles
+ *
+ * (the scheme's order; it was triangle OAC and the quadrilateral OABC)
  *
  * The answer comes out as 360 - 2g, so the given angle has to be obtuse or
  * there is no figure: with g below 90 the "chord" would have to cross the
@@ -319,10 +324,15 @@ export function twoTangentsChordQuestion(): Q {
       `&bull;&nbsp; Angle $${n.touchA}${n.centre}${n.markedEnd}$ is $${g}^{\\circ}$`,
       `Calculate the size of the shaded angle $${n.touchA}${n.outside}${n.touchC}$.`,
     ];
+    // The scheme's order (the owner, 2026-10-02, "Yes"): •¹ CAO = 37, •² CAB =
+    // 90 - 37 = 53, •³ ABC = 180 - 2 x 53 = 74, the two tangents being equal.
+    // It went by the angle at the centre and the quadrilateral, a valid route
+    // whose middle angle the scheme does not pay for.
+    const atTangent = 90 - atA;            // between the chord and the tangent
     const steps = [
       `<strong>1.</strong> $${n.touchA}${n.touchC}$ and $${n.farEnd}${n.markedEnd}$ are parallel, so the angles on the same side of $${n.centre}${n.touchA}$ add to $180^{\\circ}$:<br><br>$${n.centre}${n.touchA}${n.touchC} = 180 - ${g} = ${atA}^{\\circ}$`,
-      `<strong>2.</strong> $${n.centre}${n.touchA}$ and $${n.centre}${n.touchC}$ are both radii, so triangle $${n.centre}${n.touchA}${n.touchC}$ is isosceles and the angle at $${n.touchC}$ is $${atA}^{\\circ}$ as well:<br><br>$${n.touchA}${n.centre}${n.touchC} = 180 - 2 \\times ${atA} = ${atCentre}^{\\circ}$`,
-      `<strong>3.</strong> A radius meets a tangent at right angles, so angles $${n.centre}${n.touchA}${n.outside}$ and $${n.centre}${n.touchC}${n.outside}$ are both $90^{\\circ}$.<br><br>The angles of quadrilateral $${n.centre}${n.touchA}${n.outside}${n.touchC}$ add to $360^{\\circ}$:<br><br>$${n.touchA}${n.outside}${n.touchC} = 360 - 90 - 90 - ${atCentre} = ${answer}^{\\circ}$`,
+      `<strong>2.</strong> A radius meets a tangent at right angles, so angle $${n.centre}${n.touchA}${n.outside}$ is $90^{\\circ}$:<br><br>$${n.touchC}${n.touchA}${n.outside} = 90 - ${atA} = ${atTangent}^{\\circ}$`,
+      `<strong>3.</strong> $${n.touchA}${n.outside}$ and $${n.touchC}${n.outside}$ are tangents from the same point, so they are equal and triangle $${n.touchA}${n.outside}${n.touchC}$ is isosceles:<br><br>$${n.touchA}${n.outside}${n.touchC} = 180 - 2 \\times ${atTangent} = ${answer}^{\\circ}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
 

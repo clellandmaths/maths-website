@@ -935,16 +935,17 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2024 P2 Q5'],
     marks: 3,
     route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
-    method: 'The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through',
+    // 1% first, then 100%, as the schemes write it (the owner, 2026-10-02, "Yes").
+    method: 'Write down what percentage of the original you are given, divide to find 1%, then multiply by 100',
     plan: [
       'Decide what percentage of the original the amount you are given is — over 100% after an increase, under it after a decrease',
-      'Divide that amount by the matching multiplier to get back to 100%',
-      'Carry the division through',
+      'Divide the amount by that percentage to find 1% of the original',
+      'Multiply that by 100 to get the whole original',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'money',
     webTopics: ['Reversing a percentage change'],
-    skill: 'Divide by the multiplier to recover the original quantity',
+    skill: 'Find 1% of the original, then 100%',
   },
 
   /**
@@ -974,16 +975,19 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2025 P1 Q4'],
     marks: 3,
     route: 'know that the given amount is (100 +/- r)% of the original, then begin a valid strategy, then complete the calculation within it',
-    method: 'The amount you are given is more, or less, than 100% of the original, so write down that multiplier, divide by it, and carry the division through',
+    // The hints say what the working does, 10% first, as both schemes write it
+    // (the owner, 2026-10-02, "Yes"): they were a copy of the calculator
+    // card's "divide by the multiplier".
+    method: 'Write down what percentage of the original you are given, divide to find 10%, then multiply by 10',
     plan: [
-      'Decide what percentage of the original the amount you are given is — over 100% after an increase, under it after a decrease',
-      'Divide that amount by the matching multiplier to get back to 100%',
-      'Carry the division through',
+      'Decide what percentage of the original the amount you are given is — under 100% after a discount',
+      'Divide the amount by the tens in that percentage to find $10\\%$ of the original',
+      'Multiply that by $10$ to get the whole original',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'money',
     webTopics: ['Reversing a percentage change'],
-    skill: 'Divide by the multiplier to recover the original quantity',
+    skill: 'Find 10% of the original, then 100%, without a calculator',
   },
   // Nothing rose or fell: the figure given simply *is* r% of the whole. That
   // moves the first mark — it is for reading "80% = 480 000", and a pupil
@@ -5143,16 +5147,17 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2024 P2 Q15'],
     marks: 3,
     route: 'the correct fraction, or start the strategy for finding the angle, then know how to calculate the sector area, then calculate it',
-    method: 'Work back from the arc to find what fraction of the circle it is, turn that fraction into the angle, then use the angle in the sector area formula',
+    // The scheme's ratio method (the owner, 2026-10-02, "Yes"): no ½ × arc × radius.
+    method: 'Work out what fraction of the whole circumference the arc is, then take that fraction of the whole circle\'s area',
     plan: [
       'Divide the arc by the whole circumference, $\\pi$ times the diameter, to find what fraction of the circle the sector covers',
-      'Turn that fraction into the area — either as that fraction of the whole circle\'s area, or as half the arc times the radius',
+      'Multiply that fraction by the whole circle\'s area, $\\pi$ times the radius squared',
       'Work the area out, rounding as the question asks',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Sector area'],
-    skill: 'The arc gives the angle, and the angle gives the area',
+    skill: 'The arc\'s share of the circumference is the sector\'s share of the area',
   },
   'sector.angle-arc': {
     topic: 'Finding the Angle of a Sector',
@@ -5226,17 +5231,20 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2014 P2 Q13'],
     marks: 5,
-    route: 'as for the minor segment, with the final mark covering the extra subtraction from the whole circle - the scheme\'s last mark is "carry out all calculations correctly within a valid strategy"',
+    // The scheme's method, major sector + triangle (the owner, 2026-10-02:
+    // "markscheme of generated does a different method to the official one").
+    // This line is the pupil's method hint, so it says what to do.
+    route: 'Find the major sector and the triangle at the centre, then add them',
     plan: [
-      'Write the angle at the centre over 360, the share of the circle the small sector takes',
-      'Multiply that share by the whole circle\'s area, $\\pi$ times the radius squared, to get that sector',
+      'Take the angle at the centre from $360^{\\circ}$ for the major sector, and write that over 360, the share of the circle it takes',
+      'Multiply that share by the whole circle\'s area, $\\pi$ times the radius squared, to get the major sector',
       'Find the triangle at the centre with $\\frac{1}{2}ab\\sin C$, using the two radii and the angle between them',
-      'Take the triangle from the sector for the small piece, then take that piece away from the whole circle\'s area to leave the shaded part',
+      'Add the triangle to the major sector: together they make the area asked for',
     ],
     planMarks: [1, 1, 1, 2],
     answerShape: 'rounded',
     webTopics: ['Area of a Triangle', 'Sector area'],
-    skill: 'The whole circle less the sector-minus-triangle',
+    skill: 'The major sector plus the triangle at the centre',
   },
   // No paper asks for the minor segment on its own.
   //
@@ -5367,15 +5375,16 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2017 P1 Q9'],
     marks: 3,
     route: 'angle OBD, then ODB from the isosceles radii, then CAB',
+    // The scheme's first method, triangle ABD (the owner, 2026-10-02, "Yes").
     plan: [
       'Take the angle given at the point of contact away from $90^{\\circ}$, because a radius meets a tangent at right angles',
-      'That radius and the one to the chord\'s other end make an isosceles triangle, so double your angle and subtract from 180 for the angle at the centre, then take that off 180 again as the diameter carries on as a straight line',
-      'Finish in the triangle sitting outside the circle, where the angles add to 180 and the corner at the point of contact is the right angle with the tangent',
+      'That radius and the one to the far end of the diameter make an isosceles triangle, so the angle at the far end is the same',
+      'The tangent is a straight line, so take the given angle from 180 for the angle at the point of contact inside the big triangle, then use the angles of that triangle adding to 180',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'integer',
     webTopics: ['Angles in diagrams involving circles'],
-    skill: 'Isosceles radii, a straight line at the centre, then the triangle outside the circle',
+    skill: 'Isosceles radii, then the angles of the big triangle outside the circle',
   },
 
   'angles.two-tangents-chord': {
@@ -5383,16 +5392,18 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P2 Q5'],
     marks: 3,
-    route: 'angle CAO across the parallels, then CAB, then ABC. The scheme closes with the isosceles triangle the two equal tangents make; this closes with quadrilateral OABC, which the scheme allows since it names no required method',
+    // The scheme's order, closing with the isosceles triangle of the two equal
+    // tangents (the owner, 2026-10-02, "Yes"); it closed with quadrilateral OABC.
+    route: 'angle CAO across the parallels, then CAB, then ABC from the isosceles triangle the two equal tangents make',
     plan: [
       'Subtract the angle given at the centre from 180 to reach the angle where that radius meets the chord, because the chord and the line it is parallel to trap a pair of angles on the same side that add to 180',
-      'Copy that angle to the chord\'s other end, since the two radii make an isosceles triangle, then take both off 180 for the angle at the centre',
-      'Work round the quadrilateral made by the two tangents and the two radii: its angles add to 360 and each tangent meets its radius at $90^{\\circ}$',
+      'A radius meets a tangent at $90^{\\circ}$, so take that angle from $90^{\\circ}$ for the angle between the chord and the tangent',
+      'The two tangents from the outside point are equal, so the triangle they make with the chord is isosceles: take twice your angle from 180',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'integer',
     webTopics: ['Angles in diagrams involving circles'],
-    skill: 'Allied angles across parallel lines, isosceles radii, then a quadrilateral with two right angles',
+    skill: 'Allied angles across parallel lines, a tangent at right angles, then the isosceles triangle of two equal tangents',
   },
 
   'angles.two-tangents-diameters': {

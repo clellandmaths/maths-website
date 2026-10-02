@@ -611,10 +611,14 @@ function reverse(): Q {
       // read •¹ know that 70% = £16.10, •² begin a valid strategy, •³ complete
       // the calculation within it. Setting up the division and carrying it out
       // are separately creditable, so they are separate steps.
+      // 1% first, then 100%, as the schemes write it (2015 P2 Q8: 1% =
+      // 297.50/85; 2017 P2 Q5, 2023 P2 Q6, 2024 P2 Q5 the same). It divided by
+      // the multiplier, a valid route the schemes do not show. The owner,
+      // 2026-10-02, "Yes". The original is a whole multiple of 10, so 1% is exact.
       solutionSteps: [
         `<strong>1.</strong> The amount given is ${up ? 100 + rate : 100 - rate}% of the original:<br><br>$${up ? 100 + rate : 100 - rate}\\% = ${show(given)}$`,
-        `<strong>2.</strong> To get back to 100%, divide by the multiplier:<br><br>$${show(given)} \\div ${multiplier}$`,
-        `<strong>3.</strong> Carry out the division:<br><br>$= ${show(original)}$`,
+        `<strong>2.</strong> Divide by ${up ? 100 + rate : 100 - rate} to find 1%:<br><br>$1\\% = \\frac{${show(given)}}{${up ? 100 + rate : 100 - rate}} = ${show(original / 100)}$`,
+        `<strong>3.</strong> Multiply by 100 to get the original:<br><br>$100\\% = ${show(original / 100)} \\times 100 = ${show(original)}$`,
       ],
       stepMarks: [1, 1, 1],
       finalAnswer: answer,

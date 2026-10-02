@@ -265,14 +265,39 @@ function segmentArea(wanted?: string): Q | null {
   const steps = [
     `<strong>1.</strong> The segment is what is left when triangle $${nO}${nA}${nB}$ is taken away from sector $${nO}${nA}${nB}$, so find each in turn.`,
     `<strong>2.</strong> The sector is $\\frac{${angle}}{360}$ of the whole circle.`,
-    `<strong>3.</strong> The whole circle has area $\\pi r^{2}$, so the sector is:<br><br>$\\frac{${angle}}{360} \\times \\pi \\times ${r}^{2} = ${dp1(sector)}$ ${c.short}$^{2}$`,
-    `<strong>4.</strong> Triangle $${nO}${nA}${nB}$ has two sides of ${r} ${c.short} with that angle between them:<br><br>$\\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin ${angle}^{\\circ} = ${dp1(triangle)}$ ${c.short}$^{2}$`,
-    `<strong>5.</strong> Taking the triangle from the sector leaves the smaller piece:<br><br>$${dp1(sector)} - ${dp1(triangle)} = ${dp1(minor)}$ ${c.short}$^{2}$`,
+    // The parts to 2 d.p. and the last step from the full expressions, as 2026
+    // P2 Q10's (the owner, 2026-10-02, "Yes"): 1 d.p. parts did not take away
+    // to the answer. The major branch below replaces all five.
+    `<strong>3.</strong> The whole circle has area $\\pi r^{2}$, so the sector is:<br><br>$\\frac{${angle}}{360} \\times \\pi \\times ${r}^{2} = ${sector.toFixed(2)}$ ${c.short}$^{2}$`,
+    `<strong>4.</strong> Triangle $${nO}${nA}${nB}$ has two sides of ${r} ${c.short} with that angle between them:<br><br>$\\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin ${angle}^{\\circ} = ${triangle.toFixed(2)}$ ${c.short}$^{2}$`,
+    `<strong>5.</strong> Taking the triangle from the sector leaves the smaller piece, with the calculator's full values:<br><br>$\\frac{${angle}}{360} \\times \\pi \\times ${r}^{2} - \\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin ${angle}^{\\circ} = ${dp1(minor)}$ ${c.short}$^{2}$`,
   ];
   if (c.shade === 'major') {
-    // the shaded major piece needs one more subtraction, which the scheme
-    // folds into its last mark — "carry out all calculations correctly"
-    steps[4] = `<strong>5.</strong> Taking the triangle from the sector leaves the smaller piece, and the ${paper ? 'area asked for' : 'shaded piece'} is the rest of the circle:<br><br>$${dp1(sector)} - ${dp1(triangle)} = ${dp1(minor)}$, then $\\pi \\times ${r}^{2} - ${dp1(minor)} = ${dp1(answer)}$ ${c.short}$^{2}$`;
+    /**
+     * **The paper's method: the major sector plus the triangle.** — 2026-10-02
+     *
+     * 2014 P2 Q13's scheme is "Area of a composite shape (major sector +
+     * triangle)": •¹ evidence of major sector + triangle, •² 310/360, •³
+     * 310/360 × π × 7² (= 132.56), •⁴ ½ × 7 × 7 × sin 50° (= 18.77), •⁵
+     * 151.3. The working took the small sector less the triangle, then that
+     * from the whole circle: the same answer by a route the scheme does not
+     * describe. The owner, on the live site: "markscheme of generated does a
+     * different method to the official one", then "Yes". The last step adds
+     * the two full expressions, so no rounded part is summed (2 d.p. parts
+     * summed would round differently from the answer in 5% of draws).
+     * Strings only: no random is drawn here, and the minor id never enters.
+     */
+    const major = 360 - angle;
+    const majorSector = major / 360 * Math.PI * r * r;
+    const sectorExpr = `\\frac{${major}}{360} \\times \\pi \\times ${r}^{2}`;
+    const triangleExpr = `\\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin ${angle}^{\\circ}`;
+    steps.splice(0, steps.length,
+      `<strong>1.</strong> The ${paper ? 'area asked for' : 'shaded piece'} is the major sector $${nO}${nA}${nB}$ together with triangle $${nO}${nA}${nB}$, so find each in turn.`,
+      `<strong>2.</strong> The major sector's angle goes the long way round $${nO}$: $360^{\\circ} - ${angle}^{\\circ} = ${major}^{\\circ}$, so it is $\\frac{${major}}{360}$ of the whole circle.`,
+      `<strong>3.</strong> The whole circle has area $\\pi r^{2}$, so the major sector is:<br><br>$${sectorExpr} = ${majorSector.toFixed(2)}$ ${c.short}$^{2}$`,
+      `<strong>4.</strong> Triangle $${nO}${nA}${nB}$ has two sides of ${r} ${c.short} with that angle between them:<br><br>$${triangleExpr} = ${triangle.toFixed(2)}$ ${c.short}$^{2}$`,
+      `<strong>5.</strong> Adding the triangle to the major sector, with the calculator's full values:<br><br>$${sectorExpr} + ${triangleExpr} = ${dp1(answer)}$ ${c.short}$^{2}$`,
+    );
   }
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
@@ -353,12 +378,17 @@ function polygonSegment(): Q | null {
   // vertices, and setting the sector up stays separate from evaluating it,
   // which is a split 2014's scheme is explicit about.
   const deg = step % 1 === 0 ? String(step) : step.toFixed(2);
+  // The parts to 2 d.p., and the last step from the two full expressions, so
+  // every line is exact: the parts at 1 d.p. did not take away to the answer
+  // in 14 draws of 40 (62.8 - 47.6 = 15.3). The owner, 2026-10-02, "Yes".
+  const sectorExpr = `\\frac{${deg}}{360} \\times \\pi \\times ${r}^{2}`;
+  const triangleExpr = `\\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin ${deg}^{\\circ}`;
   const steps = [
     `<strong>1.</strong> The ${n} vertices are spaced equally round the circle, so each angle at $${nO}$ is:<br><br>$360 \\div ${n} = ${deg}^{\\circ}$`,
     `<strong>2.</strong> The shaded piece is sector $${nO}${letters[0]}${letters[1]}$ with triangle $${nO}${letters[0]}${letters[1]}$ taken out of it, and the sector is $\\frac{${deg}}{360}$ of the whole circle.`,
-    `<strong>3.</strong> The whole circle has area $\\pi r^{2}$, so the sector is:<br><br>$\\frac{${deg}}{360} \\times \\pi \\times ${r}^{2} = ${dp1(sector)}$ ${u}$^{2}$`,
-    `<strong>4.</strong> Triangle $${nO}${letters[0]}${letters[1]}$ has two sides of ${r} ${u} with that angle between them:<br><br>$\\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin ${deg}^{\\circ} = ${dp1(triangle)}$ ${u}$^{2}$`,
-    `<strong>5.</strong> The segment is what is left when the triangle is taken from the sector:<br><br>$${dp1(sector)} - ${dp1(triangle)} = ${dp1(answer)}$ ${u}$^{2}$`,
+    `<strong>3.</strong> The whole circle has area $\\pi r^{2}$, so the sector is:<br><br>$${sectorExpr} = ${sector.toFixed(2)}$ ${u}$^{2}$`,
+    `<strong>4.</strong> Triangle $${nO}${letters[0]}${letters[1]}$ has two sides of ${r} ${u} with that angle between them:<br><br>$${triangleExpr} = ${triangle.toFixed(2)}$ ${u}$^{2}$`,
+    `<strong>5.</strong> The segment is what is left when the triangle is taken from the sector, with the calculator's full values:<br><br>$${sectorExpr} - ${triangleExpr} = ${dp1(answer)}$ ${u}$^{2}$`,
   ];
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
@@ -712,12 +742,13 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         questionLines: [c.intro(nO, nA, nB), '', facts.radius, facts.arc,
           'Calculate the area of the sector.'],
         boardQuestionLines: [`Radius ${r}, arc ${trim(arc)}. Sector area?`],
-        // 2024 P2 Q15: •¹ the correct fraction, or start the strategy for
-        // finding the angle, •² know how to calculate the sector's area,
-        // •³ calculate it
+        // 2024 P2 Q15: •¹ the correct fraction, 15/(π × 24), •² that
+        // fraction of the circle's area, × π × 12², •³ 90. The scheme's ratio
+        // method (the owner, 2026-10-02, "Yes"): this used ½ × arc × radius,
+        // which N5 does not teach and the scheme does not use.
         solutionSteps: [
-          `<strong>1.</strong> The arc is a known fraction of the circumference, and that fraction gives the angle:<br><br>$\\frac{${trim(arc)}}{\\pi \\times ${2 * r}} \\times 360 = ${Math.round(angle)}^{\\circ}$`,
-          `<strong>2.</strong> The area of a sector is half its arc times its radius:<br><br>$\\text{Area} = \\frac{1}{2} \\times ${trim(arc)} \\times ${r}$`,
+          `<strong>1.</strong> The arc is this fraction of the whole circumference, $\\pi d$:<br><br>$\\frac{${trim(arc)}}{\\pi \\times ${2 * r}}$`,
+          `<strong>2.</strong> The sector is the same fraction of the whole circle's area, $\\pi r^{2}$:<br><br>$\\text{Area} = \\frac{${trim(arc)}}{\\pi \\times ${2 * r}} \\times \\pi \\times ${r}^{2}$`,
           `<strong>3.</strong> Work that out:<br><br>$\\text{Area} = ${trim(arc * r / 2)}$ ${c.short}$^{2}$`,
         ],
         stepMarks: [1, 1, 1],
@@ -862,7 +893,9 @@ function sectorInTriangleQuestion(): Q | null {
     `<strong>2.</strong> The sector is its share of a full circle, and its angle is the same $${angle}^{\\circ}$:<br><br>$\\frac{${angle}}{360}$`,
     `<strong>3.</strong> Put that share into the area of the whole circle:<br><br>$\\frac{${angle}}{360} \\times \\pi \\times ${r}^{2} = ${sectorArea.toFixed(2)}$`,
     `<strong>4.</strong> The shaded region is what is left of the triangle once the sector is taken out of it:<br><br>area of triangle $-$ area of sector`,
-    `<strong>5.</strong> So the shaded area is:<br><br>$${triangle.toFixed(2)} - ${sectorArea.toFixed(2)} = ${shaded.toFixed(1)}$ cm$^{2}$`,
+    // From the two full expressions, so the line is exact: the 2 d.p. parts did
+    // not take away to the answer in 2 draws of 40. The owner, 2026-10-02, "Yes".
+    `<strong>5.</strong> So the shaded area, with the calculator's full values, is:<br><br>$\\frac{1}{2} \\times ${ob} \\times ${oc} \\times \\sin ${angle}^{\\circ} - \\frac{${angle}}{360} \\times \\pi \\times ${r}^{2} = ${shaded.toFixed(1)}$ cm$^{2}$`,
   ];
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 

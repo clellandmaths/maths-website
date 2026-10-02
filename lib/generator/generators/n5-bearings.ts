@@ -40,6 +40,19 @@ const dp1 = (v: number) => v.toFixed(1);
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /**
+ * A bearing turned by an angle, as working: `120 - 43.7 = 76.3`, and where the
+ * turn crosses north the 360 is written, `360 + 30 - 42.2 = 347.8`, not left
+ * out (it printed "30 - 42.2 = 347.8" in 2 draws of 40 on 2018 P2 Q13; the
+ * owner, 2026-10-02, "Yes"). Opt-in: only the cards it was agreed for call it.
+ */
+function turnedBy(from: number, angle: number, side: number): string {
+  const raw = from + side * angle;
+  const sum = `${Math.round(from)} ${side > 0 ? '+' : '-'} ${dp1(angle)}`;
+  const result = dp1(((raw % 360) + 360) % 360);
+  return raw < 0 ? `360 + ${sum} = ${result}` : raw >= 360 ? `${sum} - 360 = ${result}` : `${sum} = ${result}`;
+}
+
+/**
  * Bearings are written with three digits, so 060° not 60°.
  *
  * Two forms, because there are two renderers. Prose goes through MathJax, so
@@ -401,8 +414,8 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
     : [
     cosSub, cosVal, angStep,
     atPivot
-      ? `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(given)}$, and angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$, so the bearing to the nearest degree is:<br><br>$${Math.round(given)} ${side > 0 ? '+' : '-'} ${dp1(phi)} = ${dp1(((given + side * phi) % 360 + 360) % 360)}^{\\circ}$, that is $${brg(answer)}$`
-      : `<strong>4.</strong> The bearing given is of $${nB}$ from $${nA}$, so the bearing of $${nA}$ from $${nB}$ is the back bearing, $${Math.round(stated)} ${stated < 180 ? '+' : '-'} 180 = ${brg(given)}$. Angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$:<br><br>$${Math.round(given)} ${side > 0 ? '+' : '-'} ${dp1(phi)} = ${dp1(((given + side * phi) % 360 + 360) % 360)}^{\\circ}$, that is $${brg(answer)}$`,
+      ? `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(given)}$, and angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$, so the bearing to the nearest degree is:<br><br>$${turnedBy(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`
+      : `<strong>4.</strong> The bearing given is of $${nB}$ from $${nA}$, so the bearing of $${nA}$ from $${nB}$ is the back bearing, $${Math.round(stated)} ${stated < 180 ? '+' : '-'} 180 = ${brg(given)}$. Angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$:<br><br>$${turnedBy(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`,
   ];
   const text = [...prose, ...steps].join(' ');
   if (verifyFigure(fig, text).length) return null;
@@ -489,13 +502,17 @@ function twoSides(c: BearingContext, side: number): Q | null {
   // •² rearrange the equation, •³ calculate the angle, •⁴ calculate the bearing.
   // The angle at A comes from the bearings and is not paid for separately, so
   // it opens the substitution step.
+  // which way the angle turns is a question about the picture, so it is read
+  // off the picture: adding it must land on the bearing that was measured
+  const back = (base + 180) % 360;
+  const clockwise = Math.abs(((back + beta - answer + 540) % 360) - 180) < 0.5;
   const steps = [
     `<strong>1.</strong> ${cap(rB)} is due ${CARDINAL[base]} of ${rA}, so its bearing from ${rA} is $${brg(base)}$ and the angle at $${nA}$ is the difference between that and $${brg(bC)}$, namely $${alpha}^{\\circ}$. Now substitute into the sine rule, pairing $${nA}${nB}$ with the angle at $${nC}$ and $${nB}${nC}$ with the angle at $${nA}$:<br><br>$\\frac{${bcLen}}{\\sin ${alpha}^{\\circ}} = \\frac{${ab}}{\\sin ${nC}}$`,
     `<strong>2.</strong> Rearrange to make $\\sin ${nC}$ the subject:<br><br>$\\sin ${nC} = \\frac{${ab} \\times \\sin ${alpha}^{\\circ}}{${bcLen}} = ${ratio.toFixed(4)}$`,
     `<strong>3.</strong> The diagram shows the ${gamma < 90 ? 'acute' : 'obtuse'} case, and the angles add to $180^{\\circ}$:<br><br>$${nC} = ${dp1(gamma)}^{\\circ}$, so $${nA}${nB}${nC} = 180 - ${alpha} - ${dp1(gamma)} = ${dp1(beta)}^{\\circ}$`,
-    // which way the angle turns is a question about the picture, so it is read
-    // off the picture: adding it must land on the bearing that was measured
-    `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg((base + 180) % 360)}$, and angle $${nA}${nB}${nC}$ turns ${Math.abs(((base + 180 + beta - answer + 540) % 360) - 180) < 0.5 ? 'clockwise' : 'anticlockwise'} from there:<br><br>$${brg(answer)}$`,
+    // The sum written out, as the scheme's •⁴ "calculate bearing" is paid for
+    // it: "270 - 48.4 = 221.6, so 222°" (the owner, 2026-10-02, "Yes").
+    `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(back)}$, and angle $${nA}${nB}${nC}$ turns ${clockwise ? 'clockwise' : 'anticlockwise'} from there:<br><br>$${turnedBy(back, beta, clockwise ? 1 : -1)}^{\\circ}$, so the bearing is $${brg(answer)}$`,
   ];
   const text = [...prose, ...steps].join(' ');
   if (verifyFigure(fig, text).length) return null;
