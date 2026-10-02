@@ -67,7 +67,7 @@ export const PAPER_HINTS: Record<string, PaperHint> = {
   "2015 P2 Q4": { skill: "Square the components, add, and take an exact square root", method: "Square each component and add them up, then take the square root and leave it exact" },
   "2015 P2 Q5": { skill: "Count two vectors off a square grid and add their components", method: "Components of either vector counted off the squares, then the components of the sum" },
   "2015 P2 Q6": { skill: "Give a sphere's volume in scientific notation, then divide two such volumes", method: "Substitute into the volume of a sphere and evaluate, write that in scientific notation, then set up the division and evaluate it" },
-  "2015 P2 Q7": { skill: "Multiply by the reciprocal, factorise, cancel", method: "Multiply by the reciprocal of the second fraction, factorise the top and the bottom, then cancel what they share" },
+  "2015 P2 Q7": { skill: "Multiply by the reciprocal, factorise, cancel", method: "Multiply by the reciprocal of the second fraction, then cancel and simplify" },
   "2015 P2 Q8": { skill: "Find 1% of the original, then 100%", method: "Write down what percentage of the original you are given, divide to find 1%, then multiply by 100" },
   "2015 P2 Q9": { skill: "The square of the linear scale factor, then a subtraction", method: "Linear scale factor, square it to reach the whole area, then subtract the small triangle" },
   "2015 P2 Q10": { skill: "Angle and arc back to the radius", method: "The correct fraction of the circle, construct the equation, know how to solve it, then solve it and state the radius" },
