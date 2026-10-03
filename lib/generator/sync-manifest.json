@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "ea2a605143ae0c928fc5dfea20ee488e66487d12",
+  "sourceCommit": "40ca88d3b13477cab8e1fe8c987815c22fff9377",
   "sourceDirty": false,
   "count": 105,
   "files": {
@@ -70,7 +70,7 @@
     "generators/n5-quadratics.ts": "d95a6e600748183f",
     "generators/n5-rounding.ts": "8faa901ae0a33ef5",
     "generators/n5-scinot.ts": "f6e6e732c5f1ae1d",
-    "generators/n5-sector.ts": "80915cfd3dbc8f33",
+    "generators/n5-sector.ts": "ca875cff7547501c",
     "generators/n5-simeq.ts": "742e1e33b0e5bb78",
     "generators/n5-similarity.ts": "8b1d722e153dcc9c",
     "generators/n5-sketch-parabola.ts": "5fed3ca1e2677316",

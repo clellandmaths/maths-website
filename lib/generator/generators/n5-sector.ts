@@ -804,7 +804,19 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
           }) ?? undefined
           // 2022's paper writes only the radius on its figure; the arc length
           // is in the words. The owner: "Yes".
-          : built({ radius: shown.radius, angle: '', arc: reflexOnly ? '' : shown.arc }),
+          //
+          // **2022 P2 Q10's centre letter at the sector's tip — 2026-10-03.**
+          // In a sweep near a full turn the gap between the radii is narrow,
+          // and the letter put there sat across a radius (6 draws in 100, the
+          // working audit's figure-label check). The owner, on the label
+          // sheet: "Put the C at tip in the circle at the centre and not
+          // inside the angle". The opt-in 2017 P2 Q14 already uses; this kind
+          // has its own subTopic and draw loop, so nothing else draws
+          // differently.
+          : reflexOnly
+            ? sector({ radius: r, angle, start, names: { centre: nO, a: nA, b: nB },
+              labels: { radius: shown.radius, angle: '', arc: '' }, centreInWedge: true }) ?? undefined
+            : built({ radius: shown.radius, angle: '', arc: shown.arc }),
       };
     } else {
       q = {
