@@ -206,22 +206,31 @@ async function printPage(root: ParentNode): Promise<void> {
 }
 
 /**
- * The printed page, in CSS px at 96 to the inch, **as an iPhone prints it**.
+ * **The printed page, in CSS px, as the device that prints it lays it out.**
  *
- * Height: A4 less the 1.5cm margins `@page` sets (globals.css) is 26.7cm, 1009px,
- * and that is Chrome's page. Safari also keeps about 2cm more at the foot for
- * its own footer (the address, the date and "Page 16 of 63"), measured off the
- * owner's iPhone prints of 2026-10-03: about 24.7cm, 934px. The shorter page
- * is the one used, so a card that fits Chrome's page but not the iPhone's is
- * still taken to a fresh page; in Chrome that costs at most some white space.
- *
- * Width: the card's, not the page's. The page is 18cm (680px), but the cards
- * sit inside their page's own padding: 632px in the Worksheet Builder and the
- * practice paper, 648px on a shared sheet. The narrower is used, since a copy
+ * Chrome, Edge, Firefox and Android: A4 at 96 px to the inch, less the 1.5cm
+ * margins `@page` sets (globals.css), is 680 by 1009. The cards sit inside
+ * their page's padding, so a card is 632 wide in the Worksheet Builder and the
+ * practice paper (648 on a shared sheet); the narrower is used, since a copy
  * measured too wide wraps fewer lines and comes out short.
+ *
+ * iPhone and iPad (every browser there prints through Safari) print bigger.
+ * Read off the owner's iPhone PDF of 2026-10-03 (iOS 26.6.1, A4, 595 by 842
+ * points): a CSS px prints at 0.91 point against Chrome's 0.75, so everything
+ * is about a fifth bigger on the paper (18px question text at 16.4pt, the
+ * 10px tags at 9.1pt). The printable area is 489 by 705 points, above
+ * Safari's own footer (the address and "Page 5 of 15"): 537 by 774 CSS px.
+ * Below 640 the pages' phone padding applies, so a card is 503 wide. Measured
+ * as Chrome's, 2022 P2 Q8 (Higher, 868px on that paper) fitted a page and was
+ * left to break after its header.
+ *
+ * Safari on a Mac is not known to do the same, and is measured as Chrome.
  */
-const PRINT_WIDTH_PX = 632;
-const PAGE_HEIGHT_PX = 934;
+function printedPage(): { width: number; height: number } {
+  const ua = navigator.userAgent;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  return ios ? { width: 503, height: 774 } : { width: 632, height: 1009 };
+}
 
 /**
  * **A card too tall for a page starts at the top of one** (the owner,
@@ -253,9 +262,10 @@ function markTallCards(root: ParentNode): void {
   if (typeof document === 'undefined') return;
   const cards = Array.from(root.querySelectorAll<HTMLElement>('.worksheet-question'));
   if (!cards.length) return;
+  const page = printedPage();
   const shelf = document.createElement('div');
   shelf.setAttribute('aria-hidden', 'true');
-  shelf.style.cssText = `position:absolute;left:-20000px;top:0;width:${PRINT_WIDTH_PX}px;visibility:hidden;pointer-events:none;`;
+  shelf.style.cssText = `position:absolute;left:-20000px;top:0;width:${page.width}px;visibility:hidden;pointer-events:none;`;
   try {
     document.body.appendChild(shelf);
     const copies = cards.map(card => {
@@ -278,7 +288,7 @@ function markTallCards(root: ParentNode): void {
       return copy;
     });
     copies.forEach((copy, i) => {
-      const tall = copy.getBoundingClientRect().height > 0.9 * PAGE_HEIGHT_PX;
+      const tall = copy.getBoundingClientRect().height > 0.9 * page.height;
       cards[i].toggleAttribute('data-print-tall', tall);
       if (tall) keepLeadInsWithFigures(cards[i]);
     });
