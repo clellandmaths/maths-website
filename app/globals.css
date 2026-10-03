@@ -821,6 +821,34 @@ body {
     flex: 1 1 0;
     min-width: 5rem;
   }
+  /* Smaller on paper: the tags and the source say what a question is, and the
+     number, calculator and marks are what a pupil reads first (the owner,
+     2026-10-03: "Tags smaller"). */
+  .q-head-text .topic-tag {
+    font-size: 10px !important;
+    padding: 1px 6px !important;
+  }
+  .q-head-text .q-source {
+    font-size: 11px !important;
+  }
+  .q-badge-calc {
+    background: white !important;
+  }
+  /* The QR in the card's corner: 48px on paper (about 13mm, which a phone reads
+     at arm's length; it was 64px, 17mm), with its caption underneath. */
+  .q-qr {
+    flex-direction: column-reverse !important;
+    align-items: center !important;
+    gap: 2px !important;
+  }
+  .q-qr img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .q-qr .q-qr-note {
+    text-align: center !important;
+    max-width: 64px !important;
+  }
   /* level with the number's line, not the middle of a two-line box */
   .q-head-main > .q-marks {
     margin-top: 0.2rem;

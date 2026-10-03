@@ -88,7 +88,11 @@ const MEASURE = cardSelector => `(() => {
     // squeezed row on the pair of them, while the single-chip sum says it fits
     // — so the row wrapped, the rule stayed silent about why, and the failure
     // it did report named a width that was not the problem.
-    const items = [...row.children].filter(laid);
+    // The number, source and tags sit in their own box on the worksheet cards
+    // (.q-head-text, 2026-10-03, so a printed header keeps its marks on the first
+    // line): count what is in it, not the box, or a box that wraps inside itself
+    // reads as one item the full width of the row.
+    const items = [...row.children].flatMap(el => el.classList.contains('q-head-text') ? [...el.children] : [el]).filter(laid);
     if (items.length < 2) continue;
 
     const cs = getComputedStyle(card);

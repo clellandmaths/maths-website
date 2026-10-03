@@ -6,6 +6,7 @@ import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip, Ar
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
+import CalculatorMark from '@/components/CalculatorMark';
 import { calculatorLabel } from '@/lib/calculator';
 import QRCodeImage from '@/components/QRCodeImage';
 import {
@@ -250,20 +251,56 @@ function SharedWorksheet() {
           return (
             <li
               key={q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}
-              className="worksheet-question bg-card border border-border rounded-xl p-5 sm:p-6 break-inside-avoid"
+              className="worksheet-question flow-root bg-card border border-border rounded-xl p-5 sm:p-6 break-inside-avoid"
             >
-              {/* **Two columns: the header, and the QR code beside it.** One
-                  wrapping row put the QR last, so when a long topic name and the
-                  calculator picture (2026-09-30) filled the line the code fell
-                  to a line of its own on the left of a printed sheet. Now it
-                  keeps its column, and on paper the header text wraps inside
-                  itself (globals.css, `.q-head-main`) so the marks stay on the
-                  first line, hard right, as on an exam paper. */}
+              {/* **The QR code in the card's top-right corner, and everything
+                  else down its left side.** It was the last thing in the
+                  header's row: when a long topic name and the calculator
+                  picture (2026-09-30) filled the line it fell to a line of its
+                  own on a printed sheet, and where it stayed it was the tallest
+                  thing in the header, so every question started below an empty
+                  band. Floated first, the header and the question flow past it
+                  (the owner, 2026-10-03: "the qr code fix?"). Smaller on paper
+                  (globals.css, `.q-qr`), with its caption underneath.
+
+                  **Not on a phone.** A QR code exists so somebody can scan a
+                  printed sheet. You cannot scan the screen you are holding, and
+                  a "Watch a worked example" button is right there. So: off below
+                  640px, on from a tablet up, and always on paper.
+
+                  The caption is not decoration: on paper it is the only thing
+                  standing between a pupil and the belief that they have got it
+                  wrong, because the video works the original's numbers rather
+                  than theirs. */}
+              {options.qrCodes && q.videoId && (
+                <div className="q-qr float-right ml-3 mb-2 hidden sm:flex print:flex items-center gap-1.5">
+                  {q.videoOf && (
+                    <span className="q-qr-note text-[9px] leading-tight text-muted-foreground text-right max-w-[52px]">
+                      worked example<br />{q.videoOf}
+                    </span>
+                  )}
+                  <QRCodeImage
+                    url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
+                    size={64}
+                    className="rounded"
+                  />
+                </div>
+              )}
+              {/* The header: on paper its text wraps inside itself
+                  (globals.css, `.q-head-main`) so the marks stay on the first
+                  line, as on an exam paper. */}
               <div className="flex items-start gap-3 mb-3">
               <div className="q-head-main flex flex-1 min-w-0 items-center gap-3 flex-wrap">
-                <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 print:flex-1">
-                <span className={`q-badge flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
+                <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 shrink-0 max-w-full print:flex-1">
+                {/* The calculator picture on the number's corner, as focus mode
+                    has it: no width taken from the header (the owner, 2026-10-03). */}
+                <span className={`q-badge relative flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
                   {i + 1}
+                  {calculatorLabel(q, courseId ?? '') && (
+                    <span className="q-badge-calc absolute -bottom-1.5 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-card ring-1 ring-border">
+                      <CalculatorMark label={calculatorLabel(q, courseId ?? '')!} />
+                    </span>
+                  )}
                 </span>
                 {/* No paper reference here: a past paper question's own html
                     opens with its "2026 P1 Q1" label, so repeating it prints it
@@ -277,43 +314,8 @@ function SharedWorksheet() {
                   <span className="q-source text-sm text-muted-foreground">{q.label}</span>
                 )}
                 </div>
-                <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId ?? '')} className="q-marks ml-auto" />
+                <Marks marks={q.marks} theme={theme} className="q-marks ml-auto" />
               </div>
-                {/* Beside the number rather than under the question, matching
-                    the Explorer's sheet — it keeps the QR out of the reading
-                    flow, on screen and on paper alike. */}
-                {/* **Not on a phone.** A QR code exists so somebody can scan a
-                    printed sheet, and it is the first thing on this card at
-                    64px plus its caption — above a question that is often two
-                    lines. You cannot scan the screen you are holding, and a
-                    "Watch a worked example" button is right there. So: off
-                    below 640px, on from a tablet up where scanning with a
-                    second device makes sense, and always on paper, which is
-                    what it is for. */}
-                {options.qrCodes && q.videoId && (
-                  <div className="shrink-0 hidden sm:flex print:flex items-center gap-1.5">
-                    {/* Beside the code, not beneath it. Beneath, this caption
-                        added 36px to every generated question's header and
-                        pushed its text down by the same — measured, and over a
-                        ten-question sheet that is a third of a page.
-                        Here it costs no height at all.
-
-                        It is not decoration: on paper it is the only thing
-                        standing between a pupil and the belief that they have
-                        got it wrong, because the video works the original's
-                        numbers rather than theirs. */}
-                    {q.videoOf && (
-                      <span className="q-qr-note text-[9px] leading-tight text-muted-foreground text-right max-w-[52px]">
-                        worked example<br />{q.videoOf}
-                      </span>
-                    )}
-                    <QRCodeImage
-                      url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
-                      size={64}
-                      className="rounded"
-                    />
-                  </div>
-                )}
               </div>
 
               {courseId === 'higher-apps' && <BookletExtract question={q} />}

@@ -16,6 +16,7 @@ import FocusMode from '@/components/Explorer/FocusMode';
 import FormulaeSheet from '@/components/FormulaeSheet';
 import FormulaeButton from '@/components/FormulaeButton';
 import Marks from '@/components/Marks';
+import CalculatorMark from '@/components/CalculatorMark';
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import VideoModal from '@/components/VideoModal';
@@ -1232,8 +1233,28 @@ function ExplorerContent({ course }: { course: Course }) {
                            shared the key). `uid` is what the worksheet itself
                            uses to tell questions apart. */
                         key={`ws-${q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}`}
-                        className={`worksheet-question bg-card border border-border rounded-xl p-4 sm:p-6${index === lastMovedIndex ? ' card-just-moved' : ''}`}
+                        className={`worksheet-question flow-root bg-card border border-border rounded-xl p-4 sm:p-6${index === lastMovedIndex ? ' card-just-moved' : ''}`}
                       >
+                        {/* The QR code in the card's top-right corner, floated
+                            first so the header and the question flow down its
+                            left side: as the header's last item it was its
+                            tallest, and every question started below an empty
+                            band (the owner, 2026-10-03). Smaller on paper, with
+                            its caption underneath (globals.css, `.q-qr`). */}
+                        {showQRCodes && q.videoId && (
+                          <div className="q-qr float-right ml-3 mb-2 flex items-center gap-1.5">
+                            {q.videoOf && (
+                              <span className="q-qr-note text-[9px] leading-tight text-muted-dim text-right max-w-[52px]">
+                                worked example<br />{q.videoOf}
+                              </span>
+                            )}
+                            <QRCodeImage
+                              url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
+                              size={64}
+                              className="rounded"
+                            />
+                          </div>
+                        )}
                         {/* **One wrapping row, and the controls pinned to the top.**
 
                             This is the layout that is live, and it is right:
@@ -1263,9 +1284,19 @@ function ExplorerContent({ course }: { course: Course }) {
                             {/* The number, source and tags as one box, so on paper
                                 they wrap inside it and the marks keep the top right
                                 (globals.css, `.q-head-main`). */}
-                            <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 print:flex-1">
-                            <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
+                            <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 shrink-0 max-w-full print:flex-1">
+                            {/* The calculator picture on the number's corner, as
+                                focus mode has it, rather than beside the marks: it
+                                takes no width from the header, which on a printed
+                                sheet was the line that would not fit (the owner,
+                                2026-10-03). */}
+                            <span className={`q-badge relative flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
+                              {calculatorLabel(q, course) && (
+                                <span className="q-badge-calc absolute -bottom-1.5 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-card ring-1 ring-border">
+                                  <CalculatorMark label={calculatorLabel(q, course)!} />
+                                </span>
+                              )}
                             </span>
                             {/* **The paper reference, and on a generated question nothing.** A
                                 generated card used to carry its variation's name and a "New
@@ -1292,7 +1323,7 @@ function ExplorerContent({ course }: { course: Course }) {
                             {/* `@media print` sets `margin-left: auto` on
                                 `.q-marks`, so a printed sheet keeps the exam
                                 paper's own convention of marks hard right. */}
-                            <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, course)} className="q-marks" />
+                            <Marks marks={q.marks} theme={theme} className="q-marks" />
                           </div>
                           {/* Reorder buttons — compact horizontal */}
                           <div className="no-print flex items-center gap-0.5 shrink-0">
@@ -1353,22 +1384,6 @@ function ExplorerContent({ course }: { course: Course }) {
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
-                          {showQRCodes && q.videoId && (
-                            <div className="shrink-0 flex items-center gap-1.5">
-                              {/* Beside the code rather than beneath it — see
-                                  the note in app/worksheet/page.tsx. */}
-                              {q.videoOf && (
-                                <span className="q-qr-note text-[9px] leading-tight text-muted-dim text-right max-w-[52px]">
-                                  worked example<br />{q.videoOf}
-                                </span>
-                              )}
-                              <QRCodeImage
-                                url={`https://www.youtube.com/watch?v=${q.videoId}&t=${timestampToSeconds(q.timestamp)}`}
-                                size={64}
-                                className="rounded"
-                              />
-                            </div>
-                          )}
                         </div>
 
                         {/* Its own data booklet sections, on paper only. */}
