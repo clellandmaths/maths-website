@@ -53,8 +53,17 @@ function quartiles(sorted: number[]) {
   };
 }
 
+/**
+ * A story that prints money to the penny where it is not whole pounds: "£39.50"
+ * and "£17.30", never "£39.5" (2026-10-02 full read, the owner's "Yes"). Opt-in,
+ * set only on the ids on that card; every other question prints as it did.
+ */
+type PencedContext = DataContext & { pence?: boolean };
+const pennies = (v: number, ctx: PencedContext): string =>
+  ctx.pence && ctx.prefix === '£' && !Number.isInteger(v) ? v.toFixed(2) : num(v);
+
 /** Written as the paper writes it: "£155" or "23". */
-const show = (v: number, ctx: DataContext): string => `${ctx.prefix}${num(v)}`;
+const show = (v: number, ctx: PencedContext): string => `${ctx.prefix}${pennies(v, ctx)}`;
 
 /** The same value written as prose writes it, with the unit on the end. */
 const amount = (v: number, ctx: DataContext): string =>
@@ -151,7 +160,9 @@ function comparison(
  */
 function quartilesOnly(semi: boolean): Q {
   for (let tries = 0; tries < 300; tries++) {
-    const ctx = pick(DATA_CONTEXTS);
+    // pence: the semi form is 2017 P1 Q2's alone
+    const drawnCtx = pick(DATA_CONTEXTS);
+    const ctx: PencedContext = semi ? { ...drawnCtx, pence: true } : drawnCtx;
     // Ten, as both papers use. The values vary; the count is part of the
     // question's shape rather than one of its numbers.
     const n = 10;
@@ -253,11 +264,16 @@ const MEDIAN_PAPERS: Record<string, MedianPaper> = {
   'data.median-siqr-compare-pre2019p1': { n: 10, small: true, given: 'insideB' },    // 2015 P1 Q10
 };
 
+const PENCE_MEDIAN = new Set(['data.median-iqr-compare', 'data.median-iqr-compare-2023', 'data.median-iqr-compare-2024']);
+
 function medianCompare(semi: boolean, asked?: string): Q {
   const paper: MedianPaper | undefined = MEDIAN_PAPERS[asked ?? ''];
   const small = !!paper?.small;
   for (let tries = 0; tries < (small ? 600 : 300); tries++) {
-    const ctx = pick(DATA_CONTEXTS);
+    // pence on the three interquartile papers only (2023 P1 Q9, 2024 P1 Q5,
+    // 2026 P1 Q3); the two semi papers were not on the card
+    const drawnCtx = pick(DATA_CONTEXTS);
+    const ctx: PencedContext = asked !== undefined && PENCE_MEDIAN.has(asked) ? { ...drawnCtx, pence: true } : drawnCtx;
     // **How many values is part of the question.** With an odd count the median
     // is one of the listed values and each quartile is a single value too; with
     // an even count the median is the mean of the two middles, which is what
@@ -613,7 +629,9 @@ function meanStdevConsistency(): Q {
         `<strong>1. (a)(i)</strong> Add the ${ctx.quantity} and divide by ${n}:`
         + `<br><br>$\\overline{x} = \\frac{${vals.reduce((a, b) => a + b, 0)}}{${n}} = ${num(mean)}$`,
         `<strong>2. (a)(ii)</strong> Square each difference from the mean and add them:`
-        + `<br><br>$\\sum(x - \\overline{x})^{2} = ${num(ssq)}$`,
+        // listed, as scheme •2 is the squared differences themselves and every
+        // other standard-deviation card lists them (2026-10-02 full read, the owner's "Yes")
+        + `<br><br>$\\sum(x - \\overline{x})^{2} = ${vals.map(v => `(${num(v - mean)})^{2}`).join(' + ')} = ${num(ssq)}$`,
         `<strong>3. (a)(ii)</strong> Substitute into the formula, dividing by $n - 1$:`
         + `<br><br>$s = \\sqrt{\\frac{${num(ssq)}}{${n - 1}}}$`,
         `<strong>4. (a)(ii)</strong> Take the square root:<br><br>$s = ${sd}$`,
@@ -671,7 +689,15 @@ const MEAN_SD_PAPERS: Record<string, MeanSdPaper> = {
 function meanStdevCompare(_wanted?: string, asked?: string): Q {
   const paper: MeanSdPaper | undefined = MEAN_SD_PAPERS[asked ?? ''];
   for (let tries = 0; tries < 300; tries++) {
-    const ctx = pick(DATA_CONTEXTS);
+    const drawnCtx = pick(DATA_CONTEXTS);
+    // The bicycles are "on sale at a market stall", then were compared as "the
+    // bicycles in the shop" (2026-10-02 full read: 2016 P2 Q6, the owner's
+    // "Fix"; then 2018 P2 Q5, 2022 P2 Q5 and 2025 P2 Q4, "Yes done too").
+    // Words only, no draw, on those four ids; other routines' stories are unchanged.
+    // pence on the same four ids (the full read's money card)
+    const onCard = asked !== undefined && MEAN_SD_PAPERS[asked] !== undefined;
+    const ctx: PencedContext = !onCard ? drawnCtx
+      : { ...drawnCtx, pence: true, ...(drawnCtx.groupA === 'the bicycles in the shop' ? { groupA: 'the bicycles at the market stall' } : {}) };
     const drawnN = pick([5, 6, 7]);
     const n = paper?.n ?? drawnN;
     const vals = sampleWithWholeMean(ctx, n);
@@ -686,7 +712,7 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
                          : +Math.max(0.4, s - 0.6 - random() * 2).toFixed(1);
     if (otherMean < ctx.band[0] || otherMean > ctx.band[1]) continue;
     if (Math.abs(otherS - s) < 0.3) continue;
-    const otherSd = `${ctx.prefix}${otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}`;
+    const otherSd = `${ctx.prefix}${ctx.pence ? pennies(otherS, ctx) : otherS}${ctx.unit ? ` ${unitFor(Number(otherS), ctx.unit)}` : ''}`;
     const compare = `Make two valid comments comparing the ${ctx.quantity} of ${ctx.groupA} and ${ctx.groupB}.`;
 
     return {
@@ -730,7 +756,7 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
         `<strong>(b)</strong> Now compare the standard deviations, naming the quantity and the group again:<br><br>${comparison(ctx, higher, wider)[1]}`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1],
-      finalAnswer: `(a) mean ${amount(mean, ctx)}, standard deviation ${ctx.prefix}${s.toFixed(1)}${ctx.unit ? ` ${unitFor(Number(s.toFixed(1)), ctx.unit)}` : ''}. (b) ` +
+      finalAnswer: `(a) mean ${amount(mean, ctx)}, standard deviation ${ctx.prefix}${ctx.pence ? pennies(Number(s.toFixed(1)), ctx) : s.toFixed(1)}${ctx.unit ? ` ${unitFor(Number(s.toFixed(1)), ctx.unit)}` : ''}. (b) ` +
         comparison(ctx, higher, wider).join(' '),
     };
   }

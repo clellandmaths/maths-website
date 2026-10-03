@@ -1423,6 +1423,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2023 P1 Q7'],
     marks: 4,
     route: '3 + 1, the same four as straight-line.best-fit - gradient, substitute a point, state the equation in the question letters, then evaluate. Its own id because these two name no points in their prose: the pupil reads them off the ruling, and both schemes name the exact intersections the gradient may be taken from',
+    // in a pupil's words, not the route's note (2026-10-02 full read, the owner's "Yes")
+    method: 'Read two points off the grid, find the gradient, put it and a point into $y = mx + c$ to find $c$, then use the equation for the second part',
     plan: [
       'Choose two points where the line of best fit passes exactly through a corner of the grid, so both coordinates can be read off the axes without guessing',
       'Take the change up between those points and divide it by the change across to get the gradient',
@@ -1638,7 +1640,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 2,
     route: 'find the x of the turning point by shifting the unshifted one, then state the coordinates. The equation is given in the prose and the figure prints no numbers at all - it is there to say which turning point',
     plan: [
-      'Ask where the plain wave would turn first — $\\cos x^{\\circ}$ peaks at $x = 0$ — then slide that $x$ along by the amount in the bracket, moving right when the bracket subtracts, to get the $x$-coordinate',
+      'Ask where the plain wave turns — $\\sin x^{\\circ}$ has its maximum at $x = 90$ and its minimum at $x = 270$, $\\cos x^{\\circ}$ its maximum at $x = 0$ and its minimum at $x = 180$ — then slide that $x$ along by the amount in the bracket, moving right when the bracket subtracts, to get the $x$-coordinate',
       'Take the number multiplying the $\\cos$ or $\\sin$: that is how far the curve reaches from the $x$-axis, so give it the sign matching which side of the axis the marked point is on, and write the two values as a coordinate pair',
     ],
     planMarks: [1, 1],
@@ -1812,7 +1814,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2019 P1 Q9'],
     marks: 3,
-    route: '1 + 1 + 1 - the axis of symmetry from the turning point, then a, then b. The only parabola of the seven that opens downwards, so the square is subtracted and b is the height of the maximum, but the bracket is (x + a) as in the other six and a = -h. Note 1 accepts the equation written out in place of the two values, and the working says so',
+    route: '1 + 1 + 1 - the axis of symmetry from the turning point, then a, then b. The only parabola of the seven that opens downwards, so the square is subtracted and b is the height of the maximum, but the bracket is (x + a) as in the other six and a = -h. Note 1 accepts the equation written out in place of the two values',
     plan: [
       'Give the axis of symmetry as the vertical line through the maximum turning point, taking its $x$-coordinate',
       'Set the bracket to zero at that turning point — the square is being subtracted, so $y$ is largest there — and read $a$ off, minding the sign',
@@ -1821,7 +1823,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'integer',
     webTopics: ['Turning Points and Axis of Symmetry', 'Parabola Equation from Graph'],
-    skill: 'Read a maximum turning point off a graph and match it to $y = b - (x - a)^2$',
+    skill: 'Read a maximum turning point off a graph and match it to $y = b - (x + a)^2$',
   },
 
   'quadratics.reaches-height': {
@@ -2353,10 +2355,12 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2026 P1 Q8'],
     marks: 2,
     route: 'square, then add — one mark per operation, which is what every published change-of-subject scheme in the set does',
-    method: 'Square both sides to clear the root, then add the remaining term to the other side',
+    // Some draws add under the root and some subtract, so the move names neither
+    // (2026-10-02 full read, the owner's "Yes")
+    method: 'Square both sides to clear the root, then move the remaining term to the other side',
     plan: [
       'Undo the square root by squaring each side, which frees the subject from underneath it',
-      'Add the term that is being taken away from the subject onto both sides, leaving the subject on its own',
+      'Move the term that is with the subject to the other side, doing the opposite of its sign, leaving the subject on its own',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
@@ -2567,6 +2571,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2026 P2 Q4'],
     marks: 6,
     route: '1 + 1 + 4 as the question data gives, mapping onto the other five papers exactly except that the last mark applies the two values rather than stating them',
+    // in a pupil's words, not the route's note (2026-10-02 full read, the owner's "Yes")
+    method: 'Write an equation for each sentence, solve the pair by elimination, then use both values to answer the last part',
     plan: [
       'Give each of the two unknown amounts a letter and say what it stands for, then turn the first sentence into an equation: how many of each, multiplied by its letter, adding up to the total that sentence gives',
       'Do the same with the second sentence, so you have two equations sharing the same two letters',
@@ -3069,14 +3075,19 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 2,
     route: 'identify and substitute the correct identity, then express the result in simplest form',
     method: 'Swap $\\tan x$ for $\\dfrac{\\sin x}{\\cos x}$, or take out a common factor, then use $\\sin^2 x + \\cos^2 x = 1$ to simplify what is left',
+    // The first move is the one a pupil sees. It opened on a common factor,
+    // which neither 2018 P1 Q18 nor 2016 P1 Q11 ever has: every draw is a
+    // product to swap and cancel (2026-10-02 full read, the owner's "Yes").
     plan: [
-      'Scan the terms for a factor they all share and pull it out in front of a bracket — where a $\\tan x^{\\circ}$ blocks that, write it as $\\frac{\\sin x^{\\circ}}{\\cos x^{\\circ}}$ so every term is built from the same two functions',
+      'Write $\\tan x^{\\circ}$ as $\\frac{\\sin x^{\\circ}}{\\cos x^{\\circ}}$, then cancel the $\\cos x^{\\circ}$ it shares with the other term',
       'Read what is left inside the bracket against $\\sin^{2} x^{\\circ} + \\cos^{2} x^{\\circ} = 1$: swapping that pair for $1$ lets the rest cancel down',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
     webTopics: ['Trigonometric identities'],
-    skill: 'Replace $\\tan x$ with $\\dfrac{\\sin x}{\\cos x}$, or take out a common factor, then use $\\sin^2 x + \\cos^2 x = 1$',
+    // 2018 P1 Q18 and 2016 P1 Q11 only swap the tan and cancel (2026-10-02
+    // full read, the owner's "Yes" on each).
+    skill: 'Replace $\\tan x$ with $\\dfrac{\\sin x}{\\cos x}$, then cancel',
   },
   // Take a factor out of two terms and the bracket is the identity.
   //
@@ -3261,7 +3272,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 2,
     route: 'halve the first vector, then add or subtract the second component by component',
     plan: [
-      'Halve every component of the first vector, which is the multiplication the first mark is for',
+      'Halve every component of the first vector',
       'Add or subtract the matching components of the second vector, and write the answer as a column vector with its brackets',
     ],
     planMarks: [1, 1],
@@ -3422,7 +3433,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Scientific notation'],
-    skill: 'As above, then round the answer to three significant figures',
+    skill: 'Divide using scientific notation, then round to three significant figures',
   },
 
   // ── Pythagoras — the first topic whose questions carry a diagram ─────────
@@ -3873,6 +3884,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2019 P1 Q14'],
     marks: 3,
     route: 'eliminate the denominators, rearrange into ax = b, then solve - the same three rows as the other two arrangements',
+    // in a pupil's words, not the route's note (2026-10-02 full read, the owner's "Yes")
+    method: 'Multiply every term by a number both denominators divide into, gather the letters on one side and the numbers on the other, then divide',
     plan: [
       'Work out the smallest number both bottom lines divide into, then multiply every term on both sides by it so the fractions clear away',
       'Multiply out the bracket this leaves you with, then gather the terms in the letter on one side and the plain numbers on the other',
@@ -3891,6 +3904,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2025 P2 Q13'],
     marks: 3,
     route: 'eliminate the denominators, rearrange into ax = b, then solve - the same three rows as the other two arrangements',
+    // in a pupil's words, not the route's note (2026-10-02 full read, the owner's "Yes")
+    method: 'Multiply every term by a number both denominators divide into, gather the letters on one side and the numbers on the other, then divide',
     plan: [
       'Work out the smallest number both bottom lines divide into, then multiply every term on both sides by it so the fractions clear away',
       'Multiply out the bracket the top of the first fraction leaves you with, then gather the terms in the letter on one side and the plain numbers on the other',
@@ -3932,6 +3947,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2026 P2 Q13'],
     marks: 7,
     route: 'the 1 + 2 + 4 the question data gives, split as 2015 P2 Q14 splits its identical parts',
+    // in a pupil's words, not the route's note (2026-10-02 full read, the owner's "Yes")
+    method: 'Write the length with the wall added, multiply out the area and take everything to one side, then solve the quadratic with the formula',
     plan: [
       'Trace round the plan and mark which sides have a wall against them, since only those sides push the measurement outwards — count how many times $x$ gets added to each dimension, then write an expression for each',
       'Multiply those two expressions together and expand them for the area of the base, then set that equal to the area you are given and take every term to one side so the quadratic is equal to 0',
@@ -4511,7 +4528,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1, 1],
     answerShape: 'text',
     webTopics: ['Pythagoras converse'],
-    skill: 'The same, but one distance has to be found from the total first',
+    skill: 'Find the missing side from the total, then compare the two shorter sides squared with the longest squared, and conclude',
   },
 
   // The same circle-and-chord figure with a different piece missing: 2014 gives
@@ -4908,7 +4925,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'correct substitution into the sine rule, rearrange the equation, calculate the angle, then calculate the bearing. The angle read off the given bearings is not paid for separately',
     method: 'Substitute into the sine rule, rearrange to make the sine the subject, take the inverse to get the angle, then measure it from north to give a bearing',
     plan: [
-      'Draw a north line where the bearing is given and subtract to turn it into the angle inside the triangle, then pair each known side with the angle facing it and write the sine rule with the sines on top',
+      'Draw a north line where the bearing is given and subtract to turn it into the angle inside the triangle, then pair each known side with the angle facing it and write the sine rule with the sides on top',
       'Rearrange so the sine of the unknown angle is on its own, and work that number out',
       'Press inverse sine to turn it into an angle, then take it and the angle you started with off $180$ to reach the angle at the corner the bearing is asked from',
       'Work out the bearing back along the side you already know, turn through that angle in the direction the diagram shows, and give a three-figure bearing measured clockwise from north',
@@ -5102,7 +5119,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Sector area'],
-    skill: 'The same with pi taken as 3.14, which is a different sum',
+    skill: 'Radius and angle to the area of the sector, taking $\\pi$ as $3.14$',
   },
   'sector.arc-angle': {
     topic: 'Length of an Arc',
@@ -5139,7 +5156,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Arc length'],
-    skill: 'The same with pi taken as 3.14, which is a different sum',
+    skill: 'Radius and angle to the length of a major arc, taking $\\pi$ as $3.14$',
   },
   'sector.area-arc': {
     topic: 'Area of a Sector',
@@ -5430,8 +5447,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 3,
     route: 'no published scheme: two isosceles triangles from the radii, one reached through the right angle at the tangent, then their sum',
     plan: [
-      'Start on the side where a base angle is given: the two radii make that triangle isosceles, so double the angle and take it off 180 for its angle at the centre',
-      'On the other side, subtract the second given angle from the $90^{\\circ}$ between the radius and the tangent, then run the same isosceles working for that triangle\'s angle at the centre',
+      'Start at the tangent: subtract the angle given there from the $90^{\\circ}$ between the radius and the tangent',
+      'The two radii on each side make isosceles triangles, so double each base angle and take it off 180 for that triangle\'s angle at the centre',
       'Add the two centre angles, as they lie on opposite sides of the radius and together sweep out the reflex angle',
     ],
     planMarks: [1, 1, 1],
@@ -5649,6 +5666,8 @@ const ALIASES: Record<string, {
   plan?: VariationMeta['plan'];
   /** And its one-line method, with the plan (2015 P2 Q7; the owner, "Yes"). */
   method?: VariationMeta['method'];
+  /** And its "What it asks" line (2015 P2 Q7 has nothing to factorise; the owner, 2026-10-02 full read, "Yes"). */
+  skill?: VariationMeta['skill'];
 }> = {
   // lock-year: aliases begin
   'fractions.subtract-mixed-pre2023': { aliasOf: 'fractions.subtract-mixed', basedOn: ['2015 P1 Q1'] },
@@ -5745,11 +5764,13 @@ const ALIASES: Record<string, {
   'vectors.magnitude-2018': { aliasOf: 'vectors.magnitude', basedOn: ['2018 P2 Q3'] },   // one paper, one variation
   'vectors.magnitude-2017': { aliasOf: 'vectors.magnitude', basedOn: ['2017 P2 Q1'] },   // one paper, one variation
   'vectors.magnitude-2015': { aliasOf: 'vectors.magnitude', basedOn: ['2015 P2 Q4'] },   // one paper, one variation
-  'alg-fractions.divide-2015': { aliasOf: 'alg-fractions.divide', basedOn: ['2015 P2 Q7'], method: 'Multiply by the reciprocal of the second fraction, then cancel and simplify', plan: ['Flip the second fraction upside down, then multiply by it instead of dividing', 'Cancel the letters and numbers that appear on the top and the bottom', 'Multiply what is left across the top and across the bottom, and give it in its simplest form'] },   // one paper, one variation
+  'alg-fractions.divide-2015': { aliasOf: 'alg-fractions.divide', basedOn: ['2015 P2 Q7'], skill: 'Multiply by the reciprocal, then cancel', method: 'Multiply by the reciprocal of the second fraction, then cancel and simplify', plan: ['Flip the second fraction upside down, then multiply by it instead of dividing', 'Cancel the letters and numbers that appear on the top and the bottom', 'Multiply what is left across the top and across the bottom, and give it in its simplest form'] },   // one paper, one variation
   'percentages.reverse-2015': { aliasOf: 'percentages.reverse', basedOn: ['2015 P2 Q8'] },   // one paper, one variation
   'pythagoras.chord-whole-2015': { aliasOf: 'pythagoras.chord-whole', basedOn: ['2015 P2 Q12'] },   // one paper, one variation
   'bearings.two-bearings-2015': { aliasOf: 'bearings.two-bearings', basedOn: ['2015 P2 Q13'] },   // one paper, one variation
   'quadratics.discriminant-2016': { aliasOf: 'quadratics.discriminant', basedOn: ['2016 P1 Q6'] },   // one paper, one variation
+  // its own skill line went on the 2026-10-02 full read (the owner's "Yes"): it
+  // now shares 2018 P1 Q18's
   'trig-identities.simplify-2016': { aliasOf: 'trig-identities.simplify', basedOn: ['2016 P1 Q11'] },   // one paper, one variation
   'sci-notation.calculate-2016': { aliasOf: 'sci-notation.calculate', basedOn: ['2016 P2 Q2'] },   // one paper, one variation
   'data.mean-sd-compare-2016': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6'] },   // one paper, one variation
@@ -5780,6 +5801,7 @@ for (const [id, a] of Object.entries(ALIASES)) {
     marksDiffer: a.marksDiffer, planMarksDiffer: a.planMarksDiffer,
     ...(a.plan ? { plan: a.plan } : {}),
     ...(a.method ? { method: a.method } : {}),
+    ...(a.skill ? { skill: a.skill } : {}),
   };
 }
 

@@ -53,6 +53,47 @@ function turnedBy(from: number, angle: number, side: number): string {
 }
 
 /**
+ * The same turn with the angle carried unrounded, with dots: printed to 1 d.p.
+ * the line could read "250 - 70.5 = 179.5, that is 179" (2018 P2 Q13, about
+ * one draw in twenty; 2026-10-02 full read, the owner's "Yes"). Opt-in.
+ */
+function turnedByCarried(from: number, angle: number, side: number): string {
+  const raw = from + side * angle;
+  const sum = `${Math.round(from)} ${side > 0 ? '+' : '-'} ${angle.toFixed(2)}\\ldots`;
+  // Two places, or more where two would round the other way from the true
+  // value: 185.4996 is "185.499...", not "185.50...", beside "that is 185".
+  const turned = ((raw % 360) + 360) % 360;
+  let places = 2;
+  while (places < 5 && Math.round(Number(turned.toFixed(places))) !== Math.round(turned)) places++;
+  const result = `${turned.toFixed(places)}\\ldots`;
+  return raw < 0 ? `360 + ${sum} = ${result}` : raw >= 360 ? `${sum} - 360 = ${result}` : `${sum} = ${result}`;
+}
+
+/**
+ * The compass direction at `at` furthest inside the widest gap that nothing
+ * covers: not the shaded sweep from north round to `shadedTo`, not the
+ * triangle between the legs to `ends`. A vertex letter put there clears the
+ * shading and both sides. Used by 2014 P2 Q10 alone.
+ */
+function clearGap(at: Pt, ends: [Pt, Pt], shadedTo: number): number {
+  const [l1, l2] = ends.map(e => compassOf(at, e));
+  const inside = (d: number) => {                      // the triangle's angle at `at`
+    const span = ((l2 - l1) % 360 + 360) % 360;
+    const off = ((d - l1) % 360 + 360) % 360;
+    return span <= 180 ? off <= span : off >= span;
+  };
+  const free = Array.from({ length: 360 }, (_, d) => !(d <= shadedTo) && !inside(d));
+  let best = 0, bestLen = -1;
+  for (let s = 0; s < 360; s++) {
+    if (!free[s] || free[(s + 359) % 360]) continue;  // a run starts here
+    let len = 0;
+    while (len < 360 && free[(s + len) % 360]) len++;
+    if (len > bestLen) { bestLen = len; best = (s + len / 2) % 360; }
+  }
+  return best;
+}
+
+/**
  * Bearings are written with three digits, so 060° not 60°.
  *
  * Two forms, because there are two renderers. Prose goes through MathJax, so
@@ -346,7 +387,9 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
   const atPivot = kind !== 'angle';
   const stated = atPivot ? given : (given + 180) % 360;
   const arcs: BearingArc[] = atPivot
-    ? [{ at: 1, to: 0, compass: given, label: brgPlain(given) }]
+    // labelClear: 2018 P2 Q13's label kept off the leg to C (2026-10-02 full
+    // read, the owner's "Yes" for that question only). atPivot is its kind alone.
+    ? [{ at: 1, to: 0, compass: given, label: brgPlain(given), labelClear: 2 }]
     : [{ at: 0, to: 1, compass: stated, label: brgPlain(stated) }];
   // The arc for the angle being *asked* for goes on only when the given
   // bearing is marked somewhere else. 2014 states its bearing at A and shades
@@ -365,6 +408,13 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
     north: [...new Set(arcs.map(a => a.at))].filter(v => needsArrow(points, v)),
     sides: [`${show(ba)} ${c.short}`, `${show(bcLen)} ${c.short}`,
             `${show(ca)} ${c.short}`],
+    // 2014 P2 Q10 only: the pivot's letter sat inside its own shaded angle,
+    // pushed out from the triangle's centre, which is through the wedge. It
+    // goes to the middle of the widest gap at the pivot that nothing covers -
+    // not the shaded wedge (north round to BC), not the triangle (BC to BA),
+    // not the lines (the owner, 2026-10-03: "Do the 3 left alone ones"). The
+    // 'angle' kind is 2014's alone.
+    ...(kind === 'angle' ? { nameAway: [undefined, travel(B, (clearGap(B, [A, C], answer) + 180) % 360, ba), undefined] as [Pt?, Pt?, Pt?] } : {}),
   });
   if (!fig) return null;
 
@@ -409,13 +459,17 @@ function threeSides(c: BearingContext, side: number, kind: string): Q | null {
   // The first three carry their part label too when there are two parts, so the
   // hints read (a)(a)(a)(b)(b) rather than starting to name parts halfway.
   const partA = (t: string) => t.replace(/<\/strong>/, ' (a)</strong>');
+  // The bearing kind (2018 P2 Q13) carries the angle with dots from step 3 on,
+  // so the rounding to the nearest degree is done on a number the page shows;
+  // the angle kind (2014 P2 Q10) keeps its 1 d.p. part (a) answer.
+  const angCarried = `<strong>3.</strong> Take the inverse cosine:<br><br>$${nA}${nB}${nC} = ${phi.toFixed(2)}\\ldots^{\\circ}$`;
   const steps = kind === 'angle'
     ? [partA(cosSub), partA(cosVal), partA(angStep), backBearing, shaded]
     : [
-    cosSub, cosVal, angStep,
+    cosSub, cosVal, angCarried,
     atPivot
-      ? `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(given)}$, and angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$, so the bearing to the nearest degree is:<br><br>$${turnedBy(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`
-      : `<strong>4.</strong> The bearing given is of $${nB}$ from $${nA}$, so the bearing of $${nA}$ from $${nB}$ is the back bearing, $${Math.round(stated)} ${stated < 180 ? '+' : '-'} 180 = ${brg(given)}$. Angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$:<br><br>$${turnedBy(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`,
+      ? `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(given)}$, and angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$, so the bearing to the nearest degree is:<br><br>$${turnedByCarried(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`
+      : `<strong>4.</strong> The bearing given is of $${nB}$ from $${nA}$, so the bearing of $${nA}$ from $${nB}$ is the back bearing, $${Math.round(stated)} ${stated < 180 ? '+' : '-'} 180 = ${brg(given)}$. Angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$:<br><br>$${turnedByCarried(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`,
   ];
   const text = [...prose, ...steps].join(' ');
   if (verifyFigure(fig, text).length) return null;
@@ -509,10 +563,13 @@ function twoSides(c: BearingContext, side: number): Q | null {
   const steps = [
     `<strong>1.</strong> ${cap(rB)} is due ${CARDINAL[base]} of ${rA}, so its bearing from ${rA} is $${brg(base)}$ and the angle at $${nA}$ is the difference between that and $${brg(bC)}$, namely $${alpha}^{\\circ}$. Now substitute into the sine rule, pairing $${nA}${nB}$ with the angle at $${nC}$ and $${nB}${nC}$ with the angle at $${nA}$:<br><br>$\\frac{${bcLen}}{\\sin ${alpha}^{\\circ}} = \\frac{${ab}}{\\sin ${nC}}$`,
     `<strong>2.</strong> Rearrange to make $\\sin ${nC}$ the subject:<br><br>$\\sin ${nC} = \\frac{${ab} \\times \\sin ${alpha}^{\\circ}}{${bcLen}} = ${ratio.toFixed(4)}$`,
-    `<strong>3.</strong> The diagram shows the ${gamma < 90 ? 'acute' : 'obtuse'} case, and the angles add to $180^{\\circ}$:<br><br>$${nC} = ${dp1(gamma)}^{\\circ}$, so $${nA}${nB}${nC} = 180 - ${alpha} - ${dp1(gamma)} = ${dp1(beta)}^{\\circ}$`,
+    // The angles carried with dots, as 2018 P2 Q13's now are: to 1 d.p. the
+    // last line could read "90 + 62.5 = 152.5, so the bearing is 152" (27 of
+    // 400 draws; 2026-10-02 full read, the owner's "Yes"). This id's alone.
+    `<strong>3.</strong> The diagram shows the ${gamma < 90 ? 'acute' : 'obtuse'} case, and the angles add to $180^{\\circ}$:<br><br>$${nC} = ${gamma.toFixed(2)}\\ldots^{\\circ}$, so $${nA}${nB}${nC} = 180 - ${alpha} - ${gamma.toFixed(2)}\\ldots = ${beta.toFixed(2)}\\ldots^{\\circ}$`,
     // The sum written out, as the scheme's •⁴ "calculate bearing" is paid for
     // it: "270 - 48.4 = 221.6, so 222°" (the owner, 2026-10-02, "Yes").
-    `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(back)}$, and angle $${nA}${nB}${nC}$ turns ${clockwise ? 'clockwise' : 'anticlockwise'} from there:<br><br>$${turnedBy(back, beta, clockwise ? 1 : -1)}^{\\circ}$, so the bearing is $${brg(answer)}$`,
+    `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(back)}$, and angle $${nA}${nB}${nC}$ turns ${clockwise ? 'clockwise' : 'anticlockwise'} from there:<br><br>$${turnedByCarried(back, beta, clockwise ? 1 : -1)}^{\\circ}$, so the bearing is $${brg(answer)}$`,
   ];
   const text = [...prose, ...steps].join(' ');
   if (verifyFigure(fig, text).length) return null;

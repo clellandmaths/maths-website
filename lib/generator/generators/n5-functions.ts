@@ -40,7 +40,9 @@ type Q = Omit<GeneratedQuestion, 'topic'>;
 const FN = ['f'];
 
 /** The four function shapes the papers use, as printed form plus evaluator. */
-type Shape = { tex: (v: string) => string; at: (x: number) => number; how: string };
+type Shape = { tex: (v: string) => string; at: (x: number) => number; how: string;
+  /** The substitution as the working prints it for a positive number, where `tex` would glue a coefficient to it. */
+  work?: (v: string) => string };
 
 /**
  * The four shapes, **in the order `evaluate`'s id list expects them**. An
@@ -75,7 +77,9 @@ function shapes(which?: number): Shape[] {
     // 2017 P1 Q1: f(x) = x^2 + 3x
     { tex: v => `${v}^{2} ${b < 0 ? '-' : '+'} ${Math.abs(b)}${v}`,
       at: x => x * x + b * x,
-      how: `square the number, then add ${b} times it` },
+      how: `square the number, then add ${b} times it`,
+      // 2026-10-02 full read, the owner's "Yes": `tex('3')` printed "3^{2} + 63"
+      work: v => `${v}^{2} ${b < 0 ? '-' : '+'} ${Math.abs(b)} \\times ${v}` },
     // 2019 P1 Q1: f(x) = 5x^3
     { tex: v => `${a}${v}^{3}`,
       at: x => a * x * x * x,
@@ -174,6 +178,11 @@ function evaluate(wanted?: string): Q {
     if (ids[which] === 'functions.evaluate-square' && out === 1) continue;
 
     const sub = input < 0 ? `(${input})` : `${input}`;
+    // 2017 P1 Q1's shape only (the one with `work`): a positive number gets a
+    // times sign, and no talk of brackets it does not have.
+    const step1 = s.work && input > 0
+      ? `<strong>1.</strong> Replace every $x$ with $${sub}$:<br><br>$${fn}(${input}) = ${s.work(sub)}$`
+      : `<strong>1.</strong> Replace every $x$ with $${sub}$. Keep the brackets — they are what makes the sign come out right:<br><br>$${fn}(${input}) = ${s.tex(sub)}$`;
     return {
       subTopic: 'Evaluating a Function',
       difficulty: 'skill',
@@ -181,7 +190,7 @@ function evaluate(wanted?: string): Q {
       questionLines: [`Given that $${fn}(x) = ${s.tex('x')}$, evaluate $${fn}(${input})$.`],
       boardQuestionLines: [`$${fn}(x) = ${s.tex('x')}$. Find $${fn}(${input})$`],
       solutionSteps: [
-        `<strong>1.</strong> Replace every $x$ with $${sub}$. Keep the brackets — they are what makes the sign come out right:<br><br>$${fn}(${input}) = ${s.tex(sub)}$`,
+        step1,
         `<strong>2.</strong> Now ${s.how}:<br><br>$${fn}(${input}) = ${out}$`,
       ],
       // •¹ substitute, •² evaluate — the same two marks in all four papers

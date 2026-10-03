@@ -143,7 +143,7 @@ export function tangentSemicircleQuestion(): Q {
       `Calculate the size of angle $${n.contact}${n.near}${n.fourth}$.`,
     ];
     const steps = [
-      `<strong>1.</strong> A radius meets a tangent at right angles, so angle $${n.centre}${n.contact}${n.tangentA}$ is $90^{\\circ}$:<br><br>$${n.centre}${n.contact}${n.near} = 90 - ${x} = ${first}^{\\circ}$<br><br>$${n.centre}${n.contact}$ and $${n.centre}${n.near}$ are both radii, so triangle $${n.centre}${n.contact}${n.near}$ is isosceles:<br><br>$${n.contact}${n.near}${n.far} = ${first}^{\\circ}$`,
+      `<strong>1.</strong> A radius meets a tangent at right angles, so angle $${n.centre}${n.contact}${n.tangentA}$ is $90^{\\circ}$:<br><br>$${n.centre}${n.contact}${n.near} = 90 - ${x} = ${first}^{\\circ}.$<br><br>$${n.centre}${n.contact}$ and $${n.centre}${n.near}$ are both radii, so triangle $${n.centre}${n.contact}${n.near}$ is isosceles:<br><br>$${n.contact}${n.near}${n.far} = ${first}^{\\circ}$`,
       `<strong>2.</strong> $${n.near}${n.far}$ is a diameter, so angle $${n.near}${n.fourth}${n.far}$ is $90^{\\circ}$ (the angle in a semicircle). The angles of triangle $${n.near}${n.fourth}${n.far}$ add to $180^{\\circ}$:<br><br>$${n.fourth}${n.near}${n.far} = 180 - 90 - ${y} = ${second}^{\\circ}$`,
       `<strong>3.</strong> $${n.contact}$ and $${n.fourth}$ are on opposite sides of $${n.near}${n.far}$, so the two parts add:<br><br>$${n.contact}${n.near}${n.fourth} = ${first} + ${second} = ${answer}^{\\circ}$`,
     ];
@@ -508,9 +508,12 @@ export function tangentReflexQuestion(): Q {
       `&bull;&nbsp; Angle $${n.near}${n.contact}${n.tangentE}$ is $${q}^{\\circ}.$`,
       `Calculate the size of the reflex angle $${n.near}${n.centre}${n.far}$.`,
     ];
+    // In the scheme's order: •¹ the tangent-side angle, •² the angles at the
+    // centre, •³ the reflex angle; a full stop where a sentence ends on maths
+    // (2026-10-02 full read, the owner's "Yes").
     const steps = [
-      `<strong>1.</strong> $${n.centre}${n.contact}$ and $${n.centre}${n.far}$ are both radii, so triangle $${n.centre}${n.contact}${n.far}$ is isosceles and the angle at $${n.far}$ is $${p}^{\\circ}$ as well:<br><br>$${n.contact}${n.centre}${n.far} = 180 - 2 \\times ${p} = ${first}^{\\circ}$`,
-      `<strong>2.</strong> A radius meets a tangent at right angles, so angle $${n.centre}${n.contact}${n.tangentE}$ is $90^{\\circ}$:<br><br>$${n.centre}${n.contact}${n.near} = 90 - ${q} = ${90 - q}^{\\circ}$<br><br>$${n.centre}${n.contact}$ and $${n.centre}${n.near}$ are both radii, so triangle $${n.centre}${n.contact}${n.near}$ is isosceles too:<br><br>$${n.contact}${n.centre}${n.near} = 180 - 2 \\times ${90 - q} = ${second}^{\\circ}$`,
+      `<strong>1.</strong> A radius meets a tangent at right angles, so angle $${n.centre}${n.contact}${n.tangentE}$ is $90^{\\circ}$:<br><br>$${n.centre}${n.contact}${n.near} = 90 - ${q} = ${90 - q}^{\\circ}$`,
+      `<strong>2.</strong> $${n.centre}${n.contact}$ and $${n.centre}${n.near}$ are both radii, so triangle $${n.centre}${n.contact}${n.near}$ is isosceles:<br><br>$${n.contact}${n.centre}${n.near} = 180 - 2 \\times ${90 - q} = ${second}^{\\circ}.$<br><br>$${n.centre}${n.contact}$ and $${n.centre}${n.far}$ are both radii too, so triangle $${n.centre}${n.contact}${n.far}$ is isosceles and the angle at $${n.far}$ is $${p}^{\\circ}$ as well:<br><br>$${n.contact}${n.centre}${n.far} = 180 - 2 \\times ${p} = ${first}^{\\circ}$`,
       `<strong>3.</strong> $${n.near}$ and $${n.far}$ are on opposite sides of $${n.centre}${n.contact}$, so the reflex angle is the two added:<br><br>reflex $${n.near}${n.centre}${n.far} = ${first} + ${second} = ${answer}^{\\circ}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;

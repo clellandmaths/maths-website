@@ -234,7 +234,10 @@ function calculate(wanted?: string, asked?: string): Q {
       result = big * rate / 100;
       aTex = sci(m, e);
       bTex = `${rate}\\%`;
-      method = `Find ${rate}% by multiplying by $${rate / 100}$:<br><br>$${sci(m, e)} \\times ${rate / 100}$`;
+      // `rate` has one decimal place, so three are exact; `rate / 100` alone
+      // printed "0.027999999999999997" (2026-10-02 full read, the owner's "Yes")
+      const dec = Number((rate / 100).toFixed(3));
+      method = `Find ${rate}% by multiplying by $${dec}$:<br><br>$${sci(m, e)} \\times ${dec}$`;
     } else if (ctx.op === 'multiply') {
       const count = wantRounding
         ? getRandomInt(ctx.first[0], ctx.first[1])
@@ -251,7 +254,10 @@ function calculate(wanted?: string, asked?: string): Q {
       result = total / big;
       aTex = `${total}`;
       bTex = sci(m, e);
-      method = `Divide the total by the number of parts:<br><br>$${total} \\div ${sci(m, e)}$`;
+      // Bracketed, as the scheme writes 12 ÷ (1.5 × 10^9): unbracketed it reads
+      // left to right as (total ÷ m) × 10^e. A count (no unit) divides by the
+      // size of one, not by a number of parts (2026-10-02 full read, the owner's "Yes").
+      method = `Divide the total by ${ctx.unit ? 'the number of parts' : 'the amount in one'}:<br><br>$${total} \\div (${sci(m, e)})$`;
     }
 
     if (!Number.isFinite(result) || result === 0) continue;

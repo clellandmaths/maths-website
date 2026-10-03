@@ -221,6 +221,11 @@ function sphereScientific(): Q | null {
     const e = Math.floor(Math.log10(v) + 1e-12);
     return `${(v / 10 ** e).toFixed(1)} \\times 10^{${e}}`;
   };
+  // The scheme's form, 1.098... x 10^12, cut (not rounded) after three places.
+  // `toSigFigs(exact, 5)` padded it with zeros, "1098100000000...", as if those
+  // digits were exact (2026-10-02 full read, the owner's "Yes use ...").
+  const ve = Math.floor(Math.log10(exact) + 1e-12);
+  const evaluated = `${(Math.floor(exact / 10 ** ve * 1000) / 1000).toFixed(3)}\\ldots \\times 10^{${ve}}`;
   const prose = [
     `${big.first} is approximately spherical with a radius of ${r} ${c.unit}.`,
     `<strong>(a)</strong> Calculate the volume of ${big.short}, giving your answer in scientific notation, correct to 2 significant figures.`,
@@ -230,7 +235,7 @@ function sphereScientific(): Q | null {
   const steps = [
     `<strong>1.</strong> Substitute the radius into the volume of a sphere:` +
     `<br><br>$V = \\frac{4}{3}\\pi r^{3} = \\frac{4}{3} \\times \\pi \\times ${r}^{3}$`,
-    `<strong>2.</strong> Evaluate:<br><br>$V = ${toSigFigs(exact, 5)}\\ldots$`,
+    `<strong>2.</strong> Evaluate:<br><br>$V = ${evaluated}$`,
     `<strong>3.</strong> Write it in scientific notation, correct to 2 significant figures:<br><br>$V = ${sci(shown)}$ ${cubic(c.short)}`,
     `<strong>4.</strong> "How many times greater" is a division:<br><br>$\\frac{${sci(shown)}}{${sci(other)}}$`,
     `<strong>5.</strong> Divide the numbers and subtract the powers:<br><br>$= ${times}$ times greater`,

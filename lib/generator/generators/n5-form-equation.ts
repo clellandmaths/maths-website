@@ -233,7 +233,9 @@ function wallOnThreeSides(): Q | null {
   ];
   const steps = [
     `<strong>1.</strong> There is a ${c.wall} at each end of the length, so it grows by $x$ twice:<br><br>$2x + ${len}$`,
-    `<strong>2.</strong> There is a ${c.wall} on only one of the other two sides, so the width grows by $x$ once. The area is<br><br>$(2x + ${len})(x + ${wid}) = 2x^{2} ${sgn(B, 'x')} + ${len * wid}$`,
+    `<strong>2.</strong> There is a ${c.wall} on only one of the other two sides, so the width grows by $x$ once. The area is<br><br>$(2x + ${len})(x + ${wid}) = 2x^{2} + ${2 * wid}x + ${len}x + ${len * wid} = 2x^{2} ${sgn(B, 'x')} + ${len * wid}$`,
+    // the four terms first: in a show-that they are the evidence (scheme •2;
+    // 2026-10-02 full read, the owner's "Yes")
     `<strong>3.</strong> Set that equal to ${area} and take everything to one side:<br><br>$${quadratic(A, B, C)}$`,
     ...formulaSteps(A, B, C, 2, 4),
   ];
@@ -406,6 +408,7 @@ function rectangleAgainstSquare(): Q | null {
   // becomes trivial. It had been reaching the page as "x^2 + 0x - 25 = 0".
   if (m === n) return null;
   const [B, C] = [n - m, -m * n];
+  const xt = (k: number) => (k === 1 ? 'x' : `${k}x`);
 
   const prose = [
     'The diagrams of a rectangle and square are shown below.',
@@ -415,7 +418,10 @@ function rectangleAgainstSquare(): Q | null {
   ];
   const steps = [
     `<strong>1.</strong> Area is length times breadth:<br><br>$(2x + ${q})(x + ${r})$`,
+    // the four-term expansions first, as the scheme shows them: in a show-that
+    // they are the evidence (2026-10-02 full read, the owner's "Yes")
     `<strong>2.</strong> The square has area $(x + ${s})^{2}$, so expand both and equate:` +
+    `<br><br>$2x^{2} + ${xt(2 * r)} + ${xt(q)} + ${q * r} = x^{2} + ${xt(s)} + ${xt(s)} + ${s * s}$` +
     `<br><br>$2x^{2} ${sgn(q + 2 * r, 'x')} + ${q * r} = x^{2} ${sgn(2 * s, 'x')} + ${s * s}$`,
     `<strong>3.</strong> Take everything to one side:<br><br>$${quadratic(1, B, C)}$`,
     `<strong>4.</strong> Factorise:<br><br>$(x ${sgn(-m)})(x ${sgn(n)}) = 0$`,
@@ -483,7 +489,9 @@ function cuboidVolume(): Q | null {
   ];
   const steps = [
     `<strong>1.</strong> Volume is length times breadth times height:<br><br>$(x + ${k}) \\times x \\times ${hh}$`,
-    `<strong>2.</strong> Set that equal to ${vol} and take everything to one side:<br><br>$${quadratic(A, B, C)}$`,
+    // the expanded volume first, as the scheme's •2 shows it (2x^2 + 14x = 45;
+    // 2026-10-02 full read, the owner's "Yes")
+    `<strong>2.</strong> Expand, set that equal to ${vol}, and take everything to one side:<br><br>$${hh}x^{2} + ${hh * k}x = ${vol}$<br><br>$${quadratic(A, B, C)}$`,
     ...formulaSteps(A, B, C, 1, 3),
   ];
   return assemble(
@@ -578,7 +586,9 @@ function rectangleAgainstTriangle(): Q | null {
   ];
   const steps = [
     `<strong>1.</strong> Area of a rectangle is length times breadth:<br><br>$${left}(x + ${C})$`,
-    `<strong>2.</strong> Expand that:<br><br>$${A === 1 ? '' : A}x^{2} ${sgn(A * C + B, 'x')} + ${B * C}$`,
+    // Part (b) is a "show that", so the four terms come first, as on the
+    // show-that card's three papers (2026-10-02 full read, the owner's "Yes").
+    `<strong>2.</strong> Expand that:<br><br>$${A === 1 ? '' : A}x^{2} + ${A * C === 1 ? '' : A * C}x + ${B === 1 ? '' : B}x + ${B * C} = ${A === 1 ? '' : A}x^{2} ${sgn(A * C + B, 'x')} + ${B * C}$`,
     `<strong>3.</strong> The triangle is half its base times its height, and its base is $2(x + ${D})$:` +
     `<br><br>$\\frac{1}{2} \\times 2(x + ${D}) \\times ${E}x = ${E === 1 ? '' : E}x^{2} + ${E * D}x$`,
     `<strong>4.</strong> The two areas are equal, so put them together and take everything to one side:` +

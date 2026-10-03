@@ -297,8 +297,11 @@ function solveByFactorising(wanted?: string): Q {
       questionLines: [`Solve the equation by factorising $${fmt(expanded, v)} = 0.$`],
       variationId: 'factorising.solve-non-unitary',
       solutionSteps: [
-        `<strong>1.</strong> The $${v}^{2}$ term is not on its own, so start with a pair that multiplies to give it:<br><br>$${a} = ${m} \\times ${n}$, so the brackets open $(${m === 1 ? '' : m}${v} \\ldots)(${n === 1 ? '' : n}${v} \\ldots)$`,
-        `<strong>2.</strong> Now find the second pair. They must multiply to $${c}$, and the outsides and insides must add to $${fmt([0, b], v)}$:<br><br>$${bracket([p, m], v)}${bracket([q, n], v)} = 0$`,
+        // The numbers in place first, then the signs: scheme •1 is the brackets
+        // with their numbers, (5x ... 2)(2x ... 3), before •2 settles the signs
+        // (2026-10-02 full read, the owner's "Yes").
+        `<strong>1.</strong> The $${v}^{2}$ term is not on its own, so find a pair that multiplies to give it, and a pair that multiplies to give the constant without its sign:<br><br>$${a} = ${m} \\times ${n}$ and $${Math.abs(c)} = ${Math.abs(p)} \\times ${Math.abs(q)}$, so the brackets are $(${m === 1 ? '' : m}${v} \\ldots ${Math.abs(p)})(${n === 1 ? '' : n}${v} \\ldots ${Math.abs(q)})$`,
+        `<strong>2.</strong> Now settle the signs. They must multiply to $${c}$, and the outsides and insides must add to $${fmt([0, b], v)}$:<br><br>$${bracket([p, m], v)}${bracket([q, n], v)} = 0$`,
         `<strong>3.</strong> ${solveStep}`,
       ],
       stepMarks: [1, 1, 1],

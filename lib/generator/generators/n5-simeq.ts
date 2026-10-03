@@ -101,10 +101,21 @@ function buildPair(x0: number, y0: number, bothScaled = false) {
   return null;
 }
 
+/**
+ * The papers whose working names only the equation it scales (2026 P2 Q4,
+ * 2025 P2 Q10, 2022 P2 Q4; 2019 P1 Q8 and 2017 P1 Q13 pass it directly). On the
+ * owner's "Yes" to that card, 2026-10-02 full read; then 2016 P1 Q4 and
+ * 2014 P2 Q3, which share the routine (the owner, 2026-10-03: "Do the 3 left
+ * alone ones").
+ */
+const NAME_SCALED = new Set(['simeq.construct-combine', 'simeq.construct-combine-2025',
+  'simeq.construct-solve', 'simeq.construct-solve-pre2022', 'simeq.construct-solve-2014']);
+
 /** The elimination worked through, as the markscheme sets it out. */
 function eliminationSteps(
   p: { a1: number; b1: number; c1: number; a2: number; b2: number; c2: number },
   v1: string, v2: string, x0: number, y0: number,
+  nameScaled = false,
 ): string[] {
   const { a1, b1, c1, a2, b2, c2 } = p;
   const L = Math.abs(a1 * a2) / gcd(Math.abs(a1), Math.abs(a2));   // match the v1 terms
@@ -116,11 +127,20 @@ function eliminationSteps(
   const bAfter = sameSign ? B1 - B2 : B1 + B2;
   const cAfter = sameSign ? C1 - C2 : C1 + C2;
 
+  // Only the equation that is scaled is named: "Multiply the first by 1" was
+  // in about one draw in eight (2026-10-02 full read, the owner's "Yes").
+  // Opt-in, for the five papers on that card (see NAME_SCALED); the others
+  // on this helper read as before.
+  const scale = !nameScaled ? `Scale each equation so the $${v1}$ terms match. Multiply the first by $${m1}$ and the second by $${m2}$:`
+    : m1 === 1 && m2 === 1 ? `The $${v1}$ terms already match:`
+    : m1 === 1 ? `Scale the second equation so the $${v1}$ terms match. Multiply it by $${m2}$:`
+    : m2 === 1 ? `Scale the first equation so the $${v1}$ terms match. Multiply it by $${m1}$:`
+    : `Scale each equation so the $${v1}$ terms match. Multiply the first by $${m1}$ and the second by $${m2}$:`;
   return [
     // The scaled totals and their difference through `num`: in pounds they are
     // floats, and printed raw they showed "54.400000000000006" (the owner,
     // 2026-10-02, "Yes"). The question's own lines still use `equation` as is.
-    `<strong>1.</strong> Scale each equation so the $${v1}$ terms match. Multiply the first by $${m1}$ and the second by $${m2}$:<br><br>$${equation(A1, v1, B1, v2, Number(num(C1)))}$<br>$${equation(A2, v1, B2, v2, Number(num(C2)))}$`,
+    `<strong>1.</strong> ${scale}<br><br>$${equation(A1, v1, B1, v2, Number(num(C1)))}$<br>$${equation(A2, v1, B2, v2, Number(num(C2)))}$`,
     // When the subtraction leaves the letter on its own there is nothing left
     // to divide, so the value is written once: it printed "y = 5, so y = 5"
     // (the owner, 2026-10-02, "Yes").
@@ -320,7 +340,7 @@ function intersection(): Q {
       // through to values for x and y, •³ state the coordinates of P. Writing
       // the coordinates is not a mark of its own, so it closes the third step
       // rather than adding a fourth — and the third step is the one withheld.
-      solutionSteps: eliminationSteps(p, 'x', 'y', x0, y0).map((s, i) =>
+      solutionSteps: eliminationSteps(p, 'x', 'y', x0, y0, true).map((s, i) =>
         i === 2 ? `${s}, so the lines meet at $${point}(${num(x0)}, ${num(y0)})$` : s),
       stepMarks: [1, 1, 1],
       finalAnswer: `$${point}(${num(x0)}, ${num(y0)})$`,
@@ -577,7 +597,8 @@ function constructSolve(combine = false, paper1 = false, asked?: string): Q {
       solutionSteps: [
         `<strong>(a)</strong> Let $${v1}$ be the ${unit} of one ${ctx.single[0]} and $${v2}$ the ${unit} of one ${ctx.single[1]}, both in ${inUnits}:<br><br>$${equation(q1, v1, q2, v2, dt1)}$`,
         `<strong>(b)</strong> The same for the second amount:<br><br>$${equation(q3, v1, q4, v2, dt2)}$`,
-        ...eliminationSteps(p, v1, v2, d1, d2).map(s =>
+        // `paper1` is 2019 P1 Q8's own topic, which passes no id
+        ...eliminationSteps(p, v1, v2, d1, d2, paper1 || NAME_SCALED.has(asked ?? '')).map(s =>
           s.replace(/^<strong>(\d)\.<\/strong>/, '<strong>(c) $1.</strong>')),
         combine
           ? `<strong>(c)</strong> The question asks about ${n1} ${ctx.plural[0]} and ${n2} ${ctx.plural[1]}, so put the two values to work:` +

@@ -369,9 +369,16 @@ function quadraticFormula(wanted?: string, asked?: string): Q {
     const x1 = (-b + r) / (2 * a), x2 = (-b - r) / (2 * a);
     // a root just below zero rounds to the string "-0.0", which looks like a mistake
     if (Math.abs(x1) < 0.15 || Math.abs(x2) < 0.15) continue;
+    // A significant-figure answer keeps its trailing zeros: `sigFigs` is a
+    // number, so 0.70 printed as "0.7", one figure (2026-10-02 full read, the
+    // owner's "Yes"). Same rounding, only padded.
+    const padSf = (s: string, sf: number) => {
+      const got = s.replace(/^-?[0.]*/, '').replace('.', '').length;
+      return got >= sf ? s : `${s}${s.includes('.') ? '' : '.'}${'0'.repeat(sf - got)}`;
+    };
     const show = (x: number) => 'dp' in rounding
       ? x.toFixed(rounding.dp)
-      : `${sigFigs(x, rounding.sf)}`;
+      : padSf(`${sigFigs(x, rounding.sf)}`, rounding.sf);
 
     // ── two papers, two mark structures ─────────────────────────────────────
     //

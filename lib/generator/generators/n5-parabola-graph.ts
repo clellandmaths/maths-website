@@ -323,11 +323,10 @@ function parabolaMaximum(): Q | null {
     `<strong>1. (a)</strong> The axis of symmetry is the vertical line through the turning point, so it takes the turning point's $x$-coordinate:<br><br>$x = ${h}$`,
     `<strong>2. (b)(i)</strong> The square is subtracted, so $y$ is largest when the bracket is zero — and that is where the turning point is, at $x = ${h}$:` +
     `<br><br>$${h} + a = 0$, so $a = ${a}$`,
-    // The scheme's own Note 1: writing the equation out earns both marks, so a
-    // pupil should be told that rather than left thinking only two bare numbers
-    // will do.
-    `<strong>3. (b)(ii)</strong> With the bracket zero, $y = b$ there, and the turning point is at a height of ${k}:<br><br>$b = ${k}$` +
-    `<br><br>Writing the equation out as $y = ${k} - (x - ${h})^{2}$ is also accepted for both marks.`,
+    // The scheme's Note 1 (writing the equation out earns both marks) is
+    // marker's talk, and it ran on from "b = 8" with no stop and the wrong sign
+    // in its bracket. Dropped on the owner's "Yes", 2026-10-02 full read.
+    `<strong>3. (b)(ii)</strong> With the bracket zero, $y = b$ there, and the turning point is at a height of ${k}:<br><br>$b = ${k}$`,
   ];
   return assemble({
     view,

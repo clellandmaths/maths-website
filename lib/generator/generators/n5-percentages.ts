@@ -810,6 +810,9 @@ function partOfWhole(askedId?: string): Q {
     const part = whole * pct / 100;
     if (!Number.isInteger(part) || part === whole) continue;
     const onePercent = whole / 100;
+    // Exactly, never rounded: `plain` printed 4.2 as "4", then "4 x 100 = 420"
+    // (2026-10-02 full read, the owner's "Yes"). `whole` is a multiple of 20, so 1 d.p. is exact.
+    const onePct = Number.isInteger(onePercent) ? plain(onePercent) : money(onePercent, 1);
 
     return {
       subTopic: 'Finding a Total from a Percentage',
@@ -819,8 +822,8 @@ function partOfWhole(askedId?: string): Q {
       boardQuestionLines: [`${plain(part)} is ${pct}% of the total. Find the total.`],
       solutionSteps: [
         `<strong>1.</strong> Write down what the question tells you:<br><br>$${pct}\\% = ${plain(part)}$`,
-        `<strong>2.</strong> Divide to find $1\\%$:<br><br>$1\\% = \\frac{${plain(part)}}{${pct}} = ${plain(onePercent)}$`,
-        `<strong>3.</strong> Multiply by 100 to get the whole:<br><br>$100\\% = ${plain(onePercent)} \\times 100 = ${plain(whole)}$ ${ctx.unit}`,
+        `<strong>2.</strong> Divide to find $1\\%$:<br><br>$1\\% = \\frac{${plain(part)}}{${pct}} = ${onePct}$`,
+        `<strong>3.</strong> Multiply by 100 to get the whole:<br><br>$100\\% = ${onePct} \\times 100 = ${plain(whole)}$ ${ctx.unit}`,
       ],
       // •¹ know that r% = the figure given, •² begin a valid strategy,
       // •³ answer — 2014 P1 Q9 exactly
@@ -924,6 +927,10 @@ function twoStage(): Q {
   const restYears = 2;
   const m1 = 1 - first / 100, m2 = 1 - rest / 100;
   const value = start * m1 * Math.pow(m2, restYears);
+  // Printed to two places, which is exact for a whole rate: `m1` alone printed
+  // "0.8200000000000001" (2026-10-02 full read, the owner's "Yes"). The value
+  // above keeps its own arithmetic, so the answer is unchanged.
+  const d1 = Number(m1.toFixed(2)), d2 = Number(m2.toFixed(2));
 
   return {
     subTopic: 'Two-Stage Depreciation',
@@ -946,8 +953,8 @@ function twoStage(): Q {
       `£${money(start, 0)}, down ${first}% then ${rest}% for ${restYears} years. Value?`,
     ],
     solutionSteps: [
-      `<strong>1.</strong> Find each multiplier:<br><br>$100\\% - ${first}\\% = ${m1}$ and $100\\% - ${rest}\\% = ${m2}$`,
-      `<strong>2.</strong> Apply the first once, then the second ${restYears === 2 ? 'twice' : 'three times'}:<br><br>$${money(start, 0)} \\times ${m1} \\times ${m2}^{${restYears}}$`,
+      `<strong>1.</strong> Find each multiplier:<br><br>$100\\% - ${first}\\% = ${100 - first}\\% = ${d1}$ and $100\\% - ${rest}\\% = ${100 - rest}\\% = ${d2}$`,
+      `<strong>2.</strong> Apply the first once, then the second ${restYears === 2 ? 'twice' : 'three times'}:<br><br>$${money(start, 0)} \\times ${d1} \\times ${d2}^{${restYears}}$`,
       `<strong>3.</strong> Evaluate:<br><br>$= £${money(value, 2)}$`,
     ],
     // 2023 P2 Q1: •¹ know how to decrease by both rates, •² know how to

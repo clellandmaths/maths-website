@@ -822,8 +822,9 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
         solutionSteps: [
           share,
           `<strong>2.</strong> That fraction of the circumference $2\\pi r$ is the arc, which gives an equation for $r$:<br><br>$\\frac{${Math.round(angle)}}{360} \\times 2\\pi r = ${trim(arc)}$`,
-          `<strong>3.</strong> Undo the fraction first, to get the whole circumference:<br><br>$2\\pi r = ${trim(arc)} \\div \\frac{${Math.round(angle)}}{360} = ${dp1(arc * 360 / angle)}$ ${c.short}`,
-          `<strong>4.</strong> Then divide by $2\\pi$:<br><br>$r = \\frac{${dp1(arc * 360 / angle)}}{2\\pi} = ${dp1(arc * 360 / (2 * Math.PI * angle))}$ ${c.short}`,
+          `<strong>3.</strong> Undo the fraction first, to get the whole circumference:<br><br>$2\\pi r = ${trim(arc)} \\div \\frac{${Math.round(angle)}}{360} = ${(arc * 360 / angle).toFixed(2)}\\ldots$ ${c.short}`,
+          // the circumference carried unrounded (2026-10-02 full read, the owner's "Yes")
+          `<strong>4.</strong> Then divide by $2\\pi$:<br><br>$r = \\frac{${(arc * 360 / angle).toFixed(2)}\\ldots}{2\\pi} = ${dp1(arc * 360 / (2 * Math.PI * angle))}$ ${c.short}`,
         ],
         stepMarks: [1, 1, 1, 1],
         finalAnswer: `$${dp1(arc * 360 / (2 * Math.PI * angle))}$ ${c.short}`,

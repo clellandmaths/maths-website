@@ -48,6 +48,18 @@ export interface BearingArc {
    * that vertex there are several angles it could have meant.
    */
   shade?: boolean;
+  /**
+   * Opt-in: the vertex whose leg from `at` the label must keep clear of.
+   *
+   * The label sits at the middle of the arc, and on 2018 P2 Q13 the triangle's
+   * other leg can run through that middle, printing "090°" across the line
+   * (2026-10-02 full read, the owner's "Yes" for that question only). When the
+   * leg cuts the arc, the label goes in the middle of the piece between the
+   * cut and north, outside the triangle (2026-10-03, the owner: "move the label
+   * outside triangle towards north line"). Unset for every other caller, whose
+   * labels do not move.
+   */
+  labelClear?: number;
 }
 
 export interface BearingsTriangleSpec {
@@ -161,7 +173,19 @@ export function bearingsTriangle(spec: BearingsTriangleSpec): Figure | null {
       elements.push({ kind: 'shadedShape', points: wedge });
     }
     if (a.label) {
-      const midDeg = from + (((90 - from) % 360 + 360) % 360) / 2;
+      const span = ((90 - from) % 360 + 360) % 360;
+      let midDeg = from + span / 2;
+      if (a.labelClear !== undefined) {
+        // The arc runs from its own leg round to north; where the other leg
+        // cuts it, the piece on the leg's side is inside the triangle, and a
+        // label there reads as the triangle's angle ("some would read that as
+        // angle in the triangle is 90", the owner, 2026-10-03). So the label
+        // goes in the middle of the piece between the cut and north: outside
+        // the triangle, towards the north line.
+        const leg = mathsAngle(compassOf(at, spec.points[a.labelClear]));
+        const cut = ((leg - from) % 360 + 360) % 360;      // where the leg meets the arc
+        if (cut < span) midDeg = from + cut + (span - cut) / 2;
+      }
       const rad = midDeg * Math.PI / 180;
       elements.push({
         kind: 'label',

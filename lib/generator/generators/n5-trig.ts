@@ -1,7 +1,7 @@
 import { GeneratedQuestion } from './types';
 import type { Gen } from './n5';
 import { getRandomInt, gcd } from './utils';
-import { ROTATING_CONTEXTS, withUnit } from './n5-contexts';
+import { ROTATING_CONTEXTS, withUnit, unitFor } from './n5-contexts';
 
 /**
  * National 5 trigonometric equations and identities — the parts needing no
@@ -177,25 +177,33 @@ function solveEquation(
     if (Math.abs(r) < 0.06) continue;
     if (fn === 'tan' && Math.abs(r) > 6) continue;
 
-    let x1: number, x2: number, rule: string, base = 0;
+    // `rule` is how each solution is made from the reference angle, as a
+    // prefix to it ('' is the angle itself). It printed "x and 180 - x" in
+    // words, with x the reference angle as well as the unknown (2026-10-02 full
+    // read, the owner's "Yes"): now the number goes in, "180 - 23.6 = 156.4".
+    let x1: number, x2: number, rule: [string, string], base = 0;
     if (fn === 'sin') {
       base = Math.asin(Math.abs(r)) * 180 / Math.PI;
       [x1, x2] = r > 0 ? [base, 180 - base] : [180 + base, 360 - base];
-      rule = r > 0 ? 'x and 180 - x' : '180 + x and 360 - x';
+      rule = r > 0 ? ['', '180 - '] : ['180 + ', '360 - '];
     } else if (fn === 'cos') {
       base = Math.acos(Math.abs(r)) * 180 / Math.PI;
       [x1, x2] = r > 0 ? [base, 360 - base] : [180 - base, 180 + base];
-      rule = r > 0 ? 'x and 360 - x' : '180 - x and 180 + x';
+      rule = r > 0 ? ['', '360 - '] : ['180 - ', '180 + '];
     } else {
       base = Math.atan(Math.abs(r)) * 180 / Math.PI;
       [x1, x2] = r > 0 ? [base, 180 + base] : [180 - base, 360 - base];
-      rule = r > 0 ? 'x and 180 + x' : '180 - x and 360 - x';
+      rule = r > 0 ? ['', '180 + '] : ['180 - ', '360 - '];
     }
     if (Math.abs(x1 - Math.round(x1)) < 0.04) continue;   // avoid a special angle
 
     const tex = fn === 'sin' ? S : fn === 'cos' ? C : T;
     const g = gcd(Math.abs(c - b), a) || 1;
-    const ratioTex = a / g === 1 ? `${(c - b) / g}` : `\\frac{${(c - b) / g}}{${a / g}}`;
+    // a negative fraction with its sign in front, -\frac{15}{16}, not \frac{-15}{16}
+    const ratioTex = a / g === 1 ? `${(c - b) / g}`
+      : `${c - b < 0 ? '-' : ''}\\frac{${Math.abs(c - b) / g}}{${a / g}}`;
+    const ref = dp1(base);
+    const made = (pre: string, x: number) => (pre ? `${pre}${ref} = ${dp1(x)}` : `${ref}`);
     // `b` can no longer be zero (see its draw above), so the sign is all this
     // has to choose and there is no empty case to guard.
     const lhs = `${times(a, tex)} ${b < 0 ? '-' : '+'} ${Math.abs(b)}`;
@@ -232,8 +240,8 @@ function solveEquation(
       // was left to produce two answers rather than one.
       solutionSteps: [
         `<strong>1.</strong> Get the ${fn} on its own:<br><br>$${times(a, tex)} = ${c - b}$, so $${tex} = ${ratioTex}$`,
-        `<strong>2.</strong> Take the inverse of the <strong>positive</strong> ratio to find the reference angle, $${dp1(base)}$. ${r < 0 ? `The ratio is <strong>negative</strong>, so both answers come from the quadrants where $\\${fn}$ is negative` : `The ratio is positive`}, and the two solutions in $${domain}$ are ${rule}. The first is:<br><br>$x = ${dp1(x1)}$`,
-        `<strong>3.</strong> And the second:<br><br>$x = ${dp1(x2)}$`,
+        `<strong>2.</strong> Take the inverse of the <strong>positive</strong> ratio to find the reference angle, $${dp1(base)}$. ${r < 0 ? `The ratio is <strong>negative</strong>, so both answers come from the quadrants where $\\${fn}$ is negative` : `The ratio is positive`}, and the two solutions in $${domain}$ are $${rule[0]}${ref}$ and $${rule[1]}${ref}$. The first is:<br><br>$x = ${made(rule[0], x1)}$`,
+        `<strong>3.</strong> And the second:<br><br>$x = ${made(rule[1], x2)}$`,
       ],
       stepMarks: [1, 1, 1],
       finalAnswer: `$x = ${dp1(x1)}$ or $x = ${dp1(x2)}$`,
@@ -325,6 +333,17 @@ function inFormula(wanted?: string, asked?: string): Q {
       const base = Math.acos(Math.abs(r)) * 180 / Math.PI;
       const [x1, x2] = r > 0 ? [base, 360 - base] : [180 - base, 180 + base];
       if (Math.abs(x1 - Math.round(x1)) < 0.04) continue;
+      // The cosine as the fraction it is (the scheme keeps 3/8), not "-0.7000";
+      // and the reference angle stated as a number and used, "180 - 45.6 =
+      // 134.4", where "180 - x" used x for it and for the unknown (2026-10-02
+      // full read, the owner's "Yes"). Words only: nothing here is drawn.
+      const top = minus ? B - target : target - B, gf = gcd(Math.abs(top), A) || 1;
+      const ratioTex = A / gf === 1 ? `${top / gf}`
+        : `${top < 0 ? '-' : ''}\\frac{${Math.abs(top) / gf}}{${A / gf}}`;
+      const ref = dp1(base);
+      const [p1, p2] = r > 0 ? ['', '360 - '] : ['180 - ', '180 + '];
+      const made = (pre: string, x: number) => (pre ? `${pre}${ref} = ${dp1(x)}` : `${ref}`);
+      const inverse = `Take the inverse cosine of the positive value for the reference angle, $${ref}$. ${r > 0 ? 'A positive' : 'A negative'} cosine gives the solutions $${p1}${ref}$ and $${p2}${ref}$. The first value is:<br><br>$x = ${made(p1, x1)}$`;
 
       if (whole) {
         // (a) and (b) exactly as the evaluating branch below writes them,
@@ -352,11 +371,12 @@ function inFormula(wanted?: string, asked?: string): Q {
           // rearrange, one value, the second
           solutionSteps: [
             `<strong>(a)</strong> Substitute $x = ${at}$:<br><br>$h = ${B} ${minus ? '-' : '+'} ${A} \\times \\cos ${at}^{\\circ} = ${dp1(value)}$ ${ctx.unit}`,
-            `<strong>(b)</strong> The cosine runs between $-1$ and $1$, so the height is smallest when $${minus ? `\\cos x^{\\circ} = 1` : `\\cos x^{\\circ} = -1`}$:<br><br>$h = ${B} - ${A} = ${lowest}$ ${ctx.unit}`,
+            // "= 1 metre", not "1 metres" (2026-10-02 full read, the owner's "Yes")
+            `<strong>(b)</strong> The cosine runs between $-1$ and $1$, so the height is smallest when $${minus ? `\\cos x^{\\circ} = 1` : `\\cos x^{\\circ} = -1`}$:<br><br>$h = ${B} - ${A} = ${lowest}$ ${unitFor(lowest, ctx.unit)}`,
             `<strong>(c) 1.</strong> Put the height into the formula:<br><br>$${target} = ${B} ${minus ? '-' : '+'} ${times(A, C)}$`,
-            `<strong>(c) 2.</strong> Rearrange to get the cosine on its own:<br><br>$${C} = ${r.toFixed(4)}$`,
-            `<strong>(c) 3.</strong> Take the inverse cosine, then use that ${r > 0 ? 'the second solution is $360 - x$' : 'a negative cosine gives solutions $180 - x$ and $180 + x$'}. The first value is:<br><br>$x = ${dp1(x1)}$`,
-            `<strong>(c) 4.</strong> And the second:<br><br>$x = ${dp1(x2)}$`,
+            `<strong>(c) 2.</strong> Rearrange to get the cosine on its own:<br><br>$${C} = ${ratioTex}$`,
+            `<strong>(c) 3.</strong> ${inverse}`,
+            `<strong>(c) 4.</strong> And the second:<br><br>$x = ${made(p2, x2)}$`,
           ],
           stepMarks: [1, 1, 1, 1, 1, 1],
           finalAnswer: `(a) ${dp1(value)} ${ctx.unit}, (b) ${withUnit(lowest, ctx.unit)}, (c) $x = ${dp1(x1)}$ or $x = ${dp1(x2)}$`,
@@ -396,9 +416,9 @@ function inFormula(wanted?: string, asked?: string): Q {
         // of x, •⁴ the second — the same four in 2023, 2025 and 2017's part (c)
         solutionSteps: [
           `<strong>1.</strong> Put the height into the formula:<br><br>$${target} = ${B} ${minus ? '-' : '+'} ${times(A, C)}$`,
-          `<strong>2.</strong> Rearrange to get the cosine on its own:<br><br>$${C} = ${r.toFixed(4)}$`,
-          `<strong>3.</strong> Take the inverse cosine, then use that ${r > 0 ? 'the second solution is $360 - x$' : 'a negative cosine gives solutions $180 - x$ and $180 + x$'}. The first value is:<br><br>$x = ${dp1(x1)}$`,
-          `<strong>4.</strong> And the second:<br><br>$x = ${dp1(x2)}$`,
+          `<strong>2.</strong> Rearrange to get the cosine on its own:<br><br>$${C} = ${ratioTex}$`,
+          `<strong>3.</strong> ${inverse}`,
+          `<strong>4.</strong> And the second:<br><br>$x = ${made(p2, x2)}$`,
         ],
         stepMarks: [1, 1, 1, 1],
         finalAnswer: `$x = ${dp1(x1)}$ or $x = ${dp1(x2)}$`,

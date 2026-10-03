@@ -183,7 +183,8 @@ function prism(): Q | null {
     ask('B', 'C'),
   ];
   const steps = [
-    `<strong>1.</strong> $AB$ runs parallel to the $y$-axis and is ${L} long, so only the $y$ coordinate of $A$ changes:` +
+    // AB's length comes from DC, which is what the question gives (2026-10-02 full read, the owner's "Yes")
+    `<strong>1.</strong> $AB$ runs parallel to the $y$-axis and is the same length as $DC$, ${L}, so only the $y$ coordinate of $A$ changes:` +
     `<br><br>$B${coord(B)}$`,
     `<strong>2.</strong> $AD = AE$ makes the cross-section isosceles, so $D$ is as far to the right of $A$ as $E$ is to the left — that is $x = ${e + w}$ — and $C$ is ${L} back from it at ground level:` +
     `<br><br>$C${coord(C)}$`,
@@ -315,7 +316,19 @@ function letteredCuboid(): Q | null {
   const y0 = getRandomInt(3, 10);
   const dd = 2 * getRandomInt(2, 5);              // its depth in y, even so the
   const y1 = y0 + dd;                             //   midpoint is a whole number
+  // A shallow box draws the far top edge DC short on the page, and D, M and C
+  // crowd each other on it: a depth of 4, or one under half the width (16
+  // wide and 6 deep), made every draw whose D and M sat within 22 px. A box
+  // nearly as deep as it is wide draws the hidden corner F on top of D. The
+  // paper's is 12 wide and 6 deep, so the depth stays between half and three
+  // quarters of the width (the owner, 2026-10-03: "Do the 3 left alone ones").
+  if (dd < 6 || 2 * dd < w || 4 * dd > 3 * w) return null;
   const h = getRandomInt(3, 9);                   // its height in z
+  // The y-axis is drawn through the origin at 30 degrees, and the top edge DC
+  // runs parallel to it; when the height is close to tan 30 of the width the
+  // two lie on one line and draw as one (16 wide, 9 high). Kept at least a
+  // unit apart (the owner, 2026-10-03: "Yes reject those as well").
+  if (Math.abs(h - w * Math.tan(Math.PI / 6)) * Math.cos(Math.PI / 6) < 1) return null;
 
   // Lettered as the paper does: ABCD round the top, EFGH beneath them, with A
   // above E. The two whose coordinates are printed are diagonally opposite on

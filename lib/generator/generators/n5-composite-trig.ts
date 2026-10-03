@@ -202,14 +202,18 @@ function heightOverBase(bare: boolean): Q | null {
   // trig formula, •⁵ calculate the length asked for. Finding the third angle is
   // not a mark of its own, and rearranging is — the reverse of how this was set
   // out, which put two marks in one step twice over.
+  // The slant is carried unrounded, with dots, as the scheme's •3 writes it
+  // ("15.0..."): printed as 24.8 it gave "24.8 x sin 40 = 16.0", which does not
+  // check (2026-10-02 full read, the owner's "Yes").
+  const carried = `${slant.toFixed(2)}\\ldots`;
   const steps = [
     `<strong>1.</strong> The angles of triangle $${nA}${nB}${nC}$ add to $180^{\\circ}$, so $${nA}${nB}${nC} = 180 - ${alpha} - ${gamma} = ${apex}^{\\circ}$. The sine rule pairs $${nA}${nB}$ with the angle at $${nC}$, and $${nA}${nC}$ with the angle at $${nB}$:<br><br>$\\frac{${nA}${nB}}{\\sin ${gamma}^{\\circ}} = \\frac{${L}}{\\sin ${apex}^{\\circ}}$`,
     `<strong>2.</strong> Rearrange to make $${nA}${nB}$ the subject:<br><br>$${nA}${nB} = \\frac{${L} \\times \\sin ${gamma}^{\\circ}}{\\sin ${apex}^{\\circ}}$`,
-    `<strong>3.</strong> Work that out:<br><br>$${nA}${nB} = ${dp1(slant)}$ ${short}`,
+    `<strong>3.</strong> Work that out:<br><br>$${nA}${nB} = ${carried}$ ${short}`,
     `<strong>4.</strong> ${bare
       ? `$${nB}${nD}$ is perpendicular to $${nA}${nC}$, so triangle $${nA}${nB}${nD}$ is right-angled at $${nD}$`
-      : `The height is measured straight down to level ground, so it makes a right-angled triangle with $${nA}${nB}$`}:<br><br>$\\sin ${alpha}^{\\circ} = \\frac{${wanted}}{${dp1(slant)}}$`,
-    `<strong>5.</strong> Rearrange and evaluate:<br><br>$${wanted} = ${dp1(slant)} \\times \\sin ${alpha}^{\\circ} = ${dp1(h)}$ ${short}`,
+      : `The height is measured straight down to level ground, so it makes a right-angled triangle with $${nA}${nB}$`}:<br><br>$\\sin ${alpha}^{\\circ} = \\frac{${wanted}}{${carried}}$`,
+    `<strong>5.</strong> Rearrange and evaluate:<br><br>$${wanted} = ${carried} \\times \\sin ${alpha}^{\\circ} = ${dp1(h)}$ ${short}`,
   ];
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
@@ -279,9 +283,10 @@ function twoElevations(): Q | null {
     // •³ calculate the slant, •⁴ a valid strategy for the ground distance,
     // •⁵ calculate it
     `<strong>2.</strong> The sine rule in triangle $${nA}${nC}${nD}$ pairs $${nA}${nC}$ with the angle at $${nD}$:<br><br>$\\frac{${nA}${nC}}{\\sin ${far}^{\\circ}} = \\frac{${d}}{\\sin ${near - far}^{\\circ}}$`,
-    `<strong>3.</strong> Rearrange and work it out:<br><br>$${nA}${nC} = \\frac{${d} \\times \\sin ${far}^{\\circ}}{\\sin ${near - far}^{\\circ}} = ${dp1(slant)}$ metres`,
-    `<strong>4.</strong> Triangle $${nA}${nB}${nC}$ is right-angled at $${nB}$:<br><br>$\\cos ${near}^{\\circ} = \\frac{${nB}${nC}}{${dp1(slant)}}$`,
-    `<strong>5.</strong> Rearrange:<br><br>$${nB}${nC} = ${dp1(slant)} \\times \\cos ${near}^{\\circ} = ${dp1(b1)}$ metres`,
+    `<strong>3.</strong> Rearrange and work it out:<br><br>$${nA}${nC} = \\frac{${d} \\times \\sin ${far}^{\\circ}}{\\sin ${near - far}^{\\circ}} = ${slant.toFixed(2)}\\ldots$ metres`,
+    // carried unrounded, as the scheme's •3 does (2026-10-02 full read, the owner's "Yes")
+    `<strong>4.</strong> Triangle $${nA}${nB}${nC}$ is right-angled at $${nB}$:<br><br>$\\cos ${near}^{\\circ} = \\frac{${nB}${nC}}{${slant.toFixed(2)}\\ldots}$`,
+    `<strong>5.</strong> Rearrange:<br><br>$${nB}${nC} = ${slant.toFixed(2)}\\ldots \\times \\cos ${near}^{\\circ} = ${dp1(b1)}$ metres`,
   ];
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 
@@ -345,6 +350,11 @@ function splitSideCosine(): Q | null {
   // is that paper's alone.
   getRandomInt(2, 14);                      // the far half, drawn and not used
   const e = m;                              // foot to the far end of the base
+  // **And the slant is not halved too — 2026-10-02.** With the base halved, a
+  // halved slant makes the large triangle the small one scaled by 2, and the
+  // answer is twice the perpendicular by Pythagoras, no cosine rule. The paper
+  // splits its slant 4 and 6. The owner, on the full read: "Yes".
+  if (q === p) return null;
   const height = Math.sqrt(p * p - m * m);
   const AQ = p + q, AE = m + e;
   if (AQ / AE > 3 || AE / AQ > 3) return null;
@@ -617,7 +627,9 @@ function hexagonArea(): Q | null {
     `<strong>1.</strong> The three diagonals cross at the centre and cut the hexagon into six triangles, each with two sides of half a diagonal, $${d} \\div 2 = ${r}$ ${u}. The six angles at the centre fill a full turn:<br><br>$360 \\div 6 = 60^{\\circ}$`,
     `<strong>2.</strong> One triangle, by $\\frac{1}{2}ab\\sin C$:<br><br>$\\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin 60^{\\circ}$`,
     `<strong>3.</strong> The hexagon is six of them:<br><br>$6 \\times \\frac{1}{2} \\times ${r} \\times ${r} \\times \\sin 60^{\\circ}$`,
-    `<strong>4.</strong> Work it out, and give the units:<br><br>$6 \\times ${one.toFixed(2)} = ${dp1(area)}$ ${u}$^{2}$`,
+    // One triangle carried with dots: "6 x 173.21 = 1039.2" did not check, since
+    // 6 x 173.21 = 1039.26 (2026-10-02 full read, the owner's "Yes")
+    `<strong>4.</strong> Work it out, and give the units:<br><br>$6 \\times ${one.toFixed(2)}\\ldots = ${dp1(area)}$ ${u}$^{2}$`,
   ];
   if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) return null;
 

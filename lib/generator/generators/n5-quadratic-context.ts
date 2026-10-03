@@ -1,6 +1,6 @@
 import { GeneratedQuestion } from './types';
 import { getRandomInt, gcd } from './utils';
-import { withUnit } from './n5-contexts';
+import { withUnit, unitFor } from './n5-contexts';
 import { sketchAxes, type SketchAxesSpec, type View } from '../diagrams/shapes/sketch-axes';
 import { renderScene } from '../diagrams/render';
 import { verifyFigure } from '../diagrams/verify';
@@ -126,7 +126,7 @@ function reachesHeight(): Q | null {
   const steps = [
     `<strong>1.</strong> Set the height equal to ${H}:<br><br>$${b}t - t^{2} = ${H}$`,
     `<strong>2.</strong> A quadratic has to be equal to zero before it can be solved, so gather everything on one side:<br><br>$t^{2} - ${b}t + ${H} = 0$`,
-    `<strong>3.</strong> Factorise — two numbers multiplying to ${H} and adding to ${b}:<br><br>$(t - ${t1})(t - ${t2}) = 0$`,
+    `<strong>3.</strong> Factorise — two numbers multiplying to ${H} and adding to $-${b}$:<br><br>$(t - ${t1})(t - ${t2}) = 0$`,
     `<strong>4.</strong> So $t = ${t1}$ or $t = ${t2}$. The ${c.noun} passes this height on the way up and again on the way down; the question asks when it is <strong>first</strong> there:<br><br>$t = ${t1}$ seconds`,
     `<strong>5.</strong> For part (b), find the highest point. A parabola is symmetrical, so the maximum is halfway between the two times the ${c.noun} is at the same height:<br><br>$t = \\frac{${t1} + ${t2}}{2} = ${peakAt}$`,
     `<strong>6.</strong> Work out the height at that moment:<br><br>$h(${peakAt}) = ${b} \\times ${peakAt} - ${peakAt}^{2} = ${b * peakAt} - ${peakAt * peakAt} = ${peak}$ metres`,
@@ -209,7 +209,8 @@ function landsBelow(): Q | null {
     `<b>(b)</b>&nbsp;&nbsp;After how many seconds will the ${c.noun} hit the ${c.onto}?`,
   ];
   const steps = [
-    `<strong>1.</strong> Put $t = ${T}$ into the formula:<br><br>$h = ${up}(${T}) - ${d}(${T})^{2} = ${up * T} - ${d * T * T} = ${at}$ metres`,
+    // "= 1 metre", not "1 metres" (2026-10-02 full read, the owner's "Yes")
+    `<strong>1.</strong> Put $t = ${T}$ into the formula:<br><br>$h = ${up}(${T}) - ${d}(${T})^{2} = ${up * T} - ${d * T * T} = ${at}$ ${unitFor(at, 'metres')}`,
     `<strong>2.</strong> The ${c.onto} is <strong>below</strong> the ${c.from}, so its height relative to the ${c.from} is $-${m}$:<br><br>$${up}t - ${d}t^{2} = -${m}$`,
     `<strong>3.</strong> Gather everything on one side so the quadratic equals zero:<br><br>$${d}t^{2} - ${up}t - ${m} = 0$`,
     `<strong>4.</strong> Factorise:<br><br>$(${d}t - ${m})(t + 1) = 0$`,

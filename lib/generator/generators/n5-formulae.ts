@@ -801,6 +801,10 @@ const BRACKETS_PAPERS: Record<string, BracketsPaper> = {
     { rel: '\\lt', bracket: 'left', words: 'Solve algebraically the inequality', stop: false, subtracted: true },
 };
 
+/** The inequation papers whose x terms may not collect to 1 or -1 (see the rejection below). */
+const UNIT_COEF_REJECT = new Set(['inequalities.brackets', 'inequalities.brackets-2024',
+  'inequalities.brackets-pre2023', 'inequalities.brackets-2017', 'inequalities.fractions']);
+
 function inequalityBrackets(wanted?: string, asked?: string): Q {
   const paper: BracketsPaper | undefined = BRACKETS_PAPERS[asked ?? ''];
   for (let tries = 0; tries < 500; tries++) {
@@ -857,6 +861,17 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
     if (Math.abs(ans) > 12) continue;
     const flips = a < 0;
     if (flips !== wantFlip) continue;
+    // **A real coefficient to divide by**, as each paper has (2018 P2 Q4
+    // -3x < -18, 2017 P1 Q8 -2x > -10, 2026 P1 Q4 -6 < 2x, 2024 P2 Q4
+    // -14 < 2x): x or -x left "solve" with nothing in it, in about a quarter
+    // of draws (2026-10-02 full read, the owner's "Yes", each paper on its own
+    // id). 2015 P1 Q2, not asked about, draws as before.
+    if (Math.abs(a) === 1 && asked !== undefined && UNIT_COEF_REJECT.has(asked)) continue;
+    // **The numbers do not cancel on 2015 P1 Q2.** In 6 - 2(x + 3) < 14 the 6
+    // and -6 cancel, so step 2's "collect" line repeated step 1 and its mark
+    // had nothing in it; the paper's 11 - 2(1 + 3x) leaves 9 (2026-10-02 full
+    // read, the owner's "Yes"). Its id only, after every draw.
+    if (bConst === 0 && asked === 'inequalities.brackets-2015') continue;
 
     // dividing by a negative reverses the relation
     const outRel = flips ? (rel === '\\lt' ? '\\gt' : '\\lt') : rel;
@@ -880,6 +895,8 @@ function inequalityBrackets(wanted?: string, asked?: string): Q {
         `<strong>2.</strong> Collect the $${v}$ terms on one side and the numbers on the other:<br><br>$${term(a, v)} ${rel} ${b}$`,
         flips
           ? `<strong>3.</strong> Divide both sides by $${a}$. Dividing by a <strong>negative</strong> number reverses the inequality sign:<br><br>$${v} ${outRel} ${ans}$`
+          // no "divide both sides by 1" (2026-10-02 full read, the owner's "Yes")
+          : a === 1 ? `<strong>3.</strong> That is already the solution:<br><br>$${v} ${outRel} ${ans}$`
           : `<strong>3.</strong> Divide both sides by $${a}$:<br><br>$${v} ${outRel} ${ans}$`,
       ],
       // •¹ expand the bracket, •² collect like terms, •³ solve. 2024 P2 Q4 adds
@@ -942,6 +959,9 @@ function inequalityFractions(): Q {
     const rCoef = L / r * q;
     const A = lCoef - rCoef, B = -lConst;
     if (A === 0 || B === 0) continue;
+    // a real coefficient to divide by, as the paper's -4x > 25 (see UNIT_COEF_REJECT;
+    // 2026-10-02 full read, the owner's "Yes"). This routine is 2023 P1 Q14's alone.
+    if (Math.abs(A) === 1) continue;
 
     const g = gcd(Math.abs(A), Math.abs(B)) || 1;
     let [num, den] = [B / g, A / g];
@@ -975,6 +995,7 @@ function inequalityFractions(): Q {
         `<strong>2.</strong> Expand and gather the $${v}$ terms on one side:<br><br>$${term(A, v)} ${rel} ${B}$`,
         A < 0
           ? `<strong>3.</strong> Divide by $${A}$. Dividing by a <strong>negative</strong> number reverses the inequality sign:<br><br>$${v} ${outRel} ${ansTex}$`
+          : A === 1 ? `<strong>3.</strong> That is already the solution:<br><br>$${v} ${outRel} ${ansTex}$`
           : `<strong>3.</strong> Divide both sides by $${A}$:<br><br>$${v} ${outRel} ${ansTex}$`,
       ],
       // •¹ eliminate the denominators, •² rearrange to ax > b, •³ solve

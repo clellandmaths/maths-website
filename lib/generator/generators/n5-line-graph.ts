@@ -364,6 +364,13 @@ export const CONTEXTS: LineContext[] = [
 const slopeTex = (p: number, q: number): string =>
   q === 1 ? `${p}` : `${p < 0 ? '-' : ''}\\frac{${Math.abs(p)}}{${q}}`;
 
+/**
+ * A gradient of 1 or -1 is not written as a multiplication: it printed
+ * "50 = 1 x 30 + c" and "F = 1 x 22 + 30" (2026-10-02 full read, the owner's
+ * "Yes").
+ */
+const unitSlope = (p: number, q: number) => q === 1 && Math.abs(p) === 1;
+
 /** m x + c, with the coefficient written as the papers write it. */
 function equation(yL: string, xL: string, p: number, q: number, c: number): string {
   const slope = q === 1
@@ -607,7 +614,9 @@ function bestFitOnGridQuestion(_wanted?: string, asked?: string): Q | null {
   };
 
   const eq = equation(ctx.y.letter, ctx.x.letter, p, q, c);
-  const substituted = q === 1 ? `${m} \\times ${x3}` : `\\frac{${p}}{${q}} \\times ${x3}`;
+  // the gradient as (a) wrote it, -\frac{4}{3} and not \frac{-4}{3} (2026-10-02 full read, the owner's "Yes")
+  const substituted = unitSlope(p, q) ? `${m < 0 ? '-' : ''}${x3}`
+    : `${slopeTex(p, q)} \\times ${x3}`;
   const prose = [
     ctx.story,
     '',
@@ -619,7 +628,7 @@ function bestFitOnGridQuestion(_wanted?: string, asked?: string): Q | null {
   const steps = [
     `<strong>1. (a)</strong> Read two points off the line where it crosses the grid — $(${x1}, ${y1})$ and $(${x2}, ${y2})$ — then take the change up over the change across:`
     + `<br><br>$m = \\frac{${y2} - ${br(y1)}}{${x2} - ${br(x1)}} = ${orSame(`\\frac{${y2 - y1}}{${x2 - x1}}`, slopeTex(p, q))}$`,
-    `<strong>2. (a)</strong> Put that gradient and one of those points into $y = mx + c$:<br><br>$${y1} = ${slopeTex(p, q)} \\times ${br(x1)} + c$, so $${y1} = ${m * x1} + c$`,
+    `<strong>2. (a)</strong> Put that gradient and one of those points into $y = mx + c$:<br><br>${unitSlope(p, q) ? `$${y1} = ${m * x1} + c$` : `$${y1} = ${slopeTex(p, q)} \\times ${br(x1)} + c$, so $${y1} = ${m * x1} + c$`}`,
     `<strong>3. (a)</strong> Solve for $c$ and write the equation in the question's own letters:<br><br>$c = ${y1} - ${br(m * x1)} = ${c}$, giving $${eq}$`,
     `<strong>4. (b)</strong> Put $${ctx.x.letter} = ${x3}$ into that equation:<br><br>$${ctx.y.letter} = ${substituted} ${c < 0 ? '-' : '+'} ${Math.abs(c)} = ${y3}$`,
   ];
@@ -841,7 +850,13 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     return ['A', 'B'];
   };
   const preferred = paper?.letters;
-  const [A, B] = preferred === undefined ? ['A', 'B']
+  // With no preferred pair, A and B unless a variable is one of them: 2018 P1
+  // Q7's phone tariff named "Point B" and "the monthly bill, B pounds"
+  // (2026-10-02 full read, the owner's "Yes"); and 2014 P1 Q6's "Point A" on a
+  // story whose age is A (the owner, "Yes fix"). On those two ids only, and a
+  // story clear of A and B is as before.
+  const [A, B] = preferred === undefined
+    ? (!(asked === 'straight-line.exact-line' || asked === 'straight-line.best-fit-2014') || free(['A', 'B']) ? ['A', 'B'] : firstFree())
     : free(preferred) ? preferred : firstFree();
   const spread = Math.abs(m) * (x2 - x1) * 0.22;
   const xHi = x2 + (x2 - x1) * 0.45;
@@ -857,6 +872,18 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
   const yTop = Math.max(...ys) * 1.12;
 
   const value = (v: number) => (ctx.money ? `&pound;${money(v)}` : `${v}`);
+  // "Use your equation from part (a) to ..." takes the asking sentence only. A
+  // story that opens with a sentence of its own ("A pupil scored 33 marks in
+  // the prelim exam.") keeps it in front, where it printed "... part (a) to A
+  // pupil scored ..." (2026-10-02 full read, the owner's "Yes"). A story that
+  // opens with the asking sentence reads exactly as before.
+  const useIt = (lead: string) => {
+    const est = ctx.estimate(`${x3}`);
+    const at = est.search(/\b(Estimate|Calculate)\b/);
+    return at > 0
+      ? `${est.slice(0, at)}${lead} ${est.slice(at).replace(/^[EC]/, s => s.toLowerCase())}`
+      : `${lead} ${est.replace(/^E/, 'e')}`;
+  };
   const prose = [
     ctx.story,
     '',
@@ -871,21 +898,21 @@ export function bestFitQuestion(scatter: boolean, asked?: string): Q | null {
     // parts (a) and (b) in each paper's own words: see BEST_FIT_PAPERS
     `<b>(a)</b>&nbsp;&nbsp;Find the equation of the ${ctx.scatter ? 'line of best fit' : 'line'} in terms of $${ctx.x.letter}$ and $${ctx.y.letter}$.${paper?.simplest === false ? '' : ' Give the equation in its simplest form.'}`,
     paper?.partB === 'equation'
-      ? `<b>(b)</b>&nbsp;&nbsp;Use your equation from part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
+      ? `<b>(b)</b>&nbsp;&nbsp;${useIt('Use your equation from part (a) to')}`
       : paper?.partB === 'plain'
       ? `<b>(b)</b>&nbsp;&nbsp;${ctx.estimate(`${x3}`)}`
       : paper?.partB === 'answer'
-      ? `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a) to ${ctx.estimate(`${x3}`).replace(/^E/, 'e')}`
+      ? `<b>(b)</b>&nbsp;&nbsp;${useIt('Use your answer to part (a) to')}`
       : `<b>(b)</b>&nbsp;&nbsp;Use your answer to part (a). ${ctx.estimate(`${x3}`)}`,
   ];
 
   const eq = equation(ctx.y.letter, ctx.x.letter, p, q, c);
-  const substituted = q === 1
-    ? `${m} \\times ${x3}`
-    : `\\frac{${p}}{${q}} \\times ${x3}`;
+  // the gradient as (a) wrote it, -\frac{4}{3} and not \frac{-4}{3} (2026-10-02 full read, the owner's "Yes")
+  const substituted = unitSlope(p, q) ? `${m < 0 ? '-' : ''}${x3}`
+    : `${slopeTex(p, q)} \\times ${x3}`;
   const steps = [
     `<strong>1. (a)</strong> The gradient is the change up over the change across, taken between the two marked points:<br><br>$m = \\frac{${y2} - ${br(y1)}}{${x2} - ${br(x1)}} = ${orSame(`\\frac{${y2 - y1}}{${x2 - x1}}`, slopeTex(p, q))}$`,
-    `<strong>2. (a)</strong> Put that gradient and one of the points into $y = mx + c$, using $${A}$:<br><br>$${y1} = ${slopeTex(p, q)} \\times ${br(x1)} + c$, so $${y1} = ${m * x1} + c$`,
+    `<strong>2. (a)</strong> Put that gradient and one of the points into $y = mx + c$, using $${A}$:<br><br>${unitSlope(p, q) ? `$${y1} = ${m * x1} + c$` : `$${y1} = ${slopeTex(p, q)} \\times ${br(x1)} + c$, so $${y1} = ${m * x1} + c$`}`,
     `<strong>3. (a)</strong> Solve for $c$ and write the equation in the question's own letters:<br><br>$c = ${y1} - ${br(m * x1)} = ${c}$, giving $${eq}$`,
     `<strong>4. (b)</strong> Put $${ctx.x.letter} = ${x3}$ into that equation:<br><br>$${ctx.y.letter} = ${substituted} ${c < 0 ? '-' : '+'} ${Math.abs(c)} = ${ctx.money ? money(y3) : y3}$, giving ${value(y3)}`,
   ];

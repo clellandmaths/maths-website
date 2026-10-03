@@ -37,6 +37,20 @@ type Q = Omit<GeneratedQuestion, 'topic'>;
 const POSITIVE_POWER = 'Give your answer with a positive power.';
 
 /**
+ * The letters a law is written in, never the question's own: on the letter m
+ * the working read "(m^m)^n = m^{mn}" (2026-10-02 full read, the owner's
+ * "Yes"). The scheme does the same, "(m^a)^b = m^{ab}". Where there is no
+ * clash these are the letters the working always used.
+ */
+const powerLetters = (v: string): [string, string] => (v === 'm' || v === 'n' ? ['a', 'b'] : ['m', 'n']);
+/** `(ab)^m = a^m b^m`, in letters clear of the question's. */
+const productLaw = (v: string): string => {
+  const [p, q] = v === 'a' ? ['b', 'c'] : ['a', 'b'];
+  const e = v === 'm' ? 'n' : 'm';
+  return `(${p}${q})^{${e}} = ${p}^{${e}}${q}^{${e}}`;
+};
+
+/**
  * An nth root, written the way it is printed.
  *
  * A square root is never `\sqrt[2]{x}` in a paper, and `indices.evaluate` had
@@ -79,7 +93,7 @@ function laws(): Q {
       ],
       boardQuestionLines: [`$\\frac{${pow(v, a)} \\times (${pow(v, b)})^{${c}}}{${pow(v, d)}}$`],
       solutionSteps: [
-        `<strong>1.</strong> Apply $(${v}^{m})^{n} = ${v}^{mn}$ to the bracket:<br><br>$(${pow(v, b)})^{${c}} = ${pow(v, b * c)}$`,
+        `<strong>1.</strong> Apply $(${v}^{${powerLetters(v)[0]}})^{${powerLetters(v)[1]}} = ${v}^{${powerLetters(v).join('')}}$ to the bracket:<br><br>$(${pow(v, b)})^{${c}} = ${pow(v, b * c)}$`,
         `<strong>2.</strong> Multiply by adding the powers:<br><br>$${pow(v, a)} \\times ${pow(v, b * c)} = ${pow(v, a + b * c)}$`,
         `<strong>3.</strong> Divide by subtracting the powers:<br><br>$\\frac{${pow(v, a + b * c)}}{${pow(v, d)}} = ${pow(v, result)}$`,
       ],
@@ -146,9 +160,9 @@ function negativePower(asked?: string): Q {
       ],
       boardQuestionLines: [`$(${insideTex})^{${b}} \\times ${v}^{${c}}$`],
       solutionSteps: [
-        `<strong>1.</strong> Apply $(${v}^{m})^{n} = ${v}^{mn}$:<br><br>$(${insideTex})^{${b}} = ${v}^{${a * b}}$`,
+        `<strong>1.</strong> Apply $(${v}^{${powerLetters(v)[0]}})^{${powerLetters(v)[1]}} = ${v}^{${powerLetters(v).join('')}}$:<br><br>$(${insideTex})^{${b}} = ${v}^{${a * b}}$`,
         `<strong>2.</strong> Multiply by adding the powers:<br><br>$${v}^{${a * b}} \\times ${v}^{${c}} = ${v}^{${result}}$`,
-        `<strong>3.</strong> Write with a positive power using $${v}^{-n} = \\frac{1}{${v}^{n}}$:<br><br>$${v}^{${result}} = \\frac{1}{${pow(v, -result)}}$`,
+        `<strong>3.</strong> Write with a positive power using $${v}^{-${powerLetters(v)[1]}} = \\frac{1}{${v}^{${powerLetters(v)[1]}}}$:<br><br>$${v}^{${result}} = \\frac{1}{${pow(v, -result)}}$`,
       ],
       // •¹ power of a power, •² add the powers, •³ express with a positive power
       stepMarks: [1, 1, 1],
@@ -196,7 +210,7 @@ function negativePowerFraction(): Q {
       solutionSteps: [
         `<strong>1.</strong> Add the powers on the bottom:<br><br>$${denTex} = ${pow(v, b + c)}$`,
         `<strong>2.</strong> Dividing subtracts the powers, and the ${k} is along for the ride:<br><br>$\\frac{${numTex}}{${pow(v, b + c)}} = ${k}${v}^{${result}}$`,
-        `<strong>3.</strong> Write it with a positive power using $${v}^{-n} = \\frac{1}{${v}^{n}}$:<br><br>$${k}${v}^{${result}} = \\frac{${k}}{${pow(v, -result)}}$`,
+        `<strong>3.</strong> Write it with a positive power using $${v}^{-${powerLetters(v)[1]}} = \\frac{1}{${v}^{${powerLetters(v)[1]}}}$:<br><br>$${k}${v}^{${result}} = \\frac{${k}}{${pow(v, -result)}}$`,
       ],
       // •¹ one law applied, •² the simplification completed, •³ a positive power
       stepMarks: [1, 1, 1],
@@ -269,7 +283,7 @@ function withCoefficient(asFraction: boolean): Q {
         ],
         boardQuestionLines: [`$\\left(\\frac{${num}}{${den}}${pow(v, a)}\\right)^{${b}}$`],
         solutionSteps: [
-          `<strong>1.</strong> Apply $(ab)^{m} = a^{m}b^{m}$ — the power goes to both parts:<br><br>$\\left(\\frac{${num}}{${den}}\\right)^{${b}} \\times (${pow(v, a)})^{${b}}$`,
+          `<strong>1.</strong> Apply $${productLaw(v)}$ — the power goes to both parts:<br><br>$\\left(\\frac{${num}}{${den}}\\right)^{${b}} \\times (${pow(v, a)})^{${b}}$`,
           `<strong>2.</strong> Work out each part:<br><br>$\\frac{${num ** b}}{${den ** b}} \\times ${pow(v, a * b)} = \\frac{${num ** b}}{${den ** b}}${pow(v, a * b)}$`,
         ],
         // 2018 P1 Q15: •¹ start process, •² complete process
@@ -298,7 +312,7 @@ function withCoefficient(asFraction: boolean): Q {
       questionLines: [`Simplify $\\frac{${pow(v, m)}}{(${k}${pow(v, n)})^{${p}}}.$`],
       boardQuestionLines: [`$\\frac{${pow(v, m)}}{(${k}${pow(v, n)})^{${p}}}$`],
       solutionSteps: [
-        `<strong>1.</strong> Apply $(ab)^{m} = a^{m}b^{m}$ to the denominator — the power goes to the number as well as the letter:<br><br>$(${k}${pow(v, n)})^{${p}} = ${kp}${pow(v, n * p)}$`,
+        `<strong>1.</strong> Apply $${productLaw(v)}$ to the denominator — the power goes to the number as well as the letter:<br><br>$(${k}${pow(v, n)})^{${p}} = ${kp}${pow(v, n * p)}$`,
         `<strong>2.</strong> Divide the powers of $${v}$ by subtracting them:<br><br>$\\frac{${pow(v, m)}}{${pow(v, n * p)}} = ${pow(v, left)}$`,
         `<strong>3.</strong> The ${kp} stays in the denominator, so put the two together:<br><br>$\\frac{${pow(v, m)}}{(${k}${pow(v, n)})^{${p}}} = \\frac{${pow(v, left)}}{${kp}}$`,
       ],
@@ -360,7 +374,8 @@ function expandBracket(): Q {
     ],
     boardQuestionLines: [`$${outTex}\\left(${rootTex} + ${innerTex}\\right)$`],
     solutionSteps: [
-      `<strong>1.</strong> Multiply each term in the bracket by $${outTex}$, adding the powers:<br><br>$${v}^{${outer}} \\times ${rootTex} = ${v}^{${frac(firstNum, q)}}$`,
+      // the first term only, as the step shows (2026-10-02 full read, the owner's "Yes")
+      `<strong>1.</strong> Multiply the first term in the bracket by $${outTex}$, adding the powers:<br><br>$${v}^{${outer}} \\times ${rootTex} = ${v}^{${frac(firstNum, q)}}$`,
       `<strong>2.</strong> And the second term, then write the two together:<br><br>$${v}^{${outer}} \\times ${innerTex} = ${v}^{0} = 1$, so the answer is $${v}^{${frac(firstNum, q)}} + 1$`,
     ],
     // 2024 P1 Q13: •¹ apply one of the two multiplications, •² apply both and

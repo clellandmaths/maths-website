@@ -13,7 +13,7 @@ import { twoTrianglesApart } from '../diagrams/shapes/two-triangles-apart';
 import type { Figure } from '../diagrams/scene';
 import {
   PYTHAGORAS_CONTEXTS, CHORD_CONTEXTS, CONVERSE_CONTEXTS, BOX_CONTEXTS, abbrev,
-  withUnit, type ConverseContext, type ChordContext,
+  withUnit, unitFor, type ConverseContext, type ChordContext,
 } from './n5-contexts';
 
 /**
@@ -560,16 +560,24 @@ export function pythagorasChord(family: 'segment' | 'whole' | 'cut', askedId?: s
     const words = for2023 ? '2023' : for2022 ? '2022' : forPaper2018 ? '2018'
       : askedId === 'pythagoras.chord-pre2022' ? '2016' : 'shared';
     const prose = CHORD_WORDS[words]({ ctx, O, A, B, r, chord, exact, noRounding: exact || forPaper2015 });
+    // The midpoint takes a letter the figure does not use: on chord MN it was
+    // "the midpoint M of MN" and "triangle OMN" (2026-10-02 full read, the
+    // owner's "Yes"). M wherever M is free, so those draws read as before.
+    const M = ['M', 'P', 'Q', 'X'].find(l => ![O, A, B].includes(l)) ?? 'M';
+    // "= 1 metre", not "1 metres": 2022 P2 Q8 and 2016 P2 Q15 on the full read,
+    // then 2018 P2 Q12, 2023 P1 Q10 and 2015 P2 Q12 (the owner, 2026-10-03:
+    // "Do the 3 left alone ones"), which is every paper on this line
+    const halfUnit = unitFor(chord / 2, ctx.unit);
     const steps = [
-      `<strong>1.</strong> The perpendicular from the centre to a chord bisects it, so drop it from $${O}$ to the midpoint $M$ of $${A}${B}$. That makes a right-angled triangle $${O}M${B}$, with $${O}${B}$ as its hypotenuse.`,
-      `<strong>2.</strong> Half the chord is $${num(chord)} \\div 2 = ${num(chord / 2)}$ ${ctx.unit}. Now use Pythagoras to find $${O}M$:<br><br>$${O}M^{2} = ${num(r)}^{2} - ${num(chord / 2)}^{2} = ${num(Number((r * r - (chord / 2) ** 2).toFixed(4)))}$`,
-      `<strong>3.</strong> So $${O}M = ${exact ? num(d) : d.toFixed(3)}$ ${ctx.unit}.`,
+      `<strong>1.</strong> The perpendicular from the centre to a chord bisects it, so drop it from $${O}$ to the midpoint $${M}$ of $${A}${B}$. That makes a right-angled triangle $${O}${M}${B}$, with $${O}${B}$ as its hypotenuse.`,
+      `<strong>2.</strong> Half the chord is $${num(chord)} \\div 2 = ${num(chord / 2)}$ ${halfUnit}. Now use Pythagoras to find $${O}${M}$:<br><br>$${O}${M}^{2} = ${num(r)}^{2} - ${num(chord / 2)}^{2} = ${num(Number((r * r - (chord / 2) ** 2).toFixed(4)))}$`,
+      `<strong>3.</strong> So $${O}${M} = ${exact ? num(d) : d.toFixed(3)}$ ${ctx.unit}.`,
       // "height" reads wrong on a chord stood on end, where the answer runs
       // across the page — and equally wrong on a depth. `spanWord` is the
       // question's own noun for 2018 P2 Q12 and the old expression everywhere
       // else, so the working and the arrow say the same thing and 2015 P2 Q12
       // and the signed-off papers on the other two families do not move.
-      `<strong>4.</strong> The shape is the larger piece, so its ${spanWord} is the radius <strong>plus</strong> $${O}M$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
+      `<strong>4.</strong> The shape is the larger piece, so its ${spanWord} is the radius <strong>plus</strong> $${O}${M}$:<br><br>$${num(r)} + ${exact ? num(d) : d.toFixed(3)} = ${exact ? num(height) : height.toFixed(1)}$ ${ctx.unit}`,
     ];
 
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
@@ -906,7 +914,7 @@ export function pythagorasConverse(wanted?: string, asked?: string): Q {
     // was still told the answer.
     const steps = [
       fromTotal
-        ? `<strong>1.</strong> The third distance is the total less the two given:<br><br>$${total} - ${shownShort} - ${r} = ${hiddenShort}$ ${ctx.unit}<br><br>The longest side is ${r} ${ctx.unit}, so if there is a right angle it is opposite that side.`
+        ? `<strong>1.</strong> The third distance is the total less the two given:<br><br>$${total} - ${shownShort} - ${r} = ${hiddenShort}$ ${ctx.unit}.<br><br>The longest side is ${r} ${ctx.unit}, so if there is a right angle it is opposite that side.`
         : `<strong>1.</strong> The longest side is ${r} ${ctx.unit}, so if there is a right angle it is opposite that side. Test the two shorter sides against it.`,
       `<strong>2.</strong> Square the two shorter sides and add, then square the longest:<br><br>$${p}^{2} + ${q}^{2} = ${p * p} + ${q * q} = ${sumSq}$ and $${r}^{2} = ${longSq}$`,
       right
@@ -1050,7 +1058,7 @@ export function pythagorasConverseJoined(): Q {
     // together. So the comparison does not get a step of its own here, and the
     // last step is still the one that states the answer.
     const steps = [
-      `<strong>1.</strong> Placing the two together makes a triangle whose base is the two bases added, and whose other two sides are the outer sides of $A$ and $B$. The shared edge, ${d} ${unit}, ends up inside the new triangle and is not one of its sides:<br><br>base $= ${z1} + ${z2} = ${base}$ ${unit}, with sides ${X} ${unit} and ${Y} ${unit}<br><br>The base is the longest side, so if there is a right angle it is opposite it.`,
+      `<strong>1.</strong> Placing the two together makes a triangle whose base is the two bases added, and whose other two sides are the outer sides of $A$ and $B$. The shared edge, ${d} ${unit}, ends up inside the new triangle and is not one of its sides:<br><br>base $= ${z1} + ${z2} = ${base}$ ${unit}, with sides ${X} ${unit} and ${Y} ${unit}.<br><br>The base is the longest side, so if there is a right angle it is opposite it.`,
       `<strong>2.</strong> Square the two shorter sides and add, then square the longest:<br><br>$${X}^{2} + ${Y}^{2} = ${X * X} + ${Y * Y} = ${sumSq}$ and $${base}^{2} = ${longSq}$`,
       right
         ? `<strong>3.</strong> $${sumSq} = ${longSq}$, so Pythagoras holds:<br><br>${verdict}`
@@ -1372,7 +1380,7 @@ export function pythagorasChordReverse(findChord: boolean): Q {
     // published scheme, so the split is inferred: halve the chord, state
     // Pythagoras, evaluate and take the root.
     const steps = [
-      `<strong>1.</strong> The perpendicular from the centre bisects the chord, so $${M}${B}$ is half of $${A}${B}$:<br><br>$${M}${B} = ${num(chord)} \\div 2 = ${num(chord / 2)}$ ${ctx.unit}`,
+      `<strong>1.</strong> The perpendicular from the centre bisects the chord, so $${M}${B}$ is half of $${A}${B}$:<br><br>$${M}${B} = ${num(chord)} \\div 2 = ${num(chord / 2)}$ ${unitFor(chord / 2, ctx.unit)}`,   // 2026 P2 Q5 alone: "1 metre" (full read, "Yes")
       `<strong>2.</strong> Triangle $${O}${M}${B}$ is right-angled at $${M}$, and the radius $${O}${B}$ is its hypotenuse:<br><br>$${O}${B}^{2} = ${num(chord / 2)}^{2} + ${num(dShown)}^{2}$`,
       `<strong>3.</strong> Work that out, then take the square root:<br><br>$${O}${B}^{2} = ${num(Number(((chord / 2) ** 2 + dShown * dShown).toFixed(4)))}$, so $${O}${B} = ${answer.toFixed(1)}$ ${ctx.unit}`,
     ];
@@ -1644,7 +1652,9 @@ export function pythagorasCoordinates(wanted?: string): Q {
       // strategy, •³ continue it, •⁴ calculate the space diagonal. Part (b) had
       // three marks in two steps, so a hint jumped one of them.
       const steps = [
-        `<strong>(a)</strong> $M$ is the corner diagonally opposite $O$ on the top face, so it takes its $x$ from $R$, its $y$ from $L$ and its $z$ from $L$:<br><br>$M(${X}, ${Y}, ${Z})$`,
+        // O is on the bottom face: "diagonally opposite O on the top face" said
+        // nothing (2026-10-02 full read, the owner's "Yes")
+        `<strong>(a)</strong> $M$ is the top corner diagonally opposite $O$, so it takes its $x$ from $R$, its $y$ from $L$ and its $z$ from $L$:<br><br>$M(${X}, ${Y}, ${Z})$`,
         `<strong>(b)</strong> $OM$ runs from the origin to $M$, so Pythagoras in three dimensions applies. Square each coordinate:<br><br>$OM^{2} = ${X}^{2} + ${Y}^{2} + ${Z}^{2}$`,
         `<strong>(b)</strong> Add them:<br><br>$OM^{2} = ${X * X + Y * Y + Z * Z}$`,
         `<strong>(b)</strong> Take the square root:<br><br>$OM = ${exact ? diag : diag.toFixed(1)}$ units`,

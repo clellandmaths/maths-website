@@ -92,7 +92,8 @@ export function similarTrianglePartQuestion(): Q {
     ];
     const steps = [
       `<strong>1.</strong> $${n.nearLeft}${n.nearRight}$ is parallel to $${n.left}${n.right}$, so triangles $${n.apex}${n.nearLeft}${n.nearRight}$ and $${n.apex}${n.left}${n.right}$ are similar and their sides are in the same ratio:<br><br>$\\frac{${n.apex}${n.nearLeft}}{${n.apex}${n.left}} = \\frac{${n.nearLeft}${n.nearRight}}{${n.left}${n.right}} = \\frac{${near}}{${far}}$`,
-      `<strong>2.</strong> $${n.apex}${n.left}$ is the whole ray, $x + ${num(outer)}$:<br><br>$\\frac{x}{x + ${num(outer)}} = \\frac{${near}}{${far}}$`,
+      // a side, not a ray (2026-10-02 full read, the owner's "Yes")
+      `<strong>2.</strong> $${n.apex}${n.left}$ is the whole side, $x + ${num(outer)}$:<br><br>$\\frac{x}{x + ${num(outer)}} = \\frac{${near}}{${far}}$`,
       `<strong>3.</strong> Cross-multiply and collect the $x$ terms:<br><br>$${far}x = ${near}x + ${num(near * outer)}$, so $${far - near}x = ${num(near * outer)}$ and $x = ${num(inner)}$`,
     ];
     if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
@@ -686,6 +687,9 @@ export function similarCostQuestion(): Q {
 const NOT_SIMILAR: {
   story: string; noun: string; small: string; large: string;
   measure: string; dimension: string;
+  // the plural, where adding "s" is wrong: it printed "the two boxs" (2026-10-02
+  // full read, the owner's "Yes")
+  nouns?: string;
 }[] = [
   { story: 'A juice bar serves smoothies in two different sized beakers.', noun: 'beaker',
     small: 'small', large: 'large', measure: 'deep', dimension: 'depth' },
@@ -693,7 +697,7 @@ const NOT_SIMILAR: {
     small: 'regular', large: 'large', measure: 'tall', dimension: 'height' },
   { story: 'A garden centre sells compost in two different sized tubs.', noun: 'tub',
     small: 'small', large: 'giant', measure: 'deep', dimension: 'depth' },
-  { story: 'A bakery sells cake in two different sized boxes.', noun: 'box',
+  { story: 'A bakery sells cake in two different sized boxes.', noun: 'box', nouns: 'boxes',
     small: 'small', large: 'party', measure: 'deep', dimension: 'depth' },
   { story: 'A shop sells popcorn buckets in two different sizes.', noun: 'bucket',
     small: 'standard', large: 'sharing', measure: 'tall', dimension: 'height' },
@@ -708,6 +712,7 @@ const NOT_SIMILAR: {
 export function notSimilarQuestion(): Q {
   for (let tries = 0; tries < 3000; tries++) {
     const c = pick(NOT_SIMILAR);
+    const nouns = c.nouns ?? `${c.noun}s`;
     const [a, b] = pick(ratiosBetween(1.3, 1.8));
     const m = getRandomInt(2, 8);
     const [dSmall, dLarge] = [a * m, b * m];
@@ -737,8 +742,8 @@ export function notSimilarQuestion(): Q {
         '',
         `The ${c.small} ${c.noun} is ${dSmall} cm ${c.measure} and has a volume of ${vSmall} cubic centimetres.`,
         `The ${c.large} ${c.noun} is ${dLarge} cm ${c.measure} and has a volume of ${vLarge} cubic centimetres.`,
-        `<b>(a)</b>&nbsp;&nbsp;Show that the two ${c.noun}s are <em>not</em> mathematically similar.`,
-        `<b>(b)</b>&nbsp;&nbsp;The ${c.large} ${c.noun} is redesigned so that the two ${c.noun}s are now mathematically similar. The volume of the redesigned ${c.large} ${c.noun} is ${vNew} cubic centimetres.<br>Calculate the ${c.dimension} of the redesigned ${c.large} ${c.noun}.`,
+        `<b>(a)</b>&nbsp;&nbsp;Show that the two ${nouns} are <em>not</em> mathematically similar.`,
+        `<b>(b)</b>&nbsp;&nbsp;The ${c.large} ${c.noun} is redesigned so that the two ${nouns} are now mathematically similar. The volume of the redesigned ${c.large} ${c.noun} is ${vNew} cubic centimetres.<br>Calculate the ${c.dimension} of the redesigned ${c.large} ${c.noun}.`,
         // No rounding line: 2018 P2 Q18, this id's only paper, stops at
         // "Calculate the depth of the redesigned large carton." The owner, on
         // the 2018-2014 light pass: "Yes". The answer is still shown to 1 d.p.
@@ -749,7 +754,7 @@ export function notSimilarQuestion(): Q {
       solutionSteps: [
         `<strong>1. (a)</strong> Start by assuming they are similar. The two ${c.dimension}s would give the linear scale factor:<br><br>$k = \\frac{${dLarge}}{${dSmall}} = \\frac{${b}}{${a}}$`,
         `<strong>2. (a)</strong> Volume scales by the cube of that, so work out what the ${c.large} ${c.noun} would have to hold:<br><br>$${vSmall} \\times \\left(\\frac{${b}}{${a}}\\right)^{3} = ${vSmall} \\times \\frac{${b ** 3}}{${a ** 3}} = ${wouldBe}$ cm$^{3}$`,
-        `<strong>3. (a)</strong> Compare that with the volume it actually has, and say what it means:<br><br>$${wouldBe} \\neq ${vLarge}$, so the two ${c.noun}s are not mathematically similar.`,
+        `<strong>3. (a)</strong> Compare that with the volume it actually has, and say what it means:<br><br>$${wouldBe} \\neq ${vLarge}$, so the two ${nouns} are not mathematically similar.`,
         `<strong>4. (b)</strong> Now the two <em>are</em> similar, so start from the volumes. Their ratio is the volume scale factor:<br><br>$\\frac{${vNew}}{${vSmall}} = ${(vNew / vSmall).toFixed(4)}$`,
         `<strong>5. (b)</strong> The ${c.dimension} is a length, so it scales by the <em>cube root</em> of that:<br><br>$${dSmall} \\times \\sqrt[3]{\\frac{${vNew}}{${vSmall}}} = ${newDepth.toFixed(1)}$ cm`,
       ],

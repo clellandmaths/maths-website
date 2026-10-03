@@ -20,6 +20,8 @@ import { getRandomInt, nonZeroInt } from './utils';
  */
 
 const pick = <T,>(xs: T[]): T => xs[getRandomInt(0, xs.length - 1)];
+/** A coefficient's size as the working prints it, with no "1x" (2026-10-02 full read, the owner's "Yes"). */
+const one = (k: number): string => (Math.abs(k) === 1 ? '' : `${Math.abs(k)}`);
 /**
  * `x` ten times in eleven, `y` once, and never `p`.
  *
@@ -180,7 +182,7 @@ function twoBinomials(): Q {
       questionLines: [`Multiply out the brackets and collect like terms: $${bracket([b, a], v)}${bracket([d, c], v)}$`],
       boardQuestionLines: [`$${bracket([b, a], v)}${bracket([d, c], v)}$`],
       solutionSteps: [
-        `<strong>1.</strong> Multiply every term in the first bracket by every term in the second:<br><br>$${fmt([0, 0, a * c], v)} ${a * d < 0 ? '-' : '+'} ${Math.abs(a * d)}${v} ${b * c < 0 ? '-' : '+'} ${Math.abs(b * c)}${v} ${b * d < 0 ? '-' : '+'} ${Math.abs(b * d)}$`,
+        `<strong>1.</strong> Multiply every term in the first bracket by every term in the second:<br><br>$${fmt([0, 0, a * c], v)} ${a * d < 0 ? '-' : '+'} ${one(a * d)}${v} ${b * c < 0 ? '-' : '+'} ${one(b * c)}${v} ${b * d < 0 ? '-' : '+'} ${Math.abs(b * d)}$`,
         `<strong>2.</strong> Collect the like terms:<br><br>$${fmt(result, v)}$`,
       ],
       // 2014 P1 Q2: •¹ any three terms correct, •² fourth term and collect

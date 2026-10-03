@@ -166,7 +166,8 @@ function components(wanted?: string, asked?: string): Q {
       ],
       boardQuestionLines: [`$${expr}$ where $${bold(n1)} = ${col(A)}$, $${bold(n2)} = ${col(B)}$`],
       solutionSteps: [
-        `<strong>1.</strong> Multiply $${bold(n1)}$ by its number. This is the first mark, and it is the only multiplication there is:<br><br>$${scaled(k1, n1)} = ${col(A.map(v => k1 * v))}$`,
+        // No marker's talk in a pupil's line (2026-10-02 full read, the owner's "Yes")
+        `<strong>1.</strong> Multiply $${bold(n1)}$ by $${k1 === 0.5 ? '\\frac{1}{2}' : k1}$:<br><br>$${scaled(k1, n1)} = ${col(A.map(v => k1 * v))}$`,
         `<strong>2.</strong> ${minus ? 'Subtract' : 'Add'} the matching components:<br><br>$${col(R)}$`,
       ],
       // 2024 P1 Q4: •¹ calculate the scalar multiple, •² the solution. The
@@ -259,6 +260,10 @@ function lineFromEquation(wantIntercept: boolean): Q {
 
     const mTex = frac(-a, b);
     const rearranged = `y = ${mTex === '1' ? '' : mTex === '-1' ? '-' : mTex}x ${yInt < 0 ? '-' : '+'} ${frac(Math.abs(-c), Math.abs(b))}`;
+    // The y term on its own, which is the scheme's •1 ("4y = -x + 24") and
+    // 2018 P2 Q14's "2y = -18" (2026-10-02 full read, the owner's "Yes").
+    const yTerm = `${b < 0 ? '-' : ''}${Math.abs(b) === 1 ? '' : Math.abs(b)}y`;
+    const isolated = `${yTerm} = ${-a === 1 ? '' : -a === -1 ? '-' : -a}x ${c > 0 ? '-' : '+'} ${Math.abs(c)}`;
 
     if (wantIntercept) {
       return {
@@ -274,7 +279,7 @@ function lineFromEquation(wantIntercept: boolean): Q {
         // •² state the coordinates — and the scheme insists on the brackets, so
         // the last step is the one that writes them.
         solutionSteps: [
-          `<strong>1.</strong> The line crosses the $y$-axis where $x = 0$, so substitute and solve for $y$:<br><br>$${b < 0 ? '-' : ''}${Math.abs(b) === 1 ? '' : Math.abs(b)}y ${c < 0 ? '-' : '+'} ${Math.abs(c)} = 0$, giving $y = ${yInt}$`,
+          `<strong>1.</strong> The line crosses the $y$-axis where $x = 0$, so substitute and solve for $y$:<br><br>${b === 1 ? `$y = ${yInt}$` : `$${yTerm} = ${-c}$, so $y = ${yInt}$`}`,
           `<strong>2.</strong> Write it as coordinates — the brackets are needed for the mark:<br><br>$(0, ${yInt})$`,
         ],
         stepMarks: [1, 1],
@@ -292,7 +297,9 @@ function lineFromEquation(wantIntercept: boolean): Q {
       ],
       boardQuestionLines: [`Gradient of $${equation}$?`],
       solutionSteps: [
-        `<strong>1.</strong> Rearrange into the form $y = mx + c$. Move everything except the $y$ term to the other side, then divide by $${b}$:<br><br>$${rearranged}$`,
+        b === 1
+          ? `<strong>1.</strong> Rearrange into the form $y = mx + c$. Move everything except the $y$ term to the other side:<br><br>$${rearranged}$`
+          : `<strong>1.</strong> Rearrange into the form $y = mx + c$. Move everything except the $y$ term to the other side:<br><br>$${isolated}$<br><br>Then divide by $${b}$:<br><br>$${rearranged}$`,
         `<strong>2.</strong> The gradient is the number in front of $x$:<br><br>$m = ${mTex}$`,
       ],
       // •¹ isolate the y term or divide throughout, •² state the gradient
