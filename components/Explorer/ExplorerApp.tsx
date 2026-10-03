@@ -1260,6 +1260,10 @@ function ExplorerContent({ course }: { course: Course }) {
                             with a device. */}
                         <div className="flex items-start gap-3 mb-4">
                           <div className="q-head-main flex flex-1 flex-wrap items-center gap-3 min-w-0">
+                            {/* The number, source and tags as one box, so on paper
+                                they wrap inside it and the marks keep the top right
+                                (globals.css, `.q-head-main`). */}
+                            <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 print:flex-1">
                             <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
@@ -1284,6 +1288,7 @@ function ExplorerContent({ course }: { course: Course }) {
                                 {topic}
                               </span>
                             ))}
+                            </div>
                             {/* `@media print` sets `margin-left: auto` on
                                 `.q-marks`, so a printed sheet keeps the exam
                                 paper's own convention of marks hard right. */}

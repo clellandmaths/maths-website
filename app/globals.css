@@ -800,21 +800,30 @@ body {
     flex-shrink: 0;
   }
 
-  /* **The header stays one line on paper; its words wrap instead.** With the
+  /* **On paper the marks stay on the header's first line.** With the
      calculator picture beside the marks (2026-09-30) a long topic name no
      longer fitted beside a QR code, and the row wrapped: on a shared sheet the
-     QR fell to a line of its own, in the Worksheet Builder the marks did. Here
-     the row does not wrap, and the topic and source text, which may shrink,
-     break onto a second line inside their own box, so the number, the
-     calculator and the marks keep their places. The QR is its own column. */
+     QR fell to a line of its own, in the Worksheet Builder the marks did. The
+     number, source and tags are their own box (`.q-head-text`), which wraps
+     whole tags onto a second line inside itself; this row holding that box and
+     the marks does not wrap on paper, so the marks keep the top right. The QR
+     is its own column beside the row. (Squeezing the tags instead cut a word,
+     "Factoris", on a card with three of them.) On screen nothing changes: a
+     phone still drops the marks to the start of the next line. */
   .q-head-main {
     flex-wrap: nowrap !important;
+    align-items: flex-start !important;
   }
-  .q-head-main .q-source,
-  .q-head-main .topic-tag {
-    min-width: 0;
-    flex: 0 1 auto;
-    white-space: normal;
+  /* A shared sheet's skill line is the box's last word: it wraps beside the
+     number rather than dropping beneath it. (In the Builder the paper caption
+     is followed by tags, which wrap as whole tags.) */
+  .q-head-text > .q-source:last-child {
+    flex: 1 1 0;
+    min-width: 5rem;
+  }
+  /* level with the number's line, not the middle of a two-line box */
+  .q-head-main > .q-marks {
+    margin-top: 0.2rem;
   }
 
   .q-marks span {

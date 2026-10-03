@@ -261,6 +261,7 @@ function SharedWorksheet() {
                   first line, hard right, as on an exam paper. */}
               <div className="flex items-start gap-3 mb-3">
               <div className="q-head-main flex flex-1 min-w-0 items-center gap-3 flex-wrap">
+                <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 print:flex-1">
                 <span className={`q-badge flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
                   {i + 1}
                 </span>
@@ -275,6 +276,7 @@ function SharedWorksheet() {
                 {q.label && !options.test && (
                   <span className="q-source text-sm text-muted-foreground">{q.label}</span>
                 )}
+                </div>
                 <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId ?? '')} className="q-marks ml-auto" />
               </div>
                 {/* Beside the number rather than under the question, matching
