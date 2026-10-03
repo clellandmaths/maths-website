@@ -319,7 +319,7 @@ export default function PracticePaperClient({
              this printed the page's own dark styling, and with the header and
              its four buttons still on it. */
           <article key={i} className="worksheet-question border border-border rounded-xl p-5 bg-card/40">
-            <div className="flex items-center gap-2 flex-wrap mb-2">
+            <div className="q-head flex items-center gap-2 flex-wrap mb-2">
               <span className={`font-mono text-sm font-semibold ${theme.text}`}>{plan[i].number}.</span>
               {q ? (
                 <>

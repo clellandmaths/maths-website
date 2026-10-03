@@ -201,7 +201,79 @@ async function printPage(root: ParentNode): Promise<void> {
     ]);
   }
 
+  markTallCards(root);
   window.print();
+}
+
+/**
+ * The printed page, in CSS px: A4 less the 1.5cm margins `@page` sets
+ * (globals.css), at 96 px to the inch. 18cm by 26.7cm.
+ */
+const PRINT_WIDTH_PX = 680;
+const PAGE_HEIGHT_PX = 1009;
+
+/**
+ * **A card too tall for a page starts at the top of one** (the owner,
+ * 2026-10-03: a card starting "at the bottom of a page to then move to a new
+ * page for the question").
+ *
+ * Every card asks not to be broken (`break-inside: avoid`), and every card
+ * that fits a page is kept whole by every browser. A card taller than a page
+ * cannot be, and there the browsers part company. Chrome takes it to a fresh
+ * page and breaks it once. Safari breaks it wherever it happens to start, so
+ * a card beginning near a page's foot left its number, and on a past paper
+ * question its "2026 P2 Q13", alone there. Safari ignores the softer rules
+ * that would hold a header to what follows (`break-after: avoid`), so the
+ * only break it can be asked for is a forced one: measured on 30 recorded
+ * sheets in Safari's own engine (WebKit), 4 or 5 cards in 264 were taller
+ * than a page, and they are the only ones that split.
+ *
+ * So each card is measured at the printed width, on a copy kept off screen,
+ * and one taller than nine tenths of a page is marked `data-print-tall`; the
+ * print stylesheet starts it on a new page. Nine tenths, not the whole page,
+ * because the copy is an estimate (its screen rules are not quite the print
+ * ones) and a card that tall barely fits after anything anyway.
+ *
+ * Done here, on the Print button, because Safari has no `beforeprint`
+ * (`watchSystemPrint`). Anything that goes wrong leaves the sheet printing
+ * exactly as before.
+ */
+function markTallCards(root: ParentNode): void {
+  if (typeof document === 'undefined') return;
+  const cards = Array.from(root.querySelectorAll<HTMLElement>('.worksheet-question'));
+  if (!cards.length) return;
+  const shelf = document.createElement('div');
+  shelf.setAttribute('aria-hidden', 'true');
+  shelf.style.cssText = `position:absolute;left:-20000px;top:0;width:${PRINT_WIDTH_PX}px;visibility:hidden;pointer-events:none;`;
+  try {
+    document.body.appendChild(shelf);
+    const copies = cards.map(card => {
+      const copy = card.cloneNode(true) as HTMLElement;
+      // The images as they print, sized from the originals so nothing waits on
+      // a load: past paper diagrams are held to 280px tall and 85% of the width.
+      const from = card.querySelectorAll('img'), to = copy.querySelectorAll('img');
+      to.forEach((img, i) => {
+        const o = from[i];
+        if (o?.naturalWidth) { img.width = o.naturalWidth; img.height = o.naturalHeight; img.style.height = 'auto'; }
+        if (img.closest('.question-content')) { img.style.maxHeight = '280px'; img.style.maxWidth = '85%'; }
+      });
+      copy.querySelectorAll(HIDDEN_IN_PRINT).forEach(n => n.remove());
+      copy.querySelectorAll<HTMLElement>('.q-qr').forEach(qr => { qr.style.display = 'flex'; });
+      copy.querySelectorAll<HTMLElement>('.q-qr img').forEach(img => { img.style.width = img.style.height = '48px'; });
+      copy.removeAttribute('data-print-tall');
+      copy.style.padding = '1.25rem';
+      copy.style.margin = '0';
+      shelf.appendChild(copy);
+      return copy;
+    });
+    copies.forEach((copy, i) => {
+      cards[i].toggleAttribute('data-print-tall', copy.getBoundingClientRect().height > 0.9 * PAGE_HEIGHT_PX);
+    });
+  } catch {
+    // an estimate that failed is no worse than none
+  } finally {
+    shelf.remove();
+  }
 }
 
 /**
@@ -287,6 +359,7 @@ export function watchSystemPrint(): () => void {
     // Same scope as the button: a Cmd-P print puts the same page on paper.
     printableImages(document).forEach(img => { img.loading = 'eager'; });
     warmNow(document);
+    markTallCards(document);
   };
   window.addEventListener('beforeprint', onBeforePrint);
   return () => window.removeEventListener('beforeprint', onBeforePrint);

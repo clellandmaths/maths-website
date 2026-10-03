@@ -716,6 +716,30 @@ body {
     box-shadow: none !important;
   }
 
+  /* **Where a card too tall for a page breaks** (the owner, 2026-10-03: "first
+     sentence of part a then new page"). A card that fits is kept whole, above.
+     One that cannot be starts on a new page (`data-print-tall`, set on the
+     Print button by `markTallCards` in lib/print-worksheet.ts, because Safari
+     honours a forced break and not the softer rules) and then breaks between
+     its pieces: a paragraph, a lettered part, a figure and the answer are each
+     kept whole. Safari honours that too. The header kept with the question,
+     and a line kept with the diagram it introduces, are asked for as well;
+     Chrome honours those and Safari ignores them. */
+  .worksheet-question[data-print-tall] {
+    break-before: page;
+    page-break-before: always;
+  }
+  .worksheet-question .question-content > *,
+  .worksheet-question .answer-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .worksheet-question .q-head,
+  .worksheet-question .question-content > :has(+ img, + svg) {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
   /* All text inside questions should be dark */
   .worksheet-question * {
     color: #111 !important;

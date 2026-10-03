@@ -1279,7 +1279,7 @@ function ExplorerContent({ course }: { course: Course }) {
                             they stay on the first, which is what print gets.
                             No breakpoint, no indent, nothing to keep in step
                             with a device. */}
-                        <div className="flex items-start gap-3 mb-4">
+                        <div className="q-head flex items-start gap-3 mb-4">
                           <div className="q-head-main flex flex-1 flex-wrap items-center gap-3 min-w-0">
                             {/* The number, source and tags as one box, so on paper
                                 they wrap inside it and the marks keep the top right

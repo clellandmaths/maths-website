@@ -289,7 +289,7 @@ function SharedWorksheet() {
               {/* The header: on paper its text wraps inside itself
                   (globals.css, `.q-head-main`) so the marks stay on the first
                   line, as on an exam paper. */}
-              <div className="flex items-start gap-3 mb-3">
+              <div className="q-head flex items-start gap-3 mb-3">
               <div className="q-head-main flex flex-1 min-w-0 items-center gap-3 flex-wrap">
                 <div className="q-head-text flex flex-wrap items-center gap-3 min-w-0 shrink-0 max-w-full print:flex-1">
                 {/* The calculator picture on the number's corner, as focus mode
