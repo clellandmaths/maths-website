@@ -252,7 +252,15 @@ function SharedWorksheet() {
               key={q.uid ?? `${q.year}-${q.paperNumber}-${q.questionIndex}`}
               className="worksheet-question bg-card border border-border rounded-xl p-5 sm:p-6 break-inside-avoid"
             >
-              <div className="flex items-center gap-3 mb-3 flex-wrap">
+              {/* **Two columns: the header, and the QR code beside it.** One
+                  wrapping row put the QR last, so when a long topic name and the
+                  calculator picture (2026-09-30) filled the line the code fell
+                  to a line of its own on the left of a printed sheet. Now it
+                  keeps its column, and on paper the header text wraps inside
+                  itself (globals.css, `.q-head-main`) so the marks stay on the
+                  first line, hard right, as on an exam paper. */}
+              <div className="flex items-start gap-3 mb-3">
+              <div className="q-head-main flex flex-1 min-w-0 items-center gap-3 flex-wrap">
                 <span className={`q-badge flex items-center justify-center h-7 w-7 ${theme.tint} ${theme.text} text-sm font-bold rounded-lg shrink-0`}>
                   {i + 1}
                 </span>
@@ -268,6 +276,7 @@ function SharedWorksheet() {
                   <span className="q-source text-sm text-muted-foreground">{q.label}</span>
                 )}
                 <Marks marks={q.marks} theme={theme} calculator={calculatorLabel(q, courseId ?? '')} className="q-marks ml-auto" />
+              </div>
                 {/* Beside the number rather than under the question, matching
                     the Explorer's sheet — it keeps the QR out of the reading
                     flow, on screen and on paper alike. */}

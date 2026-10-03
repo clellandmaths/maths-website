@@ -1259,7 +1259,7 @@ function ExplorerContent({ course }: { course: Course }) {
                             No breakpoint, no indent, nothing to keep in step
                             with a device. */}
                         <div className="flex items-start gap-3 mb-4">
-                          <div className="flex flex-1 flex-wrap items-center gap-3 min-w-0">
+                          <div className="q-head-main flex flex-1 flex-wrap items-center gap-3 min-w-0">
                             <span className={`q-badge flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
                               {index + 1}
                             </span>
@@ -1272,7 +1272,7 @@ function ExplorerContent({ course }: { course: Course }) {
                                 test mode: what a pupil needs before starting, not what the
                                 question is (the owner, 2026-09-30). */}
                             {!testMode && !isGenerated(q) && (
-                              <span className="text-sm text-muted-dim">
+                              <span className="q-source text-sm text-muted-dim">
                                 {paperCaption(q)}
                               </span>
                             )}

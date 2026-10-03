@@ -797,6 +797,24 @@ body {
   .q-marks {
     margin-left: auto;
     white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* **The header stays one line on paper; its words wrap instead.** With the
+     calculator picture beside the marks (2026-09-30) a long topic name no
+     longer fitted beside a QR code, and the row wrapped: on a shared sheet the
+     QR fell to a line of its own, in the Worksheet Builder the marks did. Here
+     the row does not wrap, and the topic and source text, which may shrink,
+     break onto a second line inside their own box, so the number, the
+     calculator and the marks keep their places. The QR is its own column. */
+  .q-head-main {
+    flex-wrap: nowrap !important;
+  }
+  .q-head-main .q-source,
+  .q-head-main .topic-tag {
+    min-width: 0;
+    flex: 0 1 auto;
+    white-space: normal;
   }
 
   .q-marks span {
