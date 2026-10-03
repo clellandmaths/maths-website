@@ -206,11 +206,22 @@ async function printPage(root: ParentNode): Promise<void> {
 }
 
 /**
- * The printed page, in CSS px: A4 less the 1.5cm margins `@page` sets
- * (globals.css), at 96 px to the inch. 18cm by 26.7cm.
+ * The printed page, in CSS px at 96 to the inch, **as an iPhone prints it**.
+ *
+ * Height: A4 less the 1.5cm margins `@page` sets (globals.css) is 26.7cm, 1009px,
+ * and that is Chrome's page. Safari also keeps about 2cm more at the foot for
+ * its own footer (the address, the date and "Page 16 of 63"), measured off the
+ * owner's iPhone prints of 2026-10-03: about 24.7cm, 934px. The shorter page
+ * is the one used, so a card that fits Chrome's page but not the iPhone's is
+ * still taken to a fresh page; in Chrome that costs at most some white space.
+ *
+ * Width: the card's, not the page's. The page is 18cm (680px), but the cards
+ * sit inside their page's own padding: 632px in the Worksheet Builder and the
+ * practice paper, 648px on a shared sheet. The narrower is used, since a copy
+ * measured too wide wraps fewer lines and comes out short.
  */
-const PRINT_WIDTH_PX = 680;
-const PAGE_HEIGHT_PX = 1009;
+const PRINT_WIDTH_PX = 632;
+const PAGE_HEIGHT_PX = 934;
 
 /**
  * **A card too tall for a page starts at the top of one** (the owner,
@@ -267,13 +278,42 @@ function markTallCards(root: ParentNode): void {
       return copy;
     });
     copies.forEach((copy, i) => {
-      cards[i].toggleAttribute('data-print-tall', copy.getBoundingClientRect().height > 0.9 * PAGE_HEIGHT_PX);
+      const tall = copy.getBoundingClientRect().height > 0.9 * PAGE_HEIGHT_PX;
+      cards[i].toggleAttribute('data-print-tall', tall);
+      if (tall) keepLeadInsWithFigures(cards[i]);
     });
   } catch {
     // an estimate that failed is no worse than none
   } finally {
     shelf.remove();
   }
+}
+
+/**
+ * **The paragraph that introduces a diagram goes over the page with it** (the
+ * owner, 2026-10-03: "The piece of card … centre C." printed at a page's foot
+ * with its sector overleaf). A tall card breaks between its pieces, and a
+ * paragraph straight before a figure is nearly always about that figure, so
+ * the two are wrapped in one box (`.q-keep`) that the print stylesheet keeps
+ * whole. Safari ignores `break-after: avoid`, which asked for this, but keeps
+ * a box whole.
+ *
+ * A paragraph is every line that runs on, so two or three lines go together.
+ * Only tall cards, the only ones that break. The question's own markup is set
+ * by MathRenderer, not by React, so wrapping inside it is safe, and the box
+ * has no style of its own: nothing moves on screen. Done once per pair.
+ */
+function keepLeadInsWithFigures(card: HTMLElement): void {
+  card.querySelectorAll<HTMLElement>('.question-content').forEach(content => {
+    for (const el of Array.from(content.children)) {
+      const next = el.nextElementSibling;
+      if (el.tagName !== 'P' || !next || !/^(IMG|SVG|FIGURE)$/i.test(next.tagName)) continue;
+      const box = document.createElement('div');
+      box.className = 'q-keep';
+      content.insertBefore(box, el);
+      box.append(el, next);
+    }
+  });
 }
 
 /**

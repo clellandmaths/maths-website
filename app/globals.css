@@ -722,14 +722,16 @@ body {
      Print button by `markTallCards` in lib/print-worksheet.ts, because Safari
      honours a forced break and not the softer rules) and then breaks between
      its pieces: a paragraph, a lettered part, a figure and the answer are each
-     kept whole. Safari honours that too. The header kept with the question,
-     and a line kept with the diagram it introduces, are asked for as well;
-     Chrome honours those and Safari ignores them. */
+     kept whole. Safari honours that too. The paragraph straight before a
+     diagram is boxed with it at print time (`.q-keep`, keepLeadInsWithFigures),
+     so they go over the page together in Safari as well. The header kept with
+     the question is asked for too; Chrome honours that and Safari ignores it. */
   .worksheet-question[data-print-tall] {
     break-before: page;
     page-break-before: always;
   }
   .worksheet-question .question-content > *,
+  .worksheet-question .q-keep,
   .worksheet-question .answer-section {
     break-inside: avoid;
     page-break-inside: avoid;
