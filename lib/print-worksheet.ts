@@ -224,12 +224,25 @@ async function printPage(root: ParentNode): Promise<void> {
  * as Chrome's, 2022 P2 Q8 (Higher, 868px on that paper) fitted a page and was
  * left to break after its header.
  *
- * Safari on a Mac is not known to do the same, and is measured as Chrome.
+ * **By engine, not by device** (the owner, 2026-10-03: "any iPhone, any
+ * android phone, any tablet … and any desktop device"). Chrome's engine
+ * (Windows, Chromebooks, every Android phone and tablet, Chrome and Edge on a
+ * Mac) and Firefox's take a card too tall for a page to a fresh one on their
+ * own, so for them this marking only repeats what they do. Safari's engine
+ * does not, and it prints every iPhone and iPad (Apple makes every browser
+ * there use it) and Safari on a Mac. So every Safari-engine print is measured
+ * against the smallest page any is known to print, the iPhone's: a device
+ * whose page is bigger (an iPad, a Mac, a smaller print scale) gets some white
+ * space, never a stranded header. US Letter, about 6% shorter than A4, is
+ * inside the tenth of a page `markTallCards` allows.
+ *
+ * The engine is told by what it offers, not by the device's name: only
+ * Chrome's engine has `navigator.userAgentData`, only Firefox's says Firefox.
  */
 function printedPage(): { width: number; height: number } {
-  const ua = navigator.userAgent;
-  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-  return ios ? { width: 503, height: 774 } : { width: 632, height: 1009 };
+  const blink = 'userAgentData' in navigator;
+  const gecko = /\bFirefox\//.test(navigator.userAgent);
+  return blink || gecko ? { width: 632, height: 1009 } : { width: 503, height: 774 };
 }
 
 /**
