@@ -92,7 +92,8 @@ const MEASURE = cardSelector => `(() => {
     // (.q-head-text, 2026-10-03, so a printed header keeps its marks on the first
     // line): count what is in it, not the box, or a box that wraps inside itself
     // reads as one item the full width of the row.
-    const items = [...row.children].flatMap(el => el.classList.contains('q-head-text') ? [...el.children] : [el]).filter(laid);
+    const open = el => (el.classList.contains('q-head-text') || el.classList.contains('q-tags')) ? [...el.children].flatMap(open) : [el];
+    const items = [...row.children].flatMap(open).filter(laid);
     if (items.length < 2) continue;
 
     const cs = getComputedStyle(card);

@@ -821,6 +821,21 @@ body {
     flex: 1 1 0;
     min-width: 5rem;
   }
+  /* The number and its column of reference and tags never part on paper: a
+     tag that does not fit goes under the first tag, not under the number. The
+     column starts a little right of the number, clear of the calculator on
+     its corner, and level with its top (the owner, 2026-10-03). */
+  .q-head-text {
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+  }
+  .q-head-text > .q-tags {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-left: 4px;
+    row-gap: 3px !important;
+    column-gap: 6px !important;
+  }
   /* Smaller on paper: the tags and the source say what a question is, and the
      number, calculator and marks are what a pupil reads first (the owner,
      2026-10-03: "Tags smaller"). */

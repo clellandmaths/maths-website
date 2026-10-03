@@ -1306,19 +1306,27 @@ function ExplorerContent({ course }: { course: Course }) {
                                 **But always Calculator or Non-calculator**, on every card and in
                                 test mode: what a pupil needs before starting, not what the
                                 question is (the owner, 2026-09-30). */}
-                            {!testMode && !isGenerated(q) && (
-                              <span className="q-source text-sm text-muted-dim">
-                                {paperCaption(q)}
-                              </span>
+                            {/* The reference and tags as one column beside the
+                                number: on paper a tag that does not fit goes under
+                                the first tag, not under the number (the owner,
+                                2026-10-03; globals.css, `.q-tags`). */}
+                            {!testMode && (
+                              <div className="q-tags flex flex-wrap items-center gap-x-3 gap-y-1 min-w-0">
+                                {!isGenerated(q) && (
+                                  <span className="q-source text-sm text-muted-dim">
+                                    {paperCaption(q)}
+                                  </span>
+                                )}
+                                {q.topics?.slice(0, 2).map((topic) => (
+                                  <span
+                                    key={topic}
+                                    className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
+                                  >
+                                    {topic}
+                                  </span>
+                                ))}
+                              </div>
                             )}
-                            {!testMode && q.topics?.slice(0, 2).map((topic) => (
-                              <span
-                                key={topic}
-                                className="topic-tag px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
-                              >
-                                {topic}
-                              </span>
-                            ))}
                             </div>
                             {/* `@media print` sets `margin-left: auto` on
                                 `.q-marks`, so a printed sheet keeps the exam
