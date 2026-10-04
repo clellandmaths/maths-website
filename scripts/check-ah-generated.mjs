@@ -203,6 +203,27 @@ await withPage({ port: 8161, cdp: 9261, width: 1280, height: 900 }, async ({ eva
   t.check(landed?.q.startsWith(SHORT_MARK) && !spellsInLink(landed.q), 'with a short link that spells nothing');
   t.check(landed?.n === 5, `five questions on it (${landed?.n})`);
 
+  // ── the generated practice paper (the owner: "Should get generated practice paper") ──
+  for (const [path, name] of [['/course/ah/generate/paper/2024/paper-1', '2024 Paper 1'], ['/course/ah/generate/paper/2019/paper-1', '2019 Paper']]) {
+    await go(path, 2500);
+    for (let i = 0; i < 60; i++) { if (!(await evaluate(`/Drawing question/.test(document.body.innerText)`))) break; await sleep(1000); }
+    await sleep(1500);
+    const paper = await evaluate(`({
+      n: document.querySelectorAll('.question-content').length,
+      none: /no new question could be made/i.test(document.body.innerText),
+      named: document.body.innerText.includes(${JSON.stringify(name)}),
+      paperOne: ${JSON.stringify(name)} === '2019 Paper' && /2019 Paper 1/.test(document.body.innerText),
+      dollar: /[$]/.test([...document.querySelectorAll('.question-content')].map(e => e.innerText).join(' ')),
+    })`);
+    t.check(paper?.n > 3 && !paper?.none && !paper?.dollar,
+      `a practice paper like ${name}: ${paper?.n} new questions, none missing, none with a dollar sign`);
+    t.check(paper?.named && !paper?.paperOne, `and it is called "${name}"`);
+  }
+  await click(`[...document.querySelectorAll('button')].find(x => /open as a worksheet/i.test(x.textContent || ''))`);
+  await sleep(8000);
+  t.check(await evaluate(`location.pathname === '/worksheet' && new URLSearchParams(location.search).get('c') === 'ah'`),
+    'and it opens as an Advanced Higher shared sheet');
+
   // ── practice ────────────────────────────────────────────────────────────
   await go('/course/ah/practice/differentiation', 3000);
   t.check(await evaluate(`/keep practising/i.test(document.body.innerText)`), 'an Advanced Higher practice topic offers more questions');

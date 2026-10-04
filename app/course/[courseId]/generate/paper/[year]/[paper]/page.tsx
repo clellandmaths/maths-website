@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getAllN5Questions } from '@/lib/data-loader';
-import { paperRef } from '@/lib/question-number.mjs';
+import { getAllN5Questions, getAllAHQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
+import { generationLabel } from '@/lib/similar-questions';
+import { paperName } from '@/lib/paper-name';
 import { getCourseTheme } from '@/lib/course-theme';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PracticePaperClient from './PracticePaperClient';
@@ -34,21 +35,24 @@ import PracticePaperClient from './PracticePaperClient';
  * this page actually draws, through a dynamic import in the client.
  */
 
-const GENERATOR_COURSES = ['n5'] as const;
-const COURSE_NAMES: Record<string, string> = { n5: 'National 5 Maths' };
-
-/** The shape the paper label takes, and the only shape a variation can match. */
-const N5_PAPER_LABEL = /^\d{4} P[12] Q\d+$/;
+/** National 5 and, since the port (2026-10-04, the owner: "Should get generated practice paper"), Advanced Higher. */
+const GENERATOR_COURSES = ['n5', 'ah'] as const;
+const COURSE_NAMES: Record<string, string> = { n5: 'National 5 Maths', ah: 'Advanced Higher Maths' };
+const LOADERS: Record<string, () => Promise<QuestionWithMetadata[]>> = { n5: getAllN5Questions, ah: getAllAHQuestions };
 
 interface Params { courseId: string; year: string; paper: string }
 
 export async function generateStaticParams(): Promise<Params[]> {
-  const questions = await getAllN5Questions();
-  const combos = new Set(questions.map(q => `${q.year}/${q.paperNumber}`));
-  return [...combos].map(c => {
-    const [year, paperNumber] = c.split('/');
-    return { courseId: 'n5', year, paper: `paper-${paperNumber}` };
-  });
+  const out: Params[] = [];
+  for (const courseId of GENERATOR_COURSES) {
+    const questions = await LOADERS[courseId]();
+    const combos = new Set(questions.map(q => `${q.year}/${q.paperNumber}`));
+    for (const c of combos) {
+      const [year, paperNumber] = c.split('/');
+      out.push({ courseId, year, paper: `paper-${paperNumber}` });
+    }
+  }
+  return out;
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
@@ -57,11 +61,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const paperNumber = Number(paper.replace('paper-', ''));
   const courseName = COURSE_NAMES[courseId] ?? courseId;
 
+  const name = paperName(courseId, year, paperNumber);
   return {
-    title: `${courseName} ${year} Paper ${paperNumber} — a practice paper with new numbers`,
+    title: `${courseName} ${name} — a practice paper with new numbers`,
     description:
-      `A new practice paper modelled question by question on the ${courseName} ${year} ` +
-      `Paper ${paperNumber}. Every question is checked against the real paper's marking ` +
+      `A new practice paper modelled question by question on the ${courseName} ${name}. ` +
+      `Every question is checked against the real paper's marking ` +
       'instructions, so it is new work rather than a reprint. Print it or share one link.',
     alternates: { canonical: `/course/${courseId}/generate/paper/${year}/${paper}/` },
   };
@@ -74,7 +79,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const paperNumber = Number(paper.replace('paper-', ''));
   if (!Number.isFinite(paperNumber)) notFound();
 
-  const questions = (await getAllN5Questions()).filter(
+  const questions = (await LOADERS[courseId]()).filter(
     q => String(q.year) === year && q.paperNumber === paperNumber
   );
   if (questions.length === 0) notFound();
@@ -87,9 +92,10 @@ export default async function Page({ params }: { params: Promise<Params> }) {
    * is plausible and wrong on at least one surface.
    */
   const plan = questions.map((q, i) => {
-    const label = paperRef(q.question);
     return {
-      label: label && N5_PAPER_LABEL.test(label) ? label : null,
+      // The course's own label shape (`generationLabel`): N5's "2024 P1 Q3",
+      // AH's "2019 Q4" and "2016 Q1(a)". Never one course's lookup for another.
+      label: generationLabel(courseId, null, q.question),
       number: q.questionNumber ?? String(i + 1),
       marks: (q.marks ?? []).reduce((a, b) => a + b, 0),
     };
@@ -102,7 +108,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
       <Breadcrumbs items={[
         { label: courseName, href: `/course/${courseId}` },
-        { label: `${year} Paper ${paperNumber}`, href: `/course/${courseId}/papers/${year}/${paper}` },
+        { label: paperName(courseId, year, paperNumber), href: `/course/${courseId}/papers/${year}/${paper}` },
         { label: 'Practice paper' },
       ]} />
 

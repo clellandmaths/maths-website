@@ -9,6 +9,7 @@ import { printMarkscheme, printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import { calculatorFor } from '@/lib/calculator';
+import { paperName } from '@/lib/paper-name';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
@@ -87,7 +88,7 @@ export default function PracticePaperClient({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setBackTo({
       href: `/course/${courseId}/papers/${year}/paper-${paperNumber}`,
-      label: `${year} Paper ${paperNumber}`,
+      label: paperName(courseId, year, paperNumber),
     });
   }, [courseId, year, paperNumber]);
   /**
@@ -145,8 +146,9 @@ export default function PracticePaperClient({
     (async () => {
       try {
         const { similarTo, worksheetKeys } = await import('@/lib/generated-question');
-        const { getAllN5Questions } = await import('@/lib/data-loader');
-        const byLabel = byPaperLabel(await getAllN5Questions());
+        // The course's own papers: labels collide across courses.
+        const { getAllN5Questions, getAllAHQuestions } = await import('@/lib/data-loader');
+        const byLabel = byPaperLabel(await (courseId === 'ah' ? getAllAHQuestions() : getAllN5Questions()));
 
         const out: (QuestionWithMetadata | null)[] = [];
         for (const row of plan) {
@@ -156,7 +158,7 @@ export default function PracticePaperClient({
             // The exclude set accumulates across the paper, so two questions
             // backed by the same variation get different numbers rather than
             // the same question twice.
-            const [raw] = await similarTo(row.label, 1, worksheetKeys(out.filter(Boolean) as QuestionWithMetadata[]));
+            const [raw] = await similarTo(row.label, 1, worksheetKeys(out.filter(Boolean) as QuestionWithMetadata[]), courseId);
             if (raw) q = withParentVideo(raw, byLabel);
           }
           out.push(q);
@@ -196,7 +198,7 @@ export default function PracticePaperClient({
     import('@/lib/worksheet-share').then(({ shareLinks }) => {
       const { locked } = shareLinks(
         origin, courseId, drawn,
-        `Practice paper — modelled on ${courseName} ${year} Paper ${paperNumber}`,
+        `Practice paper — modelled on ${courseName} ${paperName(courseId, year, paperNumber)}`,
         { answers: true, hints: true, video: true, qrCodes: true, test: false },
       );
       window.location.href = locked;
@@ -210,7 +212,7 @@ export default function PracticePaperClient({
           {courseName} · practice paper
         </p>
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          Modelled on {year} Paper {paperNumber}
+          Modelled on {paperName(courseId, year, paperNumber)}
         </h1>
         <p className="text-muted-foreground mb-2">
           One new question for each question of the real paper, in the same order.
@@ -362,7 +364,7 @@ export default function PracticePaperClient({
           href={`/course/${courseId}/papers/${year}/paper-${paperNumber}`}
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
-          The real {year} Paper {paperNumber}
+          The real {paperName(courseId, year, paperNumber)}
         </Link>
       </div>
     </>

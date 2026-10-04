@@ -34,6 +34,7 @@ import BookletButton from '@/components/Papers/BookletButton';
 import FormulaeButton from '@/components/FormulaeButton';
 import QuestionHelp from '@/components/Papers/QuestionHelp';
 import { Paperclip } from 'lucide-react';
+import { courseGenerates } from '@/lib/similar-questions';
 
 // Every past paper is a statically generated page with all questions,
 // answers — and for AH's no-video years, the full marking instructions —
@@ -206,8 +207,8 @@ export default async function PaperPage(
               engine, which `check-engine-isolation.mjs` holds at 0 of 542.
 
               This link stays a link because nothing about it needs the client.
-              National 5 only — it is the only course with audited variations. */}
-          {courseId === 'n5' && (
+              National 5 and Advanced Higher, the courses with generated questions. */}
+          {courseGenerates(courseId) && (
             <Link
               href={`/course/${courseId}/generate/paper/${year}/paper-${paperNumber}?from=paper`}
               className={`inline-flex items-center gap-1.5 mt-4 text-sm font-medium ${theme.text} hover:opacity-80 transition-opacity`}

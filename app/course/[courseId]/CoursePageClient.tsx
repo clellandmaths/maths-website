@@ -22,6 +22,7 @@ import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import { paperName } from '@/lib/paper-name';
+import { courseGenerates } from '@/lib/similar-questions';
 import { paperCaption } from '@/lib/question-number.mjs';
 
 interface CoursePageProps {
@@ -303,9 +304,9 @@ export default function CoursePage({ courseId }: CoursePageProps) {
 
                                     A link, not a button, so the row gains no
                                     handler; the destination does the work.
-                                    National 5 only — the one course with audited
-                                    variations. */}
-                                {courseId === 'n5' && (
+                                    National 5 and Advanced Higher, the courses with
+                                    generated questions. */}
+                                {courseGenerates(courseId) && (
                                   <Link
                                     // `from` so the generated paper can offer a way back to here, rather
                                     // than to the paper page nobody visited.
