@@ -20,6 +20,16 @@ type Sheet = { format: string; q: string; refs: string[]; questions: Record<stri
 const sheets: Sheet[] = ['share-links-2026-10-01.json', 'share-links-short-2026-10-01.json']
   .flatMap(f => (JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'fixtures', f), 'utf8')) as { sheets: Sheet[] }).sheets);
 
+/**
+ * Questions the owner has since changed on purpose, accepted by name
+ * (`fixtures/share-links-accepted.json`): the N5 full read's confirmed changes,
+ * checked one by one on 2026-10-04. The 1 October files stay as recorded, the
+ * evidence of what old links opened; a link passes on its recording or on its
+ * accepted entry, and on nothing else.
+ */
+const accepted: Record<string, { question: string }> =
+  JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'fixtures', 'share-links-accepted.json'), 'utf8')).links;
+
 /** The same fingerprint the recorder took. */
 async function fingerprint(ref: string): Promise<string | null> {
   const [, code, seed, parent] = ref.split(':');
@@ -41,7 +51,7 @@ for (const s of sheets) {
   for (const [ref, want] of Object.entries(s.questions)) {
     generated++;
     const have = await fingerprint(ref);
-    if (have !== want) { bad++; if (bad <= 5) console.log(`FAIL ${ref}: question ${have}, recorded ${want}`); }
+    if (have !== want && have !== accepted[ref]?.question) { bad++; if (bad <= 5) console.log(`FAIL ${ref}: question ${have}, recorded ${want}`); }
   }
 }
 console.log(`${sheets.length} recorded links, ${refs} questions, ${generated} generated questions re-made: ${bad ? `${bad} FAILED` : 'every one the same'}`);

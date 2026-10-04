@@ -1,0 +1,225 @@
+{
+ "note": "Generated questions whose recorded fingerprint (2026-10-01) has since changed on the owner's confirmation: the N5 full read (generator ea2a605, 23 questions re-recorded on \"I confirm n5 full read card\" and the comments quoted in that commit) and 2022 P2 Q10 (40ca88d, \"I confirm 2022 P2 Q10\"). Each was checked against the full read's confirmed list on 2026-10-04 (generator docs/verdicts/2026-10-04-sd-decimal.md). The 1 October files stay as recorded: they are the evidence of what old links opened. Add here only a change the owner confirmed, by name.",
+ "recorded": "2026-10-04",
+ "papers": [
+  "2014 P1 Q6",
+  "2014 P2 Q10",
+  "2016 P1 Q5",
+  "2018 P2 Q13",
+  "2018 P2 Q18",
+  "2018 P2 Q4",
+  "2022 P2 Q10",
+  "2022 P2 Q7",
+  "2023 P1 Q14",
+  "2024 P2 Q4",
+  "2026 P1 Q11",
+  "2026 P1 Q4"
+ ],
+ "links": {
+  "g:8bvtb:6cxq4o:0": {
+   "question": "7e340187719881f5",
+   "was": "36a59b6ca7a13623",
+   "paper": "2026 P1 Q11"
+  },
+  "g:wwt54:nl7m0v:0": {
+   "question": "dbceaf8af43f8daa",
+   "was": "27239904ca729b62",
+   "paper": "2024 P2 Q4"
+  },
+  "g:uem2o:d1ox1n:0": {
+   "question": "e215ebd23be0cc7f",
+   "was": "1cdf72e835fbe1f6",
+   "paper": "2022 P2 Q10"
+  },
+  "g:lkqxy:asn6gm:1": {
+   "question": "bc02fad1621f1e11",
+   "was": "d6b653d19fb0e2dc",
+   "paper": "2018 P2 Q13"
+  },
+  "g:uem2o:1p4ap7:0": {
+   "question": "0f1b8c4ac2854675",
+   "was": "6735131e2141ef88",
+   "paper": "2022 P2 Q10"
+  },
+  "g:9dj1r:xpq1gg:0": {
+   "question": "98846c4820a3205a",
+   "was": "810c7e0cefc59314",
+   "paper": "2014 P2 Q10"
+  },
+  "g:uem2o:93rrwm:0": {
+   "question": "5556c7eabcb82b90",
+   "was": "e1689b0b895c269a",
+   "paper": "2022 P2 Q10"
+  },
+  "g:40fhu:h8uzqd:0": {
+   "question": "4cd926a9b0e37a7e",
+   "was": "e5689bd56fa75dcd",
+   "paper": "2014 P1 Q6"
+  },
+  "g:uem2o:w3li0t:0": {
+   "question": "851c9bef361facfe",
+   "was": "70c00fe2d3267436",
+   "paper": "2022 P2 Q10"
+  },
+  "g:jmj4x:p61hu2:0": {
+   "question": "becd61d9b26a658b",
+   "was": "a7ec418e327c2b9c",
+   "paper": "2026 P1 Q4"
+  },
+  "g:8bvtb:afrmo1:0": {
+   "question": "bd2b9446d5a95447",
+   "was": "9aa15afd0b95adc4",
+   "paper": "2026 P1 Q11"
+  },
+  "g:9dj1r:ucyvyc:0": {
+   "question": "7cac37bfc08abb11",
+   "was": "6b3bd8a56792c2be",
+   "paper": "2014 P2 Q10"
+  },
+  "g:b7ht0:xwdjgk:0": {
+   "question": "de5eb5d9ccf64865",
+   "was": "c3a07bf53edc1a51",
+   "paper": "2018 P2 Q4"
+  },
+  "g:lkqxy:yu5r9d:0": {
+   "question": "a9001339f3e265cb",
+   "was": "03e353e3c6006ae5",
+   "paper": "2018 P2 Q13"
+  },
+  "g:9dj1r:st04wu:0": {
+   "question": "7f5f29c5f3f14f40",
+   "was": "685d9ed4b447a033",
+   "paper": "2014 P2 Q10"
+  },
+  "g:40fhu:e68re0:0": {
+   "question": "b5ae706f6fa99a48",
+   "was": "ae23d6d7d4b46cf5",
+   "paper": "2014 P1 Q6"
+  },
+  "g:lkqxy:p82kp1:0": {
+   "question": "2776272664e4222c",
+   "was": "1f82722ccaaffb28",
+   "paper": "2018 P2 Q13"
+  },
+  "g:uem2o:a55r7t:0": {
+   "question": "3261b9987d0db2fd",
+   "was": "0592e8309e84f4f9",
+   "paper": "2022 P2 Q10"
+  },
+  "g:lkqxy:p83gup:0": {
+   "question": "2b262d42a48cbd33",
+   "was": "7aab57ff1c3ed64b",
+   "paper": "2018 P2 Q13"
+  },
+  "g:40fhu:klbd32:1": {
+   "question": "265e0ae4773197ed",
+   "was": "9ad815d0b76068c4",
+   "paper": "2014 P1 Q6"
+  },
+  "g:7kvnt:j1cl11:0": {
+   "question": "1938d87a3364dec3",
+   "was": "9e740b191aee39b6",
+   "paper": "2022 P2 Q7"
+  },
+  "g:40fhu:ykdffq:1": {
+   "question": "6dd70371a124d9f4",
+   "was": "e752c54512c4426c",
+   "paper": "2014 P1 Q6"
+  },
+  "g:lkqxy:11ltow:1": {
+   "question": "71557c801f4a95d5",
+   "was": "5b40d9ddc67bcdc8",
+   "paper": "2018 P2 Q13"
+  },
+  "g:wwt54:8b7v:0": {
+   "question": "8d53fab42cc684f7",
+   "was": "3c7bd7944f6d624c",
+   "paper": "2024 P2 Q4"
+  },
+  "g:uem2o:gtrd:0": {
+   "question": "654b687d027e502f",
+   "was": "80f2285d58a2a2d9",
+   "paper": "2022 P2 Q10"
+  },
+  "g:uem2o:qdfz:0": {
+   "question": "2f8fcff2e8fcc17b",
+   "was": "b4156da0318d2b01",
+   "paper": "2022 P2 Q10"
+  },
+  "g:9x0yz:ww9v:0": {
+   "question": "d27ac967b49e54e5",
+   "was": "90d41992e33104bb",
+   "paper": "2016 P1 Q5"
+  },
+  "g:b7ht0:m9r7:1": {
+   "question": "9d6993f6c0b8214d",
+   "was": "656c37d5992edefd",
+   "paper": "2018 P2 Q4"
+  },
+  "g:9dj1r:kpm9:0": {
+   "question": "0f01dc0f8427a5e7",
+   "was": "32d82b9f3e0e6985",
+   "paper": "2014 P2 Q10"
+  },
+  "g:9dj1r:q6tn:0": {
+   "question": "990f69051f92e96d",
+   "was": "91ddc42e0a4f045a",
+   "paper": "2014 P2 Q10"
+  },
+  "g:8bvtb:pjd7:1": {
+   "question": "9373aaaeb6271d22",
+   "was": "0902b2f1ff0c3130",
+   "paper": "2026 P1 Q11"
+  },
+  "g:uem2o:czsh:0": {
+   "question": "b75665b3e7682548",
+   "was": "ec47774b724a9bf4",
+   "paper": "2022 P2 Q10"
+  },
+  "g:lkqxy:b2lt:0": {
+   "question": "bbc153867d45ce88",
+   "was": "3f4f8bef6c9ad8f0",
+   "paper": "2018 P2 Q13"
+  },
+  "g:8bvtb:mrck:1": {
+   "question": "192ddb53d9d9473a",
+   "was": "6dfc1a99eda0c9ba",
+   "paper": "2026 P1 Q11"
+  },
+  "g:9dj1r:qg9l:0": {
+   "question": "11a0beb1aaa7cc99",
+   "was": "2a8fc726fbd688c0",
+   "paper": "2014 P2 Q10"
+  },
+  "g:b7ht0:tcdh:0": {
+   "question": "6dae60cf6246c823",
+   "was": "c63573ef9cd83b64",
+   "paper": "2018 P2 Q4"
+  },
+  "g:8bvtb:zdht:0": {
+   "question": "92270d3614528b5c",
+   "was": "a3338db04203d354",
+   "paper": "2026 P1 Q11"
+  },
+  "g:40fhu:pk8k:1": {
+   "question": "cc49aca177f6616e",
+   "was": "56758ce4b8de9ee4",
+   "paper": "2014 P1 Q6"
+  },
+  "g:9x0yz:cfcd:0": {
+   "question": "aff6d40c8f2886a2",
+   "was": "31dd2e657f1df37a",
+   "paper": "2016 P1 Q5"
+  },
+  "g:cxfvr:rrk6:0": {
+   "question": "862b4afc9e509070",
+   "was": "45de2a25a72bca85",
+   "paper": "2023 P1 Q14"
+  },
+  "g:od1f9:qdtm:0": {
+   "question": "db0a6873e78a29de",
+   "was": "157165bca6612eec",
+   "paper": "2018 P2 Q18"
+  }
+ }
+}
