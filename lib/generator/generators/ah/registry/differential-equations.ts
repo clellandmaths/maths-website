@@ -112,7 +112,7 @@ export const DIFFERENTIAL_EQUATIONS: readonly CardMeta[] = [
   },
   {
     card: '2017 Q14',
-    skill: 'Solve a second-order equation with a repeated root and a sine and cosine on the right, given y and dy/dx at x = 0, the particular integral\'s constants halves.',
+    skill: 'Solve a second-order equation with a repeated root and a sine and cosine on the right, given y and dy/dx at x = 0.',
     marks: [10],
     route: 'The auxiliary equation; the repeated root\'s complementary function, Ae^{rx} + Bxe^{rx}; the particular integral C sin x + D cos x; both its derivatives; substituted; the sin and cos coefficients compared for two equations; C and D; the general solution differentiated; one of A and B from the conditions; the other, and the particular solution. "= 0" on the auxiliary equation or the first mark goes.',
     ranges: 'The paper: y\'\' - 6y\' + 9y = 8 sin x + 19 cos x, y = 7 and y\' = 1/2 at x = 0, answer 5e^{3x} - 14xe^{3x} - (1/2) sin x + 2 cos x. Built from the answer: the repeated root r one of ±2 and ±3 (the paper\'s 3); A from ±1 to ±6 and B from ±1 to ±15 (the paper\'s 5 and -14); C and D halves from ±1/2 to ±3, at least one not whole, as the paper\'s -1/2 and 2. Kept: both trig terms on the right whole, nonzero and within 30, y(0) within 12 and y\'(0) within 15, either maybe a half, as the paper\'s 1/2. Its own routine; a near relation of 2022 P2 Q10 (locked), the same question with whole C and D for nine marks.',

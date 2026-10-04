@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "3c88dee291c586988c02df1a78668de6afaff6ed",
+  "sourceCommit": "2dfe31e7f7e2b4aea21985fcdf4548ef561992bb",
   "sourceDirty": false,
   "count": 203,
   "files": {
@@ -55,8 +55,8 @@
     "generators/ah/maths/vector.ts": "85143cf02b687459",
     "generators/ah/registry/binomial-theorem.ts": "c3287631487ea241",
     "generators/ah/registry/complex-numbers.ts": "5ff8529d995f3ce9",
-    "generators/ah/registry/differential-equations.ts": "88ed06a2786d5027",
-    "generators/ah/registry/differentiation.ts": "e2cfe7f29919bdfb",
+    "generators/ah/registry/differential-equations.ts": "3a0262556dc859eb",
+    "generators/ah/registry/differentiation.ts": "a54ee222a790bcf9",
     "generators/ah/registry/functions-and-graphs.ts": "ac94c7b4fb155d0d",
     "generators/ah/registry/index.ts": "f663774bcfe235a4",
     "generators/ah/registry/integration.ts": "c98a4d016373425b",

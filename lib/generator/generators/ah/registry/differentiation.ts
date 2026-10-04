@@ -147,7 +147,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2023 P2 Q1',
-    skill: 'Differentiate a multiple of an inverse sine of a multiple of x, in the words "the function f is defined by".',
+    skill: 'Differentiate a multiple of an inverse sine of a multiple of x.',
     marks: [2],
     route: 'The inverse sine\'s derivative with the number in front kept, c/sqrt(1 - (kx)^2); then the chain rule\'s k, ck/sqrt(1 - (kx)^2), or with the square worked out. The whole kx is squared under the root.',
     ranges: 'The paper: 2 sin^{-1} 3x, giving 6/sqrt(1 - 9x^2). c from 2 to 9 (the paper\'s 2) and k from 2 to 9 (the paper\'s 3), always sin^{-1}: a different function is a different card. 64 questions. The same question as 2026 P2 Q1 (locked), in this paper\'s words: its own routine, so neither moves the other, and one family label at the port.',
