@@ -756,7 +756,10 @@ function meanStdevCompare(_wanted?: string, asked?: string): Q {
         `<strong>(b)</strong> Now compare the standard deviations, naming the quantity and the group again:<br><br>${comparison(ctx, higher, wider)[1]}`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1],
-      finalAnswer: `(a) mean ${amount(mean, ctx)}, standard deviation ${ctx.prefix}${ctx.pence ? pennies(Number(s.toFixed(1)), ctx) : s.toFixed(1)}${ctx.unit ? ` ${unitFor(Number(s.toFixed(1)), ctx.unit)}` : ''}. (b) ` +
+      // Pennies for a money story only: in any other, the standard deviation
+      // keeps its one decimal place, "18.0 eggs", beside the other group's
+      // "16.7 eggs" (2026-10-04, the owner's "Yes": pence had made it "18").
+      finalAnswer: `(a) mean ${amount(mean, ctx)}, standard deviation ${ctx.prefix}${ctx.pence && ctx.prefix === '£' ? pennies(Number(s.toFixed(1)), ctx) : s.toFixed(1)}${ctx.unit ? ` ${unitFor(Number(s.toFixed(1)), ctx.unit)}` : ''}. (b) ` +
         comparison(ctx, higher, wider).join(' '),
     };
   }

@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "2dfe31e7f7e2b4aea21985fcdf4548ef561992bb",
+  "sourceCommit": "6f48a6e29b5ee5f19993769cdce5f781193b2963",
   "sourceDirty": false,
   "count": 203,
   "files": {
@@ -151,7 +151,7 @@
     "generators/n5-composite-trig.ts": "3ede04cc25581b26",
     "generators/n5-contexts.ts": "54db176cdfaef60a",
     "generators/n5-coordinates-3d.ts": "b7b91fc530e3e5cd",
-    "generators/n5-data.ts": "e33356207b291ced",
+    "generators/n5-data.ts": "ed551e317a3432c2",
     "generators/n5-expanding.ts": "2a7abd5122dc9070",
     "generators/n5-factorising.ts": "bed19bd368fea316",
     "generators/n5-form-equation.ts": "dc609da801174fab",
