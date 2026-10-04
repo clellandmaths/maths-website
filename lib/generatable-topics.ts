@@ -119,3 +119,23 @@ export function subtopicsForPractice(courseId: string, slug: string): string[] {
   if (courseId !== 'n5') return [];
   return PRACTICE_TO_SUBTOPICS[slug] ?? [];
 }
+
+/**
+ * Advanced Higher's practice topics, which generate by their own id.
+ *
+ * Its 14 practice ids (`src/practice/data/advancedHigherMaths.ts`) are its
+ * generator's 14 topic files (`ah/registry/index.ts`), one to one, so nothing
+ * is mapped: a topic draws from its file's cards. `check-topic-maps.mjs` holds
+ * the three lists together, so a practice topic with no cards fails the build.
+ */
+export const AH_PRACTICE_TOPICS: readonly string[] = [
+  'binomial-theorem', 'complex-numbers', 'differential-equations', 'differentiation',
+  'functions-and-graphs', 'integration', 'maclaurin-series', 'matrices',
+  'methods-of-proof', 'number-theory', 'partial-fractions', 'sequences-and-series',
+  'systems-of-equations', 'vectors',
+];
+
+/** Does this practice topic offer generated questions? */
+export function practiceGenerates(courseId: string, slug: string): boolean {
+  return courseId === 'ah' ? AH_PRACTICE_TOPICS.includes(slug) : subtopicsForPractice(courseId, slug).length > 0;
+}

@@ -326,7 +326,13 @@ console.log('\nthe short format:');
   const codesSrc = fs.readFileSync(path.join(root, 'lib/generator/generators/variation-codes.ts'), 'utf8');
   // The table itself, not the comment above it, which names both.
   const table = codesSrc.slice(codesSrc.indexOf('export const VARIATION_CODES'), codesSrc.indexOf('export const CODE_EXCEPTIONS'));
-  const engineCodes = [...table.matchAll(/:\s*'([0-9a-z]{5})',/g)].map(m => m[1]);
+  const n5Codes = [...table.matchAll(/:\s*'([0-9a-z]{5})',/g)].map(m => m[1]);
+  // And Advanced Higher's (2026-10-04), whose cards share links the same way.
+  const ahSrc = fs.readFileSync(path.join(root, 'lib/generator/generators/ah/codes.ts'), 'utf8');
+  const ahTable = ahSrc.slice(ahSrc.indexOf('export const AH_CODES'), ahSrc.indexOf('export const AH_BY_CODE'));
+  const ahCodes = [...ahTable.matchAll(/:\s*'([0-9a-z]{5})',/g)].map(m => m[1]);
+  if (!ahCodes.length) fail('no Advanced Higher codes found in ah/codes.ts — has the table moved?');
+  const engineCodes = [...n5Codes, ...ahCodes];
   const idOf = new Map();
   LINK_ID_CODES.forEach((c, i) => {
     if (!c) return;
@@ -341,7 +347,7 @@ console.log('\nthe short format:');
     if (c && spellsInLink(chars)) fail(`link id ${i} ("${chars}") spells something, but carries ${c}: it should have been skipped`);
   });
   if (!engineCodes.length) fail('no variation codes found in the engine — has the table moved?');
-  else console.log(`  ok  ${engineCodes.length} variation codes, each with a link id`);
+  else console.log(`  ok  ${engineCodes.length} variation codes (${n5Codes.length} National 5, ${ahCodes.length} Advanced Higher), each with a link id`);
 
   // 5. Mixed sheets, thousands of them, from a fixed stream: paper questions,
   //    new short seeds, and old six-character seeds kept from a re-shared

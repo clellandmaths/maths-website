@@ -48,15 +48,22 @@ export type DrawState = 'idle' | 'drawing' | 'exhausted' | 'failed';
  * full-screen modes' video links with it, and the practice control forgot it
  * too. A caller that has to remember is a caller that will not.
  */
-let paperIndex: Map<string, QuestionWithMetadata> | null = null;
+const paperIndex = new Map<string, Map<string, QuestionWithMetadata>>();
 
-async function withVideo(q: QuestionWithMetadata): Promise<QuestionWithMetadata> {
+/**
+ * **The course's own papers.** Labels collide across courses, so an Advanced
+ * Higher "2024 P1 Q3" looked up in National 5's papers would borrow the video
+ * of a different question.
+ */
+async function withVideo(q: QuestionWithMetadata, courseId: string): Promise<QuestionWithMetadata> {
   const { byPaperLabel, withParentVideo } = await import('@/lib/similar-questions');
-  if (!paperIndex) {
-    const { getAllN5Questions } = await import('@/lib/data-loader');
-    paperIndex = byPaperLabel(await getAllN5Questions());
+  let index = paperIndex.get(courseId);
+  if (!index) {
+    const { getAllN5Questions, getAllAHQuestions } = await import('@/lib/data-loader');
+    index = byPaperLabel(await (courseId === 'ah' ? getAllAHQuestions() : getAllN5Questions()));
+    paperIndex.set(courseId, index);
   }
-  return withParentVideo(q, paperIndex);
+  return withParentVideo(q, index);
 }
 
 export interface GeneratedDraw {
@@ -71,8 +78,8 @@ export interface GeneratedDraw {
 }
 
 /**
- * @param courseId  gates everything; National 5 is the only course with audited
- *                  variations, and elsewhere the control must be absent
+ * @param courseId  gates everything; National 5 and Advanced Higher generate
+ *                  (`courseGenerates`), and elsewhere the control must be absent
  * @param drawOne   how to get one question — the caller supplies this because
  *                  "like this question" and "on this topic" are different calls
  */
@@ -101,7 +108,7 @@ export function useGeneratedDraw(
       const engine = await import('@/lib/generated-question');
       const raw = await drawOne(engine, exclude());
       if (!raw) { setState('exhausted'); return null; }
-      const made = await withVideo(raw);
+      const made = await withVideo(raw, courseId);
       drawn.current = [...drawn.current, made];
       setSeen(n => n + 1);
       setState('idle');
@@ -122,7 +129,7 @@ export function useGeneratedDraw(
       for (let i = 0; i < want; i++) {
         const q = await drawOne(engine, [...exclude(), ...made]);
         if (!q) break;
-        made.push(await withVideo(q));
+        made.push(await withVideo(q, courseId));
       }
       drawn.current = [...drawn.current, ...made];
       setSeen(n => n + made.length);

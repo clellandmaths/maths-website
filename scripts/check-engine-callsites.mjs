@@ -56,7 +56,7 @@ const BOUNDARY_FILE = 'lib/generated-question.ts';
 const INTERNALS = '@/lib/generator/';
 
 /** What a draw looks like, wherever it is spelled. */
-const DRAWS = ['similarTo', 'generateForSubtopics', 'questionFromCode', 'toWorksheetQuestion'];
+const DRAWS = ['similarTo', 'generateForSubtopics', 'generateForPracticeTopic', 'questionFromCode', 'toWorksheetQuestion'];
 
 /**
  * Files allowed to reach the boundary.

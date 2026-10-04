@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { BookOpen, Loader2, X } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
 import { useGeneratedDraw } from '@/lib/use-generated-draw';
-import { paperLabelOf } from '@/lib/similar-questions';
+import { generationLabel } from '@/lib/similar-questions';
+import MarkschemeFigures from '@/components/MarkschemeFigures';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -47,12 +48,17 @@ interface Props {
 export default function WorkedExample({ question, theme, courseId, label: given }: Props) {
   const [shown, setShown] = useState<QuestionWithMetadata | null>(null);
 
-  const label = paperLabelOf(given ?? question.label, question.question);
+  const label = generationLabel(courseId, given ?? question.label, question.question);
   const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
     if (!label) return null;
-    const [made] = await engine.similarTo(label, 1, engine.worksheetKeys(exclude));
+    const [made] = await engine.similarTo(label, 1, engine.worksheetKeys(exclude), courseId);
     return made ?? null;
   });
+  // Advanced Higher's papers before 2022 have no videos: the card offers the
+  // marking instructions instead.
+  const elsewhere = question.videoId
+    ? 'the video solution walks through this one.'
+    : 'the marking instructions on the card show every mark.';
 
   // Nothing to model a twin on. Absent rather than disabled — a control that
   // cannot do anything should not be offered.
@@ -76,13 +82,12 @@ export default function WorkedExample({ question, theme, courseId, label: given 
         </button>
         {draw.state === 'failed' && (
           <p className="mt-1 text-xs text-muted-foreground">
-            That did not work. The video solution walks through this one.
+            That did not work. {elsewhere.charAt(0).toUpperCase() + elsewhere.slice(1)}
           </p>
         )}
         {draw.state === 'exhausted' && (
           <p className="mt-1 text-xs text-muted-foreground">
-            There is no other question like this one to work through — the video
-            solution walks through this one.
+            There is no other question like this one to work through — {elsewhere}
           </p>
         )}
       </div>
@@ -121,6 +126,10 @@ export default function WorkedExample({ question, theme, courseId, label: given 
           </li>
         ))}
       </ol>
+
+      {/* A sketch question's finished sketches, as its marking instructions
+          draw them: with the working, never with the answer alone. */}
+      <MarkschemeFigures figures={shown.markschemeFigures} className="mt-3 border-t border-border pt-2" />
 
       {shown.answer && (
         <div className="mt-3 border-t border-border pt-2">

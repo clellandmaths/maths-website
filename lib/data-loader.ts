@@ -128,6 +128,23 @@ export interface QuestionWithMetadata extends Question {
    * working against a video of other numbers concludes they are wrong.
    */
   videoOf?: string;
+  /**
+   * A generated Advanced Higher question's hint ladder: its paper card's moves,
+   * marks and watch-out, with this draw's numbers and working. `Hints` stages
+   * it as it stages that paper card's ladder. Absent on every other question.
+   */
+  ladder?: {
+    moves: string[];
+    marks: number[];
+    shows: (string | null)[];
+    watch?: { at: number; text: string };
+  };
+  /**
+   * The drawings a generated Advanced Higher card's marking instructions give
+   * (the finished sketches of a sketch question), one per part. Shown with the
+   * working and the printed markscheme, never under Show answer.
+   */
+  markschemeFigures?: { part: string; svg: string }[];
 }
 
 /** The caption shown above a question in the full-screen and focus views. */

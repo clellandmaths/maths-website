@@ -11,6 +11,7 @@ import { getNotesForCourse } from '@/lib/notes-loader';
 import { getPracticeTopics } from '@/lib/practice-loader';
 import { hasFormulae } from '@/lib/formulae-loader';
 import { courseExamDates } from '@/lib/exam-dates';
+import { courseGenerates } from '@/lib/similar-questions';
 import {
   n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos, n5AppsPaperVideos,
   paperStats, paperYearRange, type PaperVideo,
@@ -133,7 +134,7 @@ export default async function CourseHub({ courseId }: { courseId: string }) {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Card href={courseHref(courseId, 'explorer')} icon={Compass} title="Worksheet Builder"
               foot={`${paperQuestions} past paper questions`}>
-              {courseId === 'n5'
+              {courseGenerates(courseId)
                 ? 'Build a worksheet from past paper questions by topic, or generate brand-new ones like them.'
                 : 'Find past paper questions by topic and year, and build a worksheet to print or share.'}
             </Card>

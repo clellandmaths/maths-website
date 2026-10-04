@@ -1,0 +1,259 @@
+/**
+ * An Advanced Higher card, in the shape the website shows questions in.
+ *
+ * National 5's adapter (`../../worksheet-question.ts`) reads National 5's
+ * registry for a question's papers, hints and part marks, so an Advanced
+ * Higher card passed through it would come out with none of the three. This is
+ * Advanced Higher's own, beside its engine, and it changes nothing of National
+ * 5's: it calls the same layout and the same delimiter conversion, so a
+ * generated Advanced Higher question displays exactly as a National 5 one does.
+ *
+ * What differs:
+ *
+ * - **The paper behind it is the card itself.** `basedOn` is the card's own
+ *   badge ("2016 Q1(a)"), so the site's `withParentVideo` finds that paper
+ *   question's video, and the printed markscheme names it.
+ * - **Its hints are its own ladder** (`Built.ladder`), the paper card's moves
+ *   with this draw's numbers, every string through `toSiteMaths`.
+ * - **Its marks are the card's**, per part, from the registry, which
+ *   `ah-registry` holds to the site's own card and the marking instructions.
+ * - **Its drawings in the marking instructions** travel as `markschemeFigures`,
+ *   shown with the working and the printed markscheme, never under Show answer.
+ *
+ * The website reaches this through its one door, `lib/generated-question.ts`,
+ * and only on a press: the routines are loaded per topic (`routines/index.ts`).
+ */
+import {
+  answerPartsOnLines, generatedUid, layoutQuestion, stopsInsideMaths, toSiteMaths,
+  type WorksheetQuestion,
+} from '../../worksheet-question';
+import { questionKey, storyFreeKey } from '../../question-key';
+import type { Built, CardLabel, Ladder } from './types';
+import { AH_CARDS, idForCard } from './registry';
+import { AH_BY_CODE, AH_CODES } from './codes';
+import { SITE_CARDS } from './site-cards';
+import { makeWith, routineFor } from './engine';
+import { familyOf } from './families';
+
+export interface AhSiteQuestion extends WorksheetQuestion {
+  /** The site's subtopics, as an Advanced Higher paper question carries them. */
+  subtopics: string[];
+  /** The hint ladder for this draw, in the site's delimiters. */
+  ladder: Ladder;
+  /** The marking instructions' drawings, absent on every card without them. */
+  markschemeFigures?: { part: string; svg: string }[];
+}
+
+/** A built card as the site's question. */
+export function toSiteQuestion(id: string, built: Built, seed: string, index: number): AhSiteQuestion {
+  const meta = AH_CARDS[id];
+  if (!meta) throw new Error(`AH site: no card has the id ${id}`);
+  const code = AH_CODES[id];
+  if (!code) throw new Error(`AH site: ${meta.card} carries no code, so no link could make it again`);
+  const site = SITE_CARDS[meta.card];
+  const { ladder } = built;
+  return {
+    question: stopsInsideMaths(toSiteMaths(layoutQuestion(built.questionLines))),
+    answer: answerPartsOnLines(toSiteMaths(built.finalAnswer)),
+    steps: built.solutionSteps.map(toSiteMaths),
+    stepMarks: built.stepMarks,
+    marks: [...meta.marks],
+    topics: [...(site?.topics ?? [])],
+    subtopics: [...(site?.subtopics ?? [])],
+    // No video of its own: the site lends it the paper question's, by `basedOn`.
+    videoId: '',
+    timestamp: '',
+    year: '',
+    paperNumber: 0,
+    questionIndex: index,
+    questionNumber: String(index + 1),
+    // The caption, as National 5's: what the question tests, not a paper badge,
+    // so nothing on the site mistakes it for the paper question.
+    label: site?.subtopics[0] ?? site?.topics[0] ?? meta.card,
+    basedOn: [meta.card],
+    parentIndex: 0,
+    skill: toSiteMaths(meta.skill),
+    ladder: {
+      moves: ladder.moves.map(toSiteMaths),
+      marks: [...ladder.marks],
+      shows: ladder.shows.map(s => (s === null ? null : toSiteMaths(s))),
+      ...(ladder.watch ? { watch: { at: ladder.watch.at, text: toSiteMaths(ladder.watch.text) } } : {}),
+    },
+    ...(built.markschemeFigures
+      ? { markschemeFigures: built.markschemeFigures.map(({ part, svg }) => ({ part, svg })) }
+      : {}),
+    uid: generatedUid(code, seed, 0),
+  };
+}
+
+/**
+ * The one way a generated Advanced Higher question is made, from its code and
+ * its seed: the builder and a shared link both come through here. Null when
+ * the code is not an Advanced Higher card's, which is how the site's door
+ * tells the courses apart (`ah-registry` proves no code is in both).
+ */
+export async function ahQuestionFromCode(code: string, seed: string, index: number): Promise<AhSiteQuestion | null> {
+  const id = AH_BY_CODE[code];
+  if (!id || !AH_CARDS[id]) return null;
+  return toSiteQuestion(id, makeWith(await routineFor(id), seed), seed, index);
+}
+
+/** Is this badge an Advanced Higher card with a routine? */
+export function isAhCard(card: CardLabel): boolean {
+  return idForCard(card) !== undefined;
+}
+
+/** Retries per card before it counts as spent: National 5's bound (`drawFrom`). */
+const TRIES = 40;
+
+/**
+ * Up to `count` different questions from a set of cards.
+ *
+ * Different as the site's sheet keys it: the whole question, and the sum
+ * without its story, the two keys `keysOfQuestion` gives the site, so a
+ * caller's `exclude` built from what a sheet holds works across calls.
+ *
+ * **A family counts as one card.** Each pick takes the card, or family, used
+ * least so far, counting what the sheet already `held` (badges of the paper
+ * and generated cards on it). So a topic gives one of a family before a second
+ * of anything, and a second Euclid card only once every other card has had its
+ * turn. Within a family, its least-used member.
+ *
+ * Ties go to the card that comes first in `cards`, so the caller's order is
+ * the order of first use: shuffled, so a topic of twenty cards does not open
+ * on the same five, and interleaved by subtopic where there are several.
+ *
+ * Sequential, necessarily: the random stream is module-level.
+ */
+async function drawCards(
+  cards: readonly CardLabel[],
+  count: number,
+  makeSeed: () => string,
+  exclude: readonly string[],
+  held: readonly CardLabel[],
+): Promise<AhSiteQuestion[]> {
+  const live = cards.filter(isAhCard);
+  const unitOf = (card: CardLabel) => familyOf(card) ?? card;
+  const units = new Map<string, CardLabel[]>();
+  for (const card of live) units.set(unitOf(card), [...(units.get(unitOf(card)) ?? []), card]);
+
+  const unitUses = new Map<string, number>();
+  const cardUses = new Map<CardLabel, number>();
+  for (const card of held) {
+    if (units.has(unitOf(card))) unitUses.set(unitOf(card), (unitUses.get(unitOf(card)) ?? 0) + 1);
+    cardUses.set(card, (cardUses.get(card) ?? 0) + 1);
+  }
+  const fails = new Map<CardLabel, number>();
+  const spent = (card: CardLabel) => (fails.get(card) ?? 0) >= TRIES;
+
+  const seen = new Set(exclude);
+  const out: AhSiteQuestion[] = [];
+  while (out.length < count) {
+    let pick: { unit: string; card: CardLabel } | null = null;
+    for (const [unit, members] of units) {
+      const open = members.filter(c => !spent(c));
+      if (!open.length) continue;
+      if (pick && (unitUses.get(unit) ?? 0) >= (unitUses.get(pick.unit) ?? 0)) continue;
+      const card = open.reduce((a, b) => ((cardUses.get(b) ?? 0) < (cardUses.get(a) ?? 0) ? b : a));
+      pick = { unit, card };
+    }
+    if (!pick) break;
+    const id = idForCard(pick.card)!;
+    const seed = makeSeed();
+    const made = toSiteQuestion(id, makeWith(await routineFor(id), seed), seed, out.length);
+    const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
+    const sum = storyFreeKey(made.question, made.answer);
+    if (seen.has(key) || seen.has(sum)) {
+      fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
+      continue;
+    }
+    seen.add(key);
+    seen.add(sum);
+    out.push(made);
+    unitUses.set(pick.unit, (unitUses.get(pick.unit) ?? 0) + 1);
+    cardUses.set(pick.card, (cardUses.get(pick.card) ?? 0) + 1);
+  }
+  return out;
+}
+
+function shuffle<T>(xs: readonly T[], rand: () => number): T[] {
+  const out = [...xs];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+/**
+ * Fresh questions like one card: "Another like this one", a variation in the
+ * Worksheet Builder, the Exam Hall's five new questions. Fewer than asked when
+ * the card cannot make that many different ones; the caller says so.
+ */
+export function ahLike(
+  card: CardLabel,
+  count: number,
+  makeSeed: () => string,
+  exclude: readonly string[] = [],
+): Promise<AhSiteQuestion[]> {
+  return drawCards([card], count, makeSeed, exclude, []);
+}
+
+/**
+ * The cards filed under a site subtopic, as the Explorer filters Advanced
+ * Higher's paper questions: by subtopic, or by the main topic where it has
+ * none (Maclaurin Series, Systems of Equations).
+ */
+function cardsUnder(subtopic: string): CardLabel[] {
+  return Object.values(AH_CARDS)
+    .map(m => m.card)
+    .filter(card => {
+      const site = SITE_CARDS[card];
+      return !!site && (site.subtopics.includes(subtopic) || site.topics.includes(subtopic));
+    });
+}
+
+/**
+ * The cards under any of the subtopics, interleaved: the first of each
+ * subtopic, then the second of each, as National 5's `generateForSubtopics`
+ * does, so two subtopics and two questions give one of each. Each subtopic's
+ * own list is shuffled first; a card filed under two comes once, where it
+ * first falls.
+ */
+export function cardsForSubtopics(subtopics: readonly string[], rand: () => number = Math.random): CardLabel[] {
+  const lists = subtopics.map(s => shuffle(cardsUnder(s), rand));
+  const out: CardLabel[] = [];
+  for (let rank = 0; lists.some(l => rank < l.length); rank++) {
+    for (const list of lists) if (rank < list.length && !out.includes(list[rank])) out.push(list[rank]);
+  }
+  return out;
+}
+
+/** The cards of one practice topic: its registry file, named as the site's practice id. */
+export function cardsForTopic(file: string): CardLabel[] {
+  return Object.values(AH_CARDS).filter(m => m.file === file).map(m => m.card);
+}
+
+/** Fresh questions across the Worksheet Builder's subtopic filter. */
+export function ahForSubtopics(
+  subtopics: readonly string[],
+  count: number,
+  makeSeed: () => string,
+  exclude: readonly string[] = [],
+  held: readonly CardLabel[] = [],
+  rand: () => number = Math.random,
+): Promise<AhSiteQuestion[]> {
+  return drawCards(cardsForSubtopics(subtopics, rand), count, makeSeed, exclude, held);
+}
+
+/** Fresh questions on one practice topic. */
+export function ahForTopic(
+  file: string,
+  count: number,
+  makeSeed: () => string,
+  exclude: readonly string[] = [],
+  held: readonly CardLabel[] = [],
+  rand: () => number = Math.random,
+): Promise<AhSiteQuestion[]> {
+  return drawCards(shuffle(cardsForTopic(file), rand), count, makeSeed, exclude, held);
+}

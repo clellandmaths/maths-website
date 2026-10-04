@@ -131,6 +131,27 @@ for (const [slug, list] of deadEnds) {
   fail(`"${slug}" maps to ${list.map(s => `"${s}"`).join(', ')}, none of which has an exam-tier variation`);
 }
 
+// ── Advanced Higher: practice ids are its generator's topic files ──────────
+// No map: `AH_PRACTICE_TOPICS` must be exactly the course's practice ids, and
+// each must be a registry file of the synced engine with cards in it, so a
+// practice topic cannot ship a "Keep practising" with nothing behind it.
+{
+  const ahPractice = [...fs.readFileSync(path.join(root, 'src', 'practice', 'data', 'advancedHigherMaths.ts'), 'utf8')
+    .matchAll(/^\s*id:\s*"([^"]+)"/gm)].map(m => m[1]);
+  const listText = mapText.slice(mapText.indexOf('AH_PRACTICE_TOPICS'), mapText.indexOf('export function practiceGenerates'));
+  const listed = [...listText.matchAll(/'([a-z-]+)'/g)].map(m => m[1]);
+  const regDir = path.join(root, 'lib', 'generator', 'generators', 'ah', 'registry');
+  if (!ahPractice.length) fail('read no Advanced Higher practice ids: has advancedHigherMaths.ts moved?');
+  for (const id of ahPractice) if (!listed.includes(id)) fail(`Advanced Higher practice topic "${id}" is not in AH_PRACTICE_TOPICS`);
+  for (const id of listed) {
+    if (!ahPractice.includes(id)) fail(`AH_PRACTICE_TOPICS lists "${id}", which is not an Advanced Higher practice topic`);
+    const file = path.join(regDir, `${id}.ts`);
+    if (!fs.existsSync(file)) fail(`AH_PRACTICE_TOPICS lists "${id}", which is not a registry file of the engine`);
+    else if (!/card:\s*'/.test(fs.readFileSync(file, 'utf8'))) fail(`Advanced Higher's ${id} registry has no cards`);
+  }
+  if (!failures) console.log(`  ${listed.length} of ${ahPractice.length} Advanced Higher practice topics generate, each from its own registry file`);
+}
+
 const live = [...mapped].filter(([, l]) => l.some(s => covered.has(s)));
 if (!failures) {
   console.log(`  ${live.length} of ${mapped.size} practice topics can generate questions`);

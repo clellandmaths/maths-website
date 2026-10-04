@@ -57,10 +57,10 @@ export function paperLabelOf(
 /**
  * Should this question offer "add a variation"?
  *
- * National 5 only: the other four courses have no audited variations and no
- * seeding. On those the control must be **absent**, not disabled — four courses
- * out of five carrying a dead button on every card reads as a broken site
- * rather than as a roadmap.
+ * National 5 and Advanced Higher (`courseGenerates`): the other three courses
+ * have no generated questions. On those the control must be **absent**, not
+ * disabled — a dead button on every card reads as a broken site rather than as
+ * a roadmap.
  *
  * A true here is a strong hint, not a promise: all 328 National 5 past paper
  * questions are modelled on by some variation today, and the generator's
@@ -78,6 +78,42 @@ export function paperLabelOf(
  */
 export function courseHasHints(courseId: string | undefined): boolean {
   return courseId === 'n5';
+}
+
+/**
+ * Does this course have generated questions behind it: "another like this
+ * one", variations in the Worksheet Builder, generating by topic, the Exam
+ * Hall's five new questions?
+ *
+ * National 5 (its variations) and Advanced Higher (one generated card per
+ * paper card, 2026-10-04). **Not `courseHasHints`**, which still means "has
+ * National 5's generator" where National 5's own tables are read (its paper
+ * plans, its worked twin's first move); Advanced Higher's are its own.
+ */
+export function courseGenerates(courseId: string | undefined): boolean {
+  return courseId === 'n5' || courseId === 'ah';
+}
+
+/**
+ * The paper label a generated question can be modelled on, for this course,
+ * or null.
+ *
+ * National 5: `paperLabelOf`, unchanged. Advanced Higher: the card's own badge
+ * ("2016 Q1(a)", "2024 P1 Q5"), from a year the course generates. Every site
+ * card from those years is a generated card (215 of 215); guided practice
+ * also carries questions from 2002 to 2015, which have none, and get nothing.
+ * **Never N5's lookup for an AH label**: labels collide across courses.
+ */
+export function generationLabel(
+  courseId: string | undefined,
+  explicit: string | null | undefined,
+  questionHtml?: string,
+): string | null {
+  if (courseId === 'n5') return paperLabelOf(explicit, questionHtml);
+  if (courseId !== 'ah') return null;
+  const ref = explicit && AH_LABEL.test(explicit) ? explicit
+    : questionHtml ? paperRef(questionHtml) : null;
+  return ref && AH_LABEL.test(ref) && HINTED_YEARS.ah.has(ref.slice(0, 4)) ? ref : null;
 }
 
 /**
@@ -223,11 +259,13 @@ export function ladderLabel(
  */
 export function hasHintLadder(
   courseId: string | undefined,
-  question: { skill?: string; method?: string; label?: string | null; question?: string },
+  question: { skill?: string; method?: string; label?: string | null; question?: string; ladder?: unknown },
   given?: string | null,
 ): boolean {
   // A generated question brings its own steps, which only the generator's
   // courses have; a past paper question needs its course's ladder table.
+  // A generated Advanced Higher question brings its own ladder.
+  if (question.ladder) return courseGenerates(courseId);
   if (question.skill && question.method) return courseHasHints(courseId);
   if (!courseHasPaperLadder(courseId)) return false;
   return ladderLabel(given ?? question.label, question.question, courseId) !== null;
@@ -237,7 +275,7 @@ export function canAddVariation(
   courseId: string | undefined,
   questionHtml: string | undefined,
 ): boolean {
-  return courseId === 'n5' && variationLabel(questionHtml) !== null;
+  return courseGenerates(courseId) && generationLabel(courseId, null, questionHtml) !== null;
 }
 
 /**
@@ -278,12 +316,12 @@ export function moreLikeThis(
   courseId: string | undefined,
   source: MoreLikeThisSource,
 ): { label: string } | null {
-  if (!courseHasHints(courseId)) return null;
+  if (!courseGenerates(courseId)) return null;
   // An explicit label beats a scraped one, and a generated question falls back
   // to the paper it was modelled on — so "another like this one" works on a
   // generated question too, meaning the same thing both times.
   const parent = source.basedOn?.[source.parentIndex ?? 0];
-  const label = paperLabelOf(source.label, source.questionHtml) ?? paperLabelOf(parent);
+  const label = generationLabel(courseId, source.label, source.questionHtml) ?? generationLabel(courseId, parent);
   return label ? { label } : null;
 }
 

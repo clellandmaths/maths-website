@@ -14,7 +14,7 @@ import MathRenderer from '@/components/MathRenderer';
  * question. It also keeps Hints off the static graph that reaches the engine.
  */
 const HintPanel = dynamic(() => import('@/components/HintPanel'), { ssr: false });
-import { ladderLabel, courseHasHints, courseHasPaperLadder } from '@/lib/similar-questions';
+import { ladderLabel, courseGenerates, courseHasHints, courseHasPaperLadder } from '@/lib/similar-questions';
 import { splitByPart, shortByPart, partNames, cardParts, partOfMove } from '@/lib/hint-parts.mjs';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
@@ -194,9 +194,17 @@ export default function Hints({
    * actually is, and it reads the same function.
    */
   const label = ladderLabel(given ?? question.label, question.question, courseId);
+  /**
+   * A generated Advanced Higher question brings its own ladder: its paper
+   * card's moves, marks and watch-out with this draw's numbers. So it is staged
+   * as that paper card is, short hints and all, and not as a National 5
+   * generated question, whose steps are the worked solution.
+   */
+  const ahOwn = !!question.ladder;
   // A generated question brings its own; a paper one needs the table.
-  const own = question.skill && question.method;
-  const possible = own ? courseHasHints(courseId) : courseHasPaperLadder(courseId) && label !== null;
+  const own = !ahOwn && question.skill && question.method;
+  const possible = ahOwn ? courseGenerates(courseId)
+    : own ? courseHasHints(courseId) : courseHasPaperLadder(courseId) && label !== null;
 
   // Reset when the question in this slot changes — a re-rolled question must
   // not arrive with the previous one's hints already open.
@@ -218,7 +226,9 @@ export default function Hints({
       // Whether this question's ladder opens with a written nudge (N5 has them
       // per question, not for every one; Higher has them throughout).
       let nudged = false;
-      if (own) {
+      if (ahOwn) {
+        next = await (await import('@/lib/ah-ladder')).stageAhLadder(question);
+      } else if (own) {
         // All but the last step. The steps ARE the worked solution, so the
         // final one lands the answer — and a hint that finishes the question is
         // not a hint. What is left is the method and the setup; the landing is
@@ -433,7 +443,7 @@ export default function Hints({
           total={total}
           more={more}
           loading={loading}
-          own={!!own}
+          own={!!own || ahOwn}
           body={body}
           aside={aside}
           onReveal={reveal}

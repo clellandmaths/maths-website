@@ -38,7 +38,7 @@ import MarkschemeSheet from '@/components/Explorer/MarkschemeSheet';
 import { loadCourseSchemes, type CourseSchemes } from '@/lib/course-markschemes';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
 import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/lib/worksheet-share';
-import { byPaperLabel, withParentVideo, courseHasHints, courseHasPaperLadder, variationLabel } from '@/lib/similar-questions';
+import { byPaperLabel, withParentVideo, courseGenerates, courseHasPaperLadder, generationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { paperCaption, withoutPaperBadge } from '@/lib/question-number.mjs';
 import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
@@ -224,11 +224,11 @@ function ExplorerContent({ course }: { course: Course }) {
    * The filter is the topic list — the Explorer and the variation registry
    * spell the website's subtopics identically, so there is nothing to map.
    *
-   * National 5 only: no other course has audited variations. The engine is
+   * National 5 and Advanced Higher (`courseGenerates`). The engine is
    * imported here and nowhere else in this file; it is 33,000 lines and a
    * static import would put it on the browse page for every course.
    */
-  const canGenerate = course === 'n5' && selectedSubtopics.length > 0;
+  const canGenerate = courseGenerates(course) && selectedSubtopics.length > 0;
 
   /**
    * How many to draw on each topic, when more than one is picked.
@@ -309,7 +309,7 @@ function ExplorerContent({ course }: { course: Course }) {
         const want = perTopic[topic] ?? 0;
         if (!want) continue;
         const got = await generateForSubtopics(
-          [topic], want, worksheetKeys([...worksheetItems, ...made]));
+          [topic], want, worksheetKeys([...worksheetItems, ...made]), course, [...worksheetItems, ...made]);
         made.push(...got.map(q => withParentVideo(q, paperIndex)));
         if (got.length < want) short.push(`${topic} (${got.length} of ${want})`);
       }
@@ -340,7 +340,7 @@ function ExplorerContent({ course }: { course: Course }) {
       // click repeats the first — measured even on a wide filter, where three
       // clicks of five on surds returned one question twice.
       const made = await generateForSubtopics(
-        selectedSubtopics, genCount, worksheetKeys(worksheetItems));
+        selectedSubtopics, genCount, worksheetKeys(worksheetItems), course, worksheetItems);
       made.map(q => withParentVideo(q, paperIndex)).forEach(addItem);
       if (!made.length) {
         // With the sheet excluded, nothing back usually means the teacher
@@ -464,8 +464,8 @@ function ExplorerContent({ course }: { course: Course }) {
    * deliver rather than "a variation of each" and then quietly fewer.
    */
   const variableCount = useMemo(
-    () => courseHasHints(course)
-      ? filteredQuestions.filter(q => variationLabel(q.question)).length
+    () => courseGenerates(course)
+      ? filteredQuestions.filter(q => generationLabel(course, null, q.question)).length
       : 0,
     [course, filteredQuestions],
   );
@@ -482,9 +482,9 @@ function ExplorerContent({ course }: { course: Course }) {
       // Sequentially, and the exclude set grows as it goes: two questions
       // backed by the same variation must not come back as the same question.
       for (const q of filteredQuestions) {
-        const label = variationLabel(q.question);
+        const label = generationLabel(course, null, q.question);
         if (!label) continue;
-        const [raw] = await similarTo(label, 1, worksheetKeys([...worksheetItems, ...made]));
+        const [raw] = await similarTo(label, 1, worksheetKeys([...worksheetItems, ...made]), course);
         if (raw) made.push(withParentVideo(raw, paperIndex));
       }
       made.forEach(addItem);
@@ -624,7 +624,7 @@ function ExplorerContent({ course }: { course: Course }) {
                 course has it: nothing on the page used to (the owner,
                 2026-09-28). Other courses are not promised it. */}
             <p className="text-muted-foreground">
-              {course === 'n5'
+              {courseGenerates(course)
                 ? 'Find past paper questions by topic, or generate brand-new ones like them, then print or share your worksheet.'
                 : 'Find past paper questions by topic and year, then build a worksheet to print or share.'}
             </p>
@@ -752,7 +752,7 @@ function ExplorerContent({ course }: { course: Course }) {
                       generating has to be mentioned (the owner, 2026-09-28:
                       "there is nothing on the website that lets people know
                       they can generate questions there"). */}
-                  {course === 'n5' && (
+                  {courseGenerates(course) && (
                     <p className={`max-w-md mx-auto mb-6 inline-flex items-start gap-2 rounded-lg ${theme.tint} ${theme.text} px-4 py-3 text-sm font-medium text-left`}>
                       <Dices className="h-5 w-5 shrink-0" aria-hidden="true" />
                       New: pick a topic and generate brand-new questions on it, modelled on the past papers, with answers and worked steps.
@@ -821,7 +821,7 @@ function ExplorerContent({ course }: { course: Course }) {
                   {/* Before a topic is picked, say that generating is here and
                       how to reach it: the button needs a topic to work on, and
                       until one was picked nothing said it existed. */}
-                  {course === 'n5' && selectedSubtopics.length === 0 && (
+                  {courseGenerates(course) && selectedSubtopics.length === 0 && (
                     <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
                       <Dices className={`h-4 w-4 ${theme.text}`} aria-hidden="true" />
                       Pick a topic in the filters to generate new questions on it
@@ -1042,7 +1042,7 @@ function ExplorerContent({ course }: { course: Course }) {
                   <p className="text-muted-dim max-w-md mx-auto mb-6">
                     Switch to &quot;Browse Questions&quot; and use the filters to find questions.
                     Click &quot;+ Add&quot; to build your worksheet
-                    {course === 'n5' ? ', or pick a topic and generate new questions on it.' : '.'}
+                    {courseGenerates(course) ? ', or pick a topic and generate new questions on it.' : '.'}
                   </p>
                   <button
                     onClick={() => setViewMode('browse')}
@@ -1686,8 +1686,9 @@ function ExplorerContent({ course }: { course: Course }) {
              variation of each and Generate new on N topics all put the
              question ON the sheet, and a twin drawn in full screen vanishes
              when the mode closes. The owner's call is that projecting one
-             is worth that. Other courses keep it off until asked. */
-          allowAnother={course === 'n5'}
+             is worth that. Advanced Higher has it as National 5 does
+             (2026-10-04); the other courses have nothing to draw. */
+          allowAnother={courseGenerates(course)}
           onClose={() => setPresentStartIndex(null)}
         />
       )}
@@ -1701,7 +1702,7 @@ function ExplorerContent({ course }: { course: Course }) {
           questions={worksheetItems}
           /* As the presenter above: N5 only. Here the twin opens below its
              question and never replaces it. */
-          allowAnother={course === 'n5'}
+          allowAnother={courseGenerates(course)}
           onClose={() => setShowFocusMode(false)}
         />
       )}

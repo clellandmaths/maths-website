@@ -10,7 +10,7 @@ import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import VideoModal from '@/components/VideoModal';
 import { getCourseTheme } from '@/lib/course-theme';
-import { courseHasHints } from '@/lib/similar-questions';
+import { courseGenerates } from '@/lib/similar-questions';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import { paperCaption } from '@/lib/question-number.mjs';
 
@@ -194,7 +194,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
     if (!questions || more === 'drawing') return;
     setMore('drawing');
     try {
-      const [{ similarTo, worksheetKeys }, { byPaperLabel, variationLabel, withParentVideo },
+      const [{ similarTo, worksheetKeys }, { byPaperLabel, generationLabel, withParentVideo },
              { shareLinks }] = await Promise.all([
         import('@/lib/generated-question'),
         import('@/lib/similar-questions'),
@@ -204,9 +204,9 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
 
       const made: QuestionWithMetadata[] = [];
       for (const q of questions) {
-        const label = variationLabel(q.question);
+        const label = generationLabel(course, null, q.question);
         if (!label) continue;
-        const [raw] = await similarTo(label, 1, worksheetKeys(made));
+        const [raw] = await similarTo(label, 1, worksheetKeys(made), course);
         if (raw) made.push(withParentVideo(raw, byLabel));
       }
 
@@ -241,9 +241,9 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           </p>
           <p className="text-muted-dim text-sm mb-8">{dateString}</p>
 
-          {/* National 5 only — the other four courses have no audited
+          {/* National 5 and Advanced Higher — the other three courses have no
               variations, so there is nothing to offer and nothing is shown. */}
-          {courseHasHints(course) && (
+          {courseGenerates(course) && (
             <div className="mb-6 flex flex-col items-center gap-2">
               <button
                 onClick={drawMore}
@@ -272,7 +272,7 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
           <button
             onClick={onBack}
             className={
-              courseHasHints(course)
+              courseGenerates(course)
                 ? 'px-8 py-3 border border-muted text-foreground-2 font-semibold rounded-lg hover:bg-muted transition-colors'
                 : `px-8 py-3 bg-gradient-to-r ${theme.gradient} hover:brightness-110 text-white font-semibold rounded-lg transition-all`
             }

@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom';
 // mount, so a print that came quickly enough caught the marks with the
 // working still empty.
 import MathHtml from '@/components/MathHtml';
+import MarkschemeFigures from '@/components/MarkschemeFigures';
 import { ladderLabel, variationLabel } from '@/lib/similar-questions';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import { ahCard, cardScheme, n5appsCard, type CourseSchemes } from '@/lib/course-markschemes';
@@ -167,6 +168,10 @@ export default function MarkschemeSheet({
                 answer is below.
               </p>
             )}
+
+            {/* A generated sketch question's finished sketches, as its
+                marking instructions draw them. */}
+            {generated && <MarkschemeFigures figures={q.markschemeFigures} className="mt-2" />}
 
             {q.answer && (
               <p className="markscheme-answer">

@@ -55,6 +55,7 @@
     "check:nontext": "node scripts/check-nontext-contrast.mjs",
     "check:print": "node scripts/check-print.mjs",
     "check:testmode": "node scripts/check-test-mode.mjs",
+    "check:ahgen": "node scripts/check-ah-generated.mjs",
     "audit:contrast": "node scripts/check-contrast.mjs --all",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },

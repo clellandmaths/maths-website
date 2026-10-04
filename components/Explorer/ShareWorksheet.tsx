@@ -5,7 +5,7 @@ import { X, Copy, Check, Share2, Lock } from 'lucide-react';
 import { shareLinks, NO_OPTIONS, LOCKED_BY_TEST, underTest, type WorksheetOptions } from '@/lib/worksheet-share';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
-import { courseHasPaperLadder } from '@/lib/similar-questions';
+import { courseGenerates, courseHasPaperLadder } from '@/lib/similar-questions';
 
 interface Props {
   theme: CourseTheme;
@@ -176,12 +176,12 @@ export default function ShareWorksheet({ theme, courseId, questions, onClose, te
               {/* The Hints tick also grants "Another like this one" in full
                   screen (app/worksheet/page.tsx passes allowAnother from it),
                   and nothing said so: the owner, 2026-09-28, chose to keep the
-                  two together and say it here. National 5 only, the one course
-                  with generated questions. */}
+                  two together and say it here. Where the course has
+                  generated questions: National 5 and Advanced Higher. */}
               {courseHasPaperLadder(courseId) && check('hints', 'Hints', (generated > 0
                 ? `What the question asks, then how the marks are earned, then the working on the ${generated} generated question${generated === 1 ? '' : 's'} — stopping before the step that lands the answer`
                 : 'What the question asks, then how the marks are earned. A past paper question stops there — its working is in the video')
-                + (courseId === 'n5' ? '. Also lets pupils press “Another like this one” for a new question in full screen' : ''))}
+                + (courseGenerates(courseId) ? '. Also lets pupils press “Another like this one” for a new question in full screen' : ''))}
             </div>
             {options.test && (
               <p role="status" className={`mt-2 flex items-start gap-2 rounded-lg ${theme.tint} ${theme.text} px-3 py-2 text-sm font-medium`}>

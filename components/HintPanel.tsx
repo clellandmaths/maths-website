@@ -7,7 +7,7 @@ import MathRenderer from '@/components/MathRenderer';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 import type { Staged } from '@/components/Hints';
-import { courseHasHints } from '@/lib/similar-questions';
+import { courseGenerates } from '@/lib/similar-questions';
 
 const WorkedExample = dynamic(() => import('@/components/WorkedExample'), { ssr: false });
 
@@ -159,13 +159,17 @@ export default function HintPanel({
             <p className="text-xs text-muted-foreground">
               {staged.short
                 ? own
-                  ? 'That is as far as a hint goes. The video on the card works through the past paper question this one is based on.'
-                  : courseHasHints(courseId)
-                    ? 'That is as far as a hint goes. The video on the card works this question through, or see a similar one worked below.'
-                    // AH's 2016-2019 and 2021 papers have no videos: the card
-                    // offers the marking instructions instead.
-                    : courseId === 'ah' && !question.videoId
-                      ? 'That is as far as a hint goes. The marking instructions on the card show every mark.'
+                  // A generated Advanced Higher question from a paper with no
+                  // video (2016 to 2019, 2021) has none to borrow.
+                  ? question.videoId
+                    ? 'That is as far as a hint goes. The video on the card works through the past paper question this one is based on.'
+                    : 'That is as far as a hint goes.'
+                  // AH's 2016-2019 and 2021 papers have no videos: the card
+                  // offers the marking instructions instead.
+                  : courseId === 'ah' && !question.videoId
+                    ? 'That is as far as a hint goes. The marking instructions on the card show every mark, or see a similar one worked below.'
+                    : courseGenerates(courseId)
+                      ? 'That is as far as a hint goes. The video on the card works this question through, or see a similar one worked below.'
                       : 'That is as far as a hint goes. The video on the card works this question through.'
                 : staged.heldBack
                 ? 'That is as far as a hint goes — the last step is the answer itself.'
@@ -195,7 +199,7 @@ export default function HintPanel({
             {/* **Only where the course has the generator.** The draw is keyed by
                 paper label, and labels collide across courses: on Higher this
                 offered the N5 clone of N5's question with the same label. */}
-            {!own && courseHasHints(courseId) && (
+            {!own && courseGenerates(courseId) && (
               <WorkedExample
                 question={question}
                 theme={theme}

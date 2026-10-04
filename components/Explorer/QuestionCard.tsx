@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import {
   ChevronDown, ChevronUp, Plus, Check, Paperclip, BookOpen, Dices, Loader2, ArrowLeft,
 } from 'lucide-react';
-import { canAddVariation, variationLabel, withParentVideo } from '@/lib/similar-questions';
+import { canAddVariation, generationLabel, withParentVideo } from '@/lib/similar-questions';
 import { getMainTopic } from '@/lib/n5-topics';
 import { useWorksheet } from '@/lib/worksheet-context';
 import { QuestionWithMetadata } from '@/lib/data-loader';
@@ -126,11 +126,11 @@ export default function QuestionCard({
    * the uid, which carries the seed.
    */
   const draw = async (count: number): Promise<QuestionWithMetadata[]> => {
-    const label = variationLabel(question.question);
+    const label = generationLabel(courseId, null, question.question);
     if (!label) return [];
     const { similarTo, worksheetKeys } = await import('@/lib/generated-question');
     const raw = await similarTo(
-      label, count, worksheetKeys([...worksheetItems, ...drawn.current]),
+      label, count, worksheetKeys([...worksheetItems, ...drawn.current]), courseId,
     );
     // The paper behind it brings the video that teaches the method.
     const made = paperIndex ? raw.map((q) => withParentVideo(q, paperIndex)) : raw;

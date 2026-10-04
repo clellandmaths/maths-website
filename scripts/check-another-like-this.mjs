@@ -33,8 +33,9 @@
  *                                   already grants a generated twin worked end
  *                                   to end, so this rides on that flag; hints
  *                                   off means the sheet is the sheet.
- *   any course but National 5     — nothing is modelled on those questions.
- *                                   Absent, never a dead button.
+ *   Higher and the Applications   — nothing is modelled on those questions.
+ *                                   Absent, never a dead button. (National 5
+ *                                   and Advanced Higher generate.)
  *
  * Traps this repo has already paid for, every one of them live in here:
  * `innerText` is *rendered* text, so matching is case-insensitive · a selector
@@ -284,7 +285,43 @@ await withPage({ port: 8156, cdp: 9256 }, async ({ evaluate, click, buttonNamed,
   t.check(await evaluate(`location.pathname === '/course/n5/papers/2024/paper-1'`),
     'reached by its own address rather than an overlay');
 
-  // ── four courses out of five have nothing behind them ───────────────────
+  /* ── Advanced Higher, which generates as National 5 does (2026-10-04) ────
+     Its twin is drawn by the card itself, never through National 5's label
+     tables: "2024 P1 Q3" is a question in both courses. So the twin must be
+     an Advanced Higher question, which its maths says, and its hints must be
+     its own ladder, which opens. */
+  await go('/course/ah/papers', 3000);
+  await click(buttonNamed('Start Paper'));
+  await sleep(3500);
+  t.check(await evaluate(`!!${OVERLAY}`), 'an Advanced Higher past paper opens full screen');
+  await sleep(1500);
+  t.check(await evaluate(`!!(${drawButton(OVERLAY)})`), 'and offers another like the question on screen');
+  const ahBefore = await evaluate(questionIn(OVERLAY));
+  await click(drawButton(OVERLAY));
+  await sleep(6000);
+  const ahTwin = await evaluate(questionIn(OVERLAY));
+  t.check(ahTwin.length > 10 && ahTwin !== ahBefore, 'pressing it swaps a new Advanced Higher question into the card');
+  t.check(await evaluate(`!/[$]/.test(${OVERLAY}?.querySelector('.question-content')?.innerText ?? '$')`),
+    'its maths is typeset: no dollar sign reaches the pupil');
+  t.check(await evaluate(`!!${OVERLAY}?.querySelector('.question-content .katex')`), 'and KaTeX drew it');
+  await click(`[...(${OVERLAY}?.querySelectorAll('button') ?? [])].find(b => (b.textContent || '').trim() === 'Hint')`);
+  await sleep(2500);
+  t.check(await evaluate(`/what it asks/i.test(document.body.innerText)`),
+    "its Hint opens the twin's own ladder");
+
+  await go('/course/ah/papers/2024/paper-1', 6000);
+  const onAhPage = await evaluate(`(() => {
+    const laid = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+    const b = [...document.querySelectorAll('button,summary')].filter(laid).map(x => x.textContent.trim());
+    return {
+      questions: b.filter(x => /show answer/i.test(x)).length,
+      another: b.filter(x => /another like this/i.test(x)).length,
+    };
+  })()`);
+  t.check(onAhPage?.questions > 0 && onAhPage?.another === onAhPage?.questions,
+    `the Advanced Higher paper page offers another like each of its ${onAhPage?.questions} questions (${onAhPage?.another})`);
+
+  // ── three courses out of five have nothing behind them ──────────────────
   await go('/course/higher/papers', 3000);
   await click(buttonNamed('Start Paper'));
   await sleep(4000);

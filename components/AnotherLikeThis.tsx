@@ -71,7 +71,7 @@ export default function AnotherLikeThis({
   const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
     if (!offer) return null;
     const [made] = await engine.similarTo(
-      offer.label, 1, engine.worksheetKeys([...exclude, ...alsoExclude]));
+      offer.label, 1, engine.worksheetKeys([...exclude, ...alsoExclude]), courseId);
     return made ?? null;
   });
 

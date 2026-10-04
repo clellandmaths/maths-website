@@ -48,10 +48,11 @@ await withPage({ port: 8131, cdp: 9231 }, async ({ evaluate, click, buttonNamed,
   t.check(!(await sectionShowing()),
     'National 5 · Rounding does not — the exam does not set it on its own');
 
-  for (const [course, slug] of [['higher', 'circle'], ['ah', 'binomial-theorem']]) {
-    await go(`/course/${course}/practice/${slug}`, 2000);
-    t.check(!(await sectionShowing()), `${course} · ${slug} offers nothing`);
-  }
+  // Advanced Higher generates since the port (2026-10-04); Higher does not.
+  await go('/course/ah/practice/binomial-theorem', 2000);
+  t.check(await sectionShowing(), 'ah · binomial-theorem offers more questions');
+  await go('/course/higher/practice/circle', 2000);
+  t.check(!(await sectionShowing()), 'higher · circle offers nothing');
 
   /* ── the per-question controls ──────────────────────────────────────────
      Hints and "another like this" on each question, not only the section at

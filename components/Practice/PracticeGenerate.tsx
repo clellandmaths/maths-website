@@ -31,13 +31,20 @@ import type { CourseTheme } from '@/lib/course-theme';
  */
 interface Props {
   courseId: string;
-  /** Which of the website's subtopics this topic covers. Empty renders nothing. */
+  /** The practice topic's id. Advanced Higher draws by it (`AH_PRACTICE_TOPICS`). */
+  topicId: string;
+  /**
+   * Whether this topic generates (`practiceGenerates`), decided by the server
+   * page, so the topic tables never ship to the browser.
+   */
+  generates: boolean;
+  /** National 5: which of the website's subtopics this topic covers. Empty renders nothing. */
   subtopics: string[];
   topicName: string;
   theme: CourseTheme;
 }
 
-export default function PracticeGenerate({ courseId, subtopics, topicName, theme }: Props) {
+export default function PracticeGenerate({ courseId, topicId, generates, subtopics, topicName, theme }: Props) {
   const [question, setQuestion] = useState<QuestionWithMetadata | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [added, setAdded] = useState(0);
@@ -45,12 +52,14 @@ export default function PracticeGenerate({ courseId, subtopics, topicName, theme
   // The hook attaches the video of the paper question behind whatever it draws,
   // so this only has to say what to draw.
   const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
-    const [made] = await engine.generateForSubtopics(subtopics, 1, engine.worksheetKeys(exclude));
+    const [made] = courseId === 'ah'
+      ? await engine.generateForPracticeTopic(topicId, 1, engine.worksheetKeys(exclude), exclude)
+      : await engine.generateForSubtopics(subtopics, 1, engine.worksheetKeys(exclude));
     return made ?? null;
   });
 
   // Nothing to offer: say nothing. See the note above.
-  if (courseId !== 'n5' || subtopics.length === 0) return null;
+  if (!generates) return null;
 
   const busy = draw.state === 'drawing';
 

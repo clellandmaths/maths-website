@@ -6,9 +6,11 @@ import {
   similarTo as fromLabel,
   generateForSubtopics as fromSubtopics,
   keysOfQuestion,
+  GENERATED_UID_PREFIX,
   type ToWorksheetOptions,
 } from './generator/worksheet-question';
 import { LINK_ALPHABET, SHORT_SEED_LENGTH, spellsInLink } from './worksheet-refs.mjs';
+import { paperRef } from './question-number.mjs';
 
 /**
  * The boundary: a generated question becomes a question this site can show.
@@ -52,8 +54,17 @@ export async function questionFromCode(
   index: number,
   parentIndex = 0,
 ): Promise<QuestionWithMetadata | null> {
-  return fromCode(code, seed, index, parentIndex);
+  // National 5's codes, then Advanced Higher's. No code is in both (the
+  // generator's `ah-registry` fails if one ever is), so a link needs no course
+  // to find its question, and a National 5 sheet never loads AH's engine.
+  return (await fromCode(code, seed, index, parentIndex)) ?? (await ah()).ahQuestionFromCode(code, seed, index);
 }
+
+/**
+ * Advanced Higher's adapter, loaded the first time an AH question is asked
+ * for. Its routines then load a topic at a time (`ah/routines/index.ts`).
+ */
+const ah = () => import('./generator/generators/ah/site');
 
 /**
  * Fresh questions modelled on one past paper question.
@@ -78,7 +89,11 @@ export async function similarTo(
   paperLabel: string,
   count: number,
   exclude: readonly string[] = [],
+  courseId = 'n5',
 ): Promise<QuestionWithMetadata[]> {
+  // **By course, never by label alone**: "2025 P1 Q3" is a card in both
+  // courses. The label comes from `generationLabel(courseId, …)`.
+  if (courseId === 'ah') return (await ah()).ahLike(paperLabel, count, newSeed, exclude);
   return fromLabel(paperLabel, count, newSeed, exclude);
 }
 
@@ -96,8 +111,37 @@ export async function generateForSubtopics(
   subtopics: readonly string[],
   count: number,
   exclude: readonly string[] = [],
+  courseId = 'n5',
+  held: readonly QuestionWithMetadata[] = [],
 ): Promise<QuestionWithMetadata[]> {
+  if (courseId === 'ah') return (await ah()).ahForSubtopics(subtopics, count, newSeed, exclude, heldCards(held));
   return fromSubtopics(subtopics, count, newSeed, exclude);
+}
+
+/**
+ * Fresh Advanced Higher questions on one practice topic. Its practice ids
+ * are the generator's topic files ("differential-equations"), one to one.
+ */
+export async function generateForPracticeTopic(
+  slug: string,
+  count: number,
+  exclude: readonly string[] = [],
+  held: readonly QuestionWithMetadata[] = [],
+): Promise<QuestionWithMetadata[]> {
+  return (await ah()).ahForTopic(slug, count, newSeed, exclude, heldCards(held));
+}
+
+/**
+ * The Advanced Higher cards a sheet already holds, for the family rule: a
+ * paper card by its printed badge, a generated one by the card behind it.
+ * Generating across a topic then takes one of a family (the Euclid cards,
+ * say) before a second of anything (the owner, 2026-10-04).
+ */
+function heldCards(held: readonly QuestionWithMetadata[]): string[] {
+  return held.flatMap(q => {
+    const card = q.uid?.startsWith(`${GENERATED_UID_PREFIX}:`) ? q.basedOn?.[0] : paperRef(q.question);
+    return card ? [card] : [];
+  });
 }
 
 /**
