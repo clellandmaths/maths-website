@@ -219,8 +219,13 @@ function cardsUnder(subtopic: string): CardLabel[] {
  * does, so two subtopics and two questions give one of each. Each subtopic's
  * own list is shuffled first; a card filed under two comes once, where it
  * first falls.
+ *
+ * **`rand` is the caller's** (the site's, or a check's fixed stream), never
+ * read here: nothing in `ah/` may reach for randomness outside the seeded
+ * stream (`ah-purity`). It orders the cards only; each question is still
+ * made from its code and seed, which is all a link carries.
  */
-export function cardsForSubtopics(subtopics: readonly string[], rand: () => number = Math.random): CardLabel[] {
+export function cardsForSubtopics(subtopics: readonly string[], rand: () => number): CardLabel[] {
   const lists = subtopics.map(s => shuffle(cardsUnder(s), rand));
   const out: CardLabel[] = [];
   for (let rank = 0; lists.some(l => rank < l.length); rank++) {
@@ -239,9 +244,9 @@ export function ahForSubtopics(
   subtopics: readonly string[],
   count: number,
   makeSeed: () => string,
+  rand: () => number,
   exclude: readonly string[] = [],
   held: readonly CardLabel[] = [],
-  rand: () => number = Math.random,
 ): Promise<AhSiteQuestion[]> {
   return drawCards(cardsForSubtopics(subtopics, rand), count, makeSeed, exclude, held);
 }
@@ -251,9 +256,9 @@ export function ahForTopic(
   file: string,
   count: number,
   makeSeed: () => string,
+  rand: () => number,
   exclude: readonly string[] = [],
   held: readonly CardLabel[] = [],
-  rand: () => number = Math.random,
 ): Promise<AhSiteQuestion[]> {
   return drawCards(shuffle(cardsForTopic(file), rand), count, makeSeed, exclude, held);
 }

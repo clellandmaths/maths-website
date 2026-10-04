@@ -114,7 +114,9 @@ export async function generateForSubtopics(
   courseId = 'n5',
   held: readonly QuestionWithMetadata[] = [],
 ): Promise<QuestionWithMetadata[]> {
-  if (courseId === 'ah') return (await ah()).ahForSubtopics(subtopics, count, newSeed, exclude, heldCards(held));
+  // Math.random orders the cards only (the engine may not read it itself);
+  // each question is still made from its code and seed.
+  if (courseId === 'ah') return (await ah()).ahForSubtopics(subtopics, count, newSeed, Math.random, exclude, heldCards(held));
   return fromSubtopics(subtopics, count, newSeed, exclude);
 }
 
@@ -128,7 +130,7 @@ export async function generateForPracticeTopic(
   exclude: readonly string[] = [],
   held: readonly QuestionWithMetadata[] = [],
 ): Promise<QuestionWithMetadata[]> {
-  return (await ah()).ahForTopic(slug, count, newSeed, exclude, heldCards(held));
+  return (await ah()).ahForTopic(slug, count, newSeed, Math.random, exclude, heldCards(held));
 }
 
 /**
