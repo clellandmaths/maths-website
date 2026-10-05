@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useLayoutEffect, useRef } from 'react';
 import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, Trash2, ChevronUp, ChevronDown, ChevronsUp, ChevronsDown, Paperclip, Share2, Dices, Loader2, Lock } from 'lucide-react';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
@@ -505,6 +505,38 @@ function ExplorerContent({ course }: { course: Course }) {
   // Are filters active?
   const hasFilters = selectedSubtopics.length > 0 || selectedYears.length > 0 || selectedPapers.length > 0;
 
+  /**
+   * **The active-filter bar shows two rows of chips, then "+N more".**
+   *
+   * The bar is sticky, so it travels down the page over the questions. With a
+   * whole Advanced Higher course chosen it held 43 chips in 352px, a third of a
+   * laptop screen, and covered the buttons that scrolled under it (the owner,
+   * 2026-10-05: "Cap it at 2 rows"). Chips differ in width, so the rows are
+   * measured, not counted: the height where the second row ends, and how many
+   * chips sit below it. The sidebar's own list caps the same way ("+N more").
+   */
+  const chipsRef = useRef<HTMLDivElement>(null);
+  const [chipsOpen, setChipsOpen] = useState(false);
+  const [chipCap, setChipCap] = useState<{ height: number; hidden: number } | null>(null);
+  useLayoutEffect(() => {
+    const el = chipsRef.current;
+    if (!el) { setChipCap(null); return; }
+    const measure = () => {
+      const chips = [...el.children] as HTMLElement[];
+      const rows = [...new Set(chips.map(c => c.offsetTop))].sort((a, b) => a - b);
+      if (rows.length <= 2) { setChipCap(null); return; }
+      // The list is `relative`, so each chip's offsetTop is measured from its top.
+      const inTwo = chips.filter(c => c.offsetTop <= rows[1]);
+      const height = Math.max(...inTwo.map(c => c.offsetTop + c.offsetHeight));
+      setChipCap(prev => (prev?.height === height && prev.hidden === chips.length - inTwo.length)
+        ? prev : { height, hidden: chips.length - inTwo.length });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [selectedSubtopics, selectedYears, selectedPapers, hasFilters]);
+
   // Past paper questions by their printed label, so a generated question can
   // borrow the video of the one it was modelled on. Built from every question
   // in the course, not the filtered set: the paper behind a variation is often
@@ -689,15 +721,30 @@ function ExplorerContent({ course }: { course: Course }) {
                     <span className="text-sm text-muted-foreground">
                       <span className={`${theme.text} font-medium`}>{filteredQuestions.length}</span> of {allQuestions.length} questions
                     </span>
-                    <button
-                      onClick={clearAllFilters}
-                      className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-red-700 dark:text-red-400 hover:bg-red-400/10 rounded transition-colors"
-                    >
-                      <X className="h-3 w-3" />
-                      Clear all filters
-                    </button>
+                    <div className="flex items-center gap-1">
+                      {chipCap && (
+                        <button
+                          onClick={() => setChipsOpen(o => !o)}
+                          aria-expanded={chipsOpen}
+                          className={`px-2 py-1 text-xs ${theme.text} hover:bg-foreground/5 rounded transition-colors`}
+                        >
+                          {chipsOpen ? 'Show fewer' : `+${chipCap.hidden} more`}
+                        </button>
+                      )}
+                      <button
+                        onClick={clearAllFilters}
+                        className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-red-700 dark:text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                      >
+                        <X className="h-3 w-3" />
+                        Clear all filters
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div
+                    ref={chipsRef}
+                    className="relative flex flex-wrap gap-1.5 overflow-hidden"
+                    style={chipCap && !chipsOpen ? { maxHeight: chipCap.height } : undefined}
+                  >
                     {/* Year chips - cyan */}
                     {selectedYears.map((year) => (
                       <button
