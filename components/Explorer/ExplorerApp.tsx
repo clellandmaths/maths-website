@@ -477,7 +477,9 @@ function ExplorerContent({ course }: { course: Course }) {
     setGenerating(true);
     setGenNote(null);
     try {
-      const { similarTo, worksheetKeys } = await import('@/lib/generated-question');
+      const { similarTo, worksheetKeys, warmForCards } = await import('@/lib/generated-question');
+      // Advanced Higher's routine files, fetched together before the draws.
+      await warmForCards(filteredQuestions.map(q => generationLabel(course, null, q.question)), course);
       const made: QuestionWithMetadata[] = [];
       // Sequentially, and the exclude set grows as it goes: two questions
       // backed by the same variation must not come back as the same question.

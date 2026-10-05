@@ -67,6 +67,28 @@ export async function questionFromCode(
 const ah = () => import('./generator/generators/ah/site');
 
 /**
+ * **Load the routine files a batch of Advanced Higher cards needs, all at once.**
+ *
+ * A batch (a variation of each filtered question, a practice paper) asks for
+ * its cards one at a time, and each card's routine file loads the first time
+ * it is asked for, so 195 cards fetched 69 small files one after another:
+ * 8.3 s on a throttled phone, against National 5's 3.4 s for 104 (the owner,
+ * 2026-10-05: "a loading spinner for some time"). Fetched together first, the
+ * draws that follow find them already loaded. Nothing about the draw changes:
+ * the same cards, seeds and questions, only the order the files arrive in.
+ * A file that fails here is left for the draw itself to report.
+ */
+export async function warmForCards(labels: readonly (string | null | undefined)[], courseId: string): Promise<void> {
+  if (courseId !== 'ah') return;
+  const [{ idForCard }, { routineFor }] = await Promise.all([
+    import('./generator/generators/ah/registry'),
+    import('./generator/generators/ah/engine'),
+  ]);
+  const ids = [...new Set(labels.filter((l): l is string => !!l).map(l => idForCard(l)).filter((id): id is string => !!id))];
+  await Promise.all(ids.map(id => routineFor(id).catch(() => undefined)));
+}
+
+/**
  * Fresh questions modelled on one past paper question.
  *
  * Backs "add a variation of this" in the Explorer. The label comes from the

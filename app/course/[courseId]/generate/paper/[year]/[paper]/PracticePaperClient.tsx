@@ -145,7 +145,8 @@ export default function PracticePaperClient({
 
     (async () => {
       try {
-        const { similarTo, worksheetKeys } = await import('@/lib/generated-question');
+        const { similarTo, worksheetKeys, warmForCards } = await import('@/lib/generated-question');
+        await warmForCards(plan.map(r => r.label), courseId);
         // The course's own papers: labels collide across courses.
         const { getAllN5Questions, getAllAHQuestions } = await import('@/lib/data-loader');
         const byLabel = byPaperLabel(await (courseId === 'ah' ? getAllAHQuestions() : getAllN5Questions()));

@@ -471,6 +471,24 @@ body {
   margin-bottom: 0;
 }
 
+/* Practice questions take a paper question's height cap. Without it a
+   practice diagram drew at its full size, which on desktop made Advanced
+   Higher's and Higher's taller crops very large (2019 Q3 at 639 x 828; the
+   owner, 2026-10-05). National 5's crops are smaller, so it barely showed.
+   **The cap only, plus the paper's centring for a bare image.** This file is
+   not in a layer, so a width here would beat the utilities on National 5's
+   worked-example images (`w-full max-w-sm`) and stretch them to the column. */
+.prose-practice img {
+  max-height: 400px;
+  object-fit: contain;
+}
+.prose-practice img:not([class]) {
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+}
+
 .question-content img {
   max-width: 100%;
   height: auto;
