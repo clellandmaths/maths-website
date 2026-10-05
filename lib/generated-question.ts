@@ -178,12 +178,15 @@ function heldCards(held: readonly QuestionWithMetadata[]): string[] {
  * Past paper questions go through it harmlessly: nothing generated matches one.
  */
 export function worksheetKeys(
-  questions: readonly { question: string; answer?: string | null }[],
+  questions: readonly { question: string; answer?: string | null; coreKey?: string }[],
 ): string[] {
   // Both keys per question: a sheet rejects a repeat of the whole question and
   // a repeat of its sum in a new story, and an exclusion list carrying only the
   // first lets the second back in on the next click.
-  return questions.flatMap(keysOfQuestion);
+  // An Advanced Higher thin card's core too (`ah/cores.ts`), so a sheet that adds
+  // more questions takes a fresh equation first (the owner, 2026-10-05). The engine
+  // treats it as a preference, never a refusal.
+  return questions.flatMap(q => (q.coreKey ? [...keysOfQuestion(q), q.coreKey] : keysOfQuestion(q)));
 }
 
 /**
