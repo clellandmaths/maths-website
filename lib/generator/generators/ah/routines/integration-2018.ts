@@ -67,7 +67,9 @@ const q2018q8: CardRoutine<Q8of2018> = {
 interface Q15of2018 { k: number; m: number }
 
 const q2018q15: CardRoutine<Q15of2018> = {
-  draw: () => ({ k: int(2, 6), m: int(1, 3) }),
+  // k from 2 to 9 on the owner's yes (variation-depth sheet, card 5, 2026-10-05): eight
+  // integrals in (a) where there were five. cos kπ = ±1, so c stays exact.
+  draw: () => ({ k: int(2, 9), m: int(1, 3) }),
 
   build: ({ k, m }): Built => {
     const xm = power('x', m);

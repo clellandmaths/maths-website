@@ -234,18 +234,34 @@ const q2021p2q4: CardRoutine<P2Q4of2021> = {
 };
 
 // ── 2021 P2 Q8 ─────────────────────────────────────────────────────────────
-// x²y³ + e^{ky} = N: dy/dx implicitly, then the one stationary point, x = 0
-// and y = (1/k) ln N, since y = 0 would need 1 = N.
+// x^p y^q + e^{ky} = N: dy/dx implicitly, then the one stationary point, x = 0
+// and y = (1/k) ln N, since y = 0 would need 1 = N. The paper's powers are x²y³;
+// p = 2 or 3 and q from 2 to 4 on the owner's yes (variation-depth sheet, card 10,
+// 2026-10-05), so (a) changes with the curve: N vanishes when you differentiate.
+// The top, -p x^{p-1} y^q, is still zero only at x = 0 or y = 0, so (b) is the paper's.
 
-interface P2Q8of2021 { k: number; N: number }
+interface P2Q8of2021 { k: number; N: number; p: number; q: number }
 
-/** N with ln N / k not simpler written another way: no perfect k-th power. */
-const Q8_CURVES2021: readonly P2Q8of2021[] = (() => {
-  const out: P2Q8of2021[] = [];
+/** A power of a letter as a paper writes it: `x`, `x^{2}`, or nothing for the zeroth. */
+const pow2021 = (v: string, n: number) => (n === 0 ? '' : n === 1 ? v : `${v}^{${n}}`);
+
+/** Is N a whole number to a power of 2 or more: 4, 8, 9? */
+const isPower2021 = (N: number) => {
+  for (let e = 2; 2 ** e <= N; e++) if (Math.round(N ** (1 / e)) ** e === N) return true;
+  return false;
+};
+
+/**
+ * N with (1/k) ln N in its simplest form, as the paper's (1/2) ln 5. With k > 1, no N
+ * that is a power: (1/2) ln 4 is ln 2, and, on the owner's "Yes fix it" (contact sheet,
+ * 2026-10-05), (1/4) ln 4 is (1/2) ln 2, (1/2) ln 8 is (3/2) ln 2, (1/4) ln 9 is (1/2) ln 3.
+ * With k = 1, ln 8 is as the paper would leave it.
+ */
+const Q8_CURVES2021: readonly Omit<P2Q8of2021, 'p' | 'q'>[] = (() => {
+  const out: Omit<P2Q8of2021, 'p' | 'q'>[] = [];
   for (let k = 1; k <= 4; k++) {
     for (let N = 2; N <= 10; N++) {
-      const root = Math.round(N ** (1 / k));
-      if (k > 1 && root ** k === N) continue;
+      if (k > 1 && isPower2021(N)) continue;
       out.push({ k, N });
     }
   }
@@ -253,39 +269,43 @@ const Q8_CURVES2021: readonly P2Q8of2021[] = (() => {
 })();
 
 const q2021p2q8: CardRoutine<P2Q8of2021> = {
-  draw: () => pick(Q8_CURVES2021),
+  draw: () => ({ ...pick(Q8_CURVES2021), p: pick([2, 3]), q: pick([2, 3, 4]) }),
 
-  build: ({ k, N }): Built => {
+  build: ({ k, N, p, q }): Built => {
     const e = `e^{${k === 1 ? '' : k}y}`;
     const ke = `${k === 1 ? '' : k}${e}`;
     const D = '\\frac{dy}{dx}';
-    const answer = `\\frac{-2xy^{3}}{3x^{2}y^{2} + ${ke}}`;
+    const product = `${pow2021('x', p)}${pow2021('y', q)}`;
+    // d/dx(x^p y^q) = p x^{p-1} y^q + q x^p y^{q-1} dy/dx.
+    const first = `${p}${pow2021('x', p - 1)}${pow2021('y', q)}`;
+    const second = `${q}${pow2021('x', p)}${pow2021('y', q - 1)}`;
+    const answer = `\\frac{-${first}}{${second} + ${ke}}`;
     const y0 = k === 1 ? `\\ln ${N}` : `\\frac{1}{${k}}\\ln ${N}`;
     const point = `\\left(0, ${y0}\\right)`;
     return {
       questionLines: [
-        `A curve is defined by $x^{2}y^{3} + ${e} = ${N}.$`,
+        `A curve is defined by $${product} + ${e} = ${N}.$`,
         `<b>(a)</b> Find $${D}$ in terms of $x$ and $y.$`,
         '<b>(b)</b> Show that there is only one stationary point on the curve.',
       ],
       solutionSteps: [
-        `<strong>(a)</strong> By the product rule, $x^{2}y^{3}$ gives $2xy^{3} + \\ldots$`,
-        `<strong>(a)</strong> $2xy^{3} + 3x^{2}y^{2}${D}$`,
-        `<strong>(a)</strong> $2xy^{3} + 3x^{2}y^{2}${D} + ${ke}${D} = 0$`,
+        `<strong>(a)</strong> By the product rule, $${product}$ gives $${first} + \\ldots$`,
+        `<strong>(a)</strong> $${first} + ${second}${D}$`,
+        `<strong>(a)</strong> $${first} + ${second}${D} + ${ke}${D} = 0$`,
         `<strong>(a)</strong> $${D} = ${answer}$`,
         `<strong>(b)</strong> At a stationary point $${answer} = 0$`,
-        `<strong>(b)</strong> So $-2xy^{3} = 0$: $x = 0$ or $y = 0$`,
+        `<strong>(b)</strong> So $-${first} = 0$: $x = 0$ or $y = 0$`,
         `<strong>(b)</strong> When $x = 0$, $${e} = ${N}$, so $y = ${y0}$; when $y = 0$, $0 + 1 = ${N}$, which has no solution. So the only stationary point is $${point}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1, 1],
       finalAnswer: [
         `(a) $${D} = ${answer}$`,
-        `(b) $${D} = 0$ gives $-2xy^{3} = 0$, so $x = 0$ or $y = 0.$ When $x = 0$, $${e} = ${N}$, so $y = ${y0}.$ When $y = 0$, $0 + 1 = ${N}$, which has no solution. Hence there is only one stationary point, at $${point}.$`,
+        `(b) $${D} = 0$ gives $-${first} = 0$, so $x = 0$ or $y = 0.$ When $x = 0$, $${e} = ${N}$, so $y = ${y0}.$ When $y = 0$, $0 + 1 = ${N}$, which has no solution. Hence there is only one stationary point, at $${point}.$`,
       ].join('<br>'),
       ladder: {
         moves: [
           'The first term is a product of two functions of different variables. Which rule does it need?',
-          '(a) Differentiate $x^{2}y^{3}$ with the product rule. The $y^{3}$ part picks up $\\frac{dy}{dx}$.',
+          `(a) Differentiate $${product}$ with the product rule. The $${pow2021('y', q)}$ part picks up $\\frac{dy}{dx}$.`,
           '(a) Complete the product term.',
           `(a) Differentiate $${e}$ and the constant.`,
           '(a) Gather the $\\frac{dy}{dx}$ terms and make $\\frac{dy}{dx}$ the subject.',
@@ -296,8 +316,8 @@ const q2021p2q8: CardRoutine<P2Q8of2021> = {
         marks: [0, 1, 1, 1, 1, 1, 1, 1],
         shows: [
           null,
-          '$2xy^{3}$ or $3x^{2}y^{2}\\frac{dy}{dx}$',
-          '$3x^{2}y^{2}\\frac{dy}{dx}$ or $2xy^{3}$',
+          `$${first}$ or $${second}\\frac{dy}{dx}$`,
+          `$${second}\\frac{dy}{dx}$ or $${first}$`,
           `$\\ldots ${ke}\\frac{dy}{dx} = 0$`,
           `$${answer}$`,
           `$${answer} = 0$`,

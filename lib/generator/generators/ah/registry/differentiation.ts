@@ -52,7 +52,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
     skill: 'Differentiate $\\ln(\\cos x)$; use it to finish an integration by parts, then find the function by parts was done on.',
     marks: [2, 2, 1],
     route: '2 + 2 + 1 - (a) 1/cos x times the derivative of cos x, -tan x, shown; (b)(i) from (a) the integral of m tan kx is -(m/k) ln(cos kx), then the limits in, exact; (b)(ii) comparing with the parts formula, v = m tan kx is what was integrated, so g(x) = mk sec^2 kx.',
-    ranges: 'The paper: 2x tan 2x - integral of 2 tan 2x, from 0 to pi/6, g(x) = 4 sec^2 2x. k from 2 to 4 and m = k or 2k, so the log\'s coefficient m/k stays whole (the paper\'s is 1); the upper limit makes kx pi/3 (the paper), pi/4 or pi/6, the angles with exact tan and cos. (a) is the paper\'s own "show that", unchanged.',
+    ranges: 'The paper: 2x tan 2x - integral of 2 tan 2x, from 0 to pi/6, g(x) = 4 sec^2 2x. k from 2 to 6 (2 to 4 before the owner\'s yes, variation-depth sheet, card 7, 2026-10-05) and m = k or 2k, so the log\'s coefficient m/k stays whole (the paper\'s is 1); the upper limit makes kx pi/3 (the paper), pi/4 or pi/6, the angles with exact tan and cos. (a) is the paper\'s own "show that", unchanged.',
   },
   {
     card: '2025 P1 Q2',
@@ -252,10 +252,10 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2021 P2 Q8',
-    skill: 'Implicit differentiation of $x^{2}y^{3} + e^{ky} = N$, then show there is only one stationary point.',
+    skill: 'Implicit differentiation of $x^{p}y^{q} + e^{ky} = N$, then show there is only one stationary point.',
     marks: [4, 3],
-    route: '4 + 3 - (a) the product rule on x^2y^3 with one term right, then both terms, then the e^{ky} term and 0, then dy/dx = -2xy^3/(3x^2y^2 + ke^{ky}); (b) dy/dx = 0, then x = 0 and y = 0, then x = 0 gives y = (1/k) ln N while y = 0 gives 1 = N, no solution.',
-    ranges: 'The paper: x^2y^3 + e^{2y} = 5, the point (0, (1/2) ln 5). k from 1 to 4 (the paper\'s 2) and N from 2 to 10 (the paper\'s 5), never 1, so y = 0 always fails; never a perfect k-th power, so (1/k) ln N has one simplest form (1/2 ln 4 is ln 2). Always x^2y^3, the paper\'s powers. 30 questions.',
+    route: '4 + 3 - (a) the product rule on x^py^q with one term right, then both terms, then the e^{ky} term and 0, then dy/dx = -px^{p-1}y^q/(qx^py^{q-1} + ke^{ky}); (b) dy/dx = 0, then x = 0 and y = 0, then x = 0 gives y = (1/k) ln N while y = 0 gives 1 = N, no solution.',
+    ranges: 'The paper: x^2y^3 + e^{2y} = 5, the point (0, (1/2) ln 5). k from 1 to 4 (the paper\'s 2) and N from 2 to 10 (the paper\'s 5), never 1, so y = 0 always fails; with k > 1, never a power (4, 8, 9), so (1/k) ln N is in its simplest form, as the paper\'s (1/2) ln 5 (1/2 ln 4 is ln 2; and, on the owner\'s "Yes fix it", contact sheet 2026-10-05, 1/4 ln 4, 1/2 ln 8 and 1/4 ln 9 are left out too). The powers x^py^q, p = 2 (the paper) or 3 and q from 2 to 4 (the paper\'s 3), on the owner\'s yes (variation-depth sheet, card 10, 2026-10-05): N vanishes when you differentiate, so with the paper\'s powers alone (a) had four versions; now 24. The top, -px^{p-1}y^q, is still zero only at x = 0 or y = 0, so (b) is the paper\'s argument.',
   },
   {
     card: '2019 Q1(a)',
@@ -297,7 +297,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
     skill: 'Implicit differentiation of $ax^{2} + y^{2} = bxy + N$, then the two vertical tangents $x = k.$',
     marks: [3, 2],
     route: '3 + 2 - (a) the chain rule on y^2 or the product rule on bxy, then every term, then dy/dx = (by - 2ax)/(2y - bx); (b) a vertical tangent, so the denominator is zero, 2y - bx = 0; then y = bx/2 substituted into the curve, x^2 = K^2 and k = ±K.',
-    ranges: 'The paper: x^2 + y^2 = xy + 12, k = ±4. A number in front of x^2, a from 1 to 3, and of xy, b from 1 to b^2 < 4a, so the points are real (the paper\'s a = b = 1, which alone makes 3 questions); N chosen so x^2 is a whole square K^2, K from 2 to 6 (the paper\'s 4), N at most 100 (the paper\'s 12). A number in front is a bigger number, not a step. y^2 alone, as the paper. 22 questions.',
+    ranges: 'The paper: x^2 + y^2 = xy + 12, k = ±4. A number in front of x^2, a from 1 to 5 (1 to 3 before the owner\'s yes, variation-depth sheet, card 11, 2026-10-05: N vanishes when you differentiate, so (a) changes only with a and b; thirteen versions where there were six), and of xy, b from 1 to b^2 < 4a, so the points are real (the paper\'s a = b = 1, which alone makes 3 questions); with an even b, top and bottom share a 2, cancelled. N chosen so x^2 is a whole square K^2, K from 2 to 6 (the paper\'s 4), N at most 100 (the paper\'s 12). A number in front is a bigger number, not a step. y^2 alone, as the paper.',
   },
   {
     card: '2018 Q1(a)',
@@ -378,9 +378,9 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2016 Q11',
-    skill: 'Related rates: a cube whose height grows at a constant rate; $\\frac{dV}{dt}$ at a given height.',
+    skill: 'Related rates: a solid whose edges grow together at a constant rate; $\\frac{dV}{dt}$ at a given length.',
     marks: [4],
-    route: 'dh/dt = R; the chain rule dV/dt = dV/dh · dh/dt with V = h^3; dV/dh = 3h^2; then 3H^2 × R with units, cm^3 s^{-1}.',
-    ranges: 'The paper: 5 cm s^{-1} at a height of 3 cm, answer 135 cm^3 s^{-1}. R and H whole, from 2 to 9 (the paper\'s 5 and 3). Always a cube, as the paper. 64 questions.',
+    route: 'dh/dt = R; the chain rule dV/dt = dV/dh · dh/dt with V = ah^3; dV/dh = 3ah^2; then 3aH^2 × R with units, cm^3 s^{-1}.',
+    ranges: 'The paper: a cube, 5 cm s^{-1} at a height of 3 cm, answer 135 cm^3 s^{-1}. R and H whole, from 2 to 9 (the paper\'s 5 and 3). A cube (a = 1, the paper), or, on the owner\'s yes (variation-depth sheet, card 18, 2026-10-05), a box on a square base of side h whose height is always a times the side, a from 2 to 4, so V = ah^3: the same steps, with a number that reaches the working. The box\'s rate no bigger than the cube\'s biggest, 2187.',
   },
 ];

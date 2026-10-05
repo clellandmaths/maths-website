@@ -11,40 +11,48 @@ import { type Element, type Pt, type Scene, pt } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 
 // ── 2026 P1 Q6 ─────────────────────────────────────────────────────────────
-// (a) the integral of x(x - k)^n by u = x - k; (b) the volume of y = c√x(x - k)^{n/2}.
+// (a) the integral of ax(x - k)^n by u = x - k; (b) the volume of y = c√(ax)(x - k)^{n/2}.
 
-interface Q6 { k: number; n: number; c: number }
+interface Q6 { k: number; n: number; a: number; c: number }
 
 /** `(x - 1)^{4}`, or `(x - 1)` to the first power. */
 const bracketPower = (k: number, p: number) => `(${poly([1, -k])})${p === 1 ? '' : `^{${p}}`}`;
 
-const q2026p1q6: CardRoutine<Q6> = {
-  draw: () => {
-    // The owner, on the sheet: "Could the power go up?", and "Don't make it
-    // slightly harder". The paper's (x - k)^4, so y has (x - k)^2, in two
-    // draws of three; the power up, (x - 1)^6, in the third, k = 1 only so the
-    // numbers stay a Paper 1 size. No coefficient inside the bracket: it adds
-    // a step the paper does not have.
-    const n = pick([4, 4, 6]);
-    const k = n === 4 ? pick([1, 2]) : 1;
-    return { k, n, c: int(1, 5) };
-  },
+/**
+ * The (k, n, a) the card sets. The owner, on the 2026 P1 sheet: "Could the power
+ * go up?", and "Don't make it slightly harder": the paper's (x - k)^4, or the power
+ * up, (x - 1)^6; no coefficient inside the bracket, which adds a step the paper does
+ * not have. Then, on the variation-depth sheet (card 16, 2026-10-05): a coefficient
+ * of x, a = 1, 2, 3 or 5 (never 4: √(4x) is 2√x, which no paper writes), kept to the
+ * by-hand size the card already had, a k^{n+2} at most 2^6 = 64 (the owner turned
+ * down k = 2 with the power 6 for its 256). So k = 2 keeps a = 1: nine integrals,
+ * one draw in nine each.
+ */
+const Q6_FORMS: readonly Omit<Q6, 'c'>[] = [
+  ...[1, 2, 3, 5].flatMap(a => [{ k: 1, n: 4, a }, { k: 1, n: 6, a }]),
+  { k: 2, n: 4, a: 1 },
+];
 
-  build: ({ k, n, c }): Built => {
+const q2026p1q6: CardRoutine<Q6> = {
+  draw: () => ({ ...pick(Q6_FORMS), c: int(1, 5) }),
+
+  build: ({ k, n, a, c }): Built => {
     const sub = poly([1, -k]);
-    const integrand = `x${bracketPower(k, n)}`;
-    const top = q(1, n + 2), next = q(k, n + 1);
-    const inU = `\\int (${sum([{ coef: 1, body: `u^{${n + 1}}` }, { coef: k, body: `u^{${n}}` }])})\\,du`;
+    const ax = a === 1 ? 'x' : `${a}x`;
+    const integrand = `${ax}${bracketPower(k, n)}`;
+    const top = q(a, n + 2), next = q(a * k, n + 1);
+    const inU = `\\int (${sum([{ coef: a, body: `u^{${n + 1}}` }, { coef: a * k, body: `u^{${n}}` }])})\\,du`;
     const result = (v: string) => sum([{ coef: top, body: `${v}^{${n + 2}}` }, { coef: next, body: `${v}^{${n + 1}}` }]);
     const answerA = `${sum([{ coef: top, body: bracketPower(k, n + 2) }, { coef: next, body: bracketPower(k, n + 1) }])} + c`;
 
     const cc = c * c;
     const lead = cc === 1 ? '' : `${cc}`;
-    const y = `${c === 1 ? '' : c}\\sqrt{x}${bracketPower(k, n / 2)}`;
-    const ySquared = `${lead}x${bracketPower(k, n)}`;
+    const y = `${c === 1 ? '' : c}\\sqrt{${ax}}${bracketPower(k, n / 2)}`;
+    // y² as c² times (a)'s integrand, so the match with (a) shows.
+    const ySquared = a === 1 || cc === 1 ? `${lead}${integrand}` : `${cc} \\times ${integrand}`;
     const bracket = `\\left[${sum([{ coef: top, body: bracketPower(k, n + 2) }, { coef: next, body: bracketPower(k, n + 1) }])}\\right]_{0}^{${k}}`;
-    // At x = 0, with n even: k^{n+2}/(n + 2) - k^{n+2}/(n + 1).
-    const kp = k ** (n + 2);
+    // At x = 0, with n even: a k^{n+2}/(n + 2) - a k^{n+2}/(n + 1).
+    const kp = a * k ** (n + 2);
     const atZero = `\\left(${num(q(kp, n + 2))} - ${num(q(kp, n + 1))}\\right)`;
     const volume = piTimes(q(cc * kp, (n + 1) * (n + 2)));
 
@@ -55,7 +63,7 @@ const q2026p1q6: CardRoutine<Q6> = {
       ],
       solutionSteps: [
         `<strong>(a)</strong> $u = ${sub}$, so $\\frac{du}{dx} = 1$, $du = dx$ and $x = ${poly([1, k], 'u')}$`,
-        `<strong>(a)</strong> $\\int (${poly([1, k], 'u')})u^{${n}}\\,du = ${inU}$`,
+        `<strong>(a)</strong> $\\int ${a === 1 ? '' : a}(${poly([1, k], 'u')})u^{${n}}\\,du = ${inU}$`,
         `<strong>(a)</strong> $= ${result('u')} + c = ${answerA}$`,
         `<strong>(b)</strong> $V = \\pi\\int_{0}^{${k}} y^{2}\\,dx$`,
         `<strong>(b)</strong> $= \\pi\\int_{0}^{${k}} ${ySquared}\\,dx$`,
@@ -230,7 +238,7 @@ const q2025p2q16: CardRoutine<P2Q16> = {
 // (a) ∫ x e^{-2m x²} dx by u = 2m x²; (b) the volume of y = c√x / e^{m x²}
 // from 0 to 1, whose y² is c² times (a)'s integrand, as the paper arranges.
 
-interface P2Q11of2025 { c: number; m: number }
+interface P2Q11of2025 { c: number; m: number; a: number }
 
 /**
  * The paper's figure: arrowed axes, 0 and 1 on the x-axis, the curve from
@@ -265,16 +273,23 @@ function curveFigure(m: number): Scene {
 }
 
 const q2025p2q11: CardRoutine<P2Q11of2025> = {
-  draw: () => ({ c: int(2, 7), m: int(1, 3) }),
+  // On the owner's yes (variation-depth sheet, card 8, 2026-10-05): m to 4, so the power
+  // up to 8x², and "a coefficient of x": y = c√(ax)/e^{mx²}, so (a) is ∫ ax e^{-2mx²} dx
+  // and y² is still c² times (a)'s integrand, as the paper arranges. a = 1, 2, 3 or 5,
+  // never 4: √(4x) is 2√x, which no paper writes.
+  draw: () => ({ c: int(2, 7), m: int(1, 4), a: pick([1, 2, 3, 5]) }),
 
-  build: ({ c, m }): Built => {
+  build: ({ c, m, a }): Built => {
     const k = 2 * m;
     const E = `e^{-${k}x^{2}}`;
-    const integrand = `x${E}`;
-    const antider = `${sum([{ coef: q(-1, 2 * k), body: E }])}`;
-    const y = `\\frac{${c}\\sqrt{x}}{e^{${m === 1 ? '' : m}x^{2}}}`;
+    const ax = a === 1 ? 'x' : `${a}x`;
+    const integrand = `${ax}${E}`;
+    const antider = `${sum([{ coef: q(-a, 2 * k), body: E }])}`;
+    const outside = q(a, 2 * k);
+    const outsideText = outside.n === 1n && outside.d === 1n ? '' : num(outside);
+    const y = `\\frac{${c}\\sqrt{${ax}}}{e^{${m === 1 ? '' : m}x^{2}}}`;
     const inIntegrable = `${c * c}\\pi\\int_{0}^{1} ${integrand}\\,dx`;
-    const K = q(c * c, 2 * k);
+    const K = q(c * c * a, 2 * k);
     const volume = `${K.d === 1n && K.n === 1n ? '' : num(K)}\\pi(1 - e^{-${k}})`;
     const scene = curveFigure(m);
     return {
@@ -287,9 +302,11 @@ const q2025p2q11: CardRoutine<P2Q11of2025> = {
       ],
       solutionSteps: [
         `<strong>(a)</strong> $u = ${k}x^{2}$, so $\\frac{du}{dx} = ${2 * k}x$ and $du = ${2 * k}x\\,dx$`,
-        `<strong>(a)</strong> $\\int ${integrand}\\,dx = \\frac{1}{${2 * k}}\\int e^{-u}\\,du = ${antider} + c$`,
+        `<strong>(a)</strong> $\\int ${integrand}\\,dx = ${outsideText}\\int e^{-u}\\,du = ${antider} + c$`,
         '<strong>(b)</strong> $V = \\pi\\int_{0}^{1} y^{2}\\,dx$',
-        `<strong>(b)</strong> $y^{2} = \\frac{${c * c}x}{e^{${k}x^{2}}} = ${c * c}x${E}$, so $V = ${inIntegrable}$`,
+        a === 1
+          ? `<strong>(b)</strong> $y^{2} = \\frac{${c * c}x}{e^{${k}x^{2}}} = ${c * c}x${E}$, so $V = ${inIntegrable}$`
+          : `<strong>(b)</strong> $y^{2} = \\frac{${c * c} \\times ${ax}}{e^{${k}x^{2}}} = ${c * c} \\times ${integrand}$, so $V = ${inIntegrable}$`,
         `<strong>(b)</strong> $V = ${c * c}\\pi\\left[${antider}\\right]_{0}^{1} = ${volume}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],
@@ -366,27 +383,42 @@ const q2024p1q8: CardRoutine<P1Q8of2024> = {
 };
 
 // ── 2024 P2 Q8 ─────────────────────────────────────────────────────────────
-// y = k/√(1 + x²) rotated about the x-axis from 0 to a: the volume k²π tan⁻¹a
-// is given, so tan⁻¹a is one of the angles whose tangent is exact.
+// y = k/√(b² + x²) rotated about the x-axis from 0 to a: the volume
+// (k²π/b) tan⁻¹(a/b) is given, so tan⁻¹(a/b) is one of the angles whose tangent
+// is exact. The paper's b is 1; b = 2 or 3 on the owner's yes (variation-depth
+// sheet, card 4, 2026-10-05), from the formula list's 1/(a² + x²).
 
-interface P2Q8of2024 { k: number; angle: 3 | 4 | 6 }
+interface P2Q8of2024 { k: number; b: 1 | 2 | 3; angle: 3 | 4 | 6 }
 
 /** tan(π/n) for the three angles, as the paper writes a length. */
 const TANGENT: Readonly<Record<3 | 4 | 6, string>> = { 3: '\\sqrt{3}', 4: '1', 6: '\\frac{1}{\\sqrt{3}}' };
 
-const q2024p2q8: CardRoutine<P2Q8of2024> = {
-  draw: () => ({ k: int(1, 6), angle: pick([3, 4, 6] as const) }),
+/** a = b tan(π/n): `2\sqrt{3}`, `3`, `\frac{2}{\sqrt{3}}`, and 3/√3 as `\sqrt{3}`. */
+function upperLimit(b: 1 | 2 | 3, angle: 3 | 4 | 6): string {
+  if (b === 1) return TANGENT[angle];
+  if (angle === 3) return `${b}\\sqrt{3}`;
+  if (angle === 4) return `${b}`;
+  return b === 3 ? '\\sqrt{3}' : `\\frac{${b}}{\\sqrt{3}}`;
+}
 
-  build: ({ k, angle }): Built => {
+const q2024p2q8: CardRoutine<P2Q8of2024> = {
+  draw: () => ({ k: int(1, 6), b: pick([1, 2, 3] as const), angle: pick([3, 4, 6] as const) }),
+
+  build: ({ k, b, angle }): Built => {
     const k2 = k * k;
-    const y = `\\frac{${k}}{\\sqrt{1 + x^{2}}}`;
-    const V = q(k2, angle);
+    const under = `${b * b} + x^{2}`;
+    const y = `\\frac{${k}}{\\sqrt{${under}}}`;
+    const V = q(k2, b * angle);
     const top = `${V.n === 1n ? '' : V.n}\\pi^{2}`;
     const volume = V.d === 1n ? top : `\\frac{${top}}{${V.d}}`;
     const theta = `\\frac{\\pi}{${angle}}`;
     const form = '\\int_{0}^{a} \\pi y^{2}\\,dx';
-    const squared = `\\int_{0}^{a} \\pi\\frac{${k2}}{1 + x^{2}}\\,dx`;
-    const kPi = `${k2 === 1 ? '' : k2}\\pi`;
+    const squared = `\\int_{0}^{a} \\pi\\frac{${k2}}{${under}}\\,dx`;
+    // k²π/b in front of the inverse tangent, and its argument x/b.
+    const front = q(k2, b);
+    const kPi = `${front.n === 1n && front.d === 1n ? '' : num(front)}\\pi`;
+    const atan = (v: string) => (b === 1 ? `\\tan^{-1}${v}` : `\\tan^{-1}\\frac{${v}}{${b}}`);
+    const a = upperLimit(b, angle);
     return {
       questionLines: [
         `A solid is formed by rotating part of the curve with equation $y = ${y}$ about the $x$-axis through $2\\pi$ radians, from $x = 0$ to $x = a.$`,
@@ -396,23 +428,29 @@ const q2024p2q8: CardRoutine<P2Q8of2024> = {
       solutionSteps: [
         `$V = ${form}$`,
         `$V = ${squared}$`,
-        `$V = \\left[${kPi}\\tan^{-1}x\\right]_{0}^{a}$`,
-        `$${kPi}\\tan^{-1}a = ${volume}$, so $\\tan^{-1}a = ${theta}$`,
-        `$a = \\tan ${theta} = ${TANGENT[angle]}$`,
+        `$V = \\left[${kPi}${atan('x')}\\right]_{0}^{a}$`,
+        `$${kPi}${atan('a')} = ${volume}$, so $${atan('a')} = ${theta}$`,
+        b === 1
+          ? `$a = \\tan ${theta} = ${a}$`
+          : `$\\frac{a}{${b}} = \\tan ${theta} = ${TANGENT[angle]}$, so $a = ${b === 3 && angle === 6 ? '\\frac{3}{\\sqrt{3}} = ' : ''}${a}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],
-      finalAnswer: `$a = ${TANGENT[angle]}$`,
+      finalAnswer: `$a = ${a}$`,
       ladder: {
         moves: [
           'What is the formula for a volume of revolution about the $x$-axis?',
           'Write the volume integral, with limits $0$ and $a$.',
           'Square $y$ and substitute.',
-          'Integrate. Which standard integral has $1 + x^{2}$ underneath?',
+          b === 1
+            ? 'Integrate. Which standard integral has $1 + x^{2}$ underneath?'
+            : `Integrate. The formula list has the integral with a number plus $x^{2}$ underneath: here the number is $${b * b} = ${b}^{2}$.`,
           'Put in the limits and set the result equal to the given volume.',
           'Solve for $a$.',
         ],
         marks: [0, 1, 1, 1, 1, 1],
-        shows: [null, `$${form}$`, `$${squared}$`, '$\\tan^{-1}x$', `$\\tan^{-1}a = ${theta}$`, null],
+        // The inverse tangent as the working writes it (the paper's tan^{-1} x), so the hint
+        // shows a piece of the worked line, not a line the working never has.
+        shows: [null, `$${form}$`, `$${squared}$`, `$${atan('x')}$`, `$${atan('a')} = ${theta}$`, null],
         watch: { at: 1, text: 'The volume integral needs its limits and $dx$ written, or that mark goes.' },
       },
     };

@@ -21,10 +21,10 @@ export const INTEGRATION: readonly CardMeta[] = [
   },
   {
     card: '2021 P1 Q5',
-    skill: 'The volume when $y = c\\sqrt{x}$ between two values of $x$ is rotated about the $x$-axis, exactly.',
+    skill: 'The volume when $y = c\\sqrt{x + s}$ between two values of $x$ is rotated about the $x$-axis, exactly.',
     marks: [2],
-    route: 'The volume integral in the right form, π∫ y^2 dx with the limits; then y^2 = c^2 x integrated and evaluated, exactly, a multiple of π.',
-    ranges: 'The paper: y = 2√x from x = 3 to 5, volume 32π. c from 1 to 4 (the paper\'s 2), the limits whole from 1 to 7 with the lower below the upper (the paper\'s 3 and 5). Only the solids whose volume c^2(b^2 - a^2)π/2 is a whole multiple of π, as the paper\'s 32π, and with no product bigger than the paper\'s biggest, 2 × 25 = 50 at the top limit (the owner on 2023 P1: "biggest should be no larger than paper"); listed, 21 solids. All exact: Paper 1.',
+    route: 'The volume integral in the right form, π∫ y^2 dx with the limits; then y^2 = c^2(x + s) integrated and evaluated, exactly, a multiple of π.',
+    ranges: 'The paper: y = 2√x from x = 3 to 5, volume 32π. y = c√(x + s), c from 1 to 4 (the paper\'s 2) and s from 0 (the paper) to 3, on the owner\'s yes (variation-depth sheet, card 3, 2026-10-05): with s = 0 alone every draw integrated a multiple of x. The limits whole from 1 to 7 with the lower below the upper (the paper\'s 3 and 5). Only the solids whose volume c^2((b^2 - a^2)/2 + s(b - a))π is a whole multiple of π, as the paper\'s 32π, and with no product bigger than the paper\'s biggest, 2 × 25 = 50 at the top limit, the antiderivative c^2(b^2/2 + sb) at most 50 (the owner on 2023 P1: "biggest should be no larger than paper"); listed, 58 solids on 10 curves. All exact: Paper 1.',
   },
   {
     card: '2022 P2 Q2',
@@ -52,7 +52,7 @@ export const INTEGRATION: readonly CardMeta[] = [
     skill: 'Integrate by a given substitution, then use it for an exact volume of revolution.',
     marks: [3, 4],
     route: '3 + 4 - (a) differentiate the substitution; rewrite the integral in u and expand; integrate and substitute back; (b) the volume integral with its limits and dx; y squared to match (a)\'s integrand; (a)\'s result with the limits; evaluated exactly. The limits and the dx must be written or the fourth mark goes.',
-    ranges: 'The paper: (a) the integral of x(x - 1)^4 with u = x - 1; (b) y = 2√x(x - 1)^2 from x = 0 to 1, volume 2π/15. The card: x(x - k)^n with u = x - k, and y = c√x(x - k)^{n/2}, so that y² = c²x(x - k)^n is c² times (a)\'s integrand, as the paper arranges; limits 0 to k, where the curve meets the axis, as the paper\'s. n is even, so y is defined on [0, k]: the paper\'s 4 in two draws of three (k 1 or 2), and 6 in the third (k 1 only, V = c²π/56), since the paper\'s n alone makes too few questions; the owner chose the power up over the power down, and no coefficient inside the bracket, which would add a step ("Don\'t make it slightly harder", 2026-09-29). k is kept to a non-calculator size (3^6 = 729 is not). c from 1 to 5. 15 questions. The volume is c²k^{n+2}π/((n + 1)(n + 2)), exact: Paper 1.',
+    ranges: 'The paper: (a) the integral of x(x - 1)^4 with u = x - 1; (b) y = 2√x(x - 1)^2 from x = 0 to 1, volume 2π/15. The card: ax(x - k)^n with u = x - k, and y = c√(ax)(x - k)^{n/2}, so that y² = c²ax(x - k)^n is c² times (a)\'s integrand, as the paper arranges; limits 0 to k, where the curve meets the axis, as the paper\'s. n is even, so y is defined on [0, k]: the paper\'s 4, with k 1 or 2, or 6 with k 1 only; the owner chose the power up over the power down, and no coefficient inside the bracket, which would add a step ("Don\'t make it slightly harder", 2026-09-29). A coefficient of x, a = 1, 2, 3 or 5, on the owner\'s yes (variation-depth sheet, card 16, 2026-10-05), never 4 (√(4x) is 2√x, which no paper writes), kept to the by-hand size the card had, a k^{n+2} at most 64, so k = 2 keeps a = 1: nine integrals, one draw in nine each (3^6 = 729 is not a non-calculator size, and the owner turned down k = 2 with the power 6). c from 1 to 5. The volume is c²ak^{n+2}π/((n + 1)(n + 2)), exact: Paper 1.',
   },
   {
     card: '2026 P2 Q11',
@@ -77,10 +77,10 @@ export const INTEGRATION: readonly CardMeta[] = [
   },
   {
     card: '2025 P2 Q11',
-    skill: 'Integrate $xe^{-kx^{2}}$ by substitution, then use it for an exact volume of revolution.',
+    skill: 'Integrate $axe^{-kx^{2}}$ by substitution, then use it for an exact volume of revolution.',
     marks: [2, 3],
     route: '2 + 3 - (a) du/dx from the substitution; the integral in u and back in x, with the constant; (b) the volume integral with its limits (stated or implied); y^2 simplified to a multiple of (a)\'s integrand; integrated with the limits and evaluated exactly. The limits must be written or that mark goes.',
-    ranges: 'The paper: (a) x e^{-2x^2} with u = 2x^2; (b) y = 4 sqrt(x)/e^{x^2} from 0 to 1, volume 4 pi (1 - e^{-2}). y = c sqrt(x)/e^{m x^2} with c from 2 to 7 (the paper\'s 4) and m from 1 (the paper) to 3, so y^2 = c^2 x e^{-2m x^2} is c^2 times (a)\'s integrand, as the paper arranges; the limits stay 0 to 1, as the figure marks them. The volume is (c^2/4m) pi (1 - e^{-2m}), exact. The figure is drawn from the curve: axes, 0 and 1, the curve and a dashed line at x = 1, as the paper\'s, with no y scale, so only m changes its shape. 18 questions.',
+    ranges: 'The paper: (a) x e^{-2x^2} with u = 2x^2; (b) y = 4 sqrt(x)/e^{x^2} from 0 to 1, volume 4 pi (1 - e^{-2}). y = c sqrt(ax)/e^{m x^2} with c from 2 to 7 (the paper\'s 4), m from 1 (the paper) to 4 and a = 1 (the paper), 2, 3 or 5, on the owner\'s yes and "a coefficient of x" (variation-depth sheet, card 8, 2026-10-05; m to 3 and a = 1 before), never a = 4 (sqrt(4x) is 2 sqrt(x)); so (a) is the integral of a x e^{-2m x^2} and y^2 = c^2 a x e^{-2m x^2} is c^2 times (a)\'s integrand, as the paper arranges: sixteen integrals where there were three. The limits stay 0 to 1, as the figure marks them. The volume is (c^2 a/4m) pi (1 - e^{-2m}), exact. The figure is drawn from the curve: axes, 0 and 1, the curve and a dashed line at x = 1, as the paper\'s, with no y scale, so only m changes its shape.',
   },
   {
     card: '2024 P1 Q8',
@@ -93,8 +93,8 @@ export const INTEGRATION: readonly CardMeta[] = [
     card: '2024 P2 Q8',
     skill: 'A volume of revolution that integrates to an inverse tangent, set equal to a given volume to find the upper limit.',
     marks: [5],
-    route: 'The volume integral of pi y^2 with its limits 0 and a and dx; y squared and substituted, pi k^2/(1 + x^2); integrated, tan^{-1} x; the limits in and set equal to the volume, tan^{-1} a = pi/n; then a. The integral needs its limits and dx written.',
-    ranges: 'The paper: y = 1/sqrt(1 + x^2), volume pi^2/3, a = sqrt(3). The numerator k from 1 (the paper) to 6, a number, as the owner kept a numerator of 2 or 3 on 2025 P1 Q5: y^2 = k^2/(1 + x^2) is the same standard integral. The volume k^2 pi times pi/3 (the paper), pi/4 or pi/6, so a is sqrt(3), 1 or 1/sqrt(3), each exact, as the paper\'s. Always 1 + x^2 underneath: a number before x^2 puts a coefficient in the inverse tangent, a step the paper does not have. 18 questions.',
+    route: 'The volume integral of pi y^2 with its limits 0 and a and dx; y squared and substituted, pi k^2/(b^2 + x^2); integrated, (1/b) tan^{-1}(x/b); the limits in and set equal to the volume, tan^{-1}(a/b) = pi/n; then a. The integral needs its limits and dx written.',
+    ranges: 'The paper: y = 1/sqrt(1 + x^2), volume pi^2/3, a = sqrt(3). The numerator k from 1 (the paper) to 6, a number, as the owner kept a numerator of 2 or 3 on 2025 P1 Q5. Underneath, b^2 + x^2 with b = 1 (the paper), 2 or 3, on the owner\'s yes (variation-depth sheet, card 4, 2026-10-05): the formula list gives the integral of 1/(a^2 + x^2) as (1/a) tan^{-1}(x/a), so a number added to x^2 is a line read off it (a number before x^2 would put a coefficient inside, a step the paper does not have). The volume (k^2/b) pi times pi/3 (the paper), pi/4 or pi/6, so a is b sqrt(3), b or b/sqrt(3) (3/sqrt(3) written sqrt(3)), each exact, as the paper\'s. 54 questions.',
   },
   {
     card: '2023 P1 Q4',
@@ -115,7 +115,7 @@ export const INTEGRATION: readonly CardMeta[] = [
     skill: 'A definite integral of a squared linear factor times an exponential by parts twice, then the volume of revolution it gives.',
     marks: [5, 3],
     route: '5 + 3 - (a) the first application begun, e^{mx}/m times the quadratic; then completed, less the integral of its derivative times e^{mx}/m; the second application; the whole integral with its limits; evaluated exactly; (b) the volume as π times the integral of y^2 with limits and dx; y^2 written as c^2 times (a)\'s integrand; then c^2π times (a).',
-    ranges: 'The paper: the integral of (x^2 - 2x + 1)e^{4x} from 0 to 1, (1/32)(e^4 - 13); y = 4(x - 1)e^{2x} from 0 to 1, (π/2)(e^4 - 13). The quadratic is always the square of x - p, written out as the paper\'s, from 0 to p, so (b)\'s y^2 is c^2 times (a)\'s integrand, as the paper\'s 16: p 1 (the paper) or 2, the exponent m 2, 4 (the paper) or 6, so y has e^{(m/2)x} with a whole number, and c from 2 to 5 (the paper\'s 4). The answers exact and in the paper\'s form, (1/D)(e^{mp} - L). 24 questions.',
+    ranges: 'The paper: the integral of (x^2 - 2x + 1)e^{4x} from 0 to 1, (1/32)(e^4 - 13); y = 4(x - 1)e^{2x} from 0 to 1, (π/2)(e^4 - 13). The quadratic is always the square of x - p, written out as the paper\'s, from 0 to p, so (b)\'s y^2 is c^2 times (a)\'s integrand, as the paper\'s 16: p 1 (the paper), 2 or 3, the exponent m 2, 4 (the paper), 6 or 8, so y has e^{(m/2)x} with a whole number, and c from 2 to 5 (the paper\'s 4). Twelve integrals where there were six, on the owner\'s yes (variation-depth sheet, card 6, 2026-10-05). The answers exact and in the paper\'s form, (1/D)(e^{mp} - L). 48 questions.',
   },
   {
     card: '2018 Q8',
@@ -129,7 +129,7 @@ export const INTEGRATION: readonly CardMeta[] = [
     skill: 'By parts, $\\int x\\sin kx\\,dx$; then $\\frac{dy}{dx} - \\frac{m}{x}y = x^{m + 1}\\sin kx$ with an integrating factor, using it.',
     marks: [3, 7],
     route: '3 + 7 - (a) by parts with u = x, -(x/k) cos kx - …; the integral left, ∫ -(1/k) cos kx dx; completed, + (1/k^2) sin kx + c; (b) the integrating factor as e^{∫ -m/x dx}; simplified, 1/x^m; the left side the derivative of (1/x^m)y; the integral equation; (a) used; c from y = 0 at x = π, c = (π/k)(-1)^k; y made the subject.',
-    ranges: 'The paper: x sin 3x, dy/dx - (2/x)y = x^3 sin 3x, y = 0 at x = π, c = -π/3. k from 2 to 6 (the paper\'s 3) and m from 1 to 3 (the paper\'s 2), so x^{m+1} over x^m is always x and (b)\'s integral is always (a)\'s, as the paper\'s "Hence"; always x = π, as the paper. 15 questions.',
+    ranges: 'The paper: x sin 3x, dy/dx - (2/x)y = x^3 sin 3x, y = 0 at x = π, c = -π/3. k from 2 to 9 (the paper\'s 3; 2 to 6 before the owner\'s yes, variation-depth sheet, card 5, 2026-10-05: eight integrals where there were five) and m from 1 to 3 (the paper\'s 2), so x^{m+1} over x^m is always x and (b)\'s integral is always (a)\'s, as the paper\'s "Hence"; always x = π, as the paper, and cos kπ = ±1 keeps c exact. Always the sine: a cosine is another question. 24 questions.',
   },
   {
     card: '2017 Q6',

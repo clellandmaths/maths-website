@@ -73,6 +73,14 @@ export function makeWith(routine: CardRoutine, seed: number | string): Built {
   return withAhSeed(seed, () => routine.build(routine.draw()));
 }
 
+/**
+ * The draw alone, under a seed: the numbers `makeWith` builds from with the same seed.
+ * For reading a card's core (`cores.ts`); builds nothing.
+ */
+export function drawWith(routine: CardRoutine, seed: number | string): unknown {
+  return withAhSeed(seed, () => routine.draw());
+}
+
 /** A built card, dressed as the question every consumer of the engine takes. */
 export function dress(id: string, built: Built): AhQuestion {
   const meta = cardMeta(id);

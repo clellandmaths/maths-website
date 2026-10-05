@@ -52,23 +52,29 @@ const q2021p1q3: CardRoutine<P1Q3of2021> = {
 };
 
 // ── 2021 P1 Q5 ─────────────────────────────────────────────────────────────
-// y = c√x from x = a to x = b about the x-axis: V = π∫ c²x dx = c²(b² - a²)π/2
+// y = c√(x + s) from x = a to x = b about the x-axis:
+// V = π∫ c²(x + s) dx = c²((b² - a²)/2 + s(b - a))π. The paper's is s = 0.
+// s from 0 to 3 on the owner's yes (variation-depth sheet, card 3, 2026-10-05):
+// the integrand c²(x + s) changes with the curve, not only its multiple.
 
-interface P1Q5of2021 { c: number; a: number; b: number }
+interface P1Q5of2021 { c: number; s: number; a: number; b: number }
 
 /**
  * Every curve and pair of limits the card sets, listed rather than drawn
  * until one fits: the volume a whole multiple of π, as the paper's 32π, and
  * no product bigger than the paper's biggest, 2 × 25 = 50 at the top limit
- * (the owner on 2023 P1: "biggest should be no larger than paper").
+ * (the owner on 2023 P1: "biggest should be no larger than paper"): the
+ * antiderivative at the top, c²(b²/2 + sb), at most 50.
  */
 const Q5_SOLIDS: readonly P1Q5of2021[] = (() => {
   const out: P1Q5of2021[] = [];
   for (let c = 1; c <= 4; c++) {
-    for (let a = 1; a <= 5; a++) {
-      for (let b = a + 1; b <= 7; b++) {
-        const twice = c * c * (b * b - a * a);
-        if (twice % 2 === 0 && c * c * b * b <= 100) out.push({ c, a, b });
+    for (let s = 0; s <= 3; s++) {
+      for (let a = 1; a <= 5; a++) {
+        for (let b = a + 1; b <= 7; b++) {
+          const twice = c * c * (b * b - a * a + 2 * s * (b - a));
+          if (twice % 2 === 0 && c * c * (b * b + 2 * s * b) <= 100) out.push({ c, s, a, b });
+        }
       }
     }
   }
@@ -78,14 +84,17 @@ const Q5_SOLIDS: readonly P1Q5of2021[] = (() => {
 const q2021p1q5: CardRoutine<P1Q5of2021> = {
   draw: () => pick(Q5_SOLIDS),
 
-  build: ({ c, a, b }): Built => {
-    const y = c === 1 ? '\\sqrt{x}' : `${c}\\sqrt{x}`;
-    const squared = sum([{ coef: c * c, body: 'x' }]);
+  build: ({ c, s, a, b }): Built => {
+    const root = s === 0 ? '\\sqrt{x}' : `\\sqrt{x + ${s}}`;
+    const y = c === 1 ? root : `${c}${root}`;
+    const squared = sum([{ coef: c * c, body: 'x' }, { coef: c * c * s, body: '' }]);
     const half = q(c * c, 2);
-    const antiderivative = sum([{ coef: half, body: 'x^{2}' }]);
-    const at = (x: number) => num(q(c * c * x * x, 2));
-    const volume = piTimes((c * c * (b * b - a * a)) / 2);
-    const setUp = `V = \\pi\\int_{${a}}^{${b}} y^{2}\\,dx = \\pi\\int_{${a}}^{${b}} ${squared}\\,dx`;
+    const antiderivative = sum([{ coef: half, body: 'x^{2}' }, { coef: c * c * s, body: 'x' }]);
+    const at = (x: number) => num(q(c * c * x * x + 2 * c * c * s * x, 2));
+    const volume = piTimes((c * c * (b * b - a * a + 2 * s * (b - a))) / 2);
+    // Two terms under the integral sign take a bracket: ∫ (4x + 4) dx.
+    const integrand = s === 0 ? squared : `(${squared})`;
+    const setUp = `V = \\pi\\int_{${a}}^{${b}} y^{2}\\,dx = \\pi\\int_{${a}}^{${b}} ${integrand}\\,dx`;
     return {
       questionLines: [
         `A solid is formed by rotating the curve with equation $y = ${y}$ between $x = ${a}$ and $x = ${b}$ through $2\\pi$ radians about the $x$-axis.`,

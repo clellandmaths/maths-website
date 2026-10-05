@@ -17,10 +17,12 @@ import { q } from '../maths/rational';
 // x² - 2x + 1: = (2e^{mp} - (p²m² + 2pm + 2))/m³; (b) y = c(x - p)e^{(m/2)x}
 // rotated between 0 and p, so y² is c² times (a)'s integrand: c²π times (a).
 
-interface Q16of2019 { m: 2 | 4 | 6; p: 1 | 2; c: number }
+interface Q16of2019 { m: 2 | 4 | 6 | 8; p: 1 | 2 | 3; c: number }
 
 const q2019q16: CardRoutine<Q16of2019> = {
-  draw: () => ({ m: pick([2, 4, 6] as const), p: pick([1, 2] as const), c: int(2, 5) }),
+  // p from 1 to 3 and m to 8 on the owner's yes (variation-depth sheet, card 6,
+  // 2026-10-05): twelve integrals where there were six. The single paper, calculator.
+  draw: () => ({ m: pick([2, 4, 6, 8] as const), p: pick([1, 2, 3] as const), c: int(2, 5) }),
 
   build: ({ m, p, c }): Built => {
     const ex = `e^{${m}x}`;

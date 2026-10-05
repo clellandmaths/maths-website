@@ -15,10 +15,12 @@ const D2 = '\\frac{d^{2}y}{dx^{2}}';
 const D1 = '\\frac{dy}{dx}';
 
 // ── 2017 Q9 ────────────────────────────────────────────────────────────────
-// dy/dx = e^{kx}(1 + y²), y = y₀ at x = 0: tan⁻¹ y = (1/k)e^{kx} + c, with
-// tan⁻¹ y₀ a standard angle, so c = θ₀ - 1/k, as the paper's π/4 - 1/2.
+// dy/dx = ae^{kx}(1 + y²), y = y₀ at x = 0: tan⁻¹ y = (a/k)e^{kx} + c, with
+// tan⁻¹ y₀ a standard angle, so c = θ₀ - a/k, as the paper's π/4 - 1/2 (a = 1).
+// The number in front, a from 1 to 4, on the owner's yes (variation-depth sheet,
+// card 2, 2026-10-05): twenty equations where there were five.
 
-interface Q9of2017 { k: number; start: number }
+interface Q9of2017 { a: number; k: number; start: number }
 
 /** y₀ and its inverse tangent, in sixths and quarters of π: the paper's 1 and π/4 first. */
 const STARTS2017: readonly { y: string; angle: string; sign: 1 | -1 }[] = [
@@ -31,29 +33,33 @@ const STARTS2017: readonly { y: string; angle: string; sign: 1 | -1 }[] = [
 ];
 
 const q2017q9: CardRoutine<Q9of2017> = {
-  // k from 2 (the paper) to 6; y₀ one of ±1, ±√3, ±1/√3, so tan⁻¹ y₀ is exact.
-  draw: () => ({ k: int(2, 6), start: int(0, STARTS2017.length - 1) }),
+  // a from 1 (the paper) to 4, k from 2 (the paper) to 6; y₀ one of ±1, ±√3, ±1/√3,
+  // so tan⁻¹ y₀ is exact.
+  draw: () => ({ a: int(1, 4), k: int(2, 6), start: int(0, STARTS2017.length - 1) }),
 
-  build: ({ k, start }): Built => {
+  build: ({ a, k, start }): Built => {
     const s = STARTS2017[start];
     const e = `e^{${k}x}`;
-    const inv = `\\frac{1}{${k}}`;
+    const front = a === 1 ? '' : `${a}`;
+    // a/k in lowest terms: the integral's number, and the constant's.
+    const ratio = num(q(a, k));
+    const inv = ratio === '1' ? '' : ratio;
     const theta = `${s.sign < 0 ? '-' : ''}${s.angle}`;
-    const c = joinTerms([theta, `-${inv}`]);
-    const inside = joinTerms([`${inv}${e}`, theta, `-${inv}`]);
-    const separated = `\\int \\frac{dy}{1 + y^{2}} = \\int ${e}\\,dx`;
+    const c = joinTerms([theta, `-${ratio}`]);
+    const inside = joinTerms([`${inv}${e}`, theta, `-${ratio}`]);
+    const separated = `\\int \\frac{dy}{1 + y^{2}} = \\int ${front}${e}\\,dx`;
     const answer = `y = \\tan\\left(${inside}\\right)`;
     const yAt = s.y.startsWith('-') ? `(${s.y})` : s.y;
     return {
       questionLines: [
-        `Solve $${D1} = ${e}(1 + y^{2})$ given that when $x = 0$, $y = ${s.y}.$`,
+        `Solve $${D1} = ${front}${e}(1 + y^{2})$ given that when $x = 0$, $y = ${s.y}.$`,
         'Express $y$ in terms of $x.$',
       ],
       solutionSteps: [
         `Separating the variables: $${separated}$`,
         '$\\int \\frac{dy}{1 + y^{2}} = \\tan^{-1} y$',
-        `$\\int ${e}\\,dx = ${inv}${e} + c$, so $\\tan^{-1} y = ${inv}${e} + c$`,
-        `At $x = 0$, $y = ${s.y}$: $\\tan^{-1} ${yAt} = ${inv} + c$, so $${theta} = ${inv} + c$ and $c = ${c}$`,
+        `$\\int ${front}${e}\\,dx = ${inv}${e} + c$, so $\\tan^{-1} y = ${inv}${e} + c$`,
+        `At $x = 0$, $y = ${s.y}$: $\\tan^{-1} ${yAt} = ${ratio} + c$, so $${theta} = ${ratio} + c$ and $c = ${c}$`,
         `$${answer}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],

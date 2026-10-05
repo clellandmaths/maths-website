@@ -37,8 +37,8 @@ export const DIFFERENTIAL_EQUATIONS: readonly CardMeta[] = [
     card: '2025 P1 Q7',
     skill: 'Solve a first-order separable equation with a log on each side, then fit its condition.',
     marks: [5],
-    route: 'Write it as an integral equation, the variables separated; integrate the left, ln y; integrate the right, (1/2) ln(2x + β) + c; evaluate the constant from the condition; rearrange by the log laws to y in terms of x. Leaving out the constant loses the last two marks.',
-    ranges: 'The paper: dy/dx = y/(2x - 1), y = 12 when x = 5, y = 4(2x - 1)^{1/2}. Built from the answer: y = K(2x + β)^{1/2} with β -1 (the paper), 1 or 3, so 2x + β is positive for every x > 1 and the paper\'s domain line stands as it is; K from 2 to 6 (the paper\'s 4); the condition at the x where 2x + β is 9 or 25, the square of 3 (the paper) or 5, so c is the log of a whole number, as ln 4, and every value exact. The 2 in front of x stays: it is what makes the answer a square root. 30 questions.',
+    route: 'Write it as an integral equation, the variables separated; integrate the left, ln y; integrate the right, (t/2) ln(2x + β) + c; evaluate the constant from the condition; rearrange by the log laws to y in terms of x. Leaving out the constant loses the last two marks.',
+    ranges: 'The paper: dy/dx = y/(2x - 1), y = 12 when x = 5, y = 4(2x - 1)^{1/2}. Built from the answer: y = K(2x + β)^{t/2}, the top y (the paper) or 3y, with β -1 (the paper), 1, 3 or 5, so 2x + β is positive for every x > 1 and the paper\'s domain line stands as it is. β stays odd, as the paper\'s: 2x + 2 is 2(x + 1), which opens a route to (1/2) ln(x + 1) with another constant that the marking instructions do not follow (and β = -2 would send y below 1 just past x = 1). K from 2 to 6 (the paper\'s 4), 2 to 4 with 3y on top; the condition at the x where 2x + β is 9 or 25, the square of 3 (the paper) or 5, only 9 with 3y on top so y is at most 108, so c is the log of a whole number, as ln 4, and every value exact. The 2 in front of x stays: it is what makes the answer a square root. Eight equations where there were three, on the owner\'s yes (variation-depth sheet, card 1, 2026-10-05).',
   },
   {
     card: '2025 P2 Q12',
@@ -87,7 +87,7 @@ export const DIFFERENTIAL_EQUATIONS: readonly CardMeta[] = [
     skill: 'A separable model in context, the decathlon\'s points: separate, integrate, fit the constant from one performance, and write $P$ in terms of $m.$',
     marks: [6],
     route: 'Both sides as integrals, 1/P dP and C/(m - B) dm; ln P; C ln(m - B) + c; the performance and its points substituted; the constant, to 2 decimal places (the paper\'s -1.94); P in terms of m, e^c (m - B)^C (the paper\'s 0.14(m - 220)^{1.4}), or its e form. Leaving out the constant loses the last three marks.',
-    ranges: 'The paper: the long jump, dP/dm = 1.4P/(m - 220), a jump of 807 cm scoring 1079 points, P = 0.14(m - 220)^{1.4}. The paper\'s numbers are the real decathlon scoring table\'s: 0.14354(807 - 220)^{1.4} = 1079.1, cut to 1079. So the card draws one of the six field events (long jump, high jump, pole vault, shot put, discus, javelin) with its real table\'s numbers, and a performance a decathlete makes (long jump 600 to 850 cm, high jump 170 to 230 cm, pole vault 380 to 560 cm, shot 11 to 17 m, discus 35 to 52 m, javelin 45 to 72 m, throws to the centimetre), and gives the points the table awards for it, so every draw is true, as the paper\'s is. The answer\'s number to 2 significant figures, as 0.14: 0.14, 0.85, 0.28, 51, 13 and 10. A different story, the same steps and marks.',
+    ranges: 'The paper: the long jump, dP/dm = 1.4P/(m - 220), a jump of 807 cm scoring 1079 points, P = 0.14(m - 220)^{1.4}. The paper\'s numbers are the real decathlon scoring table\'s: 0.14354(807 - 220)^{1.4} = 1079.1, cut to 1079. So the card draws one of the six field events (long jump, high jump, pole vault, shot put, discus, javelin), evenly, and a performance a decathlete makes (long jump 600 to 850 cm, high jump 170 to 230 cm, pole vault 380 to 560 cm, shot 11 to 17 m, discus 35 to 52 m, javelin 45 to 72 m, throws to the centimetre). On the owner\'s "Yes do A and B" (variation-depth sheet, card 9, 2026-10-05): A, the events evenly (the long jump had half the draws); B, each draw its own scoring table near the event\'s real one, since with the real tables every draw of an event had the same answer: the power moved by -0.04 to +0.05 (1.36 to 1.45 for the long jump), the start by up to two steps either side (200 to 240 cm), and the multiplier set so a performance mid-range scores what the real table gives. The points are what that table awards. A table whose constant rounds to under 0.1 is not drawn: "c = -0.00" reads as a broken question. The answer\'s number to 2 significant figures, as 0.14. A different story, the same steps and marks.',
   },
   {
     card: '2019 Q8',
@@ -105,10 +105,10 @@ export const DIFFERENTIAL_EQUATIONS: readonly CardMeta[] = [
   },
   {
     card: '2017 Q9',
-    skill: 'Solve the separable equation $\\frac{dy}{dx} = e^{kx}(1 + y^{2})$ from $y$ at $x = 0$, $y$ in terms of $x.$',
+    skill: 'Solve the separable equation $\\frac{dy}{dx} = ae^{kx}(1 + y^{2})$ from $y$ at $x = 0$, $y$ in terms of $x.$',
     marks: [5],
-    route: 'The variables separated, ∫ dy/(1 + y^2) = ∫ e^{kx} dx; tan^{-1} y; (1/k)e^{kx} + c; the constant from y at x = 0, in radians, c = tan^{-1} y₀ - 1/k; y = tan((1/k)e^{kx} + c). The y side is an inverse tangent, not a logarithm.',
-    ranges: 'The paper: dy/dx = e^{2x}(1 + y^2), y = 1 at x = 0, y = tan((1/2)e^{2x} + π/4 - 1/2). k from 2 (the paper) to 6; y at x = 0 one of 1 (the paper), √3, 1/√3 and their negatives, so tan^{-1} y₀ is ±π/4, ±π/3 or ±π/6, exact. Always e^{kx}(1 + y^2), as the paper. 30 questions.',
+    route: 'The variables separated, ∫ dy/(1 + y^2) = ∫ ae^{kx} dx; tan^{-1} y; (a/k)e^{kx} + c; the constant from y at x = 0, in radians, c = tan^{-1} y₀ - a/k; y = tan((a/k)e^{kx} + c). The y side is an inverse tangent, not a logarithm.',
+    ranges: 'The paper: dy/dx = e^{2x}(1 + y^2), y = 1 at x = 0, y = tan((1/2)e^{2x} + π/4 - 1/2). A number in front, a from 1 (the paper) to 4, and k from 2 (the paper) to 6, so a/k is the integral\'s number: twenty equations where there were five, on the owner\'s yes (variation-depth sheet, card 2, 2026-10-05). y at x = 0 one of 1 (the paper), √3, 1/√3 and their negatives, so tan^{-1} y₀ is ±π/4, ±π/3 or ±π/6, exact. Always e^{kx}(1 + y^2), as the paper.',
   },
   {
     card: '2017 Q14',

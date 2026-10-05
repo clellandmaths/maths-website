@@ -349,7 +349,8 @@ function exactValue(j: number, angle: 3 | 4 | 6): string {
 }
 
 const q2026p2q16: CardRoutine<P2Q16> = {
-  draw: () => ({ k: int(2, 4), j: pick([1, 2]), angle: pick([3, 4, 6] as const) }),
+  // k from 2 to 6 on the owner's yes (variation-depth sheet, card 7, 2026-10-05).
+  draw: () => ({ k: int(2, 6), j: pick([1, 2]), angle: pick([3, 4, 6] as const) }),
 
   build: ({ k, j, angle }): Built => {
     const m = j * k;

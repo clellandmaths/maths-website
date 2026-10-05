@@ -250,10 +250,14 @@ const q2019q6: CardRoutine<Q6of2019> = {
 
 interface Q10of2019 { a: number; b: number; K: number; N: number }
 
-/** Every curve with a whole K from 2 to 6 and N at most 100: b² < 4a keeps the points real. */
+/**
+ * Every curve with a whole K from 2 to 6 and N at most 100: b² < 4a keeps the points real.
+ * a from 1 to 5 on the owner's yes (variation-depth sheet, card 11, 2026-10-05; a to 3
+ * before): N vanishes when you differentiate, so (a) changes only with a and b.
+ */
 const Q10_CURVES2019: readonly Q10of2019[] = (() => {
   const out: Q10of2019[] = [];
-  for (let a = 1; a <= 3; a++) {
+  for (let a = 1; a <= 5; a++) {
     for (let b = 1; b * b < 4 * a; b++) {
       for (let K = 2; K <= 6; K++) {
         const fourN = K * K * (4 * a - b * b);
@@ -277,13 +281,18 @@ const q2019q10: CardRoutine<Q10of2019> = {
     const top = sum([{ coef: b, body: 'y' }, { coef: -2 * a, body: 'x' }]);
     const bottom = sum([{ coef: 2, body: 'y' }, { coef: -b, body: 'x' }]);
     const answer = `\\frac{${top}}{${bottom}}`;
-    // With 2xy, top and bottom share a 2: cancelled, and the answer given so (the owner, full read 2026-10-05).
-    const reduced = b === 2 ? `\\frac{${sum([{ coef: 1, body: 'y' }, { coef: -a, body: 'x' }])}}{y - x}` : answer;
-    const finished = b === 2 ? `${answer} = ${reduced}` : answer;
-    // b is 1, 2 or 3 (b² < 4a, a at most 3): y = x/2, y = x or y = 3x/2.
-    const yOf = b === 2 ? 'x' : `\\frac{${b === 1 ? '' : b}x}{2}`;
-    const sub = b === 2
-      ? `${ax2} + x^{2} = 2x^{2} + ${N}`
+    // With an even b, top and bottom share a 2: cancelled, and the answer given so (the owner,
+    // full read 2026-10-05, on 2xy). b = 4 is (2y - ax)/(y - 2x).
+    const h = b / 2;
+    const even = b % 2 === 0;
+    const reduced = even
+      ? `\\frac{${sum([{ coef: h, body: 'y' }, { coef: -a, body: 'x' }])}}{${sum([{ coef: 1, body: 'y' }, { coef: -h, body: 'x' }])}}`
+      : answer;
+    const finished = even ? `${answer} = ${reduced}` : answer;
+    // b from 1 to 4 (b² < 4a, a at most 5): y = x/2, x, 3x/2 or 2x.
+    const yOf = even ? sum([{ coef: h, body: 'x' }]) : `\\frac{${b === 1 ? '' : b}x}{2}`;
+    const sub = even
+      ? `${ax2} + ${sum([{ coef: h * h, body: 'x^{2}' }])} = ${sum([{ coef: b * h, body: 'x^{2}' }])} + ${N}`
       : `${ax2} + \\left(${yOf}\\right)^{2} = ${b === 1 ? '' : b}x\\left(${yOf}\\right) + ${N}`;
     return {
       questionLines: [

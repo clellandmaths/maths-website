@@ -32,12 +32,18 @@ import type { Built, CardLabel, Ladder } from './types';
 import { AH_CARDS, idForCard } from './registry';
 import { AH_BY_CODE, AH_CODES } from './codes';
 import { SITE_CARDS } from './site-cards';
-import { makeWith, routineFor } from './engine';
+import { drawWith, makeWith, routineFor } from './engine';
 import { familyOf } from './families';
+import { CORES, coreKey } from './cores';
 
 export interface AhSiteQuestion extends WorksheetQuestion {
   /** The site's subtopics, as an Advanced Higher paper question carries them. */
   subtopics: string[];
+  /**
+   * The draw's core, `core:<card>:<…>`, on a thin card only (`cores.ts`). A sheet that
+   * passes it back in `exclude` is offered a fresh core first next time.
+   */
+  coreKey?: string;
   /** The hint ladder for this draw, in the site's delimiters. */
   ladder: Ladder;
   /** The marking instructions' drawings, absent on every card without them. */
@@ -95,7 +101,12 @@ export function toSiteQuestion(id: string, built: Built, seed: string, index: nu
 export async function ahQuestionFromCode(code: string, seed: string, index: number): Promise<AhSiteQuestion | null> {
   const id = AH_BY_CODE[code];
   if (!id || !AH_CARDS[id]) return null;
-  return toSiteQuestion(id, makeWith(await routineFor(id), seed), seed, index);
+  const routine = await routineFor(id);
+  const made = toSiteQuestion(id, makeWith(routine, seed), seed, index);
+  // A shared sheet, opened again, knows its cores too, so "add more" can avoid them.
+  const card = AH_CARDS[id].card;
+  const ck = card in CORES ? coreKey(card, drawWith(routine, seed)) : undefined;
+  return ck ? { ...made, coreKey: ck } : made;
 }
 
 /** Is this badge an Advanced Higher card with a routine? */
@@ -105,6 +116,14 @@ export function isAhCard(card: CardLabel): boolean {
 
 /** Retries per card before it counts as spent: National 5's bound (`drawFrom`). */
 const TRIES = 40;
+
+/**
+ * Seeds tried for a core the sheet has not used (`cores.ts`) before a thin card
+ * repeats one with new numbers. Draws only, nothing built, so they are cheap; a card
+ * whose cores are all on the sheet spends these on each further copy, then goes on
+ * exactly as a card with no core does.
+ */
+const CORE_TRIES = 30;
 
 /**
  * Up to `count` different questions from a set of cards.
@@ -122,6 +141,12 @@ const TRIES = 40;
  * Ties go to the card that comes first in `cards`, so the caller's order is
  * the order of first use: shuffled, so a topic of twenty cards does not open
  * on the same five, and interleaved by subtopic where there are several.
+ *
+ * **A thin card takes a fresh core first** (`cores.ts`, the owner's worksheet rule,
+ * 2026-10-05): its copies on one sheet get different equations before any equation
+ * comes twice with new numbers. Cores already on the sheet arrive in `exclude` as
+ * each question's `coreKey`. Never a limit: after `CORE_TRIES` seeds with no fresh
+ * core, the card goes on as before.
  *
  * Sequential, necessarily: the random stream is module-level.
  */
@@ -145,6 +170,7 @@ async function drawCards(
   }
   const fails = new Map<CardLabel, number>();
   const spent = (card: CardLabel) => (fails.get(card) ?? 0) >= TRIES;
+  const coreMisses = new Map<CardLabel, number>();
 
   const seen = new Set(exclude);
   const out: AhSiteQuestion[] = [];
@@ -159,8 +185,15 @@ async function drawCards(
     }
     if (!pick) break;
     const id = idForCard(pick.card)!;
+    const routine = await routineFor(id);
     const seed = makeSeed();
-    const made = toSiteQuestion(id, makeWith(await routineFor(id), seed), seed, out.length);
+    // A core already on the sheet: try another seed, up to CORE_TRIES, before allowing it.
+    const ck = pick.card in CORES ? coreKey(pick.card, drawWith(routine, seed)) : undefined;
+    if (ck && seen.has(ck) && (coreMisses.get(pick.card) ?? 0) < CORE_TRIES) {
+      coreMisses.set(pick.card, (coreMisses.get(pick.card) ?? 0) + 1);
+      continue;
+    }
+    const made = toSiteQuestion(id, makeWith(routine, seed), seed, out.length);
     const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
     const sum = storyFreeKey(made.question, made.answer);
     if (seen.has(key) || seen.has(sum)) {
@@ -169,7 +202,9 @@ async function drawCards(
     }
     seen.add(key);
     seen.add(sum);
-    out.push(made);
+    if (ck) seen.add(ck);
+    coreMisses.set(pick.card, 0);
+    out.push(ck ? { ...made, coreKey: ck } : made);
     unitUses.set(pick.unit, (unitUses.get(pick.unit) ?? 0) + 1);
     cardUses.set(pick.card, (cardUses.get(pick.card) ?? 0) + 1);
   }

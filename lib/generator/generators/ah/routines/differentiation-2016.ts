@@ -150,43 +150,60 @@ const q2016q1c: CardRoutine<Q1cOf2016> = {
 };
 
 // ── 2016 Q11 ───────────────────────────────────────────────────────────────
-// A cube's height grows at R cm/s: V = h³, dV/dt = 3h² × R at h = H.
+// A cube's height grows at R cm/s: V = h³, dV/dt = 3h² × R at h = H. Or, on the
+// owner's yes (variation-depth sheet, card 18, 2026-10-05), a box on a square base of
+// side h whose height is always a times the side: V = ah³, dV/dt = 3ah² × R. The cube
+// is a = 1; a from 2 to 4 gives the same steps with a number that reaches the working.
 
-interface Q11of2016 { R: number; H: number }
+interface Q11of2016 { R: number; H: number; a: number }
 
 const q2016q11: CardRoutine<Q11of2016> = {
-  // The paper's 5 cm per second at a height of 3 cm: both whole, R and H
-  // from 2 to 9.
-  draw: () => ({ R: int(2, 9), H: int(2, 9) }),
+  // The paper's 5 cm per second at a height of 3 cm: both whole, R and H from 2 to 9.
+  // The box's rate no bigger than the cube's biggest, 3 × 9² × 9 = 2187.
+  draw: () => until(
+    () => ({ R: int(2, 9), H: int(2, 9), a: int(1, 4) }),
+    ({ R, H, a }) => 3 * a * H * H * R <= 2187,
+  ),
 
-  build: ({ R, H }): Built => {
+  build: ({ R, H, a }): Built => {
     const units = '\\ \\text{cm}^{3}\\,\\text{s}^{-1}';
-    const rate = 3 * H * H * R;
+    const rate = 3 * a * H * H * R;
     const chain = '\\frac{dV}{dt} = \\frac{dV}{dh} \\cdot \\frac{dh}{dt}';
+    const cube = a === 1;
+    const V = cube ? 'h^{3}' : `${a}h^{3}`;
+    const dV = `${3 * a}h^{2}`;
+    const what = cube ? 'the height' : 'the side of the base';
     return {
-      questionLines: [
-        `The height of a cube is increasing at the rate of $${R}$ cm s$^{-1}.$`,
-        `Find the rate of increase of the volume when the height of the cube is $${H}$ cm.`,
-      ],
+      questionLines: cube
+        ? [
+          `The height of a cube is increasing at the rate of $${R}$ cm s$^{-1}.$`,
+          `Find the rate of increase of the volume when the height of the cube is $${H}$ cm.`,
+        ]
+        : [
+          `A box has a square base, and its height is always ${a === 2 ? 'twice' : `${a} times`} the length of a side of the base. The side of the base is increasing at the rate of $${R}$ cm s$^{-1}.$`,
+          `Find the rate of increase of the volume when the side of the base is $${H}$ cm.`,
+        ],
       solutionSteps: [
-        `$\\frac{dh}{dt} = ${R}$`,
-        `$${chain}$, with $V = h^{3}$`,
-        '$\\frac{dV}{dh} = 3h^{2}$',
-        `$\\frac{dV}{dt} = 3h^{2} \\times ${R} = 3(${H})^{2} \\times ${R} = ${rate}${units}$`,
+        `$\\frac{dh}{dt} = ${R}$${cube ? '' : `, where $h$ is the side of the base`}`,
+        `$${chain}$, with $V = ${cube ? 'h^{3}' : `h \\times h \\times ${a}h = ${V}`}$`,
+        `$\\frac{dV}{dh} = ${dV}$`,
+        `$\\frac{dV}{dt} = ${dV} \\times ${R} = ${3 * a}(${H})^{2} \\times ${R} = ${rate}${units}$`,
       ],
       stepMarks: [1, 1, 1, 1],
       finalAnswer: `$${rate}${units}$`,
       ladder: {
         moves: [
-          'You know how fast the height changes and want how fast the volume changes. Which rule links them?',
+          `You know how fast ${what} changes and want how fast the volume changes. Which rule links them?`,
           'Write the given rate as $\\frac{dh}{dt}$.',
           'Write the volume in terms of $h$, and the chain rule linking the rates.',
           'Differentiate $V$ with respect to $h$.',
           `Substitute $h = ${H}$ and the rate, and evaluate with units.`,
         ],
         marks: [0, 1, 1, 1, 1],
-        shows: [null, `$\\frac{dh}{dt} = ${R}$`, `$${chain}$, $V = h^{3}$`, '$\\frac{dV}{dh} = 3h^{2}$', null],
-        watch: { at: 2, text: 'All the edges of a cube grow together. Letting only the height change does not give a cube.' },
+        shows: [null, `$\\frac{dh}{dt} = ${R}$`, `$${chain}$, $V = ${V}$`, `$\\frac{dV}{dh} = ${dV}$`, null],
+        watch: cube
+          ? { at: 2, text: 'All the edges of a cube grow together. Letting only the height change does not give a cube.' }
+          : { at: 2, text: 'The height grows with the base: write it in terms of $h$ before you multiply out the volume.' },
       },
     };
   },

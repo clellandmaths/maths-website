@@ -10,7 +10,7 @@ export const BINOMIAL: readonly CardMeta[] = [
     skill: 'Expand $(a + ki)^{3}$ by the binomial theorem, then equate parts of $z^{3} + mz = b + Di$ to find $a$ and $b.$',
     marks: [3, 3],
     route: '3 + 3 - (a) the binomial expansion with its coefficients, then the coefficients and powers of k worked out, then simplified with i^2 = -1 and i^3 = -i into real and imaginary parts; (b) mz added and set equal to b + Di, then real and imaginary parts equated, then a, the positive root, and b.',
-    ranges: 'The paper: z = a + 2i, z^3 + 3z = b + 148i, a = 5, b = 80. Built from a, a whole number from 2 to 6 (the paper\'s 5), so the imaginary equation gives a whole a^2; k from 1 to 3 (the paper\'s 2), m from 1 to 5 (the paper\'s 3); b never 0, as 80. a is always positive, as the paper says, so the negative root is always rejected. 75 questions.',
+    ranges: 'The paper: z = a + 2i, z^3 + 3z = b + 148i, a = 5, b = 80. Built from a, a whole number from 2 to 6 (the paper\'s 5), so the imaginary equation gives a whole a^2; k from 1 to 5 (the paper\'s 2; 1 to 3 before the owner\'s yes, variation-depth sheet, card 12, 2026-10-05: (a) has a as a letter, so k is all that changes it), m from 1 to 5 (the paper\'s 3); b never 0, as 80, and D positive, as 148, since the question prints b + Di. a is always positive, as the paper says, so the negative root is always rejected.',
   },
   {
     card: '2026 P2 Q2',

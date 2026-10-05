@@ -339,10 +339,13 @@ const q2023p2q5: CardRoutine<P2Q5of2023> = {
 interface P2Q7of2021 { a: number; k: number; m: number }
 
 const q2021p2q7: CardRoutine<P2Q7of2021> = {
+  // k from 1 to 5 on the owner's yes (variation-depth sheet, card 12, 2026-10-05; 1 to 3
+  // before): (a) is (a + ki)³ with a a letter, so k is all that changes it.
   draw: () => until(
-    () => ({ a: int(2, 6), k: int(1, 3), m: int(1, 5) }),
-    // The real part b not 0, as 80.
-    ({ a, k, m }) => a ** 3 - 3 * k * k * a + m * a !== 0,
+    () => ({ a: int(2, 6), k: int(1, 5), m: int(1, 5) }),
+    // The real part b not 0, as 80; the imaginary part D positive, as 148, since the
+    // question prints b + Di (k = 5 with a = 2 would make it negative).
+    ({ a, k, m }) => a ** 3 - 3 * k * k * a + m * a !== 0 && 3 * k * a * a - k ** 3 + m * k > 0,
   ),
 
   build: ({ a, k, m }): Built => {
