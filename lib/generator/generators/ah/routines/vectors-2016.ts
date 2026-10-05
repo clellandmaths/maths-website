@@ -26,7 +26,8 @@ const along = (c: number, d: number, p: string) => sum([{ coef: c, body: '' }, {
 
 /** `-1 + 3(-2)`: a coordinate at a parameter value. */
 const at = (c: number, d: number, v: number) => {
-  const times = `${Math.abs(d)}(${v})`;
+  // A 1 in front is left out, "-3 + (-2)" (the owner, full read 2026-10-05).
+  const times = Math.abs(d) === 1 ? (v < 0 ? `(${v})` : `${v}`) : `${Math.abs(d)}(${v})`;
   if (c === 0) return `${d < 0 ? '-' : ''}${times}`;
   return `${c} ${d < 0 ? '-' : '+'} ${times}`;
 };
@@ -70,7 +71,10 @@ const q2016q14: CardRoutine<Q14of2016> = {
     const dotLine = `${products[0]}${products.slice(1).map(p => ` ${p < 0 ? '-' : '+'} ${Math.abs(p)}`).join('')} = ${dot}`;
     const m1 = dot3(d1, d1), m2 = dot3(d2, d2);
     // √74√14, as the scheme; a whole magnitude takes a times sign.
-    const under = /sqrt/.test(sqrtOf(m1)) && /sqrt/.test(sqrtOf(m2)) ? `${sqrtOf(m1)}${sqrtOf(m2)}` : `${sqrtOf(m1)} \\times ${sqrtOf(m2)}`;
+    // Two whole magnitudes are multiplied out, 9 for 3 × 3 (the owner, full read 2026-10-05).
+    const bothWhole = !/sqrt/.test(sqrtOf(m1)) && !/sqrt/.test(sqrtOf(m2));
+    const under = bothWhole ? String(Math.sqrt(m1 * m2))
+      : /sqrt/.test(sqrtOf(m1)) && /sqrt/.test(sqrtOf(m2)) ? `${sqrtOf(m1)}${sqrtOf(m2)}` : `${sqrtOf(m1)} \\times ${sqrtOf(m2)}`;
     const sizes = `|\\mathbf{d}_1| = ${sqrtOf(m1)}$, $|\\mathbf{d}_2| = ${sqrtOf(m2)}$ and $\\mathbf{d}_1 \\cdot \\mathbf{d}_2 = ${dotLine}`;
     const deg = (Math.acos(dot / Math.sqrt(m1 * m2)) * 180) / Math.PI;
     const angle = `${rounded(deg, 1)}^{\\circ}`;

@@ -167,7 +167,8 @@ const q2022p2q12: CardRoutine<P2Q12of2022> = {
         moves: [
           `You have two ways to write $(${C} + i${S})^{${n}}$. What happens if you compare them?`,
           `(a) De Moivre's theorem: multiply the argument by ${n}.`,
-          `(b) Write the binomial expansion, with $\\binom{${n}}{r}$ and the powers of each term.`,
+          // Every term written out, not a general term (the owner, full read 2026-10-05).
+          `(b) Write out all ${['', '', '', 'four', 'five', 'six', 'seven', 'eight'][n]} terms of the binomial expansion, each with its coefficient and its powers of $\\cos\\theta$ and $i\\sin\\theta$.`,
           '(b) Simplify the powers of $i$ in three of the terms.',
           '(b) Finish simplifying.',
           '(c)(i) Set the real part of (a) equal to the real part of (b).',

@@ -45,7 +45,7 @@ const q2025p2q1: CardRoutine<P2Q1> = {
       ladder: {
         moves: [
           'Which standard derivative has $\\sqrt{1 - (\\ldots)^{2}}$ underneath, with a minus sign in front?',
-          'Differentiate $\\cos^{-1}$ of the bracket.',
+          `Differentiate $\\cos^{-1} ${k}x$, starting with the standard derivative.`,
           `Apply the chain rule for the $${k}x$ inside.`,
         ],
         marks: [0, 1, 1],
@@ -275,6 +275,7 @@ const q2025p2q17: CardRoutine<P2Q17> = {
     const dVdh = sum([{ coef: q(3, m), body: 'h^{2}' }]);
     const atDepth = q(3 * h * h, m);
     const dhdt = num(div(q(R - leak), atDepth));
+    const unreduced = `\\frac{${R - leak}}{${num(atDepth)}}`;
     const chain = '\\frac{dh}{dt} = \\frac{dh}{dV} \\times \\frac{dV}{dt}';
     const dVdt = `${R} - \\frac{1}{${L}}\\sqrt{h}`;
     return {
@@ -291,7 +292,8 @@ const q2025p2q17: CardRoutine<P2Q17> = {
         `$${chain}$`,
         `$\\frac{dV}{dh} = ${dVdh}$`,
         `$\\frac{dV}{dt} = ${dVdt}$`,
-        `At $h = ${h}$: $\\frac{dV}{dh} = ${num(atDepth)}$ and $\\frac{dV}{dt} = ${R} - ${leak} = ${R - leak}$, so $\\frac{dh}{dt} = \\frac{${R - leak}}{${num(atDepth)}} = ${dhdt}$ cm/sec`,
+        // Already in lowest terms, the rate is printed once (the owner, full read 2026-10-05).
+        `At $h = ${h}$: $\\frac{dV}{dh} = ${num(atDepth)}$ and $\\frac{dV}{dt} = ${R} - ${leak} = ${R - leak}$, so $\\frac{dh}{dt} = ${unreduced === dhdt ? dhdt : `${unreduced} = ${dhdt}`}$ cm/sec`,
       ],
       stepMarks: [1, 1, 1, 1],
       finalAnswer: `$\\frac{dh}{dt} = ${dhdt}$ cm/sec`,

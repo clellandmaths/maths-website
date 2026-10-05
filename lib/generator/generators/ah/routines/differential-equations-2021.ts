@@ -71,7 +71,8 @@ const q2021p1q8: CardRoutine<P1Q8of2021> = {
         `The complementary function is $${cf}$`,
         `$${er}$ is in the complementary function, so the particular integral is $${pi}$`,
         `$${derivatives}$`,
-        `Substituting: $${substituted} = ${sum([{ coef: K, body: er }])}$, so $${collected}$ and $C = ${C}$`,
+        // When r - s is 1 the collected line is already C: say it once.
+        `Substituting: $${substituted} = ${sum([{ coef: K, body: er }])}$, so $${collected}$${r - s === 1 ? '' : ` and $C = ${C}$`}`,
         `The general solution is $${general}$`,
         `$${derivative}$`,
         `At $x = 0$: $${atZero}$, so $A = ${A}$`,

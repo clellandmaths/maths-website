@@ -79,7 +79,8 @@ function figure2017(n: Q12of2017, panel: Panel2017): Scene {
   // O in the quarter the curve leaves empty: top-left beside an odd curve
   // rising through it, bottom-left under the V of |f|.
   const oAway = panel === 'modulus' ? pt(8, 8) : pt(8, -8);
-  out.push({ kind: 'label', text: '0', anchor: add(pt(0, 0), scale(unit(pt(-oAway.x, -oAway.y)), 7)), away: oAway, small: true });
+  // The letter O, as on the rest of the course (the owner, full read 2026-10-05).
+  out.push({ kind: 'label', text: 'O', anchor: add(pt(0, 0), scale(unit(pt(-oAway.x, -oAway.y)), 7)), away: oAway, small: true });
   /** A line y = a x + b dashed between x0 and x1, cut to the window. */
   const dashed = (a: number, b: number, x0: number, x1: number): Element => {
     const lo = Math.max(x0, a > 0 ? (yLo - b) / a : (Y - b) / a), hi = Math.min(x1, a > 0 ? (Y - b) / a : (yLo - b) / a);

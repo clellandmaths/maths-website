@@ -29,7 +29,6 @@ const complex2017 = (re: number, im: number) => sum([{ coef: re, body: '' }, { c
 const quartic2017 = ({ p, r, m, w }: Q17of2017) => mulPoly(conjugatePair(p, r), [1, -2 * m, m * m + w]);
 
 const UNIT2017 = 30, AXIS2017 = 4.4, ARROW2017 = 5, TICK2017 = 2;
-
 function arrow2017(at: Pt, along: Pt): Element[] {
   const u = unit(along);
   return [0.4, -0.4].map((turn): Element => {
@@ -56,19 +55,34 @@ function argand2017({ p, r, m, w }: Q17of2017): Scene {
     { kind: 'label', text: 'Im', anchor: pt(6, end), away: pt(-10, end), small: true },
     { kind: 'label', text: 'O', anchor: pt(-7, -7), away: pt(7, 7), small: true },
   ];
+  const root = Math.sqrt(w);
+  const dots = [[p, r], [p, -r], [m, root], [m, -root]].map(([x, y]) => D(x, y));
+  // A root with real part -1 sits against the imaginary axis's numbers, which
+  // are on its left: then they all go on the right, and one a root with real
+  // part 1 would sit beside is left off, so every dot stands apart (the owner,
+  // full read 2026-10-05). Otherwise the numbers keep their place.
+  const onRight = p === -1 || m === -1;
+  const roots = [[p, r], [p, -r], [m, root], [m, -root]];
+  const takenRight = (k: number) => roots.some(([x, y]) => x === 1 && Math.abs(y - k) < 0.6);
   for (let k = -3; k <= 3; k++) {
     if (k === 0) continue;
     const x = D(k, 0), y = D(0, k);
+    const text = `${k}`.replace('-', '−');
     out.push({ kind: 'segment', from: pt(x.x, -TICK2017), to: pt(x.x, TICK2017), decoration: true });
-    out.push({ kind: 'label', text: `${k}`.replace('-', '−'), role: 'tick-x', anchor: pt(x.x, -3 * TICK2017), away: pt(x.x, 10), small: true });
+    // The real axis's numbers stay: a root p ± i is 12 units under its number
+    // in the drawing, clear, and its conjugate would take the other side anyway.
+    out.push({ kind: 'label', text, role: 'tick-x', anchor: pt(x.x, -3 * TICK2017), away: pt(x.x, 10), small: true });
     out.push({ kind: 'segment', from: pt(-TICK2017, y.y), to: pt(TICK2017, y.y), decoration: true });
     // The imaginary axis's -1 would sit beside the real axis's -1 and read as
     // one of its numbers, as 2021 P1 Q7 found: its tick stays, the number goes.
     if (k === -1) continue;
-    out.push({ kind: 'label', text: `${k}`.replace('-', '−'), role: 'tick-y', anchor: pt(-3 * TICK2017, y.y), away: pt(10, y.y), small: true });
+    if (!onRight) {
+      out.push({ kind: 'label', text, role: 'tick-y', anchor: pt(-3 * TICK2017, y.y), away: pt(10, y.y), small: true });
+    } else if (!takenRight(k)) {
+      out.push({ kind: 'label', text, role: 'tick-y', anchor: pt(3 * TICK2017, y.y), away: pt(-10, y.y), small: true });
+    }
   }
-  const root = Math.sqrt(w);
-  for (const [x, y] of [[p, r], [p, -r], [m, root], [m, -root]]) out.push({ kind: 'dot', at: D(x, y), small: true });
+  for (const at of dots) out.push({ kind: 'dot', at, small: true });
   return { elements: out, target: 260 };
 }
 

@@ -172,7 +172,7 @@ function arrow2021(at: Pt, along: Pt): Element[] {
  * instructions draw the finished sketches, or bare, arrows and x and y only,
  * for the pupil to sketch on (the owner: "no numbers just y and x").
  */
-function axes2021(win: Window2021, left: number, part: string, numbered = true): Element[] {
+function axes2021(win: Window2021, left: number, part: string, numbered = true, yNumbersRight = false): Element[] {
   const D = mapper2021(win, left);
   const o = D(0, 0);
   const xEnd = pt(left + PANEL2021.w + OVER2021, o.y), yEnd = pt(o.x, PANEL2021.h + OVER2021);
@@ -199,7 +199,8 @@ function axes2021(win: Window2021, left: number, part: string, numbered = true):
     // The first number below the origin would sit in the row of the x-axis's
     // numbers and read as one of them; its tick stays, the number goes.
     if (v === -win.dy) continue;
-    out.push({ kind: 'label', text: `${v}`, role: 'tick-y', anchor: pt(o.x - 3 * TICK2021, at.y), away: pt(o.x + 20, at.y), small: true });
+    const side = yNumbersRight ? 1 : -1;
+    out.push({ kind: 'label', text: `${v}`, role: 'tick-y', anchor: pt(o.x + side * 3 * TICK2021, at.y), away: pt(o.x - side * 20, at.y), small: true });
   }
   return out;
 }
@@ -266,7 +267,10 @@ function sketch2021(a: number, p: number, modulus: boolean): Scene {
   const turning = [[0, 0], [2 * p, modulus ? Math.abs(4 * a * p) : 4 * a * p]];
   return {
     elements: [
-      ...axes2021(win, 0, modulus ? '(c)(i)' : '(b)'),
+      // With the vertical asymptote left of the y-axis, the y-axis numbers go on
+      // its right, clear of the asymptote and the steep branch beside it (the
+      // owner, full read 2026-10-05).
+      ...axes2021(win, 0, modulus ? '(c)(i)' : '(b)', true, p < 0),
       ...lines,
       ...curve2021(win, D, g, p),
       ...turning.map(([x, y]): Element => ({ kind: 'dot', at: D(x, y), small: true })),

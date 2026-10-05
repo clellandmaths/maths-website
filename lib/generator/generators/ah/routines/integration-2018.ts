@@ -36,7 +36,10 @@ const q2018q8: CardRoutine<Q8of2018> = {
         '$\\frac{du}{d\\theta} = \\cos\\theta$',
         limits,
         `$${inU}$`,
-        `$${num(q(A, n + 1))}\\left[u^{${n + 1}}\\right]_{\\frac{1}{2}}^1 = ${num(q(A, n + 1))}\\left(1 - \\frac{1}{${top}}\\right) = ${value}$`,
+        // A factor of 1 is left out, "[u³] = 1 - 1/8" (the owner, full read 2026-10-05).
+        A === n + 1
+          ? `$\\left[u^{${n + 1}}\\right]_{\\frac{1}{2}}^1 = 1 - \\frac{1}{${top}} = ${value}$`
+          : `$${num(q(A, n + 1))}\\left[u^{${n + 1}}\\right]_{\\frac{1}{2}}^1 = ${num(q(A, n + 1))}\\left(1 - \\frac{1}{${top}}\\right) = ${value}$`,
       ],
       stepMarks: [1, 1, 1, 1],
       finalAnswer: `$${value}$`,

@@ -37,7 +37,8 @@ const q2019q7: CardRoutine<Q7of2019> = {
     const answerB = sum([{ coef: toN, body: '' }, { coef: -A, body: 'p^{2}' }, { coef: -Bc, body: 'p' }]);
     const atN = joinTerms([times(A, `${N}^{2}`), times(Bc, String(N))]);
     const split = joinTerms([`${a} \\times \\frac{n(n + 1)}{2}`, sum([{ coef: b, body: 'n' }])]);
-    const constantSum = b < 0 ? `\\sum (${b})$ is $${b}n` : `\\sum ${b}$ is $${b}n`;
+    // "Σ1 is n" and "Σ(−1) is −n", not "1n" or "−1n" (the owner, full read 2026-10-05).
+    const constantSum = b < 0 ? `\\sum (${b})$ is $${b === -1 ? '-' : b}n` : `\\sum ${b}$ is $${b === 1 ? '' : b}n`;
     return {
       questionLines: [
         `<b>(a)</b> Find an expression for $\\sum_{r=1}^{n}(${term})$ in terms of $n.$`,
@@ -45,7 +46,7 @@ const q2019q7: CardRoutine<Q7of2019> = {
       ],
       solutionSteps: [
         `<strong>(a)</strong> $\\sum_{r=1}^{n}(${term}) = ${split} = ${inN}$`,
-        `<strong>(b)</strong> $\\sum_{r=p+1}^{${N}} = \\sum_{r=1}^{${N}} - \\sum_{r=1}^{p} = (${atN}) - (${inP})$`,
+        `<strong>(b)</strong> $\\sum_{r=p+1}^{${N}}(${term}) = \\sum_{r=1}^{${N}}(${term}) - \\sum_{r=1}^{p}(${term}) = (${atN}) - (${inP})$`,
         `<strong>(b)</strong> $= ${answerB}$`,
       ],
       stepMarks: [1, 1, 1],
@@ -133,7 +134,9 @@ const q2019q17: CardRoutine<Q17of2019> = {
     const { v1, v2, s, c } = q17Terms(n);
     const T = s.map((k, i) => sum([{ coef: k, body: 'x' }, { coef: c[i], body: '' }]));
     const r = num(q(rn, rd));
-    const ratio = (top: number, bottom: number) => `\\frac{${top}}{${bottom}} = ${r}`;
+    // "1 ÷ 3 = 1/3" when the fraction is already r, not "1/3 = 1/3" (the owner, full read 2026-10-05).
+    const ratio = (top: number, bottom: number) =>
+      (`\\frac{${top}}{${bottom}}` === r ? `${top} \\div ${bottom} = ${r}` : `\\frac{${top}}{${bottom}} = ${r}`);
     const rBracket = rn < 0 ? `\\left(${r}\\right)` : r;
     const S = q(v1[0] * rd, rd - rn);
     const Sdec = decimal(S, 4);

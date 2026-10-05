@@ -210,7 +210,8 @@ const q2021p2q4: CardRoutine<P2Q4of2021> = {
         `<strong>(a)</strong> $${DX} = ${begun}\\ldots$`,
         `<strong>(a)</strong> $${DX} = ${begun} \\times ${k} = ${dxdt}$`,
         `<strong>(a)</strong> $${DY} = ${dydt}$`,
-        `<strong>(b)</strong> At $t = 0$, $x = 0$ and $y = 0$, and $\\frac{dy}{dx} = ${DY} \\div ${DX} = \\frac{${b}}{${a * k}}$`,
+        // Reduced when it is not in lowest terms, "3/3 = 1", "2/6 = 1/3" (the owner, full read 2026-10-05).
+        `<strong>(b)</strong> At $t = 0$, $x = 0$ and $y = 0$, and $\\frac{dy}{dx} = ${DY} \\div ${DX} = \\frac{${b}}{${a * k}}${`\\frac{${b}}{${a * k}}` === num(m) ? '' : ` = ${num(m)}`}$`,
         `<strong>(b)</strong> The tangent is $${tangent}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],

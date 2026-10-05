@@ -9,6 +9,7 @@
 import type { Built, CardRoutine } from '../types';
 import { int, nonZero, pick, until } from '../draw';
 import { poly, rounded, sqrtOf, sum } from '../maths/format';
+import { gcd } from '../maths/integer';
 import { type V3, add3, column, content3, coords, dot3, scale3, sub3 } from '../maths/vector';
 
 // ── 2019 Q15 ───────────────────────────────────────────────────────────────
@@ -43,6 +44,25 @@ function lengths2019(dd: number, nn: number): string {
   const whole = (s: string) => !s.startsWith('\\');
   if (whole(a) && whole(b)) return `${a} \\times ${b}`;
   return whole(b) ? `${b}${a}` : `${a}${b}`;
+}
+
+/**
+ * The cosine |d·n|/(|d||n|), finished where the denominator allows: a whole
+ * denominator worked out (√6√6 is 6, 3 × 3 is 9) and a common factor with a
+ * whole length cancelled (12/(3√29) is 4/√29). Two different surds are left
+ * as they come, as the marking instructions write 3/(√6√29). (The owner, full
+ * read 2026-10-05.)
+ */
+function cosine2019(top: number, dd: number, nn: number): string {
+  const [a, b] = [sqrtOf(dd), sqrtOf(nn)];
+  const whole = (s: string) => !s.startsWith('\\');
+  if (!whole(a) && !whole(b) && dd !== nn) return `\\frac{${top}}{${lengths2019(dd, nn)}}`;
+  const surd = whole(a) && whole(b) ? '' : dd === nn ? '' : whole(a) ? b : a;
+  const W = whole(a) && whole(b) ? Number(a) * Number(b) : dd === nn ? dd : Number(whole(a) ? a : b);
+  const g = gcd(top, W);
+  const w = W / g;
+  const over = (t: number, n: number) => `\\frac{${t}}{${surd ? `${n === 1 ? '' : n}${surd}` : n}}`;
+  return g === 1 ? over(top, W) : `${over(top, W)} = ${over(top / g, w)}`;
 }
 
 const q2019q15: CardRoutine<Q15of2019> = {
@@ -94,7 +114,7 @@ const q2019q15: CardRoutine<Q15of2019> = {
     const Q = add3(A0, scale3(lambda0, d));
     const P = add3(sub3(Q, scale3(mu0, n3)), [0, 0, lift]);
     const lineL2 = axes.map((_, i) => poly([n3[i], P[i]], M));
-    const cos = `\\frac{${Math.abs(dot3(d, n3))}}{${lengths2019(dot3(d, d), dot3(n3, n3))}}`;
+    const cos = cosine2019(Math.abs(dot3(d, n3)), dot3(d, d), dot3(n3, n3));
     const theta = angle2019(d, n3);
     const deg = degrees2019(theta);
     const angleText = `$${rounded(deg, 1)}^{\\circ}$ (or $${rounded(theta, 3)}$ radians)`;

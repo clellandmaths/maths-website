@@ -8,6 +8,12 @@ import { int, nonZero, pick, until } from '../draw';
 import { decimal, num, poly, power, rounded, sum, truncated } from '../maths/format';
 import { q, add, div, mul, pow, sub, toNumber } from '../maths/rational';
 
+/**
+ * "worked = result", or the result once when the working is already it (the
+ * owner, full read 2026-10-05, on 2024 P1 Q3 and 2023 P2 Q8; only they call it).
+ */
+const once = (worked: string, result: string) => (worked === result ? result : `${worked} = ${result}`);
+
 // ── 2026 P2 Q6 ─────────────────────────────────────────────────────────────
 // (a) arithmetic: u_p, u_q to d, a, S_N; (b) geometric: v_3, v_4 to r, a, S_n;
 // (c) the least n with S_n > S_N
@@ -128,7 +134,7 @@ const q2025p2q10: CardRoutine<P2Q10> = {
     const summand = sum([{ coef: a, body: 'r^{3}' }, { coef: -c, body: 'r' }]);
     const sigma = `\\sum_{r=1}^{n} (${summand})`;
     const cubes = `\\frac{${a === 1 ? '' : a}n^{2}(n + 1)^{2}}{4}`;
-    const substituted = `${cubes} - \\frac{${c}n(n + 1)}{2}`;
+    const substituted = `${cubes} - \\frac{${c === 1 ? '' : c}n(n + 1)}{2}`;
     const lead = num(q(a, 4));
     const quadratic = `n^{2} + n - ${p * (p + 1)}`;
     const answer = `${lead}n(n + 1)(${poly([1, -p], 'n')})(n + ${p + 1})`;
@@ -267,7 +273,8 @@ const q2024p1q3: CardRoutine<P1Q3of2024> = {
       ],
       solutionSteps: [
         `<strong>(a)</strong> $ar^{2} = ${third}$ and $ar^{4} = ${fifth}$`,
-        `<strong>(a)</strong> Dividing, $r^{2} = \\frac{${fifth}}{${third}} = ${num(q(s * s, t * t))}$; the terms are positive, so $r = ${R}$`,
+        // Already in lowest terms, the division is printed once (the owner, full read 2026-10-05).
+        `<strong>(a)</strong> Dividing, $r^{2} = ${once(`\\frac{${fifth}}{${third}}`, num(q(s * s, t * t)))}$; the terms are positive, so $r = ${R}$`,
         `<strong>(b)</strong> $a = \\frac{${third}}{\\left(${R}\\right)^{2}} = ${a}$`,
         `<strong>(c)</strong> $${condition}$, so the series has a sum to infinity`,
         `<strong>(d)</strong> $S_{\\infty} = \\frac{a}{1 - r} = \\frac{${a}}{1 - ${R}} = ${S}$`,
@@ -473,7 +480,7 @@ const q2023p2q8: CardRoutine<P2Q8of2023> = {
       ],
       solutionSteps: [
         `<strong>(a)(i)</strong> $a${power('r', i - 1)} = ${X}$ and $ar^{${i + 2}} = ${Y}$, so $r^{3} = \\frac{${Y}}{${X}} = ${r ** 3}$ and $r = ${r}$`,
-        `<strong>(a)(ii)</strong> $a = ${aFrom} = ${A}$`,
+        `<strong>(a)(ii)</strong> $a = ${once(aFrom, A)}$`,
         `<strong>(b)</strong> $${Sn}$ and $${S2n}$`,
         `<strong>(b)</strong> $${divided}$`,
       ],

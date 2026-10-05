@@ -362,7 +362,8 @@ const q2024p1q2: CardRoutine<P1Q2of2024> = {
         ],
         marks: [0, 1, 1, 1, 1],
         shows: [null, `$${r}$ or $${theta}$`, `$${polarZ}$`, `$${trig('cos', raised)} + i${trig('sin', raised)}$`, null],
-        watch: { at: 3, text: 'Simplify the argument to one number before you evaluate. Leaving it as a variable loses the mark.' },
+        // The scheme's note: the argument as a variable does not earn the mark (the owner, full read 2026-10-05).
+        watch: { at: 3, text: `Put the angle itself into de Moivre's theorem. Writing $\\cos ${n}\\theta + i\\sin ${n}\\theta$ does not earn this mark.` },
       },
     };
   },

@@ -79,7 +79,7 @@ const q2023p2q1: CardRoutine<P2Q1of2023> = {
       ladder: {
         moves: [
           'Which standard derivative has $\\sqrt{1 - (\\ldots)^{2}}$ underneath?',
-          `Differentiate $\\sin^{-1}$ of the bracket, keeping the ${c} in front.`,
+          `Differentiate $\\sin^{-1} ${k}x$, keeping the ${c} in front.`,
           `Apply the chain rule for the $${k}x$ inside.`,
         ],
         marks: [0, 1, 1],
@@ -112,7 +112,8 @@ const q2023p2q4: CardRoutine<P2Q4of2023> = {
       solutionSteps: [
         `By the product rule, $\\frac{d}{dx}\\left(x^{2}y^{2}\\right) = 2xy^{2} + x^{2} \\times 2y${DYDX}$`,
         `$= ${product}$`,
-        `Differentiating the whole equation, $${whole}$; at $(0, 0)$, $${atOrigin}$, so $${DYDX} = ${gradient}$`,
+        // When p is 1 the line at the origin is already the gradient: say it once.
+        `Differentiating the whole equation, $${whole}$; at $(0, 0)$, $${atOrigin}$${p === 1 ? '' : `, so $${DYDX} = ${gradient}$`}`,
       ],
       stepMarks: [1, 1, 1],
       finalAnswer: `$${DYDX} = ${gradient}$`,

@@ -125,7 +125,10 @@ const q2017q15: CardRoutine<Q15of2017> = {
         `<strong>(b)</strong> $\\mathbf{n} = ${column(n)}$`,
         `<strong>(b)</strong> Using $P$: $${plane}$`,
         `<strong>(c)</strong> $${substituted} = ${D}$`,
-        `<strong>(c)</strong> $${collected} = ${D}$, so $\\lambda = ${lam}$`,
+        // When the line is already λ = k, print it once (the owner, full read 2026-10-05).
+        dot3(n, d) === 1 && dot3(n, B) === 0
+          ? `<strong>(c)</strong> $\\lambda = ${lam}$`
+          : `<strong>(c)</strong> $${collected} = ${D}$, so $\\lambda = ${lam}$`,
         `<strong>(c)</strong> $H${coords(H)}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1, 1, 1, 1],

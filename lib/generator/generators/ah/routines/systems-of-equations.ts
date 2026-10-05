@@ -182,7 +182,8 @@ const q2024p2q3: CardRoutine<P2Q3of2024> = {
         ],
         marks: [0, 1, 1, 1, 1, 1, 1],
         shows: [null, `$${M0}$`, `$${M1}$`, `$${M2}$`, `$${z}$`, null, null],
-        watch: { at: 4, text: `Give $z$ on its own. Leaving it as "(something)$z = ${rhs}$" loses the mark.` },
+        // The draw's own bracket, as the scheme's note names it (the owner, full read 2026-10-05).
+        watch: { at: 4, text: `Give $z$ on its own. Leaving it as $(${lam(m)})z = ${rhs}$ loses the mark.` },
       },
     };
   },
@@ -549,7 +550,8 @@ const q2017q5: CardRoutine<Q5of2017> = {
         ],
         marks: [0, 1, 1, 1, 1, 1, 1],
         shows: [null, `$${M0}$`, `$${M1}$`, `$${M2}$`, `$${zText}$`, null, null],
-        watch: { at: 4, text: `Give $z$ on its own. Leaving it as "(something)$z = ${gamma}$" loses the mark.` },
+        // The draw's own bracket, as on 2024 P2 Q3 (the owner, full read 2026-10-05).
+        watch: { at: 4, text: `Give $z$ on its own. Leaving it as $(${lambda2017(alpha, beta)})z = ${gamma}$ loses the mark.` },
       },
     };
   },

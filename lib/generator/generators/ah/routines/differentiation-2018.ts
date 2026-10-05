@@ -38,7 +38,7 @@ const q2018q1a: CardRoutine<Q1aOf2018> = {
       ladder: {
         moves: [
           'Which standard derivative has $\\sqrt{1 - (\\ldots)^2}$ underneath?',
-          'Differentiate $\\sin^{-1}$ of the bracket.',
+          `Differentiate $\\sin^{-1} ${k}x$, starting with the standard derivative.`,
           `Apply the chain rule for the $${k}x$ inside.`,
         ],
         marks: [0, 1, 1],
@@ -167,7 +167,8 @@ const q2018q6: CardRoutine<Q6of2018> = {
     const k = add(q(e, 2), q(a * a * c, 2 * e));
     const line = sum([{ coef: m, body: 'x' }, { coef: k, body: '' }]);
     const relate = `\\frac{dx}{dt} = 2t$ and $${DYDX} = \\frac{dy/dt}{dx/dt}`;
-    const gradient = `${DYDX} = \\frac{${a}}{1} \\div 2\\left(${t0}\\right) = ${num(m)}`;
+    // dy/dt is a/1 at t0: written as a (the owner, full read 2026-10-05).
+    const gradient = `${DYDX} = ${a} \\div 2\\left(${t0}\\right) = ${num(m)}`;
     const point = `x = ${num(x0)}$, $y = \\ln 1 = 0`;
     return {
       questionLines: [

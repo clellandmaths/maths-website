@@ -192,7 +192,8 @@ const q2025p2q16: CardRoutine<P2Q16> = {
     const reappears = sum([first, { coef: q(p, qq * qq), body: `${E}${S}` }, { coef: q(-p * p, qq * qq), body: 'I' }]);
     const m = p * p + qq * qq;
     const answer = `${sum([{ coef: q(p, m), body: `${E}${S}` }, { coef: q(-qq, m), body: `${E}${C}` }])} + c`;
-    const collected = `\\frac{${m}}{${qq * qq}}I = ${sum([{ coef: q(p, qq * qq), body: `${E}${S}` }, first])}`;
+    // The coefficient in lowest terms, "5I", not "(20/4)I" (the owner, full read 2026-10-05).
+    const collected = `${sum([{ coef: q(m, qq * qq), body: 'I' }])} = ${sum([{ coef: q(p, qq * qq), body: `${E}${S}` }, first])}`;
     return {
       questionLines: [
         'Use integration by parts to find',

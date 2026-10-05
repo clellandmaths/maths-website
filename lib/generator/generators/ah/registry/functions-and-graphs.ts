@@ -14,14 +14,14 @@ export const FUNCTIONS: readonly CardMeta[] = [
   },
   {
     card: '2021 P1 Q7',
-    skill: 'The asymptotes of ax^2/(x - p) with a justification, sketches of the curve and of its modulus from the given turning points, then the k for which |f(x)| = k has exactly two solutions.',
+    skill: 'The asymptotes of $\\frac{ax^{2}}{x - p}$ with a justification, sketches of the curve and of its modulus from the given turning points, then the $k$ for which $|f(x)| = k$ has exactly two solutions.',
     marks: [1, 2, 1, 1, 1],
     route: '1 + 2 + 1 + 1 + 1 - (a)(i) x = p; (a)(ii) the algebraic division, f(x) = ax + ap + ap^2/(x - p), then y = ax + ap with the remainder tending to 0 as x tends to ±infinity as the justification; (b) the sketch: both branches through the turning points, approaching the asymptotes; (c)(i) the modulus sketch, the negative part reflected, with the reflected asymptote y = -ax - ap drawn; (c)(ii) 0 < k < 4a|p|.',
     ranges: 'The paper: x^2/(x - 2) = x + 2 + 4/(x - 2), asymptotes x = 2 and y = x + 2, turning points (0, 0) and (4, 8), 0 < k < 8. p from 1 to 5 either sign (the paper\'s 2): a negative p turns the graph through a half turn, the maximum on the left at (2p, 4ap) and the minimum at the origin, and the same steps; a from 1 (the paper) to 3 in front of x^2, a bigger number, not a step (the division is the same three terms), since the paper\'s p alone makes 10 questions, below the floor. The remainder ap^2 at most 25 (a = 2 for p up to 3, a = 3 for p up to 2), so every number in the working stays within 25. Always ax^2 alone on top, so the turning points are (0, 0) and (2p, 4ap), whole, as the paper states them. 20 questions. The sketches are described in words, as the site\'s own card describes them. All exact: Paper 1.',
   },
   {
     card: '2025 P1 Q6',
-    skill: 'Divide a quadratic by a linear factor into Ax + B + C/(x - p), then state the two asymptotes.',
+    skill: 'Divide a quadratic by a linear factor into $Ax + B + \\frac{C}{x - p}$, then state the two asymptotes.',
     marks: [2, 2],
     route: '2 + 2 - (a) the algebraic division begun (the first term x and x times the divisor), then finished and f(x) rewritten with its remainder over x - p; (b) the vertical asymptote x = p, then the non-vertical asymptote y = x + B, each written as an equation.',
     ranges: 'The paper: (x^2 + x + 5)/(x - 2) = x + 3 + 11/(x - 2), asymptotes x = 2 and y = x + 3. Built from the answer: x + B + C/(x - p), with p from ±1 to ±5, B from ±1 to ±6 and C from 1 to 15, positive in three draws of four as the paper\'s 11 is, so the top is (x + B)(x - p) + C. A stays 1, as the paper\'s: the x^2 has no coefficient. Kept: the top has all three terms, as the paper\'s, its constant within 25, and C never 0, so x - p is never a factor and there is always a vertical asymptote. All exact: Paper 1.',
@@ -35,7 +35,7 @@ export const FUNCTIONS: readonly CardMeta[] = [
   },
   {
     card: '2019 Q3',
-    skill: 'From a graph given in terms of a, decide whether the function is odd, even or neither with a reason, then sketch its modulus.',
+    skill: 'From a graph given in terms of $a$, decide whether the function is odd, even or neither with a reason, then sketch its modulus.',
     marks: [1, 1],
     route: '1 + 1 - (a) which it is, with the reason: the symmetry named (the y-axis for even, the origin for odd) or f(-x) worked out; "it is symmetrical" alone is not enough; (b) the sketch of |f|: the parts below the x-axis reflected, sharp points at the roots, the roots labelled.',
     ranges: 'The paper: f(x) = x^2 - a^2, even, its graph with -a and a marked; |f| with a maximum at (0, a^2). The card asks the pupil to decide, so it must not always give the same answer (the owner\'s rule from 2023 P1 Q3, "Make half redundant", after 2024 P1 Q5 was built always odd): two even (x^2 - a^2, the paper, and a^2 - x^2), two odd (x^3 - a^2x and a^2x - x^3) and two neither (x^2 - ax and ax - x^2); then, on the owner\'s "Keep as a? Could we have 6 more of similar difficulty to initial question?", six more quadratics: x^2 - 4a^2 and 4a^2 - x^2 (even), x^2 - 2ax, 2ax - x^2, x^2 + ax - 2a^2 and x^2 - ax - 2a^2 (neither). Each has its roots at whole multiples of a, labelled in a as the paper\'s, drawn at a = 1. 12 questions.',
@@ -46,7 +46,7 @@ export const FUNCTIONS: readonly CardMeta[] = [
   },
   {
     card: '2016 Q12',
-    skill: 'From a straight line given in terms of c, sketch the modulus of the line moved up or down, then the modulus of a multiple of it.',
+    skill: 'From a straight line given in terms of $c$, sketch the modulus of the line moved up or down, then the modulus of a multiple of it.',
     marks: [2, 2],
     route: '2 + 2 - (a) the V of |f(x) + d|, its point on the x-axis and where it meets the y-axis, both marked in c, which the scheme marks together; (b) the V of |kf(x)|, symmetrical, its point at f\'s root and meeting the y-axis at kc, both marked. The sketches are in the marking instructions only, as 2019 Q3\'s, never under Show answer; the question shows the paper\'s line.',
     ranges: 'The paper: the line through c on the x-axis and -c on the y-axis (f(x) = x - c), (a) |f(x) - c|, a V at 2c meeting the y-axis at 2c; (b) |2f(x)|, a V at c meeting it at 2c. c stays a letter, as the paper\'s, drawn at c = 1. The line any of the four through ±c on both axes (the paper\'s, x + c, c - x and -x - c), so it rises or falls at 45°, as the paper\'s; (a) moved by ±c or ±2c (the paper\'s -c), but never so the V\'s point is at O, where it would meet the y-axis at 0 and have nothing to mark; (b) times 2 (the paper) or 3. 24 questions.',

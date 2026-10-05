@@ -9,7 +9,7 @@
 import type { Built, CardRoutine } from '../types';
 import { nonZero, pick } from '../draw';
 import { num, sum } from '../maths/format';
-import { type Q, q } from '../maths/rational';
+import { type Q, q, toNumber } from '../maths/rational';
 import { type Element, type Pt, type Scene, add, pt, scale, unit } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 
@@ -96,16 +96,20 @@ function pointText(x: Q, y: Q): string {
 }
 
 /**
- * A sketch, not a plot: the crossings sit at fixed distances from O on the
- * sides their signs give, so the gradient's sign and both intercepts are right
- * and the drawing is the same size whatever the numbers.
+ * A sketch, not a plot: unnumbered axes, the crossings on the sides their
+ * signs give and at distances from O in proportion to their values, the
+ * farther one 80 units out, so the line's steepness matches its labels (the
+ * owner, full read 2026-10-05: a gradient of -4 had been drawn about -1).
  */
 function locusSketch(X: Q, Y: Q): Scene {
   const sx = X.n > 0n ? 1 : -1, sy = Y.n > 0n ? 1 : -1;
-  const ix = pt(70 * sx, 0), iy = pt(0, 55 * sy);
+  const ax = Math.abs(toNumber(X)), ay = Math.abs(toNumber(Y)), far = Math.max(ax, ay);
+  const lx = (80 * ax) / far, ly = (80 * ay) / far;
+  const ix = pt(lx * sx, 0), iy = pt(0, ly * sy);
   const along = pt(ix.x - iy.x, ix.y - iy.y);
   const from = add(ix, scale(along, 0.45)), to = add(iy, scale(along, -0.45));
-  const xEnds = [sx > 0 ? -40 : -110, sx > 0 ? 110 : 40], yEnds = [sy > 0 ? -38 : -92, sy > 0 ? 92 : 38];
+  // Each axis runs 40 past its crossing, and 40 the other way from O.
+  const xEnds = [sx > 0 ? -40 : -(lx + 40), sx > 0 ? lx + 40 : 40], yEnds = [sy > 0 ? -38 : -(ly + 38), sy > 0 ? ly + 38 : 38];
   const off = (at: Pt, away: Pt, by: number): Pt => add(at, scale(unit(pt(at.x - away.x, at.y - away.y)), by));
   // Each crossing's label goes outward along its axis, on the side the line
   // leaves clear there; O takes the corner the line is not in.

@@ -127,7 +127,9 @@ const q2021p2q3: CardRoutine<P2Q3of2021> = {
     const bracket = `(${sum([{ coef: a, body: 'x' }, { coef: b, body: '' }])})`;
     const uv = `${num(q(1, k))}${bracket}\\sin ${k}x`;
     const left = `\\int \\frac{${a}}{${k}}\\sin ${k}x\\,dx`;
-    const answer = `${uv} + ${num(q(a, k * k))}\\cos ${k}x + c`;
+    // A coefficient of 1 is left unwritten, "+ cos 2x" (the owner, full read 2026-10-05).
+    const cosCoef = num(q(a, k * k));
+    const answer = `${uv} + ${cosCoef === '1' ? '' : cosCoef}\\cos ${k}x + c`;
     return {
       questionLines: [`Use integration by parts to find $\\int ${bracket}\\cos ${k}x \\,dx.$`],
       solutionSteps: [

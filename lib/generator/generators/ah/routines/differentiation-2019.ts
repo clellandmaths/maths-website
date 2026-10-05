@@ -136,7 +136,7 @@ const q2019q1c: CardRoutine<Q1cOf2019> = {
       ladder: {
         moves: [
           'Which standard derivative has $\\sqrt{1 - (\\ldots)^2}$ underneath, with a minus sign in front?',
-          'Differentiate $\\cos^{-1}$ of the bracket.',
+          `Differentiate $\\cos^{-1} ${k}x$, starting with the standard derivative.`,
           `Apply the chain rule for the $${k}x$ inside.`,
           `Substitute $x = ${x0}$ and evaluate.`,
         ],
@@ -277,6 +277,9 @@ const q2019q10: CardRoutine<Q10of2019> = {
     const top = sum([{ coef: b, body: 'y' }, { coef: -2 * a, body: 'x' }]);
     const bottom = sum([{ coef: 2, body: 'y' }, { coef: -b, body: 'x' }]);
     const answer = `\\frac{${top}}{${bottom}}`;
+    // With 2xy, top and bottom share a 2: cancelled, and the answer given so (the owner, full read 2026-10-05).
+    const reduced = b === 2 ? `\\frac{${sum([{ coef: 1, body: 'y' }, { coef: -a, body: 'x' }])}}{y - x}` : answer;
+    const finished = b === 2 ? `${answer} = ${reduced}` : answer;
     // b is 1, 2 or 3 (b² < 4a, a at most 3): y = x/2, y = x or y = 3x/2.
     const yOf = b === 2 ? 'x' : `\\frac{${b === 1 ? '' : b}x}{2}`;
     const sub = b === 2
@@ -292,12 +295,12 @@ const q2019q10: CardRoutine<Q10of2019> = {
       solutionSteps: [
         `<strong>(a)</strong> $y^{2}$ gives $2y${DYDX}$ and $${bxy}$ gives $${prod}$`,
         `<strong>(a)</strong> $${whole}$`,
-        `<strong>(a)</strong> $${DYDX} = ${answer}$`,
+        `<strong>(a)</strong> $${DYDX} = ${finished}$`,
         `<strong>(b)</strong> A tangent $x = k$ is vertical, so the denominator is zero: $${bottom} = 0$, $y = ${yOf}$`,
         `<strong>(b)</strong> $${sub}$, so $x^{2} = ${K * K}$ and $k = \\pm ${K}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],
-      finalAnswer: `(a) $${DYDX} = ${answer}$<br>(b) $k = \\pm ${K}$`,
+      finalAnswer: `(a) $${DYDX} = ${reduced}$<br>(b) $k = \\pm ${K}$`,
       ladder: {
         moves: [
           'A tangent with equation $x = k$ is vertical. What does that mean for $\\frac{dy}{dx}$?',

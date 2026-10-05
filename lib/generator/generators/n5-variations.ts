@@ -361,7 +361,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1],
     answerShape: 'fraction',
     webTopics: ['Fractions and mixed numbers'],
-    skill: 'Subtract mixed numbers, or a fraction from a mixed number',
+    skill: 'Subtract one mixed number from another',
   },
   'fractions.multiply': {
     topic: 'Multiplying Fractions',
@@ -381,7 +381,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2025 P1 Q1'],
     marks: 2,
     route: 'start to multiply the fractions, which means converting to improper fractions first, then a consistent answer in simplest form',
-    method: 'Turn both mixed numbers into improper fractions and multiply them, then tidy the answer up',
+    method: 'Turn the mixed number into an improper fraction and multiply, then tidy the answer up',
     plan: [
       'Turn each mixed number into a top-heavy fraction so there is no whole number left sitting outside a fraction line — whole numbers and fractions cannot be multiplied while they are separated like that',
       'Multiply the two tops together and the two bottoms together, then cancel the result down and write it as a mixed number if the top ends up bigger than the bottom',
@@ -389,7 +389,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1],
     answerShape: 'fraction',
     webTopics: ['Fractions and mixed numbers'],
-    skill: 'Multiply a mixed number by a fraction or another mixed number',
+    skill: 'Multiply a mixed number by a fraction',
   },
   'fractions.divide': {
     topic: 'Dividing Fractions',
@@ -411,13 +411,13 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'convert to improper fractions and multiply by the reciprocal, then a consistent answer in simplest form',
     method: 'Turn the mixed number into an improper fraction and multiply by the reciprocal, then tidy the answer up',
     plan: [
-      'Turn each mixed number into a top-heavy fraction, and write any whole number over 1 so it has a bottom line to work with',
+      'Turn the mixed number into a top-heavy fraction',
       'Flip the second fraction upside down and multiply by it instead of dividing, then cancel the result down and tidy it into a mixed number',
     ],
     planMarks: [1, 1],
     answerShape: 'fraction',
     webTopics: ['Fractions and mixed numbers'],
-    skill: 'Divide a mixed number by a fraction or a whole number',
+    skill: 'Divide a mixed number by a fraction',
   },
 
   // ── Fractions: the shape axis ───────────────────────────────────────────
@@ -696,7 +696,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 3,
     route: 'apply the power of a power, then add the powers, then express the result with a positive power. 2022 and 2023 accept two and three alternative orderings respectively; ours is their Method 1',
     plan: [
-      'Deal with the bracket first, multiplying the powers together and keeping the minus sign attached to the power it belongs to',
+      // No draw has a bracket: the bottom is a product (the owner, N5 hint check 2026-10-05).
+      'Multiply the two powers on the bottom by adding their indices',
       'Combine what is left by adding the powers where terms multiply and subtracting them where terms divide',
       'Rewrite the result so the power is positive, using $a^{-n} = \\frac{1}{a^{n}}$',
     ],
@@ -770,6 +771,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'answer-first',
     source: 'paper',
     basedOn: ['2024 P1 Q13'],
+    method: 'Multiply the term outside by each term inside, adding the powers, then simplify',
     marks: 2,
     route: 'apply one of the two multiplications, then apply both and simplify',
     plan: [
@@ -814,7 +816,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     method: 'Use $a^m \\times ka^n = ka^{m+n}$ on the top, write the square root as a power of a half, then subtract the indices to divide',
     plan: [
       'Multiply out the numerator first, adding the powers of the letter and leaving the number at the front as it is',
-      'Rewrite the square root underneath as $a^{\\frac{1}{2}}$, so top and bottom are both powers of the same letter',
+      'Rewrite the square root underneath as the letter to the power $\\frac{1}{2}$, so top and bottom are both powers of the same letter',
       'Subtract that half from the power on top, and leave the answer carrying its fractional power',
     ],
     planMarks: [1, 1, 1],
@@ -850,6 +852,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'zeta+paper',
     basedOn: ['2024 P2 Q1'],
+    method: 'Turn the rate into a multiplier, raise it to the number of years, then work it out to the accuracy asked',
     marks: 3,
     route: 'know how to change by the rate, then know how to carry it across the years, then evaluate to the stated accuracy',
     plan: [
@@ -882,6 +885,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'paper',
     basedOn: ['2026 P2 Q1'],
+    method: 'Turn the rate into a multiplier, raise it to the number of years, work it out, then round to three significant figures',
     marks: 4,
     route: 'know how to change by the rate, know how to carry it across the years, evaluate, then round to three significant figures',
     plan: [
@@ -1050,6 +1054,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'paper',
     basedOn: ['2023 P2 Q1'],
+    method: 'Turn each rate into a multiplier, use the first once and the second for each later year, then work it out',
     marks: 3,
     route: 'know how to decrease by both rates, then know how to calculate the value, then evaluate',
     plan: [
@@ -1103,11 +1108,12 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'zeta+paper',
     basedOn: ['2014 P1 Q2'],
+    method: 'Multiply each term of one bracket by each term of the other, then collect like terms',
     marks: 2,
     route: 'any three terms correct, then the fourth term and the like terms collected',
     plan: [
       'Take the first term of the left bracket across both terms of the right, then the second term across both, keeping each sign attached to the number in front of it, so you finish with four products in a row',
-      'Two of those four are terms in $x$, so add their coefficients and write your answer as a squared term, a single $x$ term and a number',
+      'Two of those four are terms in the letter, so add their coefficients and write your answer as a squared term, a single term in the letter and a number',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
@@ -1121,6 +1127,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     strategy: 'input-first',
     source: 'paper',
     basedOn: ['2026 P1 Q1'],
+    method: 'Multiply every term of the three-term bracket by each term of the two-term one, then collect like terms',
     marks: 3,
     route: 'start to expand, evidenced by any three correct terms, then complete the expansion, then collect like terms. The third mark needs a term in x^3 and, in 2017 and 2022, a negative coefficient, which the generator\'s guards enforce',
     plan: [
@@ -1163,7 +1170,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'start the expansion, then complete it, then collect like terms. The evidence for the second mark must show both brackets expanded, not the single bracket alone',
     method: 'Expand the product two terms at a time, expand the single bracket, then collect the like terms',
     plan: [
-      'Deal with the pair of brackets on its own first: take each term of one across both terms of the other and tidy that part up before you look at anything else',
+      'Deal with the squared bracket on its own first: write it as two brackets, take each term of one across both terms of the other, and tidy that part up',
       'Multiply out the remaining bracket by whatever sits in front of it, watching for a minus there, because it flips both signs inside',
       'Write the two expansions side by side, then gather the squared terms, the $x$ terms and the plain numbers into one term each',
     ],
@@ -1229,6 +1236,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Factorising Fully',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2016 P2 Q4'], marks: 2,
+    method: 'Take out the common factor, then factorise the difference of two squares',
     route: 'begin to factorise by taking out the common factor, then factorise fully via the difference of two squares',
     plan: [
       'Look at both terms and find the largest number that divides into each, then write it outside a bracket with whatever is left inside',
@@ -1243,6 +1251,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Solving by Factorising',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2018 P1 Q5'], marks: 2,
+    method: 'Factorise, then set each bracket to zero and solve',
     route: 'correct factorisation, then solve for x. Setting each bracket to zero is part of the second mark, not a mark of its own',
     plan: [
       'Hunt for the pair of numbers that multiply to give the constant and add to give the coefficient of $x$, then write the left hand side as two brackets',
@@ -1289,7 +1298,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1],
     answerShape: 'expression',
     webTopics: ['Completing the square'],
-    skill: 'Write $x^2+bx+c$ in the form $(x+p)^2+q$',
+    // The question's own letters, a and b; also 2014 P1 Q3's, by its alias. The
+    // two aliases whose papers use p and q keep that line (the owner, N5 hint
+    // check 2026-10-05).
+    skill: 'Write a quadratic in completed square form, $(x + a)^{2} + b$',
   },
   // 2024 P1 Q12 is the one cited question in this group that carries an image,
   // and only in its part (c), which asks about a line PQ drawn across the graph.
@@ -1339,11 +1351,11 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2018 P1 Q19'],
     marks: 7,
     route: '2 + 1 + 4 - the bracket with the square, complete the process, state the axis of symmetry; then equate the completed square to zero, start to solve, solve, and complete. Note 2 withholds the last mark unless the simplification actually reaches the d ± d√e form',
-    method: 'Complete the square and read the axis of symmetry straight off it; then set the completed square to zero, take the square root of both sides keeping both signs, and simplify the surd',
+    method: 'Complete the square and read the axis of symmetry straight off it; then solve with the quadratic formula or from the completed square, keeping both signs, and simplify the surd',
     plan: [
       'Halve the coefficient of $x$ for the bracket, then take off what squaring it carries in and bring the constant down beside it',
       'Give the axis of symmetry as the vertical line through the turning point, where the bracket is zero',
-      'Set that completed square equal to zero, then take the square root of both sides, keeping both the plus and the minus',
+      'Use the quadratic formula, or set your completed square equal to zero and take the number across, keeping both the plus and the minus',
       'Simplify the surd by pulling out the largest square factor, then match what you are left with to the form the question asks for',
     ],
     planMarks: [2, 1, 2, 2],
@@ -1672,6 +1684,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // 2022 P1 Q14 moved to `-axes` below, which is the half of this question
     // that prints a blank pair of axes to draw on. 2018 P1 Q16 prints none.
     basedOn: ['2018 P1 Q16'],
+    method: 'Find the roots, the turning point and the $y$-intercept, then sketch the parabola with all three marked',
     marks: 3,
     route: 'identify the roots, then the turning point or the y-intercept, then both of them on a consistently annotated sketch. The last mark is only available where the roots, the turning point and the y-intercept are all clearly marked',
     plan: [
@@ -1696,6 +1709,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Sketching a Parabola from Factorised Form',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2022 P1 Q14'],
+    method: 'Find the roots, the turning point and the $y$-intercept, then sketch the parabola with all three marked',
     marks: 3,
     route: 'identify the roots, then the turning point or the y-intercept, then both of them on a consistently annotated sketch. The last mark is only available where the roots, the turning point and the y-intercept are all clearly marked',
     plan: [
@@ -1713,6 +1727,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Parabola Through a Point',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2014 P1 Q7'],
+    method: 'Substitute the marked point into $y = ax^2$, then solve for $a$',
     marks: 2,
     route: 'know to substitute the marked point into $y = ax^2$, then solve for $a$',
     plan: [
@@ -1733,6 +1748,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Parabola Through a Point',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2026 P1 Q9'],
+    method: 'Substitute the point marked on the graph into $y = kx^2$, then solve for $k$',
     marks: 2,
     route: 'know to substitute the point marked on the graph into $y = kx^2$, then solve for $k$',
     plan: [
@@ -1836,7 +1852,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
       'Set the height formula equal to the height in the question, then gather every term on one side so the quadratic equals zero',
       'Factorise that quadratic into two brackets',
       'Set each bracket to zero for the two times, and pick the earlier one — the object passes that height on the way up and again on the way down',
-      'For the second part take the time halfway between those two, work out the height at that moment, and compare it with the height you are asked about before answering',
+      'Take the time halfway between those two, work out the height at that moment, and compare it with the height you are asked about before answering',
     ],
     planMarks: [2, 1, 1, 3],
     answerShape: 'integer',
@@ -1928,7 +1944,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'correct substitution into the quadratic formula, then evaluate the discriminant, then both roots at the stated accuracy',
     method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, then give both roots rounded as the question asks',
     plan: [
-      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
+      // "the quadratic formula", not "x = …": some draws are in p or y (the owner,
+      // N5 hint check 2026-10-05). Its alias, 2017 P2 Q4, keeps the old wording.
+      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write the quadratic formula out with those numbers in place',
       'Work out the discriminant under the root on its own first, so the rest of the arithmetic stays manageable',
       'Work out both roots, taking the plus and then the minus, and round each to the accuracy the question asks for',
     ],
@@ -1966,7 +1984,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'correct substitution into the quadratic formula, then evaluate the discriminant, then both roots to two decimal places',
     method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, then give both roots to two decimal places',
     plan: [
-      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
+      // "the quadratic formula", not "x = …" (the owner, N5 hint check 2026-10-05).
+      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write the quadratic formula out with those numbers in place',
       'Work out the discriminant under the root on its own first, so the rest of the arithmetic stays manageable',
       'Work out both roots, taking the plus and then the minus, and round each to two decimal places',
     ],
@@ -1998,7 +2017,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'correct substitution into the quadratic formula, evaluate the discriminant, both roots before rounding, then both roots to two significant figures',
     method: 'Substitute $a$, $b$ and $c$ into the quadratic formula, work out the discriminant under the root, write both roots out unrounded, then round each to two significant figures',
     plan: [
-      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
+      // "the quadratic formula", not "x = …" (the owner, N5 hint check 2026-10-05).
+      'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write the quadratic formula out with those numbers in place',
       'Work out the discriminant under the root on its own first, so the rest of the arithmetic stays manageable',
       'Work out both roots, taking the plus and then the minus, and keep the figures unrounded for now',
       'Round each root to two significant figures',
@@ -2016,6 +2036,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Simplifying Algebraic Fractions',
     difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
     basedOn: ['2015 P1 Q12'],
+    method: 'Factorise the numerator, factorise the denominator, then cancel the bracket they share',
     marks: 3,
     route: 'factorise the numerator, factorise the denominator, then cancel the brackets correctly',
     plan: [
@@ -2035,6 +2056,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Simplifying Algebraic Fractions',
     difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
     basedOn: ['2023 P2 Q12'],
+    method: 'Factorise the numerator, factorise the denominator, then cancel the bracket they share',
     marks: 3,
     route: 'factorise the numerator, factorise the denominator, then cancel the brackets correctly',
     plan: [
@@ -2052,6 +2074,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Simplifying Algebraic Fractions',
     difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
     basedOn: ['2022 P2 Q12'],
+    method: 'Factorise the numerator, factorise the denominator, then cancel the bracket they share',
     marks: 3,
     route: 'factorise the numerator, factorise the denominator, then cancel the brackets correctly',
     plan: [
@@ -2117,6 +2140,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Adding Algebraic Fractions',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
     basedOn: ['2024 P2 Q12'],
+    method: 'Put both fractions over a common denominator, multiply out the top, then collect like terms',
     marks: 3,
     route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
@@ -2135,6 +2159,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // 2019 P2 Q15 has moved to `alg-fractions.subtract-binomials`: it is the
     // one subtraction paper with no bare variable on a denominator.
     basedOn: ['2025 P1 Q14'],
+    method: 'Put both fractions over a common denominator, multiply out the top, then collect like terms',
     marks: 3,
     route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
@@ -2158,6 +2183,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Subtracting Algebraic Fractions',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2019 P2 Q15'],
+    method: 'Put both fractions over a common denominator, multiply out the top, then collect like terms',
     marks: 3,
     route: 'correct common denominator, then correct numerator, then remove the brackets and collect like terms',
     plan: [
@@ -2220,6 +2246,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Dividing with a Difference of Squares',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2026 P2 Q9'],
+    method: 'Multiply by the reciprocal, factorise the difference of two squares, then cancel',
     marks: 3,
     route: 'inferred, no published 2026 scheme, patterned on 2018 P2 Q15: start to divide by taking the reciprocal, factorise the difference of two squares, then cancel and state',
     plan: [
@@ -2303,32 +2330,34 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Changing the Subject',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
     basedOn: ['2024 P2 Q9'],
+    method: 'Multiply by the denominator, move the constant term across, divide by the coefficient',
     marks: 3,
     route: 'multiply by the denominator, subtract the constant term, divide by the coefficient - one mark per operation',
     plan: [
       'Get rid of the fraction first by multiplying both sides by the denominator, which undoes the dividing',
-      'Take the term that is added on beside the subject across to the other side, leaving only the subject and the number in front of it',
+      'Take the other term on the top across to the other side, changing its sign, leaving only the subject and the number in front of it',
       'Divide both sides by that number in front of the subject, then write the subject on its own on the left',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'expression',
     webTopics: ['Changing the subject of a formula'],
-    skill: 'Multiply up, subtract, divide — the subject sits in a numerator',
+    skill: 'Multiply up, move the other term across, divide — the subject sits in a numerator',
   },
   'change-subject.fraction-two-step': {
     topic: 'Changing the Subject',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2022 P1 Q7'],
+    method: 'Multiply by the denominator, then move the constant term across',
     marks: 2,
     route: 'multiply by the denominator, then subtract the constant term. There is no coefficient to divide out, which is why this is two marks and not three',
     plan: [
       'Clear the fraction by multiplying both sides by the denominator underneath, which undoes the dividing',
-      'Take the term sitting beside the subject across to the other side, which undoes the adding and leaves the subject by itself',
+      'Take the term sitting beside the subject across to the other side, changing its sign, so the subject is left by itself',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
     webTopics: ['Changing the subject of a formula'],
-    skill: 'Multiply up and subtract — the subject has no coefficient to divide out',
+    skill: 'Multiply up, then move the other term across — the subject has no coefficient to divide out',
   },
   'change-subject.root': {
     topic: 'Changing the Subject with Roots',
@@ -2381,7 +2410,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'expression',
     webTopics: ['Changing the subject of a formula'],
-    skill: 'Clear the fraction first, then isolate the subject',
+    skill: 'Undo the added term and the fraction, then isolate the subject',
   },
   // `P = (1/3)mn - r` - 2023 P2 Q7, the one with no square and a bare
   // constant. See the note above `plain` in n5-formulae.ts.
@@ -2413,7 +2442,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     plan: [
       'Multiply both sides by the number under the fraction, so the bracket is no longer divided by anything',
       'Divide both sides by the letter multiplying the bracket, which leaves the bracket on its own',
-      'Take the term you do not want away from both sides, and the subject is left',
+      'Move the term you do not want to the other side, changing its sign, and the subject is left',
     ],
     planMarks: [1, 1, 1],
     answerShape: 'expression',
@@ -2489,7 +2518,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'correct scaling, then a value for one variable, then a value for the other',
     method: 'Multiply one equation so that a letter matches in both, add or subtract to eliminate that letter and get the first value, then substitute back for the second',
     plan: [
-      'Multiply one equation right through, both sides, so that the $x$ terms or the $y$ terms match in size across the two equations',
+      // p and r, the paper's letters in every draw (owner's yes, N5 hint check 2026-10-05).
+      'Multiply one equation right through, both sides, so that the $p$ terms or the $r$ terms match in size across the two equations',
       'Add or subtract the two equations so that the matching letter cancels away, leaving one equation in a single letter you can work out',
       'Put that answer back into either of the original equations to get the other letter, then write both letters out together',
     ],
@@ -2530,7 +2560,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 6,
     route: 'construct each equation, scale them to match, find one value, find the other, and state both with units',
     plan: [
-      'Turn each sentence into an equation, using the letters the question names for the two unknowns',
+      'Choose a letter for each of the two unknowns and say what it stands for, then turn each sentence into an equation',
       'Multiply one or both equations so that one letter has the same number in front of it in both, then subtract to remove it',
       'Solve for the letter that is left, put it back into either equation to get the other, and state both with their units',
     ],
@@ -2574,7 +2604,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // in a pupil's words, not the route's note (2026-10-02 full read, the owner's "Yes")
     method: 'Write an equation for each sentence, solve the pair by elimination, then use both values to answer the last part',
     plan: [
-      'Give each of the two unknown amounts a letter and say what it stands for, then turn the first sentence into an equation: how many of each, multiplied by its letter, adding up to the total that sentence gives',
+      'Turn the first sentence into an equation in the two letters the question names: how many of each, multiplied by its letter, adding up to the total that sentence gives',
       'Do the same with the second sentence, so you have two equations sharing the same two letters',
       'Multiply one equation right through so one letter matches in both, add or subtract to cancel it, then put what comes out back in to get the other letter',
       'Go back to what the final part actually asks for, multiply each letter\'s amount by how many of that item it wants, add the two together and give the answer in its units',
@@ -2683,8 +2713,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'state f at the given value for part (a), then for part (b) a valid strategy and the value of the unknown',
     method: 'Substitute the value into the function for part (a); for part (b) set the function equal to the number given and solve for the unknown',
     plan: [
-      'For the first part, put the number from the brackets in place of every $x$ and work the arithmetic through to one number',
-      'For the second part, write the formula out again with the unknown letter in place of $x$ and put it equal to the number given on the right',
+      'Put the number from the brackets in place of every $x$ and work the arithmetic through to one number',
+      'Write the formula out again with the unknown letter in place of $x$ and put it equal to the number given on the right',
       'Take the number that is added on across to the other side, then divide both sides by the number in front of the letter',
     ],
     planMarks: [1, 1, 1],
@@ -2784,7 +2814,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '3 + 2 - the median, the quartiles, the interquartile range, then a valid comparison of the medians and one of the interquartile ranges. Each comparison must name the quantity and the group: 2023 P1 Q9 accepts "on average the newspaper readers\' ages are higher" and rejects "on average the ages are higher"',
     method: 'Find the median and the two quartiles, subtract them for the interquartile range, then write one sentence comparing the medians and another comparing the spreads',
     plan: [
-      'Write the values out in order and pick the middle one for the median',
+      'Write the values out in order: the median is the middle one, or halfway between the middle two when there is an even number of them',
       'Take the middle of the lower half and the middle of the upper half for the quartiles, then subtract the lower from the upper, halving it if the question asks for the semi-interquartile range',
       'Write one sentence comparing the two medians and name both data sets inside it, because a sentence that does not say whose values are whose scores nothing',
       'Write a second sentence comparing the two spreads, naming both sets again, since the average and the spread carry separate marks',
@@ -2810,7 +2840,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '3 + 2 - the median, the quartiles, the semi-interquartile range, then a valid comparison of the medians and one of the semi-interquartile ranges. Each comparison must name the quantity and the group',
     method: 'Find the median and the two quartiles, halve their difference for the semi-interquartile range, then write one sentence comparing the medians and another comparing the spreads',
     plan: [
-      'Write the values out in order and pick the middle one for the median',
+      'Write the values out in order: the median is the middle one, or halfway between the middle two when there is an even number of them',
       'Take the middle of the lower half and the middle of the upper half for the quartiles, subtract the lower from the upper, then halve it',
       'Write one sentence comparing the two medians and name both data sets inside it, because a sentence that does not say whose values are whose scores nothing',
       'Write a second sentence comparing the two spreads, naming both sets again, since the average and the spread carry separate marks',
@@ -2829,6 +2859,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Judging Consistency from the Standard Deviation',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2014 P2 Q4'],
+    method: 'Find the mean, then the standard deviation, then judge consistency from the standard deviations',
     marks: 5,
     route: '1 + 3 + 1 - the mean is its own part, then the squared differences, the formula and the standard deviation, then a single judgement. Not the compare-two-samples shape of the other four standard deviation papers: consistency is the standard deviation alone, and saying so is the whole of the last mark',
     plan: [
@@ -2877,6 +2908,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Standard Deviation in Surd Form',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2017 P1 Q12'],
+    method: 'Find the mean and the squared differences, substitute into the formula, simplify the surd, then state $a$ and $b$',
     marks: 4,
     route: 'find the mean, find the squared differences, substitute into the formula and start to evaluate, then state a and b',
     plan: [
@@ -3074,13 +3106,13 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2018 P1 Q18'],
     marks: 2,
     route: 'identify and substitute the correct identity, then express the result in simplest form',
-    method: 'Swap $\\tan x$ for $\\dfrac{\\sin x}{\\cos x}$, or take out a common factor, then use $\\sin^2 x + \\cos^2 x = 1$ to simplify what is left',
+    method: 'Swap $\\tan x$ for $\\dfrac{\\sin x}{\\cos x}$, then cancel and combine the powers',
     // The first move is the one a pupil sees. It opened on a common factor,
     // which neither 2018 P1 Q18 nor 2016 P1 Q11 ever has: every draw is a
     // product to swap and cancel (2026-10-02 full read, the owner's "Yes").
     plan: [
       'Write $\\tan x^{\\circ}$ as $\\frac{\\sin x^{\\circ}}{\\cos x^{\\circ}}$, then cancel the $\\cos x^{\\circ}$ it shares with the other term',
-      'Read what is left inside the bracket against $\\sin^{2} x^{\\circ} + \\cos^{2} x^{\\circ} = 1$: swapping that pair for $1$ lets the rest cancel down',
+      'Multiply what is left together, adding the powers of each ratio, to leave the simplest form',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
@@ -3143,7 +3175,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'take out the common factor, then use the identity to simplify what is left',
     method: 'Take the common factor out in front of a bracket, then use $\\sin^2 x + \\cos^2 x = 1$',
     plan: [
-      'Scan the two terms for the factor they share — a power of sine or cosine, and any number in front of both — and pull it out before a bracket',
+      // Every draw shares only the number (the owner, N5 hint check 2026-10-05: "Change").
+      'Both terms have the same number in front: take it out as a common factor',
       'Read what is left inside the bracket against $\\sin^{2} x^{\\circ} + \\cos^{2} x^{\\circ} = 1$: swapping that pair for $1$ leaves the factor on its own',
     ],
     planMarks: [1, 1],
@@ -3286,15 +3319,17 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2018 P1 Q4'],
     marks: 2,
     route: 'evidence of subtraction, then all components correct. One correct component counts as evidence for the first mark',
-    method: 'Subtract u from u + v, taking one component at a time',
+    // No letters, as the rest of its hint (the owner, N5 hint check v3).
+    method: 'Subtract the given vector from the sum, taking one component at a time',
     plan: [
-      'Rearrange the vector equation so that $\\mathbf{v}$ is on its own, with $\\mathbf{u}$ subtracted from the sum you were given',
-      'Subtract the matching components one row at a time to leave $\\mathbf{v}$ in component form',
+      // No letters: the draws name u and v, a and b, or p and q (the owner, N5 hint check 2026-10-05).
+      'Take the first vector away from the sum you were given, one component at a time',
+      'Subtract the matching components one row at a time to leave the missing vector in component form',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
     webTopics: ['Adding and Subtracting vector components'],
-    skill: 'Given u and u + v, subtract to find v',
+    skill: 'Given one vector and the sum of two, subtract to find the other',
   },
 
   // ── Straight Line — the papers ask two of Zeta's six diagram-free skills ─
@@ -3405,6 +3440,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Calculating in Scientific Notation',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2025 P2 Q3'],
+    method: 'Decide whether to multiply, divide or take a percentage, work it out, then write it in scientific notation',
     marks: 2,
     route: 'correct method, then evaluate and write in scientific notation',
     plan: [
@@ -3423,6 +3459,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Calculating in Scientific Notation',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2023 P2 Q2'],
+    method: 'Divide the right way round, work it out, then write it in scientific notation to three significant figures',
     marks: 3,
     route: 'correct method, then evaluate, then express in scientific notation rounded to three significant figures',
     plan: [
@@ -3618,6 +3655,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Volume of a Sphere',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2025 P2 Q2'],
+    method: 'Halve the diameter, put the radius into the volume of a sphere, then round',
     answerShape: 'rounded',
     webTopics: ['Volume - simple shape'],
     skill: 'Halve the diameter, substitute into the volume of a sphere, and round',
@@ -3706,6 +3744,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Cone with a Hemisphere Removed',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2014 P2 Q7'],
+    method: 'Find the cone and the hemisphere, subtract, then round',
     answerShape: 'rounded',
     webTopics: ['Volume - composite shape'],
     skill: 'Subtract the volume of a hemisphere from the volume of a cone',
@@ -3723,6 +3762,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Cone with its Tip Removed',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P2 Q7'],
+    method: 'Find the large cone and the small one, subtract, then round',
     answerShape: 'rounded',
     webTopics: ['Volume - composite shape'],
     skill: 'Subtract a similar cone from a cone to find the volume of a frustum',
@@ -3740,6 +3780,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'The Coating on a Sphere',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2017 P2 Q6'],
+    method: 'Find the outer sphere and the inner one, subtract, then round',
     answerShape: 'rounded',
     webTopics: ['Volume - composite shape'],
     skill: 'Find the volume of a coating from the outer diameter and its thickness',
@@ -3757,6 +3798,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Cylinder with a Dome on Top',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2019 P2 Q8'],
+    method: 'Find the hemisphere and the cylinder, add them, then round',
     answerShape: 'rounded',
     webTopics: ['Volume - composite shape'],
     skill: 'Add a hemisphere to a cylinder, working the cylinder\'s height out of the total',
@@ -3774,6 +3816,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Box with a Sphere on Top',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2022 P2 Q3'],
+    method: 'Find the sphere and the cuboid, add them, and give the units',
     answerShape: 'rounded',
     webTopics: ['Volume - composite shape'],
     skill: 'Add a sphere to a cuboid, working the cuboid\'s height out of the total',
@@ -3790,6 +3833,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Pyramid with its Tip Removed',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2023 P2 Q9'],
+    method: 'Find the small pyramid and the large one, subtract, and give the units',
     answerShape: 'integer',
     webTopics: ['Volume - composite shape'],
     skill: 'Subtract a similar pyramid from a pyramid, finding the large height first',
@@ -3807,6 +3851,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Hemisphere Set into a Box',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2024 P2 Q7'],
+    method: 'Find the hemisphere and the cuboid, subtract, then round',
     answerShape: 'rounded',
     webTopics: ['Volume - composite shape'],
     skill: 'Subtract a hemisphere from a cuboid',
@@ -3929,9 +3974,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2015 P2 Q14'],
     marks: 7,
     route: '1 for the expression, 2 for the area and the rearrangement, 4 for the formula: substitute, discriminant, solve, select and round',
-    method: 'Write the expression for the border, form the area equation and rearrange it, then substitute into the quadratic formula, evaluate the discriminant, solve, and select and round the root that is a length',
+    method: 'Write the length with the border added, form the area equation and rearrange it, then substitute into the quadratic formula, solve, and keep the root that is a length',
     plan: [
-      'Follow the length of the tile out to the edge of the board: the border sits at both ends, so the length gains $x$ twice, and the width gains $x$ twice for the same reason — write an expression for each',
+      'Follow the length of the inner rectangle out to the edge: the border sits at both ends, so the length gains $x$ twice, and the width gains $x$ twice for the same reason — write an expression for each',
       'Multiply those two expressions together and expand them for the area of the whole board, then set that equal to the area you are given and take every term to one side so the quadratic is equal to 0',
       'Read $a$, $b$ and $c$ straight off that quadratic, put them into the quadratic formula, and work out $b^{2} - 4ac$ underneath the square root sign',
       'Take the square root and work the fraction out twice, once with the plus and once with the minus, then throw away the negative value because a border cannot be a negative width, and round what is left to the accuracy the question asks for',
@@ -3958,7 +4003,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 2, 2, 2],
     answerShape: 'rounded',
     webTopics: ['Create equation in geometric context', 'Quadratic formula'],
-    skill: 'A wall on three sides grows the length twice and the width once',
+    skill: 'Find the length of a base walled on three sides, then solve a quadratic for the thickness',
   },
   'form-equation.triangle-rectangle': {
     topic: 'A Triangle Against a Rectangle',
@@ -3970,7 +4015,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // height is always odd; and the final division must not be by a single
     // digit, so the collected coefficient is always at least ten.
     route: '1 for the triangle area, then 4: equate, start to solve, rearrange, solve',
-    method: 'Write the triangle\'s area, equate it to the rectangle\'s, start to solve, rearrange, then solve',
+    method: 'Write the triangle\'s area, set it equal to the rectangle\'s, then solve for $x$',
     plan: [
       'Take the base and the height marked on the triangle and put them into half the base times the height, keeping the bracket as it stands rather than expanding it',
       'Write the area of the rectangle as its length times its breadth, then set the two areas equal because the question tells you they match',
@@ -4024,7 +4069,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '2 for the volume expression and the rearrangement, 4 for the formula',
     method: 'Write the volume expression and rearrange it into a quadratic, then substitute into the quadratic formula and solve',
     plan: [
-      'Multiply the length, the breadth and the height of the store together to build an expression for its volume',
+      'Multiply the length, the breadth and the height of the cuboid together to build an expression for its volume',
       'Set that expression equal to the volume given in the question, expand it, and take every term to one side so the quadratic is equal to 0',
       'Read $a$, $b$ and $c$ straight off that quadratic, put them into the quadratic formula, and work out $b^{2} - 4ac$ underneath the square root sign',
       'Take the square root and work the fraction out twice, once with the plus and once with the minus, then reject the negative value because a breadth cannot be negative, and round what is left to the accuracy the question asks for',
@@ -4110,6 +4155,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Pathway in a Parallelogram',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P2 Q3'],
+    method: 'Go round two sides of the parallelogram',
     marks: 1,
     route: 'one mark, one step: the route round two sides of the parallelogram',
     plan: [
@@ -4129,8 +4175,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '1 for the direct route, then 2: the pathway through the extension and the midpoint, then collecting it',
     method: 'State the direct route, then take the pathway through the extension and the midpoint, and collect it',
     plan: [
-      'Travel along the vector you are given from one corner, then back against the other one, to write the third side in terms of both letters',
-      'Set off along the extended piece, which repeats the side it continues, then add half of that third side to land on its midpoint',
+      'Go from the first letter to the second through the third corner, along the two vectors you are given, reversing any that points the wrong way',
+      'Set off along the extended piece, which is a multiple of the side it continues, then add half of that third side to land on its midpoint',
       'Multiply the half through the bracket and collect the terms in each letter',
     ],
     planMarks: [1, 1, 1],
@@ -4167,8 +4213,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '1 for the side from the diagonal, then 2: the pathway through the midpoint, then collecting it',
     method: 'Get the side from the diagonal first, then take the pathway through the midpoint and collect it',
     plan: [
-      'Cross from one corner to the next by reversing the side you are given and then running along the diagonal of the rhombus',
-      'Add on half of the side the midpoint lies on, which is a copy of the side you were given, pointing the other way',
+      'Go from the first letter to the second along the side and the diagonal you are given, reversing any that points the wrong way',
+      'Go to a corner of the side the midpoint lies on, then add half of that side: it is parallel to a side you already have in terms of the two vectors',
       'Collect the terms so each letter appears once in the pathway',
     ],
     planMarks: [1, 1, 1],
@@ -4290,11 +4336,11 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2014 P1 Q11'],
     marks: 4,
     route: '2 for starting the rearrangement and stating the gradient, 2 for knowing to set y = 0 and stating the coordinates - the scheme requires the brackets',
-    method: 'Start the rearrangement and state the gradient, then set y = 0 and state the intercept as coordinates',
+    method: 'Rearrange for $y$ and state the gradient, then set $y = 0$ and state the intercept as coordinates',
     plan: [
       'Get the term in $y$ by itself on one side, moving the $x$ term and the number across',
       'Divide every term by the number in front of $y$, and whatever multiplies $x$ is the gradient',
-      'For the second part go back to the original equation and replace $y$ with 0, since the line has no height where it meets the $x$-axis',
+      'Go back to the original equation and replace $y$ with 0, since the line has no height where it meets the $x$-axis',
       'Solve that for $x$ and write the crossing point as coordinates in brackets, with 0 as the second number',
     ],
     planMarks: [1, 1, 1, 1],
@@ -4687,6 +4733,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: '3D Coordinates and Lengths',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P1 Q7'],
+    method: 'State B, then use the differences between the coordinates of A and V to find AV',
     marks: 4,
     route: '1 + 3 - state the coordinates of B, then know how to find AM squared, know how to find AV, and find the length of AV',
     plan: [
@@ -4712,7 +4759,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     basedOn: ['2024 P2 Q10'],
     marks: 4,
     route: 'marshal the facts and recognise the right-angled triangle, a consistent Pythagoras statement, the third side, then the width asked for',
-    method: 'Find the right-angled triangle joining the two centres, write Pythagoras down for it, work out the third side, then use it to reach the width',
+    method: 'Find the right-angled triangle from a centre to the middle of the chord and one end, write Pythagoras down for it, work out the third side, then use it to reach the width',
     plan: [
       'Halve the chord that the two circles share, because the perpendicular from either centre cuts it in half',
       'Write Pythagoras down for the right-angled triangle made by that half-chord and the radius as hypotenuse, to reach the distance from a centre to the chord',
@@ -4722,7 +4769,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Pythagoras in circle diagrams'],
-    skill: 'Two equal circles overlapping, each centre on the other circle',
+    skill: 'Two equal circles sharing a chord: half the chord, Pythagoras, then the width',
   },
   'pythagoras.two-circles-half-turn': {
     topic: 'Pythagoras with Two Circles',
@@ -4740,7 +4787,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Pythagoras in circle diagrams'],
-    skill: 'A logo of two half-circles, the straight edges end to end',
+    skill: 'A badge of two equal parts of circles, their straight edges end to end',
   },
   'pythagoras.two-circles-snowman': {
     topic: 'Pythagoras with Two Circles',
@@ -4797,7 +4844,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     planMarks: [1, 1, 1],
     answerShape: 'rounded',
     webTopics: ['Cosine rule: calculate angle'],
-    skill: 'Three sides, find an angle — often the smallest',
+    skill: 'Three sides, find an angle',
   },
   // **The same three sides, and a different first move.** 2019 P2 Q7 asks for
   // "the smallest angle in triangle XYZ" and marks nothing on its figure, so
@@ -5189,6 +5236,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // paper draws it (see `reflex2017` in n5-sector.ts), and 2022's split is
     // untouched.
     basedOn: ['2017 P2 Q14'],
+    method: 'Divide the arc by the circumference, multiply by 360, then give the reflex angle',
     marks: 3,
     route: 'an expression for the arc length, or the arc-to-circumference ratio, then know how to find the angle from it, then calculate the reflex angle',
     plan: [
@@ -5211,6 +5259,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     // that the angle asked for is over 180. Read off a minor sector it is a
     // different piece of reasoning and a different answer.
     basedOn: ['2022 P2 Q10'],
+    method: 'Divide the arc by the circumference, multiply by 360, then give the reflex angle',
     marks: 3,
     route: 'an expression for the arc length, or the arc-to-circumference ratio, then know how to find the angle from it, then calculate the reflex angle',
     plan: [
@@ -5227,6 +5276,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Finding the Radius from an Arc',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2015 P2 Q10'],
+    method: 'Write the angle over 360, set that share of $2\\pi r$ equal to the arc, then solve for the radius',
     marks: 4,
     route: 'the correct fraction of the circle, construct the equation, know how to solve it, then solve it and state the radius',
     plan: [
@@ -5288,6 +5338,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Sector Cut Out of a Triangle',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2018 P2 Q17'],
+    method: 'Find the triangle by $\\tfrac{1}{2}ab\\sin C$ and the sector as a fraction of the circle, then subtract and give the units',
     marks: 5,
     route: 'the triangle by $\\tfrac{1}{2}ab\\sin C$, the fraction of the circle, the sector area, know to subtract, then evaluate with units. The sector and the triangle share the angle at O, which is what makes it one question',
     plan: [
@@ -5308,9 +5359,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 6,
     route: '3 + 3 - the linear scale factor, squared for areas, evaluated; then the larger sector area as a fraction of its circle, rearranged for the angle, evaluated. Part (b) does not use part (a). The two radii are on the figure and nowhere else',
     plan: [
-      'For part (a), write the linear scale factor as one radius over the matching radius of the other sector',
+      'Write the linear scale factor as one radius over the matching radius of the other sector',
       'Square that scale factor, because areas scale by the square of it, multiply the area you are given by it and work the other area out',
-      'For part (b), set the angle over 360 times the whole circle\'s area equal to the larger sector\'s area',
+      'Set the angle over 360 times the whole circle\'s area equal to the larger sector\'s area',
       'Rearrange that equation to leave the angle on its own, then work the angle out',
     ],
     planMarks: [1, 2, 1, 2],
@@ -5356,6 +5407,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Tangent and a Diameter',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2022 P1 Q4'],
+    method: 'The angle at the centre on the diameter, then a base angle from the isosceles radii, then add the right angle at the tangent',
     marks: 3,
     route: 'angle COE at the centre, then OCE from the isosceles radii, then ACE',
     plan: [
@@ -5373,6 +5425,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Tangent and a Semicircle',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2015 P1 Q3'],
+    method: 'The angle beside the tangent from the right angle there, then the angle in the semicircle\'s triangle, then their sum',
     marks: 3,
     route: 'angle OBD, then EDF from the semicircle, then BDF as their sum',
     plan: [
@@ -5390,6 +5443,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Tangent Meeting a Diameter',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2017 P1 Q9'],
+    method: 'Take the given angle from 90 at the tangent, carry it across the isosceles radii, then finish with the angles of the big triangle',
     marks: 3,
     route: 'angle OBD, then ODB from the isosceles radii, then CAB',
     // The scheme's first method, triangle ABD (the owner, 2026-10-02, "Yes").
@@ -5408,6 +5462,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Two Tangents and a Parallel Chord',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P2 Q5'],
+    method: 'The angle where the radius meets the chord, from the parallel lines, then the angle between the chord and the tangent, then the angle where the tangents meet, from the isosceles triangle the two equal tangents make',
     marks: 3,
     // The scheme's order, closing with the isosceles triangle of the two equal
     // tangents (the owner, 2026-10-02, "Yes"); it closed with quadrilateral OABC.
@@ -5427,6 +5482,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Two Tangents and Two Diameters',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2024 P1 Q10'],
+    method: 'The angle beside the given one on the diameter, then the angle at the centre as twice it, then the angle where the tangents meet, from the quadrilateral',
     marks: 3,
     route: 'angle OFD, then BOD as twice it, then BCD',
     plan: [
@@ -5461,6 +5517,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Polygon and a Diameter',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2019 P1 Q11'],
+    method: 'The angle at the centre from the equal division, then the angle beside it on the diameter, then a base angle of the isosceles triangle',
     marks: 3,
     route: 'angle AOB from the equal division, then FOB on the straight line, then OFB',
     plan: [
@@ -5507,7 +5564,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 3,
     route: 'state the linear scale factor, state the volume scale factor, then calculate the volume and state its units. The smaller solid is given and the larger is asked for, so the factor is bigger than one',
     plan: [
-      'Write the linear scale factor as the height of the larger solid over the height of the smaller one you are given, so it scales upwards',
+      'Write the linear scale factor as a length on the larger solid over the matching length on the smaller one you are given, so it scales upwards',
       'Cube that scale factor, because a volume is three-dimensional and scales by the cube of the linear one, then multiply the volume you are given by it',
       'Work that out, and write the volume units beside your answer',
     ],
@@ -5552,6 +5609,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'Cost of a Similar Figure',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P2 Q11'],
+    method: 'Find the linear scale factor, multiply the cost by its square, then give the cost',
     marks: 3,
     route: 'the linear scale factor, know to multiply or divide the cost by its square, then find the cost. The scheme accepts it either way up, and the quantity scaling is proportional to an area rather than being one - the words never say "area" at all',
     plan: [
@@ -5572,10 +5630,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: '3 + 2 - state the linear scale factor, know to multiply the volume by its cube, then the calculation with a valid comparison and conclusion; then find the volume scale factor and a calculation involving a root of it. The only one of the five that runs the argument backwards, and the only one needing a cube root',
     method: 'Find the linear scale factor and cube it for the volume, compare that with the volume you are given and say why they cannot be similar; then use the real volume scale factor and take its cube root',
     plan: [
-      'For part (a), treat the two solids for the moment as if they were similar, and write the linear scale factor as one length over the matching length on the other',
+      'Treat the two solids for the moment as if they were similar, and write the linear scale factor as one length over the matching length on the other',
       'Cube that scale factor, because volumes scale by the cube of the linear one, and multiply the volume you are given by it to see what the other volume would have to be',
       'Compare that with the volume the solid actually holds, and write a sentence saying what the mismatch tells you about the two solids',
-      'For part (b) the solids really are similar, so divide the new volume by the original volume to get the volume scale factor, take its cube root to come back down to a length, and multiply the original length by it',
+      'The solids really are similar now, so divide the new volume by the original volume to get the volume scale factor, take its cube root to come back down to a length, and multiply the original length by it',
     ],
     planMarks: [1, 1, 1, 2],
     answerShape: 'rounded',
@@ -5604,6 +5662,7 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'The Rest of a Similar Triangle',
     difficulty: 'exam', strategy: 'answer-first', source: 'paper',
     basedOn: ['2024 P1 Q14'],
+    method: 'Find the scale factor, scale the whole side, then subtract',
     marks: 3,
     route: 'scale factor, scale the whole side consistently, then subtract',
     plan: [
@@ -5646,6 +5705,34 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
  * construction. Nothing here is typed by hand, which is the point: every field
  * but `basedOn` is the target's own, so there is no copy to get wrong.
  */
+/**
+ * Hint wording kept for aliases whose target changed its wording for its own
+ * paper (the owner, N5 hint check 2026-10-05: each change was asked for one
+ * paper, so the papers aliased to it keep what they had, word for word).
+ */
+const SOLVE_GIVEN_XY_PLAN = [
+  'Multiply one equation right through, both sides, so that the $x$ terms or the $y$ terms match in size across the two equations',
+  'Add or subtract the two equations so that the matching letter cancels away, leaving one equation in a single letter you can work out',
+  'Put that answer back into either of the original equations to get the other letter, then write both letters out together',
+];
+const FORMULA_X_PLAN = [
+  'Pick out $a$, $b$ and $c$ from the equation, keeping any minus signs with them, then write $x = \\frac{-b \\pm \\sqrt{b^{2}-4ac}}{2a}$ out with those numbers in place',
+  'Work out the discriminant under the root on its own first, so the rest of the arithmetic stays manageable',
+  'Work out both roots, taking the plus and then the minus, and round each to the accuracy the question asks for',
+];
+const COMPLETE_SQUARE_PQ_SKILL = 'Write $x^2+bx+c$ in the form $(x+p)^2+q$';
+/**
+ * The two papers aliased to `percentages.compound` whose draws give two dates
+ * rather than a number of years (2022 P2 Q2, 2018 P2 Q1; the owner, N5
+ * first-steps read 2026-10-05, card 18, "Change").
+ */
+const COMPOUND_DATES_PLAN = [
+  'Turn the percentage change into a multiplier',
+  'Count the years between the two dates, then raise the multiplier to that power and multiply the starting amount by it',
+  'Work it out, rounding to whatever accuracy the question asks for',
+];
+const COMPOUND_DATES_METHOD = 'Turn the rate into a multiplier, count the years between the two dates, raise the multiplier to that power, then work it out to the accuracy asked';
+
 const ALIASES: Record<string, {
   aliasOf: string;
   basedOn: string[];
@@ -5674,14 +5761,14 @@ const ALIASES: Record<string, {
   'fractions.multiply-mixed-pre2023': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2019 P1 Q2'] },
   'fractions.divide-mixed-pre2023': { aliasOf: 'fractions.divide-mixed', basedOn: ['2017 P1 Q3'] },
   'surds.rationalise-pre2023': { aliasOf: 'surds.rationalise', basedOn: ['2018 P1 Q11'] },
-  'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2022 P2 Q2'] },
+  'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2022 P2 Q2'], plan: COMPOUND_DATES_PLAN, method: COMPOUND_DATES_METHOD },
   'percentages.compound-between-years-pre2023': { aliasOf: 'percentages.compound-between-years', basedOn: ['2019 P2 Q1'] },
   // 2022 P1 Q10 left this alias for `percentages.reverse-non-calculator`:
   // it is a Paper 1 question and needs a divisor a pupil can divide by.
   'percentages.reverse-pre2023': { aliasOf: 'percentages.reverse', basedOn: ['2017 P2 Q5'] },
   'percentages.part-of-whole-pre2023': { aliasOf: 'percentages.part-of-whole', basedOn: ['2018 P2 Q11'] },
   'expanding.binomial-trinomial-pre2023': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2022 P2 Q1'] },
-  'quadratics.complete-square-pre2023': { aliasOf: 'quadratics.complete-square', basedOn: ['2019 P2 Q10'] },
+  'quadratics.complete-square-pre2023': { aliasOf: 'quadratics.complete-square', basedOn: ['2019 P2 Q10'], skill: COMPLETE_SQUARE_PQ_SKILL },
   'straight-line.best-fit-pre2023': { aliasOf: 'straight-line.best-fit', basedOn: ['2016 P1 Q5'] },
   'straight-line.best-fit-grid-pre2023': { aliasOf: 'straight-line.best-fit-grid', basedOn: ['2019 P1 Q6'] },
   // 'trig-graphs.amplitude-cycles-pre2023' MATERIALISED 2026-09-20 — it draws
@@ -5704,7 +5791,7 @@ const ALIASES: Record<string, {
   // the two, a known compromise recorded in n5-formulae.ts.
   'change-subject.fraction-coefficient-pre2023': { aliasOf: 'change-subject.fraction-coefficient', basedOn: ['2014 P2 Q11'] },
   'inequalities.brackets-pre2023': { aliasOf: 'inequalities.brackets', basedOn: ['2018 P2 Q4'] },
-  'simeq.solve-given-pre2023': { aliasOf: 'simeq.solve-given', basedOn: ['2018 P1 Q3'] },
+  'simeq.solve-given-pre2023': { aliasOf: 'simeq.solve-given', basedOn: ['2018 P1 Q3'], plan: SOLVE_GIVEN_XY_PLAN },
   'data.mean-sd-compare-pre2023': { aliasOf: 'data.mean-sd-compare', basedOn: ['2022 P2 Q5'] },
   // 2022 P2 Q9 moved to `trig-equations.solve-constant`: the routine printed
   // `+ 0` in one draw in twenty and the fix could not be made in place,
@@ -5740,14 +5827,15 @@ const ALIASES: Record<string, {
   'simeq.construct-solve-pre2022': { aliasOf: 'simeq.construct-solve', basedOn: ['2016 P1 Q4'] },
   'pythagoras.chord-pre2022': { aliasOf: 'pythagoras.chord', basedOn: ['2016 P2 Q15'] },
   'trig-diagram.area-pre2022': { aliasOf: 'trig-diagram.area', basedOn: ['2019 P2 Q3'] },
-  'percentages.compound-pre2022': { aliasOf: 'percentages.compound', basedOn: ['2018 P2 Q1'] },
+  'percentages.compound-pre2022': { aliasOf: 'percentages.compound', basedOn: ['2018 P2 Q1'], plan: COMPOUND_DATES_PLAN, method: COMPOUND_DATES_METHOD },
   'expanding.binomial-trinomial-pre2022': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2019 P1 Q3'] },
   'data.mean-sd-compare-pre2022': { aliasOf: 'data.mean-sd-compare', basedOn: ['2018 P2 Q5'] },
   'data.median-siqr-compare-pre2019p1': { aliasOf: 'data.median-siqr-compare', basedOn: ['2015 P1 Q10'] },
   'fractions.multiply-mixed-pre2019p1': { aliasOf: 'fractions.multiply-mixed', basedOn: ['2014 P1 Q1'] },
   'expanding.binomial-trinomial-pre2019p1': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2017 P1 Q4'] },
-  'quadratics.complete-square-2016': { aliasOf: 'quadratics.complete-square', basedOn: ['2016 P2 Q9'] },   // one paper, one variation
-  'quadratics.complete-square-2014': { aliasOf: 'quadratics.complete-square', basedOn: ['2014 P1 Q3'] },   // one paper, one variation
+  // Its draws ask for (x + p)^2 + q or (x + a)^2 + b, so a line with no letters (the owner, N5 hint check v2).
+  'quadratics.complete-square-2016': { aliasOf: 'quadratics.complete-square', basedOn: ['2016 P2 Q9'], skill: 'Write the quadratic in completed square form, in the letters the question gives' },   // one paper, one variation
+  'quadratics.complete-square-2014': { aliasOf: 'quadratics.complete-square', basedOn: ['2014 P1 Q3'], skill: 'Write the quadratic in completed square form, $(x - a)^{2} + b$' },   // one paper, one variation
   'straight-line.best-fit-2014': { aliasOf: 'straight-line.best-fit', basedOn: ['2014 P1 Q6'] },   // one paper, one variation
   'percentages.part-of-whole-2014': { aliasOf: 'percentages.part-of-whole', basedOn: ['2014 P1 Q9'] },   // one paper, one variation
   'percentages.compound-2017': { aliasOf: 'percentages.compound', basedOn: ['2017 P2 Q2'] },   // one paper, one variation
@@ -5759,7 +5847,7 @@ const ALIASES: Record<string, {
   'inequalities.brackets-2017': { aliasOf: 'inequalities.brackets', basedOn: ['2017 P1 Q8'] },   // one paper, one variation
   'inequalities.brackets-2015': { aliasOf: 'inequalities.brackets', basedOn: ['2015 P1 Q2'] },   // one paper, one variation
   'expanding.binomial-trinomial-2015': { aliasOf: 'expanding.binomial-trinomial', basedOn: ['2015 P1 Q4'] },   // one paper, one variation
-  'simeq.solve-given-2015': { aliasOf: 'simeq.solve-given', basedOn: ['2015 P1 Q11'] },   // one paper, one variation
+  'simeq.solve-given-2015': { aliasOf: 'simeq.solve-given', basedOn: ['2015 P1 Q11'], plan: SOLVE_GIVEN_XY_PLAN },   // one paper, one variation
   'functions.find-unknown-2015': { aliasOf: 'functions.find-unknown', basedOn: ['2015 P2 Q2'] },   // one paper, one variation
   'vectors.magnitude-2018': { aliasOf: 'vectors.magnitude', basedOn: ['2018 P2 Q3'] },   // one paper, one variation
   'vectors.magnitude-2017': { aliasOf: 'vectors.magnitude', basedOn: ['2017 P2 Q1'] },   // one paper, one variation
@@ -5775,9 +5863,9 @@ const ALIASES: Record<string, {
   'sci-notation.calculate-2016': { aliasOf: 'sci-notation.calculate', basedOn: ['2016 P2 Q2'] },   // one paper, one variation
   'data.mean-sd-compare-2016': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6'] },   // one paper, one variation
   'change-subject.root-2016': { aliasOf: 'change-subject.root', basedOn: ['2016 P2 Q12'] },   // one paper, one variation
-  'quadratics.formula-2017': { aliasOf: 'quadratics.formula', basedOn: ['2017 P2 Q4'] },   // one paper, one variation
+  'quadratics.formula-2017': { aliasOf: 'quadratics.formula', basedOn: ['2017 P2 Q4'], plan: FORMULA_X_PLAN },   // one paper, one variation
   'percentages.reverse-non-calculator-2022': { aliasOf: 'percentages.reverse-non-calculator', basedOn: ['2022 P1 Q10'] },   // one paper, one variation
-  'simeq.solve-given-2023': { aliasOf: 'simeq.solve-given', basedOn: ['2023 P1 Q3'] },   // one paper, one variation
+  'simeq.solve-given-2023': { aliasOf: 'simeq.solve-given', basedOn: ['2023 P1 Q3'], plan: SOLVE_GIVEN_XY_PLAN },   // one paper, one variation
   'surds.rationalise-2023': { aliasOf: 'surds.rationalise', basedOn: ['2023 P1 Q8'] },   // one paper, one variation
   'data.median-iqr-compare-2024': { aliasOf: 'data.median-iqr-compare', basedOn: ['2024 P1 Q5'] },   // one paper, one variation
   'data.median-iqr-compare-2023': { aliasOf: 'data.median-iqr-compare', basedOn: ['2023 P1 Q9'] },   // one paper, one variation

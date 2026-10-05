@@ -61,7 +61,8 @@ const q2017q4: CardRoutine<Q4of2017> = {
         `<strong>(a)</strong> ${pair}`,
         `<strong>(a)</strong> Subtracting, $${gap}d = ${Tq - Tp}$, so $d = ${-D}$ and $a = ${a}$`,
         `<strong>(b)</strong> $${setUp}$`,
-        `<strong>(b)</strong> $${quadratic}$`,
+        // The undivided quadratic first, then divided (the owner, full read 2026-10-05).
+        `<strong>(b)</strong> $${g === 1 ? quadratic : `${poly(coefs, 'n')} = 0$, $${quadratic}`}$`,
         `<strong>(b)</strong> $${factored}$, so $n = ${N}$ or $n = ${other}$; $n$ counts terms, so $n \\gt 0$ and $n = ${N}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],

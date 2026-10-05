@@ -7,7 +7,7 @@ import type { CardMeta } from '../types';
 export const NUMBER_THEORY: readonly CardMeta[] = [
   {
     card: '2021 P2 Q2',
-    skill: 'The Euclidean algorithm to write the gcd of two numbers as Aa + Bb, then hence scale it to a multiple of the gcd.',
+    skill: 'The Euclidean algorithm to write the gcd of two numbers as $Aa + Bb$, then hence scale it to a multiple of the gcd.',
     marks: [3, 1],
     route: '3 + 1 - (a) the algorithm to its zero remainder; the gcd equated with the third line and the second substituted; a and b; (b) x and y as a and b times the multiple.',
     ranges: 'The paper: 105a + 72b = 3, a = 11, b = -16; 105x + 72y = 360, x = 1320, y = -1920. Built from the bottom line up, four lines as the paper\'s (quotients 1, 2, 5, 2): the gcd from 2 to 9 (the paper\'s 3), the quotients from 1 to 3, 1 to 3, 2 to 6 and 2 to 4, the larger number from 60 to 400 and the smaller from 30 to 250, as 105 and 72. (b)\'s right-hand side the gcd times a round number from 20 to 150 (the paper\'s 120). A near relation of 2026 P2 Q4 (locked), with the same four-line shape: its own routine.',
@@ -70,14 +70,14 @@ export const NUMBER_THEORY: readonly CardMeta[] = [
   },
   {
     card: '2018 Q5',
-    skill: 'The Euclidean algorithm, then back-substitution: integers a and b with Aa + Bb = d, d given.',
+    skill: 'The Euclidean algorithm, then back-substitution: integers $a$ and $b$ with $Aa + Bb = d$, $d$ given.',
     marks: [4],
     route: 'The first two lines of the algorithm; the rest, down to the remainder d; d written in terms of A and B by working back; a and b stated, as well as the final equation.',
     ranges: 'The paper: 306a + 119b = 17, a = 2, b = -5, four lines with quotients 2, 1, 1, 3. Built from the bottom line up, four lines, as the paper\'s: d from 7 to 30 (the paper\'s 17); quotients from 1 to 4, 1 to 3, 1 to 3 and 2 to 5; A three digits, from 200 (the paper\'s 306), and B at least 100 (the paper\'s 119). The gcd is given in the question, as the paper\'s. Near the locked Euclid cards (2021 P2 Q2 to 2026 P2 Q4), on its own routine.',
   },
   {
     card: '2017 Q8',
-    skill: 'The Euclidean algorithm, then back-substitution: integers a and b with Aa + Bb = d, d given, four-digit numbers.',
+    skill: 'The Euclidean algorithm, then back-substitution: integers $a$ and $b$ with $Aa + Bb = d$, $d$ given, four-digit numbers.',
     marks: [4],
     route: 'The first line of the algorithm; the rest, down to the remainder d (and 0); d written in terms of r1 and B, d = r1 - q3(B - q2 r1), as the scheme\'s third mark; a and b stated.',
     ranges: 'The paper: 1595a + 1218b = 29, a = 13, b = -17, four lines with quotients 1, 3, 4, 3. Built from the bottom line up, four lines, as the paper\'s: d from 11 to 40 (the paper\'s 29); quotients from 1 to 3, 1 to 4, 1 to 5 and 2 to 5; both numbers four digits, as 1595 and 1218, the larger under 5000. The gcd is given in the question, as the paper\'s. The same question as 2018 Q5 with bigger numbers, and near the other locked Euclid cards (2021 P2 Q2 to 2026 P2 Q4): its own routine, a family label at the port.',

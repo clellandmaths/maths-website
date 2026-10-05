@@ -10,6 +10,14 @@ import { gcd } from '../maths/integer';
 import { mulPoly } from '../maths/polynomial';
 import { type Q, q, isInt } from '../maths/rational';
 
+/**
+ * "$3A = 6$, so $A = 2$", or "$A = 1$" once when the coefficient is 1 (the
+ * owner, full read 2026-10-05, on 2023 P1 Q2, 2017 Q2, 2019 Q4 and 2022 P2 Q1).
+ * Only those four cards call it; every other line is as it was.
+ */
+const solvedFor = (k: number, name: string, value: number) =>
+  (k === 1 ? `$${name} = ${value}$` : `$${sum([{ coef: k, body: name }])} = ${k * value}$, so $${name} = ${value}$`);
+
 // ── 2026 P2 Q13 ────────────────────────────────────────────────────────────
 // (a) (x + c)/((x + p)(x + r)) = (j + 1)/(x + p) - j/(x + r), with r = c + jδ,
 // p = r + δ; (b) y' + 2y/(x + c) = 1/((x + p)(x + r)(x + c)), y = 0 at x = x0
@@ -255,8 +263,8 @@ const q2023p1q2: CardRoutine<P1Q2of2023> = {
     const identity = `${top} = A(${xb})^{2} + B(${xa})(${xb}) + C(${xa})`;
     // At x = β only C is left, at x = α only A; then the x² terms give B.
     const cAt = beta - alpha, aAt = (alpha - beta) ** 2;
-    const found = `at $x = ${beta}$: $${sum([{ coef: cAt, body: 'C' }])} = ${cAt * C}$, so $C = ${C}$`;
-    const rest = `At $x = ${alpha}$: $${sum([{ coef: aAt, body: 'A' }])} = ${aAt * A}$, so $A = ${A}$; comparing the $x^{2}$ terms, $A + B = ${lead}$, so $B = ${B}$`;
+    const found = `at $x = ${beta}$: ${solvedFor(cAt, 'C', C)}`;
+    const rest = `At $x = ${alpha}$: ${solvedFor(aAt, 'A', A)}; comparing the $x^{2}$ terms, $A + B = ${lead}$, so $B = ${B}$`;
     const over = (k: number, bottom: string) => ({ coef: Math.sign(k), body: `\\frac{${Math.abs(k)}}{${bottom}}` });
     const answer = sum([over(A, xa), over(B, xb), over(C, `(${xb})^{2}`)]);
     return {
@@ -302,7 +310,7 @@ const q2022p2q1: CardRoutine<P2Q1of2022> = {
     const fraction = `\\frac{${top}}{x(${quad})}`;
     const template = `\\frac{A}{x} + \\frac{Bx + C}{${quad}}`;
     const identity = `${top} = A(${quad}) + (Bx + C)x`;
-    const found = `at $x = 0$: $${sum([{ coef: m, body: 'A' }])} = ${A * m}$, so $A = ${A}$`;
+    const found = `at $x = 0$: ${solvedFor(m, 'A', A)}`;
     const rest = `Comparing the $x^{2}$ terms, $A + B = ${A + B}$, so $B = ${B}$; comparing the $x$ terms, $C = ${C}$`;
     // Each fraction's sign outside it, as the paper writes -\frac{2}{x}.
     const first = `${A < 0 ? '-' : ''}\\frac{${Math.abs(A)}}{x}`;
@@ -459,8 +467,8 @@ const q2019q4: CardRoutine<Q4of2019> = {
       solutionSteps: [
         `<strong>(a)</strong> Dividing, $\\frac{${N}}{${D}} = ${divided}$`,
         `<strong>(b)</strong> $${D} = (${f1})(${f2})$, so $\\frac{${rem}}{${D}} = ${template}$`,
-        `<strong>(b)</strong> $${identity}$; at $x = ${r1}$: $${sum([{ coef: k1, body: 'A' }])} = ${k1 * A}$, so $A = ${A}$`,
-        `<strong>(b)</strong> At $x = ${r2}$: $${sum([{ coef: k2, body: 'B' }])} = ${k2 * B}$, so $B = ${B}$, and $\\frac{${N}}{${D}} = ${answer}$`,
+        `<strong>(b)</strong> $${identity}$; at $x = ${r1}$: ${solvedFor(k1, 'A', A)}`,
+        `<strong>(b)</strong> At $x = ${r2}$: ${solvedFor(k2, 'B', B)}, and $\\frac{${N}}{${D}} = ${answer}$`,
       ],
       stepMarks: [1, 1, 1, 1],
       finalAnswer: `(a) $${divided}$<br>(b) $${answer}$`,
@@ -567,7 +575,7 @@ const q2017q2: CardRoutine<Q2of2017> = {
     const identity = `${top} = A(${xb})^{2} + B(${xa})(${xb}) + C(${xa})`;
     // At x = β only C is left, at x = α only A; then the x² terms give B.
     const cAt = beta - alpha, aAt = (alpha - beta) ** 2;
-    const two = `At $x = ${beta}$: $${sum([{ coef: cAt, body: 'C' }])} = ${cAt * C}$, so $C = ${C}$; at $x = ${alpha}$: $${sum([{ coef: aAt, body: 'A' }])} = ${aAt * A}$, so $A = ${A}$`;
+    const two = `At $x = ${beta}$: ${solvedFor(cAt, 'C', C)}; at $x = ${alpha}$: ${solvedFor(aAt, 'A', A)}`;
     const over = (k: number, bottom: string) => ({ coef: Math.sign(k), body: `\\frac{${Math.abs(k)}}{${bottom}}` });
     const answer = sum([over(A, xa), over(B, xb), over(C, `(${xb})^{2}`)]);
     return {

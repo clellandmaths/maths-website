@@ -99,7 +99,8 @@ function sectionFigure(X: number, Y: number): Scene {
       { kind: 'segment', from: pt(0, -BACK), to: yEnd }, ...head(yEnd, 0, 1),
       { kind: 'label', text: 'x', anchor: pt(xEnd.x, -4), away: pt(xEnd.x, 20), small: true },
       { kind: 'label', text: 'y', anchor: pt(-4, yEnd.y), away: pt(20, yEnd.y), small: true },
-      { kind: 'label', text: '0', anchor: pt(-5, -5), away: pt(10, 10), small: true },
+      // The letter O, as on the rest of the course (the owner, full read 2026-10-05).
+      { kind: 'label', text: 'O', anchor: pt(-5, -5), away: pt(10, 10), small: true },
     ],
     target: 220,
   };

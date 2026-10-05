@@ -184,7 +184,8 @@ function spiralFigure(m: number): Scene {
       ...arrow2017(pt(0, yHi), pt(0, 1)),
       { kind: 'label', text: 'x', anchor: pt(xHi, -4), away: pt(xHi, 10), small: true },
       { kind: 'label', text: 'y', anchor: pt(4, yHi), away: pt(-10, yHi), small: true },
-      { kind: 'label', text: '0', anchor: add(o, pt(-6, -6)), away: pt(6, 6), small: true },
+      // The letter O, as on the rest of the course (the owner, full read 2026-10-05).
+      { kind: 'label', text: 'O', anchor: add(o, pt(-6, -6)), away: pt(6, 6), small: true },
       { kind: 'path', points },
       { kind: 'dot', at: A, small: true },
       { kind: 'label', text: 'A', anchor: add(A, scale(add(out, side), 6)), away, small: true },

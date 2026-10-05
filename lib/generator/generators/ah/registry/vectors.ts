@@ -42,7 +42,7 @@ export const VECTORS: readonly CardMeta[] = [
   },
   {
     card: '2018 Q16',
-    skill: 'Three planes meeting in a line for one a by Gaussian elimination; the line; the acute angle between two planes; how two planes lie, justified.',
+    skill: 'Three planes meeting in a line for one $a$ by Gaussian elimination; the line; the acute angle between two planes; how two planes lie, justified.',
     marks: [4, 2, 3, 1],
     route: '4 + 2 + 3 + 1 - (a) the augmented matrix; two zeros in the first column; the last zero; a from the whole last row zero; (b) z = t and y from row 2; x from row 1, and the line; (c) the two normals; cos θ from the scalar product; the acute angle; (d) parallel or perpendicular, with the normals as the reason.',
     ranges: 'The paper: π1: x - 2y + z = -4, π2: 3x - 5y - 2z = 1, π3: -7x + 11y + az = -11, a = 8; π4: -9x + 15y + 6z = 20, 43° (0.75 rad), parallel to π2. Built backwards so the elimination stays in whole numbers, as the paper\'s: π1 starts with x; R2 - pR1 leaves a leading 1 in y (p from 2 to 4, the paper\'s 3); π3 = λπ1 + μπ2 (λ and μ from -3 to 3, never 0; the paper\'s 2 and -3) with its z coefficient a. Every printed coefficient nonzero and at most 15, as is a. π4: on half the draws a multiple of π2\'s normal (by -3, -2, 2 or 3, entries at most 30; the paper\'s -3) with a constant that is not a multiple of it, so π4 does not simplify, as the paper\'s 20, parallel; on the other half a normal at right angles to π2\'s (entries 1 to 6 in size), perpendicular, since a card that asks the pupil to decide must not always give the same answer (the owner\'s rule from 2023 P1 Q3). The angle to 1 decimal place in degrees and 3 in radians, as 2019 Q15.',

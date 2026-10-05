@@ -109,7 +109,7 @@ const q2025p1q7: CardRoutine<P1Q7> = {
         'The left side: $\\ln y$',
         `The right side: $${rhs}$`,
         `At $x = ${x0}$, $y = ${y0}$: $\\ln ${y0} = ${half}\\ln ${m * m} + c = \\ln ${m} + c$, so $${constant}$`,
-        `$\\ln y = \\ln(${den})^{${half}} + \\ln ${K} = \\ln ${K}(${den})^{${half}}$, so $${answer}$`,
+        `$\\ln y = \\ln(${den})^{${half}} + \\ln ${K} = \\ln(${K}(${den})^{${half}})$, so $${answer}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1],
       finalAnswer: `$${answer}$, or $y = ${K}\\sqrt{${den}}$`,
@@ -522,7 +522,10 @@ const q2023p2q7: CardRoutine<P2Q7of2023> = {
     const times = A === 1 ? '' : A === -1 ? '-' : `${A}`;
     const integral = `${IF}y = ${times}\\int ${e(qq)}${IF}\\,dx`;
     const over = sum([{ coef: q(1, qq - p), body: e(qq - p) }]);
-    const integrated = `${A < 0 ? `(${A})` : A} \\times ${qq - p < 0 ? `\\left(${over}\\right)` : over} + c`;
+    // A of 1 or -1 is not written out: "-e^{x} + c", not "(-1) × e^{x} + c" (the owner, full read 2026-10-05).
+    const unit = Math.abs(A) === 1;
+    const integratedTo = `${sum([{ coef: B, body: e(qq - p) }])} + c`;
+    const integrated = unit ? integratedTo : `${A < 0 ? `(${A})` : A} \\times ${qq - p < 0 ? `\\left(${over}\\right)` : over} + c`;
     const general = `y = ${sum([{ coef: B, body: e(qq) }, { coef: 1, body: `c${e(p)}` }])}`;
     const particular = `y = ${sum([{ coef: B, body: e(qq) }, { coef: C, body: e(p) }])}`;
     const second = sum([{ coef: B * qq * qq, body: e(qq) }, { coef: C * p * p, body: e(p) }]);
@@ -544,7 +547,7 @@ const q2023p2q7: CardRoutine<P2Q7of2023> = {
       solutionSteps: [
         `<strong>(a)</strong> The integrating factor is $e^{\\int ${-p} \\, dx} = ${IF}$`,
         `<strong>(a)</strong> $${integral}$`,
-        `<strong>(a)</strong> $${IF}y = ${integrated} = ${sum([{ coef: B, body: e(qq - p) }])} + c$`,
+        `<strong>(a)</strong> $${IF}y = ${unit ? integratedTo : `${integrated} = ${integratedTo}`}$`,
         `<strong>(a)</strong> $${general}$; at $x = 0$, $${y0} = ${B} + c$, so $c = ${C}$ and $${particular}$`,
         `<strong>(b)</strong> $${D2} = ${second}$, so $${D3} = ${third}$`,
         `<strong>(b)</strong> $${lhs} = ${third} - ${qq === 1 ? '' : qq}(${second}) = ${sum([{ coef: k, body: e(p) }])}$, so $k = ${k}$`,
@@ -613,7 +616,8 @@ const q2023p2q13: CardRoutine<P2Q13of2023> = {
     const gap = Number((m1 - ev.B).toFixed(2));
     const c = Math.log(P1) - ev.C * Math.log(gap);
     const c2 = rounded(c, 2);
-    const coef = Math.exp(c).toPrecision(2);
+    // From the printed c, so each line follows from the one before (the owner, full read 2026-10-05).
+    const coef = Math.exp(Number(c2)).toPrecision(2);
     const inM = `m - ${ev.B}`;
     const logM = `${ev.C}\\ln(${inM})`;
     const eForm = `P = e^{${logM} ${c < 0 ? '-' : '+'} ${c2.replace('-', '')}}`;

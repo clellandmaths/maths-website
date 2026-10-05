@@ -96,7 +96,7 @@ const q2026p2q1: CardRoutine<P2Q1> = {
       ladder: {
         moves: [
           'Which standard derivative has $\\sqrt{1 - (\\ldots)^{2}}$ underneath?',
-          `Differentiate $\\sin^{-1}$ of the bracket, keeping the ${c} in front.`,
+          `Differentiate $\\sin^{-1} ${k}x$, keeping the ${c} in front.`,
           `Apply the chain rule for the $${k}x$ inside.`,
         ],
         marks: [0, 1, 1],

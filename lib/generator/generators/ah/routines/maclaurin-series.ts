@@ -434,7 +434,8 @@ const q2018q17: CardRoutine<Q17of2018> = {
           '(b)(ii) Put them into the Maclaurin formula.',
           '(c) Multiply your two series.',
           '(c) Expand, keeping only terms up to $x^3$.',
-          `(d) The expression is the derivative of $${e}\\tan x$. Differentiate your answer to (c).`,
+          // A question, so seeing the derivative is still the pupil's mark (the owner, full read 2026-10-05).
+          `(d) Compare the expression in (d) with the derivative of $${e}\\tan x$. What do you notice?`,
         ],
         marks: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         shows: [
@@ -450,7 +451,8 @@ const q2018q17: CardRoutine<Q17of2018> = {
           `$${productText} \\ldots$`,
           null,
         ],
-        watch: { at: 10, text: 'Look at (d) as a derivative. That saves working out a new series.' },
+        // No longer says what the link is (the owner, full read 2026-10-05: "Change").
+        watch: { at: 10, text: 'Look for a link between (d) and an earlier part.' },
       },
     };
   },

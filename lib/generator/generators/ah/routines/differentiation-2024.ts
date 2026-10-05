@@ -202,7 +202,8 @@ const q2024p2q6: CardRoutine<P2Q6of2024> = {
     const dydt = `\\frac{dy}{dt}`;
     const begun = `$${dydt} = ${b}\\ln t + \\ldots$ or $${dydt} = \\ldots + ${b}t \\times \\frac{1}{t}$`;
     const dy = `${b}\\ln t + ${b}`;
-    const dydx = `\\frac{${times(p, L)}}{${times(s, 't')}}`;
+    // No brackets round the whole top when p is 1 (the owner, full read 2026-10-05).
+    const dydx = `\\frac{${p === 1 ? '\\ln t + 1' : times(p, L)}}{${times(s, 't')}}`;
     // The quotient rule on u = p(ln t + 1), v = st: (u'v - uv')/v².
     const uDashV = s === 1 ? `\\frac{${p}}{t}t` : `\\frac{${p}}{t} \\times ${s}t`;
     const uVDash = s === 1 ? times(p, L) : `${times(p, L)} \\times ${s}`;

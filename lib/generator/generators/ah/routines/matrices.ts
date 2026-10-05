@@ -69,8 +69,9 @@ const q2026p1q5: CardRoutine<Q5> = {
           'What does multiplying two matrices do to their determinants?',
           '(a) Use $ad - bc$ on $A$.',
           `(b) Use $\\det AB = \\det A \\times \\det B$, and compare $${detAB}$ with your answer to (a).`,
-          '(c) The inverse of $B^{-1}$ is $B$: find $\\det B^{-1}$, then swap and negate the entries.',
-          '(c) Multiply through to state $B$ as a single matrix.',
+          // The working's method, the scheme's method 1 (the owner, full read 2026-10-05).
+          '(c) Write $B^{-1}$ as $\\frac{1}{\\det B}$ times a matrix, using $\\det B$ from (b).',
+          '(c) Swap and negate that matrix\'s entries: that is $B$.',
         ],
         marks: [0, 1, 1, 1, 1],
         shows: [null, null, null, `$${rewritten}$`, null],
@@ -195,7 +196,8 @@ const q2025p2q8: CardRoutine<P2Q8> = {
       ],
       solutionSteps: [
         `<strong>(a)</strong> $A^{3} = A \\times A^{2} = A(${given}) = ${expanded}$`,
-        `<strong>(a)</strong> $A^{3} = ${p}(${given})${qq < 0 ? ' - ' : ' + '}A = ${cube}$`,
+        // A p of 1 or -1 is not written: "(A + I) + A", "-(-A + I) + A" (the owner, full read 2026-10-05).
+        `<strong>(a)</strong> $A^{3} = ${p === 1 ? '' : p === -1 ? '-' : p}(${given})${qq < 0 ? ' - ' : ' + '}A = ${cube}$`,
         `<strong>(b)</strong> $A^{-1}A^{2} = A^{-1}(${given})$`,
         `<strong>(b)</strong> $${rearranged}$, so $A^{-1} = ${inverse}$`,
       ],

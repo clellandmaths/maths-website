@@ -69,7 +69,8 @@ const q2018q9: CardRoutine<Q9of2018> = {
         moves: [
           `How do you write "any ${s.what}" with one letter?`,
           `(a) Write ${s.what} with one letter, and add them.`,
-          `(a) Factorise, and say why the result is divisible by ${s.by}.`,
+          // "Simplify" fits every form: only one has a factor to take out (the owner, full read 2026-10-05).
+          `(a) Simplify, and say why the result is divisible by ${s.by}.`,
           `(b) Write ${t.number} in general form, say what kind of number your letter is, and ${t.into}.`,
         ],
         marks: [0, 1, 1, 1],

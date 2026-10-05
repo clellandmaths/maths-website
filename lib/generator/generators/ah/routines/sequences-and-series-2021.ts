@@ -58,7 +58,8 @@ const q2021p2q11ab: CardRoutine<P2Q11abOf2021> = {
       ],
       solutionSteps: [
         `<strong>(a)(i)</strong> $d = (${t2}) - (${t1}) = ${d}$`,
-        `<strong>(a)(ii)</strong> $(${t3}) - (${t2}) = ${d}$, so $${linear('x', s - qq)} = ${d}$ and $x = ${x}$`,
+        // When nothing is left to solve, end at x (the owner, full read 2026-10-05).
+        `<strong>(a)(ii)</strong> $(${t3}) - (${t2}) = ${d}$, so ${s === qq ? `$x = ${x}$` : `$${linear('x', s - qq)} = ${d}$ and $x = ${x}$`}`,
         `<strong>(b)(i)</strong> $u_{${N}} = ${t1} = ${u}$, so $a ${op} ${(N - 1) * Math.abs(d)} = ${u}$ and $a = ${first}$`,
         `<strong>(b)(ii)</strong> $u_{n} = ${first} ${op} ${Math.abs(d)}(n - 1) = ${nth}$`,
       ],

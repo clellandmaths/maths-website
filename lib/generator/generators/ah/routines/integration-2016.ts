@@ -32,7 +32,8 @@ const q2016q9: CardRoutine<Q9of2016> = {
     const integrand = `${a === 1 ? '' : a}${xn}(\\ln x)^{2}`;
     const first = q(a, N), half = q(2 * a, N), K = q(2 * a, N * N), last = div(K, q(N));
     const uv = times(first, `${xN}(\\ln x)^{2}`);
-    const left = `\\ldots - ${num(first)}\\int ${xN} \\times \\frac{d}{dx}\\left((\\ln x)^{2}\\right)dx`;
+    // A factor of 1 is left out, "- ∫x⁴ × …" (the owner, full read 2026-10-05).
+    const left = `\\ldots - ${num(first) === '1' ? '' : num(first)}\\int ${xN} \\times \\frac{d}{dx}\\left((\\ln x)^{2}\\right)dx`;
     const simplified = `${uv} - ${times(half, `\\int ${xn}\\ln x\\,dx`)}`;
     const second = `\\ldots - \\left[${times(K, `${xN}\\ln x`)} - ${times(K, `\\int ${xN}\\left(\\frac{1}{x}\\right)dx`)}\\right]`;
     const done = `\\ldots - \\left[${times(K, `${xN}\\ln x`)} - ${times(last, xN)}\\right]`;

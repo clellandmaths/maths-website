@@ -141,8 +141,9 @@ const q2019q18: CardRoutine<Q18of2019> = {
           '(a)(ii) Find the modulus.',
           '(a)(ii) Find the argument, checking the quadrant.',
           '(a)(ii) Write $w$ in polar form.',
-          '(b)(i) De Moivre: take the cube root of the modulus, and divide the argument by 3.',
-          `(b)(i) Put in $a = ${a}$ and simplify.`,
+          // Each step says what it shows (the owner, full read 2026-10-05).
+          `(b)(i) Use de Moivre: put in $a = ${a}$, and write $z_1$ as the cube root of $w$.`,
+          '(b)(i) Divide the argument by 3.',
           '(b)(i) Compare with the given form to state $k$.',
           '(b)(i) State $m$.',
           '(b)(ii) The three cube roots are equally spaced round the circle. How far apart are they?',

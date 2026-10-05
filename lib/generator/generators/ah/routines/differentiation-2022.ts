@@ -175,7 +175,8 @@ const q2022p1q4: CardRoutine<P1Q4of2022> = {
         `<strong>(a)</strong> $${differentiated}$`,
         `<strong>(a)</strong> $${DYDX} = ${dydx}$`,
         `<strong>(b)</strong> When $y = ${y0}$, $${atY}$, so $x = ${x0}$, and $${mLine}$`,
-        `<strong>(c)</strong> At a stationary point $${DYDX} = 0$, so $${numerator} = 0$ and $y = 0$`,
+        // When b is 1 the numerator is y itself: say y = 0 once.
+        `<strong>(c)</strong> At a stationary point $${DYDX} = 0$, so ${b === 1 ? '$y = 0$' : `$${numerator} = 0$ and $y = 0$`}`,
         `<strong>(c)</strong> Putting $y = 0$ into the curve's equation, the left-hand side is $0$ and the right-hand side is $${c}$: inconsistent, so the curve has no stationary point`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1],
@@ -379,6 +380,10 @@ const q2022p2q13: CardRoutine<P2Q13of2022> = {
     const secText = `1 + \\left(\\frac{${s}}{${d}}\\right)^{2} = \\frac{${d * d + s * s}}{${d * d}}`;
     const units = '\\ \\text{ms}^{-1}';
     const scene = spotlightFigure(d);
+    // 2π/T once when nothing cancels, and "1 metre" (the owner, full read 2026-10-05).
+    const turn = `\\frac{2\\pi}{${T}}`;
+    const cancels = rate !== turn;
+    const metres = (n: number) => `${n} metre${n === 1 ? '' : 's'}`;
     return {
       questionLines: [
         `A security spotlight is situated ${d} metres from a straight fence. The spotlight rotates at a constant speed and makes one full revolution every ${T} seconds. $L$ is the spotlight, $G$ is the nearest point on the fence, $P$ is where the light hits the fence, $\\theta$ is the angle between $LG$ and $LP$, and $x$ is the distance in metres from $G$ to $P.$`,
@@ -387,10 +392,10 @@ const q2022p2q13: CardRoutine<P2Q13of2022> = {
         `(i) $${dTheta} = ${rate}$ radians per second`,
         `(ii) $${dX} = ${coef}\\sec^{2}\\theta$ metres per second.`,
         '<b>(b)</b> Prove that $1 + \\tan^{2}\\theta = \\sec^{2}\\theta.$',
-        `<b>(c)</b> Hence, or otherwise, find the exact value of $${dX}$ when $P$ is ${s} metres from $G.$`,
+        `<b>(c)</b> Hence, or otherwise, find the exact value of $${dX}$ when $P$ is ${metres(s)} from $G.$`,
       ],
       solutionSteps: [
-        `<strong>(a)(i)</strong> One full turn is $2\\pi$ radians in ${T} seconds: $${dTheta} = \\frac{2\\pi}{${T}}$, which leads to $${dTheta} = ${rate}$`,
+        `<strong>(a)(i)</strong> One full turn is $2\\pi$ radians in ${T} seconds: $${dTheta} = ${turn}$${cancels ? `, which leads to $${dTheta} = ${rate}$` : ''}`,
         `<strong>(a)(ii)</strong> $${chain}$`,
         `<strong>(a)(ii)</strong> In the right-angled triangle $LGP$, $\\tan\\theta = \\frac{x}{${d}}$, so $x = ${d}\\tan\\theta$`,
         `<strong>(a)(ii)</strong> $\\frac{dx}{d\\theta} = ${d}\\sec^{2}\\theta$`,
@@ -402,7 +407,7 @@ const q2022p2q13: CardRoutine<P2Q13of2022> = {
       ],
       stepMarks: [1, 1, 1, 1, 1, 1, 1, 1, 1],
       finalAnswer: [
-        `(a)(i) $\\frac{2\\pi}{${T}} = ${rate}$`,
+        `(a)(i) $${cancels ? `${turn} = ${rate}` : turn}$`,
         `(a)(ii) $x = ${d}\\tan\\theta$, so $${subbed} = ${coef}\\sec^{2}\\theta$`,
         '(b) $1 + \\frac{\\sin^{2}\\theta}{\\cos^{2}\\theta} = \\frac{1}{\\cos^{2}\\theta} = \\sec^{2}\\theta$',
         `(c) $${answer}${units}$`,
@@ -424,7 +429,7 @@ const q2022p2q13: CardRoutine<P2Q13of2022> = {
         marks: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         shows: [
           null,
-          `$\\frac{2\\pi}{${T}}$ leading to $${rate}$.`,
+          cancels ? `$${turn}$ leading to $${rate}$.` : `$${turn}$`,
           `$${chain}$`,
           null,
           `$\\frac{dx}{d\\theta} = ${d}\\sec^{2}\\theta$`,

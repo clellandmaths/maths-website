@@ -166,7 +166,8 @@ const q2021p2q13: CardRoutine<P2Q13of2021> = {
           `$z_2 = ${z2Text}$`,
           restPolar.map(r => `$${r}$`).join(' or '),
           restPolar.map(r => `$${r}$`).join(', '),
-          `$${realParts}$, $${twice} = ${plus ? '1' : '-1'}$`,
+          // Only this step's line: the simplified one is the next step's (the owner, full read 2026-10-05).
+          `$${realParts}$`,
           null,
         ],
         watch: { at: 5, text: 'Keep every argument between $-\\pi$ and $\\pi$, as the question asks.' },
