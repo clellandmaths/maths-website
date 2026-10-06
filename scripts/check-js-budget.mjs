@@ -3,6 +3,14 @@
  *
  *   npm run build && node scripts/check-js-budget.mjs
  *   node scripts/check-js-budget.mjs --baseline      record, don't compare
+ *   node scripts/check-js-budget.mjs --reset "why"   record although pages grew
+ *
+ * **`--reset` is the deliberate re-baseline** (the owner, 2026-10-06, choosing it
+ * over trimming: the 2026-09-17 headroom had been spent by three weeks of
+ * reviewed features). It records today's sizes even where they are larger,
+ * only with a written reason, lists what grew, and keeps every reset in the
+ * baseline's `resets`. `--baseline` alone still refuses anything worse. It is
+ * no way past `check-engine-isolation.mjs`, which has no tolerance at all.
  *
  * The number is the sum of the **unique** `/_next/static/chunks/*.js` files a
  * page's HTML references. That is the eager JavaScript: what the browser must
@@ -37,7 +45,13 @@ const OUT = path.join(root, 'out');
 const BASELINE = path.join(root, 'scripts', 'js-budget-baseline.json');
 
 const HEADROOM = 10 * 1024;
-const recording = process.argv.includes('--baseline');
+const resetAt = process.argv.indexOf('--reset');
+const resetReason = resetAt >= 0 ? (process.argv[resetAt + 1] ?? '').trim() : null;
+if (resetReason !== null && resetReason.length < 20) {
+  console.error('\n  --reset needs a reason in words, at least 20 characters: what grew and why it is wanted.\n');
+  process.exit(1);
+}
+const recording = process.argv.includes('--baseline') || resetReason !== null;
 
 /**
  * Reported by name every run: the pages whose size was promised, and the two
@@ -134,20 +148,36 @@ for (const p of PINNED) {
 
 // ── record, or compare ─────────────────────────────────────────────────────
 if (recording) {
-  if (fs.existsSync(BASELINE)) {
-    const old = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
+  const old = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : null;
+  const grown = old ? Object.keys(current).filter(k => old.templates[k] && current[k].bytes > old.templates[k].bytes) : [];
+  if (old) {
     const worse = Object.keys(current).filter(k => old.templates[k] && current[k].bytes > old.templates[k].bytes + HEADROOM);
-    if (worse.length) {
+    if (worse.length && resetReason === null) {
       console.error(`\n  REFUSING to record — ${worse.length} template(s) are over the current baseline:\n` +
         worse.map(k => `    ${k}  ${kb(old.templates[k].bytes)} → ${kb(current[k].bytes)}`).join('\n') +
-        `\n\n  A baseline may only be replaced by one that is no worse. Fix the growth first.\n`);
+        `\n\n  A baseline may only be replaced by one that is no worse. Fix the growth first,` +
+        `\n  or, if the growth is reviewed and wanted, --reset "<reason>".\n`);
       process.exit(1);
     }
   }
+  const today = new Date().toISOString().slice(0, 10);
+  const resets = [...(old?.resets ?? [])];
+  if (resetReason !== null) {
+    resets.push({
+      date: today,
+      from: old?.recorded ?? null,
+      reason: resetReason,
+      grew: grown.map(k => ({ template: k, from: old.templates[k].bytes, to: current[k].bytes })),
+    });
+    console.log(`\n  RESET from the baseline of ${old?.recorded ?? '(none)'}: ${grown.length} template(s) grew:\n` +
+      grown.map(k => `    ${k}  ${kb(old.templates[k].bytes)} → ${kb(current[k].bytes)}  (+${current[k].bytes - old.templates[k].bytes} bytes)`).join('\n') +
+      `\n  reason: ${resetReason}`);
+  }
   fs.writeFileSync(BASELINE, JSON.stringify({
-    recorded: new Date().toISOString().slice(0, 10),
+    recorded: today,
     headroomBytes: HEADROOM,
     note: 'Sum of unique /_next/static/chunks/*.js referenced by the worst page of each template.',
+    ...(resets.length ? { resets } : {}),
     templates: current,
   }, null, 2) + '\n');
   console.log(`\n  baseline recorded: ${byTemplate.size} templates → scripts/js-budget-baseline.json\n`);
