@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "412fbfbba0078ff9f41ce8ccfc5c8f91cce4a55a",
+  "sourceCommit": "8db8a90d44c4e36ff29aec5684e6298b2488ca6c",
   "sourceDirty": false,
   "count": 205,
   "files": {
@@ -138,7 +138,7 @@
     "generators/ah/routines/vectors.ts": "4882f96b9403808f",
     "generators/ah/signed-off.ts": "cafe00e3d52fe060",
     "generators/ah/site-cards.ts": "2191ce02ef61e8d2",
-    "generators/ah/site.ts": "e65b38a9a5defd5e",
+    "generators/ah/site.ts": "90104d5b2567e719",
     "generators/ah/types.ts": "f731be9caca1de9c",
     "generators/apps.ts": "86479fd7c8a3132f",
     "generators/circle.ts": "b810b6204e5b2541",

@@ -200,10 +200,13 @@ async function drawCards(
       fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
       continue;
     }
+    // Only a fresh core resets the count. A card that has used every core stays spent for
+    // the rest of this call, rather than spending CORE_TRIES draws again on each later
+    // copy: that took a 20-question separable sheet from 80 to 380 ms (2026-10-06).
+    if (ck && !seen.has(ck)) coreMisses.set(pick.card, 0);
     seen.add(key);
     seen.add(sum);
     if (ck) seen.add(ck);
-    coreMisses.set(pick.card, 0);
     out.push(ck ? { ...made, coreKey: ck } : made);
     unitUses.set(pick.unit, (unitUses.get(pick.unit) ?? 0) + 1);
     cardUses.set(pick.card, (cardUses.get(pick.card) ?? 0) + 1);
