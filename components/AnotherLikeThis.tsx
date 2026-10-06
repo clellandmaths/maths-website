@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Dices, Loader2 } from 'lucide-react';
 import { moreLikeThis } from '@/lib/similar-questions';
 import { useGeneratedDraw } from '@/lib/use-generated-draw';
@@ -74,6 +75,14 @@ export default function AnotherLikeThis({
       offer.label, 1, engine.worksheetKeys([...exclude, ...alsoExclude]), courseId);
     return made ?? null;
   });
+
+  // Ready before the press: the engine in idle time once the page has loaded
+  // (`lib/warm-generator.ts`, the owner 2026-10-06). Loaded lazily, so it costs
+  // the page only this line.
+  const card = offer?.label;
+  useEffect(() => {
+    if (card) import('@/lib/warm-generator').then(w => w.warmGenerator(courseId, card)).catch(() => {});
+  }, [courseId, card]);
 
   // Nothing modelled on this question: render nothing.
   if (!offer) return null;

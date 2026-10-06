@@ -89,6 +89,22 @@ export async function warmForCards(labels: readonly (string | null | undefined)[
 }
 
 /**
+ * What a first press would load, fetched ahead of it (`lib/warm-generator.ts`).
+ * Nothing is drawn. National 5: its generators, which the engine imports on
+ * demand (`generator.ts`, `await import('./generators/n5')`, 595 KB, and the
+ * piece a slowed phone waited on). Advanced Higher: its adapter and the card's
+ * routine file.
+ */
+export async function warmCourse(courseId: string, label?: string | null): Promise<void> {
+  if (courseId === 'ah') {
+    await Promise.all([ah(), label ? warmForCards([label], 'ah') : undefined]);
+  } else if (courseId === 'n5') {
+    const n5 = await import('./generator/generators/n5');
+    if (typeof n5.generateN5Question !== 'function') throw new Error('n5 generators');
+  }
+}
+
+/**
  * Fresh questions modelled on one past paper question.
  *
  * Backs "add a variation of this" in the Explorer. The label comes from the

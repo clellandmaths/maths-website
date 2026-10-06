@@ -72,6 +72,10 @@ const ALLOWED = new Map([
   ['components/Explorer/ExplorerApp.tsx', 'bulk generate, and re-roll on the worksheet'],
   ['app/course/[courseId]/generate/paper/[year]/[paper]/PracticePaperClient.tsx',
     'a whole practice paper'],
+  // Draws nothing, so the sequential and exclude rules are met trivially: it
+  // only loads the engine (and AH's adapter and routine files) in idle time
+  // after the page has loaded, through await import() (2026-10-06).
+  ['lib/warm-generator.ts', 'fetches the engine ahead of a press; draws nothing'],
 ]);
 
 let failures = 0;

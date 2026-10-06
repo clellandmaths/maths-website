@@ -450,6 +450,12 @@ function ExplorerContent({ course }: { course: Course }) {
     if (worksheetItems.length) warmWorksheetImages();
   }, [worksheetItems]);
 
+  // The generator ready before Generate or Variation is pressed: in idle time
+  // once the page has loaded (`lib/warm-generator.ts`, the owner 2026-10-06).
+  useEffect(() => {
+    import('@/lib/warm-generator').then(w => w.warmGenerator(course)).catch(() => {});
+  }, [course]);
+
   // Cmd-P and the browser's own menu bypass the Print button entirely.
   useEffect(() => watchSystemPrint(), []);
 

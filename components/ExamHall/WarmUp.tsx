@@ -86,6 +86,11 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
   const [showVideo, setShowVideo] = useState(false);
   const [showBooklet, setShowBooklet] = useState(false);
   const [finished, setFinished] = useState(false);
+  // Ready for "5 new questions like today's" before the five are done
+  // (`lib/warm-generator.ts`, the owner 2026-10-06).
+  useEffect(() => {
+    import('@/lib/warm-generator').then(w => w.warmGenerator(course)).catch(() => {});
+  }, [course]);
   /**
    * Another five, offered only once today's five are done.
    *
