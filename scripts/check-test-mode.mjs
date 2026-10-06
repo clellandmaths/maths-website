@@ -103,6 +103,33 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
   // Which paper says whether a calculator is allowed, not what the question is.
   t.check(test.calculators === test.cards, `and Calculator or Non-calculator (${test.calculators} of ${test.cards})`);
 
+  // Full screen and Focus carry Test mode too (the owner, 2026-10-06: "Clicking
+  // test mode and opening full screen or focus mode anywhere still gives topic
+  // names"). Neither had been told Test mode was on.
+  const topics = await evaluate(`(() => { try { return [...new Set(JSON.parse(sessionStorage.getItem('worksheet_n5') || '[]').flatMap(q => q.topics || []))]; } catch { return []; } })()`);
+  const OVERLAY_GIVEAWAYS = (close) => `(() => {
+    const o = [...document.querySelectorAll('.fixed.inset-0.z-50')].find(e => e.querySelector('[aria-label=${JSON.stringify(close)}]'));
+    if (!o) return null;
+    const text = o.innerText;
+    const buttons = [...o.querySelectorAll('button')].map(b => b.textContent.trim());
+    return {
+      topics: ${JSON.stringify(topics)}.filter(tp => text.includes(tp)),
+      paper: /[0-9]{4} (Paper [0-9]|P[0-9]) Q[0-9]/.test(text),
+      help: buttons.filter(b => /^(Hint|Answer|Show Answer|Video|Watch Solution|Watch a worked example|Markscheme|Another like this one)$/.test(b)),
+      // The overlays' Marks badge, "5 Marks" (it carries no .q-marks class).
+      marks: /\\b[0-9]+ Marks?\\b/.test(text),
+    };
+  })()`;
+  for (const [open, close, name] of [['Full screen', 'Close full screen', 'full screen'], ['Focus', 'Close focus mode', 'focus mode']]) {
+    t.check(await click(buttonNamed(open)), `the sheet opens ${name} in Test mode`);
+    await sleep(1500);
+    const g = await evaluate(OVERLAY_GIVEAWAYS(close));
+    t.check(!!g && g.topics.length === 0 && !g.paper && g.help.length === 0 && g.marks,
+      `${name} names no topic or paper and offers no answer, hint or video, and keeps the marks (${JSON.stringify(g)}, topics on the sheet ${JSON.stringify(topics)})`);
+    await click(`document.querySelector('[aria-label=${JSON.stringify(close)}]')`);
+    await sleep(800);
+  }
+
   // Shared: the handout starts in test mode and says so in its link.
   await click(buttonNamed('Share'));
   await sleep(1200);
@@ -139,6 +166,11 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
     t.check(shared.badges === 0, `with no paper reference on any of them (${shared.badges})`);
     t.check(shared.marks === shared.cards, `and marks on every one (${shared.marks})`);
     t.check(shared.calculators === shared.cards, `and Calculator or Non-calculator on every one (${shared.calculators})`);
+    t.check(await click(buttonNamed('Full screen')), 'the shared test opens full screen');
+    await sleep(1500);
+    const g = await evaluate(OVERLAY_GIVEAWAYS('Close full screen'));
+    t.check(!!g && g.topics.length === 0 && !g.paper && g.help.length === 0 && g.marks,
+      `and full screen there names no topic or paper and offers no help (${JSON.stringify(g)})`);
   }
 });
 

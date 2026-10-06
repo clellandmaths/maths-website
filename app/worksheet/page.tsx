@@ -480,6 +480,7 @@ function SharedWorksheet() {
              to end — that is the bottom of the ladder — so this adds nothing a
              teacher who ticked hints has not already agreed to. */
           allowAnother={options.hints}
+          testMode={options.test}
           onClose={() => setFullScreenFrom(null)}
         />
       )}

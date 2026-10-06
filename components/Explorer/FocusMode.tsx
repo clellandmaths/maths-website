@@ -17,6 +17,7 @@ import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
+import { withoutPaperBadge } from '@/lib/question-number.mjs';
 
 /**
  * Lazily, the way `Hints` loads its worked example.
@@ -75,9 +76,17 @@ interface FocusModeProps {
    * rule that goes with it.
    */
   allowAnother?: boolean;
+  /**
+   * The worksheet's Test mode, as `QuestionPresenter` takes it (the owner,
+   * 2026-10-06). Each question shows its number, calculator and marks, with no
+   * paper, topic or variation name, and no answer, hint, video, markscheme or
+   * another like this one. The data booklet and "Mark as Done" stay.
+   */
+  testMode?: boolean;
 }
 
-export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose, allowAnother = true }: FocusModeProps) {
+export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose, allowAnother: anotherGiven = true, testMode = false }: FocusModeProps) {
+  const allowAnother = anotherGiven && !testMode;
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
@@ -195,10 +204,12 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     </span>
                   );
                 })()}
-                <span className="text-sm text-muted-dim shrink-0">
-                  {questionLabel(q)}
-                </span>
-                {q.topics?.slice(0, 2).map((topic) => (
+                {!testMode && (
+                  <span className="text-sm text-muted-dim shrink-0">
+                    {questionLabel(q)}
+                  </span>
+                )}
+                {!testMode && q.topics?.slice(0, 2).map((topic) => (
                   <span
                     key={topic}
                     className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded shrink-0"
@@ -211,7 +222,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
 
               {/* Question content */}
               <MathRenderer
-                html={q.question}
+                html={testMode ? withoutPaperBadge(q.question) : q.question}
                 className="text-foreground question-content text-xl leading-relaxed"
               />
 
@@ -234,6 +245,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
 
               {/* Action buttons */}
               <div className="mt-4 flex flex-wrap items-center gap-2">
+                {!testMode && (<>
                 <button
                   onClick={() => toggleAnswer(index)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -258,6 +270,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   size="stage"
                   buttonClassName={`inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
                 />
+                </>)}
                 {hasDataBooklet && (
                   <button
                     onClick={() => setBookletYear(q.year)}
@@ -267,7 +280,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     Data Booklet
                   </button>
                 )}
-                {q.videoId ? (
+                {testMode ? null : q.videoId ? (
                   <button
                     onClick={() => setActiveVideo({
                       videoId: q.videoId,
@@ -319,15 +332,17 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
               {/* Why this row has no Hint button when the ones above and below
                   it do. Rarely more than one per topic, so it explains an
                   oddity rather than repeating itself down the page. */}
-              <NoHintNote
-                courseId={courseId}
-                question={q}
-                solutionUrl={q.solutionUrl}
-                className="mt-3"
-              />
+              {!testMode && (
+                <NoHintNote
+                  courseId={courseId}
+                  question={q}
+                  solutionUrl={q.solutionUrl}
+                  className="mt-3"
+                />
+              )}
 
               {/* Answer section */}
-              {revealedAnswers.has(index) && (
+              {!testMode && revealedAnswers.has(index) && (
                 <div className="mt-4 bg-card border border-border rounded-xl p-4 sm:p-6">
                   <p className={`text-sm font-medium ${theme.text} mb-2`}>Answer:</p>
                   <MathRenderer

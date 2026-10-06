@@ -1738,6 +1738,7 @@ function ExplorerContent({ course }: { course: Course }) {
              is worth that. Advanced Higher has it as National 5 does
              (2026-10-04); the other courses have nothing to draw. */
           allowAnother={courseGenerates(course)}
+          testMode={testMode}
           onClose={() => setPresentStartIndex(null)}
         />
       )}
@@ -1752,6 +1753,7 @@ function ExplorerContent({ course }: { course: Course }) {
           /* As the presenter above: N5 only. Here the twin opens below its
              question and never replaces it. */
           allowAnother={courseGenerates(course)}
+          testMode={testMode}
           onClose={() => setShowFocusMode(false)}
         />
       )}
