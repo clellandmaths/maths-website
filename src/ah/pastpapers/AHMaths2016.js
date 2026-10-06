@@ -122,7 +122,7 @@ export const advHigherMaths2016 = {
           marks: [4]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 Q12</span></strong></small><p>Below is a diagram showing the graph of a linear function, \\(y = f(x).\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2016/2016_Q12.png" alt="Graph of y = f(x)"><p>On separate diagrams show:</p><p><span class="font-bold mr-1">(a)</span>\\(y = |f(x) - c|\\)<br>(b) \\(y = |2f(x)|\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 Q12</span></strong></small><p>Below is a diagram showing the graph of a linear function, \\(y = f(x).\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2016/2016_Q12.png" alt="Graph of y = f(x)"><p>On separate diagrams show:</p><p><span class="font-bold mr-1">(a)</span>\\(y = |f(x) - c|\\)<br><span class="font-bold mr-1">(b)</span>\\(y = |2f(x)|\\)</p>`,
           answer: `(a) V-shaped graph with its vertex on the x-axis at \\(2c\\), passing through \\(2c\\) on the positive y-axis.<br>(b) Symmetrical V-shaped graph with its vertex on the x-axis at \\(c\\), passing through \\(2c\\) on the positive y-axis.`,
           videoId: "",
           timestamp: "",
