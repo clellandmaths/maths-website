@@ -1273,7 +1273,7 @@ function ExplorerContent({ course }: { course: Course }) {
                   </div>
 
                   {/* Worksheet Questions - Linear List View */}
-                  <div className="space-y-6 max-w-4xl worksheet-container pb-20 lg:pb-0">
+                  <div data-course={course} className="space-y-6 max-w-4xl worksheet-container pb-20 lg:pb-0">
                     {worksheetItems.map((q, index) => (
                       <div
                         /* **The question's own id, not where it came from.** A

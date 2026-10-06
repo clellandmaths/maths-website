@@ -765,9 +765,20 @@ body {
     color: #111 !important;
   }
 
-  /* Keep answer label green */
+  /* **The course's own colour on paper** (the owner, 2026-10-06: printed sheets
+     "default to green ... Any way to get colours to match the course"). Each
+     printed sheet's container names its course in `data-course`; the shades
+     are the light theme's (`course-theme.ts`), dark enough to read on white.
+     A sheet that names no course keeps the green it always printed. */
+  .worksheet-container[data-course="n5"] { --print-accent: #1d4ed8; --print-wash: #eff6ff; }
+  .worksheet-container[data-course="higher"] { --print-accent: #b91c1c; --print-wash: #fef2f2; }
+  .worksheet-container[data-course="ah"] { --print-accent: #065f46; --print-wash: #ecfdf5; }
+  .worksheet-container[data-course="n5-apps"] { --print-accent: #92400e; --print-wash: #fffbeb; }
+  .worksheet-container[data-course="higher-apps"] { --print-accent: #6d28d9; --print-wash: #f5f3ff; }
+
+  /* The answer label in the course's colour */
   .worksheet-question .answer-label {
-    color: #16a34a !important;
+    color: var(--print-accent, #16a34a) !important;
   }
 
   /* Answer border should be visible on print */
@@ -782,10 +793,10 @@ body {
     border: 1px solid #e2e8f0 !important;
   }
 
-  /* Question number badge */
+  /* Question number badge, in the course's colour */
   .worksheet-question .q-badge {
-    background: #f0fdf4 !important;
-    color: #16a34a !important;
+    background: var(--print-wash, #f0fdf4) !important;
+    color: var(--print-accent, #16a34a) !important;
   }
 
   /* Images */

@@ -8,6 +8,7 @@ import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 import { printMarkscheme, printWorksheet } from '@/lib/print-worksheet';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
+import CalculatorMark from '@/components/CalculatorMark';
 import { calculatorFor } from '@/lib/calculator';
 import { paperName } from '@/lib/paper-name';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
@@ -315,25 +316,41 @@ export default function PracticePaperClient({
         />
       )}
 
-      <div ref={sheetRef} className="worksheet-container space-y-6">
+      <div ref={sheetRef} data-course={courseId} className="worksheet-container space-y-6">
         {made.map((q, i) => (
           /* `worksheet-question` is what the print stylesheet keys on for a
              white card with black text and a sensible page break. Without it
              this printed the page's own dark styling, and with the header and
              its four buttons still on it. */
           <article key={i} className="worksheet-question border border-border rounded-xl p-5 bg-card/40">
-            <div className="q-head flex items-center gap-2 flex-wrap mb-2">
-              <span className={`font-mono text-sm font-semibold ${theme.text}`}>{plan[i].number}.</span>
+            {/* gap-3, the worksheet's: the calculator picture hangs 8px past the
+                number's corner, and at gap-2 it touched "modelled on". */}
+            <div className="q-head flex items-center gap-3 flex-wrap mb-2">
+              {/* The worksheet's number badge, with the calculator picture on its
+                  corner rather than beside the marks (the owner, 2026-10-06: the
+                  printed practice paper "should match worksheet generator"). The
+                  same classes as `ExplorerApp`'s, so print styles it alike. */}
+              {(() => {
+                const calculator = calculatorFor(plan[i].label, courseId);
+                return (
+                  <span className={`q-badge relative flex items-center justify-center w-8 h-8 shrink-0 ${theme.tint} ${theme.text} text-sm font-bold rounded-full`}>
+                    {plan[i].number}
+                    {calculator && (
+                      <span className="q-badge-calc absolute -bottom-1.5 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-card ring-1 ring-border">
+                        <CalculatorMark label={calculator} />
+                      </span>
+                    )}
+                  </span>
+                );
+              })()}
               {q ? (
                 <>
                   <span className="font-mono text-xs text-muted-foreground">
                     modelled on {plan[i].label}
                   </span>
-                  {/* On the right, as on a worksheet card: where a phone has
-                      no room, the picture and the marks drop to the next line
-                      together, flush right, rather than under the number
-                      (the owner, 2026-09-30: "make it so that it looks clean"). */}
-                  <Marks marks={q.marks} theme={theme} calculator={calculatorFor(plan[i].label, courseId)} className="ml-auto" />
+                  {/* On the right, as on a worksheet card. The calculator picture
+                      is on the number now, as there. */}
+                  <Marks marks={q.marks} theme={theme} className="ml-auto" />
                 </>
               ) : (
                 <span className="font-mono text-xs text-amber-800 dark:text-amber-300/90">

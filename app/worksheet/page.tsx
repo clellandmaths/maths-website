@@ -246,7 +246,7 @@ function SharedWorksheet() {
         </div>
       )}
 
-      <ol className="worksheet-container space-y-6">
+      <ol data-course={courseId ?? undefined} className="worksheet-container space-y-6">
         {questions.map((q, i) => {
           const isOpen = revealed.has(i);
           return (
