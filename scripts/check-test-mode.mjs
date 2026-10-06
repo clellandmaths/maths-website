@@ -118,6 +118,9 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
       help: buttons.filter(b => /^(Hint|Answer|Show Answer|Video|Watch Solution|Watch a worked example|Markscheme|Another like this one)$/.test(b)),
       // The overlays' Marks badge, "5 Marks" (it carries no .q-marks class).
       marks: /\\b[0-9]+ Marks?\\b/.test(text),
+      // Calculator or Non-calculator stays: read from the paper reference, which
+      // asTestQuestion moves out of the hidden badge.
+      calculators: o.querySelectorAll('[data-calculator="Calculator"], [data-calculator="Non-calculator"]').length,
     };
   })()`;
   for (const [open, close, name] of [['Full screen', 'Close full screen', 'full screen'], ['Focus', 'Close focus mode', 'focus mode']]) {
@@ -126,6 +129,9 @@ await withPage({ port: 8179, cdp: 9279, width: 1600, height: 1000 }, async ({ ev
     const g = await evaluate(OVERLAY_GIVEAWAYS(close));
     t.check(!!g && g.topics.length === 0 && !g.paper && g.help.length === 0 && g.marks,
       `${name} names no topic or paper and offers no answer, hint or video, and keeps the marks (${JSON.stringify(g)}, topics on the sheet ${JSON.stringify(topics)})`);
+    // Full screen shows one question at a time; Focus shows every one.
+    const wantCalc = name === 'focus mode' ? test.cards : 1;
+    t.check(g?.calculators === wantCalc, `and Calculator or Non-calculator on ${wantCalc === 1 ? 'the question' : 'every question'} (${g?.calculators} of ${wantCalc})`);
     await click(`document.querySelector('[aria-label=${JSON.stringify(close)}]')`);
     await sleep(800);
   }

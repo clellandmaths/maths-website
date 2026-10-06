@@ -36,6 +36,7 @@ import { getCourseTheme } from '@/lib/course-theme';
 import { QS_COPYRIGHT_NOTICE, QS_NOTICE_SCOPE } from '@/lib/exam-board';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
 import { paperCaption, withoutPaperBadge } from '@/lib/question-number.mjs';
+import { asTestQuestion } from '@/lib/test-mode-question';
 
 // A shared worksheet, locked. Everything comes from the query string, so this
 // page is static and the link works forever without anything stored anywhere.
@@ -468,7 +469,9 @@ function SharedWorksheet() {
           theme={theme}
           courseId={courseId ?? undefined}
           hasDataBooklet={courseId === 'higher-apps'}
-          questions={questions}
+          // A test names no paper or topic in full screen either (2026-10-06); the
+          // allow flags below are already off for one (`worksheet-share.ts`).
+          questions={options.test ? questions.map(asTestQuestion) : questions}
           startIndex={fullScreenFrom}
           allowAnswers={options.answers}
           allowHints={options.hints}
@@ -480,7 +483,6 @@ function SharedWorksheet() {
              to end — that is the bottom of the ladder — so this adds nothing a
              teacher who ticked hints has not already agreed to. */
           allowAnother={options.hints}
-          testMode={options.test}
           onClose={() => setFullScreenFrom(null)}
         />
       )}

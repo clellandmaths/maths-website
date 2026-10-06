@@ -8,7 +8,7 @@ import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
 import { QuestionWithMetadata, questionLabel } from '@/lib/data-loader';
-import { isWholePaper, lastQuestionNumber, withoutPaperBadge } from '@/lib/question-number.mjs';
+import { isWholePaper, lastQuestionNumber } from '@/lib/question-number.mjs';
 import MathRenderer from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import NoHintNote from '@/components/NoHintNote';
@@ -79,15 +79,6 @@ interface QuestionPresenterProps {
    * full screen is the only one of the four that does not end up on the sheet.
    */
   allowAnother?: boolean;
-  /**
-   * The worksheet's Test mode (the owner, 2026-10-06: "Clicking test mode and
-   * opening full screen or focus mode anywhere still gives topic names"). Full
-   * screen then shows what a Test mode sheet shows: the number, the marks and the
-   * calculator, with no paper, topic or variation name, and none of what Test
-   * mode locks on the sheet (answers, hints, video, another like this one).
-   * Default false, so every other use is unchanged.
-   */
-  testMode?: boolean;
 }
 
 /**
@@ -111,12 +102,7 @@ function extractImageSrcs(html: string): string[] {
   return srcs;
 }
 
-export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, backTo, allowAnswers: answersGiven = true, allowVideo: videoGiven = true, allowHints: hintsGiven = true, allowAnother: anotherGiven = true, testMode = false }: QuestionPresenterProps) {
-  // Test mode withholds what it withholds on the sheet, whatever the caller allows.
-  const allowAnswers = answersGiven && !testMode;
-  const allowVideo = videoGiven && !testMode;
-  const allowHints = hintsGiven && !testMode;
-  const allowAnother = anotherGiven && !testMode;
+export default function QuestionPresenter({ theme, hasDataBooklet = false, courseId, questions, startIndex = 0, onClose, backTo, allowAnswers = true, allowVideo = true, allowHints = true, allowAnother = true }: QuestionPresenterProps) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -308,14 +294,12 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                 Here it costs the row nothing and it sits with the words that
                 say why it exists — this line is where the twin announces it is
                 not the paper question. */}
-              {!testMode && (
-                <span className="text-sm text-muted-dim">
-                  {twin
-                    ? `New question${twin.basedOn?.[twin.parentIndex ?? 0]
-                        ? ` · based on ${twin.basedOn[twin.parentIndex ?? 0]}` : ''}`
-                    : questionLabel(question)}
-                </span>
-              )}
+              <span className="text-sm text-muted-dim">
+                {twin
+                  ? `New question${twin.basedOn?.[twin.parentIndex ?? 0]
+                      ? ` · based on ${twin.basedOn[twin.parentIndex ?? 0]}` : ''}`
+                  : questionLabel(question)}
+              </span>
               {twin && (
                 <button
                   onClick={() => { setTwin(null); setShowAnswer(false); }}
@@ -325,7 +309,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   Back to the question
                 </button>
               )}
-              {!testMode && shown.topics?.slice(0, 3).map((topic) => (
+              {shown.topics?.slice(0, 3).map((topic) => (
                 <span
                   key={topic}
                   className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded"
@@ -346,7 +330,7 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
                   {/* Text column — scrollable if question is long */}
                   <div className={hasImages ? 'lg:[&_img]:!hidden' : ''}>
                     <MathRenderer
-                      html={testMode ? withoutPaperBadge(shown.question) : shown.question}
+                      html={shown.question}
                       // 20px from the smallest phone, not 18px.
                       //
                       // `sm:` is 640px, so no phone in portrait ever reached

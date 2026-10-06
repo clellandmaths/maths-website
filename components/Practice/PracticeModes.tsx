@@ -2,18 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { Maximize2, Presentation, BookOpen, ArrowLeft } from 'lucide-react';
+import FocusMode from '@/components/Explorer/FocusMode';
 import FormulaeButton from '@/components/FormulaeButton';
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
-
-/**
- * Loaded when opened, as `CoursePageClient` loads them (2026-09-28). Both appear
- * only after a press, and eager they put the practice pages over their JS budget
- * when Test mode reached them (2026-10-06: 893 KB against 892).
- */
-const FocusMode = dynamic(() => import('@/components/Explorer/FocusMode'), { ssr: false });
-const QuestionPresenter = dynamic(() => import('@/components/Explorer/QuestionPresenter'), { ssr: false });
+import QuestionPresenter from '@/components/Explorer/QuestionPresenter';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 

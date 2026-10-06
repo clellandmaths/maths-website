@@ -17,7 +17,6 @@ import FormulaeButton from '@/components/FormulaeButton';
 import VideoModal from '@/components/VideoModal';
 import type { CourseTheme } from '@/lib/course-theme';
 import { timestampToSeconds } from '@/lib/timestamp.mjs';
-import { withoutPaperBadge } from '@/lib/question-number.mjs';
 
 /**
  * Lazily, the way `Hints` loads its worked example.
@@ -77,16 +76,14 @@ interface FocusModeProps {
    */
   allowAnother?: boolean;
   /**
-   * The worksheet's Test mode, as `QuestionPresenter` takes it (the owner,
-   * 2026-10-06). Each question shows its number, calculator and marks, with no
-   * paper, topic or variation name, and no answer, hint, video, markscheme or
-   * another like this one. The data booklet and "Mark as Done" stay.
+   * Test mode (the owner, 2026-10-06): no answer, hint, video, markscheme or
+   * another like this one; the data booklet and "Mark as Done" stay. The caller
+   * hands over `asTestQuestion` copies, so nothing names a paper or topic.
    */
   testMode?: boolean;
 }
 
-export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose, allowAnother: anotherGiven = true, testMode = false }: FocusModeProps) {
-  const allowAnother = anotherGiven && !testMode;
+export default function FocusMode({ theme, hasDataBooklet = false, courseId, questions, onClose, allowAnother = true, testMode }: FocusModeProps) {
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
   const [activeVideo, setActiveVideo] = useState<{videoId: string; timestamp: number; title: string} | null>(null);
   const [bookletYear, setBookletYear] = useState<number | string | null>(null);
@@ -204,12 +201,10 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                     </span>
                   );
                 })()}
-                {!testMode && (
-                  <span className="text-sm text-muted-dim shrink-0">
-                    {questionLabel(q)}
-                  </span>
-                )}
-                {!testMode && q.topics?.slice(0, 2).map((topic) => (
+                <span className="text-sm text-muted-dim shrink-0">
+                  {questionLabel(q)}
+                </span>
+                {q.topics?.slice(0, 2).map((topic) => (
                   <span
                     key={topic}
                     className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded shrink-0"
@@ -222,7 +217,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
 
               {/* Question content */}
               <MathRenderer
-                html={testMode ? withoutPaperBadge(q.question) : q.question}
+                html={q.question}
                 className="text-foreground question-content text-xl leading-relaxed"
               />
 
@@ -245,8 +240,7 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
 
               {/* Action buttons */}
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                {!testMode && (<>
-                <button
+                {!testMode && <button
                   onClick={() => toggleAnswer(index)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     revealedAnswers.has(index)
@@ -259,18 +253,17 @@ export default function FocusMode({ theme, hasDataBooklet = false, courseId, que
                   ) : (
                     <><Eye className="h-4 w-4" /> Show Answer</>
                   )}
-                </button>
+                </button>}
                 {/* Focus's own row is px-4 py-2 — 36px — so the Hint button
                     matches that rather than the presenter's 48px blocks. Same
                     fault in both places, different right answer. */}
-                <Hints
+                {!testMode && <Hints
                   question={q}
                   theme={theme}
                   courseId={courseId}
                   size="stage"
                   buttonClassName={`inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${theme.tint} ${theme.text} hover:bg-foreground/10`}
-                />
-                </>)}
+                />}
                 {hasDataBooklet && (
                   <button
                     onClick={() => setBookletYear(q.year)}

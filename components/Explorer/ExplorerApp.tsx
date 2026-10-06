@@ -41,6 +41,7 @@ import { decodeWorksheet, resolveWorksheet, isGenerated, questionRef } from '@/l
 import { byPaperLabel, withParentVideo, courseGenerates, courseHasPaperLadder, generationLabel } from '@/lib/similar-questions';
 import { parseGeneratedRef } from '@/lib/worksheet-refs.mjs';
 import { paperCaption, withoutPaperBadge } from '@/lib/question-number.mjs';
+import { asTestQuestion } from '@/lib/test-mode-question';
 import { printMarkscheme, printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 
 export type Course = 'n5' | 'higher' | 'ah' | 'higher-apps' | 'n5-apps';
@@ -146,6 +147,8 @@ function ExplorerContent({ course }: { course: Course }) {
   const [schemes, setSchemes] = useState<CourseSchemes | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, replaceItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
+  // What full screen and Focus are handed in Test mode (`asTestQuestion`).
+  const testItems = worksheetItems.map(asTestQuestion);
 
   // Shown in the printed header — a pupil wants to know what the paper is worth
   const totalMarks = useMemo(
@@ -1723,7 +1726,10 @@ function ExplorerContent({ course }: { course: Course }) {
           theme={theme}
           courseId={course}
           hasDataBooklet={config.hasDataBooklet}
-          questions={worksheetItems}
+          questions={testMode ? testItems : worksheetItems}
+          allowAnswers={!testMode}
+          allowHints={!testMode}
+          allowVideo={!testMode}
           startIndex={presentStartIndex}
           /* **N5 only, for now (the owner, 2026-09-27).** In class a teacher
              makes a sheet quickly, puts it up full screen and wants another
@@ -1737,8 +1743,7 @@ function ExplorerContent({ course }: { course: Course }) {
              when the mode closes. The owner's call is that projecting one
              is worth that. Advanced Higher has it as National 5 does
              (2026-10-04); the other courses have nothing to draw. */
-          allowAnother={courseGenerates(course)}
-          testMode={testMode}
+          allowAnother={courseGenerates(course) && !testMode}
           onClose={() => setPresentStartIndex(null)}
         />
       )}
@@ -1749,10 +1754,10 @@ function ExplorerContent({ course }: { course: Course }) {
           theme={theme}
           courseId={course}
           hasDataBooklet={config.hasDataBooklet}
-          questions={worksheetItems}
+          questions={testMode ? testItems : worksheetItems}
           /* As the presenter above: N5 only. Here the twin opens below its
              question and never replaces it. */
-          allowAnother={courseGenerates(course)}
+          allowAnother={courseGenerates(course) && !testMode}
           testMode={testMode}
           onClose={() => setShowFocusMode(false)}
         />
