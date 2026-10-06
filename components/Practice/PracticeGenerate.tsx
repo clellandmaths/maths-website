@@ -118,7 +118,7 @@ export default function PracticeGenerate({ courseId, topicId, generates, subtopi
       {draw.state === 'exhausted' && (
         <p className="mt-3 text-sm text-muted-foreground">
           {draw.seen > 0
-            ? `That is all ${draw.seen} different questions this topic can make just now.`
+            ? 'No more new questions on this topic: you have had them all.'
             : 'No new question could be made for this topic just now.'}
         </p>
       )}

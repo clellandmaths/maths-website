@@ -340,8 +340,10 @@ export default function QuestionCard({
             sheet makes it available again. */}
         {exhausted && (
           <p className="text-xs text-muted-foreground mb-2">
+            {/* No number (the owner, 2026-10-06): `drawn` is what this card has
+                drawn this visit, not what the question can make. */}
             {drawn.current.length > 0
-              ? `That is all ${drawn.current.length} different question${drawn.current.length === 1 ? '' : 's'} this one can make.`
+              ? 'No more new questions like this one: you have had them all.'
               : 'Every variation of this question is already on your worksheet.'}
           </p>
         )}
