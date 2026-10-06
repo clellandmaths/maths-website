@@ -50,7 +50,7 @@ export const advHigherMaths2023P1 = {
           marks: [9]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q6</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Express \\(z = 1 + \\sqrt{3}i\\) in polar form.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence, or otherwise, show that \\(z^3\\) is real.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q6</span></strong></small><p><span class="font-bold mr-1">(a)</span>Express \\(z = 1 + \\sqrt{3}i\\) in polar form.</p><p><span class="font-bold mr-1">(b)</span>Hence, or otherwise, show that \\(z^3\\) is real.</p>`,
           answer: `(a) \\(2\\left(\\cos \\frac{\\pi}{3} + i \\sin \\frac{\\pi}{3}\\right)\\)<br>(b) Using de Moivre's Theorem, \\(z^3 = 2^3 \\left(\\cos \\frac{3\\pi}{3} + i \\sin \\frac{3\\pi}{3}\\right) = 8(\\cos \\pi + i \\sin \\pi) = -8.\\) Since the imaginary part is zero, \\(z^3\\) is real.`,
           videoId: "TIoIgzV5tjU",
           timestamp: "13m44s",
@@ -59,7 +59,7 @@ export const advHigherMaths2023P1 = {
           marks: [2, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q7</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Find an expression for \\(\\sum_{r=1}^{n} (r^2 + 3r)\\) in terms of \\(n.\\)<br>Express your answer in the form \\(\\frac{1}{3}n(n + a)(n + b).\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence, or otherwise, find \\(\\sum_{r=11}^{20} (r^2 + 3r).\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q7</span></strong></small><p><span class="font-bold mr-1">(a)</span>Find an expression for \\(\\sum_{r=1}^{n} (r^2 + 3r)\\) in terms of \\(n.\\)<br>Express your answer in the form \\(\\frac{1}{3}n(n + a)(n + b).\\)</p><p><span class="font-bold mr-1">(b)</span>Hence, or otherwise, find \\(\\sum_{r=11}^{20} (r^2 + 3r).\\)</p>`,
           answer: `(a) \\(\\frac{1}{3}n(n + 1)(n + 5)\\)<br>(b) \\(2950\\)`,
           videoId: "TIoIgzV5tjU",
           timestamp: "15m54s",
@@ -68,7 +68,7 @@ export const advHigherMaths2023P1 = {
           marks: [2, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q8</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Consider the statement:<br>For all integers \\(a\\) and \\(b\\), if \\(a < b\\) then \\(a^2 < b^2.\\)<br>Find a counterexample to show that the statement is false.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Let \\(n\\) be an odd integer.<br>Prove directly that \\(n^2 - 1\\) is divisible by 4.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q8</span></strong></small><p><span class="font-bold mr-1">(a)</span>Consider the statement:<br>For all integers \\(a\\) and \\(b\\), if \\(a < b\\) then \\(a^2 < b^2.\\)<br>Find a counterexample to show that the statement is false.</p><p><span class="font-bold mr-1">(b)</span>Let \\(n\\) be an odd integer.<br>Prove directly that \\(n^2 - 1\\) is divisible by 4.</p>`,
           answer: `(a) e.g., let \\(a = -2\\) and \\(b = 1.\\) \\(-2 < 1\\) is true, but \\((-2)^2 < 1^2 \\Rightarrow 4 < 1\\) is false.<br>(b) Let \\(n = 2k + 1\\) for \\(k \\in \\mathbb{Z}.\\) Then \\(n^2 - 1 = (2k+1)^2 - 1 = 4k^2 + 4k = 4(k^2 + k)\\), which is divisible by 4.`,
           videoId: "TIoIgzV5tjU",
           timestamp: "19m30s",
@@ -77,7 +77,7 @@ export const advHigherMaths2023P1 = {
           marks: [1, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q9</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>State the matrix \\(A\\), associated with an anti-clockwise rotation of \\(\\frac{\\pi}{2}\\) radians about the origin.</p><p>The matrix \\(B\\) is given by \\(B = \\begin{pmatrix} -\\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\\\ -\\frac{1}{2} & -\\frac{\\sqrt{3}}{2} \\end{pmatrix}.\\)<br>The matrix \\(AB\\) is associated with an anti-clockwise rotation of \\(\\alpha\\) radians about the origin.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>(i) Determine \\(AB.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>(ii) Find the value of \\(\\alpha.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Determine the least positive integer value of \\(n\\) such that \\((AB)^n = I\\), where \\(I\\) is the \\(2 \\times 2\\) identity matrix.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2023 P1 Q9</span></strong></small><p><span class="font-bold mr-1">(a)</span>State the matrix \\(A\\), associated with an anti-clockwise rotation of \\(\\frac{\\pi}{2}\\) radians about the origin.</p><p>The matrix \\(B\\) is given by \\(B = \\begin{pmatrix} -\\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\\\ -\\frac{1}{2} & -\\frac{\\sqrt{3}}{2} \\end{pmatrix}.\\)<br>The matrix \\(AB\\) is associated with an anti-clockwise rotation of \\(\\alpha\\) radians about the origin.</p><p><span class="font-bold mr-1">(b)</span>(i) Determine \\(AB.\\)</p><p><span class="font-bold mr-1">(b)</span>(ii) Find the value of \\(\\alpha.\\)</p><p><span class="font-bold mr-1">(c)</span>Determine the least positive integer value of \\(n\\) such that \\((AB)^n = I\\), where \\(I\\) is the \\(2 \\times 2\\) identity matrix.</p>`,
           answer: `(a) \\(\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\)<br>(b)(i) \\(\\begin{pmatrix} \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\\\ -\\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{pmatrix}\\)<br>(b)(ii) \\(\\frac{5\\pi}{3}\\) (or \\(-\\frac{\\pi}{3}\\))<br>(c) \\(6\\)`,
           videoId: "TIoIgzV5tjU",
           timestamp: "21m35s",

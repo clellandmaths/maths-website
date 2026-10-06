@@ -23,7 +23,7 @@ export const advHigherMaths2024P2 = {
           marks: [3]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q3</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Use Gaussian elimination to express \\(z\\) in terms of \\(\\lambda\\) for the system of equations:</p><p>\\(x - y - 3z = 1\\)<br>\\(2x - 3y - 5z = 8\\)<br>\\(x + 2y + \\lambda z = -7\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>State the value of \\(\\lambda\\) for which this system is inconsistent.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Determine the solution of this system when \\(\\lambda = -1.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q3</span></strong></small><p><span class="font-bold mr-1">(a)</span>Use Gaussian elimination to express \\(z\\) in terms of \\(\\lambda\\) for the system of equations:</p><p>\\(x - y - 3z = 1\\)<br>\\(2x - 3y - 5z = 8\\)<br>\\(x + 2y + \\lambda z = -7\\)</p><p><span class="font-bold mr-1">(b)</span>State the value of \\(\\lambda\\) for which this system is inconsistent.</p><p><span class="font-bold mr-1">(c)</span>Determine the solution of this system when \\(\\lambda = -1.\\)</p>`,
           answer: `(a) \\(z = \\frac{10}{\\lambda + 6}\\)<br>(b) \\(\\lambda = -6\\)<br>(c) \\(x = 3, y = -4, z = 2\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "3m37s",
@@ -41,7 +41,7 @@ export const advHigherMaths2024P2 = {
           marks: [5]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q5</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>State and simplify the general term in the binomial expansion of \\(\\left(2x^2 - \\frac{1}{x^3}\\right)^{16}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence, or otherwise, find the coefficient of \\(\\frac{1}{x^{18}}\\) in the expansion of \\(\\left(2x^2 - \\frac{1}{x^3}\\right)^{16}.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q5</span></strong></small><p><span class="font-bold mr-1">(a)</span>State and simplify the general term in the binomial expansion of \\(\\left(2x^2 - \\frac{1}{x^3}\\right)^{16}.\\)</p><p><span class="font-bold mr-1">(b)</span>Hence, or otherwise, find the coefficient of \\(\\frac{1}{x^{18}}\\) in the expansion of \\(\\left(2x^2 - \\frac{1}{x^3}\\right)^{16}.\\)</p>`,
           answer: `(a) \\(\\binom{16}{r}(-1)^r 2^{16-r} x^{32-5r}\\)<br>(b) \\(512512\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "9m41s",
@@ -50,7 +50,7 @@ export const advHigherMaths2024P2 = {
           marks: [3, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q6</span></strong></small><p>A curve is defined parametrically by \\(x = t^2\\) and \\(y = 4t \\ln t\\) where \\(t > 0.\\)<br>Find a fully simplified expression for:</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>\\(\\frac{dy}{dx}\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>\\(\\frac{d^2y}{dx^2}\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q6</span></strong></small><p>A curve is defined parametrically by \\(x = t^2\\) and \\(y = 4t \\ln t\\) where \\(t > 0.\\)<br>Find a fully simplified expression for:</p><p><span class="font-bold mr-1">(a)</span>\\(\\frac{dy}{dx}\\)</p><p><span class="font-bold mr-1">(b)</span>\\(\\frac{d^2y}{dx^2}\\)</p>`,
           answer: `(a) \\(\\frac{2(\\ln t + 1)}{t}\\)<br>(b) \\(\\frac{-\\ln t}{t^3}\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "12m28s",
@@ -59,7 +59,7 @@ export const advHigherMaths2024P2 = {
           marks: [3, 3]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q7</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Find and simplify the Maclaurin expansion, up to and including the term in \\(x^3\\), for:</p><p>(i) \\(e^{2x}\\)</p><p>(ii) \\(\\sin 3x\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence find the Maclaurin expansion for \\(e^{2 \\sin 3x}\\) up to and including the term in \\(x^3.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q7</span></strong></small><p><span class="font-bold mr-1">(a)</span>Find and simplify the Maclaurin expansion, up to and including the term in \\(x^3\\), for:</p><p>(i) \\(e^{2x}\\)</p><p>(ii) \\(\\sin 3x\\)</p><p><span class="font-bold mr-1">(b)</span>Hence find the Maclaurin expansion for \\(e^{2 \\sin 3x}\\) up to and including the term in \\(x^3.\\)</p>`,
           answer: `(a)(i) \\(1 + 2x + 2x^2 + \\frac{4}{3}x^3\\)<br>(a)(ii) \\(3x - \\frac{9}{2}x^3\\)<br>(b) \\(1 + 6x + 18x^2 + 27x^3\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "15m49s",
@@ -77,7 +77,7 @@ export const advHigherMaths2024P2 = {
           marks: [5]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q9</span></strong></small><p>An arithmetic sequence has first term \\(-3\\) and common difference \\(d.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>State an expression for the third term.</p><p>The eighth term is five times the third term.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Find the value of \\(d.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Determine algebraically the least number of terms required so that the sum of the associated series is greater than 500.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q9</span></strong></small><p>An arithmetic sequence has first term \\(-3\\) and common difference \\(d.\\)</p><p><span class="font-bold mr-1">(a)</span>State an expression for the third term.</p><p>The eighth term is five times the third term.</p><p><span class="font-bold mr-1">(b)</span>Find the value of \\(d.\\)</p><p><span class="font-bold mr-1">(c)</span>Determine algebraically the least number of terms required so that the sum of the associated series is greater than 500.</p>`,
           answer: `(a) \\(-3 + 2d\\)<br>(b) \\(d = 4\\)<br>(c) \\(18\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "25m",
@@ -113,7 +113,7 @@ export const advHigherMaths2024P2 = {
           marks: [5]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q13</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Express \\(\\frac{-2}{x(x+1)}\\) in partial fractions.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Use integration by parts to find \\(\\int xe^{3x} dx.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Using your answers to (a) and (b), solve</p><p>\\(\\frac{dy}{dx} - \\frac{2y}{x(x+1)} = \\frac{x^3 e^{3x}}{(x+1)^2}.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q13</span></strong></small><p><span class="font-bold mr-1">(a)</span>Express \\(\\frac{-2}{x(x+1)}\\) in partial fractions.</p><p><span class="font-bold mr-1">(b)</span>Use integration by parts to find \\(\\int xe^{3x} dx.\\)</p><p><span class="font-bold mr-1">(c)</span>Using your answers to (a) and (b), solve</p><p>\\(\\frac{dy}{dx} - \\frac{2y}{x(x+1)} = \\frac{x^3 e^{3x}}{(x+1)^2}.\\)</p>`,
           answer: `(a) \\(\\frac{-2}{x} + \\frac{2}{x+1}\\)<br>(b) \\(\\frac{1}{3}xe^{3x} - \\frac{1}{9}e^{3x} + c\\)<br>(c) \\(y = \\frac{x^2}{(x+1)^2} \\left( \\frac{1}{3}xe^{3x} - \\frac{1}{9}e^{3x} + c \\right)\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "36m34s",
@@ -122,7 +122,7 @@ export const advHigherMaths2024P2 = {
           marks: [2, 3, 5]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q14</span></strong></small><p>A plane passes through \\(A(2, -1, 8)\\), \\(B(1, 1, -1)\\) and \\(C(4, -2, 11).\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>(i) Determine \\(\\vec{AB}\\) and \\(\\vec{AC}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>(ii) Hence find the Cartesian equation of the plane.</p><p>A line is defined by the equations \\(\\frac{x-1}{1} = \\frac{y+1}{-1} = \\frac{z+1}{4}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Show that the line and the plane do not intersect.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q14</span></strong></small><p>A plane passes through \\(A(2, -1, 8)\\), \\(B(1, 1, -1)\\) and \\(C(4, -2, 11).\\)</p><p><span class="font-bold mr-1">(a)</span>(i) Determine \\(\\vec{AB}\\) and \\(\\vec{AC}.\\)</p><p><span class="font-bold mr-1">(a)</span>(ii) Hence find the Cartesian equation of the plane.</p><p>A line is defined by the equations \\(\\frac{x-1}{1} = \\frac{y+1}{-1} = \\frac{z+1}{4}.\\)</p><p><span class="font-bold mr-1">(b)</span>Show that the line and the plane do not intersect.</p>`,
           answer: `(a)(i) \\(\\vec{AB} = \\begin{pmatrix} -1 \\\\ 2 \\\\ -9 \\end{pmatrix}\\), \\(\\vec{AC} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}\\)<br>(a)(ii) \\(x + 5y + z = 5\\)<br>(b) Substituting parametric equations \\((x = 1 + \\lambda, y = -1 - \\lambda, z = -1 + 4\\lambda)\\) into the plane gives \\(-5 \\neq 5\\), so they do not intersect.`,
           videoId: "glLpgi1-Mxc",
           timestamp: "43m41s",
@@ -131,7 +131,7 @@ export const advHigherMaths2024P2 = {
           marks: [1, 3, 3]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q15</span></strong></small><p>A storage tank contains a mixture of salt and water. An additional amount of salt and water pours in while, at the same time, some of the existing mixture pours out.</p><p>The process can be modelled by the differential equation</p><p>\\(\\frac{dW}{dt} = \\frac{36 - W}{120}, W < 36\\)</p><p>where \\(W\\) is the amount of salt in kilograms at time \\(t\\) minutes. Initially, the storage tank contains 8 kilograms of salt.</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Express \\(W\\) in terms of \\(t.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Find the rate at which the amount of salt is increasing after 67 minutes.</p><p>As the process continues, the amount of salt approaches a limit \\(L\\) kilograms.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Find the value of \\(L\\), justifying your answer.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2024 P2 Q15</span></strong></small><p>A storage tank contains a mixture of salt and water. An additional amount of salt and water pours in while, at the same time, some of the existing mixture pours out.</p><p>The process can be modelled by the differential equation</p><p>\\(\\frac{dW}{dt} = \\frac{36 - W}{120}, W < 36\\)</p><p>where \\(W\\) is the amount of salt in kilograms at time \\(t\\) minutes. Initially, the storage tank contains 8 kilograms of salt.</p><p><span class="font-bold mr-1">(a)</span>Express \\(W\\) in terms of \\(t.\\)</p><p><span class="font-bold mr-1">(b)</span>Find the rate at which the amount of salt is increasing after 67 minutes.</p><p>As the process continues, the amount of salt approaches a limit \\(L\\) kilograms.</p><p><span class="font-bold mr-1">(c)</span>Find the value of \\(L\\), justifying your answer.</p>`,
           answer: `(a) \\(W = 36 - 28e^{-\\frac{1}{120}t}\\)<br>(b) \\(\\frac{7}{30}e^{-\\frac{67}{120}}\\) (or \\(0.13\\)) kilograms per minute<br>(c) \\(L = 36\\), because \\(e^{-\\frac{1}{120}t} \\rightarrow 0\\) as \\(t \\rightarrow \\infty.\\)`,
           videoId: "glLpgi1-Mxc",
           timestamp: "48m54s",

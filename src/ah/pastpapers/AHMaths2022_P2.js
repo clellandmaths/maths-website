@@ -50,7 +50,7 @@ export const advHigherMaths2022P2 = {
           marks: [3]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q6</span></strong></small><p>The first three terms of a sequence are defined algebraically by \\(x+5\\), \\(3x+2\\), \\(5x-1\\), where \\(x\\in\\mathbb{N}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Show that these three terms form the start of an arithmetic sequence.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Find a simplified expression for the \\(15^{th}\\) term of this sequence.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Given that the sum of the first 20 terms of this sequence is 1130, find the value of \\(x.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q6</span></strong></small><p>The first three terms of a sequence are defined algebraically by \\(x+5\\), \\(3x+2\\), \\(5x-1\\), where \\(x\\in\\mathbb{N}.\\)</p><p><span class="font-bold mr-1">(a)</span>Show that these three terms form the start of an arithmetic sequence.</p><p><span class="font-bold mr-1">(b)</span>Find a simplified expression for the \\(15^{th}\\) term of this sequence.</p><p><span class="font-bold mr-1">(c)</span>Given that the sum of the first 20 terms of this sequence is 1130, find the value of \\(x.\\)</p>`,
           answer: `(a) \\((3x+2) - (x+5) = 2x-3\\) and \\((5x-1) - (3x+2) = 2x-3.\\) Common difference is the same, so it is arithmetic.<br>(b) \\(29x - 37\\)<br>(c) \\(x = 4\\)`,
           videoId: "uYs7eC7VBfI",
           timestamp: "14m58s",
@@ -59,7 +59,7 @@ export const advHigherMaths2022P2 = {
           marks: [2, 2, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q7</span></strong></small><p>The complex number \\(z=3+i\\) is a root of \\(z^{2}-6z+a=0\\) where \\(a\\) is a real number.</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>State the second root of \\(z^{2}-6z+a=0.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence, or otherwise, find the value of \\(a.\\)</p><p>The expression \\(z^{2}-6z+a\\) is a factor of \\(z^{3}-z^{2}-20z+b\\) where \\(b\\) is a real number.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Find the value of \\(b.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q7</span></strong></small><p>The complex number \\(z=3+i\\) is a root of \\(z^{2}-6z+a=0\\) where \\(a\\) is a real number.</p><p><span class="font-bold mr-1">(a)</span>State the second root of \\(z^{2}-6z+a=0.\\)</p><p><span class="font-bold mr-1">(b)</span>Hence, or otherwise, find the value of \\(a.\\)</p><p>The expression \\(z^{2}-6z+a\\) is a factor of \\(z^{3}-z^{2}-20z+b\\) where \\(b\\) is a real number.</p><p><span class="font-bold mr-1">(c)</span>Find the value of \\(b.\\)</p>`,
           answer: `(a) \\(3 - i\\)<br>(b) \\(10\\)<br>(c) \\(50\\)`,
           videoId: "uYs7eC7VBfI",
           timestamp: "19m29s",
@@ -68,7 +68,7 @@ export const advHigherMaths2022P2 = {
           marks: [1, 2, 1]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q8</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Differentiate \\(x \\ln x - x\\) with respect to \\(x.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence find the general solution of the differential equation \\(\\frac{dy}{dx} + y \\ln x = x^{-x}.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q8</span></strong></small><p><span class="font-bold mr-1">(a)</span>Differentiate \\(x \\ln x - x\\) with respect to \\(x.\\)</p><p><span class="font-bold mr-1">(b)</span>Hence find the general solution of the differential equation \\(\\frac{dy}{dx} + y \\ln x = x^{-x}.\\)</p>`,
           answer: `(a) \\(\\ln x\\)<br>(b) \\(y = \\frac{-e^{-x} + c}{x^{x}e^{-x}}\\)`,
           videoId: "uYs7eC7VBfI",
           timestamp: "23m46s",
@@ -104,7 +104,7 @@ export const advHigherMaths2022P2 = {
           marks: [4]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q12</span></strong></small><p>Let \\(z = \\cos \\theta + i \\sin \\theta.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Use de Moivre's theorem to state an expression for \\(z^{4}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>State and simplify the binomial expansion of \\((\\cos \\theta + i \\sin \\theta)^{4}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Hence show that:<br>(i) \\(\\cos 4\\theta = 8\\cos^{4}\\theta - 8\\cos^{2}\\theta + 1.\\)<br>(ii) \\(\\sin \\theta \\cot 4\\theta\\) can be written in terms of \\(\\cos \\theta\\) only.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q12</span></strong></small><p>Let \\(z = \\cos \\theta + i \\sin \\theta.\\)</p><p><span class="font-bold mr-1">(a)</span>Use de Moivre's theorem to state an expression for \\(z^{4}.\\)</p><p><span class="font-bold mr-1">(b)</span>State and simplify the binomial expansion of \\((\\cos \\theta + i \\sin \\theta)^{4}.\\)</p><p><span class="font-bold mr-1">(c)</span>Hence show that:<br>(i) \\(\\cos 4\\theta = 8\\cos^{4}\\theta - 8\\cos^{2}\\theta + 1.\\)<br>(ii) \\(\\sin \\theta \\cot 4\\theta\\) can be written in terms of \\(\\cos \\theta\\) only.</p>`,
           answer: `(a) \\(\\cos 4\\theta + i \\sin 4\\theta\\)<br>(b) \\(\\cos^{4}\\theta + 4i \\cos^{3}\\theta \\sin \\theta - 6\\cos^{2}\\theta \\sin^{2}\\theta - 4i \\cos \\theta \\sin^{3}\\theta + \\sin^{4}\\theta\\)<br>(c)(i) Equating real parts: \\(\\cos 4\\theta = \\cos^{4}\\theta - 6\\cos^{2}\\theta \\sin^{2}\\theta + \\sin^{4}\\theta = 8\\cos^{4}\\theta - 8\\cos^{2}\\theta + 1\\)<br>(c)(ii) \\(\\frac{8\\cos^{4}\\theta - 8\\cos^{2}\\theta + 1}{8\\cos^{3}\\theta - 4\\cos \\theta}\\)`,
           videoId: "uYs7eC7VBfI",
           timestamp: "45m40s",
@@ -113,7 +113,7 @@ export const advHigherMaths2022P2 = {
           marks: [1, 3, 2, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q13</span></strong></small><p>A security spotlight is situated 10 metres from a straight fence. The spotlight rotates at a constant speed and makes one full revolution every 12 seconds. \\(L\\) is the spotlight, \\(G\\) is the nearest point on the fence, \\(P\\) is where the light hits the fence, \\(\\theta\\) is the angle between \\(LG\\) and \\(LP\\), and \\(x\\) is the distance in metres from \\(G\\) to \\(P.\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2022/2022_P2_Q13.png" alt="Spotlight pointing at a fence"><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Show that:<br>(i) \\(\\frac{d\\theta}{dt} = \\frac{\\pi}{6}\\) radians per second<br>(ii) \\(\\frac{dx}{dt} = \\frac{5\\pi}{3}\\sec^{2}\\theta\\) metres per second.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Prove that \\(1+\\tan^{2}\\theta=\\sec^{2}\\theta.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Hence, or otherwise, find the exact value of \\(\\frac{dx}{dt}\\) when \\(P\\) is 5 metres from \\(G.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2022 P2 Q13</span></strong></small><p>A security spotlight is situated 10 metres from a straight fence. The spotlight rotates at a constant speed and makes one full revolution every 12 seconds. \\(L\\) is the spotlight, \\(G\\) is the nearest point on the fence, \\(P\\) is where the light hits the fence, \\(\\theta\\) is the angle between \\(LG\\) and \\(LP\\), and \\(x\\) is the distance in metres from \\(G\\) to \\(P.\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2022/2022_P2_Q13.png" alt="Spotlight pointing at a fence"><p><span class="font-bold mr-1">(a)</span>Show that:<br>(i) \\(\\frac{d\\theta}{dt} = \\frac{\\pi}{6}\\) radians per second<br>(ii) \\(\\frac{dx}{dt} = \\frac{5\\pi}{3}\\sec^{2}\\theta\\) metres per second.</p><p><span class="font-bold mr-1">(b)</span>Prove that \\(1+\\tan^{2}\\theta=\\sec^{2}\\theta.\\)</p><p><span class="font-bold mr-1">(c)</span>Hence, or otherwise, find the exact value of \\(\\frac{dx}{dt}\\) when \\(P\\) is 5 metres from \\(G.\\)</p>`,
           answer: `(a)(i) \\(\\frac{2\\pi}{12} = \\frac{\\pi}{6}\\)<br>(a)(ii) \\(x = 10 \\tan \\theta\\), so \\(\\frac{dx}{dt} = 10\\sec^{2}\\theta \\cdot \\frac{\\pi}{6} = \\frac{5\\pi}{3}\\sec^{2}\\theta\\)<br>(b) \\(1 + \\frac{\\sin^{2}\\theta}{\\cos^{2}\\theta} = \\frac{1}{\\cos^{2}\\theta} = \\sec^{2}\\theta\\)<br>(c) \\(\\frac{25\\pi}{12} \\text{ ms}^{-1}\\)`,
           videoId: "uYs7eC7VBfI",
           timestamp: "55m20s",

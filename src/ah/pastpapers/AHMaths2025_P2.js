@@ -32,7 +32,7 @@ export const advHigherMaths2025P2 = {
           marks: [3]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q4</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Use the Euclidean algorithm to find \\(d\\), the greatest common divisor of 1118 and 416.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence find integers \\(a\\) and \\(b\\) such that \\(1118a + 416b = d.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q4</span></strong></small><p><span class="font-bold mr-1">(a)</span>Use the Euclidean algorithm to find \\(d\\), the greatest common divisor of 1118 and 416.</p><p><span class="font-bold mr-1">(b)</span>Hence find integers \\(a\\) and \\(b\\) such that \\(1118a + 416b = d.\\)</p>`,
           answer: `(a) 26<br>(b) \\(a = 3, b = -8\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "7m44s",
@@ -50,7 +50,7 @@ export const advHigherMaths2025P2 = {
           marks: [5]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q6</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Find and simplify the Maclaurin expansion, up to and including the term in \\(x^4\\), for \\(\\cos 3x.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Hence find and simplify the Maclaurin expansion, up to and including the term in \\(x^4\\), for \\(\\cos^2 3x.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q6</span></strong></small><p><span class="font-bold mr-1">(a)</span>Find and simplify the Maclaurin expansion, up to and including the term in \\(x^4\\), for \\(\\cos 3x.\\)</p><p><span class="font-bold mr-1">(b)</span>Hence find and simplify the Maclaurin expansion, up to and including the term in \\(x^4\\), for \\(\\cos^2 3x.\\)</p>`,
           answer: `(a) \\(1 - \\frac{9}{2}x^2 + \\frac{27}{8}x^4\\)<br>(b) \\(1 - 9x^2 + 27x^4\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "12m42s",
@@ -59,7 +59,7 @@ export const advHigherMaths2025P2 = {
           marks: [2, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q7</span></strong></small><p>A curve is defined on a suitable domain by the equations \\(x = t^2\\) and \\(y = \\tan t.\\)<br>Find in terms of \\(t\\):</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>\\(\\frac{dy}{dx}\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>\\(\\frac{d^2y}{dx^2}\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q7</span></strong></small><p>A curve is defined on a suitable domain by the equations \\(x = t^2\\) and \\(y = \\tan t.\\)<br>Find in terms of \\(t\\):</p><p><span class="font-bold mr-1">(a)</span>\\(\\frac{dy}{dx}\\)</p><p><span class="font-bold mr-1">(b)</span>\\(\\frac{d^2y}{dx^2}\\)</p>`,
           answer: `(a) \\(\\frac{\\sec^2 t}{2t}\\)<br>(b) \\(\\frac{2t \\sec^2 t \\tan t - \\sec^2 t}{4t^3}\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "18m4s",
@@ -68,7 +68,7 @@ export const advHigherMaths2025P2 = {
           marks: [2, 3]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q8</span></strong></small><p>The matrix \\(A\\) has the following property:</p><p>\\(A^2 = 6A - I\\), where \\(I\\) is the identity matrix.</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Express \\(A^3\\) in the form \\(pA + qI\\), where \\(p, q \\in \\mathbb{R}.\\)</p><p>Matrix \\(A\\) is non-singular.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Find a similar expression for \\(A^{-1}\\) in terms of \\(A\\) and \\(I.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q8</span></strong></small><p>The matrix \\(A\\) has the following property:</p><p>\\(A^2 = 6A - I\\), where \\(I\\) is the identity matrix.</p><p><span class="font-bold mr-1">(a)</span>Express \\(A^3\\) in the form \\(pA + qI\\), where \\(p, q \\in \\mathbb{R}.\\)</p><p>Matrix \\(A\\) is non-singular.</p><p><span class="font-bold mr-1">(b)</span>Find a similar expression for \\(A^{-1}\\) in terms of \\(A\\) and \\(I.\\)</p>`,
           answer: `(a) \\(35A - 6I\\)<br>(b) \\(6I - A\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "21m13s",
@@ -77,7 +77,7 @@ export const advHigherMaths2025P2 = {
           marks: [2, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q9</span></strong></small><p>Relative to a fixed origin, the velocity, \\(v\\) metres per second, of an object at time \\(t\\) seconds is given by \\(v = 2t + e^{5t}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Find an expression for the displacement of the object, \\(s\\) metres, in terms of \\(t\\), given that when \\(t = 0, s = 0.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Show that the acceleration of the object is always positive.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q9</span></strong></small><p>Relative to a fixed origin, the velocity, \\(v\\) metres per second, of an object at time \\(t\\) seconds is given by \\(v = 2t + e^{5t}.\\)</p><p><span class="font-bold mr-1">(a)</span>Find an expression for the displacement of the object, \\(s\\) metres, in terms of \\(t\\), given that when \\(t = 0, s = 0.\\)</p><p><span class="font-bold mr-1">(b)</span>Show that the acceleration of the object is always positive.</p>`,
           answer: `(a) \\(t^2 + \\frac{1}{5}e^{5t} - \\frac{1}{5}\\)<br>(b) \\(a = 2 + 5e^{5t}.\\) Since \\(e^{5t} > 0\\) for all \\(t\\), \\(a > 0.\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "24m3s",
@@ -95,7 +95,7 @@ export const advHigherMaths2025P2 = {
           marks: [2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q11</span></strong></small><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Using the substitution \\(u = 2x^2\\), or otherwise, find \\(\\int xe^{-2x^2} dx.\\)</p><p>The diagram shows part of the curve with equation \\(y = \\frac{4\\sqrt{x}}{e^{x^2}}.\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2025/2025_P2_Q11.png" alt="Curve of y = 4*sqrt(x) / e^(x^2) rotated about x-axis"><p>A solid is generated by rotating the curve through \\(2\\pi\\) radians about the \\(x\\)-axis from \\(x = 0\\) to \\(x = 1.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Calculate the exact value of the volume generated.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q11</span></strong></small><p><span class="font-bold mr-1">(a)</span>Using the substitution \\(u = 2x^2\\), or otherwise, find \\(\\int xe^{-2x^2} dx.\\)</p><p>The diagram shows part of the curve with equation \\(y = \\frac{4\\sqrt{x}}{e^{x^2}}.\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2025/2025_P2_Q11.png" alt="Curve of y = 4*sqrt(x) / e^(x^2) rotated about x-axis"><p>A solid is generated by rotating the curve through \\(2\\pi\\) radians about the \\(x\\)-axis from \\(x = 0\\) to \\(x = 1.\\)</p><p><span class="font-bold mr-1">(b)</span>Calculate the exact value of the volume generated.</p>`,
           answer: `(a) \\(-\\frac{1}{4}e^{-2x^2} + c\\)<br>(b) \\(4\\pi(1 - e^{-2})\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "28m27s",
@@ -113,7 +113,7 @@ export const advHigherMaths2025P2 = {
           marks: [9]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q13</span></strong></small><p>An infinite geometric sequence of positive numbers has second term 100 and fourth term 16.</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Determine:</p><p>(i) the common ratio<br>(ii) the first term of this sequence.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Explain why the associated geometric series has a sum to infinity.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Determine this sum to infinity.</p><p>A new geometric sequence is formed by multiplying each term in the sequence above by the real number \\(k\\), where \\(k \\neq 0.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(d)</span>State the effect that this will have on:</p><p>(i) the common ratio<br>(ii) the sum to infinity of the associated series.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q13</span></strong></small><p>An infinite geometric sequence of positive numbers has second term 100 and fourth term 16.</p><p><span class="font-bold mr-1">(a)</span>Determine:</p><p>(i) the common ratio<br>(ii) the first term of this sequence.</p><p><span class="font-bold mr-1">(b)</span>Explain why the associated geometric series has a sum to infinity.</p><p><span class="font-bold mr-1">(c)</span>Determine this sum to infinity.</p><p>A new geometric sequence is formed by multiplying each term in the sequence above by the real number \\(k\\), where \\(k \\neq 0.\\)</p><p><span class="font-bold mr-1">(d)</span>State the effect that this will have on:</p><p>(i) the common ratio<br>(ii) the sum to infinity of the associated series.</p>`,
           answer: `(a)(i) \\(\\frac{2}{5}\\)<br>(a)(ii) \\(250\\)<br>(b) A sum to infinity exists because \\(-1 < \\frac{2}{5} < 1\\)<br>(c) \\(\\frac{1250}{3}\\)<br>(d)(i) The common ratio is unchanged.<br>(d)(ii) The sum to infinity is multiplied by \\(k.\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "39m35s",
@@ -158,7 +158,7 @@ export const advHigherMaths2025P2 = {
           marks: [4]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q18</span></strong></small><p>Let \\(z = x + iy\\) be a complex number, where \\(x, y \\in \\mathbb{R}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>(i) Express \\(\\bar{z} + iz\\) in Cartesian form, where \\(\\bar{z}\\) is the complex conjugate of \\(z.\\)<br>(ii) Given \\(x > y\\), find the argument of \\(\\bar{z} + iz.\\)</p><p>When \\(x < y\\), \\(\\bar{z} + iz = r\\left(\\cos\\left(-\\frac{3\\pi}{4}\\right) + i\\sin\\left(-\\frac{3\\pi}{4}\\right)\\right)\\) where \\(r\\) is the modulus of \\(\\bar{z} + iz.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Use de Moivre's theorem to find, in polar form, both square roots of \\(\\bar{z} + iz.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2025 P2 Q18</span></strong></small><p>Let \\(z = x + iy\\) be a complex number, where \\(x, y \\in \\mathbb{R}.\\)</p><p><span class="font-bold mr-1">(a)</span>(i) Express \\(\\bar{z} + iz\\) in Cartesian form, where \\(\\bar{z}\\) is the complex conjugate of \\(z.\\)<br>(ii) Given \\(x > y\\), find the argument of \\(\\bar{z} + iz.\\)</p><p>When \\(x < y\\), \\(\\bar{z} + iz = r\\left(\\cos\\left(-\\frac{3\\pi}{4}\\right) + i\\sin\\left(-\\frac{3\\pi}{4}\\right)\\right)\\) where \\(r\\) is the modulus of \\(\\bar{z} + iz.\\)</p><p><span class="font-bold mr-1">(b)</span>Use de Moivre's theorem to find, in polar form, both square roots of \\(\\bar{z} + iz.\\)</p>`,
           answer: `(a)(i) \\((x - y) + i(x - y)\\)<br>(a)(ii) \\(\\frac{\\pi}{4}\\) (or \\(45^\\circ\\))<br>(b) \\(\\sqrt{r}\\left(\\cos\\left(-\\frac{3\\pi}{8}\\right) + i\\sin\\left(-\\frac{3\\pi}{8}\\right)\\right)\\) and \\(\\sqrt{r}\\left(\\cos\\left(\\frac{5\\pi}{8}\\right) + i\\sin\\left(\\frac{5\\pi}{8}\\right)\\right)\\)`,
           videoId: "SoqgtES7sRA",
           timestamp: "59m30s",

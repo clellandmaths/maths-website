@@ -32,7 +32,7 @@ export const advHigherMaths2016 = {
           marks: [2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 Q2</span></strong></small><p>A geometric sequence has second and fifth terms 108 and 4 respectively.</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Calculate the value of the common ratio.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>State why the associated geometric series has a sum to infinity.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Find the value of this sum to infinity.</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 Q2</span></strong></small><p>A geometric sequence has second and fifth terms 108 and 4 respectively.</p><p><span class="font-bold mr-1">(a)</span>Calculate the value of the common ratio.</p><p><span class="font-bold mr-1">(b)</span>State why the associated geometric series has a sum to infinity.</p><p><span class="font-bold mr-1">(c)</span>Find the value of this sum to infinity.</p>`,
           answer: `(a) \\(r = \\frac{1}{3}\\)<br>(b) A sum to infinity exists because \\(-1 < \\frac{1}{3} < 1\\)<br>(c) 486`,
           videoId: "",
           timestamp: "",
@@ -77,7 +77,7 @@ export const advHigherMaths2016 = {
           marks: [6]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 Q7</span></strong></small><p>A is the matrix \\(\\begin{pmatrix} 2 & 0 \\\\ \\lambda & -1 \\end{pmatrix}.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Find the determinant of matrix A.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Show that \\(A^2\\) can be expressed in the form \\(pA + qI\\), stating the values of \\(p\\) and \\(q.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Obtain a similar expression for \\(A^4.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 Q7</span></strong></small><p>A is the matrix \\(\\begin{pmatrix} 2 & 0 \\\\ \\lambda & -1 \\end{pmatrix}.\\)</p><p><span class="font-bold mr-1">(a)</span>Find the determinant of matrix A.</p><p><span class="font-bold mr-1">(b)</span>Show that \\(A^2\\) can be expressed in the form \\(pA + qI\\), stating the values of \\(p\\) and \\(q.\\)</p><p><span class="font-bold mr-1">(c)</span>Obtain a similar expression for \\(A^4.\\)</p>`,
           answer: `(a) \\(-2\\)<br>(b) \\(A^2 = A + 2I\\), so \\(p = 1\\) and \\(q = 2\\)<br>(c) \\(5A + 6I\\)`,
           videoId: "",
           timestamp: "",
@@ -86,7 +86,7 @@ export const advHigherMaths2016 = {
           marks: [1, 3, 2]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 Q8</span></strong></small><p>Let \\(z = \\sqrt{3} - i.\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Plot \\(z\\) on an Argand diagram.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Let \\(w = az\\) where \\(a > 0\\), \\(a \\in \\mathbb{R}.\\)<br>Express \\(w\\) in polar form.</p><p><span class="text-cyan-400 font-bold mr-1">(c)</span>Express \\(w^8\\) in the form \\(ka^n(x + i\\sqrt{y})\\) where \\(k, x, y \\in \\mathbb{Z}.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 Q8</span></strong></small><p>Let \\(z = \\sqrt{3} - i.\\)</p><p><span class="font-bold mr-1">(a)</span>Plot \\(z\\) on an Argand diagram.</p><p><span class="font-bold mr-1">(b)</span>Let \\(w = az\\) where \\(a > 0\\), \\(a \\in \\mathbb{R}.\\)<br>Express \\(w\\) in polar form.</p><p><span class="font-bold mr-1">(c)</span>Express \\(w^8\\) in the form \\(ka^n(x + i\\sqrt{y})\\) where \\(k, x, y \\in \\mathbb{Z}.\\)</p>`,
           answer: `(a) Point plotted at \\((\\sqrt{3}, -1)\\) in the 4th quadrant of the Argand diagram.<br>(b) \\(2a\\left(\\cos\\left(-\\frac{\\pi}{6}\\right) + i\\sin\\left(-\\frac{\\pi}{6}\\right)\\right)\\)<br>(c) \\(128a^8(-1 + i\\sqrt{3})\\)`,
           videoId: "",
           timestamp: "",
@@ -122,7 +122,7 @@ export const advHigherMaths2016 = {
           marks: [4]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 Q12</span></strong></small><p>Below is a diagram showing the graph of a linear function, \\(y = f(x).\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2016/2016_Q12.png" alt="Graph of y = f(x)"><p>On separate diagrams show:</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>\\(y = |f(x) - c|\\)<br>(b) \\(y = |2f(x)|\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 Q12</span></strong></small><p>Below is a diagram showing the graph of a linear function, \\(y = f(x).\\)</p><img src="/img/Adv_Higher_Maths_Past_Papers/2016/2016_Q12.png" alt="Graph of y = f(x)"><p>On separate diagrams show:</p><p><span class="font-bold mr-1">(a)</span>\\(y = |f(x) - c|\\)<br>(b) \\(y = |2f(x)|\\)</p>`,
           answer: `(a) V-shaped graph with its vertex on the x-axis at \\(2c\\), passing through \\(2c\\) on the positive y-axis.<br>(b) Symmetrical V-shaped graph with its vertex on the x-axis at \\(c\\), passing through \\(2c\\) on the positive y-axis.`,
           videoId: "",
           timestamp: "",
@@ -140,7 +140,7 @@ export const advHigherMaths2016 = {
           marks: [9]
         },
         {
-          question: `<small><strong><span style="white-space: nowrap;">2016 Q14</span></strong></small><p>Two lines \\(L_1\\) and \\(L_2\\) are given by the equations:</p><p>\\(L_1: x = 4 + 3\\lambda, y = 2 + 4\\lambda, z = -7\\lambda\\)<br>\\(L_2: \\frac{x - 3}{-2} = \\frac{y - 8}{1} = \\frac{z + 1}{3}\\)</p><p><span class="text-cyan-400 font-bold mr-1">(a)</span>Show that the lines \\(L_1\\) and \\(L_2\\) intersect and find the point of intersection.</p><p><span class="text-cyan-400 font-bold mr-1">(b)</span>Calculate the obtuse angle between the lines \\(L_1\\) and \\(L_2.\\)</p>`,
+          question: `<small><strong><span style="white-space: nowrap;">2016 Q14</span></strong></small><p>Two lines \\(L_1\\) and \\(L_2\\) are given by the equations:</p><p>\\(L_1: x = 4 + 3\\lambda, y = 2 + 4\\lambda, z = -7\\lambda\\)<br>\\(L_2: \\frac{x - 3}{-2} = \\frac{y - 8}{1} = \\frac{z + 1}{3}\\)</p><p><span class="font-bold mr-1">(a)</span>Show that the lines \\(L_1\\) and \\(L_2\\) intersect and find the point of intersection.</p><p><span class="font-bold mr-1">(b)</span>Calculate the obtuse angle between the lines \\(L_1\\) and \\(L_2.\\)</p>`,
           answer: `(a) Point of intersection is \\((7, 6, -7)\\)<br>(b) \\(135.6^\\circ\\)`,
           videoId: "",
           timestamp: "",
