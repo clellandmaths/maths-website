@@ -92,11 +92,13 @@ export default function AnotherLikeThis({
       </button>
 
       {/* Running out is a fact about how many different questions this one can
-          make, not a fault. */}
+          make, not a fault. **No number** (the owner, 2026-10-06): `draw.seen`
+          is what this button has drawn this visit, not what the card can make,
+          so "That is all 3" could name a count the card does not have. */}
       {draw.state === 'exhausted' && (
         <p className={noticeClassName}>
           {draw.seen > 0
-            ? `That is all ${draw.seen} different questions this one can make.`
+            ? 'No more new questions like this one: you have had them all.'
             : 'No new question could be made just now.'}
         </p>
       )}
