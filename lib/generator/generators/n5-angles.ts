@@ -356,6 +356,82 @@ export function polygonDiameterQuestion(): Q {
 }
 
 /**
+ * **2019 P1 Q11 widened — the owner's "Option c", 2026-10-08** (the widening
+ * sheet, https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA). The card made one
+ * question once the paper's own is kept out; this makes twelve.
+ *
+ * F is joined to the vertex k places round from A (k = 1 is the paper's B),
+ * and the polygon may be even, when the diameter from A ends on the opposite
+ * vertex and that vertex is the far point. The same three steps and marks:
+ * the angle at the centre (k equal parts, so AOC = k × 360/n), the straight
+ * line, the isosceles triangle of two radii.
+ *
+ *   odd    pentagon k = 1, 2; nonagon k = 1, 2, 3 (k = 4 makes a sliver at F)
+ *   even   hexagon, decagon, dodecagon k = 1; decagon k = 2, 3;
+ *          dodecagon k = 2, 3, 4 (the octagon's 22.5° is not whole)
+ *
+ * `polygonDiameterQuestion` above is left exactly as it was; the dispatch now
+ * sends the card here. Both serve `angles.polygon-diameter` alone.
+ */
+const DIAMETER_SHAPES: [number, number][] = [
+  [5, 1], [9, 1], [5, 2], [9, 2], [9, 3],
+  [6, 1], [10, 1], [12, 1],
+  [10, 2], [10, 3], [12, 2], [12, 3], [12, 4],
+];
+// A dodecagon needs twelve letters; I is skipped as the papers skip it.
+const LETTERS12 = 'ABCDEFGHJKLM';
+export function polygonDiameterWideQuestion(): Q {
+  for (let tries = 0; tries < 3000; tries++) {
+    const [n, k] = pick(DIAMETER_SHAPES);
+    const even = n % 2 === 0;
+    const step = 360 / n;
+    const atCentre = k * step;
+    const answer = (180 - (180 - atCentre)) / 2;
+    const names = LETTERS12.slice(0, n).split('');
+    const far = even ? names[n / 2] : LETTERS[n];
+    // the pentagon upright, as the paper draws it (see polygonDiameterQuestion)
+    const start = n === 5 ? (getRandomInt(0, 1) === 0 ? 90 : 270) : getRandomInt(0, 11) * 30;
+    const fig = polygonDiameter({ sides: n, radius: 1, start, names, far, centre: 'O', reach: k, even });
+    if (!fig) continue;
+    const plainFig = polygonDiameter({ sides: n, radius: 1, start, names, far, centre: 'O', plain: true, even });
+    if (!plainFig) continue;
+    const [A, T] = [names[0], names[k]];
+    const context = pick(LOGO_CONTEXTS);
+    const prose = [
+      `${context} is designed around a regular ${WORD[n]} $${names.join('')}$.`,
+      `The vertices of the ${WORD[n]} lie on a circle with centre $O$.`,
+      '',
+      `The design is then completed as shown below.`,
+      '',
+      `$${A}${far}$ is a diameter of the circle.`,
+      `Calculate the size of angle $O${far}${T}$.`,
+    ];
+    const first = k === 1
+      ? `$${A}O${T} = \\frac{360}{${n}} = ${atCentre}^{\\circ}$`
+      : `$${A}O${names[1]} = \\frac{360}{${n}} = ${step}^{\\circ}$, so $${A}O${T} = ${k} \\times ${step} = ${atCentre}^{\\circ}$`;
+    const steps = [
+      `<strong>1.</strong> The ${n} vertices divide the turn at the centre equally:<br><br>${first}`,
+      `<strong>2.</strong> $${A}O${far}$ is a straight line, so the angles at $O$ add to $180^{\\circ}$:<br><br>$${T}O${far} = 180 - ${atCentre} = ${180 - atCentre}^{\\circ}$`,
+      `<strong>3.</strong> $O${T}$ and $O${far}$ are both radii, so triangle $O${T}${far}$ is isosceles and its other two angles are equal:<br><br>$O${far}${T} = \\frac{180 - ${180 - atCentre}}{2} = ${answer}^{\\circ}$`,
+    ];
+    if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    if (verifyFigure(plainFig, [...prose, ...steps].join(' ')).length) continue;
+    return {
+      subTopic: 'A Polygon and a Diameter',
+      difficulty: 'exam',
+      variationId: 'angles.polygon-diameter',
+      stepMarks: [1, 1, 1],
+      questionLines: [prose[0], prose[1], renderScene(plainFig.scene), prose[3], renderScene(fig.scene), ...prose.slice(5)],
+      boardQuestionLines: [`Regular ${WORD[n]} on a circle, centre O. ${A}${far} is a diameter. Find angle O${far}${T}.`],
+      solutionSteps: steps,
+      finalAnswer: `$${answer}^{\\circ}$`,
+      figure: fig,
+    };
+  }
+  throw new Error('polygon diameter wide: no valid question found');
+}
+
+/**
  * An H shape with a regular polygon against one upright.
  *
  * 2023 P2 Q5. Two steps and both of them are in the picture:
@@ -420,6 +496,7 @@ export function barPolygonQuestion(): Q {
 
 export const ANGLE_GENERATORS: Record<string, () => Q> = {
   'A Side of a Polygon Produced': polygonAngleQuestion,
-  'A Polygon and a Diameter': polygonDiameterQuestion,
+  // widened on the owner's word, 2026-10-08; the original routine is kept above
+  'A Polygon and a Diameter': polygonDiameterWideQuestion,
   'An H Shape and a Polygon': barPolygonQuestion,
 };

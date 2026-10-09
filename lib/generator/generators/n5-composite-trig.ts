@@ -601,11 +601,28 @@ const HEXAGON_CONTEXTS: {
 ];
 
 
-function hexagonArea(): Q | null {
-  const c = pick(HEXAGON_CONTEXTS);
+/**
+ * **2015 P2 Q11 widened — the owner's "Yes" to both, 2026-10-08** (the widening
+ * sheet, https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA): the diagonal is
+ * picked evenly first, over every size a story can take, then a story whose
+ * range holds it (so 4 m and 4 cm stop piling up); and odd diagonals too, half
+ * a diagonal then ending in .5, which this calculator paper handles. The topic
+ * serves `composite.hexagon-area` alone; `hexagonArea` without a `draft` is
+ * unchanged.
+ */
+function hexagonAreaWide(): Q | null {
+  const sizes = [...new Set(HEXAGON_CONTEXTS.flatMap(c => Array.from({ length: c.band[1] - c.band[0] + 1 }, (_, i) => c.band[0] + i)))];
+  const d = pick(sizes);
+  const c = pick(HEXAGON_CONTEXTS.filter(x => d >= x.band[0] && d <= x.band[1]));
+  return hexagonArea({ c, d });
+}
+
+function hexagonArea(draft?: { c: typeof HEXAGON_CONTEXTS[number]; d: number }): Q | null {
+  const c = draft ? draft.c : pick(HEXAGON_CONTEXTS);
   const { unit, short: u } = c;
-  // an even diagonal, so halving it stays a whole number
-  const d = getRandomInt(Math.ceil(c.band[0] / 2), Math.floor(c.band[1] / 2)) * 2;
+  // an even diagonal, so halving it stays a whole number (the widened card
+  // passes its own, odd ones included)
+  const d = draft ? draft.d : getRandomInt(Math.ceil(c.band[0] / 2), Math.floor(c.band[1] / 2)) * 2;
   const r = d / 2;
   // six triangles, two sides of r with sixty degrees between them
   const one = 0.5 * r * r * Math.sin(60 * Math.PI / 180);
@@ -703,5 +720,10 @@ export const COMPOSITE_TRIG_GENERATORS: Record<string, Gen> = {
   'A Perpendicular Inside a Triangle': (w) => composite(['bare'], w),
   'Two Triangles Sharing an Angle': (w) => composite(['split-cosine', 'split-area'], w),
   'A Point Off a Straight Line': (w) => composite(['straight-line'], w),
-  'Area of a Regular Hexagon': (w) => composite(['hexagon'], w),
+  // widened 2026-10-08 (see `hexagonAreaWide`); its own retry, as the draft the
+  // owner chose was measured with
+  'Area of a Regular Hexagon': () => {
+    for (let i = 0; i < 3000; i++) { const q = hexagonAreaWide(); if (q) return q; }
+    throw new Error('composite.hexagon-area: no valid question found');
+  },
 };

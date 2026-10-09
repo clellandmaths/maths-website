@@ -39,6 +39,13 @@ export interface TwoTangentsDiametersSpec {
    * this layout has no room for it (see the end of the routine).
    */
   written?: boolean;
+  /**
+   * When the number has no room inside the angle, write it just outside side
+   * DE on the angle's bisector, with a short pointer back to the arc. 2024 P1
+   * Q10 widened on the owner's "Option A" (2026-10-08), which takes the angle
+   * at the centre to 146. Opt-in; without it the figure is unchanged.
+   */
+  outsideOk?: boolean;
   names: { centre: string; touchB: string; touchD: string; outside: string;
            oppB: string; oppD: string; endA: string; endE: string };
 }
@@ -287,6 +294,22 @@ export function twoTangentsDiameters(spec: TwoTangentsDiametersSpec): Figure | n
       if (verifyFigure(out).length || !landed(out.scene).inside) continue;
       return out;
     }
+  }
+  if (!spec.outsideOk) return null;
+  // No room inside: outside DE on the bisector, the pointer starting just
+  // beyond the arc so it cannot be read as another line of the figure.
+  const bis = bearing(F, bisects) * Math.PI / 180;
+  const u = pt(Math.cos(bis), Math.sin(bis));
+  const p0 = place({ elements: [...elements, ...angleMark(F, [D, E])], target });
+  const a = ARC_PX / (dist(p0.px(O), p0.px(pt(r, 0))) / r);
+  const past = dist(F, bisects);
+  for (const extra of [0.12, 0.16, 0.2, 0.25, 0.3, 0.36]) {
+    const tip = add(F, scale(u, past + extra * r));
+    const label: Element = { kind: 'label', text, anchor: tip, away: F, small: true };
+    const pointer: Element = { kind: 'segment', from: add(F, scale(u, a * 1.25)), to: add(F, scale(u, past + extra * r * 0.6)), decoration: true };
+    const out: Figure = { scene: { elements: [...elements, ...angleMark(F, [D, E], undefined, a), pointer, label], target }, claims };
+    if (verifyFigure(out).length) continue;
+    return out;
   }
   return null;
 }

@@ -4,6 +4,7 @@ import {
 } from './generators/n5-variations';
 import { VARIATION_BY_CODE, VARIATION_CODES } from './generators/variation-codes';
 import { questionKey, storyFreeKey } from './question-key';
+import { sameQuestionKey, sameWorkingKey, shortHash } from './same-question';
 import type { GeneratedQuestion, Topic } from './generators/types';
 
 /**
@@ -63,6 +64,14 @@ export interface WorksheetQuestion {
   skill?: string;
   /** How the marks are earned, in one line. The second hint. */
   method?: string;
+  /**
+   * The question's two identities by the owner's "same question" test (`same-question.ts`), hashed: the
+   * wording key and, where the working is full enough to judge by, the working key. A sheet never holds two
+   * questions sharing either (the owner, 2026-10-07: "(x - 3)(x + 5) = 0 and (x + 5)(x - 3) = 0 ...");
+   * `keysOfQuestion` hands them on, so "Another like this one" does not offer a twin of a question already on
+   * the sheet. Absent on a paper question.
+   */
+  twinKeys?: string[];
 }
 
 /**
@@ -539,7 +548,15 @@ export function toWorksheetQuestion(
       : {}),
 
     uid: generatedUid(q.code, seed, parentIndex),
+    twinKeys: twinKeysOf(q),
   };
+}
+
+/** The question's identities by the owner's "same question" test, hashed small (see `twinKeys`). */
+export function twinKeysOf(q: Pick<GeneratedQuestion, 'questionLines' | 'finalAnswer' | 'solutionSteps'>): string[] {
+  const lines = q.questionLines ?? [], answer = q.finalAnswer ?? '';
+  const w = sameWorkingKey(lines, answer, q.solutionSteps ?? []);
+  return [shortHash(`Q:${sameQuestionKey(lines, answer)}`), ...(w ? [shortHash(w)] : [])];
 }
 
 /**
@@ -664,8 +681,9 @@ export function keyOfQuestion(q: { question: string; answer?: string | null }): 
  * `keyOfQuestion` alone lets the second kind back in on the next click. That is
  * what `adapter` means by a pool disagreeing with itself.
  */
-export function keysOfQuestion(q: { question: string; answer?: string | null }): string[] {
-  return [keyOfQuestion(q), storyFreeKey(q.question, q.answer ?? '')];
+export function keysOfQuestion(q: { question: string; answer?: string | null; twinKeys?: readonly string[] }): string[] {
+  // and its "same question" identities (2026-10-08), so a twin in a new story or another order stays off too
+  return [keyOfQuestion(q), storyFreeKey(q.question, q.answer ?? ''), ...(q.twinKeys ?? [])];
 }
 
 /**
@@ -803,8 +821,15 @@ async function drawFrom(
     // answer would now merge; that is rarer than the bug it replaces.
     const sum = storyFreeKey(made.question, made.answer);
     if (seen.has(sum)) continue;
+    // **And not a twin by the owner's "same question" test** (2026-10-08): the same question with its sum
+    // or its facts in another order, its letters renamed, its numbers told in another order in the story.
+    // `questionKey` and `storyFreeKey` keep the printed order, so (x - 3)(x + 5) = 0 and (x + 5)(x - 3) = 0
+    // were two questions to them.
+    const twins = made.twinKeys ?? [];
+    if (twins.some(k => seen.has(k))) continue;
     seen.add(key);
     seen.add(sum);
+    for (const k of twins) seen.add(k);
     out.push(made);
   }
   return out;

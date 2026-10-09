@@ -921,6 +921,32 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Appreciation and Depreciation'],
     skill: 'Count the years between two dates, then apply the multiplier that many times',
   },
+  /**
+   * 2019 P2 Q1. An alias of `percentages.compound-between-years` until
+   * 2026-10-08, when the owner widened it ("Yes": every whole answer picked
+   * evenly) and it was materialised, as `aliasOf` describes: its own topic and
+   * routine (`compoundBetweenYearsWide`), `aliasOf` removed, the target and
+   * 2025 P2 Q1 untouched. Every field below is the one it inherited, word for
+   * word; only `topic` is new.
+   */
+  'percentages.compound-between-years-pre2023': {
+    topic: 'Appreciation Over Three Years',
+    difficulty: 'exam',
+    strategy: 'input-first',
+    source: 'paper',
+    basedOn: ['2019 P2 Q1'],
+    marks: 3,
+    route: 'multiplier, then the number of years worked out from the two dates, then evaluate',
+    plan: [
+      'Turn the percentage change into a multiplier',
+      'Count the years between the two dates, then raise the multiplier to that power and multiply the starting amount by it',
+      'Work the multiplication out',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'rounded',
+    webTopics: ['Appreciation and Depreciation'],
+    skill: 'Count the years between two dates, then apply the multiplier that many times',
+  },
   'percentages.reverse': {
     topic: 'Reverse Percentages',
     difficulty: 'exam',
@@ -2284,6 +2310,31 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Multiply or divide Algebraic Fractions'],
     skill: 'Multiply by the reciprocal, factorise, cancel',
   },
+  /**
+   * 2015 P2 Q7. An alias of `alg-fractions.divide` until 2026-10-08, when the
+   * owner widened it ("Yes": the powers vary too) and it was materialised, as
+   * `aliasOf` describes: its own topic and routine (`divideMonomialPowers`),
+   * `aliasOf` removed, the target untouched. Every field below is the one it
+   * inherited, word for word (its skill, method and plan were already its
+   * own); only `topic` is new.
+   */
+  'alg-fractions.divide-2015': {
+    topic: 'Dividing Fractions with Powers',
+    difficulty: 'exam', strategy: 'answer-first', source: 'zeta+paper',
+    basedOn: ['2015 P2 Q7'],
+    marks: 3,
+    route: 'start the division by multiplying by the reciprocal, then factorise, then multiply and express in simplest form',
+    method: 'Multiply by the reciprocal of the second fraction, then cancel and simplify',
+    plan: [
+      'Flip the second fraction upside down, then multiply by it instead of dividing',
+      'Cancel the letters and numbers that appear on the top and the bottom',
+      'Multiply what is left across the top and across the bottom, and give it in its simplest form',
+    ],
+    planMarks: [1, 1, 1],
+    answerShape: 'expression',
+    webTopics: ['Multiply or divide Algebraic Fractions'],
+    skill: 'Multiply by the reciprocal, then cancel',
+  },
   // 2022 P1 Q12 has nothing to factorise between the reciprocal and the
   // cancelling, and is worth two marks rather than three.
   'alg-fractions.divide-simple': {
@@ -2640,7 +2691,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   },
   // `a x^3` - 2019 P1 Q1.
   'functions.evaluate-cube-multiple': {
-    topic: 'Evaluating a Function',
+    // Its own topic from 2026-10-08, when the owner widened it ("Just number
+    // in front up to 9"): `evaluate`, which 2017 P1 Q1, 2022 P1 Q2 and 2024
+    // P1 Q2 draw from, is not entered on its behalf. webTopics unchanged.
+    topic: 'Evaluating a Cube Multiple',
     difficulty: 'exam', strategy: 'input-first', source: 'zeta+paper',
     basedOn: ['2019 P1 Q1'],
     marks: 2,
@@ -3098,7 +3152,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
   // are five distinct shapes, so they are built as four topics — the two tan
   // substitutions and the common-factor form share one, being the same move.
   'trig-identities.simplify': {
-    topic: 'Simplifying Trigonometric Expressions',
+    // Its own topic from 2026-10-08, when the owner widened it ("Add the cos
+    // power 4 expression only"): the shared topic, and 2023 P2 Q13 and
+    // 2026 P2 Q12 on it, are not entered on its behalf. webTopics unchanged.
+    topic: 'Simplifying a Sine, Cosine and Tangent Product',
     difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
     // Both papers substitute tan and cancel — 2016 as a pair of squares, 2018
     // as a three-way product. One move, so one variation; the powers are the
@@ -3119,6 +3176,29 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     webTopics: ['Trigonometric identities'],
     // 2018 P1 Q18 and 2016 P1 Q11 only swap the tan and cancel (2026-10-02
     // full read, the owner's "Yes" on each).
+    skill: 'Replace $\\tan x$ with $\\dfrac{\\sin x}{\\cos x}$, then cancel',
+  },
+  /**
+   * 2016 P1 Q11. An alias of `trig-identities.simplify` until 2026-10-08,
+   * when the owner widened it ("A: cos⁴ only") and it was materialised, as
+   * `aliasOf` describes: its own topic (`substituteTanWide(0)`), `aliasOf`
+   * removed. Every field below is the one it inherited, word for word; only
+   * `topic` is new.
+   */
+  'trig-identities.simplify-2016': {
+    topic: 'Simplifying a Tangent and Cosine Product',
+    difficulty: 'exam', strategy: 'curated-pool', source: 'paper',
+    basedOn: ['2016 P1 Q11'],
+    marks: 2,
+    route: 'identify and substitute the correct identity, then express the result in simplest form',
+    method: 'Swap $\\tan x$ for $\\dfrac{\\sin x}{\\cos x}$, then cancel and combine the powers',
+    plan: [
+      'Write $\\tan x^{\\circ}$ as $\\frac{\\sin x^{\\circ}}{\\cos x^{\\circ}}$, then cancel the $\\cos x^{\\circ}$ it shares with the other term',
+      'Multiply what is left together, adding the powers of each ratio, to leave the simplest form',
+    ],
+    planMarks: [1, 1],
+    answerShape: 'expression',
+    webTopics: ['Trigonometric identities'],
     skill: 'Replace $\\tan x$ with $\\dfrac{\\sin x}{\\cos x}$, then cancel',
   },
   // Take a factor out of two terms and the bracket is the identity.
@@ -4155,17 +4235,19 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     topic: 'A Pathway in a Parallelogram',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P2 Q3'],
-    method: 'Go round two sides of the parallelogram',
+    // Widened 2026-10-08 (the owner: a trapezium too, two sides only), so the
+    // words say "shape" and name the trapezium's parallel sides
+    method: 'Go round two sides of the shape, one of them parallel to a side you are given',
     marks: 1,
-    route: 'one mark, one step: the route round two sides of the parallelogram',
+    route: 'one mark, one step: the route round two sides of the shape',
     plan: [
-      'Pick a route between the two corners that uses only sides of the parallelogram, since no side joins them directly',
-      'Swap each leg of that route for the lettered vector it copies, remembering opposite sides of a parallelogram are equal, and put a minus in front of any leg travelled against its arrow',
+      'Pick a route between the two corners that uses only sides of the shape, since no side joins them directly',
+      'Swap each leg of that route for the lettered vector it copies, remembering opposite sides of a parallelogram are equal and a trapezium\'s long parallel side is twice its short one, and put a minus in front of any leg travelled against its arrow',
     ],
     planMarks: [0, 1],
     answerShape: 'expression',
     webTopics: ['Vector pathways'],
-    skill: 'Express a diagonal of a parallelogram in terms of two sides',
+    skill: 'Express a vector across a parallelogram or trapezium in terms of two sides',
   },
   'vectors.pathway-extended': {
     topic: 'A Pathway with an Extended Side',
@@ -4229,8 +4311,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 2,
     route: 'the base as a sum and the fraction of it beyond the end, then the route from the third point',
     plan: [
-      'Add the two lettered vectors nose to tail to get the whole line, then take the fraction of it that the piece running on past the end is worth',
-      'Build the pathway from the point you are asked about: travel to the end of that line, then on along the fraction beyond it, and gather the terms',
+      // reversing and turning round: widened 2026-10-08 (the owner: "Yes" to both levers)
+      'Add the two lettered vectors nose to tail to get the whole line, reversing any that points the wrong way, then take the fraction of it that the piece running on past the end is worth',
+      'Build the pathway from the point you are asked about: travel to the end of that line, then on along the fraction beyond it, turning the whole journey round if it is asked the other way, and gather the terms',
     ],
     planMarks: [1, 1],
     answerShape: 'expression',
@@ -4634,7 +4717,8 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     route: 'marshal the facts and recognise the right angle, know how to use Pythagoras, the correct calculation, then the length asked for. The first mark is getting the perpendicular out of the height, which is what makes this four rather than three',
     method: 'The perpendicular from the centre cuts the chord in half, so write Pythagoras down for that right-angled triangle, work out the half-chord, then double it',
     plan: [
-      'Take the radius off the height to get the distance from the centre down to the middle of the chord',
+      // both ways round: the near side added 2026-10-08 (the owner's "Option A")
+      'Get the distance from the centre to the middle of the chord: take the radius off the length when the line runs through the centre, or the length off the radius when it runs out to the near side',
       'Write Pythagoras down for the right-angled triangle made by that distance, half the chord, and the radius as hypotenuse',
       'Take the square root to get half the chord',
       'Double that half, since the perpendicular from the centre cut the chord in two',
@@ -5152,7 +5236,10 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     skill: 'Radius and angle to the area of the sector',
   },
   'sector.area-angle-pi314': {
-    topic: 'Area of a Sector',
+    // Its own topic from 2026-10-08, when the owner widened its angles
+    // ("Yes"): the shared 'Area of a Sector' routine, and 2025 P2 Q6 and
+    // 2024 P2 Q15 with it, are not entered on its behalf. webTopics unchanged.
+    topic: 'Area of a Sector, Pi as 3.14',
     difficulty: 'exam', strategy: 'input-first', source: 'paper',
     basedOn: ['2016 P1 Q3'],
     marks: 3,
@@ -5521,7 +5608,9 @@ export const N5_VARIATIONS: Record<string, VariationMeta> = {
     marks: 3,
     route: 'angle AOB from the equal division, then FOB on the straight line, then OFB',
     plan: [
-      'Divide 360 by the number of corners the shape has, because its vertices are spread evenly round the circle and share the turn at the centre equally',
+      // "as many shares": the widened card (the owner's "Option c",
+      // 2026-10-08) can join the far point to a corner up to four round from A
+      'Divide 360 by the number of corners the shape has, because its vertices are spread evenly round the circle and share the turn at the centre equally, and take as many shares as there are sides between A and the corner joined to the far end',
       'Subtract that from 180 for the angle next to it at the centre, since the diameter runs straight across',
       'Finish in the triangle made by two radii: it is isosceles, so take the centre angle off 180 and halve what is left',
     ],
@@ -5762,7 +5851,7 @@ const ALIASES: Record<string, {
   'fractions.divide-mixed-pre2023': { aliasOf: 'fractions.divide-mixed', basedOn: ['2017 P1 Q3'] },
   'surds.rationalise-pre2023': { aliasOf: 'surds.rationalise', basedOn: ['2018 P1 Q11'] },
   'percentages.compound-pre2023': { aliasOf: 'percentages.compound', basedOn: ['2022 P2 Q2'], plan: COMPOUND_DATES_PLAN, method: COMPOUND_DATES_METHOD },
-  'percentages.compound-between-years-pre2023': { aliasOf: 'percentages.compound-between-years', basedOn: ['2019 P2 Q1'] },
+  // 'percentages.compound-between-years-pre2023' materialised 2026-10-08: its own entry above
   // 2022 P1 Q10 left this alias for `percentages.reverse-non-calculator`:
   // it is a Paper 1 question and needs a divisor a pupil can divide by.
   'percentages.reverse-pre2023': { aliasOf: 'percentages.reverse', basedOn: ['2017 P2 Q5'] },
@@ -5852,14 +5941,12 @@ const ALIASES: Record<string, {
   'vectors.magnitude-2018': { aliasOf: 'vectors.magnitude', basedOn: ['2018 P2 Q3'] },   // one paper, one variation
   'vectors.magnitude-2017': { aliasOf: 'vectors.magnitude', basedOn: ['2017 P2 Q1'] },   // one paper, one variation
   'vectors.magnitude-2015': { aliasOf: 'vectors.magnitude', basedOn: ['2015 P2 Q4'] },   // one paper, one variation
-  'alg-fractions.divide-2015': { aliasOf: 'alg-fractions.divide', basedOn: ['2015 P2 Q7'], skill: 'Multiply by the reciprocal, then cancel', method: 'Multiply by the reciprocal of the second fraction, then cancel and simplify', plan: ['Flip the second fraction upside down, then multiply by it instead of dividing', 'Cancel the letters and numbers that appear on the top and the bottom', 'Multiply what is left across the top and across the bottom, and give it in its simplest form'] },   // one paper, one variation
+  // 'alg-fractions.divide-2015' materialised 2026-10-08: its own entry above
   'percentages.reverse-2015': { aliasOf: 'percentages.reverse', basedOn: ['2015 P2 Q8'] },   // one paper, one variation
   'pythagoras.chord-whole-2015': { aliasOf: 'pythagoras.chord-whole', basedOn: ['2015 P2 Q12'] },   // one paper, one variation
   'bearings.two-bearings-2015': { aliasOf: 'bearings.two-bearings', basedOn: ['2015 P2 Q13'] },   // one paper, one variation
   'quadratics.discriminant-2016': { aliasOf: 'quadratics.discriminant', basedOn: ['2016 P1 Q6'] },   // one paper, one variation
-  // its own skill line went on the 2026-10-02 full read (the owner's "Yes"): it
-  // now shares 2018 P1 Q18's
-  'trig-identities.simplify-2016': { aliasOf: 'trig-identities.simplify', basedOn: ['2016 P1 Q11'] },   // one paper, one variation
+  // 'trig-identities.simplify-2016' materialised 2026-10-08: its own entry above
   'sci-notation.calculate-2016': { aliasOf: 'sci-notation.calculate', basedOn: ['2016 P2 Q2'] },   // one paper, one variation
   'data.mean-sd-compare-2016': { aliasOf: 'data.mean-sd-compare', basedOn: ['2016 P2 Q6'] },   // one paper, one variation
   'change-subject.root-2016': { aliasOf: 'change-subject.root', basedOn: ['2016 P2 Q12'] },   // one paper, one variation

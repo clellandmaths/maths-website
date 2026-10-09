@@ -534,6 +534,69 @@ function rootAsPower(): Q {
   };
 }
 
+// ═══ widened on the owner's word, 2026-10-08 ═══════════════════════════════
+//
+// The widening sheet, https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA. Each
+// topic below serves its card's id alone, so the dispatch sends it here and no
+// other question can move. The originals above are kept as they were.
+
+/**
+ * **2017 P2 Q12 — "Both"**: a fifth root as well, and the power under the root
+ * up to 7. Square, cube and fourth roots as before, the cube root twice as
+ * likely, and the power never sharing a factor with the root.
+ */
+function rootAsPowerWide(roots: number[], mMax: number): Q {
+  for (let i = 0; i < 300; i++) {
+    const v = pick(['x', 'm', 'c']);
+    const n = pick(roots);
+    const m = getRandomInt(1, mMax);
+    if (gcd(m, n) !== 1) continue;
+    const inside = m === 1 ? v : pow(v, m);
+    const rootTex = nthRoot(n, inside);
+    const answer = `${v}^{-\\frac{${m}}{${n}}}`;
+    return {
+      subTopic: 'Writing a Root as a Power', difficulty: 'exam', variationId: 'indices.root-as-power',
+      questionLines: [`Express $\\frac{1}{${rootTex}}$ in the form $${v}^{n}$.`],
+      boardQuestionLines: [`$\\frac{1}{${rootTex}}$ in the form $${v}^{n}$`],
+      solutionSteps: [
+        `<strong>1.</strong> A root is a fractional index — the root goes on the bottom of the fraction, the power on the top:<br><br>$${rootTex} = ${v}^{\\frac{${m}}{${n}}}$`,
+        `<strong>2.</strong> One over a power is that power made negative:<br><br>$\\frac{1}{${v}^{\\frac{${m}}{${n}}}} = ${answer}$`,
+      ],
+      // 2017 P2 Q12: •¹ apply nth root of x^m = x^{m/n}, •² apply 1/x^n = x^{-n}
+      stepMarks: [1, 1], finalAnswer: `$${answer}$`,
+    };
+  }
+  throw new Error('indices.root-as-power: no valid question found');
+}
+
+/**
+ * **2015 P1 Q14 — "Yes"**: fourth and fifth roots as well (16^{3/4} = 8,
+ * 81^{3/4} = 27, 32^{3/5} = 8). The square and cube roots stay the common case;
+ * the card's own caps stay (the number at most 200, the answer at most 400).
+ */
+function evaluateFractionalWide(): Q {
+  for (let tries = 0; tries < 300; tries++) {
+    const root = pick([2, 2, 2, 3, 3, 3, 4, 5]);
+    const base = getRandomInt(2, root === 2 ? 12 : root === 3 ? 5 : root === 4 ? 3 : 2);
+    const n = Math.round(base ** root);
+    const p = getRandomInt(2, 5);
+    if (gcd(p, root) !== 1) continue;
+    const answer = Math.round(base ** p);
+    if (n > 200 || answer > 400) continue;
+    return {
+      subTopic: 'Fractional Indices', difficulty: 'skill', variationId: 'indices.evaluate',
+      questionLines: [`Evaluate $${n}^{\\frac{${p}}{${root}}}.$`],
+      boardQuestionLines: [`$${n}^{\\frac{${p}}{${root}}}$`],
+      solutionSteps: [
+        `<strong>1.</strong> The denominator of the power is the root and the numerator is the power:<br><br>$${n}^{\\frac{${p}}{${root}}} = \\left(${nthRoot(root, n)}\\right)^{${p}}$`,
+        `<strong>2.</strong> Take the root, then raise it to the power:<br><br>$${nthRoot(root, n)} = ${base}$, so $${base}^{${p}} = ${answer}$`,
+      ],
+      stepMarks: [1, 1], finalAnswer: `$${answer}$`,
+    };
+  }
+  throw new Error('indices.evaluate: no valid question found');
+}
+
 export const INDICES_GENERATORS: Record<string, Gen> = {
   'Laws of Indices': laws,
   // Two papers write a product and one writes a fraction; the fraction is
@@ -548,11 +611,13 @@ export const INDICES_GENERATORS: Record<string, Gen> = {
     wanted === 'indices.negative-power' ? negativePower(asked)
     : wanted === 'indices.negative-power-fraction' ? negativePowerFraction()
     : getRandomInt(0, 1) === 0 ? negativePower(asked) : negativePowerFraction()),
-  'Fractional Indices': evaluateFractional,
+  // widened 2026-10-08 (see above); `evaluateFractional` is kept
+  'Fractional Indices': () => evaluateFractionalWide(),
   'Indices with Coefficients': () => withCoefficient(true),
   'Indices in a Quotient': () => withCoefficient(false),
   'Expanding with Indices': expandBracket,
   'Cancelling Coefficients with Indices': cancelCoefficients,
   'A Root in the Denominator': rootInDenominator,
-  'Writing a Root as a Power': rootAsPower,
+  // widened 2026-10-08 (see above); `rootAsPower` is kept
+  'Writing a Root as a Power': () => rootAsPowerWide([2, 3, 3, 4, 5], 7),
 };

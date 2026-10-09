@@ -97,7 +97,25 @@ const P1_ANGLES = {
   major: [210, 225, 240, 270, 300, 315],
 } as const;
 
-function drawP1Angle(sweep: SectorContext['sweep']): number {
+/**
+ * **2016 P1 Q3 widened — the owner's "Yes", 2026-10-08** (the widening sheet,
+ * https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA): every fraction of the turn
+ * with a denominator of 12 or less (80°, 108°, 144°, 216°, 252°, 288° added),
+ * the radius and the 3.14 multiplier caps unchanged. Used only under that
+ * card's own topic, "Area of a Sector, Pi as 3.14", so 2019 P1 Q4 and the
+ * calculator papers on this routine do not move.
+ */
+const P1_ANGLES_WIDE = {
+  minor: [30, 36, 40, 45, 60, 72, 80, 90, 108, 120, 135, 144, 150],
+  major: [210, 216, 225, 240, 252, 270, 288, 300, 315],
+} as const;
+
+function drawP1Angle(sweep: SectorContext['sweep'], wide = false): number {
+  if (wide) {
+    if (sweep === 'minor') return pick([...P1_ANGLES_WIDE.minor]);
+    if (sweep === 'major') return pick([...P1_ANGLES_WIDE.major]);
+    return pick([...P1_ANGLES_WIDE.minor, ...P1_ANGLES_WIDE.major]);
+  }
   if (sweep === 'minor') return pick([...P1_ANGLES.minor]);
   if (sweep === 'major') return pick([...P1_ANGLES.major]);
   return pick([...P1_ANGLES.minor, ...P1_ANGLES.major]);
@@ -424,7 +442,11 @@ const ID_KIND: Record<string, Kind> = {
   'sector.radius-arc': 'radius-arc',
 };
 
-export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string): Q {
+// `wideP1`: 2016 P1 Q3's fuller angle list (P1_ANGLES_WIDE), passed only by its own topic.
+// `p1OnTopic`: whether a topic sheet (no id asked for) may toss for the 3.14 form. 'Area of a
+// Sector' passes false from 2026-10-08, when 2016 P1 Q3's id moved to its own topic, so a topic
+// sheet no longer hands that id out from here. A draw asked for by id never reaches the toss.
+export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string, wideP1 = false, p1OnTopic = true): Q {
   // `askedId` is the variation id the caller named. NOT to be confused with
   // the local `asked` just below, which is the KIND that id maps to.
   // Taught: the asked id names the kind that makes it.
@@ -456,7 +478,7 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
   const paper1 = majorArc || ((kind === 'area-angle' || kind === 'arc-angle')
     && (wanted !== undefined
       ? wanted.endsWith('-pi314')
-      : getRandomInt(0, 2) === 0));
+      : p1OnTopic && getRandomInt(0, 2) === 0));
   // **The area questions are minor sectors, because both their papers are.**
   // 2025 P2 Q6 is 170 degrees and 2016 P1 Q3 is 45; the owner's family ruling
   // puts major against minor among the pairs a variation may not toss a coin
@@ -593,7 +615,7 @@ export function sectorQuestion(kinds: Kind[], wanted?: string, askedId?: string)
          two thirds of 60 is 40 and `240/360*60` is 40.000000000000006.
 
          Failing the test re-draws both, which is what the 3000 tries are for. */
-      angle = drawP1Angle(sweep);
+      angle = drawP1Angle(sweep, wideP1);
       const share = kind === 'area-angle' ? angle * r * r : angle * 2 * r;
       if (share % 360 !== 0) continue;
       /* **2016 P1 Q3: a round radius and a sum held to hand size.** The owner,
@@ -1026,7 +1048,10 @@ export const SECTOR_GENERATORS: Record<string, Gen> = {
     }
     throw new Error('segment: no valid question found');
   },
-  'Area of a Sector': (w, a) => sectorQuestion(['area-angle', 'area-arc'], w, a),
+  'Area of a Sector': (w, a) => sectorQuestion(['area-angle', 'area-arc'], w, a, false, false),
+  // 2016 P1 Q3, widened 2026-10-08: its own topic, so 'Area of a Sector' and
+  // the papers drawn from it are untouched (see P1_ANGLES_WIDE)
+  'Area of a Sector, Pi as 3.14': () => sectorQuestion(['area-angle', 'area-arc'], 'sector.area-angle-pi314', 'sector.area-angle-pi314', true),
   'Length of an Arc': (w, a) => sectorQuestion(['arc-angle'], w, a),
   // 2019 P1 Q4 - the major arc, pi as 3.14. Its own loop, so it cannot
   // disturb `sector.arc-angle` (2023 P2 Q3) the way an in-place fix did.

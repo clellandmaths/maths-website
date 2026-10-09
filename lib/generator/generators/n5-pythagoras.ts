@@ -1011,14 +1011,40 @@ const CEVIAN_NEAR: readonly (readonly [number, number, number, number, number])[
   [21, 21, 18, 12, 15], [24, 20, 18, 14, 15],
 ];
 
+/**
+ * **2017 P2 Q7 widened — the owner's "Yes", 2026-10-08** (the widening sheet,
+ * https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA): every whole-number pair
+ * of triangles up to 25 that meets the card's own rules, searched (Stewart's
+ * theorem exact, both parts real triangles, the base the longest side, the
+ * parts sharing exactly one length so the join is readable, the apex exactly
+ * 90° or within 4° of it). Searched by `cevian-search.mjs`, kept in
+ * `tools/never-the-paper/widen-drafts/`. "Yes" one draw in three.
+ */
+const CEVIAN_RIGHT_WIDE: readonly (readonly [number, number, number, number, number])[] = [
+  [15, 20, 4, 21, 13], [15, 20, 9, 16, 12], [20, 15, 11, 14, 13], [15, 20, 14, 11, 13], [20, 15, 16, 9, 12], [20, 15, 21, 4, 13],
+];
+const CEVIAN_NEAR_WIDE: readonly (readonly [number, number, number, number, number])[] = [
+  [6, 10, 3, 9, 5], [8, 13, 3, 12, 7], [11, 25, 3, 25, 10], [8, 14, 4, 12, 7], [8, 13, 5, 10, 7], [11, 10, 5, 10, 8],
+  [10, 18, 5, 15, 9], [17, 18, 5, 20, 14], [20, 22, 5, 25, 17], [12, 20, 6, 18, 10], [14, 23, 6, 21, 12], [13, 16, 7, 14, 10],
+  [24, 12, 7, 20, 18], [11, 25, 7, 21, 10], [14, 24, 7, 21, 12], [7, 23, 8, 16, 9], [10, 6, 9, 3, 5], [11, 18, 9, 12, 10],
+  [20, 12, 9, 15, 13], [20, 19, 9, 18, 15], [23, 14, 9, 18, 16], [10, 11, 10, 5, 8], [13, 8, 10, 5, 7], [14, 21, 10, 15, 12],
+  [19, 16, 10, 15, 13], [22, 20, 10, 20, 16], [13, 8, 12, 3, 7], [14, 8, 12, 4, 7], [18, 11, 12, 9, 10], [18, 21, 12, 15, 14],
+  [15, 25, 12, 18, 13], [23, 21, 12, 20, 16], [25, 11, 13, 15, 14], [16, 13, 14, 7, 10], [20, 24, 14, 18, 15], [18, 10, 15, 5, 9],
+  [12, 20, 15, 9, 13], [16, 19, 15, 10, 13], [21, 14, 15, 10, 12], [21, 18, 15, 12, 14], [11, 25, 15, 13, 14], [23, 7, 16, 8, 9],
+  [20, 12, 18, 6, 10], [14, 23, 18, 9, 16], [19, 20, 18, 9, 15], [25, 15, 18, 12, 13], [24, 20, 18, 14, 15], [18, 17, 20, 5, 14],
+  [12, 24, 20, 7, 18], [20, 22, 20, 10, 16], [21, 23, 20, 12, 16], [23, 14, 21, 6, 12], [24, 14, 21, 7, 12], [25, 11, 21, 7, 10],
+  [25, 11, 25, 3, 10], [22, 20, 25, 5, 17],
+];
+
 const JOINED_NAMES = [
   ['P', 'Q', 'R', 'S'], ['A', 'B', 'C', 'D'], ['W', 'X', 'Y', 'Z'], ['J', 'K', 'L', 'M'],
 ];
 
-export function pythagorasConverseJoined(): Q {
+/** `wide`: the searched triangles above, passed only on 2017 P2 Q7's own keyed branch. */
+export function pythagorasConverseJoined(wide = false): Q {
   for (let tries = 0; tries < 300; tries++) {
-    const right = getRandomInt(0, 1) === 0;
-    const [X, Y, z1, z2, d] = pick([...(right ? CEVIAN_RIGHT : CEVIAN_NEAR)]);
+    const right = wide ? getRandomInt(0, 2) === 0 : getRandomInt(0, 1) === 0;
+    const [X, Y, z1, z2, d] = pick([...(right ? (wide ? CEVIAN_RIGHT_WIDE : CEVIAN_RIGHT) : (wide ? CEVIAN_NEAR_WIDE : CEVIAN_NEAR))]);
     /**
      * **The join must be readable off the lengths.** — 2026-09-23
      *
@@ -1185,7 +1211,14 @@ export function pythagorasConverseJoined(): Q {
 // and the reason is in the working: 2014 spends its first mark getting the
 // perpendicular out of the height, which 2026 simply gives you.
 
-export function pythagorasChordReverse(findChord: boolean): Q {
+/**
+ * `nearSide`: AB is measured from the chord's midpoint out to the NEAR arc in
+ * half the draws, so CA = r − AB. 2014 P1 Q12 widened on the owner's "Option A"
+ * (the widening sheet, 2026-10-08). Opt-in: only that card's dispatch passes
+ * it, and without it no random is drawn and nothing moves (2026 P2 Q5 is the
+ * other branch).
+ */
+export function pythagorasChordReverse(findChord: boolean, nearSide = false): Q {
   for (let tries = 0; tries < 400; tries++) {
     /**
      * **`sideways` contexts belong to 2023 P1 Q10 and nothing else.**
@@ -1255,18 +1288,21 @@ export function pythagorasChordReverse(findChord: boolean): Q {
 
       const r = t.r;
       const chord = 2 * t.half;
-      const height = r + t.d;
+      const near = nearSide && getRandomInt(0, 1) === 0;
+      const height = near ? r - t.d : r + t.d;
       const dShown = t.d;
       const halfChord = t.half;
       const answer = chord;
       if (answer < r * 0.4) continue;
       if (answer === height || answer === r) continue;   // never a given
+      if (near && (height < 2 || height === dShown)) continue;   // a sliver of a gap, or a given that is CA itself
 
       // 2014 P1 Q12 draws the whole circle and the line from the chord's
       // midpoint A through the centre to B on the far side — solid, and with
-      // no number on it, because AB = 27 is given in the words.
+      // no number on it, because AB = 27 is given in the words. On the near
+      // side the line runs from A out to the closer arc instead.
       const fig = circleChord({
-        radius: r, chord, major: true, rest: 'solid', radiusLine: 'none',
+        radius: r, chord, major: !near, rest: 'solid', radiusLine: 'none',
         names: { a: pN, b: qN, centre: cN, mid: aN, far: bN },
         centreDot: true, spanLine: true,
         labels: { radius: '', chord: '', height: '' },
@@ -1285,7 +1321,9 @@ export function pythagorasChordReverse(findChord: boolean): Q {
       // angle, •² know how to use Pythagoras, •³ the correct calculation, •⁴ the
       // length asked for.
       const steps = [
-        `<strong>1.</strong> $${aN}${bN}$ runs from the midpoint $${aN}$ through the centre $${cN}$ to the circle, so the part from $${cN}$ to $${aN}$ is $${aN}${bN}$ minus the radius:<br><br>$${cN}${aN} = ${num(height)} - ${num(r)} = ${num(dShown)}$ ${ctx.unit}`,
+        near
+          ? `<strong>1.</strong> $${aN}${bN}$ runs from the midpoint $${aN}$ out to the circle, away from the centre $${cN}$, so $${cN}${bN}$ is a radius and the part from $${cN}$ to $${aN}$ is the radius minus $${aN}${bN}$:<br><br>$${cN}${aN} = ${num(r)} - ${num(height)} = ${num(dShown)}$ ${ctx.unit}`
+          : `<strong>1.</strong> $${aN}${bN}$ runs from the midpoint $${aN}$ through the centre $${cN}$ to the circle, so the part from $${cN}$ to $${aN}$ is $${aN}${bN}$ minus the radius:<br><br>$${cN}${aN} = ${num(height)} - ${num(r)} = ${num(dShown)}$ ${ctx.unit}`,
         `<strong>2.</strong> The line from the centre to the midpoint of a chord is perpendicular to it, so $${cN}${aN}${qN}$ is right-angled with $${cN}${qN}$, a radius, as its hypotenuse:<br><br>$${aN}${qN}^{2} = ${num(r)}^{2} - ${num(dShown)}^{2}$`,
         `<strong>3.</strong> Work that out and take the square root:<br><br>$${aN}${qN}^{2} = ${num(r * r - dShown * dShown)}$, so $${aN}${qN} = ${num(halfChord)}$ ${ctx.unit}`,
         `<strong>4.</strong> The chord is twice $${aN}${qN}$:<br><br>$${pN}${qN} = 2 \\times ${num(halfChord)} = ${num(answer)}$ ${ctx.unit}`,
@@ -1961,13 +1999,16 @@ export const PYTHAGORAS_GENERATORS: Record<string, Gen> = {
   'Pythagoras with Two Circles': (wanted) => pythagorasTwoCircles(wanted),
   '3D Coordinates and Lengths': (wanted) => pythagorasCoordinates(wanted),
   'The Space Diagonal of a Cuboid': (wanted) => pythagorasSpaceDiagonal(wanted),
-  'Finding a Chord or Radius in a Circle': () => pythagorasChordReverse(true),
+  // the near side as well: 2014 P1 Q12 widened 2026-10-08 (see the routine)
+  'Finding a Chord or Radius in a Circle': () => pythagorasChordReverse(true, true),
   'Finding the Radius from a Chord': () => pythagorasChordReverse(false),
   // Three presentations of the converse, and the dispatch is where the third
   // joins: `pythagorasConverse` already splits itself between the plain shape
   // and the from-a-total one.
   'The Converse of Pythagoras': (wanted, asked) =>
-    wanted === 'pythagoras.converse-joined' ? pythagorasConverseJoined()
+    // 2017 P2 Q7's own keyed branch, widened 2026-10-08 (CEVIAN_*_WIDE); a
+    // topic sheet's draw below keeps the original lists
+    wanted === 'pythagoras.converse-joined' ? pythagorasConverseJoined(true)
     : wanted !== undefined ? pythagorasConverse(wanted, asked)
     : getRandomInt(1, 3) === 1 ? pythagorasConverseJoined() : pythagorasConverse(),
   'Pythagoras in a Right-Angled Triangle': pythagorasFindSide,

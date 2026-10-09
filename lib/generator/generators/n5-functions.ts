@@ -95,6 +95,35 @@ function shapes(which?: number): Shape[] {
   ];
 }
 
+/**
+ * **2019 P1 Q1 widened — the owner's "Just number in front up to 9",
+ * 2026-10-08** (the widening sheet, https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA):
+ * f(x) = ax³ at a negative whole number, a from 2 to 9; the card's own cap
+ * (|f| at most 400, never 0) stays. Its own topic, "Evaluating a Cube
+ * Multiple", so `evaluate` below, and the three other papers it serves, are
+ * not entered on its behalf.
+ */
+function evaluateCubeMultipleWide(): Q {
+  for (let tries = 0; tries < 300; tries++) {
+    const a = getRandomInt(2, 9);
+    const input = -getRandomInt(2, 6);
+    const out = a * input ** 3;
+    if (Math.abs(out) > 400 || out === 0) continue;
+    const sub = `(${input})`;
+    return {
+      subTopic: 'Evaluating a Function', difficulty: 'skill', variationId: 'functions.evaluate-cube-multiple',
+      questionLines: [`Given that $f(x) = ${a}x^{3}$, evaluate $f(${input})$.`],
+      boardQuestionLines: [`$f(x) = ${a}x^{3}$. Find $f(${input})$`],
+      solutionSteps: [
+        `<strong>1.</strong> Replace every $x$ with $${sub}$. Keep the brackets — they are what makes the sign come out right:<br><br>$f(${input}) = ${a}${sub}^{3}$`,
+        `<strong>2.</strong> Now cube the number, then multiply by ${a}:<br><br>$f(${input}) = ${out}$`,
+      ],
+      stepMarks: [1, 1], finalAnswer: `$${out}$`,
+    };
+  }
+  throw new Error('functions.evaluate-cube-multiple: no valid question found');
+}
+
 // ── evaluate — 2017 P1 Q1, 2019 P1 Q1, 2022 P1 Q2, 2024 P1 Q2 ────────────
 
 /**
@@ -125,7 +154,11 @@ function evaluate(wanted?: string): Q {
   // so the id the caller asked for IS the index — no draw to discard. A topic
   // sheet names none and keeps the even draw across all four.
   const asked = wanted === undefined ? -1 : ids.indexOf(wanted);
-  const which = asked >= 0 ? asked : getRandomInt(0, 3);
+  // A topic sheet draws the three shapes still on this topic: 2019 P1 Q1's
+  // cube multiple has its own topic from 2026-10-08 (evaluateCubeMultipleWide),
+  // so it no longer comes out of here under its id. A draw asked for by id
+  // never reaches the toss, so no paper's draws move.
+  const which = asked >= 0 ? asked : [0, 2, 3][getRandomInt(0, 2)];
   for (let tries = 0; tries < 200; tries++) {
     const s = shapes(which)[which];
     const fn = pick(FN);
@@ -371,6 +404,8 @@ function evaluateTrig(wanted?: string): Q {
 
 export const FUNCTION_GENERATORS: Record<string, Gen> = {
   'Evaluating a Function': evaluate,
+  // 2019 P1 Q1's own, widened 2026-10-08 (see evaluateCubeMultipleWide)
+  'Evaluating a Cube Multiple': () => evaluateCubeMultipleWide(),
   'Finding an Unknown in a Function': (w, asked) => findUnknown(w, asked),
   'Evaluating a Trigonometric Function': (w) => evaluateTrig(w),
 };

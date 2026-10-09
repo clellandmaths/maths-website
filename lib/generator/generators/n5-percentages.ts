@@ -709,6 +709,53 @@ function compoundBetweenYears(asked?: string): Q {
   };
 }
 
+/**
+ * **2019 P2 Q1 widened — the owner's "Yes", 2026-10-08** (the widening sheet,
+ * https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA): three years, answer
+ * first. Every (rate, start) whose value after three years is whole is listed
+ * for the story, then one is picked evenly, instead of the first pair that
+ * happens to come out whole (which made a few questions most of the draws).
+ * Whole rates 2% to 15% (the paper's own is 15%), decimal rates 1.5% to 9%
+ * one draw in three as before. Wording and steps are the card's own.
+ *
+ * `percentages.compound-between-years-pre2023` was an alias of 2025 P2 Q1's
+ * id; it is materialised under its own topic, "Appreciation Over Three Years",
+ * so `compoundBetweenYears` above, and 2025 P2 Q1 with it, do not move.
+ */
+function compoundBetweenYearsWide(): Q {
+  const ctx = pick(BETWEEN_YEARS_CONTEXTS);
+  const [lo, hi] = ctx.band;
+  const step = hi > 200000 ? 10000 : hi > 40000 ? 2500 : 500;
+  const decimal = getRandomInt(0, 2) === 0;
+  const rates = decimal ? Array.from({ length: 76 }, (_, i) => (15 + i) / 10).filter(r => !Number.isInteger(r))
+    : Array.from({ length: 14 }, (_, i) => i + 2);
+  const cands: [number, number, number][] = [];
+  for (const rate of rates) {
+    const multiplier = Math.round((1 + rate / 100) * 10000) / 10000;
+    for (let s = Math.ceil(lo / step); s <= Math.floor(hi / step); s++) {
+      const value = s * step * Math.pow(multiplier, 3);
+      if (Math.abs(value - Math.round(value)) < 1e-6) cands.push([rate, multiplier, s * step]);
+    }
+  }
+  if (!cands.length) return compoundBetweenYearsWide();
+  const [rate, multiplier, start] = pick(cands);
+  const years = 3, value = Math.round(start * Math.pow(multiplier, years));
+  const from = getRandomInt(2014, 2025);
+  return {
+    subTopic: 'Appreciation Between Two Years', difficulty: 'exam', variationId: 'percentages.compound-between-years-pre2023',
+    questionLines: [ctx.opening(plain(start), from), `This number is expected to increase by ${rate}% each year.`, ctx.ask(from + years)],
+    boardQuestionLines: [`${plain(start)} in ${from}, up ${rate}% a year. How many in ${from + years}?`],
+    solutionSteps: [
+      `<strong>1.</strong> Find the multiplier for an increase of ${rate}%:<br><br>$100\\% + ${rate}\\% = ${Math.round((100 + rate) * 10) / 10}\\% = ${multiplier}$`,
+      `<strong>2.</strong> From ${from} to ${from + years} is ${years} years, so apply the multiplier ${timesWord(years)}:<br><br>$${plain(start)} \\times ${multiplier}^{${years}}$`,
+      `<strong>3.</strong> Evaluate:<br><br>$= ${plain(value)}$ ${ctx.unit}`,
+    ],
+    // •¹ know how to increase by the rate, •² the value after three years, •³ evaluate
+    stepMarks: [1, 1, 1],
+    finalAnswer: `${plain(value)} ${ctx.unit}`,
+  };
+}
+
 // ── shape: a part stated as a percentage of a whole — 2014 P1 Q9, 2026 P1 Q2
 //
 // Not a reverse percentage in the usual sense: nothing rose or fell. The
@@ -1066,6 +1113,8 @@ export const PERCENTAGE_GENERATORS: Record<string, Gen> = {
   // three-year span without touching 2025 P2 Q1 on the target id, which is
   // signed off. See the note above `compoundBetweenYears`.
   'Appreciation Between Two Years': (_w, asked) => compoundBetweenYears(asked),
+  // 2019 P2 Q1's own from 2026-10-08 (see compoundBetweenYearsWide)
+  'Appreciation Over Three Years': () => compoundBetweenYearsWide(),
   'Finding a Total from a Percentage': (_w, a) => partOfWhole(a),
   'Finding the Extra Charged': surcharge,
 };

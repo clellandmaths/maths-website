@@ -384,6 +384,46 @@ const DIAM_SETS: DiamNames[] = [
 type DiamNames = { centre: string; touchB: string; touchD: string; outside: string;
   oppB: string; oppD: string; endA: string; endE: string };
 
+/**
+ * **2024 P1 Q10 widened — the owner's "Option A", 2026-10-08** (the widening
+ * sheet, https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA): the angle at the
+ * centre runs 104 to 146 (the given angle 107° to 128°, not only 119° to
+ * 128°), and where the printed angle has no room inside its small triangle the
+ * figure writes it just outside side DE with a pointer (`outsideOk`). The same
+ * three steps. The topic serves `angles.two-tangents-diameters` alone;
+ * `twoTangentsDiametersQuestion` below is kept as it was.
+ */
+export function twoTangentsDiametersWideQuestion(): Q {
+  for (let tries = 0; tries < 3000; tries++) {
+    const n = pick(DIAM_SETS);
+    const k = getRandomInt(52, 73) * 2, given = 180 - k / 2, answer = 180 - k;
+    const fig = twoTangentsDiameters({ radius: 1, start: getRandomInt(0, 11) * 30, atCentre: k, flip: getRandomInt(0, 1) === 1, names: n, written: true, outsideOk: true });
+    if (!fig) continue;
+    const prose = [
+      `The diagram below shows a circle, centre $${n.centre}$.`, '',
+      `&bull;&nbsp; $${n.endA}${n.outside}$ is a tangent to the circle at the point $${n.touchB}$`,
+      `&bull;&nbsp; $${n.outside}${n.endE}$ is a tangent to the circle at the point $${n.touchD}$`,
+      `&bull;&nbsp; $${n.touchD}${n.oppD}$ and $${n.touchB}${n.oppB}$ are diameters of the circle`,
+      `&bull;&nbsp; Angle $${n.touchD}${n.oppB}${n.endE}$ is $${given}^{\\circ}$`,
+      `Calculate the size of the shaded angle $${n.touchB}${n.outside}${n.touchD}$.`,
+    ];
+    const steps = [
+      `<strong>1.</strong> $${n.touchB}${n.oppB}${n.endE}$ is a straight line, so the angles at $${n.oppB}$ add to $180^{\\circ}$:<br><br>$${n.touchD}${n.oppB}${n.touchB} = 180 - ${given} = ${k / 2}^{\\circ}$`,
+      `<strong>2.</strong> The angle at the centre is twice the angle at the circumference standing on the same arc $${n.touchB}${n.touchD}$:<br><br>$${n.touchB}${n.centre}${n.touchD} = 2 \\times ${k / 2} = ${k}^{\\circ}$`,
+      `<strong>3.</strong> A radius meets a tangent at right angles, so angles $${n.centre}${n.touchB}${n.outside}$ and $${n.centre}${n.touchD}${n.outside}$ are both $90^{\\circ}$.<br><br>The angles of quadrilateral $${n.centre}${n.touchB}${n.outside}${n.touchD}$ add to $360^{\\circ}$:<br><br>$${n.touchB}${n.outside}${n.touchD} = 360 - 90 - 90 - ${k} = ${answer}^{\\circ}$`,
+    ];
+    if (verifyFigure(fig, [...prose, ...steps].join(' ')).length) continue;
+    return {
+      subTopic: 'Two Tangents and Two Diameters', difficulty: 'exam', variationId: 'angles.two-tangents-diameters', stepMarks: [1, 1, 1],
+      // the stops inside the maths, as 2024 P1 Q10 prints them (see below)
+      questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(2).map(l => !l.startsWith('&bull;') ? l : l.endsWith('$') ? `${l.slice(0, -1)}.$` : `${l}.`)],
+      boardQuestionLines: [`Tangents at ${n.touchB} and ${n.touchD} meet at ${n.outside}; ${n.touchB}${n.oppB} and ${n.touchD}${n.oppD} are diameters. Angle ${n.touchD}${n.oppB}${n.endE} = ${given}°. Find ${n.touchB}${n.outside}${n.touchD}.`],
+      solutionSteps: steps, finalAnswer: `$${answer}^{\\circ}$`, figure: fig,
+    };
+  }
+  throw new Error('two tangents diameters wide: no valid question found');
+}
+
 export function twoTangentsDiametersQuestion(): Q {
   for (let tries = 0; tries < 3000; tries++) {
     const n = pick(DIAM_SETS);
@@ -538,6 +578,7 @@ export const TANGENT_GENERATORS: Record<string, () => Q> = {
   'A Tangent and a Semicircle': tangentSemicircleQuestion,
   'A Tangent Meeting a Diameter': tangentMeetsDiameterQuestion,
   'Two Tangents and a Parallel Chord': twoTangentsChordQuestion,
-  'Two Tangents and Two Diameters': twoTangentsDiametersQuestion,
+  // widened 2026-10-08; `twoTangentsDiametersQuestion` is kept
+  'Two Tangents and Two Diameters': twoTangentsDiametersWideQuestion,
   'A Reflex Angle at the Centre': tangentReflexQuestion,
 };

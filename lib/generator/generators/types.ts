@@ -140,6 +140,7 @@ export type Topic =
   | "Percentage Change"
   | "Two-Stage Depreciation"
   | "Appreciation Between Two Years"
+  | "Appreciation Over Three Years"
   | "Finding a Total from a Percentage"
   | "Finding the Extra Charged"
   | "Expanding a Single Bracket"
@@ -183,6 +184,7 @@ export type Topic =
   | "Subtracting Algebraic Fractions"
   | "Multiplying Algebraic Fractions"
   | "Dividing Algebraic Fractions"
+  | "Dividing Fractions with Powers"
   | "Dividing with a Difference of Squares"
   | "Gradient as an Algebraic Fraction"
   | "Changing the Subject"
@@ -197,6 +199,7 @@ export type Topic =
   | "Constructing Simultaneous Equations without a Calculator"
   | "Simultaneous Equations Used Again"
   | "Evaluating a Function"
+  | "Evaluating a Cube Multiple"
   | "Finding an Unknown in a Function"
   | "Evaluating a Trigonometric Function"
   | "Quartiles and Interquartile Range"
@@ -210,6 +213,8 @@ export type Topic =
   | "Solving a Trigonometric Equation with a Constant Term"
   | "Trigonometric Equations in a Formula"
   | "Simplifying Trigonometric Expressions"
+  | "Simplifying a Tangent and Cosine Product"
+  | "Simplifying a Sine, Cosine and Tangent Product"
   | "Expanding Trigonometric Brackets"
   | "Trigonometric Fractions"
   | "Writing in a Given Trigonometric Form"
@@ -295,6 +300,7 @@ export type Topic =
   | "A Point Off a Straight Line"
   | "Area of a Regular Hexagon"
   | "Area of a Sector"
+  | "Area of a Sector, Pi as 3.14"
   | "A Sector Cut Out of a Triangle"
   | "Two Similar Sectors"
   | "Length of an Arc"
@@ -487,6 +493,8 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Percentage Change",
     "Two-Stage Depreciation",
     "Appreciation Between Two Years",
+    // 2019 P2 Q1's own, widened 2026-10-08 (n5-percentages.ts)
+    "Appreciation Over Three Years",
     "Finding a Total from a Percentage",
     "Finding the Extra Charged",
   ],
@@ -551,6 +559,8 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Subtracting Algebraic Fractions",
     "Multiplying Algebraic Fractions",
     "Dividing Algebraic Fractions",
+    // 2015 P2 Q7's own, widened 2026-10-08 (n5-alg-fractions.ts)
+    "Dividing Fractions with Powers",
     "Dividing with a Difference of Squares",
     "Gradient as an Algebraic Fraction",
   ],
@@ -571,6 +581,8 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
   ],
   "N5 Functions": [
     "Evaluating a Function",
+    // 2019 P1 Q1's own, widened 2026-10-08 (n5-functions.ts)
+    "Evaluating a Cube Multiple",
     "Finding an Unknown in a Function",
     "Evaluating a Trigonometric Function",
   ],
@@ -588,6 +600,9 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
     "Solving a Trigonometric Equation with a Constant Term",
     "Trigonometric Equations in a Formula",
     "Simplifying Trigonometric Expressions",
+    // 2016 P1 Q11's and 2018 P1 Q18's own, widened 2026-10-08 (n5-trig.ts)
+    "Simplifying a Tangent and Cosine Product",
+    "Simplifying a Sine, Cosine and Tangent Product",
     "Expanding Trigonometric Brackets",
     "Trigonometric Fractions",
     "Writing in a Given Trigonometric Form",
@@ -711,6 +726,8 @@ export const TOPIC_GROUPS_N5: Record<string, Topic[]> = {
   // the prose; these put them on the figure, as Paper 2 does.
   "N5 Arcs and Sectors (Diagrams)": [
     "Area of a Sector",
+    // 2016 P1 Q3's own, widened 2026-10-08 (n5-sector.ts, P1_ANGLES_WIDE)
+    "Area of a Sector, Pi as 3.14",
     "A Sector Cut Out of a Triangle",
     "Two Similar Sectors",
     "Length of an Arc",

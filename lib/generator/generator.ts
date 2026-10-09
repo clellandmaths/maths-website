@@ -1,5 +1,6 @@
 import { Topic, TOPIC_GROUPS, ALL_TOPICS, GeneratedQuestion, COURSES } from './generators/types';
 import { questionKey } from './question-key';
+import { sameQuestionKey, sameWorkingKey } from './same-question';
 import { N5_VARIATIONS, variationsBasedOn, topicsBasedOn, aliasTarget } from './generators/n5-variations';
 import { VARIATION_CODES } from './generators/variation-codes';
 import { mulberry32, random, seedFrom, setRandomStream } from './generators/utils';
@@ -169,7 +170,20 @@ export async function generateQuestion(
   const isN5 = Object.values(COURSES["National 5 Maths"]).some(ts => ts.includes(selected));
   if (isN5) {
     const { generateN5Question } = await import('./generators/n5');
-    q = generateN5Question(selected, options.makeId, options.askedId);
+    /**
+     * **Never the paper's own question** (the owner, 2026-10-07; see generators/paper-guard.ts). A draw that
+     * IS a past paper question, by the owner's "same question" test, is drawn again. Every other draw is
+     * returned as it was, with no extra randomness used, so a seed that never met a paper question gives
+     * exactly the question it always gave.
+     */
+    const { paperQuestionOf, GUARD_LIMIT } = await import('./generators/paper-guard');
+    for (let tries = 0; ; tries++) {
+      q = generateN5Question(selected, options.makeId, options.askedId);
+      if (!paperQuestionOf(q)) break;
+      if (tries >= GUARD_LIMIT) {
+        throw new Error(`generateQuestion: ${selected} drew a past paper question ${GUARD_LIMIT} times running`);
+      }
+    }
   }
   else if (TOPIC_GROUPS["Sequences"].includes(selected)) {
     const { generateSequencesQuestion } = await import('./generators/sequences');
@@ -300,7 +314,12 @@ export async function questionsLike(
     // handing a teacher both is handing them the same question twice.
     const key = questionKey(q);
     if (seen.has(key)) continue;
+    // nor a twin by the owner's "same question" test (2026-10-08): the same question in another order or story
+    const w = sameWorkingKey(q.questionLines ?? [], q.finalAnswer ?? '', q.solutionSteps ?? []);
+    const twins = [`Q:${sameQuestionKey(q.questionLines ?? [], q.finalAnswer ?? '')}`, ...(w ? [w] : [])];
+    if (twins.some(k => seen.has(k))) continue;
     seen.add(key);
+    for (const k of twins) seen.add(k);
     out.push(q);
   }
   return out;

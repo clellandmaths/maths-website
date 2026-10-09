@@ -608,6 +608,285 @@ function runningOn(): Q | null {
     steps, [1, 1], `$${answer}$`);
 }
 
+// ═══ widened on the owner's word, 2026-10-08 ═══════════════════════════════
+//
+// The widening sheet (https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA) and its
+// follow-up (https://claude.ai/artifact/K2fwaDiZs5QMHTa7faxjyt). Each card below
+// has a topic of its own serving its id alone, so the dispatch sends that topic
+// here and no other question can move. The original routines above are kept
+// exactly as they were; two of the wide ones still call them for the paper's
+// own form.
+
+/** t as α·e1 + β·e2 (all in the figure's own basis): the coefficients on the two named vectors. */
+function express(t: Combo, e1: Combo, e2: Combo): Combo {
+  const det = rSub(rMul(e1.a, e2.b), rMul(e1.b, e2.a));
+  const inv = (x: R): R => r(x[1], x[0]);
+  const al = rMul(rSub(rMul(t.a, e2.b), rMul(t.b, e2.a)), inv(det));
+  const be = rMul(rSub(rMul(e1.a, t.b), rMul(e1.b, t.a)), inv(det));
+  return { a: al, b: be };
+}
+const neg1 = (x: R): R => rSub(r(0, 1), x);
+/** A combination with either named vector turned round (−1). */
+const sgn = (c: Combo, sa: number, sb: number): Combo => ({ a: sa === 1 ? c.a : neg1(c.a), b: sb === 1 ? c.b : neg1(c.b) });
+
+/**
+ * **2016 P2 Q3 — every question needs a parallel side.** The owner, on the
+ * widening sheet: *"When pupils don't need to go down a parallel side the
+ * question is too easy. I'd suggest thinking about varying the picture perhaps
+ * from a parallelogram to other shapes with parallel sides."* Then, on the
+ * follow-up: *"Option C but only add trapezium questions that require 2 sides
+ * to be used we need to keep question as simple as possible"*.
+ *
+ * The two given vectors are two adjacent sides, either going round (the
+ * paper's AB, BC) or leaving one corner (AB, AD). They reach three corners; the
+ * vector asked for must touch the fourth, must not be a multiple of one given
+ * vector alone, and its route must run only along given sides and sides
+ * parallel to them. Shapes: the parallelogram, and a trapezium whose long side
+ * is twice its short one (answers with a fraction are refused). `twoSides`
+ * keeps the trapezium to routes of two sides.
+ */
+type Shape = 'parallelogram' | 'trapezium';
+const SHAPE_BASIS: Record<Shape, { U: Pt; V: Pt }> = {
+  parallelogram: { U: pt(70, 0), V: pt(26, 46) },
+  trapezium: { U: pt(40, 0), V: pt(22, 46) },
+};
+function parallelSides(shapes: Shape[], id: string, topic: string, twoSides = false): Q | null {
+  const shape = pick(shapes);
+  const names = pick([['A', 'B', 'C', 'D'], ['P', 'Q', 'R', 'S'], ['K', 'L', 'M', 'N'], ['W', 'X', 'Y', 'Z']]);
+  const [P1, P2, P3, P4] = names;
+  const [nu, nv] = pick(LETTER_SETS);
+  // corners in the shape's own basis; the trapezium's P1P2 is twice P4P3
+  const pos: Record<string, Combo> = shape === 'trapezium'
+    ? { [P1]: C(0, 1, 0, 1), [P2]: C(2, 1, 0, 1), [P3]: C(1, 1, 1, 1), [P4]: C(0, 1, 1, 1) }
+    : { [P1]: C(0, 1, 0, 1), [P2]: C(1, 1, 0, 1), [P3]: C(1, 1, 1, 1), [P4]: C(0, 1, 1, 1) };
+  const k = pick([0, 1, 2, 3]);
+  const at = names[k], nxt = names[(k + 1) % 4], opp = names[(k + 2) % 4], prv = names[(k + 3) % 4];
+  const form = pick(['round', 'corner'] as const);
+  const [g1, g2]: [string, string][] = form === 'round' ? [[at, nxt], [nxt, opp]] : [[at, nxt], [at, prv]];
+  const covered = new Set([...g1, ...g2]);
+  const fourth = names.find(n => !covered.has(n))!;
+  const others = names.filter(n => n !== fourth);
+  const [from, to] = pick(others.flatMap(o => [[fourth, o], [o, fourth]]));
+  const e1 = cSub(pos[g1[1]], pos[g1[0]]), e2 = cSub(pos[g2[1]], pos[g2[0]]);
+  const want = express(cSub(pos[to], pos[from]), e1, e2);
+  if (want.a[0] === 0 || want.b[0] === 0) return null;                 // a multiple of one given alone
+  if (want.a[1] !== 1 || want.b[1] !== 1) return null;                 // no fractions
+  // the parallel pairs: every side of the parallelogram; the trapezium's P1P2 and P4P3 only
+  const side = (x: string, y: string) => cSub(pos[y], pos[x]);
+  const parallelTo = (x: string, y: string, gx: string, gy: string) => {
+    const s = side(x, y), g = side(gx, gy);
+    return rNum(s.a) * rNum(g.b) - rNum(s.b) * rNum(g.a) === 0;
+  };
+  const okEdge = (x: string, y: string) => [g1, g2].some(([gx, gy]) => parallelTo(x, y, gx, gy));
+  // a route round the shape, either way, along given sides and sides parallel to them
+  const iF = names.indexOf(from), iT = names.indexOf(to);
+  const routes = [1, 3].map(step => { const out = [from]; let i = iF; while (i !== iT) { i = (i + step) % 4; out.push(names[i]); } return out; })
+    .filter(rt => rt.slice(1).every((n, i) => okEdge(rt[i], n)))
+    .sort((a, b) => a.length - b.length);
+  if (!routes.length) return null;
+  const route = routes[0];
+  if (twoSides && shape === 'trapezium' && route.length !== 3) return null;
+  const isGiven = (x: string, y: string) => [g1, g2].find(([gx, gy]) => (gx === x && gy === y) || (gx === y && gy === x));
+  const termOf = (x: string, y: string) => { const t = express(side(x, y), e1, e2); return combo(t.a, t.b, nu, nv); };
+  const reasons = route.slice(1).flatMap((n, i) => {
+    const x = route[i];
+    if (isGiven(x, n)) return [];
+    const [gx, gy] = [g1, g2].find(([a, b]) => parallelTo(x, n, a, b))!;
+    const why = shape === 'trapezium'
+      ? `$${x}${n}$ is parallel to $${gx}${gy}$ and ${Math.abs(rNum(express(side(x, n), e1, e2).a) || rNum(express(side(x, n), e1, e2).b)) === 2 ? 'twice' : 'half'} as long`
+      : `opposite sides of a ${shape} are equal and parallel`;
+    return [`$${ray(x, n)} = ${termOf(x, n)}$, because ${why}`];
+  });
+  const answer = combo(want.a, want.b, nu, nv);
+  const { U, V } = SHAPE_BASIS[shape];
+  const points = Object.fromEntries(Object.entries(pos).map(([kk, v]) => [kk, place(v, U, V)]));
+  const intro = shape === 'trapezium'
+    ? [`The diagram below shows trapezium $${P1}${P2}${P3}${P4}$.`, `$${P1}${P2}$ is parallel to $${P4}${P3}$ and twice as long.`]
+    : [`The diagram below shows ${shape} $${P1}${P2}${P3}${P4}$.`];
+  const prose = [
+    ...intro,
+    `$${ray(g1[0], g1[1])}$ represents vector $${vec(nu)}$ and $${ray(g2[0], g2[1])}$ represents vector $${vec(nv)}$.`,
+    `Express $${ray(from, to)}$ in terms of $${vec(nu)}$ and $${vec(nv)}$.`,
+  ];
+  const sum = route.slice(1).map((n, i) => ray(route[i], n)).join(' + ');
+  const steps = [`<strong>1.</strong> There is no direct route, so go round the shape from $${from}$ to $${to}$:` +
+    `<br><br>$${ray(from, to)} = ${sum}$` +
+    (reasons.length ? `<br><br>${reasons.join('<br><br>')}` : '') +
+    `<br><br>so $${ray(from, to)} = ${route.slice(1).map((n, i) => `(${termOf(route[i], n)})`).join(' + ')} = ${answer}$`];
+  const edges: [string, string][] = [[P1, P2], [P2, P3], [P3, P4], [P4, P1]];
+  if (!edges.some(([x, y]) => (x === from && y === to) || (x === to && y === from))) edges.push([from, to]);
+  const fig = vectorFigure({ points, edges, arrows: [{ from: g1[0], to: g1[1], label: nu }, { from: g2[0], to: g2[1], label: nv }, { from, to }] });
+  if (verifyFigure(fig).length) return null;
+  return {
+    subTopic: topic, difficulty: 'exam', variationId: id,
+    questionLines: [intro[0], renderScene(fig.scene), ...prose.slice(1)],
+    boardQuestionLines: [`${shape} ${P1}${P2}${P3}${P4}, ${g1.join('')} = ${nu}, ${g2.join('')} = ${nv}. Find ${from}${to}.`],
+    solutionSteps: steps, stepMarks: [1], finalAnswer: `$${answer}$`, figure: fig,
+  };
+}
+
+/**
+ * **2017 P2 Q8 — the side may also be extended by half a length** (TA = ½AB),
+ * beside the paper's own. The owner: "Yes". Two draws in three are the
+ * original routine's.
+ */
+function extendedSideHalf(id: string, topic: string): Q | null {
+  if (getRandomInt(0, 2) > 0) { const q = extendedSide(); return q && { ...q, variationId: id, subTopic: topic }; }
+  const [A, B, D, T, V] = pick([['P', 'Q', 'R', 'T', 'V'], ['A', 'B', 'C', 'S', 'M'], ['D', 'E', 'F', 'G', 'N'], ['K', 'L', 'M', 'T', 'V']]);
+  const [nc, nd] = pick(LETTER_SETS);
+  const sc = getRandomInt(0, 1) === 0 ? 1 : -1, sd = getRandomInt(0, 1) === 0 ? 1 : -1;
+  const pos: Record<string, Combo> = {
+    [A]: C(0, 1, 0, 1), [B]: C(0, 1, sd, 1), [D]: cSub(C(0, 1, sd, 1), C(sc, 1, 0, 1)), [T]: C(0, 1, -sd, 2),
+  };
+  pos[V] = cHalf(cAdd(pos[A], pos[D]));
+  const first = cSub(pos[D], pos[A]), second = cSub(pos[V], pos[T]);
+  const Cv = pt(44, -54), Dv = pt(70, 0);   // the paper's own (k = 1) height: a half run-on is shorter still
+  const points = Object.fromEntries(Object.entries(pos).map(([kk, v]) => [kk, place(v, Cv, Dv)]));
+  const [ans1, ans2] = [combo(first.a, first.b, nc, nd), combo(second.a, second.b, nc, nd)];
+  const cRay = sc === 1 ? ray(D, B) : ray(B, D), dRay = sd === 1 ? ray(A, B) : ray(B, A);
+  const arrows = [sc === 1 ? { from: D, to: B, label: nc } : { from: B, to: D, label: nc }, sd === 1 ? { from: A, to: B, label: nd } : { from: B, to: A, label: nd }];
+  const triangle: Record<string, Pt> = { [A]: points[A], [B]: points[B], [D]: points[D] };
+  const fig1 = vectorFigure({ points: triangle, edges: [[A, B], [B, D], [D, A]], arrows });
+  const fig2 = vectorFigure({ points, edges: [[A, B], [B, D], [D, A], [T, A], [T, V]], arrows });
+  if (verifyFigure(fig1).length || verifyFigure(fig2).length) return null;
+  const steps = [
+    `<strong>1.</strong> Go from $${A}$ to $${B}$ and then back along the other vector:<br><br>$${ray(A, D)} = ${ray(A, B)} + ${ray(B, D)} = ${ans1}$`,
+    `<strong>2.</strong> $${T}${A}$ is half of $${A}${B}$, and $${V}$ is halfway along $${A}${D}$, so build the pathway from $${T}$ to $${V}$:<br><br>$${ray(T, V)} = ${ray(T, A)} + \\frac{1}{2}${ray(A, D)}$`,
+    `<strong>3.</strong> Multiply out and collect:<br><br>$${ray(T, V)} = ${ans2}$`,
+  ];
+  return {
+    subTopic: topic, difficulty: 'exam', variationId: id,
+    questionLines: [
+      `In the diagram below, $${cRay}$ and $${dRay}$ represent the vectors $${vec(nc)}$ and $${vec(nd)}$ respectively.`,
+      renderScene(fig1.scene), `<strong>(a)</strong> Express $${ray(A, D)}$ in terms of $${vec(nc)}$ and $${vec(nd)}$.`,
+      `The line $${B}${A}$ is extended to $${T}$.`, renderScene(fig2.scene),
+      `&bull;&nbsp; $${T}${A} = \\frac{1}{2}${A}${B}$`, `&bull;&nbsp; $${V}$ is the midpoint of $${A}${D}$`,
+      `<strong>(b)</strong> Express $${ray(T, V)}$ in terms of $${vec(nc)}$ and $${vec(nd)}$. Give your answer in simplest form.`,
+    ],
+    boardQuestionLines: [`$${cRay} = ${vec(nc)}$, $${dRay} = ${vec(nd)}$, $${T}${A} = \\frac{1}{2}${A}${B}$, $${V}$ midpoint of $${A}${D}$. Find $${ray(A, D)}$ and $${ray(T, V)}$.`],
+    solutionSteps: steps, stepMarks: [1, 1, 1], finalAnswer: `(a) $${ans1}$ &nbsp;&nbsp; (b) $${ans2}$`, figure: fig2,
+  };
+}
+
+/**
+ * **2025 P2 Q15 — both levers** (the owner: "Yes" to "Yes to both levers"):
+ * the journey may be asked either way round (FG, FD), and either given vector
+ * may be named the other way (GD = r for DG = r).
+ */
+function runningOnWide(lever: 'reverse' | 'given' | 'all', id: string, topic: string): Q | null {
+  const [D, G, E, F] = pick([['D', 'G', 'E', 'F'], ['A', 'B', 'C', 'H'], ['P', 'T', 'Q', 'S'], ['K', 'M', 'L', 'N']]);
+  const [nr, ns] = pick(LETTER_SETS);
+  const k = getRandomInt(2, 5);
+  const pos: Record<string, Combo> = { [D]: C(0, 1, 0, 1), [G]: C(1, 1, 0, 1), [E]: C(1, 1, 1, 1) };
+  pos[F] = cAdd(pos[E], cScale(pos[E], r(1, k)));
+  const fromD = getRandomInt(0, 1) === 0;
+  const start = fromD ? D : G;
+  const back = (lever === 'reverse' || lever === 'all') && getRandomInt(0, 1) === 0;
+  const sR = (lever === 'given' || lever === 'all') && getRandomInt(0, 1) === 0 ? -1 : 1;
+  const sS = (lever === 'given' || lever === 'all') && getRandomInt(0, 1) === 0 ? -1 : 1;
+  const [p, q] = back ? [F, start] : [start, F];
+  const want = sgn(cSub(pos[q], pos[p]), sR, sS);
+  const R0 = pt(30, 52), S0 = pt(60, -32);
+  const points = Object.fromEntries(Object.entries(pos).map(([kk, v]) => [kk, place(v, R0, S0)]));
+  const answer = combo(want.a, want.b, nr, ns);
+  const rRay = sR === 1 ? ray(D, G) : ray(G, D), sRay = sS === 1 ? ray(G, E) : ray(E, G);
+  const DGt = `${sR === 1 ? '' : '-'}${vec(nr)}`;
+  const DEt = `${DGt} ${sS === 1 ? '+' : '-'} ${vec(ns)}`;
+  const steps = [
+    `<strong>1.</strong> First find $${ray(D, E)}$, then take the fraction of it that $${ray(E, F)}$ is:<br><br>$${ray(D, E)} = ${DEt}$, so $${ray(E, F)} = \\frac{1}{${k}}(${DEt})$`,
+    `<strong>2.</strong> The pathway from $${start}$ to $${F}$ is $${fromD ? `${ray(D, E)}` : `${ray(G, E)}`} + ${ray(E, F)}$${back ? ', and the journey asked for is that one turned round' : ''}:<br><br>$${ray(p, q)} = ${answer}$`,
+  ];
+  return assemble({
+    points, edges: [[D, G], [G, E], [D, E], [E, F], [start, F]],
+    arrows: [sR === 1 ? { from: D, to: G, label: nr } : { from: G, to: D, label: nr }, sS === 1 ? { from: G, to: E, label: ns } : { from: E, to: G, label: ns }],
+  }, topic, id, [
+    `In the diagram, $${rRay}$ and $${sRay}$ are represented by vectors $${vec(nr)}$ and $${vec(ns)}$ respectively.`,
+    `$${ray(D, E)} = ${k}${ray(E, F)}$.`,
+    `Express $${ray(p, q)}$ in terms of $${vec(nr)}$ and $${vec(ns)}$. Give your answer in its simplest form.`,
+  ], `$${rRay} = ${vec(nr)}$, $${sRay} = ${vec(ns)}$, $${ray(D, E)} = ${k}${ray(E, F)}$. Find $${ray(p, q)}$.`, steps, [1, 1], `$${answer}$`);
+}
+
+/**
+ * **2024 P2 Q14 — either given vector may be named the other way** (WZ = a
+ * for ZW = a; XZ = b for ZX = b). The owner: "Yes".
+ */
+function rhombusGiven(id: string, topic: string): Q | null {
+  const [W, X, Y, Z, M] = pick([['W', 'X', 'Y', 'Z', 'M'], ['A', 'B', 'C', 'D', 'M'], ['P', 'Q', 'R', 'S', 'N'], ['J', 'K', 'L', 'M', 'T']]);
+  const [na, nb] = pick(LETTER_SETS);
+  const pos: Record<string, Combo> = { [Z]: C(0, 1, 0, 1), [W]: C(1, 1, 0, 1), [X]: C(0, 1, 1, 1) };
+  pos[Y] = cSub(pos[X], pos[W]);
+  const cycle = [W, X, Y, Z];
+  const sideAt = getRandomInt(0, 2);
+  const P = cycle[sideAt], Qp = cycle[(sideAt + 1) % 4], V = cycle[(sideAt + 3) % 4];
+  pos[M] = cHalf(cAdd(pos[P], pos[Qp]));
+  const flipA = getRandomInt(0, 1) === 0, flipB = getRandomInt(0, 1) === 0;
+  const sA = getRandomInt(0, 1) === 0 ? -1 : 1, sB = getRandomInt(0, 1) === 0 ? -1 : 1;
+  const [fromA, toA] = flipA ? [X, W] : [W, X];
+  const [fromB, toB] = flipB ? [M, V] : [V, M];
+  const first = sgn(cSub(pos[toA], pos[fromA]), sA, sB), second = sgn(cSub(pos[toB], pos[fromB]), sA, sB);
+  const legVP = sgn(cSub(pos[P], pos[V]), sA, sB), legPQ = sgn(cSub(pos[Qp], pos[P]), sA, sB);
+  const side = 52, turn = getRandomInt(-40, -10) * Math.PI / 180;
+  const Av = pt(0, side), Bv = pt(Av.x + side * Math.cos(turn), Av.y + side * Math.sin(turn));
+  const points = Object.fromEntries(Object.entries(pos).map(([kk, v]) => [kk, place(v, Av, Bv)]));
+  const [ans1, ans2] = [combo(first.a, first.b, na, nb), combo(second.a, second.b, na, nb)];
+  const aRay = sA === 1 ? ray(Z, W) : ray(W, Z), bRay = sB === 1 ? ray(Z, X) : ray(X, Z);
+  const steps = [
+    `<strong>1.</strong> Go from $${fromA}$ to $${toA}$ by way of $${Z}$:<br><br>$${ray(fromA, toA)} = ${ray(fromA, Z)} + ${ray(Z, toA)} = ${ans1}$`,
+    `<strong>2.</strong> $${M}$ is halfway along $${P}${Qp}$, so the pathway is<br><br>$${ray(V, M)} = ${ray(V, P)} + \\frac{1}{2}${ray(P, Qp)}$`,
+    `<strong>3.</strong> $${ray(V, P)} = ${combo(legVP.a, legVP.b, na, nb)}$ and $${ray(P, Qp)} = ${combo(legPQ.a, legPQ.b, na, nb)}$, so collect${flipB ? ', then turn it round' : ''}:<br><br>$${ray(fromB, toB)} = ${ans2}$`,
+  ];
+  return assemble({
+    points, edges: [[W, X], [X, Y], [Y, Z], [Z, W], [Z, X]],
+    arrows: [sA === 1 ? { from: Z, to: W, label: na } : { from: W, to: Z, label: na }, sB === 1 ? { from: Z, to: X, label: nb } : { from: X, to: Z, label: nb }],
+  }, topic, id, [
+    `The diagram shows a rhombus $${W}${X}${Y}${Z}$ with the diagonal $${Z}${X}$ drawn.`,
+    `$${aRay}$ represents vector $${vec(na)}$ and $${bRay}$ represents vector $${vec(nb)}$.`,
+    `<strong>(a)</strong> Express $${ray(fromA, toA)}$ in terms of $${vec(na)}$ and $${vec(nb)}$.`,
+    `$${M}$ is the midpoint of $${P}${Qp}$.`,
+    `<strong>(b)</strong> Express $${ray(fromB, toB)}$ in terms of $${vec(na)}$ and $${vec(nb)}$. Give your answer in its simplest form.`,
+  ], `Rhombus $${W}${X}${Y}${Z}$, $${aRay} = ${vec(na)}$, $${bRay} = ${vec(nb)}$. Find $${ray(fromA, toA)}$ and $${ray(fromB, toB)}$.`,
+    steps, [1, 1, 1], `(a) $${ans1}$ &nbsp;&nbsp; (b) $${ans2}$`);
+}
+
+/**
+ * **2018 P2 Q10 — both levers** (the owner: "Both"): CB asked as well as BC,
+ * and either given vector named the other way (BA = u, AE = w).
+ */
+function multiplesWide(lever: 'reverse' | 'given' | 'all', id: string, topic: string): Q | null {
+  const [A, B, Cp, D, E] = pick([['A', 'B', 'C', 'D', 'E'], ['P', 'Q', 'R', 'S', 'T'], ['J', 'K', 'L', 'M', 'N'], ['V', 'W', 'X', 'Y', 'Z']]);
+  const [nu, nw] = pick(LETTER_SETS);
+  const m = getRandomInt(2, 5), n = getRandomInt(2, 5);
+  const pos: Record<string, Combo> = { [A]: C(0, 1, 0, 1), [B]: C(1, 1, 0, 1), [E]: C(0, 1, -1, 1) };
+  pos[D] = cAdd(pos[E], C(m, 1, 0, 1));
+  pos[Cp] = cAdd(pos[D], C(0, 1, 1, n));
+  const back = (lever === 'reverse' || lever === 'all') && getRandomInt(0, 1) === 0;
+  const sU = (lever === 'given' || lever === 'all') && getRandomInt(0, 1) === 0 ? -1 : 1;
+  const sW = (lever === 'given' || lever === 'all') && getRandomInt(0, 1) === 0 ? -1 : 1;
+  const [p, q] = back ? [Cp, B] : [B, Cp];
+  const want = sgn(cSub(pos[q], pos[p]), sU, sW);
+  if (want.a[0] === 0 || want.b[0] === 0) return null;
+  const U = pt(60, 0), W = pt(-20, -45 * (m + 1) / 3 * (n / 2));
+  const points = Object.fromEntries(Object.entries(pos).map(([kk, v]) => [kk, place(v, U, W)]));
+  const answer = combo(want.a, want.b, nu, nw);
+  const uRay = sU === 1 ? ray(A, B) : ray(B, A), wRay = sW === 1 ? ray(E, A) : ray(A, E);
+  const AB = `${sU === 1 ? '' : '-'}${vec(nu)}`, EA = `${sW === 1 ? '' : '-'}${vec(nw)}`;
+  const flip = (s: string) => s.startsWith('-') ? s.slice(1) : `-${s}`;
+  const steps = [
+    `<strong>1.</strong> There is no direct route, so go the long way round:<br><br>$${ray(B, Cp)} = ${ray(B, A)} + ${ray(A, E)} + ${ray(E, D)} + ${ray(D, Cp)}$`,
+    `<strong>2.</strong> Write each piece in terms of $${vec(nu)}$ and $${vec(nw)}$ and collect${back ? ', then turn the journey round' : ''}:<br><br>$${ray(B, Cp)} = ${flip(AB)} ${flip(EA).startsWith('-') ? '' : '+ '}${flip(EA)} + ${m}(${AB}) + \\frac{1}{${n}}(${EA})$, so $${ray(p, q)} = ${answer}$`,
+  ];
+  return assemble({
+    points, edges: [[E, A], [A, B], [B, Cp], [Cp, D], [D, E]],
+    arrows: [sU === 1 ? { from: A, to: B, label: nu } : { from: B, to: A, label: nu }, sW === 1 ? { from: E, to: A, label: nw } : { from: A, to: E, label: nw }],
+    bisectCorners: true,
+  }, topic, id, [
+    `In the diagram below, $${uRay}$ and $${wRay}$ represent the vectors $${vec(nu)}$ and $${vec(nw)}$ respectively.`,
+    `$\\bullet \\quad ${ray(E, D)} = ${m}${ray(A, B)}$`,
+    `$\\bullet \\quad ${ray(E, A)} = ${n}${ray(D, Cp)}$`,
+    `Express $${ray(p, q)}$ in terms of $${vec(nu)}$ and $${vec(nw)}$. Give your answer in its simplest form.`,
+  ], `$${uRay} = ${vec(nu)}$, $${wRay} = ${vec(nw)}$. Find $${ray(p, q)}$.`, steps, [1, 1], `$${answer}$`);
+}
+
 // ── dispatch ──────────────────────────────────────────────────────────────
 
 const tried = (name: string, make: () => Q | null): (() => Q) => () => {
@@ -619,9 +898,17 @@ const tried = (name: string, make: () => Q | null): (() => Q) => () => {
 };
 
 export const VECTOR_PATHWAY_GENERATORS: Record<string, () => Q> = {
-  'A Pathway in a Parallelogram': tried('vectors.pathway-parallelogram', parallelogram),
-  'A Pathway with an Extended Side': tried('vectors.pathway-extended', extendedSide),
-  'A Pathway with Multiples': tried('vectors.pathway-multiples', multiples),
-  'A Pathway in a Rhombus': tried('vectors.pathway-rhombus', rhombus),
-  'A Pathway Running On': tried('vectors.pathway-running-on', runningOn),
+  // all five widened on the owner's word, 2026-10-08 (see above); the original
+  // routines `parallelogram`, `extendedSide`, `multiples`, `rhombus` and
+  // `runningOn` are kept, and two of the wide ones still call them
+  'A Pathway in a Parallelogram': tried('vectors.pathway-parallelogram',
+    () => parallelSides(['parallelogram', 'trapezium'], 'vectors.pathway-parallelogram', 'A Pathway in a Parallelogram', true)),
+  'A Pathway with an Extended Side': tried('vectors.pathway-extended',
+    () => extendedSideHalf('vectors.pathway-extended', 'A Pathway with an Extended Side')),
+  'A Pathway with Multiples': tried('vectors.pathway-multiples',
+    () => multiplesWide('all', 'vectors.pathway-multiples', 'A Pathway with Multiples')),
+  'A Pathway in a Rhombus': tried('vectors.pathway-rhombus',
+    () => rhombusGiven('vectors.pathway-rhombus', 'A Pathway in a Rhombus')),
+  'A Pathway Running On': tried('vectors.pathway-running-on',
+    () => runningOnWide('all', 'vectors.pathway-running-on', 'A Pathway Running On')),
 };

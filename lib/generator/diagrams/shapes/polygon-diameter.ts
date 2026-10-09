@@ -46,6 +46,18 @@ export interface PolygonDiameterSpec {
    * they have served their purpose and the design is what matters.
    */
   plain?: boolean;
+  /**
+   * F is joined to the vertex this many places round from A, and to its
+   * mirror image (1, the default, is the paper's B and E). 2019 P1 Q11
+   * widened on the owner's "Option c" (2026-10-08). Opt-in.
+   */
+  reach?: number;
+  /**
+   * An even polygon (6, 10 or 12 sides): the diameter from A ends on the
+   * opposite vertex, which is the far point and keeps that vertex's own
+   * letter, so there is no separate F. Same widening; opt-in.
+   */
+  even?: boolean;
 }
 
 const dir = (deg: number): Pt =>
@@ -55,14 +67,18 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
   const { sides: n, radius: r, start } = spec;
   // even and the diameter ends on a vertex; the answer stops being whole
   // outside 5 and 9 anyway
-  if (n % 2 === 0 || n < 5 || n > 9 || r <= 0 || spec.names.length !== n) return null;
+  if (spec.even) {
+    if (![6, 10, 12].includes(n) || r <= 0 || spec.names.length !== n) return null;
+  } else if (n % 2 === 0 || n < 5 || n > 9 || r <= 0 || spec.names.length !== n) return null;
 
   const step = 360 / n;
   const O = pt(0, 0);
   const V = Array.from({ length: n }, (_, i) => scale(dir(start + i * step), r));
-  const F = scale(dir(start + 180), r);
+  const F = spec.even ? V[n / 2] : scale(dir(start + 180), r);
   const side = 2 * r * Math.sin(Math.PI / n);
-  const [B, E] = [V[1], V[n - 1]];
+  const k = spec.reach ?? 1;
+  if (k < 1 || 2 * k >= n) return null;
+  const [B, E] = [V[k], V[n - k]];
 
   // ── the paper's FIRST figure: the polygon as it is drawn, before the
   //    design. Every radius dashed to a dotted centre, which is what shows
@@ -83,7 +99,11 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
           // The owner, on the 2019 re-review sheet: "Just move the O". So for
           // more than five sides it sits further out, centred in the gap where
           // it has widened; the pentagon, whose gap is 72, is drawn as before.
-          n > 5
+          // An even polygon has a radius straight opposite A, so its letter
+          // goes half a step round, into the gap beside it.
+          spec.even
+            ? { kind: 'label', text: spec.centre, anchor: scale(dir(start + 180 + step / 2), r * (n === 6 ? 0.3 : 0.45)), away: O, centred: true }
+            : n > 5
             ? { kind: 'label', text: spec.centre, anchor: scale(dir(start + 180), r * 0.3), away: O, centred: true }
             : { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start), r * 0.4) },
         ],
@@ -131,7 +151,8 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
     { kind: 'segment', from: E, to: F },
     { kind: 'segment', from: B, to: F },
     ...V.map((p, i): Element => ({ kind: 'label', text: spec.names[i], anchor: p, away: O })),
-    { kind: 'label', text: spec.far, anchor: F, away: O },
+    // an even polygon's far point is a vertex, already lettered above
+    ...(spec.even ? [] : [{ kind: 'label', text: spec.far, anchor: F, away: O } as Element]),
     // Two lines leave the centre and they are opposite each other, so the
     // letter goes square off the diameter — along it there is nowhere to sit.
     { kind: 'label', text: spec.centre, anchor: O, away: scale(dir(start + 90), r * 0.4) },
@@ -152,7 +173,7 @@ export function polygonDiameter(spec: PolygonDiameterSpec): Figure | null {
       // the centre into the angle beside it
       { kind: 'angle', at: O, arms: [V[0], F], value: 180, shown: false },
       // and the answer's own geometry
-      { kind: 'angle', at: F, arms: [O, B], value: 180 / n, shown: false },
+      { kind: 'angle', at: F, arms: [O, B], value: k * 180 / n, shown: false },
     ],
   };
 }

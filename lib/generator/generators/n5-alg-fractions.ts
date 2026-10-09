@@ -484,6 +484,37 @@ function multiply(): Q {
   };
 }
 
+/**
+ * **2015 P2 Q7 widened — the owner's "Yes", 2026-10-08** (the widening sheet,
+ * https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA): the powers vary too,
+ * p t^a / s ÷ t / (q s^d) with a in {1, 2} and d in {2, 3}, the paper's own
+ * a = 1, d = 2 the commonest. The same three steps; the answer is
+ * pq t^(a-1) s^(d-1).
+ *
+ * `alg-fractions.divide-2015` was an alias of 2018 P2 Q15's id; it is
+ * materialised here under its own topic, "Dividing Fractions with Powers", so
+ * `divide` below, and 2018 P2 Q15 and 2022 P1 Q12 with it, do not move.
+ */
+function divideMonomialPowers(): Q {
+  const s = 's', t = 't';
+  const p = getRandomInt(2, 7), q = getRandomInt(2, 5);
+  const a = pick([1, 1, 2]), d = pick([2, 2, 3]);
+  const pw = (v: string, n: number) => n === 0 ? '' : n === 1 ? v : `${v}^{${n}}`;
+  const num = `${p}${pw(t, a)}`, den2 = `${q}${pw(s, d)}`;
+  const ans = `${p * q}${pw(t, a - 1)}${pw(s, d - 1)}`;
+  return {
+    subTopic: 'Dividing Algebraic Fractions', difficulty: 'skill', variationId: 'alg-fractions.divide-2015',
+    questionLines: [`Express $${frac(num, s)} \\div ${frac(t, den2)}$ in its simplest form.`],
+    boardQuestionLines: [`$${frac(num, s)} \\div ${frac(t, den2)}$`],
+    solutionSteps: [
+      `<strong>1.</strong> Dividing by a fraction is multiplying by its reciprocal:<br><br>$${frac(num, s)} \\times ${frac(den2, t)}$`,
+      `<strong>2.</strong> Multiply across:<br><br>$${frac(`${p * q}${pw(t, a)}${pw(s, d)}`, `${s}${t}`)}$`,
+      `<strong>3.</strong> Cancel one $${t}$ and one $${s}$:<br><br>$${ans}$`,
+    ],
+    stepMarks: [1, 1, 1], finalAnswer: `$${ans}$`,
+  };
+}
+
 // ── divide — 2015 P2 Q7, 2018 P2 Q15, 2022 P1 Q12 ────────────────────────
 //
 // Three questions, three genuinely different shapes, so all three are built.
@@ -715,6 +746,8 @@ export const ALG_FRACTION_GENERATORS: Record<string, Gen> = {
     addSubtract(true, getRandomInt(0, 1) === 0, wanted),
   'Multiplying Algebraic Fractions': multiply,
   'Dividing Algebraic Fractions': (w, a) => divide(w, a),
+  // 2015 P2 Q7's own, widened 2026-10-08 (see divideMonomialPowers)
+  'Dividing Fractions with Powers': () => divideMonomialPowers(),
   'Dividing with a Difference of Squares': divideFactoriseNumerator,
   'Gradient as an Algebraic Fraction': gradientContext,
 };

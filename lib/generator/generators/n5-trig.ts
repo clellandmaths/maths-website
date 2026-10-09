@@ -603,6 +603,38 @@ function substituteTan(asked?: string): Q {
   };
 }
 
+/**
+ * **2016 P1 Q11 and 2018 P1 Q18 widened — 2026-10-08** (the widening sheet,
+ * https://claude.ai/artifact/SKZLY6zDdsFDaEfQLuCMiA; the owner on 2018: "Add
+ * the cos power 4 expression only", and on 2016, asked: "A: cos⁴ only"). The
+ * cos⁴ products inside the existing weight cap (p + q + r at most 6) join each
+ * card's own family: tan x cos⁴x and tan²x cos⁴x for 2016 (tangent-first,
+ * "Simplify"), sin x cos⁴x tan x for 2018 (sine-first, "its simplest form").
+ *
+ * Each card now has its own topic, so `substituteTan` above, and 2023 P2 Q13
+ * and 2026 P2 Q12 on the shared topic, are not entered on their behalf.
+ */
+const TAN_EXTRA: TanProduct[] = [{ p: 0, q: 4, r: 1 }, { p: 0, q: 4, r: 2 }, { p: 1, q: 4, r: 1 }];
+function substituteTanWide(fam: 0 | 1): Q {
+  const inFam = (t: TanProduct) => (fam === 0 ? t.p === 0 : t.p > 0);
+  const pool = [...TAN_PRODUCTS, ...TAN_EXTRA].filter(inFam);
+  const { p, q, r } = pick(pool);
+  const expr = p === 0 ? `${power('t', r)}${power('c', q)}` : `${power('s', p)}${power('c', q)}${power('t', r)}`;
+  const ans = `${power('s', p + r)}${power('c', q - r)}`;
+  const substituted = `${power('s', p)}${power('c', q)} \\times \\frac{${power('s', r)}}{${power('c', r)}}`;
+  return {
+    subTopic: 'Simplifying Trigonometric Expressions', difficulty: 'exam',
+    variationId: fam === 0 ? 'trig-identities.simplify-2016' : 'trig-identities.simplify',
+    questionLines: [fam === 0 ? `Simplify $${expr}$.` : `Express $${expr}$ in its simplest form.`, WORKING],
+    boardQuestionLines: [`Simplify $${expr}$`],
+    solutionSteps: [
+      `<strong>1.</strong> Replace the tangent using $\\tan x^{\\circ} = \\frac{${S}}{${C}}$:<br><br>$${substituted}$`,
+      `<strong>2.</strong> The $${power('c', r)}$ cancels:<br><br>$${ans}$`,
+    ],
+    stepMarks: [1, 1], finalAnswer: `$${ans}$`,
+  };
+}
+
 // ── a common factor, then sin^2 + cos^2 = 1 — 2023 P2 Q13, 2026 P2 Q12 ───
 //
 // Both papers take a factor out of two terms and find the bracket is the
@@ -1126,7 +1158,15 @@ export const TRIG_GENERATORS: Record<string, Gen> = {
     w === 'trig-identities.simplify' ? substituteTan(a)
     : w !== undefined && w.startsWith('trig-identities.common-factor')
       ? commonFactor(w)
-    : getRandomInt(0, 1) === 0 ? substituteTan(a) : commonFactor(),
+    // A topic sheet draws the common-factor family only: the tangent
+    // substitution moved to its own two topics on 2026-10-08 (below), so it
+    // no longer comes out of here under 2018's id. Draws asked for by id
+    // take the branches above and do not move.
+    : commonFactor(),
+  // 2016 P1 Q11 and 2018 P1 Q18, each its own topic from 2026-10-08 (see
+  // substituteTanWide); the shared topic above is unchanged
+  'Simplifying a Tangent and Cosine Product': () => substituteTanWide(0),
+  'Simplifying a Sine, Cosine and Tangent Product': () => substituteTanWide(1),
   'Expanding Trigonometric Brackets': expandBracket,
   'Trigonometric Fractions': splitFraction,
   'Writing in a Given Trigonometric Form': givenForm,
