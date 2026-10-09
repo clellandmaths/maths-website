@@ -80,7 +80,9 @@ function SharedWorksheet() {
     setTitle(shared.title);
     setOptions(shared.options);
     LOADERS[shared.courseId]()
-      .then(all => resolveWorksheet(shared.refs, all))
+      // A handout opens with the maker it was made with, so a sheet already
+      // set as homework is exactly what the teacher shared (lib/link-engines.ts).
+      .then(all => resolveWorksheet(shared.refs, all, shared.version))
       .then(({ questions: qs, missing: m }) => {
         setQuestions(qs);
         setMissing(m);

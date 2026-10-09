@@ -32,6 +32,7 @@ import {
   packGenerated, unpackGenerated, generatedRef, parseGeneratedRef,
   GENERATED_MARK, GENERATED_TOKEN_LENGTH, CODE_LENGTH, SEED_LENGTH,
   encodeShortRefs, spellsInLink, SHORT_MARK, SHORT_SEED_LENGTH, LINK_ALPHABET,
+  LINK_VERSION, VERSION_MARKS, linkVersion,
 } from '../lib/worksheet-refs.mjs';
 import { LINK_ID_CODES } from '../lib/link-ids.mjs';
 
@@ -315,7 +316,7 @@ console.log('\nthe short format:');
     if (!q) { fail(`${ref} does not pack in the short format`); continue; }
     const back = decodeRefs(q);
     if (back.length !== 1 || back[0] !== ref) fail(`${ref} → "${q}" → ${JSON.stringify(back)}`);
-    const token = q.slice(1).split(SHORT_MARK).join('');
+    const token = q.slice(linkVersion(q) === 1 ? 1 : 2).split(SHORT_MARK).join('');
     const prev = shortSeen.get(token);
     if (prev && prev !== ref) fail(`short token "${token}" is used by both ${prev} and ${ref}`);
     shortSeen.set(token, ref);
@@ -395,6 +396,54 @@ console.log('\nthe short format:');
     if (!q || JSON.stringify(decodeRefs(q)) !== JSON.stringify(s.refs) || spellsInLink(q)) { reBad++; if (reBad <= 3) fail(`a recorded link re-shared short does not come back clean: ${s.q.slice(0, 40)}…`); }
   }
   if (!reBad) console.log(`  ok  all ${recorded.length} recorded links, re-shared, come back with the same questions and no word`);
+}
+
+// ------------------------------------------------- which maker made a link
+// 2026-10-09: a handout opens with the question-maker its link was made with
+// (lib/link-engines.ts, docs/link-versions.md). Every link made before has no
+// mark and is version 1; new links carry VERSION_MARKS[LINK_VERSION]. Reading
+// a link's version wrongly is silent: it still opens, with other questions.
+console.log('\nlink versions:');
+{
+  const before = failures;
+  const recorded = JSON.parse(fs.readFileSync(path.join(root, 'scripts/fixtures/share-links-2026-10-01.json'), 'utf8')).sheets;
+  const pinned = JSON.parse(fs.readFileSync(path.join(root, 'scripts/fixtures/share-links-short-2026-10-01.json'), 'utf8')).sheets;
+
+  // 1. Every link made before versions reads as version 1.
+  const notOne = [...recorded, ...pinned].filter(s => linkVersion(s.q) !== 1);
+  if (notOne.length) fail(`${notOne.length} links made before versions do not read as version 1: ${notOne[0].q.slice(0, 40)}…`);
+  else console.log(`  ok  all ${recorded.length + pinned.length} recorded links read as version 1`);
+
+  // 2. Version 1 is still written exactly as it was: each pinned short link,
+  //    encoded again as version 1, is the same string.
+  const moved = pinned.filter(s => encodeShortRefs(s.refs, 1) !== s.q);
+  if (moved.length) fail(`${moved.length} pinned short links no longer encode the same as version 1: ${moved[0].q.slice(0, 40)}…`);
+  else console.log(`  ok  version 1 is still written exactly as pinned (${pinned.length} links)`);
+
+  // 3. Every mark is safe: one character, never part of a question, no word,
+  //    left alone in a URL, one per version, every version after 1 has one.
+  const marks = Object.entries(VERSION_MARKS);
+  if (new Set(marks.map(([, m]) => m)).size !== marks.length) fail('two versions share a mark');
+  for (let v = 2; v <= LINK_VERSION; v++) if (!VERSION_MARKS[v]) fail(`version ${v} has no mark in VERSION_MARKS`);
+  for (const [v, m] of marks) {
+    if (typeof m !== 'string' || m.length !== 1) { fail(`version ${v}'s mark "${m}" is not one character`); continue; }
+    if (LINK_ALPHABET.includes(m) || m === GENERATED_MARK || m === SHORT_MARK) fail(`version ${v}'s mark "${m}" could be read as part of a question`);
+    if (/[aeiou013451]/.test(m)) fail(`version ${v}'s mark "${m}" is a vowel or reads as one`);
+    if (new URLSearchParams({ q: `.${m}` }).toString() !== `q=.${m}`) fail(`version ${v}'s mark "${m}" is percent-encoded in a URL`);
+  }
+
+  // 4. New links carry the current mark, read as the current version, and hold
+  //    the same questions as the same sheet written as version 1.
+  let bad = 0;
+  for (const s of [...recorded, ...pinned]) {
+    const q = encodeShortRefs(s.refs);
+    if (!q || q[1] !== VERSION_MARKS[LINK_VERSION] || linkVersion(q) !== LINK_VERSION
+        || JSON.stringify(decodeRefs(q)) !== JSON.stringify(s.refs) || spellsInLink(q)) {
+      bad++; if (bad <= 3) fail(`a new link does not carry version ${LINK_VERSION} cleanly: ${String(q).slice(0, 40)}…`);
+    }
+  }
+  if (!bad) console.log(`  ok  new links carry version ${LINK_VERSION} ("${VERSION_MARKS[LINK_VERSION]}" after the ".") and read back the same questions`);
+  if (failures === before) console.log(`  ok  ${marks.length} version mark${marks.length === 1 ? '' : 's'}, each safe in a link`);
 }
 
 // --------------------------------------- a sheet is resolved one at a time

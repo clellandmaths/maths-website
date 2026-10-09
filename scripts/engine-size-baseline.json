@@ -1,8 +1,8 @@
 {
-  "recorded": "2026-09-27",
+  "recorded": "2026-10-09",
   "headroomBytes": 65536,
   "note": "Total bytes of every out/_next/static/chunks/*.js carrying a variation id. Lazy — on no page — but it is what the first press of Variation fetches.",
-  "acceptedGrowth": "N5 short hints 2026-09-27, owner-approved (\"Let's try short hints\", \"Ok N5\", \"rewrite to avoid using shared\"): paper-plan.ts carries a nudge, an own first step, a watch-out and a marks line for all 328 N5 past paper questions, about +110 KB. That table is its own lazy chunk (no engine code), fetched only when a pupil opens an N5 hint, not by Variation; it is counted here only because it is keyed by variation id. No new imports.",
-  "chunks": 6,
-  "bytes": 1279162
+  "acceptedGrowth": "Link versions 2026-10-09, on the owner's 'Go ahead': lib/generator-v1 (website 767a87c's maker, frozen byte for byte, check:frozen) opens handout links made before version 2, so homework already set opens exactly what was shared. Its chunks hold variation ids, so they count here: 841 KB in 2 chunks (582 + 259), fetched only when an old handout with a generated question is opened (check:linkversions: never by a new handout or a practice paper). The current maker is the other 1,280 KB (+31 KB on 1,249: the guard's keys and the same-question test). The copy never changes, so growth after this recording is the current maker's.",
+  "chunks": 7,
+  "bytes": 2172076
 }

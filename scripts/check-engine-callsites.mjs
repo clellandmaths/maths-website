@@ -49,11 +49,22 @@ const root = path.resolve(import.meta.dirname, '..');
  * looking only for the alias did not see it at all — which is a whole class of
  * call site the registry would never have been shown.
  */
-const BOUNDARY = /['"][^'"]*\/generated-question['"]/;
-const BOUNDARY_FILE = 'lib/generated-question.ts';
+const BOUNDARY = /['"][^'"]*\/generated-question(?:-v\d+)?['"]/;
+const isBoundaryFile = name => /^lib\/generated-question(?:-v\d+)?\.ts$/.test(name);
 
-/** Anything under here is engine internals. */
+/**
+ * **A frozen maker's door** (`lib/generated-question-v1.ts`, 2026-10-09) opens
+ * the questions of links made with an older version, and nothing else: only
+ * `lib/link-engines.ts`, which chooses a maker by a link's version, may use it.
+ * A Builder or a "more like this" drawing from a frozen maker would hand out
+ * questions the owner has since changed.
+ */
+const FROZEN_BOUNDARY = /['"][^'"]*\/generated-question-v\d+['"]/;
+const FROZEN_ALLOWED = 'lib/link-engines.ts';
+
+/** Anything under here is engine internals, the current maker's or a frozen one's. */
 const INTERNALS = '@/lib/generator/';
+const isInternals = from => from.startsWith(INTERNALS) || /^@\/lib\/generator-v\d+\//.test(from);
 
 /** What a draw looks like, wherever it is spelled. */
 const DRAWS = ['similarTo', 'generateForSubtopics', 'generateForPracticeTopic', 'questionFromCode', 'toWorksheetQuestion'];
@@ -65,7 +76,9 @@ const DRAWS = ['similarTo', 'generateForSubtopics', 'generateForPracticeTopic', 
  * the reason beside it.
  */
 const ALLOWED = new Map([
-  ['lib/worksheet-share.ts', 'rebuilds a shared sheet from its codes and seeds'],
+  // lib/worksheet-share.ts rebuilds a shared sheet through this, one question
+  // at a time (check-share-refs holds it to that).
+  ['lib/link-engines.ts', 'opens a shared sheet with the maker its link was made with'],
   ['lib/use-generated-draw.ts', 'the shared hook every on-page control draws through'],
   ['components/Explorer/QuestionCard.tsx', 'a variation of the question on the card'],
   ['components/ExamHall/WarmUp.tsx', 'five more once the daily five are done'],
@@ -87,8 +100,9 @@ function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, e.name);
     if (e.isDirectory()) {
-      // The vendored engine is a copy of another repo and plays by its rules.
-      if (full.includes(path.join('lib', 'generator'))) continue;
+      // The vendored engine is a copy of another repo and plays by its rules,
+      // and so are its frozen copies (lib/generator-v1, …), which never change.
+      if (/^lib[\\/]generator(?:-v\d+)?$/.test(path.relative(root, full))) continue;
       walk(full, out);
     } else if (/\.(ts|tsx|mjs)$/.test(e.name)) out.push(full);
   }
@@ -131,7 +145,7 @@ for (const file of files) {
 
   // ── 1. one door ─────────────────────────────────────────────────────────
   // The boundary is not a caller of itself.
-  const usesBoundary = name !== BOUNDARY_FILE && BOUNDARY.test(src);
+  const usesBoundary = !isBoundaryFile(name) && BOUNDARY.test(src);
   if (usesBoundary) {
     reached.push(name);
     if (!ALLOWED.has(name)) {
@@ -139,11 +153,15 @@ for (const file of files) {
            `after checking it draws sequentially and passes an exclude set.`);
     }
   }
+  if (FROZEN_BOUNDARY.test(src) && name !== FROZEN_ALLOWED) {
+    fail(`${name} reaches a frozen maker. Only ${FROZEN_ALLOWED} may, to open an old link: ` +
+         `anything else would hand out questions that have since been changed.`);
+  }
 
   // ── 2. a client component may not carry the engine ──────────────────────
   for (const m of src.matchAll(/^\s*import\s+([\s\S]*?)from\s+'([^']+)'/gm)) {
     const [, what, from] = m;
-    if (!from.startsWith(INTERNALS)) continue;
+    if (!isInternals(from)) continue;
     if (/^\s*type\s/.test(what)) continue;                 // `import type { … }`
     if (isClient) {
       fail(`${name} is a client component and imports ${from} at the top level. ` +

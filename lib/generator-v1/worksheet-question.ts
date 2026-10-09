@@ -1,0 +1,851 @@
+import { generateQuestion, withSeed } from './generator';
+import {
+  N5_VARIATIONS, variationsBasedOn, variationsForSubtopic,
+} from './generators/n5-variations';
+import { VARIATION_BY_CODE, VARIATION_CODES } from './generators/variation-codes';
+import { questionKey, storyFreeKey } from './question-key';
+import type { GeneratedQuestion, Topic } from './generators/types';
+
+/**
+ * A generated question, in the shape the website shows questions in.
+ *
+ * **Why this lives here and not in the website.** The mapping needs to be
+ * checked by running it, and the checks live in this repo — the website has no
+ * way to execute TypeScript and adding one would put a build dependency on the
+ * repo that deploys the live site. So the mapping is here, where `adapter.ts`
+ * can drive it, and `website-v1/lib/generated-question.ts` is a three-line file
+ * that assigns the result to `QuestionWithMetadata`.
+ *
+ * That assignment is the drift check, and it is a good one: if the website
+ * changes its question shape, or this drifts from it, `next build` fails at
+ * that line. Nothing has to remember to compare them.
+ *
+ * The generator already carries `webTopics` — the website's own taxonomy, in
+ * the website's own spelling — for the same reason. Where the two sides
+ * disagree, this side adapts.
+ */
+export interface WorksheetQuestion {
+  question: string;
+  answer: string;
+  steps?: string[];
+  stepMarks?: number[];
+  marks?: number[];
+  topics: string[];
+  videoId: string;
+  timestamp: string;
+  year: number | string;
+  paperNumber: number;
+  questionIndex: number;
+  questionNumber: string;
+  label?: string;
+  uid?: string;
+  /**
+   * The past paper questions this was modelled on, **best first**.
+   *
+   * The website turns the first of these into a video link, so a pupil meeting
+   * a generated question can watch the original being worked. Empty for
+   * anything with no registry behind it.
+   */
+  basedOn?: string[];
+  /**
+   * Which of `basedOn` the video should be, as an index into it.
+   *
+   * 0 - the most recent paper - unless the caller knew better. `similarTo`
+   * does: a teacher clicking "Variation" on a 2014 question was looking at the
+   * 2014 question, so that is the video they and their pupils get.
+   *
+   * **It is in the uid, and therefore in the link.** That is the whole point:
+   * a pupil's browser resolves the question from the link alone, so anything
+   * not carried there cannot be recovered, and teacher and pupil would differ.
+   */
+  parentIndex?: number;
+  /** What this question is asking the pupil to do. The first hint. */
+  skill?: string;
+  /** How the marks are earned, in one line. The second hint. */
+  method?: string;
+}
+
+/**
+ * The first sentence of a variation's markscheme route, as a method hint.
+ *
+ * `route` is written for whoever is checking a variation against its marking
+ * instructions, so it often carries a second sentence about how a particular
+ * mark is worded. That is detail for a marker, not help for a pupil - the
+ * first sentence is the method and stands on its own.
+ *
+ * The leading mark split goes too. 39 of the 328 open with one - "3 + 1 - find
+ * the gradient..." - which tells a pupil how many steps there are before they
+ * have had a go at it.
+ */
+export function methodOf(route: string | undefined): string {
+  let first = (route ?? '').split(/\.\s/)[0].trim();
+
+  // `route` mentions the scheme in two shapes, and a pupil should see neither.
+  //
+  //   a preamble   "Inferred, no published 2026 scheme: start the addition..."
+  //   an aside     "Substitute, evaluate, round - the scheme exactly"
+  //
+  // A colon soon after the mention means the first: the note says where the
+  // marks came from and the method follows it. Anything else is the second, and
+  // is cut back to the separator before it - those trailing clauses are also
+  // the only two places a quotation from the scheme survives.
+  //
+  // The distinction matters. Applying the preamble rule to every colon threw
+  // away the whole method of a route whose only colon introduced a quoted
+  // phrase at the very end.
+  const at = first.search(/scheme/i);
+  if (at !== -1) {
+    // The method is the longer part. A position threshold got this wrong both
+    // ways: one route's colon sat past it and the whole method was cut to the
+    // word "Inferred", while another's arrived early enough to strip a method
+    // and keep a quoted fragment.
+    const colon = first.indexOf(': ', at);
+    if (colon !== -1 && first.length - colon > 30) {
+      first = first.slice(colon + 2).trim();
+    } else {
+      const before = first.slice(0, at);
+      const cut = Math.max(
+        before.lastIndexOf(' - '),
+        before.lastIndexOf(' \u2014 '),
+        before.lastIndexOf(', '),
+      );
+      if (cut > 0) first = first.slice(0, cut).trim();
+    }
+  }
+
+  // The mark split the scheme awards - "3 + 1 - find the gradient...". 39 of the
+  // 328 opened with one, and it tells a pupil how many steps there are before
+  // they have had a go.
+  first = first.replace(/^\s*\d+(\s*\+\s*\d+)*\s*[-\u2013]\s*/, '').trim();
+
+  // The same note arrives trailing, and in the middle, and for a long time only
+  // the leading form was cut:
+  //
+  //   "state a, then state b - a mark each"
+  //   "undo the operations in turn, one mark each, with the square ..."
+  //   "square and add, take the root, simplify the surd - one mark per skill"
+  //
+  // 19 of the 197 reached a pupil carrying one.
+  //
+  // **Each pattern requires a mark WORD right after the separator**, and that
+  // is the whole of what keeps this safe. Splitting on separators and dropping
+  // short clauses that mention a mark looked equivalent and was not: it turned
+  // `y - b = m(x - a)` into `y, b = m(x, a)`, because a minus sign between
+  // spaces is a separator too. It also left "calculate with units, not five"
+  // behind after eating "three marks" out of the middle of its own clause.
+  const MARK_WORD = '(?:an?|one|two|three|four|five|six|seven|eight|nine|\\d+)';
+
+  first = first
+    // trailing: "... - a mark each", "... - three marks, not five"
+    .replace(new RegExp(`\\s[-\u2013\u2014]\\s*${MARK_WORD}\\s+marks?\\b.*$`, 'i'), '')
+    // embedded: "..., one mark each, ..."
+    .replace(new RegExp(`,\\s*${MARK_WORD}\\s+marks?\\s+each\\s*,`, 'i'), ',')
+    // leading: "One mark, one step: ..."
+    .replace(new RegExp(`^${MARK_WORD}\\s+marks?,\\s*`, 'i'), '')
+    .trim();
+
+  return first ? first.charAt(0).toUpperCase() + first.slice(1) : '';
+}
+
+/**
+ * The method hint for one variation: its own plan if it has one, otherwise the
+ * markscheme route's first sentence.
+ *
+ * Every caller goes through this rather than reaching for `route` directly, so
+ * a variation that needed its own wording gets it everywhere at once - the
+ * card, the app, the printed sheet, and the baked `paper-hints.ts` table. That
+ * matters more than it looks: the table is generated from the registry, so a
+ * caller that skipped this would put a different second hint on a past paper
+ * question than on the generated question modelled on it.
+ */
+export function methodFor(meta: { method?: string; route?: string } | undefined): string {
+  return (meta?.method ?? '').trim() || methodOf(meta?.route);
+}
+
+/**
+ * Paper labels ordered most recent first.
+ *
+ * A variation can be modelled on several past paper questions - 63 of the 197
+ * offered are - so something has to choose which one's video to offer. The most
+ * recent is the one whose wording and marking most resemble what a pupil is
+ * sitting now.
+ *
+ * **Ordered here rather than chosen by the caller, and this matters.** The
+ * question a teacher clicked "Variation" on is not necessarily the one that
+ * ends up first, which is a small loss - but the alternative is worse: a link
+ * carries only the code and the seed, so a pupil's copy has no way to know
+ * which question the teacher was looking at. Choosing per-caller would mean the
+ * teacher and the pupil saw different videos under identical questions, and
+ * nothing on either screen would say so.
+ */
+function bestFirst(labels: readonly string[]): string[] {
+  const rank = (s: string) => {
+    const m = /^(\d{4}) P(\d) Q(\d+)/.exec(s.trim());
+    return m ? Number(m[1]) * 10000 + Number(m[2]) * 100 + Number(m[3]) : -1;
+  };
+  return [...labels].sort((a, b) => rank(b) - rank(a));
+}
+
+/** Marks the boundary between the two sources in a share link and a basket. */
+export const GENERATED_UID_PREFIX = 'g';
+
+/**
+ * A generated question's identity: its variation's permanent code and its seed.
+ *
+ * Not the question's text, and not its position on the sheet. The pair is what
+ * `withSeed` needs to make the question again, so it is both the identity and
+ * the recipe — which is what lets a whole sheet travel as a list of these.
+ *
+ * See `generators/variation-codes.ts` for why the code is not the variation id,
+ * and why it never changes.
+ */
+export function generatedUid(code: string, seed: string, parentIndex = 0): string {
+  return `${GENERATED_UID_PREFIX}:${code}:${seed}:${parentIndex.toString(36)}`;
+}
+
+/**
+ * The generator's inline maths delimiter, turned into the website's.
+ *
+ * This generator writes inline maths as `$…$`. Every question already on the
+ * website writes it as `\(…\)`. The site's renderer understands both — but not
+ * equally, and that asymmetry is the whole of this function.
+ *
+ * `\(…\)` is unambiguous. `$…$` is not, because a dollar sign is also money,
+ * and the site had a real fault where "Price of silver ($) … Price of gold ($)"
+ * paired its two dollars and handed the markup between them to KaTeX. So
+ * `render-math.ts` makes a `$…$` run *earn* its treatment: a run that opens
+ * with a digit and carries no operator is read as the tail of a money amount
+ * and left alone.
+ *
+ * That rule is right for prose written by a human and wrong for everything
+ * here. **Measured across 1,182 drawn questions: 725 fields printed a literal
+ * dollar sign to the pupil** — `$11$`, `$15.2$`, `$(3, 0, 0)$`, `$18s$` — in
+ * 110 of the 197 variations. Bare numbers, decimals, coordinates and
+ * number-letter products are exactly what an answer or a worked step is made
+ * of, and not one of them carries an operator.
+ *
+ * Converting here rather than loosening the site's rule is deliberate. That
+ * rule protects five courses of human-written questions, three of which teach
+ * currency; this touches only what this generator emits.
+ *
+ * **What makes the conversion safe is a property of the source, so it is
+ * checked rather than assumed.** Across the same 1,182 questions: every `$` is
+ * paired (0 unpaired), no run between a pair reads as prose, and money is
+ * written `£` — 105 fields use it, none use `$`. `adapter.ts` asserts the
+ * result carries no bare dollar at all, so a variation that ever writes one as
+ * currency fails the check instead of reaching a pupil.
+ *
+ * `$$…$$` is left alone — two dollars are already unambiguous, and the site
+ * handles them first — and a literal dollar escapes as `\$`. Both are handled
+ * by matching them in the same pass and handing them back untouched, rather
+ * than by lifting them out and putting them back: a placeholder is one more
+ * thing that can collide with the content it is hiding in.
+ */
+export function toSiteMaths(html: string): string {
+  if (!html.includes('$')) return html;
+  // Alternation, tried left to right, so a `$$…$$` run is consumed whole
+  // before the single-dollar branch can pair into the middle of it.
+  return html.replace(
+    /\$\$[\s\S]*?\$\$|(^|[^\\])\$([^$\n]+?)\$/g,
+    (whole, before: string | undefined, tex: string | undefined) =>
+      tex === undefined ? whole : `${before}\\(${tex}\\)`,
+  );
+}
+
+/**
+ * A generated question's lines, laid out the way the past papers are.
+ *
+ * The owner, 2026-09-28: generated questions looked unlike the exam ones,
+ * "often more lines between". They were joined with `<br><br>`, a blank line
+ * between every line, where a paper sets a paragraph's lines one break apart;
+ * and an empty line, which a variation writes to mean "a new paragraph here",
+ * came out as four breaks: a gap that read as a missing figure (2026 P2 Q3).
+ *
+ * So, as the papers do:
+ *   - consecutive lines are one paragraph, one `<br>` apart;
+ *   - an empty line starts a new paragraph;
+ *   - a figure (an inline `<svg>` or `<img>`) stands between paragraphs;
+ *   - a lettered part, `(a)` or `<b>(a)</b>`, starts its own paragraph.
+ *
+ * Presentation only. The lines themselves are what `frozen` fingerprints, so
+ * no signed-off question changes. A full stop straight after the maths moves
+ * inside it (`\(y = kx^2\).` to `\(y = kx^2.\)`), the site's rule for every
+ * question it shows (see `stopsInsideMaths`).
+ */
+export function layoutQuestion(lines: readonly string[]): string {
+  const blocks: string[] = [];
+  let para: string[] = [];
+  const flush = () => {
+    if (para.length) blocks.push(`<p>${para.join('<br>')}</p>`);
+    para = [];
+  };
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { flush(); continue; }
+    if (/^<(svg|img|figure|table|div)\b/i.test(line)) { flush(); blocks.push(line); continue; }
+    if (/^(<b>)?\s*\(([a-h])\)/.test(line)) flush();
+    para.push(line);
+  }
+  flush();
+  return blocks.join('');
+}
+
+/**
+ * A full stop directly after a closing `\)` goes inside it. The site's
+ * punctuation rule, which the past papers already follow: a stop outside the
+ * maths can wrap onto a line of its own, and KaTeX and MathJax set it apart
+ * from the expression it ends.
+ */
+export function stopsInsideMaths(html: string): string {
+  return html.replace(/\\\)\.(?!\.)/g, '.\\)');
+}
+
+export interface ToWorksheetOptions {
+  /** The seed this question was generated from. Half of its identity. */
+  seed: string;
+  /** Position on the sheet. Only used for the synthesised paper fields. */
+  index: number;
+  /** Which of the variation's papers the video is of. Defaults to the most recent. */
+  parentIndex?: number;
+}
+
+/**
+ * A lettered part opens a question line, bare or in bold: `(a)`, `<b>(a)</b>`,
+ * `<strong>(a)</strong>`. `(a + b)` is algebra, not a part.
+ *
+ * **Bold used to be missed.** This matched a bare `(a)` only, and most
+ * variations set their parts in bold, so 36 of the 58 that ask lettered parts
+ * were read as single-part questions and printed a total alone (the owner,
+ * 2026-09-28: "multipart questions should always break down marks into parts
+ * like the real exam questions do").
+ */
+const QUESTION_PART = /(?:^|<br>)\s*(?:<(?:b|strong)>\s*)?\(([a-h])\)/g;
+
+/** A roman sub-part, `(i)` to `(v)`, anywhere after its letter. */
+const SUB_PART = /\((i{1,3}|iv|v)\)/g;
+
+/**
+ * A step names the part it belongs to in a leading `<strong>`, sometimes
+ * numbered within it and sometimes down to a sub-part: `<strong>(a)</strong>`,
+ * `<strong>1. (a)</strong>`, `<strong>2. (b)(ii)</strong>`.
+ */
+const STEP_PART = /^\s*<strong>\s*(?:\d+\.\s*)?\(([a-h])\)(?:\((i{1,3}|iv|v)\))?/;
+
+/**
+ * The parts a paper would print marks beside, in order: `a`, `b`, or `a.i`,
+ * `a.ii`, `b` where a letter is split into romans. One roman alone is not a
+ * split. Fewer than two means the question has no parts.
+ */
+export function markedParts(questionLines: readonly string[]): string[] {
+  const text = questionLines.join('<br>');
+  // A letter repeated on each of its sub-parts' lines (`(a) (i)`, `(a) (ii)`)
+  // is one part: keep only where each letter first appears.
+  const letters = [...text.matchAll(QUESTION_PART)]
+    .filter((m, i, all) => i === 0 || all[i - 1][1] !== m[1]);
+  const out: string[] = [];
+  letters.forEach((m, i) => {
+    const end = i + 1 < letters.length ? letters[i + 1].index! : text.length;
+    const romans = [...new Set([...text.slice(m.index!, end).matchAll(SUB_PART)].map(r => r[1]))];
+    if (romans.length >= 2) romans.forEach(r => out.push(`${m[1]}.${r}`));
+    else if (!out.includes(m[1])) out.push(m[1]);
+  });
+  return out;
+}
+
+/**
+ * The split a variation's `route` states, if it states one that fits.
+ *
+ * The route is the markscheme's own account, written when the scheme was read,
+ * and it gives the split three ways: in figures (`3 + 1 - …`, or `the 1 + 2 + 4
+ * the question data gives`), clause by clause (`3 for the volume…, 2 for the
+ * division`, `1 for …, then 2: …`), or as `a mark each`. Each reading is taken
+ * only if it has one number per marked part, none below 1, and they add up to
+ * the question's total; otherwise the next is tried, and none fitting is null.
+ */
+export function routeSplit(route: string | undefined, parts: number, total: number): number[] | null {
+  const text = route ?? '';
+  const fits = (s: number[] | null) =>
+    s !== null && s.length === parts && s.every(n => n >= 1) && s.reduce((a, b) => a + b, 0) === total;
+
+  const figures = text.match(/\b\d+(?:\s*\+\s*\d+)+\b/)?.[0];
+  const readings: (number[] | null)[] = [
+    figures ? figures.split('+').map(n => Number(n.trim())) : null,
+    [...text.matchAll(/\b(\d+) for\b|\bthen (\d+):/g)].map(m => Number(m[1] ?? m[2])),
+    /\b(?:a|one) mark each\b/i.test(text) ? Array(parts).fill(1) : null,
+  ];
+  return readings.find(fits) ?? null;
+}
+
+/**
+ * What each lettered part is worth, or null if the question has no parts.
+ *
+ * **Three different facts wear the word "marks" here, and conflating any two of
+ * them is the bug this exists to prevent.** The *total* is what the question is
+ * worth. The *step* marks are what each line of the worked solution earns —
+ * six of them on a question with three parts. The *part* marks are what the
+ * paper prints beside `(a)`, `(b)`, `(c)`, and they are what the website's
+ * `Marks` renders as a breakdown.
+ *
+ * **From the working where it can, from the route where it cannot.** Where
+ * every worked step opens by naming its part, grouping the step marks by that
+ * label *is* the split, and it cannot fall out of step with the steps it is
+ * made from. Where the steps are only numbered, the variation's `route` (the
+ * markscheme's own split, see `routeSplit`) is the source. `multipart.ts`
+ * compares the two wherever both exist.
+ *
+ * Returns null rather than guessing: a step labelled for a part never asked, a
+ * part with nothing against it, or a sum that misses the total each mean the
+ * split could be wrong rather than merely absent, and the total alone is then
+ * the honest answer, which is what the caller falls back to.
+ */
+export function partMarks(q: GeneratedQuestion): number[] | null {
+  const asked = markedParts(q.questionLines);
+  if (asked.length < 2) return null;
+
+  const steps = q.solutionSteps ?? [];
+  const stepMarks = q.stepMarks;
+  if (!steps.length || !stepMarks?.length || steps.length !== stepMarks.length) return null;
+  const total = stepMarks.reduce((a, b) => a + b, 0);
+
+  const byPart = new Map<string, number>();
+  let labelled = true;
+  for (const [i, step] of steps.entries()) {
+    const m = step.match(STEP_PART);
+    if (!m) { labelled = false; break; }
+    // A step for (a)(i) counts to `a.i` if the paper splits (a), else to `a`.
+    const key = m[2] && asked.includes(`${m[1]}.${m[2]}`) ? `${m[1]}.${m[2]}` : m[1];
+    byPart.set(key, (byPart.get(key) ?? 0) + stepMarks[i]);
+  }
+
+  if (labelled) {
+    const split = asked.map(p => byPart.get(p) ?? 0);
+    const unasked = [...byPart.keys()].some(k => !asked.includes(k));
+    if (!unasked && split.every(n => n > 0) && split.reduce((a, b) => a + b, 0) === total) return split;
+  }
+
+  const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
+  return routeSplit(meta?.route, asked.length, total);
+}
+
+/**
+ * Each part's answer on a line of its own, as a marking scheme sets them out:
+ * `(a) G(7, 9, 0), (b) 11 units` becomes two lines. Only an answer that opens
+ * with `(a)` is touched, so a `(b)` mentioned in prose is left alone, and one
+ * already on its own line is not given a second break.
+ */
+export function answerPartsOnLines(answer: string): string {
+  if (!/^\s*(?:<(?:b|strong)>\s*)?\(a\)/.test(answer)) return answer;
+  // `&nbsp;` counts as a space: several answers space their parts with two,
+  // and reading its `;` as a separator left a broken `&nbsp<br>` behind.
+  return answer.replace(
+    /(?<!<br>)(?:(?:\s|&nbsp;)*[,;](?:\s|&nbsp;)*|(?:\s|&nbsp;)+and(?:\s|&nbsp;)+|(?:\s|&nbsp;)+)(?=(?:<(?:b|strong)>\s*)?\([b-h]\))/g,
+    '<br>',
+  );
+}
+
+/**
+ * `GeneratedQuestion` → the website's question shape.
+ *
+ * Modelled on `toPresenterQuestions()` in the website's `specials-loader.ts`,
+ * which is the existing precedent for feeding a non-paper source into that
+ * shape by synthesising the paper fields. Everything downstream — the Explorer,
+ * the basket, the worksheet page, print — then treats it as an ordinary
+ * question, which is the point: **a generated question must display exactly
+ * the way a paper one does.**
+ *
+ * Throws rather than returning null. Every failure here is a mistake at the
+ * boundary — a warm-up that slipped past the picker, a Higher question with no
+ * code — and a sheet that quietly dropped a question would be a sheet the
+ * teacher previewed and the pupil did not get.
+ */
+export function toWorksheetQuestion(
+  q: GeneratedQuestion,
+  { seed, index, parentIndex = 0 }: ToWorksheetOptions,
+): WorksheetQuestion {
+  // Warm-ups are not ported. `offeredVariationIds()` is the list the picker
+  // works from, and `codes.ts` proves it is the exam tier exactly. This is the
+  // guard behind that filter, because a filter is the thing a future caller
+  // forgets to apply.
+  if (q.difficulty !== 'exam') {
+    throw new Error(
+      `toWorksheetQuestion: ${q.variationId ?? q.subTopic} is tier ` +
+      `'${q.difficulty ?? 'unset'}'. Only exam-tier variations go on a sheet.`);
+  }
+  if (!q.code) {
+    throw new Error(
+      `toWorksheetQuestion: ${q.variationId ?? q.subTopic} carries no variation code, ` +
+      'so nothing could regenerate it from a shared link. Only National 5 has codes.');
+  }
+
+  // Laid out by `layoutQuestion`, which this generator's own UI uses too, so
+  // what a teacher previews there and what a pupil gets are the same question.
+  // One of these lines may be an inline <svg>, which carries its own width and
+  // needs no website CSS — see "The display requirement" in the porting plan.
+  const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
+
+  // Delimiters converted on the way out — see `toSiteMaths`. Every field that
+  // can carry maths goes through it: the question, the answer and every worked
+  // step, which is what a hint shows.
+  // Laid out as the papers are: see `layoutQuestion`.
+  const question = stopsInsideMaths(toSiteMaths(layoutQuestion(q.questionLines)));
+
+  // The per-part split where the question has parts, the total where it does
+  // not. Never the per-step split, which is a third thing — see `partMarks`.
+  const total = q.stepMarks?.reduce((a, b) => a + b, 0);
+  const parts = partMarks(q);
+
+  return {
+    question,
+    answer: answerPartsOnLines(toSiteMaths(q.finalAnswer)),
+    steps: q.solutionSteps?.map(toSiteMaths),
+    stepMarks: q.stepMarks,
+    ...(parts ? { marks: parts } : total ? { marks: [total] } : {}),
+    topics: q.webTopics ?? [],
+    // No video stands behind a generated question and none ever will — the
+    // worked steps are what it has instead. Every surface on the site already
+    // reads an empty videoId as "no video", which is why this is '' rather
+    // than absent.
+    videoId: '',
+    timestamp: '',
+
+    // The synthesised paper fields. `specials-loader.ts` does the same for
+    // guided practice, for the same reason: the shape requires them and a
+    // generated question has no paper.
+    year: '',
+    paperNumber: 0,
+    questionIndex: index,
+    questionNumber: String(index + 1),
+
+    // The caption. The website's `questionLabel()` prefers this, and without it
+    // the sheet would read " Paper 0 Q1". The skill is what the teacher picked,
+    // so it is what the caption should say.
+    label: q.subTopic,
+
+    // The papers behind this question, so the website can offer the original
+    // being worked as a tutorial. Ordered here so that the teacher's copy and
+    // every pupil's copy agree on which video that is.
+    ...(meta?.basedOn?.length
+      ? { basedOn: bestFirst(meta.basedOn), parentIndex }
+      : {}),
+
+    // Staged help, from the same registry the question came from. A generated
+    // question also carries `steps`, so it can go further than a paper one.
+    // Both go through `toSiteMaths` too. They are prose, but a dozen of them
+    // name the thing they are about — "Write $x^2+bx+c$ in the form
+    // $(x+p)^2+q$" — and a hint is the one place a pupil reads them.
+    ...(meta?.skill ? { skill: toSiteMaths(meta.skill) } : {}),
+    ...(methodFor(meta)
+      ? { method: toSiteMaths(methodFor(meta)) }
+      : {}),
+
+    uid: generatedUid(q.code, seed, parentIndex),
+  };
+}
+
+/**
+ * Fresh questions modelled on one past paper question.
+ *
+ * "Add a variation of this" in the Explorer. The label is the paper's own -
+ * `'2023 P1 Q8'` - and it should be read from the question's printed badge
+ * rather than rebuilt from metadata, because one surface synthesises its
+ * question numbers and would produce a plausible, wrong label.
+ *
+ * **Why this does not wrap `questionsLike()`.** That draws unseeded, and a seed
+ * cannot be attached to a question after the fact: the seed is what *produces*
+ * the question. A `uid` carrying a seed that did not make the question would
+ * regenerate something else from a shared link - silently, and only for the
+ * pupil. So these are drawn through `questionFromCode`, the same path a link
+ * resolves through, and every one that comes back is shareable.
+ *
+ * `questionsLike()` stays as it is: the right shape for a caller that only
+ * wants to *show* questions and never needs to name them again.
+ *
+ * The seed comes from the caller because its shape belongs to the link rather
+ * than to the generator - six base36 characters, fixed by `worksheet-refs.mjs`.
+ *
+ * Sequential, necessarily: the stream is module-level.
+ *
+ * Returns fewer than asked when the variations cannot make that many
+ * *different* questions. That is a property of the variation, not a failure -
+ * `pool.ts` reports which are thin. Handing back the same question twice would
+ * be worse than handing back one.
+ */
+export async function similarTo(
+  paperLabel: string,
+  count: number,
+  makeSeed: () => string,
+  exclude: readonly string[] = [],
+): Promise<WorksheetQuestion[]> {
+  // Exam tier only. `variationsBasedOn` does not filter, and a warm-up would be
+  // refused by `toWorksheetQuestion` anyway - better not to draw it at all.
+  return drawFrom(
+    variationsBasedOn(paperLabel).filter(id => N5_VARIATIONS[id]?.difficulty === 'exam'),
+    count, makeSeed,
+    // The teacher was looking at THIS question, so it is the video they get -
+    // and because the index travels in the uid, their pupils get it too.
+    // Measured before adding it: without this, 138 of 335 question/variation
+    // pairs offered a sibling paper's video instead. Not wrong, since a sibling
+    // is the same question shape, but surprising on a sheet built from 2014.
+    (id) => parentIndexOf(id, paperLabel),
+    exclude);
+}
+
+/** Where `paperLabel` sits in a variation's papers, best-first. 0 if unknown. */
+function parentIndexOf(variationId: string, paperLabel: string): number {
+  const stem = (s: string) => s.trim().replace(/([a-z])$/, '');
+  const papers = bestFirst(N5_VARIATIONS[variationId]?.basedOn ?? []);
+  const at = papers.findIndex(p => stem(p) === stem(paperLabel));
+  return at === -1 ? 0 : at;
+}
+
+/**
+ * Fresh questions across a set of the website's own subtopics.
+ *
+ * What the Explorer's filter produces. A teacher who has narrowed to
+ * "Rationalising the denominator" and "Simplifying surds" can ask for five more
+ * on the same footing, without meeting a second topic picker - the filter is
+ * already the topic list, in the website's own words.
+ *
+ * Draws across all the matching variations rather than exhausting one, so five
+ * questions over two subtopics gives both rather than five of whichever came
+ * first.
+ *
+ * Empty when nothing files under any of them. Returns short when the variations
+ * cannot make that many *different* questions.
+ */
+export async function generateForSubtopics(
+  subtopics: readonly string[],
+  count: number,
+  makeSeed: () => string,
+  exclude: readonly string[] = [],
+): Promise<WorksheetQuestion[]> {
+  // Interleaved, not concatenated. `drawFrom` walks its candidates in order, so
+  // a flat list of "everything under the first subtopic, then everything under
+  // the second" balances by how many variations each happens to have: filtering
+  // to two topics and asking for six returned six of the first. Taking one from
+  // each subtopic in turn, then a second from each, gives the teacher the
+  // topics they picked rather than the topics with the most variations.
+  const perSubtopic = subtopics.map(s => variationsForSubtopic(s));
+  const ids: string[] = [];
+  for (let rank = 0; ; rank++) {
+    let anyLeft = false;
+    for (const list of perSubtopic) {
+      if (rank >= list.length) continue;
+      anyLeft = true;
+      // A variation can carry more than one subtopic - 42 of them do - so a
+      // filter naming two of its tags must not make it twice as likely.
+      if (!ids.includes(list[rank])) ids.push(list[rank]);
+    }
+    if (!anyLeft) break;
+  }
+  return drawFrom(ids, count, makeSeed, undefined, exclude);
+}
+
+/**
+ * The identity `drawFrom` dedupes on, for questions the caller already holds.
+ *
+ * The exclusion list is *keys*, not questions, and the key is the engine's
+ * business - `questionKey` merges `x^2+5x+6` with `y^2+5y+6` and drops a
+ * figure's coordinates, neither of which a caller could be expected to know.
+ * So the website builds its exclusion list through this rather than reaching
+ * for `questionKey` itself and getting a subtly different answer.
+ *
+ * Safe to hand a past paper question: its key simply matches nothing.
+ */
+export function keyOfQuestion(q: { question: string; answer?: string | null }): string {
+  return questionKey({ questionLines: [q.question], finalAnswer: q.answer ?? '' });
+}
+
+/**
+ * **Both** identities a sheet dedupes on, for a question the caller holds.
+ *
+ * `drawFrom` rejects a candidate that repeats either the whole question or
+ * merely its sum in a new story, so an exclusion list built from
+ * `keyOfQuestion` alone lets the second kind back in on the next click. That is
+ * what `adapter` means by a pool disagreeing with itself.
+ */
+export function keysOfQuestion(q: { question: string; answer?: string | null }): string[] {
+  return [keyOfQuestion(q), storyFreeKey(q.question, q.answer ?? '')];
+}
+
+/**
+ * Staged help for one question, in the order a teacher gives it at a desk.
+ *
+ * **Why the first two stages exist at all.** A pupil who is stuck has two
+ * different problems - not knowing what is being asked, and not knowing how to
+ * start - and handing over the first line of the working answers only the
+ * second. "What is it asking you to do?" is the first thing any teacher says,
+ * and it costs nothing to a pupil who had already understood the question.
+ *
+ * So the ladder is always:
+ *
+ *   1.  what the question asks     `skill`
+ *   2.  where the marks go         `method`
+ *   3+  one step at a time         `solutionSteps`, with `stepMarks` beside
+ *
+ * **The last step is never a hint.** It states the answer, so it is the mark
+ * the pupil is left to earn. `heldBack` distinguishes "that is all the help
+ * there is" from "there was never any".
+ *
+ * **Two callers, two shapes.** The website's adapter has already resolved
+ * `skill` and `method` onto the question; the generator's own app holds a raw
+ * `GeneratedQuestion` and has only `variationId`. Both are accepted and the
+ * resolved fields win, so neither caller has to know which case it is in.
+ *
+ * Courses other than National 5 have no registry, so `skill` and `method` come
+ * back null and the ladder is the steps alone - which is exactly what those
+ * questions have always shown.
+ *
+ * `Hints.tsx` on the website stages the same ladder without importing this,
+ * deliberately: it is drawn on every card in the archive, and importing from
+ * here would pull the 33,000-line engine onto the browse page. The rule lives
+ * here so it can be checked by running it; that component is the one place it
+ * is spelled twice, and `hint-ladder.ts` fails if the two disagree.
+ */
+export interface StagedHints {
+  skill: string | null;
+  method: string | null;
+  /** Every step but the last. */
+  steps: string[];
+  /** Aligned with `steps`; empty where a variation has not been backfilled. */
+  stepMarks: number[];
+  /** True when a final step was withheld because it lands the answer. */
+  heldBack: boolean;
+  /** How many presses the ladder is worth, prose lines included. */
+  presses: number;
+}
+
+export function stageHints(q: {
+  solutionSteps?: readonly string[];
+  steps?: readonly string[];
+  stepMarks?: readonly number[];
+  variationId?: string;
+  skill?: string;
+  method?: string;
+}): StagedHints {
+  const meta = q.variationId ? N5_VARIATIONS[q.variationId] : undefined;
+  const skill = q.skill || meta?.skill || null;
+  const method = q.method || (meta ? methodFor(meta) : '') || null;
+
+  // `solutionSteps` on the generator's shape, `steps` on the website's.
+  const all = q.solutionSteps ?? q.steps ?? [];
+  const steps = all.slice(0, -1);
+
+  return {
+    skill,
+    method,
+    steps: [...steps],
+    stepMarks: [...(q.stepMarks ?? [])].slice(0, steps.length),
+    heldBack: all.length > 0,
+    presses: (skill ? 1 : 0) + (method ? 1 : 0) + steps.length,
+  };
+}
+
+/**
+ * Draw `count` different questions from a set of variations.
+ *
+ * Shared by both of the above, because they differ only in which variations are
+ * candidates - and a second copy of this is exactly where the two would drift
+ * apart on seeding, ordering or distinctness.
+ *
+ * Sequential, necessarily: the stream is module-level, so overlapping draws
+ * take each other's numbers.
+ */
+async function drawFrom(
+  ids: readonly string[],
+  count: number,
+  makeSeed: () => string,
+  parentFor: (variationId: string) => number = () => 0,
+  exclude: readonly string[] = [],
+): Promise<WorksheetQuestion[]> {
+  if (!ids.length) return [];
+
+  // Seeded with what the caller already holds, so a second call carries on
+  // where the first stopped. Without this the dedupe is per-call, and the
+  // controls that use it are clicked repeatedly: measured on `2018 P1 Q18`,
+  // whose pool is six, ten separate clicks returned **four** different
+  // questions and six byte-identical repeats.
+  const seen = new Set<string>(exclude);
+  const out: WorksheetQuestion[] = [];
+  // Bounded the way `questionsLike` is: a thin variation returns short rather
+  // than spinning after a question that does not exist.
+  //
+  // The bound is per *candidate*, not per question wanted, because `exclude`
+  // changes the arithmetic: with most of a pool already spoken for, the last
+  // unseen question comes up rarely. A variation holding four questions with
+  // three of them held is found with p = 1/4 a draw, so 40 tries miss it once
+  // in 100,000 - and at **0.4ms a draw, measured**, even a 20-variation filter
+  // spends 340ms to conclude it is spent. Cheap enough to buy the certainty.
+  const budget = Math.max(ids.length, 1) * 40 + count * 8;
+  for (let draw = 0; draw < budget && out.length < count; draw++) {
+    // Round-robin rather than random, so asking for three across two variations
+    // gives both rather than the same one three times by chance.
+    const id = ids[draw % ids.length];
+    const made = await questionFromCode(
+      VARIATION_CODES[id], makeSeed(), out.length, parentFor(id));
+    if (!made) continue;
+    // Not the raw text: `x^2+5x+6` and `y^2+5y+6` are one question, and handing
+    // a teacher both is handing them the same question twice.
+    const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
+    if (seen.has(key)) continue;
+    // **And not the same sum wearing a different story.** `questionKey` keeps
+    // the prose, so a brooch and a biscuit tin built on the same nonagon are
+    // two keys and one question; a sheet of ten could be two sums in ten
+    // costumes. See `storyFreeKey`.
+    //
+    // **No variation id in it.** It was `${id}|...` at first, which held inside
+    // one call and vanished between calls: `exclude` carries keys, and a caller
+    // holding a question cannot know which variation made it. `adapter` caught
+    // that as a pool disagreeing with itself - ten questions asked for at once,
+    // fifteen asked for one at a time. Without the id the key is derivable from
+    // the question alone, so `keysOfQuestion` can hand both to the next call.
+    // Two different variations landing on the same numbers *and* the same
+    // answer would now merge; that is rarer than the bug it replaces.
+    const sum = storyFreeKey(made.question, made.answer);
+    if (seen.has(sum)) continue;
+    seen.add(key);
+    seen.add(sum);
+    out.push(made);
+  }
+  return out;
+}
+
+/**
+ * The one way a generated question is made, from its code and its seed.
+ *
+ * **Both sides of the promise run through here.** The builder calls it to show
+ * a teacher a question; `resolveWorksheet` calls it to make that same question
+ * again in every pupil's browser. If those were two call sites that merely
+ * agreed, "the sheet is what the teacher previewed" would hold until someone
+ * changed one of them.
+ *
+ * The draw is `generateQuestion` narrowed to the one variation, which retries
+ * until that variation comes up. How many retries that takes depends on what
+ * else lives in the topic - but it is the same number every time for a given
+ * seed, which is all reproducibility needs. It is also why the builder must not
+ * draw some other way.
+ *
+ * **Never run two of these at once.** `withSeed` sets a module-level stream, so
+ * overlapping calls draw from each other and neither reproduces. Sequential
+ * `for ... await`, never `Promise.all`. See the note on `withSeed` itself.
+ *
+ * Returns null when the code names no variation - a link made by a newer
+ * version of the site, or a variation withdrawn since. The caller counts that
+ * as a missing question rather than substituting a different one, which is the
+ * same thing the paper path does with a reference it cannot resolve.
+ */
+export async function questionFromCode(
+  code: string,
+  seed: string,
+  index: number,
+  parentIndex = 0,
+): Promise<WorksheetQuestion | null> {
+  const variationId = VARIATION_BY_CODE[code];
+  if (!variationId) return null;
+  const meta = N5_VARIATIONS[variationId];
+  if (!meta) return null;
+
+  const q = await withSeed(seed, () =>
+    generateQuestion([meta.topic as Topic], { variationIds: [variationId] }));
+  return toWorksheetQuestion(q, { seed, index, parentIndex });
+}

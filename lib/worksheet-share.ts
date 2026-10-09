@@ -1,8 +1,12 @@
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import {
   packRef, decodeRefs, packGenerated, parseGeneratedRef, encodeShortRefs,
+  linkVersion, LINK_VERSION,
 } from '@/lib/worksheet-refs.mjs';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
+// Small, and it loads each maker only through await import(), so importing it
+// here puts no engine on a page.
+import { engineForVersion, type LinkEngine } from '@/lib/link-engines';
 
 /**
  * Sharing a worksheet as a link.
@@ -109,6 +113,8 @@ export interface SharedWorksheet {
   refs: string[];
   title?: string;
   options: WorksheetOptions;
+  /** Which question-maker the link was made with (`LINK_VERSION` in worksheet-refs.mjs). */
+  version: number;
 }
 
 /**
@@ -158,6 +164,8 @@ export function encodeWorksheet(courseId: string, questions: QuestionWithMetadat
     ? packed.join('')
     : questions.map(questionRef).join(SEP);
   params.set('q', q);
+  // These formats have no room for a version mark, so it rides beside them.
+  params.set('v', String(LINK_VERSION));
   return params.toString();
 }
 
@@ -169,11 +177,13 @@ export function decodeWorksheet(search: string): SharedWorksheet | null {
   if (!courseId || !q) return null;
   const refs = decodeRefs(q);
   if (!refs.length) return null;
+  const v = Number(params.get('v'));
   return {
     courseId,
     refs,
     title: params.get('t') ?? undefined,
     options: decodeOptions(params.get('o')),
+    version: Number.isInteger(v) && v > 1 ? v : linkVersion(q),
   };
 }
 
@@ -202,10 +212,20 @@ export function decodeWorksheet(search: string): SharedWorksheet | null {
  * Async because of it. The paper half is still a map lookup and costs nothing;
  * the engine is only imported once a link actually contains a generated
  * question, so a sheet of paper questions never loads it at all.
+ *
+ * ## `version`: the question-maker the link was made with
+ *
+ * A handout link (`/worksheet`) passes the version it was made with, and its
+ * generated questions come from that version's maker, kept frozen
+ * (`lib/link-engines.ts`), so it opens exactly what was shared. With no version
+ * the current maker is used: the Builder does that for an editable link, which
+ * hands over a working copy (the owner, 2026-10-09: "I'm not bothered about
+ * preserving editable links just shared").
  */
 export async function resolveWorksheet(
   refs: string[],
-  available: QuestionWithMetadata[]
+  available: QuestionWithMetadata[],
+  version: number = LINK_VERSION,
 ): Promise<{ questions: QuestionWithMetadata[]; missing: number }> {
   const byRef = new Map(available.map(q => [questionRef(q), q]));
   const questions: QuestionWithMetadata[] = [];
@@ -213,7 +233,7 @@ export async function resolveWorksheet(
 
   // Loaded on demand, and at most once. A static import here would put the
   // engine in the bundle of every page that can open a shared sheet.
-  let engine: typeof import('./generated-question') | null = null;
+  let engine: LinkEngine | null = null;
   // Built once, and only if a generated question actually turns up: a sheet of
   // paper questions should not pay for a lookup it never reads.
   let byLabel: Map<string, QuestionWithMetadata> | null = null;
@@ -221,7 +241,7 @@ export async function resolveWorksheet(
   for (const ref of refs) {
     const gen = parseGeneratedRef(ref);
     if (gen) {
-      engine ??= await import('./generated-question');
+      engine ??= await engineForVersion(version);
       const made = await engine.questionFromCode(
         gen.code, gen.seed, questions.length, gen.parentIndex);
       if (made) {

@@ -212,6 +212,8 @@ function ExplorerContent({ course }: { course: Course }) {
     window.history.replaceState(null, '', window.location.pathname);
 
     let cancelled = false;
+    // No version on purpose: an editable link is a working copy, made with the
+    // current maker (the owner, 2026-10-09). Handouts keep theirs: app/worksheet.
     resolveWorksheet(shared.refs, allQuestions).then(({ questions: incoming }) => {
       if (cancelled || !incoming.length) return;
       clearAll();
