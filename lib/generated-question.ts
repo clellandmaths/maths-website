@@ -9,8 +9,33 @@ import {
   GENERATED_UID_PREFIX,
   type ToWorksheetOptions,
 } from './generator/worksheet-question';
+import { VARIATION_BY_CODE } from './generator/generators/variation-codes';
 import { LINK_ALPHABET, SHORT_SEED_LENGTH, spellsInLink } from './worksheet-refs.mjs';
 import { paperRef } from './question-number.mjs';
+
+/**
+ * **National 5's two lazy files, fetched together.** A National 5 draw needs
+ * its generators (`generator.ts`: `await import('./generators/n5')`) and then,
+ * once the first question is drawn, the paper guard and its keys
+ * (`await import('./generators/paper-guard')`, "never the paper's own
+ * question", 2026-10-09). One after the other, that is a second round trip:
+ * on a slowed phone a generated practice paper was ready 0.4 s later than
+ * before the guard (6.9 s against 6.5 s, timed against live on 2026-10-09).
+ * Asked for here at the same moment, the engine's own imports then find both
+ * already loaded. Nothing about any draw changes, only when the files arrive.
+ *
+ * Only on the way to a National 5 draw (or the warm-up for one), never for an
+ * Advanced Higher question. A failed fetch is forgotten, so the next press
+ * tries again, as the engine's own import would.
+ */
+let n5Files: Promise<[typeof import('./generator/generators/n5'), unknown]> | null = null;
+function readyN5() {
+  n5Files ??= Promise.all([
+    import('./generator/generators/n5'),
+    import('./generator/generators/paper-guard'),
+  ]).catch(e => { n5Files = null; throw e; });
+  return n5Files;
+}
 
 /**
  * The boundary: a generated question becomes a question this site can show.
@@ -57,6 +82,7 @@ export async function questionFromCode(
   // National 5's codes, then Advanced Higher's. No code is in both (the
   // generator's `ah-registry` fails if one ever is), so a link needs no course
   // to find its question, and a National 5 sheet never loads AH's engine.
+  if (VARIATION_BY_CODE[code]) await readyN5();
   return (await fromCode(code, seed, index, parentIndex)) ?? (await ah()).ahQuestionFromCode(code, seed, index);
 }
 
@@ -99,7 +125,7 @@ export async function warmCourse(courseId: string, label?: string | null): Promi
   if (courseId === 'ah') {
     await Promise.all([ah(), label ? warmForCards([label], 'ah') : undefined]);
   } else if (courseId === 'n5') {
-    const n5 = await import('./generator/generators/n5');
+    const [n5] = await readyN5();
     if (typeof n5.generateN5Question !== 'function') throw new Error('n5 generators');
   }
 }
@@ -132,6 +158,7 @@ export async function similarTo(
   // **By course, never by label alone**: "2025 P1 Q3" is a card in both
   // courses. The label comes from `generationLabel(courseId, …)`.
   if (courseId === 'ah') return (await ah()).ahLike(paperLabel, count, newSeed, exclude);
+  await readyN5();
   return fromLabel(paperLabel, count, newSeed, exclude);
 }
 
@@ -155,6 +182,7 @@ export async function generateForSubtopics(
   // Math.random orders the cards only (the engine may not read it itself);
   // each question is still made from its code and seed.
   if (courseId === 'ah') return (await ah()).ahForSubtopics(subtopics, count, newSeed, Math.random, exclude, heldCards(held));
+  await readyN5();
   return fromSubtopics(subtopics, count, newSeed, exclude);
 }
 
