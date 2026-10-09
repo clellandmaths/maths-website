@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "aeb97f0bf6ce57ba2b612b0e70c56dce64dccd03",
+  "sourceCommit": "1c877b69508ea868a313b88bcaeb7349c61bdeb4",
   "sourceDirty": false,
   "count": 208,
   "files": {
@@ -182,7 +182,7 @@
     "generators/n5-trig.ts": "295214aaa972b42b",
     "generators/n5-variations.ts": "5cb3c3ffd936fc04",
     "generators/n5-vector-pathway.ts": "ceb701ae6f701735",
-    "generators/n5-vectors.ts": "88cda4aa92ff7ce3",
+    "generators/n5-vectors.ts": "d07d582f979dbbab",
     "generators/n5-volume.ts": "7253dadc7dce323f",
     "generators/n5.ts": "be3402e3e4c42e72",
     "generators/paper-guard-keys.ts": "cf678384b7f1aae2",

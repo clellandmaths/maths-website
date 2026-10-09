@@ -315,7 +315,19 @@ function lineFromEquation(wantIntercept: boolean): Q {
 //    the gradient between two points, and the equation through two points
 
 function twoPoints(wantEquation: boolean, wanted?: string, asked?: string): Q {
-  for (let tries = 0; tries < 200; tries++) {
+  /**
+   * **600 tries, not 200 (the owner, 2026-10-09: "We should fix the rare n5
+   * failure").** The equation's caps (gradient 2 to 5, a whole intercept of 20
+   * or less and never 0) and, for 2017 P1 Q6, the figure check pass about one
+   * try in twenty, so 200 tries all failed on about one draw in 7,000 and the
+   * site said "Could not make one just now". **Only the bound moved:** a draw
+   * returns at its first passing try, in the same order as before, so every
+   * draw that was made within 200 tries is byte for byte what it was (all four
+   * ids on this routine, three of them locked); only a draw that used to throw
+   * now goes on to make one. So no question shown before and no shared link
+   * moves. Proven against the synced copy, seed for seed, before syncing.
+   */
+  for (let tries = 0; tries < 600; tries++) {
     const [x1, y1] = [nonZeroInt(-8, 8), nonZeroInt(-9, 9)];
     const [x2, y2] = [nonZeroInt(-8, 8), nonZeroInt(-9, 9)];
     if (x1 === x2) continue;                        // undefined gradient
