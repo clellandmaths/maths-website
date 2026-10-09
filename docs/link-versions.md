@@ -67,8 +67,14 @@ will need the steps above.
 
 ## How long a version is kept
 
-**Not set yet: the owner decides.** The suggestion is one school year after a version is replaced. Taking a
-copy out changes what that version's links open, so do it at a quiet time and only on the owner's word.
+**Kept, and reviewed once a year** (the owner, 2026-10-09: "Keep old review once per year").
+- An old copy costs visitors nothing: only an old handout fetches it.
+- Once a year, ideally over the summer, list the frozen versions and ask the owner which to keep. Keep any
+  whose links may still be in use.
+- Taking a copy out changes what that version's links open, so it's done only on the owner's word, at a
+  quiet time.
+- The real cost of a copy is a future framework or TypeScript upgrade that stops it building. Then adapt
+  around it in its door file, or put retiring it to the owner. Never edit the copy itself.
 
 ## Costs, measured
 
