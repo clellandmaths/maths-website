@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "d0c9e61b29df5d679fad04cee94bc11f2c575ff6",
+  "sourceCommit": "8028f9a82bd30424c56db831261e49ed4be89294",
   "sourceDirty": false,
   "count": 215,
   "files": {
@@ -46,7 +46,7 @@
     "generators/ah/cores.ts": "e33db3a6e5b38d7f",
     "generators/ah/engine.ts": "dae6a63ace2bca4b",
     "generators/ah/families.ts": "629ca0b540a88ad0",
-    "generators/ah/not-the-paper.ts": "60aad3cae56e2103",
+    "generators/ah/not-the-paper.ts": "3d100ba349cc0db4",
     "generators/ah/paper-draws.ts": "fbcfa3f2e7032037",
     "generators/ah/paper-keys.ts": "5ebeea66461643d1",
     "generators/ah/plain-key.ts": "4911c8339d8446b0",
@@ -134,7 +134,7 @@
     "generators/ah/routines/vectors.ts": "5f59b174ba8eb9ec",
     "generators/ah/signed-off.ts": "cafe00e3d52fe060",
     "generators/ah/site-cards.ts": "2191ce02ef61e8d2",
-    "generators/ah/site.ts": "5d0093863d4cd5fb",
+    "generators/ah/site.ts": "117ba410cf13976f",
     "generators/ah/types.ts": "c7b51e545b843c69",
     "generators/apps.ts": "86479fd7c8a3132f",
     "generators/circle.ts": "b810b6204e5b2541",

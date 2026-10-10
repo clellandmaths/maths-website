@@ -36,6 +36,7 @@ import { drawWith, makeWith, routineFor } from './engine';
 import { familyOf } from './families';
 import { CORES, coreKey } from './cores';
 import { CARD_TWINS, cardTwinKey } from './card-twins';
+import { drawKey } from './not-the-paper';
 
 export interface AhSiteQuestion extends WorksheetQuestion {
   /** The site's subtopics, as an Advanced Higher paper question carries them. */
@@ -194,6 +195,7 @@ async function drawCards(
 
   const seen = new Set(exclude);
   const drawn = new Set<string>();
+  const drawnN = new Set<string>();
   const out: AhSiteQuestion[] = [];
   while (out.length < count) {
     let pick: { unit: string; card: CardLabel } | null = null;
@@ -216,6 +218,14 @@ async function drawCards(
     }
     // A draw the sheet has already seen, word for word, has the same keys and the same verdict:
     // refused at once, before the site's question and its twin keys are made (the costly part).
+    // The same numbers make the same question: refused before it is built (a figure card's build
+    // is the costly part, 2016 Q12 about 3 ms a try). Speed only: the same draws are refused.
+    const nk = `${pick.card}\n${drawKey(drawWith(routine, seed))}`;
+    if (drawnN.has(nk)) {
+      fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
+      continue;
+    }
+    drawnN.add(nk);
     const built = makeWith(routine, seed);
     const raw = `${pick.card}\n${built.questionLines.join('\n')}\n${built.finalAnswer}`;
     if (drawn.has(raw)) {

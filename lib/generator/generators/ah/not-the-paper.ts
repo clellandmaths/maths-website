@@ -66,6 +66,8 @@ export function piecesOf(b: Built): Pieces {
 }
 
 const PAPER_PIECES = new Map<string, Pieces>();
+/** A figure card's own paper question, built once (it was built again on every check). */
+const FIGURE_PAPER_TEXT = new Map<string, string>();
 
 /**
  * The owner's P2 (2026-10-10, https://claude.ai/artifact/MkFza3BMgrXXUvxPboVU9w): "keep out
@@ -96,7 +98,11 @@ function onePartFromPaper(card: CardLabel, routine: CardRoutine, built: Built): 
 export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Built): string | null {
   const q = questionOf(built);
   const own = FIGURE_PAPERS[card];
-  if (own !== undefined && q === questionOf(routine.build(own))) return card;
+  if (own !== undefined) {
+    let paper = FIGURE_PAPER_TEXT.get(card);
+    if (paper === undefined) { paper = questionOf(routine.build(own)); FIGURE_PAPER_TEXT.set(card, paper); }
+    if (q === paper) return card;
+  }
   const byText = AH_PAPER_KEYS[keyHash(plainKey(q))];
   if (byText) return byText;
   return onePartFromPaper(card, routine, built) ? card : null;
@@ -105,16 +111,36 @@ export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Bu
 /** How many draws in a row may be a paper question before the guard gives up loudly (no card comes close). */
 export const GUARD_LIMIT = 200;
 
-/** A card's routine that never draws a past paper question. */
+/**
+ * A card's routine that never draws a past paper question.
+ *
+ * Each draw's verdict is remembered by its numbers (`drawKey`): a build is a function of its
+ * draw alone, so the same numbers always get the same verdict, and a card a sheet has used up
+ * no longer builds the same question again and again to check it. 2016 Q12, whose build draws
+ * its figure, took 708 ms in Node for one more press once spent, about 2.6 s on a slowed phone
+ * (tools/never-the-paper `data/ah/speed/`). Speed only: 86,000 draws and every sheet the same.
+ */
 export function guarded<N>(card: CardLabel, routine: CardRoutine<N>): CardRoutine<N> {
+  const verdicts = new Map<string, boolean>();
   return {
     build: routine.build,
     draw: () => {
       for (let tries = 0; tries < GUARD_LIMIT; tries++) {
         const n = routine.draw();
-        if (!paperQuestionOf(card, routine as CardRoutine, routine.build(n))) return n;
+        const k = drawKey(n);
+        let paper = verdicts.get(k);
+        if (paper === undefined) {
+          paper = !!paperQuestionOf(card, routine as CardRoutine, routine.build(n));
+          if (verdicts.size < 5000) verdicts.set(k, paper);
+        }
+        if (!paper) return n;
       }
       throw new Error(`not-the-paper: ${GUARD_LIMIT} draws in a row of ${card} were a past paper question`);
     },
   };
+}
+
+/** A draw's numbers as a key (BigInt-safe): a routine's build is a function of its draw alone. */
+export function drawKey(n: unknown): string {
+  return JSON.stringify(n, (_, v) => (typeof v === 'bigint' ? `${v}n` : v));
 }
