@@ -19,10 +19,15 @@ questions in the 500 recorded test links (113 links, 1 to 3 questions each).
 
 - **Every link carries a version.** `LINK_VERSION` in `lib/worksheet-refs.mjs` is the version new links are
   made with. A short link marks it with one character straight after its leading "." (`VERSION_MARKS`:
-  version 2 is "y"). The older formats, never written now, carry `v=`. A link with no mark is **version 1**,
-  which covers every link made before 2026-10-09.
+  version 2 is "y", version 3 is "-"). The older formats, never written now, carry `v=`. A link with no mark
+  is **version 1**, which covers every link made before 2026-10-09.
 - **Each older version's maker is kept, frozen, byte for byte.** Version 1 is `lib/generator-v1/`, the
-  generator exactly as it was live at website 767a87c (live 2026-10-06 to 2026-10-09).
+  generator exactly as it was live at website 767a87c (live 2026-10-06 to 2026-10-09). Version 2 is
+  `lib/generator-v2/`, exactly as live at website a794574 (from 2026-10-09: National 5's "never the paper's
+  own question"). Version 3, the current maker, is Advanced Higher's (2026-10-10: six cards widened, never
+  any AH paper's own question, no twins on an AH sheet, 2025 P1 Q8 no longer giving up). Made because it
+  moved 24 of the 1,108 generated questions in the 200 recorded version 2 links, every one an AH question:
+  11 on a widened card, 13 that were the paper's own question.
 - **One routing point:** `lib/link-engines.ts` (`engineForVersion`). Each maker is loaded with
   `await import()`, so an old maker is fetched only when a link made with it is opened, never for a new link
   or by any other page.
@@ -40,30 +45,30 @@ questions in the 500 recorded test links (113 links, 1 to 3 questions each).
 |---|---|---|
 | `scripts/check-frozen-engines.mjs` (`check:frozen`) | every build | every frozen copy is exactly the files listed in `scripts/frozen-engines.json`, which were taken from `git ls-tree <commit>` and not from the copy: no file changed, added or missing (CRLF read as LF) |
 | `scripts/check-share-refs.mjs` (`check:sharerefs`) | every build | the 500 recorded links read as version 1; version 1 is still written exactly as pinned; new links carry the current mark; every mark is one character, outside the link alphabet, no vowel, not escaped in a URL |
-| `scripts/check-engine-callsites.mjs` (`check:callsites`) | every build | only `lib/link-engines.ts` reaches a frozen maker's door (`lib/generated-question-v1.ts`) |
-| `scripts/verify-share-fixtures.mts` | by hand, before going live | every generated question in the recorded links, made by its own version's maker, has its recorded fingerprint: version 1 from `share-links-2026-10-01.json` and `share-links-short-2026-10-01.json`, version 2 from `share-links-v2-2026-10-09.json` |
+| `scripts/check-engine-callsites.mjs` (`check:callsites`) | every build | only `lib/link-engines.ts` reaches a frozen maker's door (`lib/generated-question-v1.ts`, `-v2.ts`) |
+| `scripts/verify-share-fixtures.mts` | by hand, before going live | every generated question in the recorded links, made by its own version's maker, has its recorded fingerprint: version 1 from `share-links-2026-10-01.json` and `share-links-short-2026-10-01.json`, version 2 from `share-links-v2-2026-10-09.json`, version 3 from `share-links-v3-2026-10-10.json` (250 links, 50 of them Advanced Higher only) |
 
 ## When the generator changes again
 
-Run `npx tsx scripts/verify-share-fixtures.mts` after syncing the generator. If **version 2** links fail, the
-change moves what shared links open. Then:
+Run `npx tsx scripts/verify-share-fixtures.mts` after syncing the generator. If links of the **current
+version** (now 3) fail, the change moves what shared links open. Then, with N the current version:
 
-1. Freeze the maker being replaced. Copy `lib/generator` *from the live commit* to `lib/generator-v2/` with
+1. Freeze the maker being replaced. Copy `lib/generator` *from the live commit* to `lib/generator-vN/` with
    `git -c core.autocrlf=false archive <live commit> lib/generator`, and check it with
    `git hash-object --no-filters` against `git ls-tree`.
 2. Add it to `scripts/frozen-engines.json` from `git ls-tree <live commit> lib/generator`, never from the copy.
-3. Add a door, `lib/generated-question-v2.ts` (copy v1's and point it at `generator-v2`), and a branch in
-   `engineForVersion`.
-4. Raise `LINK_VERSION` to 3, append a mark to `VERSION_MARKS`, and record
-   `share-links-v3-<date>.json` with a recorder like `record-v2-fixtures.mts`.
+3. Add a door, `lib/generated-question-vN.ts` (copy the newest door and point it at `generator-vN`, mirroring
+   `questionFromCode` as it is at the live commit), and a branch in `engineForVersion`.
+4. Raise `LINK_VERSION` to N + 1, append a mark to `VERSION_MARKS` (every lower-case consonant outside the
+   link alphabet is used: "y", then "-"; next an upper-case consonant, which `check-share-refs` will hold to
+   the rules), and record `share-links-v<N+1>-<date>.json` with a recorder like `record-v3-fixtures.mts`.
 5. Accept the engine size growth with its reason (`check-engine-isolation.mjs --accept-growth "…"`).
 
 **Never edit a frozen copy** to make something pass, and never re-record a fixture. If the site's question
 shape changes, adapt it in the version's door file (`lib/generated-question-v<n>.ts`).
 
-Advanced Higher's coming "never the paper's own question" work is exactly such a change. The version 1 copy
-already holds AH as it was at 767a87c, so AH links made before 2026-10-09 are covered. Version 2 AH links
-will need the steps above.
+Done once so far, for version 3 (2026-10-10, Advanced Higher's "never the paper's own question"): version 2
+frozen from a794574, 209 files byte-exact.
 
 ## How long a version is kept
 

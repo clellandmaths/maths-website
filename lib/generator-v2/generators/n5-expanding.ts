@@ -1,0 +1,369 @@
+import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
+import { getRandomInt, nonZeroInt } from './utils';
+
+/**
+ * National 5 Expanding Brackets.
+ *
+ * The specification is unusually precise here, naming four forms:
+ *   a(bx+c) + d(ex+f),  ax(bx+c),  (ax+b)(cx+d),  (ax+b)(cx^2+dx+e)
+ * with every coefficient an integer.
+ *
+ * Zeta covers the same ground as three skills — single bracket, two brackets by
+ * FOIL, and "every term in the first bracket must multiply every term in the
+ * second" — and practice drills the two simplest, which the papers never ask on
+ * their own.
+ *
+ * The papers ask the two hardest: a binomial times a trinomial (2022 P2 Q1,
+ * 2024 P1 Q3, 2026 P1 Q1) and a product plus a single bracket (2018 P1 Q2,
+ * 2023 P1 Q2, 2025 P1 Q2).
+ */
+
+const pick = <T,>(xs: T[]): T => xs[getRandomInt(0, xs.length - 1)];
+/** A coefficient's size as the working prints it, with no "1x" (2026-10-02 full read, the owner's "Yes"). */
+const one = (k: number): string => (Math.abs(k) === 1 ? '' : `${Math.abs(k)}`);
+/**
+ * `x` ten times in eleven, `y` once, and never `p`.
+ *
+ * That is exactly what the eleven paper questions tagged *Expanding brackets*
+ * do - x:10, y:1 - so the weighting is theirs rather than a preference. `p`
+ * appeared in a third of our draws and in none of the papers.
+ *
+ * Written as a weighted list rather than a set, because the set was never the
+ * problem: a pupil meeting `p(p+3)` once in three has met a question the exam
+ * does not set, even though `p` is a perfectly good letter.
+ * See `__checks__/variables.ts`.
+ */
+const VARS = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'y'];
+
+/** Highest common factor, taking absolute values, so gcd(-6, 4) is 2. */
+const gcd = (m: number, n: number): number =>
+  n ? gcd(Math.abs(n), Math.abs(m) % Math.abs(n)) : Math.abs(m);
+type Q = Omit<GeneratedQuestion, 'topic'>;
+
+// ── polynomials as coefficients, index = power ─────────────────────────────
+
+export type Poly = number[];
+
+const addP = (a: Poly, b: Poly): Poly => {
+  const out: Poly = [];
+  for (let i = 0; i < Math.max(a.length, b.length); i++) out[i] = (a[i] ?? 0) + (b[i] ?? 0);
+  return out;
+};
+
+const mulP = (a: Poly, b: Poly): Poly => {
+  const out: Poly = new Array(a.length + b.length - 1).fill(0);
+  a.forEach((ai, i) => b.forEach((bj, j) => { out[i + j] += ai * bj; }));
+  return out;
+};
+
+const scaleP = (a: Poly, k: number): Poly => a.map(c => c * k);
+
+/** "6x^3 + 11x^2 - 13x + 2", dropping zero terms and coefficients of 1. */
+export function fmt(p: Poly, v: string): string {
+  const parts: string[] = [];
+  for (let i = p.length - 1; i >= 0; i--) {
+    const c = p[i];
+    if (!c) continue;
+    const mag = Math.abs(c);
+    const body = i === 0 ? `${mag}`
+      : `${mag === 1 ? '' : mag}${v}${i === 1 ? '' : `^{${i}}`}`;
+    parts.push(parts.length === 0
+      ? (c < 0 ? `-${body}` : body)
+      : (c < 0 ? ` - ${body}` : ` + ${body}`));
+  }
+  return parts.length ? parts.join('') : '0';
+}
+
+/** "(3x - 2)" from coefficients, for writing the question. */
+export const bracket = (p: Poly, v: string): string => `(${fmt(p, v)})`;
+
+/** A signed multiplier as it is written in front of a bracket: "-2", "5". */
+const coeffTex = (k: number): string => (k === 1 ? '' : k === -1 ? '-' : `${k}`);
+
+const EXPAND = 'Expand and simplify';
+
+// ── skill: one bracket — Zeta "3(x+4) = 3x+12" ────────────────────────────
+
+function single(): Q {
+  const v = pick(VARS);
+  const a = nonZeroInt(-9, 9);
+  const b = nonZeroInt(1, 6);
+  const c = nonZeroInt(-9, 9);
+  const inner: Poly = [c, b];
+  const result = scaleP(inner, a);
+  return {
+    subTopic: 'Expanding a Single Bracket',
+    difficulty: 'skill',
+    variationId: 'expanding.single',
+    questionLines: [`Expand $${coeffTex(a)}${bracket(inner, v)}$`],
+    boardQuestionLines: [`$${coeffTex(a)}${bracket(inner, v)}$`],
+    solutionSteps: [
+      `<strong>1.</strong> Multiply each term inside the bracket by $${a}$:<br><br>$${a} \\times ${b === 1 ? v : `${b}${v}`} = ${fmt([0, a * b], v)}$ and $${a} \\times ${c > 0 ? c : `(${c})`} = ${a * c}$`,
+      `<strong>2.</strong> Write the result:<br><br>$${fmt(result, v)}$`,
+    ],
+    finalAnswer: `$${fmt(result, v)}$`,
+  };
+}
+
+// ── skill: two single brackets — spec "a(bx+c) + d(ex+f)", practice ───────
+
+function twoSingles(): Q {
+  for (let tries = 0; tries < 300; tries++) {
+    const v = pick(VARS);
+    const a = nonZeroInt(-6, 6), b = nonZeroInt(1, 5), c = nonZeroInt(-9, 9);
+    const d = nonZeroInt(-6, 6), e = nonZeroInt(1, 5), f = nonZeroInt(-9, 9);
+    const result = addP(scaleP([c, b], a), scaleP([f, e], d));
+    if (!result[1] || !result[0]) continue;      // both terms must survive
+    return {
+      subTopic: 'Expanding Two Single Brackets',
+      difficulty: 'skill',
+      variationId: 'expanding.two-singles',
+      questionLines: [
+        `Multiply out the brackets and collect like terms:`,
+        `$${coeffTex(a)}${bracket([c, b], v)} ${d < 0 ? '-' : '+'} ${coeffTex(Math.abs(d))}${bracket([f, e], v)}$`,
+      ],
+      boardQuestionLines: [
+        `$${coeffTex(a)}${bracket([c, b], v)} ${d < 0 ? '-' : '+'} ${coeffTex(Math.abs(d))}${bracket([f, e], v)}$`,
+      ],
+      solutionSteps: [
+        `<strong>1.</strong> Expand each bracket:<br><br>$${fmt(scaleP([c, b], a), v)}$ and $${fmt(scaleP([f, e], d), v)}$`,
+        `<strong>2.</strong> Collect like terms:<br><br>$${fmt(result, v)}$`,
+      ],
+      finalAnswer: `$${fmt(result, v)}$`,
+    };
+  }
+  throw new Error('expanding.two-singles: no valid question found');
+}
+
+// ── skill: a term outside — spec "ax(bx+c)", practice "6x(-2x+3)" ─────────
+
+function monomial(): Q {
+  const v = pick(VARS);
+  const a = nonZeroInt(-8, 8);
+  const b = nonZeroInt(-5, 5);
+  const c = nonZeroInt(-9, 9);
+  const result = mulP([0, a], [c, b]);
+  return {
+    subTopic: 'Expanding with a Term Outside',
+    difficulty: 'skill',
+    variationId: 'expanding.monomial',
+    questionLines: [`Expand $${coeffTex(a)}${v}${bracket([c, b], v)}$`],
+    boardQuestionLines: [`$${coeffTex(a)}${v}${bracket([c, b], v)}$`],
+    solutionSteps: [
+      `<strong>1.</strong> Multiply each term inside the bracket by $${coeffTex(a)}${v}$:<br><br>$${coeffTex(a)}${v} \\times ${fmt([0, b], v)} = ${fmt([0, 0, a * b], v)}$`,
+      `<strong>2.</strong> And the constant term:<br><br>$${coeffTex(a)}${v} \\times ${c > 0 ? c : `(${c})`} = ${fmt([0, a * c], v)}$`,
+      `<strong>3.</strong> Write the result:<br><br>$${fmt(result, v)}$`,
+    ],
+    finalAnswer: `$${fmt(result, v)}$`,
+  };
+}
+
+// ── skill: two binomials — spec "(ax+b)(cx+d)", Zeta FOIL ────────────────
+
+function twoBinomials(): Q {
+  for (let tries = 0; tries < 300; tries++) {
+    const v = pick(VARS);
+    const a = nonZeroInt(1, 4), b = nonZeroInt(-9, 9);
+    const c = nonZeroInt(1, 4), d = nonZeroInt(-9, 9);
+    const result = mulP([b, a], [d, c]);
+    if (!result[1]) continue;                    // a vanishing middle term is a giveaway
+    // **No common factor in either bracket, in the paper's own words.**
+    // 2014 P1 Q2 is "Multiply out the brackets and collect like terms:
+    // (2x - 5)(3x + 1)". The clone had a bracket such as 4x + 8 in 184 of 400
+    // draws, which invites taking the 4 out first, and always said "Expand
+    // and simplify". The owner, on the 2014 P1 sheet: "Yes". Nothing else
+    // serves this routine.
+    if (gcd(a, b) > 1 || gcd(c, d) > 1) continue;
+    return {
+      subTopic: 'Expanding Two Brackets',
+      difficulty: 'skill',
+      variationId: 'expanding.two-binomials',
+      questionLines: [`Multiply out the brackets and collect like terms: $${bracket([b, a], v)}${bracket([d, c], v)}$`],
+      boardQuestionLines: [`$${bracket([b, a], v)}${bracket([d, c], v)}$`],
+      solutionSteps: [
+        `<strong>1.</strong> Multiply every term in the first bracket by every term in the second:<br><br>$${fmt([0, 0, a * c], v)} ${a * d < 0 ? '-' : '+'} ${one(a * d)}${v} ${b * c < 0 ? '-' : '+'} ${one(b * c)}${v} ${b * d < 0 ? '-' : '+'} ${Math.abs(b * d)}$`,
+        `<strong>2.</strong> Collect the like terms:<br><br>$${fmt(result, v)}$`,
+      ],
+      // 2014 P1 Q2: •¹ any three terms correct, •² fourth term and collect
+      stepMarks: [1, 1],
+      finalAnswer: `$${fmt(result, v)}$`,
+    };
+  }
+  throw new Error('expanding.two-binomials: no valid question found');
+}
+
+// ── shape: binomial times trinomial ─────────────────────────────────────
+//
+// Six papers, one question: 2015 P1 Q4, 2017 P1 Q4, 2019 P1 Q3, 2022 P2 Q1,
+// 2024 P1 Q3, 2026 P1 Q1. A linear bracket times a three-term quadratic, three
+// marks, and the same three scheme rows in all six — the only differences are
+// the numbers and the word ("multiply out the brackets" in 2015).
+//
+// The third mark requires the collected terms to include a term in x^3, and in
+// 2017 and 2022 additionally a negative coefficient. So the parameters cannot
+// all be positive.
+//
+// **Neither bracket may have a common factor.** None of the six does: the
+// linear brackets are (3x-2), (x+1), (x-4), (2x+3), (x+5), (y+4) and the
+// trinomials 2x^2+5x-1, x^2-4x+5, x^2+x-2, x^2-4x+1, 2x^2-7x-3, y^2-3y+2. Drawn
+// freely this produced (2x-6)(x^2-5x-5) and (x-1)(3x^2-6x+3), and a pupil who
+// takes the 2 or the 3 outside is doing a shorter and different piece of work
+// from the one the scheme pays three marks for.
+//
+// **And every term survives into the answer.** If the x^2 or x terms cancel,
+// the third mark — collect like terms — is partly handed over, and all six
+// papers collect to four terms. `twoBinomials` above already guards its middle
+// term for the same reason.
+
+const SHAPE_OF: Record<string, { plainFirst: boolean; plainSecond: boolean }> = {
+  'expanding.binomial-trinomial-2015':      { plainFirst: true,  plainSecond: true },  // (x - 4)(x^2 + x - 2)
+  'expanding.binomial-trinomial-pre2019p1': { plainFirst: false, plainSecond: true },  // 2017 P1 Q4 (2x + 3)(x^2 - 4x + 1)
+  'expanding.binomial-trinomial-pre2022':   { plainFirst: true,  plainSecond: false }, // 2019 P1 Q3 (x + 5)(2x^2 - 7x - 3)
+  'expanding.binomial-trinomial-pre2023':   { plainFirst: false, plainSecond: false }, // 2022 P2 Q1 (3x - 2)(2x^2 + 5x - 1), "Yes key"
+  'expanding.binomial-trinomial-2024':      { plainFirst: true,  plainSecond: true },  // 2024 P1 Q3 (x + 1)(x^2 - 4x + 5)
+  'expanding.binomial-trinomial':           { plainFirst: true,  plainSecond: true },  // 2026 P1 Q1 (y + 4)(y^2 - 3y + 2)
+};
+
+function binomialTrinomial(_wanted?: string, asked?: string): Q {
+  for (let tries = 0; tries < 400; tries++) {
+    // **x, always.** Five of the six papers here use x and only 2026 P1 Q1
+    // uses y; the owner's ruling on 2024 P1 Q3 is to keep the variable to x.
+    // A letter is not a reason to split a variation - it is a reason not to
+    // vary one.
+    const v = 'x';
+    const a = nonZeroInt(1, 3), b = nonZeroInt(-6, 6);
+    const c = nonZeroInt(1, 3), d = nonZeroInt(-6, 6), e = nonZeroInt(-6, 6);
+    const result = mulP([b, a], [e, d, c]);
+    // **Each paper's own shape: whether a plain x leads each bracket.** The
+    // clone mixed all of them for every paper, so each got its own in about
+    // one draw in five. 2015 P1 Q4 is `(x - 4)(x^2 + x - 2)`, and the owner,
+    // on the 2015 P1 sheet: *"I agree"*. The four LOCKED ones were put to
+    // them at the foot of that sheet, each against its own paper: *"Ok
+    // agree"*, *"Agreed"*, *"Yes"*, *"Agreed"*, and 2022 P2 Q1 once it was
+    // the last one mixing: *"Yes key"*. A rejection read by each paper's own id.
+    const shape = SHAPE_OF[asked ?? ''];
+    if (shape && ((a === 1) !== shape.plainFirst || (c === 1) !== shape.plainSecond)) continue;
+    if (!result[3]) continue;                             // must have the cubic term
+    if (!result.some(k => k < 0)) continue;               // and a negative coefficient
+    if (result.some(k => Math.abs(k) > 60)) continue;     // keep it to paper scale
+    if (gcd(a, b) > 1 || gcd(gcd(c, d), e) > 1) continue; // no bracket factorises out
+    if (!result[1] || !result[2]) continue;               // four terms, as all six have
+    return {
+      subTopic: 'Expanding a Trinomial',
+      difficulty: 'exam',
+      variationId: 'expanding.binomial-trinomial',
+      // The papers' full stop, inside the maths - five of the six print one;
+      // 2015 P1 Q4 ("Multiply out the brackets …: (x−4)(x²+x−2)") does not.
+      // The owner, on the 2026 re-review: "Yes on all papers".
+      // And 2015 P1 Q4 has its own instruction, "Multiply out the brackets
+      // and collect like terms:". The owner, on the 2018-2014 light pass:
+      // "Yes". Its own alias; every other paper keeps "Expand and simplify".
+      questionLines: [asked === 'expanding.binomial-trinomial-2015'
+        ? `Multiply out the brackets and collect like terms: $${bracket([b, a], v)}${bracket([e, d, c], v)}$`
+        : `${EXPAND} $${bracket([b, a], v)}${bracket([e, d, c], v)}.$`],
+      boardQuestionLines: [`$${bracket([b, a], v)}${bracket([e, d, c], v)}$`],
+      solutionSteps: [
+        `<strong>1.</strong> Multiply the trinomial by $${fmt([0, a], v)}$:<br><br>$${fmt(mulP([0, a], [e, d, c]), v)}$`,
+        `<strong>2.</strong> Multiply the trinomial by $${b > 0 ? b : `(${b})`}$:<br><br>$${fmt(mulP([b], [e, d, c]), v)}$`,
+        `<strong>3.</strong> Add the two and collect like terms:<br><br>$${fmt(result, v)}$`,
+      ],
+      // •¹ start to expand, •² complete the expansion, •³ collect like terms
+      stepMarks: [1, 1, 1],
+      finalAnswer: `$${fmt(result, v)}$`,
+    };
+  }
+  throw new Error('expanding.binomial-trinomial: no valid question found');
+}
+
+// ── shape: a product plus a single bracket — 2018 P1 Q2, 2023 P1 Q2, 2025 P1 Q2 ─
+
+/**
+ * **Three papers, three shapes, three ids.**
+ *
+ *   2018 P1 Q2   (3x + 1)(x - 1) + 2(x^2 - 5)   product, then a quadratic
+ *   2023 P1 Q2   (x + 7)^2 + 6(x^2 - 10)        a square, then a quadratic
+ *   2025 P1 Q2   (x + 3)(x + 5) + 4(x - 2)      product, then a linear
+ *
+ * `squared` was already drawn once before the loop, which is the rule; but
+ * `quadratic` was drawn *inside* it, so the two together made four shapes from
+ * three papers - and the fourth, a square plus a multiple of a linear, is a
+ * question none of them sets. Both are now chosen together, from the three
+ * that exist, and each carries its own id so a press on 2023 P1 Q2 cannot
+ * return 2025's.
+ */
+function productPlusBracket(wanted?: string): Q {
+  // Taught: the three shapes are the three papers and each stamps its own
+  // id, so the asked id names the shape.
+  const shape = wanted === 'expanding.product-plus-square' ? 1
+    : wanted === 'expanding.product-plus-linear' ? 2
+    : wanted === 'expanding.product-plus' ? 0
+    : getRandomInt(0, 2);              // 0 2018, 1 2023, 2 2025
+  const squared = shape === 1;
+  const quadratic = shape !== 2;
+  for (let tries = 0; tries < 400; tries++) {
+    // All three papers use x.
+    const v = 'x';
+    const a = squared ? 1 : nonZeroInt(1, 3);
+    const b = nonZeroInt(-9, 9);
+    const c = squared ? a : nonZeroInt(1, 3);
+    const d = squared ? b : nonZeroInt(-9, 9);
+    // **Added, not subtracted.** 2018 P1 Q2 is `+ 2(x^2 - 5)`, 2023 P1 Q2 is
+    // `+ 6(x^2 - 10)` and 2025 P1 Q2 is `+ 4(x - 2)`: three of three join the
+    // two parts with a plus. A minus in front of the multiplier is a fair
+    // enough piece of algebra and it is not one of these three questions - it
+    // puts a sign to distribute where the paper puts none.
+    // At least two: a multiplier of 1 prints no multiplier at all, and "expand
+    // the single bracket" becomes copying it out. The papers use 2, 6 and 4.
+    const k = getRandomInt(2, 7);
+    const second: Poly = quadratic ? [nonZeroInt(-10, 10), 0, 1] : [nonZeroInt(-9, 9), nonZeroInt(1, 4)];
+    const result = addP(mulP([b, a], [d, c]), scaleP(second, k));
+    if (!result[2] || !result[1] || !result[0]) continue;   // every term should survive
+    if (result.some(x => Math.abs(x) > 60)) continue;
+    // **No bracket may factorise out**, as none of the three papers' do:
+    // (3x + 1), (x - 1), (x + 7), (x + 3), (x + 5), (x^2 - 5), (x^2 - 10),
+    // (x - 2). Drawn freely this printed (3x - 3)(x + 6) and - 6(4x + 6), where
+    // a pupil can take the 3 or the 2 outside and is then doing a shorter and
+    // different piece of work from the one the three marks pay for.
+    if (gcd(a, b) > 1 || gcd(c, d) > 1) continue;
+    if (!quadratic && gcd(second[0], second[1] ?? 0) > 1) continue;
+
+    const first = squared
+      ? `${bracket([b, a], v)}^{2}`
+      : `${bracket([b, a], v)}${bracket([d, c], v)}`;
+    return {
+      subTopic: 'Expanding and Collecting',
+      difficulty: 'exam',
+      variationId: shape === 1 ? 'expanding.product-plus-square'
+        : shape === 2 ? 'expanding.product-plus-linear'
+        : 'expanding.product-plus',
+      // 2018 P1 Q2 ends with a stop inside the maths; 2023's and 2025's shapes
+      // are left as they are. The owner, 2026-09-25: "if the only fixes is
+      // putting full stops just do that without asking me".
+      questionLines: [
+        `${EXPAND} $${first} ${k < 0 ? '-' : '+'} ${coeffTex(Math.abs(k))}${bracket(second, v)}${shape === 0 ? '.' : ''}$`,
+      ],
+      boardQuestionLines: [
+        `$${first} ${k < 0 ? '-' : '+'} ${coeffTex(Math.abs(k))}${bracket(second, v)}$`,
+      ],
+      solutionSteps: [
+        `<strong>1.</strong> Expand the product:<br><br>$${first} = ${fmt(mulP([b, a], [d, c]), v)}$`,
+        `<strong>2.</strong> Expand the single bracket:<br><br>$${coeffTex(k)}${bracket(second, v)} = ${fmt(scaleP(second, k), v)}$`,
+        `<strong>3.</strong> Collect like terms:<br><br>$${fmt(result, v)}$`,
+      ],
+      // •¹ start expansion, •² complete expansion, •³ collect like terms
+      stepMarks: [1, 1, 1],
+      finalAnswer: `$${fmt(result, v)}$`,
+    };
+  }
+  throw new Error('expanding.product-plus: no valid question found');
+}
+
+export const EXPANDING_GENERATORS: Record<string, Gen> = {
+  'Expanding a Single Bracket': single,
+  'Expanding Two Single Brackets': twoSingles,
+  'Expanding with a Term Outside': monomial,
+  'Expanding Two Brackets': twoBinomials,
+  'Expanding a Trinomial': binomialTrinomial,
+  'Expanding and Collecting': (w) => productPlusBracket(w),
+};

@@ -22,7 +22,8 @@ import {
 import { LINK_ID_CODES } from '../lib/link-ids.mjs';
 import { engineForVersion } from '../lib/link-engines';
 
-if (LINK_VERSION !== 2) throw new Error(`this records version 2; LINK_VERSION is ${LINK_VERSION}`);
+// (a number, not the literal: version 3 exists, and this now always refuses, as it should: never re-record)
+if ((LINK_VERSION as number) !== 2) throw new Error(`this records version 2; LINK_VERSION is ${LINK_VERSION}`);
 const engine = await engineForVersion(2);
 const root = path.resolve(import.meta.dirname, '..');
 let state = 20261009;

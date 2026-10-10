@@ -1,8 +1,8 @@
 {
-  "recorded": "2026-10-09",
+  "recorded": "2026-10-10",
   "headroomBytes": 65536,
   "note": "Total bytes of every out/_next/static/chunks/*.js carrying a variation id. Lazy — on no page — but it is what the first press of Variation fetches.",
-  "acceptedGrowth": "Link versions 2026-10-09, on the owner's 'Go ahead': lib/generator-v1 (website 767a87c's maker, frozen byte for byte, check:frozen) opens handout links made before version 2, so homework already set opens exactly what was shared. Its chunks hold variation ids, so they count here: 841 KB in 2 chunks (582 + 259), fetched only when an old handout with a generated question is opened (check:linkversions: never by a new handout or a practice paper). The current maker is the other 1,280 KB (+31 KB on 1,249: the guard's keys and the same-question test). The copy never changes, so growth after this recording is the current maker's.",
-  "chunks": 7,
-  "bytes": 2172076
+  "acceptedGrowth": "Link version 3, 2026-10-10 (Advanced Higher never the paper's own question): lib/generator-v2 (website a794574's maker, frozen byte for byte, check:frozen) opens version 2 handout links. Its N5-id chunks are 854 KB in 2 (593 + 261), fetched only when a version 2 handout with a generated question is opened (check:linkversions: never by a new handout or a National 5 or Advanced Higher practice paper). Version 1's copy stays 841 KB (582 + 259). The current maker's N5-id chunks are 1,280 KB, the same as at the 2026-10-09 recording: National 5 is unchanged. Both copies never change, so growth after this recording is the current maker's.",
+  "chunks": 9,
+  "bytes": 3046895
 }

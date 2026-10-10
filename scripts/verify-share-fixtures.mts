@@ -14,7 +14,9 @@
  *   - `share-links-2026-10-01.json` and `share-links-short-2026-10-01.json`:
  *     links made before versions (version 1), opened by the frozen copy of the
  *     maker live until 2026-10-09;
- *   - `share-links-v2-2026-10-09.json`: version 2 links, opened by the current
+ *   - `share-links-v2-2026-10-09.json`: version 2 links, opened by the frozen
+ *     copy of the maker live from 2026-10-09 (`lib/generator-v2`);
+ *   - `share-links-v3-2026-10-10.json`: version 3 links, opened by the current
  *     maker. **If these fail after a generator change, the change moves what
  *     shared links open: raise LINK_VERSION and freeze the maker it replaces**
  *     (docs/link-versions.md). Never re-record them.
@@ -26,7 +28,7 @@ import { decodeRefs, linkVersion } from '../lib/worksheet-refs.mjs';
 import { engineForVersion } from '../lib/link-engines';
 
 type Sheet = { format: string; q: string; refs: string[]; questions: Record<string, string | null> };
-const FILES = ['share-links-2026-10-01.json', 'share-links-short-2026-10-01.json', 'share-links-v2-2026-10-09.json'];
+const FILES = ['share-links-2026-10-01.json', 'share-links-short-2026-10-01.json', 'share-links-v2-2026-10-09.json', 'share-links-v3-2026-10-10.json'];
 const sheets: Sheet[] = FILES.flatMap(f => {
   const file = path.join(import.meta.dirname, 'fixtures', f);
   if (!fs.existsSync(file)) { console.log(`FAIL ${f} is missing`); process.exitCode = 1; return []; }

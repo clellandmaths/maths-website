@@ -14,8 +14,12 @@ import type { QuestionWithMetadata } from './data-loader';
  *   version 1  `lib/generator-v1/`, the maker live from 2026-10-06 (website
  *              767a87c), byte for byte. Every link made before versions existed.
  *              Locked by `scripts/check-frozen-engines.mjs`.
- *   version 2  `lib/generator/`, the current one: the 18 widened National 5
- *              cards, never the paper's own question, no twins on a sheet.
+ *   version 2  `lib/generator-v2/`, the maker live from 2026-10-09 (website
+ *              a794574), byte for byte: the 18 widened National 5 cards, never
+ *              the paper's own question, no twins on a sheet. Locked the same way.
+ *   version 3  `lib/generator/`, the current one: Advanced Higher's six widened
+ *              cards, never any AH paper's own question, no twins on an AH sheet,
+ *              2025 P1 Q8 no longer giving up.
  *
  * Each maker is reached only through `await import()`, so a version costs
  * nothing until a link made with it is opened, and an old maker is never
@@ -27,6 +31,7 @@ export interface LinkEngine {
 
 export async function engineForVersion(version: number): Promise<LinkEngine> {
   if (version === 1) return import('./generated-question-v1');
+  if (version === 2) return import('./generated-question-v2');
   // The current version, and any version newer than this site knows (a link
   // from a later deploy): the newest maker here is the nearest it has.
   return import('./generated-question');
