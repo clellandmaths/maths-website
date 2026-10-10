@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick } from '../draw';
-import { num, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { q } from '../maths/rational';
+import { int, pick } from '../../core/draw';
+import { num, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { q } from '../../core/maths/rational';
 
 // ── 2019 Q16 ───────────────────────────────────────────────────────────────
 // (a) ∫_0^p (x - p)² e^{mx} dx by parts twice, written expanded as the paper's

@@ -38,10 +38,10 @@ export const PROOF: readonly CardMeta[] = [
     skill: 'Write the contrapositive of "if $r$ is irrational then the $n$th root of $r$ is irrational", and use it to prove the statement.',
     marks: [1, 3],
     route: '1 + 3 - (a) the contrapositive: if the root is rational then r is rational; (b) the root as p/q, p and q integers, q not zero, and r = p^n/q^n; which is rational, so the contrapositive is true and so is the statement. A proof by contradiction earns the middle two marks only.',
-    ranges: 'The paper\'s statement, with the root varying: square (the paper), cube, fourth or fifth. The proof is the same three steps with the power changing; a root past the fifth is not one a paper would set, and letters are not a different question. 4 questions, under the floor of 12, so exempt on the owner\'s word.',
+    ranges: 'The paper\'s statement, with the root varying: square (the paper), cube, fourth, fifth or sixth. The proof is the same three steps with the power changing, and letters are not a different question. The sixth root was added on the AH widening sheet so that, with the paper\'s own question kept out, the card still makes 4 (one over the root was offered and not taken). 5 questions, under the floor of 12, so exempt on the owner\'s word.',
     exempt: {
-      why: 'A standard contrapositive proof whose only number is the root: square to fifth roots make 4 questions, and widening further would set roots no paper sets.',
-      owner: 'The owner on the 2026 P2 sheet, 2026-09-29: "What about any root of r?", then "Yes" to "Roots 2 to 5, exempt (4 questions)?"',
+      why: 'A standard contrapositive proof whose only number is the root: square to sixth roots make 5 questions, 4 once the paper\'s own is kept out.',
+      owner: 'The owner on the 2026 P2 sheet, 2026-09-29: "What about any root of r?", then "Yes" to "Roots 2 to 5, exempt (4 questions)?"; on the AH widening sheet, 2026-10-10, "A" (the sixth root as well).',
     },
   },
   {
@@ -56,10 +56,10 @@ export const PROOF: readonly CardMeta[] = [
     skill: 'Disprove one statement about two consecutive integers by counterexample, and prove the other directly.',
     marks: [3],
     route: 'Statement A by a counterexample, with why it fails; for B the form of two consecutive integers, k and k + 1 with k an integer (the mark needs it); then the algebra shown to be 2(...) + 1, odd, and said so.',
-    ranges: 'The paper: the sum of the squares of two consecutive integers, "always prime" (false, 3^2 + 4^2 = 25) and "always odd" (true, 2(k^2 + k) + 1). Nothing numerical varies. Honest beside it, each in the same three steps (a counterexample, the form of the integers, the algebra): the difference between the squares (prime false, odd true); and for two consecutive odd integers, 2k + 1 and 2k + 3, the sum (a multiple of 4 false, even true) and the difference (a multiple of 16 false, of 8 true); and for two consecutive even integers, 2k and 2k + 2, the sum and the difference (a multiple of 8 false, of 4 true). The owner asked for more than 2 on the 2024 P2 sheet ("More please"). 6 questions, under the floor of 12, so exempt on the owner\'s word.',
+    ranges: 'The paper: the sum of the squares of two consecutive integers, "always prime" (false, 3^2 + 4^2 = 25) and "always odd" (true, 2(k^2 + k) + 1). Nothing numerical varies. Honest beside it, each in the same three steps (a counterexample, the form of the integers, the algebra): the difference between the squares (prime false, odd true); and for two consecutive odd integers, 2k + 1 and 2k + 3, the sum (a multiple of 4 false, even true) and the difference (a multiple of 16 false, of 8 true); and for two consecutive even integers, 2k and 2k + 2, the sum and the difference (a multiple of 8 false, of 4 true); and for two consecutive multiples of 3, 3k and 3k + 3, the sum and the difference (a multiple of 18 false, of 9 true). The owner asked for more than 2 on the 2024 P2 sheet ("More please"), and the multiples of 3 were added on the AH widening sheet so seven remain once the paper\'s own is kept out. 8 questions, under the floor of 12, so exempt on the owner\'s word.',
     exempt: {
-      why: 'A counterexample and a direct proof about two consecutive integers, with nothing numerical to vary: the six statements (the sum or difference of the squares of consecutive integers, odd integers or even integers) are every one that keeps the paper\'s three steps; past them a statement needs a step the paper does not have.',
-      owner: 'The owner on the 2024 P2 sheet, 2026-09-29: "More please" (from 2), then "Yes" to "exempt at 6?"',
+      why: 'A counterexample and a direct proof about two consecutive integers, with nothing numerical to vary: the eight statements (the sum or difference of the squares of consecutive integers, odd integers, even integers or multiples of 3) keep the paper\'s three steps; past them a statement needs a step the paper does not have, or repeats another card\'s proof (the sum of three consecutive integers is 2018 Q9(a)\'s).',
+      owner: 'The owner on the 2024 P2 sheet, 2026-09-29: "More please" (from 2), then "Yes" to "exempt at 6?"; on the AH widening sheet, 2026-10-10, "A" (consecutive multiples of 3 as well).',
     },
   },
   {
@@ -116,10 +116,10 @@ export const PROOF: readonly CardMeta[] = [
     skill: 'Prove by induction that the sum of $r(3r + b)$ from 1 to $n$ is $n(n + 1)(n + c).$',
     marks: [4],
     route: 'Both sides at n = 1 worked out; the assumption for n = k ("assume", not "consider") and the sum to k + 1 as the sum to k plus (k + 1)(3(k + 1) + b); the assumption used, (k + 1) taken out and what is left factorised, (k + 1)(k + 2)(k + 1 + c); the result in terms of k + 1, with the conclusion in full.',
-    ranges: 'The paper: the sum of r(3r - 1) is n^2(n + 1). The sum of r(3r + b) is n(n + 1)(n + c) with c = (1 + b)/2, whole only for b odd; b never a multiple of 3, where r(3r + b) has a factor a paper would take out; b from -1 (the paper) to 19, so every term is positive, as the paper\'s, c from 0 to 10, and the same four steps on every draw. Three printings of one question: n^2(n + 1) at c = 0 (the paper), n(n + 1)^2 at c = 1, n(n + 1)(n + c) otherwise. 8 statements, below the floor, exempt at 8.',
+    ranges: 'The paper: the sum of r(3r - 1) is n^2(n + 1). The sum of r(3r + b) is n(n + 1)(n + c) with c = (1 + b)/2, whole only for b odd; b never a multiple of 3, where r(3r + b) has a factor a paper would take out; b from -1 (the paper) to 25, so every term is positive, as the paper\'s, c from 0 to 13, and the same four steps on every draw. Three printings of one question: n^2(n + 1) at c = 0 (the paper), n(n + 1)^2 at c = 1, n(n + 1)(n + c) otherwise. 23 and 25 were added on the AH widening sheet, so nine remain once the paper\'s own is kept out. 10 statements, below the floor, exempt at 10.',
     exempt: {
-      why: 'A proof card: r(3r + b) with b odd, not a multiple of 3 and every term positive, as the paper\'s, makes 8 statements in the paper\'s four steps; b = -5 and -7 would make 10, with sums that start negative.',
-      owner: 'On the 2016 sheet, 2026-10-04, "Yes" to "Exempt at 8?"',
+      why: 'A proof card: r(3r + b) with b odd, not a multiple of 3 and every term positive, as the paper\'s, from -1 to 25, makes 10 statements in the paper\'s four steps; b = -5 and -7 would start the sums negative.',
+      owner: 'On the 2016 sheet, 2026-10-04, "Yes" to "Exempt at 8?"; on the AH widening sheet, 2026-10-10, "A" (b on to 25).',
     },
   },
   {

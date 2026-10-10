@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { poly, rounded, sqrtOf, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { type V3, add3, column, content3, coords, dot3, scale3, sub3 } from '../maths/vector';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { poly, rounded, sqrtOf, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { type V3, add3, column, content3, coords, dot3, scale3, sub3 } from '../../core/maths/vector';
 
 // ── 2019 Q15 ───────────────────────────────────────────────────────────────
 // (a) verify L1: (x0 + aλ, y0 + bλ, λ) lies in π1 and π2; (b) the acute angle

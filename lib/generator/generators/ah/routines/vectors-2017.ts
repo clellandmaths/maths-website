@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { poly, sum } from '../maths/format';
-import { type V3, add3, column, content3, coords, cross3, dot3, scale3, sub3 } from '../maths/vector';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { poly, sum } from '../../core/maths/format';
+import { type V3, add3, column, content3, coords, cross3, dot3, scale3, sub3 } from '../../core/maths/vector';
 
 // ── 2017 Q15 ───────────────────────────────────────────────────────────────
 // (a) the line through B and T in parametric form; (b) the plane through P,

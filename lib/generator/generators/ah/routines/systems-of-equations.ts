@@ -4,11 +4,11 @@
  * `../registry/systems-of-equations.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { nonZero, pick, sign, until } from '../draw';
-import { num, sum } from '../maths/format';
-import { augmented, combine, det3, eliminate, opText, type Row } from '../maths/linear';
-import { gcd } from '../maths/integer';
-import { q } from '../maths/rational';
+import { nonZero, pick, sign, until } from '../../core/draw';
+import { num, sum } from '../../core/maths/format';
+import { augmented, combine, det3, eliminate, opText, type Row } from '../../core/maths/linear';
+import { gcd } from '../../core/maths/integer';
+import { q } from '../../core/maths/rational';
 
 // ── 2026 P1 Q2 ─────────────────────────────────────────────────────────────
 // Three equations, a leading x in the first, solved by Gaussian elimination.

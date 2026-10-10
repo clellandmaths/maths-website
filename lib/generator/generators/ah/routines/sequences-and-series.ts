@@ -4,9 +4,9 @@
  * `../registry/sequences-and-series.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { decimal, num, poly, power, rounded, sum, truncated } from '../maths/format';
-import { q, add, div, mul, pow, sub, toNumber } from '../maths/rational';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { decimal, num, poly, power, rounded, sum, truncated } from '../../core/maths/format';
+import { q, add, div, mul, pow, sub, toNumber } from '../../core/maths/rational';
 
 /**
  * "worked = result", or the result once when the working is already it (the

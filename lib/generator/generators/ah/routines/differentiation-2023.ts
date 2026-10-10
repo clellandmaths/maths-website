@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { joinTerms, num, power, rounded, sum } from '../maths/format';
-import { q } from '../maths/rational';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { joinTerms, num, power, rounded, sum } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 import { type Scene, dimensionArrow, pt } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 

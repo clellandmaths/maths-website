@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, until } from '../draw';
-import { poly } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { gcdB } from '../maths/rational';
+import { int, until } from '../../core/draw';
+import { poly } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { gcdB } from '../../core/maths/rational';
 
 // ── 2016 Q13 ───────────────────────────────────────────────────────────────
 // A/(x + p) + B/(q - x), combined: ((B - A)x + Aq + Bp)/((x + p)(q - x)),

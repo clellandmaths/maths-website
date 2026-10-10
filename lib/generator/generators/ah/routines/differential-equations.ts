@@ -4,9 +4,9 @@
  * `../registry/differential-equations.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { distinct, int, nonZero, pick, until } from '../draw';
-import { num, poly, rounded, sum } from '../maths/format';
-import { type Q, q } from '../maths/rational';
+import { distinct, int, nonZero, pick, until } from '../../core/draw';
+import { num, poly, rounded, sum } from '../../core/maths/format';
+import { type Q, q } from '../../core/maths/rational';
 
 // ── 2026 P1 Q4 ─────────────────────────────────────────────────────────────
 // a y'' + b y' + c y = 0 from (αm - β)(m - γ) = 0, with y(0) and y'(0) given.

@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, sign } from '../draw';
-import { num, power, sum } from '../maths/format';
-import { q } from '../maths/rational';
+import { int, pick, sign } from '../../core/draw';
+import { num, power, sum } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 
 const DYDX = '\\frac{dy}{dx}';
 

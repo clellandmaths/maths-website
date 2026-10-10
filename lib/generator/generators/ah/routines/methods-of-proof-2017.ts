@@ -7,8 +7,8 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { sum } from '../maths/format';
+import { pick } from '../../core/draw';
+import { sum } from '../../core/maths/format';
 
 // ── 2017 Q13 ───────────────────────────────────────────────────────────────
 // "If nᵖ + b is even (or odd), then n is …", proved by its contrapositive,

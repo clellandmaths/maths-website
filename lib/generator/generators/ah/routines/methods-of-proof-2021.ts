@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int } from '../draw';
-import { num } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { q } from '../maths/rational';
+import { int } from '../../core/draw';
+import { num } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { q } from '../../core/maths/rational';
 
 // ── 2021 P2 Q10 ────────────────────────────────────────────────────────────
 // By induction from n = 2: the sum of c/((r + a)(r + a - 1)) from r = 2 is

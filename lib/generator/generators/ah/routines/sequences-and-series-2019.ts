@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { decimal, joinTerms, num, sum } from '../maths/format';
-import { q } from '../maths/rational';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { decimal, joinTerms, num, sum } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 
 /** `3 \times 20^{2}`, `20^{2}`, `-16 \times 20`: a coefficient times a written value. */
 const times = (coef: number, body: string) =>

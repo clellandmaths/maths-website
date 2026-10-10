@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { num, sum } from '../maths/format';
-import { q } from '../maths/rational';
+import { pick } from '../../core/draw';
+import { num, sum } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 
 // ── 2018 Q14 ───────────────────────────────────────────────────────────────
 // A geometric sequence, first term a and ratio 1/r: its 7th term a/r⁶ and sum

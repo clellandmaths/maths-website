@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, until } from '../draw';
-import { pmatrix } from '../maths/matrix';
-import { joinTerms, sum } from '../maths/format';
+import { int, nonZero, until } from '../../core/draw';
+import { pmatrix } from '../../core/maths/matrix';
+import { joinTerms, sum } from '../../core/maths/format';
 
 // ── 2019 Q2 ────────────────────────────────────────────────────────────────
 // A 3 × 3 with p in its middle, det A = Cp + K given, so p; B 3 × 2 with q in

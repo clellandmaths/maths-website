@@ -4,9 +4,9 @@
  * `../registry/functions-and-graphs.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { poly, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { poly, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
 import { type Element, type Pt, type Scene, add, pt, scale, unit } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 

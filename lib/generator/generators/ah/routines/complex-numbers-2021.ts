@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { piTimes } from '../maths/format';
-import { q } from '../maths/rational';
+import { pick } from '../../core/draw';
+import { piTimes } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 import { type Element, type Pt, type Scene, add, pt, scale, unit } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 
@@ -17,14 +17,15 @@ import { renderScene } from '../../../diagrams/render';
 // The roots of z⁵ + a⁵ = 0 (the paper's, a = 1) or z⁵ - a⁵ = 0, a = 1, 2 or 3
 // (the owner on the 2021 P2 sheet: "Any way to vary with +1 with other
 // numbers?", then "a = 1, 2, 3"; and on z⁷, five roots in (d) and three
-// cosines in (e) for the same marks, 2026-10-03: "6 only"). The build still
-// takes any odd n. (a) -aⁿ (or aⁿ) in polar
+// cosines in (e) for the same marks, 2026-10-03: "6 only"); and a = 4 (the
+// owner on the AH widening sheet, 2026-10-10: "A"), so seven remain once the
+// paper's own is kept out. The build still takes any odd n. (a) -aⁿ (or aⁿ) in polar
 // form; (b) z1 a root, by de Moivre; (c) z2, the next root anticlockwise, read
 // off the Argand diagram; (d) the rest, with -π < θ ≤ π; (e) the real parts of
 // the roots summing to zero give the sum of the cosines of the roots above the
 // real axis: 1/2 (or -1/2), the modulus a cancelling.
 
-interface P2Q13of2021 { n: 5; plus: boolean; a: 1 | 2 | 3 }
+interface P2Q13of2021 { n: 5; plus: boolean; a: 1 | 2 | 3 | 4 }
 
 /** An argument of mπ/n in the paper's polar form, with a modulus a in front unless it is 1. */
 function polar(m: number, n: number, a = 1): string {
@@ -78,7 +79,7 @@ function argand(first: number, second: number): Scene {
 }
 
 const q2021p2q13: CardRoutine<P2Q13of2021> = {
-  draw: () => ({ n: 5 as const, plus: pick([true, false]), a: pick([1, 2, 3] as const) }),
+  draw: () => ({ n: 5 as const, plus: pick([true, false]), a: pick([1, 2, 3, 4] as const) }),
 
   build: ({ n, plus, a }): Built => {
     const sign = plus ? '+' : '-';

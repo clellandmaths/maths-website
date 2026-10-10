@@ -7,8 +7,8 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { nonZero, pick, until } from '../draw';
-import { poly, sum } from '../maths/format';
+import { nonZero, pick, until } from '../../core/draw';
+import { poly, sum } from '../../core/maths/format';
 
 const D2 = '\\frac{d^{2}y}{dx^{2}}';
 const D1 = '\\frac{dy}{dx}';

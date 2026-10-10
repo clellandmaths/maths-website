@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { num } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { q } from '../maths/rational';
+import { pick } from '../../core/draw';
+import { num } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { q } from '../../core/maths/rational';
 
 // ── 2016 Q2 ────────────────────────────────────────────────────────────────
 // A geometric sequence from its second and fifth terms: (a) r³ = T₅/T₂, so

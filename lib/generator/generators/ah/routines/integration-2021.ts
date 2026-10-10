@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { num, piTimes, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { q } from '../maths/rational';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { num, piTimes, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { q } from '../../core/maths/rational';
 
 // ── 2021 P1 Q3 ─────────────────────────────────────────────────────────────
 // ∫ a cos θ sin^n θ dθ with u = sin θ: ∫ a u^n du = a/(n + 1) sin^{n+1} θ + c

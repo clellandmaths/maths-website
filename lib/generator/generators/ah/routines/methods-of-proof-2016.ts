@@ -7,8 +7,8 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { poly, sum } from '../maths/format';
+import { pick } from '../../core/draw';
+import { poly, sum } from '../../core/maths/format';
 
 // ── 2016 Q5 ────────────────────────────────────────────────────────────────
 // By induction: the sum of r(3r + b) from 1 to n is n(n + 1)(n + c), with b
@@ -20,10 +20,11 @@ interface Q5of2016 { b: number }
 /**
  * b odd, so the sum factorises with whole numbers, as the paper's; never a
  * multiple of 3, where r(3r + b) has a factor a paper would take out; from
- * -1 (the paper) to 19, so every term is positive, as the paper's, and c runs
- * from 0 to 10.
+ * -1 (the paper) to 25, so every term is positive, as the paper's, and c runs
+ * from 0 to 13. 23 and 25 added so nine remain once the paper's own is kept
+ * out (the owner on the AH widening sheet, 2026-10-10: "A").
  */
-const B2016 = [-1, 1, 5, 7, 11, 13, 17, 19];
+const B2016 = [-1, 1, 5, 7, 11, 13, 17, 19, 23, 25];
 
 /** n(n + 1)(n + c) as a paper writes it: `n^{2}(n + 1)`, `n(n + 1)^{2}`, `n(n + 1)(n + 3)`. */
 function rhs2016(c: number, v: string): string {

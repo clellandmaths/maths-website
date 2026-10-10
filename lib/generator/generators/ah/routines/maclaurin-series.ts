@@ -4,11 +4,11 @@
  * `../registry/maclaurin-series.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, until } from '../draw';
-import { gcd } from '../maths/integer';
-import { num, piTimes, series, sum } from '../maths/format';
-import { type Q, q, add, div, mul, neg, pow, ZERO } from '../maths/rational';
-import { expSeries, log1pSeries, mulSeries } from '../maths/series';
+import { int, pick, until } from '../../core/draw';
+import { gcd } from '../../core/maths/integer';
+import { num, piTimes, series, sum } from '../../core/maths/format';
+import { type Q, q, add, div, mul, neg, pow, ZERO } from '../../core/maths/rational';
+import { expSeries, log1pSeries, mulSeries } from '../../core/maths/series';
 
 // ── 2026 P2 Q3 ─────────────────────────────────────────────────────────────
 // (a) e^{kx} and ln(1 + x) to x^3; (b) hence e^{kx} ln(1/(1 + x))

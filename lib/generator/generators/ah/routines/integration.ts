@@ -4,9 +4,9 @@
  * `../registry/integration.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, until } from '../draw';
-import { num, piTimes, poly, power, sum } from '../maths/format';
-import { type Q, q } from '../maths/rational';
+import { int, pick, until } from '../../core/draw';
+import { num, piTimes, poly, power, sum } from '../../core/maths/format';
+import { type Q, q } from '../../core/maths/rational';
 import { type Element, type Pt, type Scene, pt } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 

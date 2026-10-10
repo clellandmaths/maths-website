@@ -7,11 +7,11 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { nonZero, pick, until } from '../draw';
-import { num, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { opText } from '../maths/linear';
-import { q } from '../maths/rational';
+import { nonZero, pick, until } from '../../core/draw';
+import { num, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { opText } from '../../core/maths/linear';
+import { q } from '../../core/maths/rational';
 
 // ── 2016 Q4 ────────────────────────────────────────────────────────────────
 // Three equations, 2λ as row 3's z coefficient, and the λ for redundancy.

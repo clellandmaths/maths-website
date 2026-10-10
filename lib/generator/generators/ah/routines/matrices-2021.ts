@@ -7,11 +7,11 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, sign, until } from '../draw';
-import { pmatrix } from '../maths/matrix';
-import { gcd } from '../maths/integer';
-import { sum } from '../maths/format';
-import { q } from '../maths/rational';
+import { int, nonZero, sign, until } from '../../core/draw';
+import { pmatrix } from '../../core/maths/matrix';
+import { gcd } from '../../core/maths/integer';
+import { sum } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 
 // ── 2021 P1 Q2 ─────────────────────────────────────────────────────────────
 // A 2 × 2, B 3 × 2: (a) B' and AB'; (b) det A and A^{-1}, written as the

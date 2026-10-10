@@ -7,8 +7,8 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { sum } from '../maths/format';
+import { pick } from '../../core/draw';
+import { sum } from '../../core/maths/format';
 
 // ── 2019 Q11 ───────────────────────────────────────────────────────────────
 // (a) a counterexample to "n² + bn + c is always prime"; (b) the contrapositive

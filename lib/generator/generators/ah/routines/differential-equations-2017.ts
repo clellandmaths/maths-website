@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { joinTerms, num, poly, sum } from '../maths/format';
-import { type Q, add, isInt, mul, q, sub } from '../maths/rational';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { joinTerms, num, poly, sum } from '../../core/maths/format';
+import { type Q, add, isInt, mul, q, sub } from '../../core/maths/rational';
 
 const D2 = '\\frac{d^{2}y}{dx^{2}}';
 const D1 = '\\frac{dy}{dx}';

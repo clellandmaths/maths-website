@@ -18,13 +18,14 @@
  * is what makes the same pair give the same question in every browser.
  */
 import type { GeneratedQuestion } from '../types';
-import { mulberry32, seedFrom, setRandomStream } from '../utils';
+import { drawWith, makeWith, withSeed } from '../core/seeded';
 import { questionKey } from '../../question-key';
 import type { Built, CardLabel, CardRoutine, Ladder } from './types';
 import { AH_CARDS, idForCard, type Registered } from './registry';
 import { ROUTINE_LOADERS } from './routines';
 import { AH_CODES } from './codes';
 import { SITE_CARDS } from './site-cards';
+import { guarded } from './not-the-paper';
 
 /**
  * A generated Advanced Higher card: the question every consumer of the engine
@@ -35,21 +36,12 @@ import { SITE_CARDS } from './site-cards';
 export type AhQuestion = GeneratedQuestion & { ladder: Ladder };
 
 /**
- * Run `fn` with the random stream seeded, restoring the previous stream after,
- * including when `fn` throws.
- *
- * **Synchronous on purpose.** The stream is module-level and shared with
- * National 5, so a seeded draw that awaited could interleave with another. The
- * routine is loaded first (the only await), then drawn and built inside this.
+ * The seeded draw, `makeWith` and `drawWith` live in the shared core since
+ * 2026-10-07 (`../core/seeded.ts`), unchanged; they are re-exported here
+ * under their AH names so every caller is as it was.
  */
-export function withAhSeed<T>(seed: number | string, fn: () => T): T {
-  const prev = setRandomStream(mulberry32(seedFrom(seed)));
-  try {
-    return fn();
-  } finally {
-    setRandomStream(prev);
-  }
-}
+export { drawWith, makeWith };
+export const withAhSeed = withSeed;
 
 /** The registered card for an id. Throws on an id that is not one. */
 export function cardMeta(id: string): Registered {
@@ -58,8 +50,12 @@ export function cardMeta(id: string): Registered {
   return meta;
 }
 
-/** Load the routine that makes a card. One topic file, loaded once. */
-export async function routineFor(id: string): Promise<CardRoutine> {
+/**
+ * Load the routine that makes a card, as its topic file writes it: it can draw
+ * a past paper's own question. Only the checks that prove the guard use this;
+ * everything else takes `routineFor`.
+ */
+export async function unguardedRoutineFor(id: string): Promise<CardRoutine> {
   const meta = cardMeta(id);
   const load = ROUTINE_LOADERS[meta.file];
   if (!load) throw new Error(`AH engine: no routine file "${meta.file}" for ${meta.card}`);
@@ -68,17 +64,19 @@ export async function routineFor(id: string): Promise<CardRoutine> {
   return routine;
 }
 
-/** Draw then build, under a seed. The one place a card is made. */
-export function makeWith(routine: CardRoutine, seed: number | string): Built {
-  return withAhSeed(seed, () => routine.build(routine.draw()));
-}
+const GUARDED = new Map<string, CardRoutine>();
 
 /**
- * The draw alone, under a seed: the numbers `makeWith` builds from with the same seed.
- * For reading a card's core (`cores.ts`); builds nothing.
+ * Load the routine that makes a card. One topic file, loaded once. It never
+ * draws a past paper's own question (`not-the-paper.ts`); every other draw is
+ * what the card's routine draws.
  */
-export function drawWith(routine: CardRoutine, seed: number | string): unknown {
-  return withAhSeed(seed, () => routine.draw());
+export async function routineFor(id: string): Promise<CardRoutine> {
+  const have = GUARDED.get(id);
+  if (have) return have;
+  const routine = guarded(cardMeta(id).card, await unguardedRoutineFor(id));
+  GUARDED.set(id, routine);
+  return routine;
 }
 
 /** A built card, dressed as the question every consumer of the engine takes. */

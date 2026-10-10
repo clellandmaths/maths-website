@@ -4,8 +4,8 @@
  * `../registry/number-theory.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, until } from '../draw';
-import { digits, euclid } from '../maths/integer';
+import { int, pick, until } from '../../core/draw';
+import { digits, euclid } from '../../core/maths/integer';
 
 // ── 2026 P2 Q4 ─────────────────────────────────────────────────────────────
 // (a) gcd(A, B) = d by the Euclidean algorithm, four lines; (b) Aa + Bb = d

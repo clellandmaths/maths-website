@@ -4,11 +4,11 @@
  * `../registry/vectors.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { poly, rounded, sqrtOf, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { augmented, det3, eliminate, opText, type Row } from '../maths/linear';
-import { type V3, add3, column, content3, coords, cross3, dot3, scale3, sub3 } from '../maths/vector';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { poly, rounded, sqrtOf, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { augmented, det3, eliminate, opText, type Row } from '../../core/maths/linear';
+import { type V3, add3, column, content3, coords, cross3, dot3, scale3, sub3 } from '../../core/maths/vector';
 
 // ── 2026 P2 Q14 ────────────────────────────────────────────────────────────
 // (a) the plane through P, Q, R; (b) where the line meets it, S;
@@ -206,11 +206,12 @@ const q2025p1q8: CardRoutine<P1Q8> = {
     }, w => w !== null && w.some(c => c !== 0) && w.every(c => Math.abs(c) <= 8)
       && add3(T, w).every(c => Math.abs(c) <= 12)) as V3;
     const P = add3(T, v);
-    const d = until((): V3 => [nonZero(-3, 3), nonZero(-3, 3), nonZero(-3, 3)], d => dot3(d, n) !== 0 && content3(d) === 1);
-    const mu = until(() => pick([-3, -2, -1, 1, 2, 3]), m => {
-      const G = sub3(P, scale3(m, d));
-      return G.every(c => c !== 0 && Math.abs(c) <= 12);
-    });
+    const fits = (m: number, dd: V3) => sub3(P, scale3(m, dd)).every(c => c !== 0 && Math.abs(c) <= 12);
+    // A direction only if some μ fits it: otherwise no μ could be found, and about 1 draw in
+    // 10,000 threw here. Every draw that worked before is unchanged (the owner, 2026-10-10, "Yes").
+    const d = until((): V3 => [nonZero(-3, 3), nonZero(-3, 3), nonZero(-3, 3)],
+      d => dot3(d, n) !== 0 && content3(d) === 1 && [-3, -2, -1, 1, 2, 3].some(m => fits(m, d)));
+    const mu = until(() => pick([-3, -2, -1, 1, 2, 3]), m => fits(m, d));
     return { rows, T, v, d, mu };
   },
 

@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int } from '../draw';
-import { num, series, sum } from '../maths/format';
-import { q, ZERO } from '../maths/rational';
-import { expSeries, mulSeries } from '../maths/series';
+import { int } from '../../core/draw';
+import { num, series, sum } from '../../core/maths/format';
+import { q, ZERO } from '../../core/maths/rational';
+import { expSeries, mulSeries } from '../../core/maths/series';
 
 // ── 2016 Q6 ────────────────────────────────────────────────────────────────
 // sin ax = ax - (a³/6)x³ and e^{bx} = 1 + bx + (b²/2)x² + (b³/6)x³, each

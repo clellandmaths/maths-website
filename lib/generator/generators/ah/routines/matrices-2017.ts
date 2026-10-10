@@ -7,8 +7,8 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, until } from '../draw';
-import { sum } from '../maths/format';
+import { int, nonZero, until } from '../../core/draw';
+import { sum } from '../../core/maths/format';
 
 // ── 2017 Q7 ────────────────────────────────────────────────────────────────
 // P = (x b; c d) with det P = D given: (a)(i) x = (D + bc)/d; (ii) P⁻¹;

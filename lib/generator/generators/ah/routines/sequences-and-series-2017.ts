@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, until } from '../draw';
-import { poly, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { q } from '../maths/rational';
+import { int, pick, until } from '../../core/draw';
+import { poly, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { q } from '../../core/maths/rational';
 
 // ── 2017 Q4 ────────────────────────────────────────────────────────────────
 // An arithmetic sequence from its pth and qth terms: (a) a and d; (b) the n

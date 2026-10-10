@@ -4,10 +4,10 @@
  * `../registry/methods-of-proof.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick } from '../draw';
-import { poly } from '../maths/format';
-import { coprime } from '../maths/integer';
-import { pmatrix } from '../maths/matrix';
+import { int, pick } from '../../core/draw';
+import { poly } from '../../core/maths/format';
+import { coprime } from '../../core/maths/integer';
+import { pmatrix } from '../../core/maths/matrix';
 
 // ── 2026 P2 Q12 ────────────────────────────────────────────────────────────
 // a^n + b divisible by d, by induction: a = 1 + id, b = jd - 1
@@ -66,17 +66,19 @@ const q2026p2q12: CardRoutine<P2Q12> = {
 // The contrapositive of "r irrational implies the nth root of r irrational",
 // and the proof through it: the paper's square root, or (the owner, on the
 // sheet, "What about any root of r?", then "Yes") a cube, fourth or fifth
-// root. Exempt from the pool at 4 questions, on the owner's word (registry).
+// root, and (the owner on the AH widening sheet, 2026-10-10, "A") a sixth, so
+// four remain once the paper's own is kept out. Exempt from the pool
+// (registry).
 
-interface P2Q15 { n: 2 | 3 | 4 | 5 }
+interface P2Q15 { n: 2 | 3 | 4 | 5 | 6 }
 
 /** What raising to the nth power is called in the move: "square", "cube", … */
-const RAISE: Record<2 | 3 | 4 | 5, string> = {
-  2: 'square', 3: 'cube', 4: 'raise to the fourth power', 5: 'raise to the fifth power',
+const RAISE: Record<2 | 3 | 4 | 5 | 6, string> = {
+  2: 'square', 3: 'cube', 4: 'raise to the fourth power', 5: 'raise to the fifth power', 6: 'raise to the sixth power',
 };
 
 const q2026p2q15: CardRoutine<P2Q15> = {
-  draw: () => ({ n: pick([2, 3, 4, 5] as const) }),
+  draw: () => ({ n: pick([2, 3, 4, 5, 6] as const) }),
 
   build: ({ n }): Built => {
     const root = n === 2 ? '\\sqrt{r}' : `\\sqrt[${n}]{r}`;
@@ -192,10 +194,11 @@ const q2025p2q15: CardRoutine<P2Q15of2025> = {
 
 // ── 2024 P2 Q11 ────────────────────────────────────────────────────────────
 // Two statements about the squares of two consecutive integers (or
-// consecutive odd, or even, integers): one false, by counterexample, and one
-// true, by a direct proof, in the paper's three steps.
+// consecutive odd, or even, integers, or multiples of 3): one false, by
+// counterexample, and one true, by a direct proof, in the paper's three steps.
 
-type SquaresKind = 'sum' | 'difference' | 'oddSum' | 'oddDifference' | 'evenSum' | 'evenDifference';
+type SquaresKind = 'sum' | 'difference' | 'oddSum' | 'oddDifference' | 'evenSum' | 'evenDifference'
+  | 'tripleSum' | 'tripleDifference';
 
 interface P2Q11of2024 { kind: SquaresKind }
 
@@ -254,6 +257,24 @@ const SQUARES: Readonly<Record<SquaresKind, {
     form: '2k,\\ 2k + 2,\\ k \\in \\mathbb{Z}', letters: '$2k$ and $2k + 2$',
     algebra: '(2k + 2)^{2} - (2k)^{2} = 4k^{2} + 8k + 4 - 4k^{2} = 4(2k + 1)',
     combine: 'Subtract the smaller square from the larger', which: 'even integers',
+  },
+  // Two consecutive multiples of 3, so five remain once the paper's own is kept
+  // out (the owner on the AH widening sheet, 2026-10-10: "A").
+  tripleSum: {
+    phrase: 'The sum of the squares of any two consecutive multiples of 3',
+    falseClaim: 'a multiple of 18', trueClaim: 'a multiple of 9',
+    counter: '3^{2} + 6^{2} = 45', not: 'which is not a multiple of 18.',
+    form: '3k,\\ 3k + 3,\\ k \\in \\mathbb{Z}', letters: '$3k$ and $3k + 3$',
+    algebra: '(3k)^{2} + (3k + 3)^{2} = 18k^{2} + 18k + 9 = 9(2k^{2} + 2k + 1)',
+    combine: 'Add their squares', which: 'multiples of 3',
+  },
+  tripleDifference: {
+    phrase: 'The difference between the squares of any two consecutive multiples of 3',
+    falseClaim: 'a multiple of 18', trueClaim: 'a multiple of 9',
+    counter: '6^{2} - 3^{2} = 27', not: 'which is not a multiple of 18.',
+    form: '3k,\\ 3k + 3,\\ k \\in \\mathbb{Z}', letters: '$3k$ and $3k + 3$',
+    algebra: '(3k + 3)^{2} - (3k)^{2} = 9k^{2} + 18k + 9 - 9k^{2} = 9(2k + 1)',
+    combine: 'Subtract the smaller square from the larger', which: 'multiples of 3',
   },
 };
 

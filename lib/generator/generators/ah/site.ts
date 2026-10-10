@@ -24,7 +24,7 @@
  * and only on a press: the routines are loaded per topic (`routines/index.ts`).
  */
 import {
-  answerPartsOnLines, generatedUid, layoutQuestion, stopsInsideMaths, toSiteMaths,
+  answerPartsOnLines, generatedUid, layoutQuestion, stopsInsideMaths, toSiteMaths, twinKeysOf,
   type WorksheetQuestion,
 } from '../../worksheet-question';
 import { questionKey, storyFreeKey } from '../../question-key';
@@ -88,6 +88,9 @@ export function toSiteQuestion(id: string, built: Built, seed: string, index: nu
     ...(built.markschemeFigures
       ? { markschemeFigures: built.markschemeFigures.map(({ part, svg }) => ({ part, svg })) }
       : {}),
+    // Its "same question" identities, as National 5's carry (no twins on a sheet: the owner on
+    // the AH no-twins sheet, 2026-10-10, "Yes"), so a sheet's `exclude` keeps its twins off too.
+    twinKeys: twinKeysOf(built),
     uid: generatedUid(code, seed, 0),
   };
 }
@@ -196,7 +199,10 @@ async function drawCards(
     const made = toSiteQuestion(id, makeWith(routine, seed), seed, out.length);
     const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
     const sum = storyFreeKey(made.question, made.answer);
-    if (seen.has(key) || seen.has(sum)) {
+    // A twin of a question on the sheet is the same question too (the Euclid sisters, a
+    // factor order, the same equation in other words): the owner, 2026-10-10.
+    const twins = made.twinKeys ?? [];
+    if (seen.has(key) || seen.has(sum) || twins.some(t => seen.has(t))) {
       fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
       continue;
     }
@@ -206,6 +212,7 @@ async function drawCards(
     if (ck && !seen.has(ck)) coreMisses.set(pick.card, 0);
     seen.add(key);
     seen.add(sum);
+    for (const t of twins) seen.add(t);
     if (ck) seen.add(ck);
     out.push(ck ? { ...made, coreKey: ck } : made);
     unitUses.set(pick.unit, (unitUses.get(pick.unit) ?? 0) + 1);

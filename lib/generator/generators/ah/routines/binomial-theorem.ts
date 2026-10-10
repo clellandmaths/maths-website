@@ -4,10 +4,10 @@
  * `../registry/binomial-theorem.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, until } from '../draw';
-import { joinTerms, num, power, sum } from '../maths/format';
-import { binom, coprime } from '../maths/integer';
-import { type Q, q, abs, mul, pow } from '../maths/rational';
+import { int, pick, until } from '../../core/draw';
+import { joinTerms, num, power, sum } from '../../core/maths/format';
+import { binom, coprime } from '../../core/maths/integer';
+import { type Q, q, abs, mul, pow } from '../../core/maths/rational';
 
 // ── 2026 P2 Q2 ─────────────────────────────────────────────────────────────
 // (x^m - a/x)^4 written out and simplified, a whole (2 to 10) or 1/b (b 2 to 5)

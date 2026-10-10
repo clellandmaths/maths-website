@@ -7,8 +7,8 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { binom, coprime } from '../maths/integer';
+import { pick } from '../../core/draw';
+import { binom, coprime } from '../../core/maths/integer';
 
 // ── 2016 Q3 ────────────────────────────────────────────────────────────────
 // (a/x - bx)ⁿ: the general term C(n, r) aⁿ⁻ʳ(-b)ʳ x^{2r - n}, simplified,

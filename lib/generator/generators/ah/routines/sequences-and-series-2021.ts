@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { num, poly, sum } from '../maths/format';
-import { type Q, q, abs, cmp, div, isInt, mul, neg, pow, sub, toNumber } from '../maths/rational';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { num, poly, sum } from '../../core/maths/format';
+import { type Q, q, abs, cmp, div, isInt, mul, neg, pow, sub, toNumber } from '../../core/maths/rational';
 
 /** `x - 1`, `x + 4`: a letter and a constant. */
 const linear = (v: string, c: number, lead = 1) => sum([{ coef: lead, body: v }, { coef: c, body: '' }]);

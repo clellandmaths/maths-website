@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int } from '../draw';
-import { num, power, sum } from '../maths/format';
-import { type Q, div, neg, q } from '../maths/rational';
+import { int } from '../../core/draw';
+import { num, power, sum } from '../../core/maths/format';
+import { type Q, div, neg, q } from '../../core/maths/rational';
 
 // ── 2016 Q9 ────────────────────────────────────────────────────────────────
 // ∫ a xⁿ (ln x)² dx by parts twice, N = n + 1:

@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, until } from '../draw';
-import { rounded, sqrtOf, sum } from '../maths/format';
-import { type V3, content3, coords, dot3, scale3, sub3 } from '../maths/vector';
+import { int, nonZero, until } from '../../core/draw';
+import { rounded, sqrtOf, sum } from '../../core/maths/format';
+import { type V3, content3, coords, dot3, scale3, sub3 } from '../../core/maths/vector';
 
 // ── 2016 Q14 ───────────────────────────────────────────────────────────────
 // L₁: A + λd₁ in parametric form, L₂: (x - B)/d₂ in symmetric form, built to

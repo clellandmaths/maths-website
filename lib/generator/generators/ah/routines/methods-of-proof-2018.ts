@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick } from '../draw';
-import { num } from '../maths/format';
-import { add, q } from '../maths/rational';
+import { int, pick } from '../../core/draw';
+import { num } from '../../core/maths/format';
+import { add, q } from '../../core/maths/rational';
 
 // ── 2018 Q9 ────────────────────────────────────────────────────────────────
 // Two direct proofs in the paper's steps: (a) a sum of consecutive integers

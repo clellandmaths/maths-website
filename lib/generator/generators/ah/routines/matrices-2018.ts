@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { sum } from '../maths/format';
-import { pmatrix } from '../maths/matrix';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { sum } from '../../core/maths/format';
+import { pmatrix } from '../../core/maths/matrix';
 
 // ── 2018 Q7 ────────────────────────────────────────────────────────────────
 // 2C' - D, then det D = c(k + s) and D singular at k = -s. D's rows 1 and 3

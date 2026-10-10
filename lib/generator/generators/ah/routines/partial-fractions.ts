@@ -4,11 +4,11 @@
  * `../registry/partial-fractions.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { distinct, int, nonZero, pick, until } from '../draw';
-import { decimal, joinTerms, num, poly, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { mulPoly } from '../maths/polynomial';
-import { type Q, q, isInt } from '../maths/rational';
+import { distinct, int, nonZero, pick, until } from '../../core/draw';
+import { decimal, joinTerms, num, poly, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { mulPoly } from '../../core/maths/polynomial';
+import { type Q, q, isInt } from '../../core/maths/rational';
 
 /**
  * "$3A = 6$, so $A = 2$", or "$A = 1$" once when the coefficient is 1 (the

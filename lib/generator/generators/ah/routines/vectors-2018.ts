@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { rounded, sqrtOf, sum } from '../maths/format';
-import { opText } from '../maths/linear';
-import { type V3, column, content3, dot3, scale3 } from '../maths/vector';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { rounded, sqrtOf, sum } from '../../core/maths/format';
+import { opText } from '../../core/maths/linear';
+import { type V3, column, content3, dot3, scale3 } from '../../core/maths/vector';
 
 // ── 2018 Q16 ───────────────────────────────────────────────────────────────
 // Three planes meeting in a line for one a, built backwards: π1 starts with

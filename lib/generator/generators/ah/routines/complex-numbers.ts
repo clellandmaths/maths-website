@@ -4,10 +4,10 @@
  * `../registry/complex-numbers.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { piTimes, poly, sum } from '../maths/format';
-import { q } from '../maths/rational';
-import { conjugatePair, mulPoly } from '../maths/polynomial';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { piTimes, poly, sum } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
+import { conjugatePair, mulPoly } from '../../core/maths/polynomial';
 
 // ── 2026 P1 Q3 ─────────────────────────────────────────────────────────────
 // z = ±a√3 ± ai: polar form, then z³ purely imaginary by de Moivre.
@@ -202,11 +202,13 @@ const q2025p1q3: CardRoutine<P1Q3> = {
 };
 
 // ── 2025 P2 Q18 ────────────────────────────────────────────────────────────
-// w, one of z̄ ± iz or z ± iz̄, is (a multiple of) 1 ± i: (a) Cartesian, then its
-// argument on one side of the line; (b) given its polar form on the other
-// side, both square roots by de Moivre.
+// w, one of z̄ ± iz, z ± iz̄, iz - z̄ or iz̄ - z, is (a multiple of) 1 ± i or
+// -1 + i: (a) Cartesian, then its argument on one side of the line; (b) given
+// its polar form on the other side, both square roots by de Moivre. iz - z̄
+// and iz̄ - z added so eleven remain once the paper's own is kept out (the
+// owner on the AH widening sheet, 2026-10-10: "A").
 
-type Which = 'conj+iz' | 'conj-iz' | 'z+iconj' | 'z-iconj';
+type Which = 'conj+iz' | 'conj-iz' | 'z+iconj' | 'z-iconj' | 'iz-conj' | 'iconj-z';
 interface P2Q18 { which: Which; swap: boolean }
 
 const P2Q18_FORMS: Record<Which, {
@@ -217,6 +219,8 @@ const P2Q18_FORMS: Record<Which, {
   argPos: number; argNeg: number;
   /** For the ladder: the parts when the multiplier is positive and when negative. */
   seePos: string; seeNeg: string;
+  /** The (a)(i) move, for the forms that start with i (the others add or subtract the other term). */
+  move?: string;
 }> = {
   'conj+iz': {
     w: '\\bar{z} + iz', expand: 'x - iy + i(x + iy) = x - iy + ix - y', cartesian: '(x - y) + i(x - y)',
@@ -240,10 +244,25 @@ const P2Q18_FORMS: Record<Which, {
     seePos: 'equal in size, the real part positive and the imaginary part negative',
     seeNeg: 'equal in size, the real part negative and the imaginary part positive',
   },
+  // (x + y)(-1 + i) and (x - y)(-1 + i): the second-quadrant argument 3π/4.
+  'iz-conj': {
+    w: 'iz - \\bar{z}', expand: 'i(x + iy) - (x - iy) = ix - y - x + iy', cartesian: '-(x + y) + i(x + y)',
+    pos: 'x + y \\gt 0', neg: 'x + y \\lt 0', argPos: 3, argNeg: -1,
+    seePos: 'equal in size, the real part negative and the imaginary part positive',
+    seeNeg: 'equal in size, the real part positive and the imaginary part negative',
+    move: '(a)(i) Multiply out $iz$, using $i^{2} = -1$, subtract $\\bar{z}$, and group the real and imaginary parts.',
+  },
+  'iconj-z': {
+    w: 'i\\bar{z} - z', expand: 'i(x - iy) - (x + iy) = ix + y - x - iy', cartesian: '(y - x) + i(x - y)',
+    pos: 'x \\gt y', neg: 'x \\lt y', argPos: 3, argNeg: -1,
+    seePos: 'equal in size, the real part negative and the imaginary part positive',
+    seeNeg: 'equal in size, the real part positive and the imaginary part negative',
+    move: '(a)(i) Multiply out $i\\bar{z}$, using $i^{2} = -1$, subtract $z$, and group the real and imaginary parts.',
+  },
 };
 
 const q2025p2q18: CardRoutine<P2Q18> = {
-  draw: () => ({ which: pick<Which>(['conj+iz', 'conj-iz', 'z+iconj', 'z-iconj']), swap: pick([false, true]) }),
+  draw: () => ({ which: pick<Which>(['conj+iz', 'conj-iz', 'z+iconj', 'z-iconj', 'iz-conj', 'iconj-z']), swap: pick([false, true]) }),
 
   build: ({ which, swap }): Built => {
     const F = P2Q18_FORMS[which];
@@ -280,7 +299,7 @@ const q2025p2q18: CardRoutine<P2Q18> = {
         moves: [
           'What is the complex conjugate of $x + iy$, and what does multiplying by $i$ do?',
           '(a)(i) Write down $\\bar{z}$.',
-          `(a)(i) ${which.includes('-') ? 'Subtract' : 'Add'} the other term, using $i^{2} = -1$, and group the real and imaginary parts.`,
+          F.move ?? `(a)(i) ${which.includes('-') ? 'Subtract' : 'Add'} the other term, using $i^{2} = -1$, and group the real and imaginary parts.`,
           `(a)(ii) The real and imaginary parts are ${see}. Which angle is that?`,
           '(b) De Moivre: take the square root of the modulus and halve the argument.',
           '(b) Find the second root by adding a full turn to the argument before halving.',

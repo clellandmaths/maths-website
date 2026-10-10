@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { pick } from '../draw';
-import { piTimes } from '../maths/format';
-import { q } from '../maths/rational';
+import { pick } from '../../core/draw';
+import { piTimes } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 import { type Element, type Pt, type Scene, add, pt, scale, unit } from '../../../diagrams/scene';
 import { renderScene } from '../../../diagrams/render';
 
@@ -18,9 +18,10 @@ import { renderScene } from '../../../diagrams/render';
 // -π/3: w = a - a√3 i) or ±π/6, modulus 2a; (a) w in Cartesian and polar
 // form; then with a given, z1 = k(cos π/m + i sin π/m) a cube root of w, so
 // k = (2a)^{1/3} and m = 3π/arg w; (b)(ii) the other two roots, 2π/3 either
-// side. 2a a whole cube: a = 4 (the paper, k = 2) or 32 (k = 4).
+// side. 2a a whole cube: a = 4 (the paper, k = 2), 32 (k = 4) or 108 (k = 6;
+// the owner on the AH widening sheet, 2026-10-10: "A").
 
-interface Q18of2019 { m: -9 | 9 | -18 | 18; a: 4 | 32 }
+interface Q18of2019 { m: -9 | 9 | -18 | 18; a: 4 | 32 | 108 }
 
 /** `\cos\frac{5\pi}{9} + i\sin\frac{5\pi}{9}`, a negative angle in brackets, as the paper. */
 function innerOf(top: number, bottom: number): string {
@@ -76,7 +77,7 @@ function argand2019(m: number, re: string, im: string): Scene {
 }
 
 const q2019q18: CardRoutine<Q18of2019> = {
-  draw: () => ({ m: pick([-9, 9, -18, 18] as const), a: pick([4, 32] as const) }),
+  draw: () => ({ m: pick([-9, 9, -18, 18] as const), a: pick([4, 32, 108] as const) }),
 
   build: ({ m, a }): Built => {
     const third = Math.abs(m) === 9;

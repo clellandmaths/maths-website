@@ -4,10 +4,10 @@
  * `../registry/differentiation.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, pick, until } from '../draw';
-import { joinTerms, num, piTimes, poly, power, sum } from '../maths/format';
-import { coprime, gcd } from '../maths/integer';
-import { type Q, q, div } from '../maths/rational';
+import { int, pick, until } from '../../core/draw';
+import { joinTerms, num, piTimes, poly, power, sum } from '../../core/maths/format';
+import { coprime, gcd } from '../../core/maths/integer';
+import { type Q, q, div } from '../../core/maths/rational';
 
 // ── 2026 P1 Q1 ─────────────────────────────────────────────────────────────
 // (a) y = c x^n sec kx      (b) f(x) = e^{px} / (ax + b), simplified

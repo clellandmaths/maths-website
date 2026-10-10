@@ -7,9 +7,9 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int } from '../draw';
-import { num, power } from '../maths/format';
-import { q } from '../maths/rational';
+import { int } from '../../core/draw';
+import { num, power } from '../../core/maths/format';
+import { q } from '../../core/maths/rational';
 
 // ── 2018 Q8 ────────────────────────────────────────────────────────────────
 // ∫ from π/6 to π/2 of A sin^n θ cos θ dθ with u = sin θ: A∫ from 1/2 to 1 of

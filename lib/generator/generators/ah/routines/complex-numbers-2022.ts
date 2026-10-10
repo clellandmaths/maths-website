@@ -7,10 +7,10 @@
  * (`ah-purity`); `index.ts` merges them into the topic's one loader.
  */
 import type { Built, CardRoutine } from '../types';
-import { int, nonZero, pick, until } from '../draw';
-import { poly, sum } from '../maths/format';
-import { binom } from '../maths/integer';
-import { conjugatePair } from '../maths/polynomial';
+import { int, nonZero, pick, until } from '../../core/draw';
+import { poly, sum } from '../../core/maths/format';
+import { binom } from '../../core/maths/integer';
+import { conjugatePair } from '../../core/maths/polynomial';
 
 // ── 2022 P2 Q7 ─────────────────────────────────────────────────────────────
 // z = p + qi a root of z² - 2pz + a = 0: (a) the conjugate; (b) a = p² + q²;

@@ -4,11 +4,11 @@
  * `../registry/matrices.ts` under the same label.
  */
 import type { Built, CardRoutine } from '../types';
-import { distinct, int, nonZero, pick, until } from '../draw';
-import { joinTerms, piTimes, poly, sum } from '../maths/format';
-import { gcd } from '../maths/integer';
-import { adj2, det2, inverse2, m2, pmatrix } from '../maths/matrix';
-import { isInt, q } from '../maths/rational';
+import { distinct, int, nonZero, pick, until } from '../../core/draw';
+import { joinTerms, piTimes, poly, sum } from '../../core/maths/format';
+import { gcd } from '../../core/maths/integer';
+import { adj2, det2, inverse2, m2, pmatrix } from '../../core/maths/matrix';
+import { isInt, q } from '../../core/maths/rational';
 
 // ── 2026 P1 Q5 ─────────────────────────────────────────────────────────────
 // A = (p q; r x): det A, then det B from det AB, then B from B^{-1}.
