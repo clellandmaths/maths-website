@@ -28,13 +28,14 @@ import {
   type WorksheetQuestion,
 } from '../../worksheet-question';
 import { questionKey, storyFreeKey } from '../../question-key';
-import type { Built, CardLabel, Ladder } from './types';
+import type { Built, CardLabel, CardRoutine, Ladder } from './types';
 import { AH_CARDS, idForCard } from './registry';
 import { AH_BY_CODE, AH_CODES } from './codes';
 import { SITE_CARDS } from './site-cards';
 import { drawWith, makeWith, routineFor } from './engine';
 import { familyOf } from './families';
 import { CORES, coreKey } from './cores';
+import { CARD_TWINS, cardTwinKey } from './card-twins';
 
 export interface AhSiteQuestion extends WorksheetQuestion {
   /** The site's subtopics, as an Advanced Higher paper question carries them. */
@@ -105,11 +106,21 @@ export async function ahQuestionFromCode(code: string, seed: string, index: numb
   const id = AH_BY_CODE[code];
   if (!id || !AH_CARDS[id]) return null;
   const routine = await routineFor(id);
-  const made = toSiteQuestion(id, makeWith(routine, seed), seed, index);
-  // A shared sheet, opened again, knows its cores too, so "add more" can avoid them.
   const card = AH_CARDS[id].card;
+  const made = withCardTwin(card, toSiteQuestion(id, makeWith(routine, seed), seed, index), routine, seed);
+  // A shared sheet, opened again, knows its cores too, so "add more" can avoid them.
   const ck = card in CORES ? coreKey(card, drawWith(routine, seed)) : undefined;
   return ck ? { ...made, coreKey: ck } : made;
+}
+
+/**
+ * The question with its card's own twin key added (`card-twins.ts`), on the few cards the
+ * owner ruled have twins the shared test cannot see. Reads the draw only.
+ */
+function withCardTwin(card: CardLabel, made: AhSiteQuestion, routine: CardRoutine, seed: string): AhSiteQuestion {
+  if (!(card in CARD_TWINS)) return made;
+  const tk = cardTwinKey(card, drawWith(routine, seed));
+  return tk ? { ...made, twinKeys: [...(made.twinKeys ?? []), tk] } : made;
 }
 
 /** Is this badge an Advanced Higher card with a routine? */
@@ -117,8 +128,14 @@ export function isAhCard(card: CardLabel): boolean {
   return idForCard(card) !== undefined;
 }
 
-/** Retries per card before it counts as spent: National 5's bound (`drawFrom`). */
-const TRIES = 40;
+/**
+ * Refused draws in a row before a card counts as spent. National 5's bound (`drawFrom`) was
+ * 40, and on a card with fewer than 20 questions a sheet of 20 then stopped short of the card's
+ * questions on 113 of 350 sheets: the last one or two are rare, and 40 misses in a row came
+ * first. At 200 none did (tools/never-the-paper `ahtries.mts`; the owner, 2026-10-10: "do the
+ * 200"). Only a card a sheet has nearly used up ever reaches it.
+ */
+const TRIES = 200;
 
 /**
  * Seeds tried for a core the sheet has not used (`cores.ts`) before a thin card
@@ -176,6 +193,7 @@ async function drawCards(
   const coreMisses = new Map<CardLabel, number>();
 
   const seen = new Set(exclude);
+  const drawn = new Set<string>();
   const out: AhSiteQuestion[] = [];
   while (out.length < count) {
     let pick: { unit: string; card: CardLabel } | null = null;
@@ -196,7 +214,16 @@ async function drawCards(
       coreMisses.set(pick.card, (coreMisses.get(pick.card) ?? 0) + 1);
       continue;
     }
-    const made = toSiteQuestion(id, makeWith(routine, seed), seed, out.length);
+    // A draw the sheet has already seen, word for word, has the same keys and the same verdict:
+    // refused at once, before the site's question and its twin keys are made (the costly part).
+    const built = makeWith(routine, seed);
+    const raw = `${pick.card}\n${built.questionLines.join('\n')}\n${built.finalAnswer}`;
+    if (drawn.has(raw)) {
+      fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
+      continue;
+    }
+    drawn.add(raw);
+    const made = withCardTwin(pick.card, toSiteQuestion(id, built, seed, out.length), routine, seed);
     const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
     const sum = storyFreeKey(made.question, made.answer);
     // A twin of a question on the sheet is the same question too (the Euclid sisters, a
