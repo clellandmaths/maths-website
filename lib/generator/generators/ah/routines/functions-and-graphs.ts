@@ -382,7 +382,10 @@ const q2021p1q7: CardRoutine<P1Q7of2021> = {
 type Form2019 = 'x2-a2' | 'a2-x2' | 'x3-a2x' | 'a2x-x3' | 'x2-ax' | 'ax-x2'
   // The owner on the 2019 sheet: "Keep as a? Could we have 6 more of similar
   // difficulty to initial question?": six more quadratics, a still a letter.
-  | 'x2-4a2' | '4a2-x2' | 'x2-2ax' | '2ax-x2' | 'x2+ax-2a2' | 'x2-ax-2a2';
+  | 'x2-4a2' | '4a2-x2' | 'x2-2ax' | '2ax-x2' | 'x2+ax-2a2' | 'x2-ax-2a2'
+  // 2026-10-11, the owner: "So could we add anything else other graphs that ask same question", then "Yes add
+  // these": six more of the same difficulty, none another's negative (f against -f is a twin, the owner's ruling).
+  | 'x2-9a2' | 'x3-4a2x' | 'x2+ax' | 'x2+2ax' | 'x2+2ax-3a2' | 'x2-ax-6a2';
 
 interface Shape2019 {
   tex: string;
@@ -457,6 +460,36 @@ const SHAPES2019: Record<Form2019, Shape2019> = {
     tex: 'x^{2} - ax - 2a^{2}', g: x => x * x - x - 2, roots: [{ x: -1, text: '−a' }, { x: 2, text: '2a' }], parity: 'neither',
     atMinusX: '(-x)^{2} - a(-x) - 2a^{2} = x^{2} + ax - 2a^{2}', xs: [-2, 3], ys: [-2.8, 4.5],
     sketch: 'sharp points on the $x$-axis at $-a$ and $2a$ (labelled), the part between them a hump above the axis with its maximum at $\\left(\\frac{a}{2}, \\frac{9a^{2}}{4}\\right)$, and the arms outside unchanged',
+  },
+  'x2-9a2': {
+    tex: 'x^{2} - 9a^{2}', g: x => x * x - 9, roots: [{ x: -3, text: '−3a' }, { x: 3, text: '3a' }], parity: 'even',
+    atMinusX: '(-x)^{2} - 9a^{2} = x^{2} - 9a^{2} = f(x)', xs: [-4.1, 4.1], ys: [-10.4, 8.6],
+    sketch: 'a curve meeting the $x$-axis in sharp points at $-3a$ and $3a$ (labelled), with a local maximum at $(0, 9a^{2})$ on the $y$-axis, the parts for $|x| \\gt 3a$ unchanged, and line symmetry about the $y$-axis',
+  },
+  'x3-4a2x': {
+    tex: 'x^{3} - 4a^{2}x', g: x => x ** 3 - 4 * x, roots: [{ x: -2, text: '−2a' }, { x: 0, text: '' }, { x: 2, text: '2a' }], parity: 'odd',
+    atMinusX: '(-x)^{3} - 4a^{2}(-x) = -x^{3} + 4a^{2}x = -f(x)', xs: [-2.45, 2.45], ys: [-5.6, 5.6],
+    sketch: 'sharp points on the $x$-axis at $-2a$, $0$ and $2a$ (labelled): the part between $-2a$ and $0$ and the part between $0$ and $2a$ both above the axis, the arms beyond $-2a$ and $2a$ rising, and line symmetry about the $y$-axis',
+  },
+  'x2+ax': {
+    tex: 'x^{2} + ax', g: x => x * x + x, roots: [{ x: -1, text: '−a' }, { x: 0, text: '' }], parity: 'neither',
+    atMinusX: '(-x)^{2} + a(-x) = x^{2} - ax', xs: [-2.1, 1.1], ys: [-0.9, 2.6],
+    sketch: 'sharp points on the $x$-axis at $-a$ and $0$ (labelled), the part between them reflected above the axis, a hump with its maximum at $\\left(-\\frac{a}{2}, \\frac{a^{2}}{4}\\right)$, and the arms outside unchanged',
+  },
+  'x2+2ax': {
+    tex: 'x^{2} + 2ax', g: x => x * x + 2 * x, roots: [{ x: -2, text: '−2a' }, { x: 0, text: '' }], parity: 'neither',
+    atMinusX: '(-x)^{2} + 2a(-x) = x^{2} - 2ax', xs: [-2.9, 0.9], ys: [-1.6, 3],
+    sketch: 'sharp points on the $x$-axis at $-2a$ and $0$ (labelled), the part between them reflected above the axis, a hump with its maximum at $(-a, a^{2})$, and the arms outside unchanged',
+  },
+  'x2+2ax-3a2': {
+    tex: 'x^{2} + 2ax - 3a^{2}', g: x => x * x + 2 * x - 3, roots: [{ x: -3, text: '−3a' }, { x: 1, text: 'a' }], parity: 'neither',
+    atMinusX: '(-x)^{2} + 2a(-x) - 3a^{2} = x^{2} - 2ax - 3a^{2}', xs: [-4, 2], ys: [-4.8, 6],
+    sketch: 'sharp points on the $x$-axis at $-3a$ and $a$ (labelled), the part between them a hump above the axis with its maximum at $(-a, 4a^{2})$, and the arms outside unchanged',
+  },
+  'x2-ax-6a2': {
+    tex: 'x^{2} - ax - 6a^{2}', g: x => x * x - x - 6, roots: [{ x: -2, text: '−2a' }, { x: 3, text: '3a' }], parity: 'neither',
+    atMinusX: '(-x)^{2} - a(-x) - 6a^{2} = x^{2} + ax - 6a^{2}', xs: [-3, 4], ys: [-7.2, 6.8],
+    sketch: 'sharp points on the $x$-axis at $-2a$ and $3a$ (labelled), the part between them a hump above the axis with its maximum at $\\left(\\frac{a}{2}, \\frac{25a^{2}}{4}\\right)$, and the arms outside unchanged',
   },
 };
 

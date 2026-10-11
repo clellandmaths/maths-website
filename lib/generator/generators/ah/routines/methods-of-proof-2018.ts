@@ -16,7 +16,9 @@ import { add, q } from '../../core/maths/rational';
 // written with one letter and collected to a multiple; (b) a number written in
 // general form and split as the statement says.
 
-type Sum2018 = 'three' | 'five' | 'threeEven' | 'threeOdd';
+// The last four on the owner's "Yes" (2026-10-11, sheets that feel distinct): (a) is 2 of the 3 marks, so a sheet
+// takes a fresh sum first; each is the paper's proof (one letter, collected, why it divides).
+type Sum2018 = 'three' | 'five' | 'threeEven' | 'threeOdd' | 'seven' | 'fiveEven' | 'fourOdd' | 'fourEven';
 type Split2018 = 'oddTwo' | 'fourOdd' | 'oddSquares' | 'threeThree';
 
 interface Q9of2018 { a: Sum2018; b: Split2018 }
@@ -27,6 +29,10 @@ const SUMS2018: Readonly<Record<Sum2018, { what: string; by: number; terms: stri
   five: { what: 'five consecutive integers', by: 5, terms: '(n - 2) + (n - 1) + n + (n + 1) + (n + 2)', total: '5n' },
   threeEven: { what: 'three consecutive even integers', by: 6, terms: '(2n - 2) + 2n + (2n + 2)', total: '6n' },
   threeOdd: { what: 'three consecutive odd integers', by: 3, terms: '(2n - 1) + (2n + 1) + (2n + 3)', total: '6n + 3 = 3(2n + 1)' },
+  seven: { what: 'seven consecutive integers', by: 7, terms: '(n - 3) + (n - 2) + (n - 1) + n + (n + 1) + (n + 2) + (n + 3)', total: '7n' },
+  fiveEven: { what: 'five consecutive even integers', by: 10, terms: '(2n - 4) + (2n - 2) + 2n + (2n + 2) + (2n + 4)', total: '10n' },
+  fourOdd: { what: 'four consecutive odd integers', by: 8, terms: '(2n - 3) + (2n - 1) + (2n + 1) + (2n + 3)', total: '8n' },
+  fourEven: { what: 'four consecutive even integers', by: 4, terms: '(2n - 2) + 2n + (2n + 2) + (2n + 4)', total: '8n + 4 = 4(2n + 1)' },
 };
 
 /** (b): the statement, the number in general form, and how it splits. */
@@ -39,7 +45,7 @@ const SPLITS2018: Readonly<Record<Split2018, { statement: string; number: string
 
 const q2018q9: CardRoutine<Q9of2018> = {
   draw: () => ({
-    a: pick(['three', 'five', 'threeEven', 'threeOdd'] as const),
+    a: pick(['three', 'five', 'threeEven', 'threeOdd', 'seven', 'fiveEven', 'fourOdd', 'fourEven'] as const),
     b: pick(['oddTwo', 'fourOdd', 'oddSquares', 'threeThree'] as const),
   }),
 

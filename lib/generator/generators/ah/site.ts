@@ -37,6 +37,7 @@ import { familyOf } from './families';
 import { CORES, coreKey } from './cores';
 import { CARD_TWINS, cardTwinKey } from './card-twins';
 import { drawKey } from './not-the-paper';
+import { mathsKey, workingKey, partsKeyOf, partsFromKey, sharesHalf, PARTS_PREFIX } from './same-keys';
 
 export interface AhSiteQuestion extends WorksheetQuestion {
   /** The site's subtopics, as an Advanced Higher paper question carries them. */
@@ -46,6 +47,12 @@ export interface AhSiteQuestion extends WorksheetQuestion {
    * passes it back in `exclude` is offered a fresh core first next time.
    */
   coreKey?: string;
+  /**
+   * The draw's parts and their marks, `parts:…` (`same-keys.ts`), on a question in parts only. A sheet that
+   * passes it back in `exclude` is offered a question sharing less than half its marks first next time
+   * (the owner, 2026-10-11, "sheets that feel distinct": H as a preference).
+   */
+  partsKey?: string;
   /** The hint ladder for this draw, in the site's delimiters. */
   ladder: Ladder;
   /** The marking instructions' drawings, absent on every card without them. */
@@ -91,8 +98,10 @@ export function toSiteQuestion(id: string, built: Built, seed: string, index: nu
       ? { markschemeFigures: built.markschemeFigures.map(({ part, svg }) => ({ part, svg })) }
       : {}),
     // Its "same question" identities, as National 5's carry (no twins on a sheet: the owner on
-    // the AH no-twins sheet, 2026-10-10, "Yes"), so a sheet's `exclude` keeps its twins off too.
-    twinKeys: twinKeysOf(built),
+    // the AH no-twins sheet, 2026-10-10, "Yes"), so a sheet's `exclude` keeps its twins off too;
+    // and since 2026-10-11 the maths and working keys, the same test the guard uses (`same-keys.ts`;
+    // the owner: "Yes" to one test for the guard and for twins).
+    twinKeys: [...twinKeysOf(built), mathsKey(built), workingKey(built)],
     uid: generatedUid(code, seed, 0),
   };
 }
@@ -108,10 +117,12 @@ export async function ahQuestionFromCode(code: string, seed: string, index: numb
   if (!id || !AH_CARDS[id]) return null;
   const routine = await routineFor(id);
   const card = AH_CARDS[id].card;
-  const made = withCardTwin(card, toSiteQuestion(id, makeWith(routine, seed), seed, index), routine, seed);
-  // A shared sheet, opened again, knows its cores too, so "add more" can avoid them.
+  const built = makeWith(routine, seed);
+  const made = withCardTwin(card, toSiteQuestion(id, built, seed, index), routine, seed);
+  // A shared sheet, opened again, knows its cores and parts too, so "add more" can avoid them.
   const ck = card in CORES ? coreKey(card, drawWith(routine, seed)) : undefined;
-  return ck ? { ...made, coreKey: ck } : made;
+  const pk = partsKeyOf(built, card);
+  return { ...made, ...(ck ? { coreKey: ck } : {}), ...(pk ? { partsKey: pk } : {}) };
 }
 
 /**
@@ -192,6 +203,19 @@ async function drawCards(
   const fails = new Map<CardLabel, number>();
   const spent = (card: CardLabel) => (fails.get(card) ?? 0) >= TRIES;
   const coreMisses = new Map<CardLabel, number>();
+  // Each question on the sheet by its card and parts, the ones already there arriving in `exclude` as `parts:` keys.
+  const onSheet = exclude.filter(k => k.startsWith(PARTS_PREFIX)).map(partsFromKey);
+  const partMisses = new Map<CardLabel, number>();
+  // A card that already has a repeat on the sheet has been found to have no fresh question (the preference gave way
+  // for it), so it is not searched again on every later click: that cost 2018 Q17, whose (b) never changes, 30 extra
+  // builds a click, 32 to 150 ms in Node (ahspeed.mts). Read from the sheet itself, so it holds across clicks.
+  const ranOut = new Set<string>();
+  onSheet.forEach((x, j) => { if (onSheet.slice(0, j).some(y => y.card === x.card && sharesHalf(x.parts, y.parts))) ranOut.add(x.card); });
+  /** A try refused: towards the card being spent, and towards its parts' preference giving way. */
+  const refuse = (card: CardLabel) => {
+    fails.set(card, (fails.get(card) ?? 0) + 1);
+    partMisses.set(card, (partMisses.get(card) ?? 0) + 1);
+  };
 
   const seen = new Set(exclude);
   const drawn = new Set<string>();
@@ -222,17 +246,37 @@ async function drawCards(
     // is the costly part, 2016 Q12 about 3 ms a try). Speed only: the same draws are refused.
     const nk = `${pick.card}\n${drawKey(drawWith(routine, seed))}`;
     if (drawnN.has(nk)) {
-      fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
+      refuse(pick.card);
       continue;
     }
     drawnN.add(nk);
     const built = makeWith(routine, seed);
     const raw = `${pick.card}\n${built.questionLines.join('\n')}\n${built.finalAnswer}`;
     if (drawn.has(raw)) {
-      fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
+      refuse(pick.card);
       continue;
     }
     drawn.add(raw);
+    // Sheets that feel distinct (the owner, 2026-10-11, "Yes" to H as a preference): a draw sharing parts worth half
+    // its marks or more with a question on the sheet is put back, until CORE_TRIES tries in a row have found nothing
+    // fresh, then allowed. Put back, not used up: the same draw may still be taken once the card has no fresh one
+    // (marking it used made 177 of 2,720 measured sheets shorter). Every refused try counts, not only the put-backs:
+    // near the end of a small card most tries are repeats, and counting put-backs alone let a card's 200 tries run out
+    // first, so a sheet made one question at a time, as the site makes it, came out shorter (2016 Q8 29 to 25).
+    // Only a fresh one resets the count, as a core's. Decided from the built question, before the site's question and
+    // its twin keys are made (the costly part), so a put-back costs a build and no more. The parts are read only
+    // while the preference is still looking (at most CORE_TRIES tries), and otherwise once, for the question taken:
+    // reading them on every one of a spent card's 200 tries made its last click up to twice as slow as live.
+    const looking = onSheet.length > 0 && !ranOut.has(pick.card) && (partMisses.get(pick.card) ?? 0) < CORE_TRIES;
+    let pk = looking ? partsKeyOf(built, pick.card) : undefined;
+    let ps = pk ? partsFromKey(pk).parts : undefined;
+    let repeat = !!ps && onSheet.some(o => sharesHalf(ps!, o.parts));
+    if (repeat && looking) {
+      partMisses.set(pick.card, (partMisses.get(pick.card) ?? 0) + 1);
+      drawnN.delete(nk);
+      drawn.delete(raw);
+      continue;
+    }
     const made = withCardTwin(pick.card, toSiteQuestion(id, built, seed, out.length), routine, seed);
     const key = questionKey({ questionLines: [made.question], finalAnswer: made.answer });
     const sum = storyFreeKey(made.question, made.answer);
@@ -240,8 +284,18 @@ async function drawCards(
     // factor order, the same equation in other words): the owner, 2026-10-10.
     const twins = made.twinKeys ?? [];
     if (seen.has(key) || seen.has(sum) || twins.some(t => seen.has(t))) {
-      fails.set(pick.card, (fails.get(pick.card) ?? 0) + 1);
+      refuse(pick.card);
       continue;
+    }
+    if (!looking) {
+      pk = partsKeyOf(built, pick.card);
+      ps = pk ? partsFromKey(pk).parts : undefined;
+      repeat = !!ps && onSheet.some(o => sharesHalf(ps!, o.parts));
+    }
+    if (ps) {
+      if (repeat) ranOut.add(pick.card);
+      else partMisses.set(pick.card, 0);
+      onSheet.push({ card: pick.card, parts: ps });
     }
     // Only a fresh core resets the count. A card that has used every core stays spent for
     // the rest of this call, rather than spending CORE_TRIES draws again on each later
@@ -251,7 +305,7 @@ async function drawCards(
     seen.add(sum);
     for (const t of twins) seen.add(t);
     if (ck) seen.add(ck);
-    out.push(ck ? { ...made, coreKey: ck } : made);
+    out.push({ ...made, ...(ck ? { coreKey: ck } : {}), ...(pk ? { partsKey: pk } : {}) });
     unitUses.set(pick.unit, (unitUses.get(pick.unit) ?? 0) + 1);
     cardUses.set(pick.card, (cardUses.get(pick.card) ?? 0) + 1);
   }

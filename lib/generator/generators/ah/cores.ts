@@ -35,7 +35,7 @@ export const CORES: Readonly<Record<CardLabel, (d: any) => string>> = {
   '2023 P2 Q13': d => `${d.event} ${d.dC} ${d.dB}`, // the event's equation
   '2021 P2 Q8': d => `${d.k} ${d.p} ${d.q}`,       // (a): N vanishes
   '2019 Q10': d => `${d.a} ${d.b}`,                // (a): N vanishes
-  '2021 P2 Q7': d => `${d.k}`,                     // (a) (a + ki)³
+  '2021 P2 Q7': d => `${d.k} ${d.s ?? 1}`,         // (a) (a ± ki)³ (the sign since 2026-10-11, a - ki)
   '2026 P1 Q6': d => `${d.k} ${d.n} ${d.a}`,       // (a) ∫ ax(x - k)^n dx
   '2016 Q11': d => `${d.a}`,                       // V = ah³
   // A part with few versions, the rest of the card varied (the sheet's cards 13 and 14).

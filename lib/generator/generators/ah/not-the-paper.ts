@@ -17,6 +17,14 @@
  * - **Whole, figure included**, for the three cards whose figure carries the
  *   paper's numbers (FIGURE_PAPERS): their text is the paper's on draws whose
  *   figure is not, and those are different questions, so they are kept.
+ * - **By the one "same question" test** (`same-keys.ts`, since 2026-10-11): the
+ *   paper in another card's words, by the owner's twin rulings, or with a number
+ *   its working never uses changed; and P2 against every paper, not only the
+ *   card's own. Word for word alone let these through: a separate search found
+ *   2019 Q3's f against −f in 9.4% of its card's draws (tools/never-the-paper,
+ *   `ahagain-*.mts`, `ahdesign.mts`). The owner: one test for the guard and for
+ *   twins, "Yes". `ah-not-the-paper` holds every leak found and every look-alike
+ *   ruled different as test cases.
  *
  * A draw that is not a paper question is exactly what it was: nothing else is
  * drawn, so every other draw under a seed is unchanged. Only routines draw
@@ -26,6 +34,9 @@ import type { Built, CardLabel, CardRoutine } from './types';
 import { AH_PAPER_KEYS } from './paper-keys';
 import { PAPER_DRAWS } from './paper-draws';
 import { keyHash, plainKey } from './plain-key';
+import { PAPER_PARTS, PAPER_SAME, PAPER_TWIN } from './paper-same';
+import { heldOf, marksHeld, sameKeysOf } from './same-keys';
+import { cardTwinKey } from './card-twins';
 
 /**
  * The numbers that build each figure paper's own question, the figure included
@@ -91,11 +102,24 @@ function onePartFromPaper(card: CardLabel, routine: CardRoutine, built: Built): 
   return 2 * (total - (p.marks[changed[0]] ?? 0)) >= total;
 }
 
+/** Each paper identity (`same-keys.ts`) to its paper. */
+const PAPER_SAME_KEYS = new Map(Object.entries(PAPER_SAME).flatMap(([p, ks]) => ks.map(k => [k, p] as const)));
+/** Each multi-part paper's total marks, for P2 across cards. */
+const PART_TOTALS = new Map(Object.entries(PAPER_PARTS).map(([p, ps]) => [p, ps.reduce((t, x) => t + x.marks, 0)]));
+
 /**
- * The paper a built question is, or null: another paper's by its text, a figure card's own
- * whole, or its own with one part changed and half the marks or more the paper's (P2).
+ * The paper a built question is, or null:
+ * - another paper's (any card's) by its text, word for word;
+ * - a figure card's own, whole;
+ * - any paper's by the one "same question" test (`same-keys.ts`; the owner, 2026-10-11, "Yes"): the
+ *   paper in other words, by the owner's twin rulings, or with a number its working never uses
+ *   changed. The paper's identities are its card's own build (`paper-same.ts`);
+ * - its own paper by its card's twin rule (`card-twins.ts`), when the draw is given;
+ * - its own paper with one part changed, half the marks or more the paper's (P2);
+ * - another card's paper whose parts it holds word for word, half that paper's marks or more
+ *   (P2 across cards: 2016 Q6's card drew 2024 P2 Q7's part (a), 4 of its 6 marks).
  */
-export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Built): string | null {
+export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Built, draw?: unknown): string | null {
   const q = questionOf(built);
   const own = FIGURE_PAPERS[card];
   if (own !== undefined) {
@@ -105,7 +129,15 @@ export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Bu
   }
   const byText = AH_PAPER_KEYS[keyHash(plainKey(q))];
   if (byText) return byText;
-  return onePartFromPaper(card, routine, built) ? card : null;
+  for (const k of sameKeysOf(built)) { const p = PAPER_SAME_KEYS.get(k); if (p) return p; }
+  if (draw !== undefined && PAPER_TWIN[card] !== undefined && cardTwinKey(card, draw) === PAPER_TWIN[card]) return card;
+  if (onePartFromPaper(card, routine, built)) return card;
+  const held = heldOf(built);
+  for (const [paper, parts] of Object.entries(PAPER_PARTS)) {
+    if (paper === card) continue;
+    if (2 * marksHeld(parts, held) >= PART_TOTALS.get(paper)!) return paper;
+  }
+  return null;
 }
 
 /** How many draws in a row may be a paper question before the guard gives up loudly (no card comes close). */
@@ -130,7 +162,7 @@ export function guarded<N>(card: CardLabel, routine: CardRoutine<N>): CardRoutin
         const k = drawKey(n);
         let paper = verdicts.get(k);
         if (paper === undefined) {
-          paper = !!paperQuestionOf(card, routine as CardRoutine, routine.build(n));
+          paper = !!paperQuestionOf(card, routine as CardRoutine, routine.build(n), n);
           if (verdicts.size < 5000) verdicts.set(k, paper);
         }
         if (!paper) return n;

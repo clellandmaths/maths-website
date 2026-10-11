@@ -23,7 +23,8 @@ interface P1Q1of2024 { k: number; c: number; a: number; b: number }
 
 const q2024p1q1: CardRoutine<P1Q1of2024> = {
   draw: () => {
-    const k = int(2, 9);
+    // k to 12 on the owner's "Yes" (2026-10-11, sheets that feel distinct): (a) is 2 of the 4 marks, the same chain rule.
+    const k = int(2, 12);
     const { c, a, b } = until(
       () => ({ c: int(2, 6), a: int(2, 6), b: nonZero(-9, 9) }),
       // The bracket as plain as 4x - 7, and the second term's number whole, as 10.

@@ -280,51 +280,62 @@ const q2026p2q8: CardRoutine<P2Q8> = {
 // ── 2026 P2 Q10 ────────────────────────────────────────────────────────────
 // (a) implicit dy/dx for x²e^{ky} + x² + y^m = C; (b) why it is never zero
 
-interface P2Q10 { k: number; m: number; C: number }
+interface P2Q10 { k: number; m: number; C: number; a?: number; b?: number }
+
+// 2026-10-11, the owner: "So surely we could add coefficients on left hand side", then "A": a and b from 1 to 3 on the
+// two x^2 terms, both positive, so (b)'s reason is the paper's, and with no factor in common, so the answer needs no
+// factor taken out (the numerator is always -2x(ae^{ky} + b)).
+const coef10 = (c: number, body: string) => (c === 1 ? body : `${c}${body}`);
 
 const q2026p2q10: CardRoutine<P2Q10> = {
   // k and m never both even: then top and bottom share a 2, and the paper's
   // answer (k = 6, m = 5) has no common factor.
-  draw: () => until(
-    () => ({ k: int(2, 9), m: int(3, 7), C: int(20, 90) }),
-    ({ k, m }) => k % 2 === 1 || m % 2 === 1,
-  ),
+  draw: () => {
+    const base = until(
+      () => ({ k: int(2, 9), m: int(3, 7), C: int(20, 90) }),
+      ({ k, m }) => k % 2 === 1 || m % 2 === 1,
+    );
+    // a and b share no factor; and a k and m not both even (the top's 2 would then cancel), as the paper's rule
+    const ab = until(() => ({ a: int(1, 3), b: int(1, 3) }), ({ a, b }) => gcd(a, b) === 1 && ((a * base.k) % 2 === 1 || base.m % 2 === 1));
+    return { ...base, ...ab };
+  },
 
-  build: ({ k, m, C }): Built => {
+  build: ({ k, m, C, a = 1, b = 1 }): Built => {
     const E = `e^{${k}y}`;
     const D = '\\frac{dy}{dx}';
     const yTerm = `${m}y^{${m - 1}}`;
-    const productRule = `2x${E} + ${k}x^{2}${E}${D}`;
-    const explicit = `\\frac{-2x${E} - 2x}{${yTerm} + ${k}x^{2}${E}}`;
-    const factorised = `\\frac{-2x(${E} + 1)}{${k}x^{2}${E} + ${yTerm}}`;
+    const productRule = `${2 * a}x${E} + ${a * k}x^{2}${E}${D}`;
+    const explicit = `\\frac{-${2 * a}x${E} - ${2 * b}x}{${yTerm} + ${a * k}x^{2}${E}}`;
+    const inner = `${coef10(a, E)} + ${b}`;
+    const factorised = `\\frac{-2x(${inner})}{${a * k}x^{2}${E} + ${yTerm}}`;
     return {
       questionLines: [
-        `A curve is defined by the equation $x^{2}${E} + x^{2} + y^{${m}} = ${C}.$`,
+        `A curve is defined by the equation $${coef10(a, `x^{2}${E}`)} + ${coef10(b, 'x^{2}')} + y^{${m}} = ${C}.$`,
         `<b>(a)</b> Find $${D}$ in terms of $x$ and $y.$`,
         '<b>(b)</b> Given $x \\gt 0$, explain why the derivative is never zero.',
       ],
       solutionSteps: [
-        `<strong>(a)</strong> By the product rule, $\\frac{d}{dx}\\left(x^{2}${E}\\right) = 2x${E} + \\ldots$`,
-        `<strong>(a)</strong> $\\frac{d}{dx}\\left(x^{2}${E}\\right) = ${productRule}$`,
-        `<strong>(a)</strong> So $${productRule} + 2x + ${yTerm}${D} = 0$`,
+        `<strong>(a)</strong> By the product rule, $\\frac{d}{dx}\\left(${coef10(a, `x^{2}${E}`)}\\right) = ${2 * a}x${E} + \\ldots$`,
+        `<strong>(a)</strong> $\\frac{d}{dx}\\left(${coef10(a, `x^{2}${E}`)}\\right) = ${productRule}$`,
+        `<strong>(a)</strong> So $${productRule} + ${2 * b}x + ${yTerm}${D} = 0$`,
         `<strong>(a)</strong> $${D} = ${explicit} = ${factorised}$`,
-        `<strong>(b)</strong> For $x \\gt 0$, $-2x \\ne 0$, and $${E} + 1 \\gt 0$ for every $y$, so the numerator is never zero. A fraction is zero only when its numerator is, so $${D}$ is never zero.`,
+        `<strong>(b)</strong> For $x \\gt 0$, $-2x \\ne 0$, and $${inner} \\gt 0$ for every $y$, so the numerator is never zero. A fraction is zero only when its numerator is, so $${D}$ is never zero.`,
       ],
       stepMarks: [1, 1, 1, 1, 1],
-      finalAnswer: `(a) $${D} = ${factorised}$<br>(b) For $x \\gt 0$ the numerator $-2x(${E} + 1)$ is never zero, since $-2x \\ne 0$ and $${E} + 1 \\gt 0$, so the derivative is never zero.`,
+      finalAnswer: `(a) $${D} = ${factorised}$<br>(b) For $x \\gt 0$ the numerator $-2x(${inner})$ is never zero, since $-2x \\ne 0$ and $${inner} \\gt 0$, so the derivative is never zero.`,
       ladder: {
         moves: [
           'The first term is a product of two functions of different variables. Which rule does it need?',
-          `(a) Differentiate $x^{2}${E}$ with the product rule. Every $y$-term you differentiate picks up $${D}$.`,
-          `(a) Differentiate $x^{2}$ and $y^{${m}}$, and the constant.`,
+          `(a) Differentiate $${coef10(a, `x^{2}${E}`)}$ with the product rule. Every $y$-term you differentiate picks up $${D}$.`,
+          `(a) Differentiate $${coef10(b, 'x^{2}')}$ and $y^{${m}}$, and the constant.`,
           `(a) Gather the $${D}$ terms on one side and make $${D}$ the subject.`,
           '(b) When is a fraction zero? Look at each factor of the numerator for $x \\gt 0$.',
         ],
         marks: [0, 2, 1, 1, 1],
         shows: [
           null,
-          `$2x${E} + \\ldots$ or $\\ldots + ${k}x^{2}${E}${D}$`,
-          `$\\ldots + 2x + ${yTerm}${D} = 0$`,
+          `$${2 * a}x${E} + \\ldots$ or $\\ldots + ${a * k}x^{2}${E}${D}$`,
+          `$\\ldots + ${2 * b}x + ${yTerm}${D} = 0$`,
           `$${D} = ${explicit}$`,
           null,
         ],

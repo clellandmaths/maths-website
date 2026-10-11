@@ -21,7 +21,7 @@ import { renderScene } from '../../../diagrams/render';
 /** f(x) = s(x - r)c-style: slope s (±1), root r and y-intercept -sr, in units of c. */
 interface Line2016 { s: 1 | -1; r: 1 | -1 }
 
-interface Q12of2016 { line: Line2016; d: number; k: 2 | 3 }
+interface Q12of2016 { line: Line2016; d: number; k: 2 | 3 | 4 }
 
 /** The paper's x - c, and the other three lines through ±c on both axes. */
 const LINES2016: readonly Line2016[] = [{ s: 1, r: 1 }, { s: 1, r: -1 }, { s: -1, r: 1 }, { s: -1, r: -1 }];
@@ -32,7 +32,8 @@ const LINES2016: readonly Line2016[] = [{ s: 1, r: 1 }, { s: 1, r: -1 }, { s: -1
  */
 const SETS2016: readonly Q12of2016[] = LINES2016.flatMap(line =>
   [-2, -1, 1, 2].filter(d => -line.s * line.r + d !== 0)
-    .flatMap(d => [2, 3].map(k => ({ line, d, k: k as 2 | 3 }))));
+    // |4f(x)| on the owner's "Yes" (2026-10-11, sheets that feel distinct): (b) is 2 of the 4 marks, the same stretch.
+    .flatMap(d => [2, 3, 4].map(k => ({ line, d, k: k as 2 | 3 | 4 }))));
 
 /** A multiple of c as the paper writes it: `c`, `-2c`. */
 const inC = (m: number) => (m === 1 ? 'c' : m === -1 ? '-c' : `${m}c`);

@@ -222,7 +222,7 @@ function heldCards(held: readonly QuestionWithMetadata[]): string[] {
  * Past paper questions go through it harmlessly: nothing generated matches one.
  */
 export function worksheetKeys(
-  questions: readonly { question: string; answer?: string | null; coreKey?: string }[],
+  questions: readonly { question: string; answer?: string | null; coreKey?: string; partsKey?: string }[],
 ): string[] {
   // Both keys per question: a sheet rejects a repeat of the whole question and
   // a repeat of its sum in a new story, and an exclusion list carrying only the
@@ -230,7 +230,11 @@ export function worksheetKeys(
   // An Advanced Higher thin card's core too (`ah/cores.ts`), so a sheet that adds
   // more questions takes a fresh equation first (the owner, 2026-10-05). The engine
   // treats it as a preference, never a refusal.
-  return questions.flatMap(q => (q.coreKey ? [...keysOfQuestion(q), q.coreKey] : keysOfQuestion(q)));
+  // And an Advanced Higher question's parts (`ah/same-keys.ts`, 2026-10-11): the sheet
+  // takes a question sharing less than half its marks with what it holds first (the
+  // owner, "sheets that feel distinct"). Also a preference: without it here the next
+  // click could not see the sheet's parts, and the preference would do nothing.
+  return questions.flatMap(q => [...keysOfQuestion(q), ...(q.coreKey ? [q.coreKey] : []), ...(q.partsKey ? [q.partsKey] : [])]);
 }
 
 /**

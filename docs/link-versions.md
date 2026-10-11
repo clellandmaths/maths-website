@@ -19,15 +19,17 @@ questions in the 500 recorded test links (113 links, 1 to 3 questions each).
 
 - **Every link carries a version.** `LINK_VERSION` in `lib/worksheet-refs.mjs` is the version new links are
   made with. A short link marks it with one character straight after its leading "." (`VERSION_MARKS`:
-  version 2 is "y", version 3 is "-"). The older formats, never written now, carry `v=`. A link with no mark
-  is **version 1**, which covers every link made before 2026-10-09.
+  version 2 is "y", version 3 is "-", version 4 is "K"). The older formats, never written now, carry `v=`. A
+  link with no mark is **version 1**, which covers every link made before 2026-10-09.
 - **Each older version's maker is kept, frozen, byte for byte.** Version 1 is `lib/generator-v1/`, the
   generator exactly as it was live at website 767a87c (live 2026-10-06 to 2026-10-09). Version 2 is
   `lib/generator-v2/`, exactly as live at website a794574 (from 2026-10-09: National 5's "never the paper's
-  own question"). Version 3, the current maker, is Advanced Higher's (2026-10-10: six cards widened, never
-  any AH paper's own question, no twins on an AH sheet, 2025 P1 Q8 no longer giving up). Made because it
-  moved 24 of the 1,108 generated questions in the 200 recorded version 2 links, every one an AH question:
-  11 on a widened card, 13 that were the paper's own question.
+  own question"). Version 3 is `lib/generator-v3/`, exactly as live at website 3e570a3 (from 2026-10-10:
+  Advanced Higher's six cards widened, never any AH paper's own question word for word, no twins on an AH
+  sheet, 2025 P1 Q8 no longer giving up); made because it moved 24 of the 1,108 generated questions in the
+  200 recorded version 2 links, every one an AH question. Version 4, the current maker (2026-10-11): AH never
+  the paper's own question in any wording (one "same question" test for the guard and for twins), sheets
+  that take distinct questions first, and ten widened cards, every moved card confirmed by the owner.
 - **One routing point:** `lib/link-engines.ts` (`engineForVersion`). Each maker is loaded with
   `await import()`, so an old maker is fetched only when a link made with it is opened, never for a new link
   or by any other page.
@@ -45,7 +47,7 @@ questions in the 500 recorded test links (113 links, 1 to 3 questions each).
 |---|---|---|
 | `scripts/check-frozen-engines.mjs` (`check:frozen`) | every build | every frozen copy is exactly the files listed in `scripts/frozen-engines.json`, which were taken from `git ls-tree <commit>` and not from the copy: no file changed, added or missing (CRLF read as LF) |
 | `scripts/check-share-refs.mjs` (`check:sharerefs`) | every build | the 500 recorded links read as version 1; version 1 is still written exactly as pinned; new links carry the current mark; every mark is one character, outside the link alphabet, no vowel, not escaped in a URL |
-| `scripts/check-engine-callsites.mjs` (`check:callsites`) | every build | only `lib/link-engines.ts` reaches a frozen maker's door (`lib/generated-question-v1.ts`, `-v2.ts`) |
+| `scripts/check-engine-callsites.mjs` (`check:callsites`) | every build | only `lib/link-engines.ts` reaches a frozen maker's door (`lib/generated-question-v1.ts`, `-v2.ts`, `-v3.ts`) |
 | `scripts/verify-share-fixtures.mts` | by hand, before going live | every generated question in the recorded links, made by its own version's maker, has its recorded fingerprint: version 1 from `share-links-2026-10-01.json` and `share-links-short-2026-10-01.json`, version 2 from `share-links-v2-2026-10-09.json`, version 3 from `share-links-v3-2026-10-10.json` (250 links, 50 of them Advanced Higher only) |
 
 ## When the generator changes again
@@ -67,8 +69,9 @@ version** (now 3) fail, the change moves what shared links open. Then, with N th
 **Never edit a frozen copy** to make something pass, and never re-record a fixture. If the site's question
 shape changes, adapt it in the version's door file (`lib/generated-question-v<n>.ts`).
 
-Done once so far, for version 3 (2026-10-10, Advanced Higher's "never the paper's own question"): version 2
-frozen from a794574, 209 files byte-exact.
+Done twice so far: for version 3 (2026-10-10, Advanced Higher's "never the paper's own question"), version 2
+frozen from a794574, 209 files byte-exact; and for version 4 (2026-10-11, AH never the paper in any wording
+and sheets that feel distinct), version 3 frozen from 3e570a3, 216 files byte-exact, mark "K".
 
 ## How long a version is kept
 

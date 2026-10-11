@@ -17,9 +17,14 @@ import type { QuestionWithMetadata } from './data-loader';
  *   version 2  `lib/generator-v2/`, the maker live from 2026-10-09 (website
  *              a794574), byte for byte: the 18 widened National 5 cards, never
  *              the paper's own question, no twins on a sheet. Locked the same way.
- *   version 3  `lib/generator/`, the current one: Advanced Higher's six widened
- *              cards, never any AH paper's own question, no twins on an AH sheet,
- *              2025 P1 Q8 no longer giving up.
+ *   version 3  `lib/generator-v3/`, the maker live from 2026-10-10 (website
+ *              3e570a3), byte for byte: Advanced Higher's six widened cards, never
+ *              any AH paper's own question word for word, no twins on an AH sheet,
+ *              2025 P1 Q8 no longer giving up. Locked the same way.
+ *   version 4  `lib/generator/`, the current one: Advanced Higher never the
+ *              paper's own question in any wording (one "same question" test for
+ *              the guard and for twins), sheets that take distinct questions
+ *              first, and ten widened cards (2026-10-11).
  *
  * Each maker is reached only through `await import()`, so a version costs
  * nothing until a link made with it is opened, and an old maker is never
@@ -32,6 +37,7 @@ export interface LinkEngine {
 export async function engineForVersion(version: number): Promise<LinkEngine> {
   if (version === 1) return import('./generated-question-v1');
   if (version === 2) return import('./generated-question-v2');
+  if (version === 3) return import('./generated-question-v3');
   // The current version, and any version newer than this site knows (a link
   // from a later deploy): the newest maker here is the nearest it has.
   return import('./generated-question');

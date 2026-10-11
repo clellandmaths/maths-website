@@ -33,6 +33,10 @@ export const CARD_TWINS: Readonly<Record<CardLabel, (d: any) => string>> = {
   // ruling (b), vector components reordered). The owner: "Same".
   '2021 P2 Q12': ({ n, Q, t, u, v }) => least(...ORDERS.map(o =>
     JSON.stringify([reorder(n, o), reorder(Q, o), t, reorder(u, o), reorder(v, o)]))),
+  // The matrix with its two diagonal entries swapped: the same determinant, the same p and q,
+  // the same A^4, every answer the paper's. The owner (2026-10-11, on
+  // https://claude.ai/artifact/HsgUh874rKzLiNnRij1tMc): "Same".
+  '2016 Q7': ({ d1, d2 }) => least(`${d1},${d2}`, `${d2},${d1}`),
 };
 
 /** The twin key of a card's draw, or undefined for a card with none. */

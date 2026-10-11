@@ -336,36 +336,44 @@ const q2023p2q5: CardRoutine<P2Q5of2023> = {
 // (b) z³ + mz = b + Di, the imaginary parts give a (positive), the real b.
 // Built from a, so a² comes out whole.
 
-interface P2Q7of2021 { a: number; k: number; m: number }
+interface P2Q7of2021 { a: number; k: number; m: number; s?: 1 | -1 }
 
 const q2021p2q7: CardRoutine<P2Q7of2021> = {
   // k from 1 to 5 on the owner's yes (variation-depth sheet, card 12, 2026-10-05; 1 to 3
-  // before): (a) is (a + ki)³ with a a letter, so k is all that changes it.
-  draw: () => until(
-    () => ({ a: int(2, 6), k: int(1, 5), m: int(1, 5) }),
-    // The real part b not 0, as 80; the imaginary part D positive, as 148, since the
-    // question prints b + Di (k = 5 with a = 2 would make it negative).
-    ({ a, k, m }) => a ** 3 - 3 * k * k * a + m * a !== 0 && 3 * k * a * a - k ** 3 + m * k > 0,
-  ),
+  // before): (a) is (a + ki)³ with a a letter, so k is all that changes it. And z = a - ki
+  // as well (s = -1) on the owner's "Yes" (2026-10-11, sheets that feel distinct): the same
+  // expansion with its signs carried, so (a), 3 of the 6 marks, has ten forms; (b) then
+  // prints b - Di, its imaginary parts the paper's equation with both sides negated.
+  draw: () => ({
+    ...until(
+      () => ({ a: int(2, 6), k: int(1, 5), m: int(1, 5) }),
+      // The real part b not 0, as 80; the imaginary part D positive, as 148, since the
+      // question prints b + Di (k = 5 with a = 2 would make it negative).
+      ({ a, k, m }) => a ** 3 - 3 * k * k * a + m * a !== 0 && 3 * k * a * a - k ** 3 + m * k > 0,
+    ),
+    s: pick([1, -1] as const),
+  }),
 
-  build: ({ a, k, m }): Built => {
+  build: ({ a, k, m, s = 1 }): Built => {
+    const sg = s === 1 ? '+' : '-';
     const ki = k === 1 ? 'i' : `${k}i`;
+    const kiS = s === 1 ? ki : `-${ki}`;
     const lead = (n: number) => (n === 1 ? '' : String(n));
-    const expanded = `a^{3} - ${3 * k * k}a + (${3 * k}a^{2} - ${k ** 3})i`;
+    const expanded = `a^{3} - ${3 * k * k}a ${sg} (${3 * k}a^{2} - ${k ** 3})i`;
     const D = 3 * k * a * a - k ** 3 + m * k;
     const B = a ** 3 - 3 * k * k * a + m * a;
     const realB = sum([{ coef: 1, body: 'a^{3}' }, { coef: m - 3 * k * k, body: 'a' }]);
-    const imagEq = `${sum([{ coef: 3 * k, body: 'a^{2}' }, { coef: m * k - k ** 3, body: '' }])} = ${D}`;
-    const binomialLine = `\\binom{3}{0}a^{3} + \\binom{3}{1}a^{2}(${ki}) + \\binom{3}{2}a(${ki})^{2} + \\binom{3}{3}(${ki})^{3}`;
-    const powers = `a^{3} + ${3 * k}a^{2}i + ${3 * k * k}ai^{2} + ${lead(k ** 3)}i^{3}`;
-    const z = `a + ${ki}`;
+    const imagEq = `${sum([{ coef: s * 3 * k, body: 'a^{2}' }, { coef: s * (m * k - k ** 3), body: '' }])} = ${s * D}`;
+    const binomialLine = `\\binom{3}{0}a^{3} + \\binom{3}{1}a^{2}(${kiS}) + \\binom{3}{2}a(${kiS})^{2} + \\binom{3}{3}(${kiS})^{3}`;
+    const powers = `a^{3} ${sg} ${3 * k}a^{2}i + ${3 * k * k}ai^{2} ${sg} ${lead(k ** 3)}i^{3}`;
+    const z = `a ${sg} ${ki}`;
     const plus = `${lead(m)}z`;
-    const substituted = `${expanded} + ${lead(m)}a + ${lead(m * k)}i = b + ${D}i`;
+    const substituted = `${expanded} + ${lead(m)}a ${sg} ${lead(m * k)}i = b ${sg} ${D}i`;
     return {
       questionLines: [
         `A complex number is defined by $z = ${z}$ where $a$ is a positive real number.`,
         '<b>(a)</b> State and simplify the binomial expansion of $z^{3}.$',
-        `<b>(b)</b> Given that $z^{3} + ${plus} = b + ${D}i$ where $b$ is a real number, find the values of $a$ and $b.$`,
+        `<b>(b)</b> Given that $z^{3} + ${plus} = b ${sg} ${D}i$ where $b$ is a real number, find the values of $a$ and $b.$`,
       ],
       solutionSteps: [
         `<strong>(a)</strong> $z^{3} = ${binomialLine}$`,
@@ -383,7 +391,7 @@ const q2021p2q7: CardRoutine<P2Q7of2021> = {
           `(a) Write the binomial expansion of $(${z})^3$.`,
           k === 1 ? '(a) Work out the coefficients.' : `(a) Work out the coefficients and the powers of ${k}.`,
           '(a) Use $i^2 = -1$ and $i^3 = -i$, and group the real and imaginary parts.',
-          `(b) Add $${plus}$ to your expansion and set it equal to $b + ${D}i$.`,
+          `(b) Add $${plus}$ to your expansion and set it equal to $b ${sg} ${D}i$.`,
           '(b) Set the real parts equal, and the imaginary parts equal.',
           '(b) Solve for $a$, keeping the positive value, then find $b$.',
         ],

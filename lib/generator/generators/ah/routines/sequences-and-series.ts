@@ -392,9 +392,11 @@ const q2023p1q7: CardRoutine<P1Q7of2023> = {
   // both sums in (b) are positive, as the paper's. The biggest product worked
   // by hand, N(N + 1)(N + b), is no bigger than the paper's 20 × 21 × 25: the
   // owner on the 2023 P1 sheet, "biggest should be no larger than paper".
+  // k = -5, 9 and 11 on the owner's "Yes" (2026-10-11, sheets that feel distinct): (a) is 2 of the 4 marks;
+  // each fits the paper's form, and the sum to L - 1 stays positive (k = -5 has n - 7 in it, so L from 9).
   draw: () => until(
-    () => ({ k: pick([-3, -1, 1, 3, 5, 7]), L: int(6, 15), N: int(12, 20) }),
-    ({ k, L, N }) => N - L >= 5 && N * (N + 1) * (N + (1 + 3 * k) / 2) <= 20 * 21 * 25,
+    () => ({ k: pick([-5, -3, -1, 1, 3, 5, 7, 9, 11]), L: int(6, 15), N: int(12, 20) }),
+    ({ k, L, N }) => N - L >= 5 && N * (N + 1) * (N + (1 + 3 * k) / 2) <= 20 * 21 * 25 && L - 1 + (1 + 3 * k) / 2 > 0,
   ),
 
   build: ({ k, L, N }): Built => {

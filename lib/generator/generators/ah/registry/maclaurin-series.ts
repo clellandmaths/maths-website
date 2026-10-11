@@ -10,7 +10,7 @@ export const MACLAURIN: readonly CardMeta[] = [
     skill: 'Maclaurin series of $e^{-kx}$ to $x^{3}$ from its derivatives, then hence of a linear expression over $e^{kx}.$',
     marks: [2, 2],
     route: '2 + 2 - (a) all three derivatives and all four values at 0, stated or implied, then the simplified series; (b) the quotient written as the product (p + qx)e^{-kx}, then multiplied out to its first four terms. p + qx is a polynomial already and is not expanded as a series.',
-    ranges: 'The paper: e^{-4x}, then (3 + 2x)/e^{4x}, giving 1 - 4x + 8x^2 - (32/3)x^3 and 3 - 10x + 16x^2 - 16x^3. k from 2 to 4 (the paper\'s 4), always e^{-kx} so (b) is a division by e^{kx} as the paper\'s; p from 1 to 5 and q from -5 to 5, never 0, sharing no factor (the paper\'s 3 and 2), and none of (b)\'s first four terms 0, as the paper\'s. No product worked by hand bigger than the paper\'s (the owner on 2023 P1, "biggest should be no larger than paper"): k^3 at most 64, and p times k^3/6 and q times k^2/2 at most 32, as 3 x 32/3; so with k = 4, p is at most 3 and q at most 4. A negative q is a sign, not a step. All exact: Paper 1.',
+    ranges: 'The paper: e^{-4x}, then (3 + 2x)/e^{4x}, giving 1 - 4x + 8x^2 - (32/3)x^3 and 3 - 10x + 16x^2 - 16x^3. k from 2 to 4 (the paper\'s 4), always e^{-kx} so (b) is a division by e^{kx} as the paper\'s; p from 1 to 5 and q from -5 to 5, never 0, sharing no factor (the paper\'s 3 and 2), and none of (b)\'s first four terms 0, as the paper\'s. No product worked by hand bigger than the paper\'s (the owner on 2023 P1, "biggest should be no larger than paper"): k^3 at most 64, and p times k^3/6 and q times k^2/2 at most 32, as 3 x 32/3; so with k = 4, p is at most 3 and q at most 4. A negative q is a sign, not a step. All exact: Paper 1. Not widened on 2026-10-11 (sheets that feel distinct): a bigger k breaks "biggest should be no larger than paper"; the owner: "Yes", so a sheet takes each k once before it repeats one.',
   },
   {
     card: '2026 P2 Q3',
@@ -45,7 +45,7 @@ export const MACLAURIN: readonly CardMeta[] = [
     skill: 'Maclaurin series of $e^{kx}$ and of $\\tan x$ (its third derivative shown), their product, then the derivative of the product written down.',
     marks: [2, 3, 2, 2, 1],
     route: '2 + 3 + 2 + 2 + 1 - (a) the derivatives and their values at 0, then the series; (b)(i) g\'\'(x) = 2 sec x sec x tan x, the product rule begun, then completed to the given form; (b)(ii) all four values at 0, then x + x^3/3; (c) the two series multiplied, then simplified to x^3; (d) the expression is the derivative of (c)\'s, so its first three non-zero terms are (c) differentiated.',
-    ranges: 'The paper: e^{2x}, e^{2x} tan x = x + 2x^2 + (7/3)x^3, and 1 + 4x + 7x^2. k from -9 to 9, never 0 or ±1 (the paper\'s 2), as 2026 P2 Q3\'s e^{kx} (which the owner widened to ±12); (b) is the paper\'s, fixed, since it is a show-that about tan x. 16 questions.',
+    ranges: 'The paper: e^{2x}, e^{2x} tan x = x + 2x^2 + (7/3)x^3, and 1 + 4x + 7x^2. k from -9 to 9, never 0 or ±1 (the paper\'s 2), as 2026 P2 Q3\'s e^{kx} (which the owner widened to ±12); (b) is the paper\'s, fixed, since it is a show-that about tan x. 16 questions. Not widened on 2026-10-11 (sheets that feel distinct): tan kx puts the chain rule into every derivative of (b)(i), the paper\'s show-that changed; the owner: "if we cannot we will need to let a vary and keep the rest", then "Yes".',
   },
   {
     card: '2016 Q6',

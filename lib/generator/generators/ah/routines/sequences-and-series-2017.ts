@@ -102,8 +102,10 @@ function factorised2017(m: number, n: string): string {
 
 const q2017q10: CardRoutine<Q10of2017> = {
   // m from 0 to 7 where c is not whole (c = 1 and c = 3 are 2023 P1 Q7's);
-  // L from 6 to 13 where the sum to L - 1 is whole, as the paper's 300.
-  draw: () => ({ m: pick([0, 1, 3, 4, 6, 7]), L: pick([6, 7, 9, 10, 12, 13]) }),
+  // L from 6 to 13 where the sum to L - 1 is whole, as the paper's 300. m = 9 and 10
+  // (c = 17/3, 19/3) on the owner's "Yes" (2026-10-11, sheets that feel distinct): (a) is
+  // 2 of the 4 marks; each fully factorises the same way, the sum to L - 1 whole for the same L.
+  draw: () => ({ m: pick([0, 1, 3, 4, 6, 7, 9, 10]), L: pick([6, 7, 9, 10, 12, 13]) }),
 
   build: ({ m, L }): Built => {
     const c = q(2 * m - 1, 3);

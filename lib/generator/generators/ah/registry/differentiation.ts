@@ -45,7 +45,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
     skill: 'Implicit differentiation with a product of $x$ and an exponential in $y$, then why the derivative is never zero.',
     marks: [4, 1],
     route: '4 + 1 - (a) the product rule on x^2 e^{ky}, one term then both, with dy/dx on the y term; the other terms, 2x and m y^{m-1} dy/dx, and = 0; then dy/dx made the subject, -2x(e^{ky} + 1)/(k x^2 e^{ky} + m y^{m-1}); (b) for x > 0 the numerator is never zero, since -2x is not and e^{ky} + 1 is positive. Talking about the denominator does not earn the mark.',
-    ranges: 'The paper: x^2 e^{6y} + x^2 + y^5 = 50. k from 2 to 9, the power m from 3 to 7, never both even (then the answer\'s top and bottom share a 2, and the paper\'s has no common factor), the constant from 20 to 90. The two x^2 terms keep coefficient 1, as the paper, so the numerator factorises as -2x(e^{ky} + 1) and (b)\'s reason is the paper\'s.',
+    ranges: 'The paper: x^2 e^{6y} + x^2 + y^5 = 50. k from 2 to 9, the power m from 3 to 7, never both even (then the answer\'s top and bottom share a 2, and the paper\'s has no common factor), the constant from 20 to 90. Since 2026-10-11 (the owner: "So surely we could add coefficients on left hand side", then "A"): a x^2 e^{ky} + b x^2 with a and b from 1 to 3 (the paper\'s 1 and 1), sharing no factor, and a k and m never both even, so the numerator is always -2x(a e^{ky} + b), factorised by x as the paper\'s, and (b)\'s reason is the paper\'s. 207 on one sheet (31 before).',
   },
   {
     card: '2026 P2 Q16',
@@ -108,7 +108,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
     skill: 'Differentiate a cot of $kx$, then a multiple of $x$ times the square root of a linear bracket by the product rule.',
     marks: [2, 2],
     route: '2 + 2 - (a) the derivative of cot begun, -cosec^2 kx, then the chain rule\'s k; (b) the product rule with one term right, c(ax + b)^{1/2} or c x times a half times a times (ax + b)^{-1/2}, then both terms, c(ax + b)^{1/2} + (ca/2)x(ax + b)^{-1/2}. The scheme asks for no simplifying, so the answer is the two terms as they stand, as the paper\'s.',
-    ranges: 'The paper: cot 3x, and 5x(4x - 7)^{1/2}. (a) k from 2 to 9, always cot: a different function is a different card. (b) c x(ax + b)^{1/2} with c and a from 2 to 6 and b from ±1 to ±9, a and b sharing no factor so the bracket is as plain as 4x - 7, and ca even so the second term\'s number is whole, as 10. The power stays a half. All exact: Paper 1.',
+    ranges: 'The paper: cot 3x, and 5x(4x - 7)^{1/2}. (a) k from 2 to 9 (to 12 on the owner\'s "Yes", 2026-10-11, sheets that feel distinct: (a) is 2 of the 4 marks), always cot: a different function is a different card. (b) c x(ax + b)^{1/2} with c and a from 2 to 6 and b from ±1 to ±9, a and b sharing no factor so the bracket is as plain as 4x - 7, and ca even so the second term\'s number is whole, as 10. The power stays a half. All exact: Paper 1.',
   },
   {
     card: '2024 P1 Q7',

@@ -76,7 +76,11 @@ const q2019q15: CardRoutine<Q15of2019> = {
       return [x, y, -(x * d[0] + y * d[1])];
     }, n => n[0] > 0 && n[2] !== 0 && Math.abs(n[2]) <= 5 && content3(n) === 1
       // The plane's constant never 0 and within 20, as the paper's 9 and 2.
-      && dot3(n, A0) !== 0 && Math.abs(dot3(n, A0)) <= 20);
+      // 2,000 tries, not 200: a few d and A0 accept only 2 normals of the 64, and 200 tries then
+      // missed both on about 2 draws in 100,000 ("until: no acceptable draw"). Every d and A0 accepts
+      // at least 2, so this always finishes; a draw that finished in 200 is exactly what it was.
+      // The owner, 2026-10-11: "Yes" (tools/never-the-paper, q15normals).
+      && dot3(n, A0) !== 0 && Math.abs(dot3(n, A0)) <= 20, 2000);
     const n1 = normal();
     const n2 = until(normal, n => n[0] !== n1[0] || n[1] !== n1[1]);
     const n3 = until((): V3 => [nonZero(-4, 4), nonZero(-4, 4), nonZero(-4, 4)], n => {

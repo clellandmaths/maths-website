@@ -24,7 +24,7 @@ import { LINK_ID_CODES } from '../lib/link-ids.mjs';
 import { engineForVersion } from '../lib/link-engines';
 import { AH_BY_CODE } from '../lib/generator/generators/ah/codes';
 
-if (LINK_VERSION !== 3) throw new Error(`this records version 3; LINK_VERSION is ${LINK_VERSION}`);
+if ((LINK_VERSION as number) !== 3) throw new Error(`this records version 3; LINK_VERSION is ${LINK_VERSION}`);
 const engine = await engineForVersion(3);
 const root = path.resolve(import.meta.dirname, '..');
 let state = 20261010;

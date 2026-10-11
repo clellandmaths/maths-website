@@ -1,0 +1,598 @@
+import { GeneratedQuestion } from './types';
+import type { Gen } from './n5';
+import { getRandomInt } from './utils';
+import { BEARING_CONTEXTS, type BearingContext } from './n5-contexts';
+import {
+  bearingsTriangle, compassOf, travel, type BearingArc,
+} from '../diagrams/shapes/bearings-triangle';
+import { pt, type Pt } from '../diagrams/scene';
+import { renderScene } from '../diagrams/render';
+import { verifyFigure } from '../diagrams/verify';
+
+/**
+ * The navigation questions: triangle trigonometry wrapped in bearings.
+ *
+ * These are the sine and cosine rules with a step bolted on at each end. The
+ * angle inside the triangle is never given — it has to be read off the compass
+ * arcs first — and the answer is usually wanted as a bearing, so it has to be
+ * turned back afterwards. Both extra steps happen on the diagram.
+ *
+ *   2014 P2 Q10  three buoys: three sides, the angle, then the bearing back
+ *   2015 P2 Q13  two towns due north-south, a bearing from each, find a side
+ *   2017 P2 Q10  two towns due east-west, a bearing from each, one reflex
+ *   2018 P2 Q13  ferry, trawler and yacht: three sides and a reflex bearing
+ *   2025 P2 Q12  orienteering: two sides and one bearing, find a bearing
+ *
+ * Everything is built by placing the points from the bearings and then reading
+ * the geometry back off them. Nothing is worked out twice: the printed bearings
+ * come from the construction, and the answer is measured from the same points
+ * the diagram is drawn from. That is the only way the picture and the prose
+ * cannot drift apart, which at National 5 is the whole difficulty — a pupil who
+ * cannot trust the diagram cannot start.
+ */
+
+const pick = <T,>(xs: T[]): T => xs[getRandomInt(0, xs.length - 1)];
+type Q = Omit<GeneratedQuestion, 'topic'>;
+
+const DEG = Math.PI / 180;
+const sin = (d: number) => Math.sin(d * DEG);
+const dp1 = (v: number) => v.toFixed(1);
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/**
+ * A bearing turned by an angle, as working: `120 - 43.7 = 76.3`, and where the
+ * turn crosses north the 360 is written, `360 + 30 - 42.2 = 347.8`, not left
+ * out (it printed "30 - 42.2 = 347.8" in 2 draws of 40 on 2018 P2 Q13; the
+ * owner, 2026-10-02, "Yes"). Opt-in: only the cards it was agreed for call it.
+ */
+function turnedBy(from: number, angle: number, side: number): string {
+  const raw = from + side * angle;
+  const sum = `${Math.round(from)} ${side > 0 ? '+' : '-'} ${dp1(angle)}`;
+  const result = dp1(((raw % 360) + 360) % 360);
+  return raw < 0 ? `360 + ${sum} = ${result}` : raw >= 360 ? `${sum} - 360 = ${result}` : `${sum} = ${result}`;
+}
+
+/**
+ * The same turn with the angle carried unrounded, with dots: printed to 1 d.p.
+ * the line could read "250 - 70.5 = 179.5, that is 179" (2018 P2 Q13, about
+ * one draw in twenty; 2026-10-02 full read, the owner's "Yes"). Opt-in.
+ */
+function turnedByCarried(from: number, angle: number, side: number): string {
+  const raw = from + side * angle;
+  const sum = `${Math.round(from)} ${side > 0 ? '+' : '-'} ${angle.toFixed(2)}\\ldots`;
+  // Two places, or more where two would round the other way from the true
+  // value: 185.4996 is "185.499...", not "185.50...", beside "that is 185".
+  const turned = ((raw % 360) + 360) % 360;
+  let places = 2;
+  while (places < 5 && Math.round(Number(turned.toFixed(places))) !== Math.round(turned)) places++;
+  const result = `${turned.toFixed(places)}\\ldots`;
+  return raw < 0 ? `360 + ${sum} = ${result}` : raw >= 360 ? `${sum} - 360 = ${result}` : `${sum} = ${result}`;
+}
+
+/**
+ * The compass direction at `at` furthest inside the widest gap that nothing
+ * covers: not the shaded sweep from north round to `shadedTo`, not the
+ * triangle between the legs to `ends`. A vertex letter put there clears the
+ * shading and both sides. Used by 2014 P2 Q10 alone.
+ */
+function clearGap(at: Pt, ends: [Pt, Pt], shadedTo: number): number {
+  const [l1, l2] = ends.map(e => compassOf(at, e));
+  const inside = (d: number) => {                      // the triangle's angle at `at`
+    const span = ((l2 - l1) % 360 + 360) % 360;
+    const off = ((d - l1) % 360 + 360) % 360;
+    return span <= 180 ? off <= span : off >= span;
+  };
+  const free = Array.from({ length: 360 }, (_, d) => !(d <= shadedTo) && !inside(d));
+  let best = 0, bestLen = -1;
+  for (let s = 0; s < 360; s++) {
+    if (!free[s] || free[(s + 359) % 360]) continue;  // a run starts here
+    let len = 0;
+    while (len < 360 && free[(s + len) % 360]) len++;
+    if (len > bestLen) { bestLen = len; best = (s + len / 2) % 360; }
+  }
+  return best;
+}
+
+/**
+ * Bearings are written with three digits, so 060° not 60°.
+ *
+ * Two forms, because there are two renderers. Prose goes through MathJax, so
+ * the degree sign is `^{\circ}` inside `$…$`. A diagram is SVG, where `<text>`
+ * is drawn exactly as written and `^{\circ}` would appear on the page as those
+ * eight characters.
+ */
+const pad = (v: number) => String(Math.round(v) % 360).padStart(3, '0');
+const brg = (v: number) => `${pad(v)}^{\\circ}`;
+const brgPlain = (v: number) => `${pad(v)}°`;
+const CARDINAL: Record<number, string> = { 0: 'north', 90: 'east', 180: 'south', 270: 'west' };
+
+/**
+ * A north arrow is only drawn where it would not lie along a side.
+ *
+ * 2015 leans on exactly this: Portlee is due south of Queenstown, so the side
+ * PQ *is* the north line at P and the paper measures the 72° from it. Drawing
+ * an arrow on top of the side would say nothing and look like an error.
+ */
+function needsArrow(points: Pt[], i: number): boolean {
+  return !points.some((p, j) => j !== i && Math.abs(((compassOf(points[i], p) + 180) % 360) - 180) < 2);
+}
+
+/** The intro sentence with the context's letters put in. */
+function intro(c: BearingContext): string {
+  return c.intro.replace(/\{(\d)\}/g, (_, d) => `$${c.letters[Number(d)]}$`);
+}
+
+/** The inverse of the `variationId` stamps — which kind makes which id. */
+const ID_KIND: Record<string, string> = {
+  'bearings.two-bearings': 'side',
+  'bearings.three-sides-angle': 'angle',
+  'bearings.three-sides-bearing': 'bearing',
+  'bearings.two-sides': 'two-sides',
+};
+
+export function bearingsQuestion(kinds: string[], wanted?: string, askedId?: string): Q {
+  // The branch is chosen once, before the retry loop, not inside it.
+  //
+  // Choosing inside means a rejected layout re-enters the lottery rather than
+  // retrying the branch that was asked for, so what reaches the page ends up
+  // proportional to (chosen x survived) instead of to chosen. A figure that is
+  // harder to lay out is then quietly buried by an easier one: the cuboid on
+  // axes was picked half the time and reached the page 9% of the time.
+  //
+  // Fixing it here also makes a branch that can *never* lay out fail loudly
+  // instead of silently substituting its neighbour, which is how a figure once
+  // went missing entirely without a single check noticing.
+  // Taught: the asked id names the kind that makes it. `kinds.length > 1` is
+  // the freeze — a topic with one kind never drew a choice, and skipping `pick`
+  // would move its numbers for nothing.
+  const asked = ID_KIND[wanted ?? ''];
+  const kind = kinds.length > 1 && asked !== undefined && kinds.includes(asked)
+    ? asked : pick(kinds);
+  for (let tries = 0; tries < 4000; tries++) {
+    // No context names a point N — see BEARING_CONTEXTS.
+    const c = pick(BEARING_CONTEXTS);
+    // which way round the third point lies: every bearing in the question, and
+    // the sign of the arithmetic at the end, follows from this one choice
+    const side = pick([1, -1]);
+    const q = kind === 'side' ? twoBearings(c, side, askedId === 'bearings.two-bearings',
+        askedId === 'bearings.two-bearings-2015')
+      : kind === 'two-sides' ? twoSides(c, side)
+      : threeSides(c, side, kind);
+    if (q) return q;
+  }
+  throw new Error('bearings: no valid question found');
+}
+
+// ── two bearings from two known points: the sine rule for a side ────────────
+// 2015 P2 Q13, 2017 P2 Q10. The two places lie on a cardinal line so the angle
+// at each of them can be read straight off its bearing.
+function twoBearings(c: BearingContext, side: number, eastWest = false, paper2015 = false): Q | null {
+  const [nA, nB, nC] = c.letters;
+  const [rA, rB, rC] = c.refer;
+  /**
+   * **2017 P2 Q10 lies east–west; 2015 P2 Q13 lies north–south.** — 2026-09-24
+   *
+   * "Dunbridge is 15 km west of Earlsford" against "Portlee is 25 kilometres
+   * due South of Queenstown". On a north–south line the angles inside the
+   * triangle come straight off the bearings; on an east–west one each is
+   * worked out from 90 or 270 first, which is the paper's first mark. One id
+   * served both and each got the other's layout: 2017's id was north–south in
+   * 153 of 400 draws. The owner: *"Yes key it"*.
+   *
+   * Keyed on the id asked, because 2015's is an ALIAS of this one and arrives
+   * with the same `wanted`. One `pick` either way, so the draws after it do
+   * not shift; 2015 keeps the free choice until its own review.
+   */
+  const drawnBase = eastWest ? pick([90, 270]) : pick([0, 90, 180, 270]);
+  /**
+   * **2015 P2 Q13 is the paper's own layout, and shows only what it shows —
+   * 2026-09-25.** P due south of Q, R to the east: measured on the 2015 P2
+   * sheet, 132 of 400 draws of its id had that, 251 lay east–west and 16 put
+   * the third point west. And the paper's figure marks less: one north arrow
+   * (up through Q), 25 km on PQ, and the 72° at P, with Q's 128° left to the
+   * words. The owner: *"Yes key it and also only show the information that the
+   * original question does on the diagram."* The pick above is still drawn,
+   * so this changes 2015's draws and nothing else.
+   */
+  const base = paper2015 ? 0 : drawnBase;
+  if (paper2015) side = -1;
+  const d = getRandomInt(c.band[0], c.band[1]);
+  const alpha = getRandomInt(26, 76);
+  const beta = getRandomInt(26, 76);
+  const gamma = 180 - alpha - beta;
+  if (gamma < 26 || gamma > 110) return null;
+
+  const bA = ((base - side * alpha) % 360 + 360) % 360;
+  const bB = ((base + 180 + side * beta) % 360 + 360) % 360;
+  const A = pt(0, 0);
+  const B = travel(A, base, d);
+  const AC = d * sin(beta) / sin(gamma);
+  const C = travel(A, bA, AC);
+  if (AC < d * 0.3 || AC > d * 3) return null;      // keep the drawing balanced
+
+  const points: [Pt, Pt, Pt] = [A, B, C];
+  const arcs: BearingArc[] = paper2015
+    // The paper writes the angle at P as "72°", not as a three-figure bearing.
+    ? [{ at: 0, to: 2, compass: bA, label: `${bA}°` }]
+    : [
+      { at: 0, to: 2, compass: bA, label: brgPlain(bA) },
+      { at: 1, to: 2, compass: bB, label: brgPlain(bB) },
+    ];
+  const fig = bearingsTriangle({
+    names: c.letters, points, arcs,
+    north: [0, 1].filter(i => needsArrow(points, i)),
+    sides: [`${d} ${c.short}`, '', ''],
+    // 2015 only: B's letter goes west, off its north line (see `nameAway`).
+    ...(paper2015 ? { nameAway: [undefined, pt(B.x + d, B.y), undefined] as [Pt?, Pt?, Pt?] } : {}),
+  });
+  if (!fig) return null;
+
+  const prose = [
+    intro(c),
+    `${cap(rA)} is ${d} ${c.unit} due ${CARDINAL[(base + 180) % 360]} of ${rB}.`,
+    `From ${rA}, the bearing of ${rC} is $${brg(bA)}$.`,
+    `From ${rB}, the bearing of ${rC} is $${brg(bB)}$.`,
+    `Calculate the distance between ${rA} and ${rC}.`,
+    // 2017 P2 Q10 says nothing about a scale drawing; 2015 P2 Q13 does. The
+    // owner, on the 2018-2014 light pass: "Yes" to dropping it for 2017.
+    // `eastWest` is 2017's own id.
+    ...(eastWest ? [] : ['Do not use a scale drawing.']),
+  ];
+  // Four marks in both papers: •¹ calculate the angles of the triangle,
+  // •² correct substitution into the sine rule, •³ rearrange it, •⁴ calculate
+  // the side. All three angles are one mark between them, so they are one step.
+  const steps = [
+    `<strong>1.</strong> ${cap(rB)} is due ${CARDINAL[base]} of ${rA}, so the bearing of ${rB} from ${rA} is $${brg(base)}$ and the bearing back is $${brg((base + 180) % 360)}$. Each angle inside the triangle is the difference between two bearings, and the third follows from the angle sum:<br><br>$${nA} = ${alpha}^{\\circ}$, $${nB} = ${beta}^{\\circ}$, $${nC} = 180 - ${alpha} - ${beta} = ${gamma}^{\\circ}$`,
+    `<strong>2.</strong> Now the sine rule, pairing each side with the angle opposite it. $${nA}${nC}$ is opposite $${nB}$, and $${nA}${nB}$ is opposite $${nC}$:<br><br>$\\frac{${nA}${nC}}{\\sin ${beta}^{\\circ}} = \\frac{${d}}{\\sin ${gamma}^{\\circ}}$`,
+    `<strong>3.</strong> Rearrange to make $${nA}${nC}$ the subject:<br><br>$${nA}${nC} = \\frac{${d} \\times \\sin ${beta}^{\\circ}}{\\sin ${gamma}^{\\circ}}$`,
+    `<strong>4.</strong> Evaluate:<br><br>$${nA}${nC} = ${dp1(AC)}$ ${c.short}`,
+  ];
+  const text = [...prose, ...steps].join(' ');
+  if (verifyFigure(fig, text).length) return null;
+
+  return {
+    subTopic: 'Bearings with the Sine Rule',
+    difficulty: 'exam',
+    variationId: 'bearings.two-bearings',
+    questionLines: [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    boardQuestionLines: [`${nA} is ${d} ${c.short} due ${CARDINAL[(base + 180) % 360]} of ${nB}. Bearing of ${nC}: ${brgPlain(bA)} from ${nA}, ${brgPlain(bB)} from ${nB}. Find ${nA}${nC}.`],
+    solutionSteps: steps,
+    stepMarks: [1, 1, 1, 1],
+    finalAnswer: `$${dp1(AC)}$ ${c.unit}`,
+    figure: fig,
+  };
+}
+
+// ── three sides: the cosine rule, then the bearing back ─────────────────────
+// 2014 P2 Q10 asks for the angle and then the shaded angle, 3 + 2; 2018 P2 Q13
+// asks only for the bearing, 4 in one part. Both turn on the same figure, so
+// both are generated from it, and the `angle` kind produces 2014's *whole*
+// question rather than only its part (a).
+function threeSides(c: BearingContext, side: number, kind: string): Q | null {
+  const [nA, nB, nC] = c.letters;
+  const [rA, rB, rC] = c.refer;
+  const [lo, hi] = c.band;
+  // Either all three distances are whole, as 2014 gives them, or all three
+  // carry a decimal, as 2018 does. A drawing reading "12.2", "15.6", "15"
+  // mixes the two and looks like one of them was rounded by accident.
+  const oneDp = c.band[1] < 20 && getRandomInt(0, 1) === 0;
+  const draw = () => oneDp
+    ? getRandomInt(lo * 10, hi * 10 - 1) / 10
+    : getRandomInt(lo, hi);
+  const show = (v: number) => oneDp ? v.toFixed(1) : `${v}`;
+
+  // B is the pivot: the two legs from it are given, and so is the third side
+  const ba = draw(), bcLen = draw(), ca = draw();
+  if (ba + bcLen <= ca * 1.03 || bcLen + ca <= ba * 1.03 || ca + ba <= bcLen * 1.03) return null;
+  const phi = Math.acos((ba * ba + bcLen * bcLen - ca * ca) / (2 * ba * bcLen)) / DEG;
+  if (phi < 26 || phi > 140) return null;
+
+  /**
+   * **No right-angled triangles — 2018 P2 Q13, the owner on the sheet:**
+   *
+   * > *"I wouldn't give a right angled triangle for this question as it makes
+   * > it easy to do without cosine rule"*
+   *
+   * Right, and the marks say so: the scheme's first two are "correct
+   * substitution into the cosine rule" and "correct calculation of cos YTF".
+   * A square corner lets a pupil reach the same angle by SOHCAHTOA, or spot
+   * it outright by Pythagoras, and take none of that. The figure is drawn at
+   * true coordinates, so a corner that *is* square also *looks* square.
+   *
+   * Measured over 400 draws before the guard: **62 came within five degrees
+   * of a right angle** (24 within two, 9 within one).
+   *
+   * **Five degrees, because that is where the exam itself stops.** 2014 P2
+   * Q10 sets 8, 11 and 13 km, and its angle B is 84.8 degrees — Qualifications
+   * Scotland are content with a triangle 5.2 degrees off square. A wider guard
+   * would refuse to draw a past paper's own question, which is the one thing
+   * this review may never do. So the bar is set at the paper's own limit and
+   * not at what looks tidy.
+   *
+   * **Keyed to the bearing question.** This routine also serves
+   * `bearings.three-sides-angle` — 2014 P2 Q10, and 2014 is not yet reviewed.
+   * The guard is very likely right for it too (a right angle undercuts the
+   * cosine rule wherever it appears, and that question's own part (a) is the
+   * cosine rule) but the owner has not been asked about that paper, and
+   * `CLAUDE.md` is explicit: split if the generator serves ANY other paper,
+   * not only a signed-off one. **Recorded for 2014's review** in
+   * `docs/verdicts/IN-PROGRESS.md`; it will be one word here.
+   */
+  if (kind !== 'angle') {
+    const ang = (o: number, p: number, q: number) =>
+      Math.acos((p * p + q * q - o * o) / (2 * p * q)) / DEG;
+    const angles = [phi, ang(ba, bcLen, ca), ang(bcLen, ca, ba)];
+    if (angles.some(a => Math.abs(a - 90) <= 5)) return null;
+  }
+
+  const given = getRandomInt(1, 71) * 5 % 360;         // a bearing in whole degrees
+  const B = pt(0, 0);
+  const A = travel(B, given, ba);
+  const C = travel(B, given + side * phi, bcLen);
+  const answer = ((given + side * phi) % 360 + 360) % 360;
+  // a bearing that rounds to 000 reads as no bearing at all
+  if (Math.round(answer) % 360 === 0) return null;
+  /**
+   * **2014 P2 Q10: the shaded angle lies outside the triangle, and no two
+   * sides are equal.** — 2026-09-25
+   *
+   * The paper's shaded angle at B turns from north round to BC without
+   * crossing BA, so (b) is the back bearing less (a): 360 − 120 − 84.8. On the
+   * 2014 P2 sheet, 211 of 400 draws swept across the triangle's own angle and
+   * added instead, and 65 had two equal sides (8 equilateral, (a) exactly
+   * 60°) against the paper's 8, 11 and 13. The owner: *"Yes"*.
+   *
+   * Only the `angle` kind, which is 2014's alone: 2018 P2 Q13 (LOCKED) comes
+   * through here as `bearing` and never reaches either test.
+   */
+  // Clockwise from north, BC comes before BA, with no wrap through north: a
+  // wrap puts north inside angle ABC, so the shaded angle lies in it.
+  if (kind === 'angle' && (!(side === -1 && given - phi > 0) || new Set([ba, bcLen, ca]).size < 3)) return null;
+
+  const points: [Pt, Pt, Pt] = [A, B, C];
+  /**
+   * 2018 states the bearing at the pivot; 2014 states it from the far point,
+   * and its part (b) works back through the back bearing, which is the route
+   * its scheme prices ("360 - 120 - [answer to (a)]"). So the two-part
+   * question always takes 2014's arrangement.
+   *
+   * **And the one-part question always takes 2018's — it was a coin toss until
+   * 2026-09-22.** The owner, on the 2018 P2 sheet: *"Have a good look at the
+   * original question, I think our variations are much more difficult."* They
+   * were, by exactly one step:
+   *
+   *   atPivot    "F is on a bearing of 240 from T" … "the bearing of the
+   *              yacht from the trawler". Both measured from T, so the
+   *              cosine-rule angle is added to 240 and that is the answer.
+   *   otherwise  "H is 14 km from G on a bearing of 075" … "the bearing of K
+   *              from H". Measured from a different point, so a BACK BEARING
+   *              has to be found first — 075 + 180 = 255 — before the triangle
+   *              angle goes on.
+   *
+   * Measured over 400 draws of 2018 P2 Q13: **204 the paper's way, 196 needing
+   * a back bearing.** Both are four steps, and both read identically to
+   * `one-form`, which compares presentation — so nothing in the suite could
+   * see it. It was found by reading the two questions side by side.
+   *
+   * The comment above already knew which paper wanted which. Both arrangements
+   * were here and both were right; only the choosing between them was wrong.
+   * That is the eighth time on this project that a paper's own form turned out
+   * to be sitting in the code behind a toss.
+   *
+   * **No key is needed.** `bearings.three-sides-bearing` cites 2018 P2 Q13
+   * alone, and the `angle` branch short-circuits before the draw — so
+   * 2014 P2 Q10 never read the random this removes, and its stream is
+   * untouched.
+   */
+  const atPivot = kind !== 'angle';
+  const stated = atPivot ? given : (given + 180) % 360;
+  const arcs: BearingArc[] = atPivot
+    // labelClear: 2018 P2 Q13's label kept off the leg to C (2026-10-02 full
+    // read, the owner's "Yes" for that question only). atPivot is its kind alone.
+    ? [{ at: 1, to: 0, compass: given, label: brgPlain(given), labelClear: 2 }]
+    : [{ at: 0, to: 1, compass: stated, label: brgPlain(stated) }];
+  // The arc for the angle being *asked* for goes on only when the given
+  // bearing is marked somewhere else. 2014 states its bearing at A and shades
+  // the answer at B; 2018 states its at the pivot and draws nothing for the
+  // answer. Two arcs at one vertex, same radius, merge into a circle.
+  if (kind !== 'two-sides' && !atPivot) {
+    // Shaded only where the words say shaded. 2014 P2 Q10 is the two-part
+    // 'angle' shape and ends "find the size of the shaded angle"; the bearing
+    // shape asks for a bearing by name and its paper shades nothing, so filling
+    // it there would be ink asserting a region the question never mentions.
+    arcs.push({ at: 1, to: 2, compass: answer, label: '', shade: kind === 'angle' });
+  }
+
+  const fig = bearingsTriangle({
+    names: c.letters, points, arcs,
+    north: [...new Set(arcs.map(a => a.at))].filter(v => needsArrow(points, v)),
+    sides: [`${show(ba)} ${c.short}`, `${show(bcLen)} ${c.short}`,
+            `${show(ca)} ${c.short}`],
+    // 2014 P2 Q10 only: the pivot's letter sat inside its own shaded angle,
+    // pushed out from the triangle's centre, which is through the wedge. It
+    // goes to the middle of the widest gap at the pivot that nothing covers -
+    // not the shaded wedge (north round to BC), not the triangle (BC to BA),
+    // not the lines (the owner, 2026-10-03: "Do the 3 left alone ones"). The
+    // 'angle' kind is 2014's alone.
+    ...(kind === 'angle' ? { nameAway: [undefined, travel(B, (clearGap(B, [A, C], answer) + 180) % 360, ba), undefined] as [Pt?, Pt?, Pt?] } : {}),
+  });
+  if (!fig) return null;
+
+  // 2018 lists the three distances and states the bearing separately; 2014
+  // folds each distance into the sentence that places the point. Repeating a
+  // distance in both would be the generator talking, not the exam.
+  const setup = atPivot
+    ? `${cap(rA)} is on a bearing of $${brg(given)}$ from ${rB}.`
+    : `$${nB}$ is ${show(ba)} ${c.unit} from $${nA}$ on a bearing of $${brg(stated)}$.`;
+  const facts = atPivot ? [
+    `$${nA}${nB}$ is ${show(ba)} ${c.unit}.`,
+    `$${nB}${nC}$ is ${show(bcLen)} ${c.unit}.`,
+    `$${nC}${nA}$ is ${show(ca)} ${c.unit}.`,
+    setup,
+  ] : [
+    setup,
+    `$${nC}$ is ${show(bcLen)} ${c.unit} from $${nB}$.`,
+    `$${nA}$ is ${show(ca)} ${c.unit} from $${nC}$.`,
+  ];
+  // **The whole of 2014 P2 Q10, both parts.** It was cloned as part (a) alone
+  // for a long time and cited honestly as "2014 P2 Q10a" - but a pupil asking
+  // for that question then got three of its five marks. Part (b) is the shaded
+  // angle at the pivot, which is the bearing of the third point from it.
+  const ask = kind === 'angle'
+    ? [`<b>(a)</b>&nbsp;&nbsp;Calculate the size of angle $${nA}${nB}${nC}$.`,
+       `<b>(b)</b>&nbsp;&nbsp;Hence find the size of the shaded angle.`]
+    : [`Calculate the bearing of ${rC} from ${rB}.`];
+  const prose = [intro(c), ...facts, ...ask];
+
+  // The schemes pay for the substitution and for the value of cos separately —
+  // 2014 P2 Q10(a) and 2018 P2 Q13 both read •¹ substitute correctly into the
+  // cosine rule, •² calculate cos B correctly, •³ calculate the angle. So the
+  // substitution and its evaluation are two steps, not one.
+  const cosSub = `<strong>1.</strong> All three sides are known, so substitute into the cosine rule for the angle at $${nB}$:<br><br>$\\cos ${nB} = \\frac{${show(ba)}^{2} + ${show(bcLen)}^{2} - ${show(ca)}^{2}}{2 \\times ${show(ba)} \\times ${show(bcLen)}}$`;
+  const cosVal = `<strong>2.</strong> Work that out:<br><br>$\\cos ${nB} = ${((ba * ba + bcLen * bcLen - ca * ca) / (2 * ba * bcLen)).toFixed(4)}$`;
+  const angStep = `<strong>3.</strong> Take the inverse cosine:<br><br>$${nA}${nB}${nC} = ${dp1(phi)}^{\\circ}$`;
+  // The scheme pays part (b) twice: "know how to calculate the angle", then
+  // "correctly calculate the angle within a valid strategy". So the back
+  // bearing and the arithmetic are two steps, not one.
+  const backBearing = `<strong>4. (b)</strong> The bearing given is of $${nB}$ from $${nA}$, so the bearing of $${nA}$ from $${nB}$ is the back bearing:<br><br>$${Math.round(stated)} ${stated < 180 ? '+' : '-'} 180 = ${brg(given)}$`;
+  const shaded = `<strong>5. (b)</strong> The shaded angle turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there by angle $${nA}${nB}${nC}$:<br><br>$${Math.round(given)} ${side > 0 ? '+' : '-'} ${dp1(phi)} = ${dp1(((given + side * phi) % 360 + 360) % 360)}^{\\circ}$`;
+  // The first three carry their part label too when there are two parts, so the
+  // hints read (a)(a)(a)(b)(b) rather than starting to name parts halfway.
+  const partA = (t: string) => t.replace(/<\/strong>/, ' (a)</strong>');
+  // The bearing kind (2018 P2 Q13) carries the angle with dots from step 3 on,
+  // so the rounding to the nearest degree is done on a number the page shows;
+  // the angle kind (2014 P2 Q10) keeps its 1 d.p. part (a) answer.
+  const angCarried = `<strong>3.</strong> Take the inverse cosine:<br><br>$${nA}${nB}${nC} = ${phi.toFixed(2)}\\ldots^{\\circ}$`;
+  const steps = kind === 'angle'
+    ? [partA(cosSub), partA(cosVal), partA(angStep), backBearing, shaded]
+    : [
+    cosSub, cosVal, angCarried,
+    atPivot
+      ? `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(given)}$, and angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$, so the bearing to the nearest degree is:<br><br>$${turnedByCarried(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`
+      : `<strong>4.</strong> The bearing given is of $${nB}$ from $${nA}$, so the bearing of $${nA}$ from $${nB}$ is the back bearing, $${Math.round(stated)} ${stated < 180 ? '+' : '-'} 180 = ${brg(given)}$. Angle $${nA}${nB}${nC}$ turns ${side > 0 ? 'clockwise' : 'anticlockwise'} from there to $${nB}${nC}$:<br><br>$${turnedByCarried(given, phi, side)}^{\\circ}$, that is $${brg(answer)}$`,
+  ];
+  const text = [...prose, ...steps].join(' ');
+  if (verifyFigure(fig, text).length) return null;
+
+  return {
+    subTopic: kind === 'angle' ? 'Bearings with the Cosine Rule' : 'Finding a Bearing',
+    difficulty: 'exam',
+    variationId: kind === 'angle' ? 'bearings.three-sides-angle' : 'bearings.three-sides-bearing',
+    // 2018 P2 Q13 gives its four facts as bullets, each with its stop: "• FY is
+    // 7.2 kilometres. … • F is on a bearing of 240° from T." The owner, on the
+    // 2018-2014 light pass: "Yes". The bearing kind is that paper's alone, and
+    // this is after verifyFigure.
+    questionLines: kind === 'bearing'
+      ? [prose[0], renderScene(fig.scene), ...facts.map(f => `&bull;&nbsp; ${f}`), ...ask]
+      : [prose[0], renderScene(fig.scene), ...prose.slice(1)],
+    boardQuestionLines: [`${nA}${nB} = ${show(ba)}, ${nB}${nC} = ${show(bcLen)}, ${nC}${nA} = ${show(ca)} ${c.short}. ${setup.replace(/\$/g, '')} ${ask.join(' ').replace(/<[^>]+>|&nbsp;|\$/g, '')}`],
+    solutionSteps: steps,
+    stepMarks: steps.map(() => 1),
+    finalAnswer: kind === 'angle'
+      ? `(a) $${dp1(phi)}^{\\circ}$<br>(b) $${dp1(((given + side * phi) % 360 + 360) % 360)}^{\\circ}$`
+      : `$${brg(answer)}$`,
+    figure: fig,
+  };
+}
+
+// ── two sides and one bearing: the sine rule, then the bearing back ─────────
+// 2025 P2 Q12. The angle inside the triangle comes from the bearing against the
+// cardinal line, and the sine rule gives the angle opposite the known side.
+function twoSides(c: BearingContext, side: number): Q | null {
+  const [nA, nB, nC] = c.letters;
+  const [rA, rB, rC] = c.refer;
+  // **East or west, because 2025 P2 Q12 is east.** "B is 250 metres east of A",
+  // and the owner's family ruling puts a north-south baseline against an
+  // east-west one among the pairs a variation may not choose between. It was
+  // choosing from all four, and south alone took half the draws.
+  //
+  // A north baseline also empties the first step: the angle at A is the
+  // difference between the printed bearing and the baseline's own, and against
+  // north that difference is the bearing itself, so the working would print a
+  // subtraction of nothing.
+  const base = pick([90, 270]);
+  const ab = getRandomInt(c.band[0], c.band[1]);
+  const alpha = getRandomInt(28, 72);
+  const bcLen = Math.round(ab * (getRandomInt(70, 145) / 100));
+  // **No equal sides.** 10 km and 10 km make the triangle isosceles, and the
+  // angle at C then comes without the sine rule the paper's four marks are
+  // for - 67 of 400 draws. The owner, on the 2025 re-review sheet: "Yes", as
+  // on 2014 P2's bearings. The kind is fixed before the loop, so only this id
+  // ever reaches it.
+  if (bcLen === ab) return null;
+  const ratio = ab * sin(alpha) / bcLen;
+  if (ratio > 0.985) return null;
+  const gamma = Math.asin(ratio) / DEG;
+  // near 90° the two sine-rule solutions sit almost on top of each other and
+  // the drawing stops settling which one is meant
+  if (Math.abs(gamma - 90) < 14) return null;
+  const beta = 180 - alpha - gamma;
+  if (beta < 22) return null;
+
+  const bC = ((base - side * alpha) % 360 + 360) % 360;
+  const A = pt(0, 0);
+  const B = travel(A, base, ab);
+  const C = travel(A, bC, bcLen * sin(beta) / sin(alpha));
+  const answer = compassOf(B, C);
+  if (Math.round(answer) % 360 === 0) return null;
+
+  const points: [Pt, Pt, Pt] = [A, B, C];
+  const fig = bearingsTriangle({
+    names: c.letters, points,
+    arcs: [{ at: 0, to: 2, compass: bC, label: brgPlain(bC) }],
+    north: [0, 1].filter(i => needsArrow(points, i)),
+    sides: [`${ab} ${c.short}`, `${bcLen} ${c.short}`, ''],
+  });
+  if (!fig) return null;
+
+  const prose = [
+    intro(c),
+    `${cap(rB)} is ${ab} ${c.unit} due ${CARDINAL[base]} of ${rA}.`,
+    `The bearing of ${rC} from ${rA} is $${brg(bC)}$.`,
+    `${cap(rC)} is ${bcLen} ${c.unit} from ${rB}.`,
+    `Calculate the bearing of ${rC} from ${rB}.`,
+  ];
+  // 2025 P2 Q12 is four marks: •¹ correct substitution into the sine rule,
+  // •² rearrange the equation, •³ calculate the angle, •⁴ calculate the bearing.
+  // The angle at A comes from the bearings and is not paid for separately, so
+  // it opens the substitution step.
+  // which way the angle turns is a question about the picture, so it is read
+  // off the picture: adding it must land on the bearing that was measured
+  const back = (base + 180) % 360;
+  const clockwise = Math.abs(((back + beta - answer + 540) % 360) - 180) < 0.5;
+  const steps = [
+    `<strong>1.</strong> ${cap(rB)} is due ${CARDINAL[base]} of ${rA}, so its bearing from ${rA} is $${brg(base)}$ and the angle at $${nA}$ is the difference between that and $${brg(bC)}$, namely $${alpha}^{\\circ}$. Now substitute into the sine rule, pairing $${nA}${nB}$ with the angle at $${nC}$ and $${nB}${nC}$ with the angle at $${nA}$:<br><br>$\\frac{${bcLen}}{\\sin ${alpha}^{\\circ}} = \\frac{${ab}}{\\sin ${nC}}$`,
+    `<strong>2.</strong> Rearrange to make $\\sin ${nC}$ the subject:<br><br>$\\sin ${nC} = \\frac{${ab} \\times \\sin ${alpha}^{\\circ}}{${bcLen}} = ${ratio.toFixed(4)}$`,
+    // The angles carried with dots, as 2018 P2 Q13's now are: to 1 d.p. the
+    // last line could read "90 + 62.5 = 152.5, so the bearing is 152" (27 of
+    // 400 draws; 2026-10-02 full read, the owner's "Yes"). This id's alone.
+    `<strong>3.</strong> The diagram shows the ${gamma < 90 ? 'acute' : 'obtuse'} case, and the angles add to $180^{\\circ}$:<br><br>$${nC} = ${gamma.toFixed(2)}\\ldots^{\\circ}$, so $${nA}${nB}${nC} = 180 - ${alpha} - ${gamma.toFixed(2)}\\ldots = ${beta.toFixed(2)}\\ldots^{\\circ}$`,
+    // The sum written out, as the scheme's •⁴ "calculate bearing" is paid for
+    // it: "270 - 48.4 = 221.6, so 222°" (the owner, 2026-10-02, "Yes").
+    `<strong>4.</strong> The bearing of ${rA} from ${rB} is $${brg(back)}$, and angle $${nA}${nB}${nC}$ turns ${clockwise ? 'clockwise' : 'anticlockwise'} from there:<br><br>$${turnedByCarried(back, beta, clockwise ? 1 : -1)}^{\\circ}$, so the bearing is $${brg(answer)}$`,
+  ];
+  const text = [...prose, ...steps].join(' ');
+  if (verifyFigure(fig, text).length) return null;
+
+  return {
+    subTopic: 'Finding a Bearing',
+    difficulty: 'exam',
+    variationId: 'bearings.two-sides',
+    stepMarks: [1, 1, 1, 1],
+    // The three facts bulleted, as 2025 P2 Q12 prints them - "• B is 250
+    // metres east of A." The owner: "Yes". After verifyFigure, so no draw
+    // passes or fails differently.
+    questionLines: [prose[0], renderScene(fig.scene),
+      ...prose.slice(1, 4).map(l => `&bull;&nbsp; ${l}`), ...prose.slice(4)],
+    boardQuestionLines: [`${nB} is ${ab} ${c.short} due ${CARDINAL[base]} of ${nA}. Bearing of ${nC} from ${nA} is ${brgPlain(bC)}. ${nB}${nC} = ${bcLen} ${c.short}. Bearing of ${nC} from ${nB}?`],
+    solutionSteps: steps,
+    finalAnswer: `$${brg(answer)}$`,
+    figure: fig,
+  };
+}
+
+export const BEARINGS_GENERATORS: Record<string, Gen> = {
+  'Bearings with the Sine Rule': (w, asked) => bearingsQuestion(['side'], w, asked),
+  'Bearings with the Cosine Rule': (w) => bearingsQuestion(['angle'], w),
+  'Finding a Bearing': (w) => bearingsQuestion(['bearing', 'two-sides'], w),
+};

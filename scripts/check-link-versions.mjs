@@ -42,12 +42,23 @@ const V2 = [
   '.y_2flj87m6_2glrhcd2_28bk2bg2_28fzpfd2_2tszbbd2_2v97hb82_2kcvgtq2_27cdz926_26x8p9g2_2jw8v6n2_2jrlrh72_2fzbnjk2_2gpllz22_2w9wkb92_2q9zjtz2',
   '.y_2qszwws6_2t8mnrd2_272wqxt6_2h7rwlj2_2plvs2s2_2k9b6vl2',
 ];
+// Recorded version 3 links (scripts/fixtures/share-links-v3-2026-10-10.json), each holding an Advanced Higher
+// question version 4 changes (never the paper in any wording, a widened card), 2026-10-11: version 4 changes 28
+// of the 1,594 generated questions in those 250 links.
+const V3 = [
+  '.-_2nsgrj72_2xchcnx2_2vqrmd72',
+  '.-_2wxv9kl2_2nszthn2_2npzxcr6',
+  '.-_2q7ztnn2_2bwrpdz2_29cq78h2_28929n82',
+  '.-_2tf8zrh2b2nbb2_2jgx2tj2_296qmbw2_2fz9bnw2_2hkqh9b6_2xsl9j.z.2',
+];
 // Each must be in the recorded fixtures, so a typo here can't pass for a link.
 const recordedQs = new Set(['share-links-2026-10-01.json', 'share-links-short-2026-10-01.json'].flatMap(f =>
   JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'fixtures', f), 'utf8')).sheets.map(s => s.q)));
 for (const q of OLD) t.check(recordedQs.has(q), `${q.slice(0, 14)}… is a recorded old link`);
 const recordedV2 = new Set(JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'fixtures', 'share-links-v2-2026-10-09.json'), 'utf8')).sheets.map(s => s.q));
 for (const q of V2) t.check(recordedV2.has(q), `${q.slice(0, 14)}… is a recorded version 2 link`);
+const recordedV3 = new Set(JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'fixtures', 'share-links-v3-2026-10-10.json'), 'utf8')).sheets.map(s => s.q));
+for (const q of V3) t.check(recordedV3.has(q), `${q.slice(0, 14)}… is a recorded version 3 link`);
 
 const SHEET = `(() => {
   const m = /(\\d+) questions?/.exec(document.body.innerText);
@@ -107,15 +118,34 @@ await withPage({ port: 8151, cdp: 9251, width: 1280, height: 900 }, async ({ eva
   t.check(v2Only.length > 0, `version 2 handouts fetch ${v2Only.length} script file${v2Only.length === 1 ? '' : 's'} that no new handout and no version 1 handout fetches (version 2's frozen maker)`);
   t.note(`version 2's frozen maker: ${v2Only.map(f => `${f} ${chunkKb(f)} KB`).join(', ')}`);
 
-  // A page that makes new questions fetches none of either frozen maker: National 5's and Advanced Higher's papers.
-  const frozen = [...frozenOnly, ...v2Only];
+  // Version 3 handouts (Advanced Higher questions version 4 changes), the same way, by version 3's frozen maker.
+  const v3Scripts = new Set();
+  for (const full of V3) {
+    const refs = decodeRefs(full);
+    const fresh = encodeShortRefs(refs);
+    t.check(linkVersion(full) === 3 && linkVersion(fresh) === LINK_VERSION, `${full.slice(0, 14)}… reads as version 3, and written now as version ${LINK_VERSION}`);
+    const a = await open(full, 'ah');
+    const b = await open(full, 'ah');
+    const n = await open(fresh, 'ah');
+    a.scripts.forEach(s => v3Scripts.add(s));
+    n.scripts.forEach(s => newScripts.add(s));
+    t.check(a.count === refs.length && !a.missing, `the version 3 link opens all ${refs.length} questions (${a.count}, missing: ${a.missing})`);
+    t.check(a.text && a.text === b.text, '  and the same questions each time it is opened');
+    t.check(n.count === refs.length && n.text !== a.text, '  the same sheet as a new link opens with the current maker instead (different questions)');
+  }
+  const v3Only = [...v3Scripts].filter(s => !newScripts.has(s) && !oldScripts.has(s) && !v2Scripts.has(s));
+  t.check(v3Only.length > 0, `version 3 handouts fetch ${v3Only.length} script file${v3Only.length === 1 ? '' : 's'} that no new handout and no older handout fetches (version 3's frozen maker)`);
+  t.note(`version 3's frozen maker: ${v3Only.map(f => `${f} ${chunkKb(f)} KB`).join(', ')}`);
+
+  // A page that makes new questions fetches none of the frozen makers: National 5's and Advanced Higher's papers.
+  const frozen = [...frozenOnly, ...v2Only, ...v3Only];
   for (const route of ['/course/n5/generate/paper/2024/paper-1', '/course/ah/generate/paper/2025/paper-2']) {
     await go(route, 2500);
     for (let i = 0; i < 40; i++) { if (!(await evaluate(`/Drawing question/.test(document.body.innerText)`))) break; await sleep(1000); }
     await sleep(1500);
     const paper = await evaluate(SCRIPTS);
     const leaked = paper.filter(s => frozen.includes(s));
-    t.check(frozenOnly.length > 0 && v2Only.length > 0 && leaked.length === 0, `a generated practice paper (${route}) loads none of the frozen makers (${leaked.length} of their files)`);
+    t.check(frozenOnly.length > 0 && v2Only.length > 0 && v3Only.length > 0 && leaked.length === 0, `a generated practice paper (${route}) loads none of the frozen makers (${leaked.length} of their files)`);
   }
 });
 

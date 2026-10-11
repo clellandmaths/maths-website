@@ -323,7 +323,7 @@ const q2024p2q11: CardRoutine<P2Q11of2024> = {
 
 type OrderClaim = 'lt' | 'gt' | 'squaresLt' | 'squaresGt' | 'squaresEqual';
 
-interface P1Q8of2023 { claim: OrderClaim; c: -1 | 3 | -5 | 7 }
+interface P1Q8of2023 { claim: OrderClaim; c: -1 | 3 | -5 | 7 | -9 | 11 | -13 | 15 }
 
 /**
  * Each statement, its counterexample (with the stop inside the maths), and
@@ -361,7 +361,9 @@ const CLAIMS: Readonly<Record<OrderClaim, { statement: string; counter: string; 
 const ORDER_CLAIMS = Object.keys(CLAIMS) as OrderClaim[];
 
 const q2023p1q8: CardRoutine<P1Q8of2023> = {
-  draw: () => ({ claim: pick(ORDER_CLAIMS), c: pick([-1, 3, -5, 7] as const) }),
+  // -9, 11, -13 and 15 on the owner's "Yes" (2026-10-11, sheets that feel distinct): (b) is 2 of the 3 marks, each
+  // constant one less than a multiple of 4, so (b) is the paper's two steps (n = 2k + 1, then 4 taken out).
+  draw: () => ({ claim: pick(ORDER_CLAIMS), c: pick([-1, 3, -5, 7, -9, 11, -13, 15] as const) }),
 
   build: ({ claim, c }): Built => {
     const s = CLAIMS[claim];

@@ -37,8 +37,10 @@ export const AH_FAMILIES: Readonly<Record<string, readonly CardLabel[]>> = {
   'homogeneous-conditions': ['2019 Q8', '2024 P2 Q4', '2026 P1 Q4'],
   // A number from one base to another, through base 10.
   'base-change': ['2019 Q12', '2026 P2 Q9'],
-  // The derivative of a multiple of an inverse sine of a multiple of x.
-  'inverse-sine': ['2023 P2 Q1', '2026 P2 Q1'],
+  // The derivative of a multiple of an inverse sine of a multiple of x. 2018 Q1(a) since
+  // 2026-10-11: its card draws the same function (and drew both sisters' paper questions in its
+  // own words); the owner: "Yes it should join the family".
+  'inverse-sine': ['2018 Q1(a)', '2023 P2 Q1', '2026 P2 Q1'],
 };
 
 const FAMILY_OF: ReadonlyMap<CardLabel, string> = new Map(
