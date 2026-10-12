@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "dd83646a709a4d5d459c68247c9df33915effebd",
+  "sourceCommit": "4787cd8f3851160c686c69f6e0d0865425286409",
   "sourceDirty": false,
   "count": 217,
   "files": {
@@ -51,7 +51,7 @@
     "generators/ah/paper-keys.ts": "5ebeea66461643d1",
     "generators/ah/paper-same.ts": "28fca0d10df3dd07",
     "generators/ah/plain-key.ts": "4911c8339d8446b0",
-    "generators/ah/registry/binomial-theorem.ts": "a42b788ace5e6641",
+    "generators/ah/registry/binomial-theorem.ts": "454d644cb599afd1",
     "generators/ah/registry/complex-numbers.ts": "1f740bc66a547f3a",
     "generators/ah/registry/differential-equations.ts": "fa0a32ded5f30b35",
     "generators/ah/registry/differentiation.ts": "c7522cdedf4b4490",
