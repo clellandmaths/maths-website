@@ -204,7 +204,11 @@ async function drawCards(
   const spent = (card: CardLabel) => (fails.get(card) ?? 0) >= TRIES;
   const coreMisses = new Map<CardLabel, number>();
   // Each question on the sheet by its card and parts, the ones already there arriving in `exclude` as `parts:` keys.
-  const onSheet = exclude.filter(k => k.startsWith(PARTS_PREFIX)).map(partsFromKey);
+  // Once each, however often a page passes it (the audit, 2026-10-12, the owner "Yes"): Focus Mode and the full-screen
+  // presenter pass the sheet twice, and a question read twice "shares half" with itself, which put its card in
+  // `ranOut` from the second press and switched the preference off (2018 Q9's first repeat at press 2, not 8). Two
+  // questions with one parts key are one question, which the sheet's own keys already refuse, so nothing else moves.
+  const onSheet = [...new Set(exclude.filter(k => k.startsWith(PARTS_PREFIX)))].map(partsFromKey);
   const partMisses = new Map<CardLabel, number>();
   // A card that already has a repeat on the sheet has been found to have no fresh question (the preference gave way
   // for it), so it is not searched again on every later click: that cost 2018 Q17, whose (b) never changes, 30 extra

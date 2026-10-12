@@ -35,7 +35,7 @@ import { AH_PAPER_KEYS } from './paper-keys';
 import { PAPER_DRAWS } from './paper-draws';
 import { keyHash, plainKey } from './plain-key';
 import { PAPER_PARTS, PAPER_SAME, PAPER_TWIN } from './paper-same';
-import { heldOf, marksHeld, sameKeysOf } from './same-keys';
+import { heldOf, marksHeld, sameKeysOf, sheetPartsOf, type SheetPart } from './same-keys';
 import { cardTwinKey } from './card-twins';
 
 /**
@@ -102,6 +102,33 @@ function onePartFromPaper(card: CardLabel, routine: CardRoutine, built: Built): 
   return 2 * (total - (p.marks[changed[0]] ?? 0)) >= total;
 }
 
+/**
+ * The one card whose own paper's parts are NOT held against it (the audit's G1, 2026-10-12): 2018 Q17's (b), tan x,
+ * is the paper's in every draw (5 of its 10 marks), so holding it would leave the card no question. The owner: "let a
+ * vary and keep the rest" (2026-10-11), and on the audit sheet, "Probably best to leave it widening to sec x just means
+ * all variations would have sec x instead of tan x" (https://claude.ai/artifact/Ds2CWt7zPQsZ8HBcHZ63Av, card 2).
+ */
+const OWN_PARTS_LEFT = new Set<string>(['2018 Q17']);
+
+/**
+ * The marks of a card's own paper held by a draw: the paper's parts whose own lines, WORKING and answer the draw has
+ * word for word, whatever its opening lines (`sheetPartsOf` without the stem). The working as well as the answer, as
+ * the owner was shown it ("the other parts stay the paper's own, word for word, working and answer"), and as a sheet
+ * compares parts: 2024 P1 Q5's x^3 + x for x^3 - x, ruled a different question (2026-10-11), keeps (b)'s answer but
+ * not its working (f'(x) = 3x^2 + 1), so it is not held.
+ */
+const OWN_PAPER_PARTS = new Map<string, SheetPart[]>();
+function ownPaperHeld(card: CardLabel, routine: CardRoutine, built: Built): boolean {
+  const n = PAPER_DRAWS[card];
+  if (n === undefined) return false;
+  let p = OWN_PAPER_PARTS.get(card);
+  if (!p) { p = sheetPartsOf(routine.build(n), false); OWN_PAPER_PARTS.set(card, p); }
+  if (p.length < 2) return false;
+  const have = new Set(sheetPartsOf(built, false).map(x => x.key));
+  const total = p.reduce((t, x) => t + x.marks, 0);
+  return total > 0 && 2 * p.filter(x => have.has(x.key)).reduce((t, x) => t + x.marks, 0) >= total;
+}
+
 /** Each paper identity (`same-keys.ts`) to its paper. */
 const PAPER_SAME_KEYS = new Map(Object.entries(PAPER_SAME).flatMap(([p, ks]) => ks.map(k => [k, p] as const)));
 /** Each multi-part paper's total marks, for P2 across cards. */
@@ -116,8 +143,11 @@ const PART_TOTALS = new Map(Object.entries(PAPER_PARTS).map(([p, ps]) => [p, ps.
  *   changed. The paper's identities are its card's own build (`paper-same.ts`);
  * - its own paper by its card's twin rule (`card-twins.ts`), when the draw is given;
  * - its own paper with one part changed, half the marks or more the paper's (P2);
- * - another card's paper whose parts it holds word for word, half that paper's marks or more
- *   (P2 across cards: 2016 Q6's card drew 2024 P2 Q7's part (a), 4 of its 6 marks).
+ * - any paper whose parts it holds word for word, half that paper's marks or more (P2 across cards: 2016 Q6's
+ *   card drew 2024 P2 Q7's part (a), 4 of its 6 marks), ITS OWN included (the audit's G1, the owner "Yes",
+ *   2026-10-12): a number changed in the opening line that only one part uses leaves the other parts the paper's
+ *   (2024 P1 Q7, -32 to -108: (a) is the paper's, 3 of 6 marks), which the one-part rule above never saw because
+ *   the opening line differs. 2018 Q17 is left (`OWN_PARTS_LEFT`).
  */
 export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Built, draw?: unknown): string | null {
   const q = questionOf(built);
@@ -132,6 +162,7 @@ export function paperQuestionOf(card: CardLabel, routine: CardRoutine, built: Bu
   for (const k of sameKeysOf(built)) { const p = PAPER_SAME_KEYS.get(k); if (p) return p; }
   if (draw !== undefined && PAPER_TWIN[card] !== undefined && cardTwinKey(card, draw) === PAPER_TWIN[card]) return card;
   if (onePartFromPaper(card, routine, built)) return card;
+  if (!OWN_PARTS_LEFT.has(card) && ownPaperHeld(card, routine, built)) return card;
   const held = heldOf(built);
   for (const [paper, parts] of Object.entries(PAPER_PARTS)) {
     if (paper === card) continue;

@@ -197,7 +197,8 @@ const q2024p2q13: CardRoutine<P2Q13of2024> = {
       ],
       solutionSteps: [
         `<strong>(a)</strong> $${fraction} = ${template}$`,
-        `<strong>(a)</strong> $-${nb} = A(${xb}) + Bx$: at $x = 0$ and $x = -${b}$, $A = -${n}$ and $B = ${n}$`,
+        // Ends on the partial fractions themselves, not only A and B (the audit, 2026-10-12, the owner "Yes").
+        `<strong>(a)</strong> $-${nb} = A(${xb}) + Bx$: at $x = 0$ and $x = -${b}$, $A = -${n}$ and $B = ${n}$, so $${fraction} = ${partial}$`,
         `<strong>(b)</strong> With $u = x$ and $\\frac{dv}{dx} = ${e}$: $${uv} - \\ldots$`,
         `<strong>(b)</strong> $\\int x${e}\\,dx = ${uv} - ${left}$`,
         `<strong>(b)</strong> $\\int x${e}\\,dx = ${integral}$`,

@@ -129,6 +129,16 @@ export interface QuestionWithMetadata extends Question {
    */
   videoOf?: string;
   /**
+   * A generated question's identities by the owner's one "same question" test, hashed small: what keeps a twin off
+   * a sheet. `worksheetKeys` passes them on every press, so a surface that rebuilt a question field by field without
+   * them would let its twin back in silently. Declared on the audit's word (2026-10-12, the owner "Yes").
+   */
+  twinKeys?: string[];
+  /** A thin Advanced Higher card's core (`ah/cores.ts`): a sheet takes a fresh one first. A preference, never a limit. */
+  coreKey?: string;
+  /** An Advanced Higher question's parts (`ah/same-keys.ts`): a sheet takes one sharing less than half its marks first. */
+  partsKey?: string;
+  /**
    * A generated Advanced Higher question's hint ladder: its paper card's moves,
    * marks and watch-out, with this draw's numbers and working. `Hints` stages
    * it as it stages that paper card's ladder. Absent on every other question.

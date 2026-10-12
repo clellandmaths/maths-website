@@ -112,7 +112,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2024 P1 Q7',
-    skill: 'Implicit differentiation of $ax^{2}y + bxy^{2} = c$, then the one stationary point with $y$ positive.',
+    skill: 'Implicit differentiation of the curve\'s equation in $x^{2}y$ and $xy^{2}$, then the one stationary point with $y$ positive.',
     marks: [3, 3],
     route: '3 + 3 - (a) the product rule on one term, then every term differentiated with the constant going to 0, then dy/dx made the subject, (-2axy - by^2)/(ax^2 + 2bxy); (b) dy/dx set to 0, then the line 2ax + by = 0 from the numerator (y > 0 rules out y = 0), then substituted into the curve to give the point.',
     ranges: 'The paper: x^2 y + 4xy^2 = -32, y > 0, stationary point (-4, 2). Built from the point: x^2 y + b xy^2 = c with b even from ±2 to ±8 (the paper\'s 4) and y0 from 1 to 3, so the line is x = -(b/2)y, whole as x = -2y, and c = -b^2 y0^3/4 is whole and at most 150 in size, as -32. A number in front of x^2 y, or an odd b, puts fractions in the line and the substitution (x = -2y/3), a step the paper does not have. The sign of b is either (the paper\'s positive gives x0 negative); y > 0 always, as the paper, so the point is unique. 20 questions. All exact: Paper 1.',
@@ -189,7 +189,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2022 P1 Q4',
-    skill: 'Implicit differentiation of $y^{3} + ay = bxy + c$, the gradient at a given $y$, then show there is no stationary point.',
+    skill: 'Implicit differentiation of the curve\'s equation in $y^{3}$, $y$ and $xy$, the gradient at a given $y$, then show there is no stationary point.',
     marks: [3, 1, 2],
     route: '3 + 1 + 2 - (a) the chain rule on y^3 or the product rule on bxy, one right; then every term, 3y^2 dy/dx + a dy/dx = by + bx dy/dx; then dy/dx = by/(3y^2 + a - bx); (b) x from the curve at the given y, then the gradient; (c) dy/dx = 0 gives y = 0, and y = 0 in the curve\'s equation gives 0 = c, inconsistent. (c) needs the value put back into the curve\'s equation, not only y = 0.',
     ranges: 'The paper: y^3 + 4y = 2xy + 1, at y = -1 (so x = 3), gradient -2. a from 1 to 6 (the paper\'s 4), b from 1 to 4 (the paper\'s 2; a negative b prints "= -3xy - 5", which no paper writes), c from -6 to 6 never 0 (the paper\'s 1, and never 0 or (c) has nothing to show), y from -2 to 2 never 0 (the paper\'s -1). Only the curves where x is whole and not 0 at that y and the gradient is a whole number, not 0, as the paper\'s; listed, 76 of them. A negative c is a sign, not a step. All exact: Paper 1.',
@@ -266,7 +266,7 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2019 Q1(b)',
-    skill: 'Differentiate $\\frac{ax^{n} + b}{x^{n} + c}$ by the quotient rule, and simplify.',
+    skill: 'Differentiate $y$, a quotient of two expressions in the same power of $x$, by the quotient rule, and simplify.',
     marks: [3],
     route: 'The quotient rule with the denominator and one term of the numerator right; then the whole numerator, na x^{n-1}(x^n + c) - (ax^n + b)(n x^{n-1}); then simplified, the x^n terms cancelling to n(ac - b)x^{n-1} over (x^n + c)^2. The last mark needs the brackets multiplied out and collected.',
     ranges: 'The paper: (2x^3 + 1)/(x^3 - 4), answer -27x^2/(x^3 - 4)^2. The same power top and bottom, n from 2 to 4 (the paper\'s 3), so the numerator collects to one term, as the paper\'s does; a from 2 to 5 (the paper\'s 2), b from -9 to 9 and c from -6 to 6, never 0 (the paper\'s 1 and -4); never ac = b, which would make y a constant. The bottom has no number in front of x^n, as the paper\'s.',
@@ -336,14 +336,14 @@ export const DIFFERENTIATION: readonly CardMeta[] = [
   },
   {
     card: '2017 Q3',
-    skill: 'Differentiate $\\frac{e^{u}}{u}$ with $u = x^{n} + c$ by the quotient rule, and simplify.',
+    skill: 'Differentiate $\\frac{e^{u}}{u}$, with $u$ the expression in $x$ that appears in both, by the quotient rule, and simplify.',
     marks: [3],
     route: 'The quotient rule with one term of the numerator right, u\'e^u(u) - …, the top\'s derivative by the chain rule; the whole derivative over u^2; then the common factor u\'e^u taken out and the numerator simplified to u - 1, as the paper\'s (x^2 - 1) - 1 = x^2 - 2. Leaving (u) - 1 unsimplified loses the last mark.',
     ranges: 'The paper: e^{x^2 - 1}/(x^2 - 1), answer 2xe^{x^2 - 1}(x^2 - 2)/(x^2 - 1)^2. u = x^n + c, the same u in the power and underneath, as the paper; n 2 (the paper) or 3, c from -9 to 9 (the paper\'s -1), never 0 and never 1, where u - 1 would be x^n alone and the answer would simplify further than the paper\'s. 34 questions.',
   },
   {
     card: '2017 Q11',
-    skill: 'Differentiate $x^{ax^{n} + b}$ by logarithmic differentiation.',
+    skill: 'Differentiate $x$ to a power that is itself a function of $x$, by logarithmic differentiation.',
     marks: [5],
     route: 'Logs of both sides with the power brought down, ln y = (ax^n + b) ln x; the left side, (1/y) dy/dx; the product rule on the right with one term right; both terms; then dy/dx = x^{ax^n + b}(anx^{n-1} ln x + (ax^n + b)/x), in terms of x. Without the product rule the middle marks go.',
     ranges: 'The paper: x^{2x^3 + 1}, answer x^{2x^3 + 1}(6x^2 ln x + (2x^3 + 1)/x). The power ax^n + b: a from 1 to 4 (the paper\'s 2), n from 2 to 4 (the paper\'s 3), b from -6 to 6, never 0 (the paper\'s 1), a and b sharing no factor, as 2 and 1 (a paper never prints x^{2x^3 + 4}). Always x to a power of x, as the paper. 96 questions.',

@@ -119,7 +119,11 @@ const q2026p2q14: CardRoutine<P2Q14> = {
         `<strong>(a)</strong> Using $P$: $${plane}$`,
         `<strong>(b)</strong> $${parametric}$`,
         `<strong>(b)</strong> $${substituted} = ${D}$`,
-        `<strong>(b)</strong> $${collected} = ${D}$, so $t = ${tS}$ and $S${coords(S)}$`,
+        // Collected to t alone, the line already says what t is: "t = -1, so S(…)", never "t = -1, so t = -1" (the audit,
+        // 2026-10-12, the owner "Yes").
+        collected === 't'
+          ? `<strong>(b)</strong> $t = ${tS}$, so $S${coords(S)}$`
+          : `<strong>(b)</strong> $${collected} = ${D}$, so $t = ${tS}$ and $S${coords(S)}$`,
         `<strong>(c)</strong> $\\mathbf{d} = ${column(d)}$`,
         `<strong>(c)</strong> $\\cos\\phi = \\frac{\\mathbf{d} \\cdot \\mathbf{n}}{|\\mathbf{d}||\\mathbf{n}|} = ${cosine}$`,
         `<strong>(c)</strong> The acute angle between $L$ and the normal is $${rounded(phi, 1)}^{\\circ}$, so the acute angle between $L$ and $\\pi$ is $90^{\\circ} - ${rounded(phi, 1)}^{\\circ} = ${rounded(theta, 1)}^{\\circ}$`,
@@ -260,7 +264,10 @@ const q2025p1q8: CardRoutine<P1Q8> = {
         `<strong>(a)</strong> So $${sum([{ coef: last[2], body: 'z' }])} = ${last[3]}$, and by back substitution $${tValues}$: $T${coords(T)}$`,
         `<strong>(b)</strong> Setting each fraction equal to $\\mu$: $${parametric}$`,
         `<strong>(b)</strong> Substituting into $\\pi_3$: $${substituted} = ${D}$`,
-        `<strong>(b)</strong> $${collected} = ${D}$, so $\\mu = ${mu}$ and $P${coords(P)}$`,
+        // As 2026 P2 Q14's: collected to mu alone, the line already says what mu is.
+        collected === '\\mu'
+          ? `<strong>(b)</strong> $\\mu = ${mu}$, so $P${coords(P)}$`
+          : `<strong>(b)</strong> $${collected} = ${D}$, so $\\mu = ${mu}$ and $P${coords(P)}$`,
         `<strong>(c)</strong> $\\overrightarrow{TP} = ${column(v)}$`,
         `<strong>(c)</strong> Through $P$: $${l2}$`,
       ],
@@ -484,7 +491,10 @@ const q2021p2q12: CardRoutine<P2Q12of2021> = {
         `<strong>(b)</strong> The same normal, through the origin: $${plane2}$`,
         `<strong>(c)(i)</strong> Along the normal from $A$: $${parametric}$`,
         `<strong>(c)(ii)</strong> $${substituted} = 0$`,
-        `<strong>(c)(ii)</strong> $${collected} = 0$, so $t = ${-t}$ and $Q${coords(Q)}$`,
+        // As 2026 P2 Q14's: collected to t alone, the line already says what t is.
+        collected === 't'
+          ? `<strong>(c)(ii)</strong> $t = 0$, so $Q${coords(Q)}$`
+          : `<strong>(c)(ii)</strong> $${collected} = 0$, so $t = ${-t}$ and $Q${coords(Q)}$`,
       ],
       stepMarks: [1, 1, 1, 1, 1, 1, 1, 1],
       finalAnswer: `(a) $${plane1}$<br>(b) $${plane2}$<br>(c)(i) $${parametric}$<br>(c)(ii) $Q${coords(Q)}$`,

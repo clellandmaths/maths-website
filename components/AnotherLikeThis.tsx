@@ -88,6 +88,10 @@ export default function AnotherLikeThis({
   if (!offer) return null;
 
   const busy = draw.state === 'drawing';
+  // Had one already: drawn by this button, or by the page before this button was mounted. Below a drawn question the
+  // button is a new one with a count of 0, so running out read "could not be made just now" where it meant "you have
+  // had them all" (the audit, 2026-10-12, the owner "Yes").
+  const hadOne = draw.seen > 0 || alsoExclude.some(q => q.basedOn?.includes(offer.label));
 
   return (
     <>
@@ -101,13 +105,13 @@ export default function AnotherLikeThis({
       </button>
 
       {/* Running out is a fact about how many different questions this one can
-          make, not a fault. **No number** (the owner, 2026-10-06): `draw.seen`
-          is what this button has drawn this visit, not what the card can make,
+          make, not a fault. **No number** (the owner, 2026-10-06): `hadOne`
+          counts what this page has drawn this visit, not what the card can make,
           so "That is all 3" could name a count the card does not have. */}
       {draw.state === 'exhausted' && (
         <p className={noticeClassName}>
-          {draw.seen > 0
-            ? 'No more new questions like this one: you have had them all.'
+          {hadOne
+            ?'No more new questions like this one: you have had them all.'
             : 'No new question could be made just now.'}
         </p>
       )}

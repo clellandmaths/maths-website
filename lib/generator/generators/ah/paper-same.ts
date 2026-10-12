@@ -167,7 +167,7 @@ export const PAPER_SAME: Readonly<Record<string, readonly string[]>> = {
   "2024 P2 Q10": ["10fnsz3i881","10o13mzsvm2","18ndnx17xkw","1fib0ngrtp6","1uf2794gk9","75g0cfvthj"],
   "2024 P2 Q11": ["10gssh030g3","11a8zqwtbtw","13tqm90nsi9","1t7v0vrac6a","1yoyo6m7bk3","ntk4mp35h2"],
   "2024 P2 Q12": ["2622ix61yhw","hhkv5uhnqg","iqbfwguqhl","o5qedydldh","twpskp501g","z9og49clf5"],
-  "2024 P2 Q13": ["16jhsj81rh5","i0mtp46j58","mr5x8srma1","nzljkrrugk","wkasucc1ie","yudm6uqrjr"],
+  "2024 P2 Q13": ["16jhsj81rh5","25d3cdjvo9d","dp5vcm72vd","i0mtp46j58","nzljkrrugk","wkasucc1ie"],
   "2024 P2 Q14": ["1d2gxgiq2eb","1emcupy3rtw","1ssw7r9itmx","2d55njx8h0t","ofo0gsnrui","wt1h269jvh"],
   "2024 P2 Q15": ["1y6wtlvk9fo","2f5npccmzqb","2flwovij68e","84eiry5szz","8uqs6etrwo","9w2r75smp9"],
   "2025 P1 Q1": ["12xzomwem9k","1i1nt5uiers","27pq88ylw4i","29w1bngzxx","8p5pnzjqc4","kw7xh5vgte"],

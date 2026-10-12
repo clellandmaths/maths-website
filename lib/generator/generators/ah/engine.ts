@@ -19,9 +19,8 @@
  */
 import type { GeneratedQuestion } from '../types';
 import { drawWith, makeWith, withSeed } from '../core/seeded';
-import { questionKey } from '../../question-key';
-import type { Built, CardLabel, CardRoutine, Ladder } from './types';
-import { AH_CARDS, idForCard, type Registered } from './registry';
+import type { Built, CardRoutine, Ladder } from './types';
+import { AH_CARDS, type Registered } from './registry';
 import { ROUTINE_LOADERS } from './routines';
 import { AH_CODES } from './codes';
 import { SITE_CARDS } from './site-cards';
@@ -105,34 +104,6 @@ export async function makeCard(id: string, seed: number | string): Promise<AhQue
   return dress(id, makeWith(await routineFor(id), seed));
 }
 
-/**
- * Up to `count` different questions like one card, for "Another like this
- * one" and the Worksheet Builder.
- *
- * Different means a different `questionKey`, and anything in `exclude` (the
- * keys of what the sheet already holds) counts as taken. Returns fewer when
- * the card cannot make that many: the caller must say so, not pad the sheet.
- * `seeds` supplies a fresh seed per attempt, and each result carries the one
- * that made it, which is what a shared link stores.
- */
-export async function cardsLike(
-  card: CardLabel,
-  count: number,
-  seeds: () => string,
-  exclude: readonly string[] = [],
-): Promise<{ question: AhQuestion; seed: string }[]> {
-  const id = idForCard(card);
-  if (!id) return [];
-  const routine = await routineFor(id);
-  const taken = new Set(exclude);
-  const out: { question: AhQuestion; seed: string }[] = [];
-  for (let attempt = 0; attempt < count * 8 && out.length < count; attempt++) {
-    const seed = seeds();
-    const question = dress(id, makeWith(routine, seed));
-    const key = questionKey(question);
-    if (taken.has(key)) continue;
-    taken.add(key);
-    out.push({ question, seed });
-  }
-  return out;
-}
+// "Another like this one" and the Worksheet Builder take their questions from `drawCards` in `site.ts` (`ahLike`,
+// `ahForTopic`), which holds every sheet rule. `cardsLike`, which held none of them and had no caller, was removed on
+// the audit (2026-10-12, the owner "Yes").

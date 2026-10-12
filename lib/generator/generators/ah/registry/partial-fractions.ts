@@ -66,7 +66,7 @@ export const PARTIAL_FRACTIONS: readonly CardMeta[] = [
   },
   {
     card: '2018 Q2',
-    skill: 'Integrate $\\frac{px + c}{(x + m)(x - n)}$ by partial fractions.',
+    skill: 'Factorise the denominator, then integrate by partial fractions.',
     marks: [4],
     route: 'The template A/(x + m) + B/(x - n); the identity and one constant; the other, and the integral as two fractions; the logs, with + c, or the last mark goes.',
     ranges: 'The paper: (3x - 7)/(x^2 - 2x - 15) = 2/(x + 3) + 1/(x - 5). Built from the answer: A and B from 1 to 4 (the paper\'s 2 and 1); the factors x + m and x - n with m from 1 to 6 and n from 1 to 7 (the paper\'s 3 and 5), m ≠ n so the denominator has an x term, as the paper\'s -2x; the top\'s constant never 0, as the paper\'s -7.',

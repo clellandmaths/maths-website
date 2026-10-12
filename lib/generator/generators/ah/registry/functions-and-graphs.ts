@@ -14,14 +14,14 @@ export const FUNCTIONS: readonly CardMeta[] = [
   },
   {
     card: '2021 P1 Q7',
-    skill: 'The asymptotes of $\\frac{ax^{2}}{x - p}$ with a justification, sketches of the curve and of its modulus from the given turning points, then the $k$ for which $|f(x)| = k$ has exactly two solutions.',
+    skill: 'The asymptotes of $f(x)$, a multiple of $x^{2}$ over a linear factor, with a justification, sketches of the curve and of its modulus from the given turning points, then the $k$ for which $|f(x)| = k$ has exactly two solutions.',
     marks: [1, 2, 1, 1, 1],
     route: '1 + 2 + 1 + 1 + 1 - (a)(i) x = p; (a)(ii) the algebraic division, f(x) = ax + ap + ap^2/(x - p), then y = ax + ap with the remainder tending to 0 as x tends to ±infinity as the justification; (b) the sketch: both branches through the turning points, approaching the asymptotes; (c)(i) the modulus sketch, the negative part reflected, with the reflected asymptote y = -ax - ap drawn; (c)(ii) 0 < k < 4a|p|.',
     ranges: 'The paper: x^2/(x - 2) = x + 2 + 4/(x - 2), asymptotes x = 2 and y = x + 2, turning points (0, 0) and (4, 8), 0 < k < 8. p from 1 to 5 either sign (the paper\'s 2): a negative p turns the graph through a half turn, the maximum on the left at (2p, 4ap) and the minimum at the origin, and the same steps; a from 1 (the paper) to 3 in front of x^2, a bigger number, not a step (the division is the same three terms), since the paper\'s p alone makes 10 questions, below the floor. The remainder ap^2 at most 25 (a = 2 for p up to 3, a = 3 for p up to 2), so every number in the working stays within 25. Always ax^2 alone on top, so the turning points are (0, 0) and (2p, 4ap), whole, as the paper states them. 20 questions. The sketches are described in words, as the site\'s own card describes them. All exact: Paper 1.',
   },
   {
     card: '2025 P1 Q6',
-    skill: 'Divide a quadratic by a linear factor into $Ax + B + \\frac{C}{x - p}$, then state the two asymptotes.',
+    skill: 'Divide a quadratic by a linear factor into $Ax + B$ plus a constant over that factor, then state the two asymptotes.',
     marks: [2, 2],
     route: '2 + 2 - (a) the algebraic division begun (the first term x and x times the divisor), then finished and f(x) rewritten with its remainder over x - p; (b) the vertical asymptote x = p, then the non-vertical asymptote y = x + B, each written as an equation.',
     ranges: 'The paper: (x^2 + x + 5)/(x - 2) = x + 3 + 11/(x - 2), asymptotes x = 2 and y = x + 3. Built from the answer: x + B + C/(x - p), with p from ±1 to ±5, B from ±1 to ±6 and C from 1 to 15, positive in three draws of four as the paper\'s 11 is, so the top is (x + B)(x - p) + C. A stays 1, as the paper\'s: the x^2 has no coefficient. Kept: the top has all three terms, as the paper\'s, its constant within 25, and C never 0, so x - p is never a factor and there is always a vertical asymptote. All exact: Paper 1.',

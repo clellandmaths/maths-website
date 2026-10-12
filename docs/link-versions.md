@@ -73,6 +73,13 @@ Done twice so far: for version 3 (2026-10-10, Advanced Higher's "never the paper
 frozen from a794574, 209 files byte-exact; and for version 4 (2026-10-11, AH never the paper in any wording
 and sheets that feel distinct), version 3 frozen from 3e570a3, 216 files byte-exact, mark "K".
 
+**A version is changed freely until it is live, never after.** Version 4's maker changed on the preview
+(2026-10-12, the independent audit's answers: the guard keeps out a paper's own parts wherever the change is),
+so its recorded links were re-recorded (3 questions, all 2022 P1 Q6) before it went live. Versions 1 to 3,
+live, were checked unchanged first. Once a version's links are on the live site, a change to what they make
+needs the next version. **And a rollback past a live version breaks its links**: the older site reads the
+newer mark as version 1. After going live, keep the rollback for the first check only, then fix forward.
+
 ## How long a version is kept
 
 **Kept, and reviewed once a year** (the owner, 2026-10-09: "Keep old review once per year").

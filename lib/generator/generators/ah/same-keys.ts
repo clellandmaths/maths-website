@@ -110,20 +110,27 @@ export function marksHeld(paper: readonly PartMaths[], held: Held): number {
  * numbers and figure). The working carries what a "hence" builds on: 2023 P1 Q6's (b) "show z³ is real" for
  * z = 2 − 2√3i and 2 + 2√3i (both −64) is worked from each one's own argument, so it differs, while 2018 Q17's (b),
  * tan x, is the same work whatever (a) is. Marks are the working's, by letter.
+ *
+ * A figure that sits after one part and before the next counts with the NEXT part, which it introduces (the audit,
+ * 2026-10-12, the owner "Yes"): 2017 Q18's path is drawn after (a) for (b) to read a point off, and counted with (a)
+ * it made the same (a), 5 of 7 marks, look new on every question of a sheet. A figure after the last part stays there.
  */
 export interface SheetPart { key: string; marks: number }
 const PART_LETTER = /^\s*(?:<b>|<strong>)?\s*\(([a-h])\)/;
 const flat = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-export function sheetPartsOf(b: Built): SheetPart[] {
+export function sheetPartsOf(b: Built, withStem = true): SheetPart[] {
   const stem: string[] = [], lines = new Map<string, string[]>();
-  let letter = '';
+  const add = (l: string, xs: string[]) => lines.set(l, [...(lines.get(l) ?? []), ...xs]);
+  let letter = '', figs: string[] = [];
   for (const l of b.questionLines) {
     const m = PART_LETTER.exec(l);
-    if (m) letter = m[1];
+    if (m) { letter = m[1]; add(letter, figs); figs = []; }
     const fig = l.startsWith('<svg') ? `svg:${shortHash(l)}` : '';
     if (!letter) stem.push(fig || `${mathsOf(l).join('|')}#${proseNumbers(l).join(',')}`);
-    else lines.set(letter, [...(lines.get(letter) ?? []), fig || flat(l)]);
+    else if (fig) figs.push(fig);
+    else add(letter, [flat(l)]);
   }
+  if (letter) add(letter, figs);
   const ans = new Map<string, string[]>();
   for (const l of b.finalAnswer.split('<br>')) {
     const m = /^\s*\(([a-h])\)/.exec(l);
@@ -136,9 +143,15 @@ export function sheetPartsOf(b: Built): SheetPart[] {
     work.set(l, [...(work.get(l) ?? []), flat(s)]);
     marks.set(l, (marks.get(l) ?? 0) + (b.stepMarks[i] ?? 0));
   });
-  const st = stem.join('§');
+  // `withStem` false: a part as its WORKING and answer alone, whatever the question's lines say (the guard's own-paper
+  // rule, `not-the-paper.ts`: a number changed in the opening line, or in a line between parts, the part's work the
+  // same). Not its lines: a line that introduces the next part sits after this one (2022 P2 Q7's "is a factor of …"
+  // before (c), 2024 P1 Q4's matrix B before (b)), so a change there read as this part changing (the independent parts
+  // search, 2026-10-12).
+  const st = withStem ? stem.join('§') : '';
+  const own = (l: string) => (withStem ? (lines.get(l) ?? []).join('§') : '');
   return [...ans.keys()].map(l => ({
-    key: shortHash(`${st}¶${(lines.get(l) ?? []).join('§')}¶${(work.get(l) ?? []).join('§')}¶${(ans.get(l) ?? []).join('§')}`),
+    key: shortHash(`${st}¶${own(l)}¶${(work.get(l) ?? []).join('§')}¶${(ans.get(l) ?? []).join('§')}`),
     marks: marks.get(l) ?? 0,
   }));
 }

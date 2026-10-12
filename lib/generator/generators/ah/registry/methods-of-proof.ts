@@ -24,7 +24,7 @@ export const PROOF: readonly CardMeta[] = [
     skill: 'Disprove "for all odd $n$, $n^{2} + c$ is prime" by counterexample, then prove directly that the difference between the cubes of two consecutive integers is not divisible by 3.',
     marks: [1, 3],
     route: '1 + 3 - (a) a counterexample, the composite number and that it is not prime, all three (n = 9, 85, not prime); (b) the form of two consecutive integers with the letter an integer, n, n + 1, n in Z; then the difference of the cubes, (n + 1)^3 - n^3; then multiplied out to 3(n^2 + n) + 1 and said to be not divisible by 3.',
-    ranges: 'The paper: n^2 + 4 (false first at n = 9, 85 = 5 x 17), and consecutive integers, 3(n^2 + n) + 1. Nothing numerical varies in the proof. (a) n^2 + c with c even, whose first counterexample is at n = 3 to 9, so a pupil tries a few, as the paper\'s: c = 2, 4 (the paper), 6, 10, 12, 16, 18, 28 or 30; an odd c makes every value even, and c = 8, 14, 20, 24, 26 fail at n = 1. (b) the paper\'s consecutive integers, or consecutive odd integers 2n + 1 and 2n + 3, or even 2n and 2n + 2, each 3(...) + 2, in the same three steps, as 2024 P2 Q11 was widened. 27 questions.',
+    ranges: 'The paper: n^2 + 4 (false first at n = 9, 85 = 5 x 17), and consecutive integers, 3(n^2 + n) + 1. Nothing numerical varies in the proof. (a) n^2 + c with c even, whose first counterexample is at n = 3 to 9, so a pupil tries a few, as the paper\'s: c = 2, 4 (the paper), 6, 10, 12, 16, 18, 28 or 30; an odd c makes every value even, and c = 8, 14, 20, 24, 26 fail at n = 1. (b) the paper\'s consecutive integers, or consecutive odd integers 2n + 1 and 2n + 3, or even 2n and 2n + 2, each 3(...) + 2, in the same three steps, as 2024 P2 Q11 was widened. 27 questions. Then 18: with the paper\'s consecutive integers (b) is the paper\'s proof word for word, 3 of the 4 marks, so the guard keeps it out (the audit, own paper\'s parts by working and answer; the owner "Yes", the audit contact sheet, 2026-10-12), leaving odd and even.',
   },
   {
     card: '2026 P2 Q12',
@@ -64,7 +64,7 @@ export const PROOF: readonly CardMeta[] = [
   },
   {
     card: '2023 P1 Q8',
-    skill: 'Disprove a statement about two integers and their squares by counterexample, then prove directly that $n^{2} + c$ is divisible by 4 for odd $n.$',
+    skill: 'Disprove a statement about two integers and their squares by counterexample, then prove directly that the expression in $n$ is divisible by 4 for odd $n.$',
     marks: [1, 2],
     route: '1 + 2 - (a) a counterexample, with why it fails (a = -2, b = 1: 4 is not less than 1); (b) the form of an odd integer, 2k + 1 with k an integer (natural numbers are not enough); then n^2 + c expanded, 4 taken out, and said to be divisible by 4.',
     ranges: 'The paper: "if a < b then a^2 < b^2", false (a = -2, b = 1), and n odd, n^2 - 1 divisible by 4. Nothing numerical varies in (a). Honest beside it, each broken the same way by a negative integer in the paper\'s one step: "if a > b then a^2 > b^2", its two converses ("if a^2 < b^2 then a < b", "if a^2 > b^2 then a > b"), and "if a^2 = b^2 then a = b". (b) n^2 + c with c one less than a multiple of 4, -1 (the paper), 3, -5 or 7, so (2k + 1)^2 + c = 4(k^2 + k + (1 + c)/4) in the paper\'s two steps. Always n odd. 20 questions; then -9, 11, -13 and 15 as well, on the owner\'s "Yes" (2026-10-11, sheets that feel distinct: (b) is 2 of the 3 marks, so a sheet takes a fresh constant first), 40 questions.',
@@ -78,7 +78,7 @@ export const PROOF: readonly CardMeta[] = [
   },
   {
     card: '2019 Q11',
-    skill: 'Disprove "$n^{2} + bn + c$ is always prime" by counterexample, then write the contrapositive of a parity statement and prove it.',
+    skill: 'Disprove that the quadratic in $n$ is always prime by counterexample, then write the contrapositive of a parity statement and prove it.',
     marks: [1, 1, 3],
     route: '1 + 1 + 3 - (a) a counterexample, the value and why it is not prime; (b)(i) the contrapositive, starting with the condition on n: if n is even then n^2 + Bn + C is odd; (b)(ii) n = 2k with k a natural number, and substituted; then 2(…) + 1, odd since the bracket is a natural number; then the contrapositive true, and so the original statement.',
     ranges: 'The paper: n^2 + n + 1 (n = 4 gives 21), and n^2 - 2n + 7, 4k^2 - 4k + 7 = 2(2k^2 - 2k + 3) + 1. (a) n^2 + bn + c with b 1, 3 or 5 and c odd from 1 to 11, so every value is odd and no counterexample is a plain even number, and only those whose first counterexample is n = 2 to 6 (the paper\'s 4). (b) B even from ±2 to ±6 (the paper\'s -2) and C odd from 1 to 15 (the paper\'s 7), so the statement is true, and the bracket 2k^2 + Bk + (C - 1)/2 is a natural number for every k, as the paper\'s.',
@@ -124,7 +124,7 @@ export const PROOF: readonly CardMeta[] = [
   },
   {
     card: '2016 Q10',
-    skill: 'Disprove "if $p$ is prime then so is $ap + b$" by counterexample, then prove directly that a number with remainder $r$ on division by $m$ has a cube with remainder $r$ too.',
+    skill: 'Disprove the statement about a prime $p$ by counterexample, then prove directly that a number with remainder $r$ on division by $m$ has a cube with remainder $r$ too.',
     marks: [4],
     route: 'A: a prime p with ap + b not prime, its factors shown, and "false"; B: n = ma + r with a a whole number; (ma + r)^3 expanded, four terms; written m(…) + r, with the conclusion, "true". The scheme takes any counterexample; the working gives the first.',
     ranges: 'The paper: 2p + 1 (false first at p = 7, 15 = 3 × 5), and remainder 1 on division by 3, 27a^3 + 27a^2 + 9a + 1 = 3(9a^3 + 9a^2 + 3a) + 1. A: ap + b with a 2, 4 or 6 and b odd from -5 to 19, so every value is odd and no counterexample is a plain even number, as 2p + 1; only those true at p = 2 and false first at a prime from 3 to 11, so a pupil tries a few, as the paper\'s. B: m from 2 to 5 with r = 1 or m - 1, the remainders whose cube leaves the same remainder, so the paper\'s words "also has remainder r" hold on every draw; always a cube, four terms, as the paper\'s. A is always the false one and B the true one, as the paper, as 2022 P1 Q6, 2019 Q11 and 2024 P2 Q11 keep theirs. 23 A statements and 7 B statements, 161 questions.',

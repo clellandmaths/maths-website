@@ -63,7 +63,7 @@ export const SEQUENCES: readonly CardMeta[] = [
   },
   {
     card: '2023 P1 Q7',
-    skill: 'Sum $r^{2} + kr$ with the standard formulae into the form $\\frac{1}{3}n(n + a)(n + b)$, then a sum between two limits.',
+    skill: 'Sum $r^{2}$ and a multiple of $r$ with the standard formulae into the form $\\frac{1}{3}n(n + a)(n + b)$, then a sum between two limits.',
     marks: [2, 2],
     route: '2 + 2 - (a) the standard sums substituted, n(n + 1)(2n + 1)/6 and k times n(n + 1)/2; then simplified into the given form; (b) the sum to N substituted, with the subtraction shown; then the sum to L - 1 substituted and the difference evaluated. Taking away the sum to L instead is the slip the scheme names.',
     ranges: 'The paper: r^2 + 3r, (1/3)n(n + 1)(n + 5), and the sum from 11 to 20, 2950. The form (1/3)n(n + a)(n + b) needs 2n + 1 + 3k to halve, so k is odd: -3, -1, 1, 3 (the paper), 5 or 7, giving b = (1 + 3k)/2 from -4 to 11; always r^2 with no number before it, since the form is the paper\'s. (b) from L = 6 to 15 up to N = 12 to 20, at least five terms (the paper\'s 11 to 20), and the biggest product worked by hand, N(N + 1)(N + b), no bigger than the paper\'s 20 x 21 x 25 (so N stops at 18 when b = 11): the owner on the 2023 P1 sheet, 2026-09-29, "biggest should be no larger than paper". The sum to L - 1 is always positive, as the paper\'s. All exact: Paper 1. And k = -5, 9 and 11 (b = -7, 14, 17), on the owner\'s "Yes" (2026-10-11, sheets that feel distinct: (a) is 2 of the 4 marks), the same limits, L from 9 when k = -5 so the sum to L - 1 stays positive.',
@@ -77,7 +77,7 @@ export const SEQUENCES: readonly CardMeta[] = [
   },
   {
     card: '2019 Q7',
-    skill: 'Sum $ar + b$ with the standard formulae in terms of $n$, then hence a sum from $p + 1$ to $N$ in terms of $p.$',
+    skill: 'Sum the linear expression in $r$ with the standard formulae in terms of $n$, then hence a sum from $p + 1$ to $N$ in terms of $p.$',
     marks: [1, 2],
     route: '1 + 2 - (a) a times n(n + 1)/2 and the sum of b as bn, simplified to (a/2)n^2 + (a/2 + b)n; (b) the sum to N substituted and the sum to p taken from it, (… at N) - …; then simplified, the sum to N less (a/2)p^2 + (a/2 + b)p.',
     ranges: 'The paper: 6r + 13, 3n^2 + 16n, and the sum from p + 1 to 20, 1520 - 3p^2 - 16p. a even from 2 to 10 (the paper\'s 6), so the answer has whole coefficients as the paper\'s; b from -15 to 15, never 0 (the paper\'s 13), and a/2 + b never 0, so the answer keeps its n term; N from 10 to 30 (the paper\'s 20), the sum to N never 0.',
@@ -105,7 +105,7 @@ export const SEQUENCES: readonly CardMeta[] = [
   },
   {
     card: '2017 Q10',
-    skill: 'Sum $r^{2} + cr$ with the standard formulae, $c$ a number of thirds, fully factorised; then hence a sum from a given number to $2p.$',
+    skill: 'Sum $r^{2}$ and a number of thirds times $r$ with the standard formulae, fully factorised; then hence a sum from a given number to $2p.$',
     marks: [2, 2],
     route: '2 + 2 - (a) the standard sums substituted, n(n + 1)(2n + 1)/6 and c n(n + 1)/2, collected over 6; then fully factorised, n(n + 1)(n + m)/3; (b) the sums to 2p and to L - 1 substituted and subtracted; then the expression, the sum to L - 1 evaluated.',
     ranges: 'The paper: r^2 + (1/3)r, n(n + 1)^2/3, and the sum from 10 to 2p, p > 5, 2p(2p + 1)^2/3 - 300. c = (2m - 1)/3, so the sum factorises fully as n(n + 1)(n + m)/3: m from 0 to 7 where c is a third that is not whole, -1/3, 1/3 (the paper), 5/3, 7/3, 11/3 and 13/3 (c = 1 and 3 are 2023 P1 Q7\'s, locked, which asks for (1/3)n(n + a)(n + b) and a number in (b)). L from 6 to 13 where the sum to L - 1 is whole, as the paper\'s 300 (L = 6, 7, 9, 10, 12, 13), and p > L/2 rounded down, as the paper\'s p > 5. Always to 2p, as the paper. 36 questions. And m = 9 and 10 (c = 17/3, 19/3), on the owner\'s "Yes" (2026-10-11, sheets that feel distinct: (a) is 2 of the 4 marks), the sum to L - 1 whole for the same L: 48 questions.',
