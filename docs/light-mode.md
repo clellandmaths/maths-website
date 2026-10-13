@@ -142,9 +142,19 @@ Coverage went from **33 of 190** nodes on the homepage to **169 of 190**.
 The three-block palette is in `globals.css`: `:root` is light, dark is applied
 twice — once behind `prefers-color-scheme` for the reader who has chosen
 nothing, once behind `[data-theme="dark"]` so an explicit choice beats the OS
-either way. `@custom-variant dark` binds Tailwind's `dark:` to the same
-attribute, because Tailwind 4 would otherwise key it off the OS and a `dark:`
-utility would disagree with the token beside it.
+either way. `@custom-variant dark` binds Tailwind's `dark:` to the same rule as
+the palette: `[data-theme="dark"]` where there is a stamp, and the OS where there
+is none.
+
+**It was bound to the attribute alone until 2026-10-13**, and that broke the
+commonest reader of all: a first-time visitor on a phone set to dark. No stored
+choice means no stamp, so the palette went dark (the OS block) while every `dark:`
+colour kept its light value: Hint, Show answer, Formulae and the course-coloured
+text at about 2:1 on the dark ground, 791 nodes below AA on the measured pages
+(the independent audit's card 13). `check:contrast` never saw it because it
+always stores a theme first; `check:contrast --theme=system-dark` now measures
+that visitor (no stored theme, the OS asking for dark), and `check:theme` requires
+both halves of the variant.
 
 **Every light value was chosen against a number, not by eye**, because the
 existing `--muted-dim` comment sets that standard:

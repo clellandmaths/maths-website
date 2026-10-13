@@ -14,6 +14,15 @@
 
 Enforced by `scripts/check-maths-punctuation.mjs`.
 
+**In the data** (questions, answers, notes, the site's src/): the check above, against a baseline. **At display**,
+since 2026-10-13, for the text the data rule never reached: hints (every course's ladders: what it asks, how the marks
+go, moves, working, watch-outs), the worked example's steps, the printed markscheme sheet and the markscheme table on
+paper pages all pass through `lib/maths-punctuation.ts` (`stopsInsideMaths`), which moves the stop inside at render.
+About 2,200 hint and working lines and 700 markscheme lines across the five courses; nothing in the tables or the
+generator changes, so no locked card or shared link moves. `check:stopsshown` holds it in Chrome (a stop after a
+formula on a hint ladder or a paper's marking instructions fails). A new course's hints and markschemes get this for
+free as long as they are shown through those components.
+
 ---
 
 ## Why, and where this came from
