@@ -59,6 +59,7 @@
     "check:testmode": "node scripts/check-test-mode.mjs",
     "check:ahgen": "node scripts/check-ah-generated.mjs",
     "check:anotherfixes": "node scripts/check-another-fixes.mjs",
+    "check:hintkeys": "node scripts/check-hint-keys.mjs",
     "audit:contrast": "node scripts/check-contrast.mjs --all",
     "audit:responsive": "node scripts/check-responsive.mjs --all"
   },

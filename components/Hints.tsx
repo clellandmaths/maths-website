@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Lightbulb, X } from 'lucide-react';
 import MathRenderer from '@/components/MathRenderer';
@@ -171,6 +171,13 @@ export default function Hints({
   const [open, setOpen] = useState(false);
   const [staged, setStaged] = useState<Staged | null>(null);
   const [loading, setLoading] = useState(false);
+  /**
+   * Where focus goes back to when the panel closes (the audit's card 14). Not "whatever had focus when the panel
+   * opened": the button reads "Loading…" and is disabled for that moment, which drops focus to the page, so the panel
+   * would have nothing to return to. **Up here with the other hooks, before the early return below**: placed after
+   * it, it crashed every practice page whose questions change between having and not having a ladder (React #310).
+   */
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   /**
    * An explicit label, then the question's own, then the printed badge.
@@ -407,6 +414,7 @@ export default function Hints({
           across a practice page ended up pressing the NEXT question's button. */}
       <div className={`no-print ${className}`}>
         <button
+          ref={buttonRef}
           onClick={openLadder}
           disabled={loading}
           className={buttonClassName
@@ -448,6 +456,7 @@ export default function Hints({
           aside={aside}
           onReveal={reveal}
           onClose={() => setOpen(false)}
+          returnFocus={buttonRef}
         />
       )}
     </>

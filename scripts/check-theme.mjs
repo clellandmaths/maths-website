@@ -145,18 +145,25 @@ if (!light || !darkMedia || !darkAttr) {
   }
 }
 
-// ── 3. the dark variant is bound to the attribute ──────────────────────────
+// ── 3. the dark variant follows the palette's rule ─────────────────────────
+// The attribute where there is one, the OS where there is not. Bound to the attribute ALONE until 2026-10-13, which
+// made a first-time visitor on a dark phone (no attribute) get the dark palette with every `dark:` colour still
+// light (the independent audit, card 13). Both halves are required now.
 console.log('\nthe dark: variant:');
 {
-  const cv = /@custom-variant\s+dark\s*\(([^)]*)\)/.exec(css);
-  if (!cv) {
+  const at = css.indexOf('@custom-variant dark');
+  const block = at < 0 ? '' : css.slice(at, css.indexOf('\n}', at) + 2);
+  if (at < 0) {
     fail('no `@custom-variant dark` — Tailwind 4 would fall back to '
        + 'prefers-color-scheme, so a `dark:` utility and the token beside it '
        + 'would disagree for anyone who chose a theme against their OS');
-  } else if (cv[1].indexOf('data-theme') < 0) {
-    fail(`the dark variant does not mention data-theme: ${cv[1].trim()}`);
+  } else if (!/\[data-theme="dark"\]/.test(block)) {
+    fail('the dark variant does not follow a chosen dark theme ([data-theme="dark"])');
+  } else if (!/@media\s*\(prefers-color-scheme:\s*dark\)[\s\S]*:not\(\[data-theme\]\)/.test(block)) {
+    fail('the dark variant does not follow the OS when no theme is chosen: a first-time visitor on a dark '
+       + 'phone gets the dark palette with light `dark:` colours on it');
   } else {
-    console.log('  ok    bound to [data-theme="dark"], the same thing the palette reads');
+    console.log('  ok    follows [data-theme="dark"], and the OS where no theme is chosen, as the palette does');
   }
 }
 

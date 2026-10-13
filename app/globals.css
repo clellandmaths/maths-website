@@ -1,14 +1,32 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
-/* **Tailwind's `dark:` keys off our attribute, not the OS.**
+/* **Tailwind's `dark:` follows the same rule as the palette: the attribute where
+   there is one, the OS where there is not.**
 
-   Tailwind 4 defaults `dark:` to `prefers-color-scheme`, which would ignore a
-   reader who has chosen a theme against their system setting. The palette below
+   Tailwind 4 defaults `dark:` to `prefers-color-scheme` alone, which would ignore
+   a reader who has chosen a theme against their system setting. The palette below
    honours both — the attribute wins where present, the OS decides where it is
    not — and the variant has to follow the same rule, or a `dark:` utility and
-   the token underneath it would disagree about which theme is showing. */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+   the token underneath it would disagree about which theme is showing.
+
+   **It was bound to the attribute alone until 2026-10-13**, and that is exactly
+   the disagreement: a first-time visitor on a phone set to dark has no attribute
+   (the layout stamps only a stored choice), so the palette went dark and every
+   `dark:` colour kept its light value. Hint, Show answer, Formulae, Full screen
+   and the course-coloured text sat at about 2:1 on the dark ground, 791 nodes on
+   the measured pages (the independent audit, card 13; the owner: "Yes").
+   `check:contrast --theme=system-dark` measures that state now. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
 
 /* Brand theme — grounded in the Clelland Maths logo (true black + signal magenta/mint)
  *

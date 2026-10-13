@@ -70,12 +70,20 @@ const RECORD = args.includes('--baseline');
  * sites and a shared file would let a fault in one hide behind the other.
  */
 const THEME = (args.find(a => a.startsWith('--theme=')) || '--theme=dark').slice(8);
-if (THEME !== 'light' && THEME !== 'dark') {
-  console.error(`  --theme must be light or dark, not "${THEME}"`);
+/**
+ * `--theme=system-dark`: a first-time visitor on a phone set to dark, who has never touched the toggle (the
+ * independent audit, 2026-10-12, card 13). No stored choice, so no `data-theme` at all, and the OS asks for dark.
+ * The two other modes always store a choice first, which is why neither ever saw that every `dark:` colour was
+ * bound to the attribute alone and kept its light value on the dark ground (285 nodes at about 2:1). It must
+ * measure exactly as `dark` does, so it is held to dark's baseline.
+ */
+const SYSTEM_DARK = THEME === 'system-dark';
+if (THEME !== 'light' && THEME !== 'dark' && !SYSTEM_DARK) {
+  console.error(`  --theme must be light, dark or system-dark, not "${THEME}"`);
   process.exit(1);
 }
 const BASELINE = join(import.meta.dirname,
-  THEME === 'dark' ? 'contrast-baseline.json' : `contrast-baseline-${THEME}.json`);
+  THEME === 'dark' || SYSTEM_DARK ? 'contrast-baseline.json' : `contrast-baseline-${THEME}.json`);
 
 /**
  * The pages, chosen to cover every template rather than every page.
@@ -245,8 +253,9 @@ const totals = {
 const add = r => { for (const k of Object.keys(totals)) totals[k] += r[k] || 0; };
 
 await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
-  evaluate, click, buttonNamed, buttonMatching, go: navigate, sleep,
+  send, evaluate, click, buttonNamed, buttonMatching, go: navigate, sleep,
 }) => {
+  if (SYSTEM_DARK) await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] });
   /**
    * Navigate with the theme already in force, through the site's own mechanism.
    *
@@ -269,12 +278,21 @@ await withPage({ port: 8173, cdp: 9273, width: 1440, height: 1000 }, async ({
   const go = async (path, settle) => {
     if (!seeded) {
       await navigate(path, 2000);
-      await evaluate(`localStorage.setItem('theme', ${JSON.stringify(THEME)})`);
+      await evaluate(SYSTEM_DARK ? `localStorage.removeItem('theme')` : `localStorage.setItem('theme', ${JSON.stringify(THEME)})`);
       seeded = true;
     }
     await navigate(path, settle);
     const got = await evaluate(`document.documentElement.getAttribute('data-theme')`);
-    if (got !== THEME) {
+    if (SYSTEM_DARK) {
+      // No attribute, and the page really is dark (read through a canvas: the colours are lab()).
+      const dark = await evaluate(`(() => { const c = document.createElement('canvas'); c.width = c.height = 1;
+        const x = c.getContext('2d'); x.fillStyle = getComputedStyle(document.body).backgroundColor; x.fillRect(0, 0, 1, 1);
+        const d = x.getImageData(0, 0, 1, 1).data; return d[0] + d[1] + d[2] < 120; })()`);
+      if (got !== null || !dark) {
+        throw new Error(`a first-time visitor on a dark phone loaded with data-theme "${got}" and a `
+          + `${dark ? 'dark' : 'light'} page: this run would not be measuring the state it claims to`);
+      }
+    } else if (got !== THEME) {
       throw new Error(`the page loaded as "${got}", not "${THEME}" — the theme `
         + 'script did not honour the stored choice, so nothing below would be '
         + 'measuring the theme it claims to');

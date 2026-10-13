@@ -37,11 +37,13 @@ interface Props {
   aside: string;
   onReveal: () => void;
   onClose: () => void;
+  /** Where focus goes when the panel closes: the Hint button that opened it. */
+  returnFocus?: { readonly current: HTMLElement | null };
 }
 
 export default function HintPanel({
   question, theme, courseId, given, staged, shown, total, more, loading, own,
-  body, aside, onReveal, onClose,
+  body, aside, onReveal, onClose, returnFocus,
 }: Props) {
   /**
    * Each press brings what it revealed into view (the owner, 2026-09-28). The
@@ -60,6 +62,37 @@ export default function HintPanel({
     return () => cancelAnimationFrame(frame);
   }, [shown]);
 
+  /**
+   * **The keyboard is the panel's while it is open** (the independent audit, card 14; the owner: "Yes"). It said it
+   * was a modal dialog and behaved like none: focus stayed on the page behind, Tab walked out of it, and Escape and
+   * the arrow keys went to whatever was underneath — in full screen, Escape closed the whole presenter under an open
+   * hint and an arrow key changed the question behind it. Now: focus moves into the panel, Tab stays in it, Escape
+   * closes the panel (only the panel), the arrow keys stop here (they still scroll it), and focus goes back to the
+   * Hint button on closing. Listened for in the capture phase, so it is heard before the presenter's own handler.
+   * `onClose` through a ref: a parent that passes a new function every render must not re-run this and bounce focus.
+   */
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+  const returnRef = useRef(returnFocus);
+  returnRef.current = returnFocus;
+  useEffect(() => {
+    const was = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    panelRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeRef.current(); return; }
+      if (e.key.startsWith('Arrow')) { e.stopPropagation(); return; }
+      if (e.key !== 'Tab' || !panelRef.current) return;
+      const stops = [...panelRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')];
+      if (!stops.length) return;
+      const first = stops[0], last = stops[stops.length - 1], at = document.activeElement;
+      if (e.shiftKey && (at === first || at === panelRef.current)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (at === last || !panelRef.current.contains(at))) { e.preventDefault(); first.focus(); }
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => { window.removeEventListener('keydown', onKey, true); (returnRef.current?.current ?? was)?.focus(); };
+  }, []);
+
   return (
       <div
         className="no-print fixed inset-0 z-[60] flex items-end justify-center bg-black/70 sm:items-center sm:p-6"
@@ -69,7 +102,9 @@ export default function HintPanel({
         onClick={onClose}
       >
         <div
-          className="flex max-h-[88vh] w-full flex-col rounded-t-2xl border border-border bg-background sm:max-w-2xl sm:rounded-2xl"
+          ref={panelRef}
+          tabIndex={-1}
+          className="flex max-h-[88vh] w-full flex-col rounded-t-2xl border border-border bg-background outline-none sm:max-w-2xl sm:rounded-2xl"
           onClick={e => e.stopPropagation()}
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-6">
