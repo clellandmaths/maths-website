@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MathsFit from "@/components/MathsFit";
 import "./globals.css";
 
 const inter = Inter({
@@ -200,6 +201,9 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {/* Long inline maths fitted to a phone's width (lib/maths-fit.ts): renders nothing, and fetches its logic
+            only on a phone, after the page has loaded. */}
+        <MathsFit />
       </body>
     </html>
   );
