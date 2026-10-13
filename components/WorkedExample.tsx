@@ -6,6 +6,7 @@ import MathRenderer from '@/components/MathRenderer';
 import { useGeneratedDraw } from '@/lib/use-generated-draw';
 import { generationLabel } from '@/lib/similar-questions';
 import MarkschemeFigures from '@/components/MarkschemeFigures';
+import { stopsInsideMaths } from '@/lib/maths-punctuation';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 
@@ -120,7 +121,7 @@ export default function WorkedExample({ question, theme, courseId, label: given 
         {(shown.steps ?? []).map((step, i) => (
           <li key={i} className="border-t border-border pt-2">
             <MathRenderer
-              html={step}
+              html={stopsInsideMaths(step)}
               className="answer-content text-sm text-foreground-2"
             />
           </li>

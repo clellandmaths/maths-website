@@ -1,5 +1,6 @@
 import MathHtml from '@/components/MathHtml';
 import type { SchemeMark } from '@/lib/generator/generators/paper-markscheme';
+import { stopsInsideMaths as inside } from '@/lib/maths-punctuation';
 
 /**
  * One card's marking instructions on screen: a row per mark, then the notes.
@@ -43,10 +44,10 @@ export default function SchemeTable({
                   {row.part ? `${row.part} ` : ''}&bull;<sup>{n + 1}</sup>
                 </td>
                 <td className="py-2 pr-3 text-foreground/85">
-                  <MathHtml html={row.for} className="inline" />
+                  <MathHtml html={inside(row.for)} className="inline" />
                 </td>
                 <td className="py-2 text-foreground/85">
-                  <MathHtml html={row.shows} className="inline" />
+                  <MathHtml html={inside(row.shows)} className="inline" />
                 </td>
               </tr>
             ))}
@@ -58,7 +59,7 @@ export default function SchemeTable({
           <h4 className={`font-mono text-xs font-semibold uppercase tracking-widest ${accent} mb-2`}>Notes</h4>
           <ul className="space-y-1.5 text-sm text-foreground/80">
             {notes.map((note, i) => (
-              <li key={i}><MathHtml html={note} className="inline" /></li>
+              <li key={i}><MathHtml html={inside(note)} className="inline" /></li>
             ))}
           </ul>
         </div>

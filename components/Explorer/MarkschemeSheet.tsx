@@ -8,6 +8,7 @@ import { createPortal } from 'react-dom';
 import MathHtml from '@/components/MathHtml';
 import MarkschemeFigures from '@/components/MarkschemeFigures';
 import { ladderLabel, variationLabel } from '@/lib/similar-questions';
+import { stopsInsideMaths as inside } from '@/lib/maths-punctuation';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 import { ahCard, cardScheme, n5appsCard, type CourseSchemes } from '@/lib/course-markschemes';
 
@@ -117,7 +118,7 @@ export default function MarkschemeSheet({
 
             {scheme?.subject && (
               <p className="markscheme-subject">
-                <MathHtml html={scheme.subject} className="inline" />
+                <MathHtml html={inside(scheme.subject)} className="inline" />
               </p>
             )}
 
@@ -132,8 +133,8 @@ export default function MarkschemeSheet({
                       <td className="markscheme-bullet">
                         {row.part ? `${row.part} ` : ''}&bull;<sup>{n + 1}</sup>
                       </td>
-                      <td><MathHtml html={row.for} className="inline" /></td>
-                      <td><MathHtml html={row.shows} className="inline" /></td>
+                      <td><MathHtml html={inside(row.for)} className="inline" /></td>
+                      <td><MathHtml html={inside(row.shows)} className="inline" /></td>
                     </tr>
                   ))}
                 </tbody>
@@ -148,7 +149,7 @@ export default function MarkschemeSheet({
                     <tr key={n}>
                       <td className="markscheme-bullet">&bull;<sup>{n + 1}</sup></td>
                       <td colSpan={2}>
-                        <MathHtml html={step} className="answer-content" />
+                        <MathHtml html={inside(step)} className="answer-content" />
                         {q.stepMarks?.[n] !== undefined && (
                           <span className="markscheme-step-mark">
                             {q.stepMarks[n]} mark{q.stepMarks[n] === 1 ? '' : 's'}
@@ -185,7 +186,7 @@ export default function MarkschemeSheet({
                 <strong>Notes</strong>
                 <ul>
                   {own.notes.map((note, n) => (
-                    <li key={n}><MathHtml html={note} className="inline" /></li>
+                    <li key={n}><MathHtml html={inside(note)} className="inline" /></li>
                   ))}
                 </ul>
               </div>

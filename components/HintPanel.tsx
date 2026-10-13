@@ -8,6 +8,7 @@ import type { QuestionWithMetadata } from '@/lib/data-loader';
 import type { CourseTheme } from '@/lib/course-theme';
 import type { Staged } from '@/components/Hints';
 import { courseGenerates } from '@/lib/similar-questions';
+import { stopsInsideMaths as inside } from '@/lib/maths-punctuation';
 
 const WorkedExample = dynamic(() => import('@/components/WorkedExample'), { ssr: false });
 
@@ -143,12 +144,12 @@ export default function HintPanel({
         */}
         <div className={body}>
           <span className={`font-semibold ${theme.text}`}>What it asks: </span>
-          <MathRenderer html={staged.skill} className="inline text-foreground-2" />
+          <MathRenderer html={inside(staged.skill)} className="inline text-foreground-2" />
         </div>
         {shown > 1 && (
           <div className={body}>
             <span className={`font-semibold ${theme.text}`}>How the marks go: </span>
-            <MathRenderer html={staged.method} className="inline text-foreground-2" />
+            <MathRenderer html={inside(staged.method)} className="inline text-foreground-2" />
           </div>
         )}
         {staged.rungs.slice(0, Math.max(0, shown - 2)).map((rung, i) => (
@@ -156,7 +157,7 @@ export default function HintPanel({
             {/* A short hint's watch-out stands on a rung of its own, with no move. */}
             {rung.move && <div className="flex items-start gap-2">
               <MathRenderer
-                html={rung.move}
+                html={inside(rung.move)}
                 className={`answer-content flex-1 ${body} text-foreground-2`}
               />
               {/* **A move worth 0 shows nothing at all.** Two variations are
@@ -174,7 +175,7 @@ export default function HintPanel({
                 half. Absent where showing it would hand over an answer. */}
             {rung.shows && (
               <MathRenderer
-                html={rung.shows}
+                html={inside(rung.shows)}
                 className={`answer-content mt-1 ${aside} text-muted-foreground`}
               />
             )}
@@ -184,7 +185,7 @@ export default function HintPanel({
             {rung.watch && (
               <div className={`mt-1 flex gap-1.5 border-l-2 border-amber-600 pl-2 dark:border-amber-400 ${aside} text-amber-800 dark:text-amber-300/90`}>
                 <span className="shrink-0 font-medium">Watch out:</span>
-                <MathRenderer html={rung.watch} className="answer-content flex-1" />
+                <MathRenderer html={inside(rung.watch)} className="answer-content flex-1" />
               </div>
             )}
           </div>
