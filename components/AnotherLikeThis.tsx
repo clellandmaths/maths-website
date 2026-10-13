@@ -58,6 +58,14 @@ interface Props {
 
 const NOTHING: readonly QuestionWithMetadata[] = [];
 
+/**
+ * "Start again" (the owner, 2026-10-13): once a card has given every question it has, a pupil can go round again.
+ * The questions this page had drawn from that card are forgotten, by uid, so they can come back. Kept here and not in
+ * the component because the button is a new one each time it moves below a drawn question (or full screen moves to
+ * the next question), and a forgetting that lived in it would be forgotten itself. Questions on the sheet stay off.
+ */
+const FORGOTTEN = new Map<string, Set<string>>();
+
 export default function AnotherLikeThis({
   courseId, question, label, showing = false, alsoExclude = NOTHING, onDrawn,
   className = '', noticeClassName = 'mt-2 text-sm text-muted-foreground',
@@ -69,10 +77,16 @@ export default function AnotherLikeThis({
     parentIndex: question.parentIndex,
   });
 
+  const forgotKey = `${courseId}|${offer?.label}`;
+  const notForgotten = (qs: readonly QuestionWithMetadata[]) => {
+    const gone = FORGOTTEN.get(forgotKey);
+    return gone ? qs.filter(q => !q.uid || !gone.has(q.uid)) : qs;
+  };
+
   const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
     if (!offer) return null;
     const [made] = await engine.similarTo(
-      offer.label, 1, engine.worksheetKeys([...exclude, ...alsoExclude]), courseId);
+      offer.label, 1, engine.worksheetKeys([...exclude, ...notForgotten(alsoExclude)]), courseId);
     return made ?? null;
   });
 
@@ -91,7 +105,14 @@ export default function AnotherLikeThis({
   // Had one already: drawn by this button, or by the page before this button was mounted. Below a drawn question the
   // button is a new one with a count of 0, so running out read "could not be made just now" where it meant "you have
   // had them all" (the audit, 2026-10-12, the owner "Yes").
-  const hadOne = draw.seen > 0 || alsoExclude.some(q => q.basedOn?.includes(offer.label));
+  const hadOne = draw.seen > 0 || notForgotten(alsoExclude).some(q => q.basedOn?.includes(offer.label));
+
+  const startAgain = () => {
+    const gone = FORGOTTEN.get(forgotKey) ?? new Set<string>();
+    for (const q of alsoExclude) if (q.uid && q.basedOn?.includes(offer.label)) gone.add(q.uid);
+    FORGOTTEN.set(forgotKey, gone);
+    draw.restart();
+  };
 
   return (
     <>
@@ -111,7 +132,10 @@ export default function AnotherLikeThis({
       {draw.state === 'exhausted' && (
         <p className={noticeClassName}>
           {hadOne
-            ?'No more new questions like this one: you have had them all.'
+            ? <>No more new questions like this one: you have had them all.{' '}
+                <button type="button" onClick={startAgain} className="underline underline-offset-2 font-medium hover:text-foreground">
+                  Start again
+                </button></>
             : 'No new question could be made just now.'}
         </p>
       )}

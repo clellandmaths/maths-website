@@ -21,6 +21,8 @@ import dynamic from 'next/dynamic';
  * to the edge of its 10 KB budget headroom.
  */
 const QuestionPresenter = dynamic(() => import('@/components/Explorer/QuestionPresenter'), { ssr: false });
+/** Lazily too, as Focus Mode loads it: only a handout with Hints ticked renders it. */
+const MoreLikeThis = dynamic(() => import('@/components/MoreLikeThis'), { ssr: false });
 import FormulaeSheet from '@/components/FormulaeSheet';
 import DataBookletSheet, { BookletExtract } from '@/components/DataBookletSheet';
 import DownloadFilesButton from '@/components/DownloadFilesButton';
@@ -71,6 +73,8 @@ function SharedWorksheet() {
   const [options, setOptions] = useState<WorksheetOptions>(NO_OPTIONS);
   const [fullScreenFrom, setFullScreenFrom] = useState<number | null>(null);
   const [booklet, setBooklet] = useState<string | number | null>(null);
+  /** Every twin drawn on the cards this visit, so two cards never hand out the same one. */
+  const [drawn, setDrawn] = useState<QuestionWithMetadata[]>([]);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -419,6 +423,25 @@ function SharedWorksheet() {
                   <p className={`answer-label font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Answer</p>
                   <MathRenderer html={q.answer} className="answer-content text-xl leading-relaxed text-foreground/80" />
                 </div>
+              )}
+
+              {/* Another like this one on the card, when the maker ticked Hints (the owner, 2026-10-13: "Yes on
+                  cards on shared page if teacher has enabled hints"), as full screen has had it since 2026-09-28.
+                  It opens below, as on a practice page, and never prints: the handout is what the teacher made.
+                  Off in a test, which locks hints. Absent where the course has nothing to draw (MoreLikeThis
+                  renders nothing there). Everything on the sheet, and every twin drawn on the page, stays off. */}
+              {options.hints && !options.test && (
+                <MoreLikeThis
+                  courseId={courseId ?? undefined}
+                  theme={theme}
+                  label={q.label}
+                  questionHtml={q.question}
+                  basedOn={q.basedOn}
+                  parentIndex={q.parentIndex}
+                  className="no-print mt-4"
+                  alsoExclude={[...questions, ...drawn]}
+                  onDrawn={(made) => setDrawn(d => [...d, made])}
+                />
               )}
             </li>
           );

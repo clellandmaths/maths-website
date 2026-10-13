@@ -75,6 +75,8 @@ export interface GeneratedDraw {
   /** Draw several and put them on the sheet. Returns how many landed. */
   toSheet: (want: number) => Promise<number>;
   reset: () => void;
+  /** Forget what this control has drawn, so its questions can come round again ("Start again"). */
+  restart: () => void;
 }
 
 /**
@@ -147,6 +149,8 @@ export function useGeneratedDraw(
   };
 
   const reset = () => { setState('idle'); };
+  // The sheet itself stays off the table: only what this control drew is forgotten.
+  const restart = () => { drawn.current = []; setSeen(0); setState('idle'); };
 
-  return { state, seen, one, toSheet, reset };
+  return { state, seen, one, toSheet, reset, restart };
 }

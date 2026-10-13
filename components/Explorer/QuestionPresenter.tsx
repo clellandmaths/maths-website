@@ -385,6 +385,11 @@ export default function QuestionPresenter({ theme, hasDataBooklet = false, cours
             {allowAnother && (
               <div className="shrink-0 flex justify-center mt-4">
                 <TwinControls
+                  /* One per question (the owner's phone check, 2026-10-13): kept
+                     across Next and Previous, it carried the last question's
+                     "you have had them all" onto the next one. What it drew
+                     stays off the table through `drawn`. */
+                  key={`${currentIndex}`}
                   courseId={courseId}
                   question={question}
                   alsoExclude={drawn}

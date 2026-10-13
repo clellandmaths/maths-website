@@ -59,6 +59,13 @@ interface Props {
   label?: string | null;
   /** The question HTML, scraped only when no label is given. */
   questionHtml?: string;
+  /**
+   * A generated question's parentage, so it can offer more of its kind (the owner's phone check, 2026-10-13: Focus
+   * Mode offered nothing on the Worksheet Builder's generated questions, while full screen, which passes the whole
+   * question, did). A generated question's label is its topic, not a paper badge, so without these there is no card.
+   */
+  basedOn?: readonly string[];
+  parentIndex?: number;
   className?: string;
   /**
    * Which surface this is on, and so how it is painted.
@@ -96,7 +103,7 @@ const TONES = {
 } as const;
 
 export default function MoreLikeThis({
-  courseId, theme, label, questionHtml, className = '',
+  courseId, theme, label, questionHtml, basedOn, parentIndex, className = '',
   tone = 'page', alsoExclude, onDrawn,
 }: Props) {
   const paint = TONES[tone];
@@ -116,10 +123,10 @@ export default function MoreLikeThis({
 
   // Nothing modelled on this question: render nothing, not an empty box with a
   // margin on it. Absent, not disabled.
-  if (!moreLikeThis(courseId, { label, questionHtml })) return null;
+  if (!moreLikeThis(courseId, { label, questionHtml, basedOn, parentIndex })) return null;
 
   /** Enough of the question on screen for the draw to model a twin on. */
-  const source = { question: questionHtml ?? '' } as QuestionWithMetadata;
+  const source = { question: questionHtml ?? '', basedOn, parentIndex } as QuestionWithMetadata;
 
   const button = (
     <AnotherLikeThis
