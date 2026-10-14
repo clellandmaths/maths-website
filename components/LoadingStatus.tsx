@@ -51,7 +51,14 @@ export default function LoadingStatus({
         </p>
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted" aria-hidden="true">
           {counting ? (
-            <div className={`h-full rounded-full ${barClass} transition-[width] duration-300`} style={{ width: `${pct}%` }} />
+            // **Scaled, not widened** (2026-10-14): a width animation runs on the
+            // page's main thread, and while a slow phone was busy making the
+            // questions the bar sat at a fifth full beside "50 of 50". A
+            // transform is moved by the compositor, so it keeps up.
+            <div
+              className={`h-full w-full origin-left rounded-full ${barClass} motion-safe:transition-transform motion-safe:duration-300`}
+              style={{ transform: `scaleX(${pct / 100})` }}
+            />
           ) : (
             <div className={`h-full w-1/3 rounded-full ${barClass} loading-sweep`} />
           )}

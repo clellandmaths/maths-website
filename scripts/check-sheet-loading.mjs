@@ -44,6 +44,13 @@ const MARKS = `window.__t = {}; window.__seen = { maxOpacity: 0, disabledWhileLo
       __seen.maxOpacity = Math.max(__seen.maxOpacity, +getComputedStyle(panel).opacity);
       m('panelShown', () => +getComputedStyle(panel).opacity > 0.5);
       const c = (panel.innerText.match(/(\\d+) of (\\d+)/) || [])[0]; if (c) __seen.count = c;
+      if (/Drawing the maths/.test(panel.innerText)) __seen.drawing ??= performance.now();
+      // The bar as drawn (its fill against its track, transforms included), 400 ms after every question is made.
+      if (/20 of 20/.test(panel.innerText)) {
+        __seen.allMade ??= performance.now();
+        const track = panel.querySelector('.rounded-full.bg-muted'), fill = track?.firstElementChild;
+        if (fill && performance.now() - __seen.allMade > 400) __seen.barThen ??= fill.getBoundingClientRect().width / track.getBoundingClientRect().width;
+      }
     }
     if (document.querySelector('main h1') && !qs && __seen.disabledWhileLoading === null) {
       const b = [...document.querySelectorAll('main button')];
@@ -73,6 +80,10 @@ await withPage({ port: 8228, cdp: 9328, width: 390, height: 844 }, async ({ send
   t.check(r.t.panelShown < r.t.sheet, 'and shows before the sheet on a wait this long');
   t.check(/^\d+ of 20$/.test(r.seen.count), `it counts the questions as they are made ("${r.seen.count}")`);
   t.check(r.n === 20, `the whole sheet arrives (${r.n} of 20)`);
+  // Once all 20 are made it still fetches the maths drawer: it says so, and its bar has kept up (a width animation
+  // stalled on a busy phone, at a fifth full beside "50 of 50", 2026-10-14).
+  t.check(r.seen.drawing !== undefined, 'with every question made, it says "Drawing the maths" while the maths drawer loads');
+  t.check(r.seen.barThen === undefined || r.seen.barThen > 0.9, `and its bar is full by then (${r.seen.barThen ?? 'not sampled: the wait was short'})`);
   t.check(r.printOn, 'then Print can be pressed');
   t.check(r.ready.includes('Worksheet ready: 20 questions'), `and a screen reader is told (${JSON.stringify(r.ready)})`);
 

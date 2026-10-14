@@ -270,7 +270,9 @@ function SharedWorksheet() {
             generated questions settles them one at a time: on a first visit on
             an older phone, 50 AH questions took 12.9 s. */}
         <LoadingStatus
-          label={`Setting out ${count} question${count === 1 ? '' : 's'}`}
+          // Once every question is made, the sheet still waits for the maths
+          // drawer and its fonts (above): say so, rather than sit at "50 of 50".
+          label={settled >= count && count > 0 ? 'Drawing the maths' : `Setting out ${count} question${count === 1 ? '' : 's'}`}
           done={settled}
           total={count}
           barClass={theme.progress}
