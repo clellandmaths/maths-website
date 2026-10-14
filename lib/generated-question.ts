@@ -90,7 +90,7 @@ export async function questionFromCode(
  * Advanced Higher's adapter, loaded the first time an AH question is asked
  * for. Its routines then load a topic at a time (`ah/routines/index.ts`).
  */
-const ah = () => import('./generator/generators/ah/site');
+const ah = () => import('./ah-door');
 
 /**
  * **Load the routine files a batch of Advanced Higher cards needs, all at once.**
@@ -112,6 +112,31 @@ export async function warmForCards(labels: readonly (string | null | undefined)[
   ]);
   const ids = [...new Set(labels.filter((l): l is string => !!l).map(l => idForCard(l)).filter((id): id is string => !!id))];
   await Promise.all(ids.map(id => routineFor(id).catch(() => undefined)));
+}
+
+/**
+ * **The same for a shared link, by its codes** (the owner, 2026-10-14, card 13a
+ * of the loading-states sheet: "let's just do 13a"). A shared sheet made its
+ * questions in order, and each AH card's routine file loaded when its turn
+ * came, so the files arrived in about 8 batches one after another (a
+ * 20-question AH sheet: 8.6 s on a first visit on a slowed phone, against 7.7 s
+ * with every file asked for when the link is read). The sheet calls this the
+ * moment it has read the link, alongside the papers it also needs. As above,
+ * nothing about the questions changes, and nothing extra is fetched: the files
+ * the sheet would load anyway, sooner. National 5's generators are one load.
+ */
+export async function warmForCodes(codes: readonly string[]): Promise<void> {
+  const ahCodes = codes.filter(c => !VARIATION_BY_CODE[c]);
+  await Promise.all([
+    ahCodes.length < codes.length ? readyN5().catch(() => undefined) : undefined,
+    ahCodes.length ? (async () => {
+      // Through the one door (`lib/ah-door.ts`): imported on their own, the
+      // code table and routine loader were downloaded a second time.
+      const { AH_BY_CODE, routineFor } = await ah();
+      const ids = [...new Set(ahCodes.map(c => AH_BY_CODE[c]).filter((id): id is string => !!id))];
+      await Promise.all(ids.map(id => routineFor(id).catch(() => undefined)));
+    })().catch(() => undefined) : undefined,
+  ]);
 }
 
 /**

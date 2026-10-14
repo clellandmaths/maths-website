@@ -32,6 +32,8 @@ import type { QuestionWithMetadata } from './data-loader';
  */
 export interface LinkEngine {
   questionFromCode(code: string, seed: string, index: number, parentIndex?: number): Promise<QuestionWithMetadata | null>;
+  /** Fetch every file a link's codes will need, at once (the current maker only: the frozen ones load as they did). */
+  warmForCodes?(codes: readonly string[]): Promise<void>;
 }
 
 export async function engineForVersion(version: number): Promise<LinkEngine> {

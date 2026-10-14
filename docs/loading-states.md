@@ -73,6 +73,27 @@ Held by `npm run check:loadingmore` (16 points; fails 15 of 16 on the code befor
 from how the whole site loads that font (`app/layout.tsx`), so any page whose small mono text wraps differently can
 jump the same way. A fix would change every page's first visit.
 
+## Card 13a: a shared link's question code, asked for at once
+
+Measured read-only first (sheet v3, cards 13a to 13c; the owner: "let's just do 13a and move on as long as links
+don't get bigger"). A shared sheet made its questions in order, and each AH card's routine file loaded when its turn
+came: on a 20-question AH sheet the scripts were asked for in 8 waves, one after another (18 on 50 questions).
+
+- `warmLink(refs, version)` (`lib/worksheet-share.ts`), called by the shared sheet the moment it has read the link,
+  asks the link's own maker to fetch everything its codes need (`warmForCodes` in `lib/generated-question.ts`, the
+  same idea as `warmForCards` for the Builder's batches), alongside the course's papers. The frozen makers of older
+  link versions have no `warmForCodes` and load as they did.
+- **`lib/ah-door.ts`**: AH's site adapter, code table and routine loader re-exported from one module, and every AH
+  import on the site goes through it (`ah()` in `lib/generated-question.ts`). Imported separately, the code table and
+  routine loader were bundled into a second set of files and downloaded twice (about 100 KB compressed). Through the
+  door, the files are the ones the sheet already loaded: 57 scripts, as before.
+- Links are unchanged: the same references, and `npx tsx scripts/verify-share-fixtures.mts` re-makes all 1200
+  recorded links (6943 generated questions, versions 1 to 4) identically.
+- Measured on the local build, old against new (the local server sends files uncompressed, so only the difference
+  counts): 20 AH 17.6 s to 16.35 s; 50 AH 20.0 s to 17.35 s; 5 N5 unchanged (its code is already one load). Held by
+  `check:sheetloading` (6 waves of requests at most; live's code before 13a made 8).
+
 ## Still to do
 
-3 diagram sizes (its own job, its own sheet); 13 the speed of a shared sheet's question maker, read-only first.
+3 diagram sizes (its own job, its own sheet); 13b (an AH sheet also downloads National 5's question maker through
+the generator's shared core: read-only first, a generator job).

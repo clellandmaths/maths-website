@@ -222,6 +222,20 @@ export function decodeWorksheet(search: string): SharedWorksheet | null {
  * hands over a working copy (the owner, 2026-10-09: "I'm not bothered about
  * preserving editable links just shared").
  */
+/**
+ * **Start fetching a link's question makers now** (card 13a of the
+ * loading-states sheet): the shared sheet calls this the moment it has read the
+ * link, so the maker and every question's code load alongside the course's
+ * papers rather than one after another once they are in. Fire and forget: a
+ * failure here is left for `resolveWorksheet` to meet and report. The link and
+ * the questions it makes are unchanged.
+ */
+export function warmLink(refs: readonly string[], version: number = LINK_VERSION): void {
+  const codes = refs.map(r => parseGeneratedRef(r)?.code).filter((c): c is string => !!c);
+  if (!codes.length) return;
+  engineForVersion(version).then(e => e.warmForCodes?.(codes)).catch(() => {});
+}
+
 export async function resolveWorksheet(
   refs: string[],
   available: QuestionWithMetadata[],

@@ -75,6 +75,15 @@ await withPage({ port: 8228, cdp: 9328, width: 390, height: 844 }, async ({ send
   t.check(r.n === 20, `the whole sheet arrives (${r.n} of 20)`);
   t.check(r.printOn, 'then Print can be pressed');
   t.check(r.ready.includes('Worksheet ready: 20 questions'), `and a screen reader is told (${JSON.stringify(r.ready)})`);
+
+  // Card 13a (2026-10-14): every card's code asked for at once when the link is read, not as each question's turn
+  // came. Counted as waves of script requests after first paint (a gap of 250 ms starts a new wave): live's code
+  // before 13a made 8 on this sheet (18 on a 50-question one); with it, 5 for both.
+  const waves = await evaluate(`(() => {
+    const fcp = performance.getEntriesByName('first-contentful-paint')[0]?.startTime ?? 0;
+    const s = performance.getEntriesByType('resource').filter(e => /\\.js(\\?|$)/.test(e.name) && e.startTime > fcp).map(e => e.startTime).sort((a, b) => a - b);
+    let n = 0, last = -1e9; for (const x of s) { if (x - last > 250) n++; last = x; } return n; })()`);
+  t.check(waves <= 6, `the question code is asked for together, not question by question (${waves} waves of requests)`);
 });
 
 // 2. The same, with nothing reading the page while it waits: does anything move?

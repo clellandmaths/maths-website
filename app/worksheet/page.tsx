@@ -10,7 +10,7 @@ import CalculatorMark from '@/components/CalculatorMark';
 import { calculatorLabel } from '@/lib/calculator';
 import QRCodeImage from '@/components/QRCodeImage';
 import {
-  decodeWorksheet, resolveWorksheet, isGenerated, NO_OPTIONS, type WorksheetOptions,
+  decodeWorksheet, resolveWorksheet, warmLink, isGenerated, NO_OPTIONS, type WorksheetOptions,
 } from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
 import LoadingStatus from '@/components/LoadingStatus';
@@ -89,6 +89,8 @@ function SharedWorksheet() {
     setTitle(shared.title);
     setOptions(shared.options);
     setExpected(shared.refs.length);
+    // The question makers' files now, alongside the papers (card 13a).
+    warmLink(shared.refs, shared.version);
     // **The maths drawer, waited for before the sheet is shown.** Each
     // question's maths box (MathRenderer) stays empty until KaTeX is here.
     // Shown first, the boxes were drawn empty, then filled, pushing every card
