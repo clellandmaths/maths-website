@@ -1311,3 +1311,29 @@ summary::-webkit-details-marker {
 @media (prefers-reduced-motion: reduce) {
   .card-face { animation: none; }
 }
+
+/* **LoadingStatus** (components/LoadingStatus.tsx; the loading-states audit,
+   2026-10-14). Its words wait half a second before they show, so a wait that
+   ends sooner shows nothing at all: no spinner flashing up and away. The space
+   is held by the component's box from the start, so the delay moves nothing.
+   The sweep is the bar's "not countable yet" state. Under "reduce motion" the
+   words still wait (that is timing, not motion) but appear without a fade, and
+   the sweep is a still, faint bar. */
+@keyframes loading-reveal {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.loading-reveal {
+  animation: loading-reveal 200ms ease-out 500ms both;
+}
+@keyframes loading-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(300%); }
+}
+.loading-sweep {
+  animation: loading-sweep 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading-reveal { animation-duration: 0s; }
+  .loading-sweep { animation: none; width: 100%; opacity: 0.35; }
+}

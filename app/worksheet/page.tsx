@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Printer, Eye, EyeOff, Compass, Maximize2, Play, BookOpen, Paperclip, ArrowLeft } from 'lucide-react';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer, { warmMathRenderer } from '@/components/MathRenderer';
 import Hints from '@/components/Hints';
 import Marks from '@/components/Marks';
 import CalculatorMark from '@/components/CalculatorMark';
@@ -13,6 +13,7 @@ import {
   decodeWorksheet, resolveWorksheet, isGenerated, NO_OPTIONS, type WorksheetOptions,
 } from '@/lib/worksheet-share';
 import { printWorksheet, warmWorksheetImages, watchSystemPrint } from '@/lib/print-worksheet';
+import LoadingStatus from '@/components/LoadingStatus';
 import dynamic from 'next/dynamic';
 
 /**
@@ -76,6 +77,10 @@ function SharedWorksheet() {
   /** Every twin drawn on the cards this visit, so two cards never hand out the same one. */
   const [drawn, setDrawn] = useState<QuestionWithMetadata[]>([]);
   const [notFound, setNotFound] = useState(false);
+  /** How many questions the link holds, known the moment it is read; and how
+   *  many are set out so far, for the count while the sheet waits. */
+  const [expected, setExpected] = useState<number | null>(null);
+  const [settled, setSettled] = useState(0);
 
   useEffect(() => {
     const shared = decodeWorksheet(window.location.search);
@@ -83,10 +88,21 @@ function SharedWorksheet() {
     setCourseId(shared.courseId);
     setTitle(shared.title);
     setOptions(shared.options);
+    setExpected(shared.refs.length);
+    // **The maths drawer, fetched with the questions rather than after them.**
+    // Each question's maths box (MathRenderer) stays empty until KaTeX is
+    // here. Fetched only once the sheet was on screen, the boxes could be drawn
+    // empty, then filled, pushing every card below down: 0.34 of layout shift
+    // on a slowed phone (the loading-states work, 2026-10-14). Asked for now,
+    // and waited for, it is ready the moment the questions are; and the boxes
+    // below are `immediate`, so they are drawn before the browser paints them
+    // (fetching early alone still let 1 run in 3 paint them empty first).
+    const drawer = warmMathRenderer();
     LOADERS[shared.courseId]()
       // A handout opens with the maker it was made with, so a sheet already
       // set as homework is exactly what the teacher shared (lib/link-engines.ts).
-      .then(all => resolveWorksheet(shared.refs, all, shared.version))
+      .then(all => resolveWorksheet(shared.refs, all, shared.version, setSettled))
+      .then(async made => { await drawer; return made; })
       .then(({ questions: qs, missing: m }) => {
         setQuestions(qs);
         setMissing(m);
@@ -133,20 +149,28 @@ function SharedWorksheet() {
   // held and nothing visible moves. Not on paper, where it could add a page.
   const frame = 'mx-auto max-w-3xl px-4 py-8 min-h-[100svh] print:min-h-0';
 
-  if (!questions) {
-    return (
-      <div className={frame} aria-busy="true">
-        <div key="loading" className="flex items-center justify-center py-24">
-          <div className="h-8 w-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-        </div>
-      </div>
-    );
+  // **Before the script has read the link, nothing true can be shown**, so the
+  // frame is empty (it holds the screen, as above). That is the static page and
+  // the first moment of the script: well under a second on every device timed
+  // (the loading-states audit, 2026-10-14).
+  if (!questions && expected === null) {
+    return <div className={frame} aria-busy="true" />;
   }
 
   const theme = getCourseTheme(courseId ?? 'n5');
+  const loading = !questions;
+  const count = questions ? questions.length : expected ?? 0;
 
-  return (
-    <div className={frame}>
+  // **The sheet's own header, while it loads and after** (the owner, 2026-10-14,
+  // card 1 of the loading-states sheet: "Yes"). Everything here is in the link:
+  // the course, the title, how many questions, what the maker allowed. It used
+  // to wait behind a bare spinner until every question was made (7.4 s for 20
+  // AH questions on a first visit on an older phone). One header serves both
+  // states, so nothing in it moves when the questions arrive: the marks join
+  // the count on its line, and the buttons wake up where they already are.
+  // Print and Full screen wait for every question, as they always did.
+  const header = (
+    <>
       <div className="mb-8 no-print">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           {COURSE_NAMES[courseId ?? ''] ?? 'Worksheet'} · shared worksheet
@@ -155,8 +179,13 @@ function SharedWorksheet() {
           {title || `${COURSE_NAMES[courseId ?? ''] ?? ''} Worksheet`}
         </h1>
         <p className="font-mono text-xs text-muted-dim">
-          {questions.length} question{questions.length === 1 ? '' : 's'}
+          {count} question{count === 1 ? '' : 's'}
           {totalMarks > 0 && ` · ${totalMarks} marks`}
+        </p>
+        {/* For a screen reader: there from the start, so the change to "ready"
+            is announced (a status that only appears when filled may not be). */}
+        <p className="sr-only" role="status">
+          {loading ? '' : `Worksheet ready: ${count} question${count === 1 ? '' : 's'}`}
         </p>
         {missing > 0 && (
           <p className="mt-3 text-sm text-muted-foreground">
@@ -196,7 +225,8 @@ function SharedWorksheet() {
       <div className="flex flex-wrap gap-3 mb-8 no-print">
         <button
           onClick={() => printWorksheet()}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-background text-sm font-bold rounded-lg transition-colors"
+          disabled={loading}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-background text-sm font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-accent"
         >
           <Printer className="h-4 w-4" />
           Print
@@ -206,22 +236,50 @@ function SharedWorksheet() {
             same answer and video settings. */}
         <button
           onClick={() => setFullScreenFrom(0)}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
+          disabled={loading}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-muted/40"
         >
           <Maximize2 className="h-4 w-4" />
           Full screen
         </button>
-        <DownloadFilesButton questions={questions} title={title} />
+        <DownloadFilesButton questions={questions ?? []} title={title} />
         {options.answers && (
           <button
-            onClick={() => setRevealed(r => r.size === questions.length ? new Set() : new Set(questions.map((_, i) => i)))}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors"
+            onClick={() => questions && setRevealed(r => r.size === questions.length ? new Set() : new Set(questions.map((_, i) => i)))}
+            disabled={loading}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-muted/40 hover:bg-muted/60 text-foreground text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-muted/40"
           >
-            {revealed.size === questions.length ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            {revealed.size === questions.length ? 'Hide all answers' : 'Show all answers'}
+            {questions && revealed.size === questions.length ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {questions && revealed.size === questions.length ? 'Hide all answers' : 'Show all answers'}
           </button>
         )}
       </div>
+    </>
+  );
+
+  if (!questions) {
+    return (
+      <div className={frame} aria-busy="true">
+        {header}
+        {/* The space the sheet will fill, held from the start (min-h), so the
+            swap moves nothing below the header; the panel itself waits half a
+            second before it shows (LoadingStatus). Counted, because a sheet of
+            generated questions settles them one at a time: on a first visit on
+            an older phone, 50 AH questions took 12.9 s. */}
+        <LoadingStatus
+          label={`Setting out ${count} question${count === 1 ? '' : 's'}`}
+          done={settled}
+          total={count}
+          barClass={theme.progress}
+          className="min-h-[50svh]"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={frame}>
+      {header}
 
       {/* Print-only header. The worksheet print stylesheet already knows these
           class names from the Explorer, so a handout comes out of the printer
@@ -326,7 +384,7 @@ function SharedWorksheet() {
               </div>
 
               {courseId === 'higher-apps' && <BookletExtract question={q} />}
-              <MathRenderer html={options.test ? withoutPaperBadge(q.question) : q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
+              <MathRenderer immediate html={options.test ? withoutPaperBadge(q.question) : q.question} className="question-content text-xl leading-relaxed text-foreground/90" />
 
               {/* Whatever the maker granted, offered here on the card as well as
                   in full screen — a pupil reading down the page should not have
@@ -421,7 +479,7 @@ function SharedWorksheet() {
               {options.answers && isOpen && (
                 <div className="answer-section mt-4 pt-4 border-t border-border">
                   <p className={`answer-label font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>Answer</p>
-                  <MathRenderer html={q.answer} className="answer-content text-xl leading-relaxed text-foreground/80" />
+                  <MathRenderer immediate html={q.answer} className="answer-content text-xl leading-relaxed text-foreground/80" />
                 </div>
               )}
 

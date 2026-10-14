@@ -226,10 +226,14 @@ export async function resolveWorksheet(
   refs: string[],
   available: QuestionWithMetadata[],
   version: number = LINK_VERSION,
+  /** Called as each ref is settled (made, found or missing), with how many
+   *  are: the shared sheet counts them while it waits (LoadingStatus). */
+  onProgress?: (settled: number) => void,
 ): Promise<{ questions: QuestionWithMetadata[]; missing: number }> {
   const byRef = new Map(available.map(q => [questionRef(q), q]));
   const questions: QuestionWithMetadata[] = [];
   let missing = 0;
+  const settled = () => onProgress?.(questions.length + missing);
 
   // Loaded on demand, and at most once. A static import here would put the
   // engine in the bundle of every page that can open a shared sheet.
@@ -251,11 +255,13 @@ export async function resolveWorksheet(
       } else {
         missing++;
       }
+      settled();
       continue;
     }
     const q = byRef.get(ref);
     if (q) questions.push(q);
     else missing++;
+    settled();
   }
   return { questions, missing };
 }
