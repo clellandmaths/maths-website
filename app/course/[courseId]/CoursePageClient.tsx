@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { lazy, Suspense, useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap, Dices } from 'lucide-react';
+import { Play, FileText, ChevronDown, ChevronUp, BookOpen, List, Compass, GraduationCap, Dices, Loader2, X } from 'lucide-react';
 import CourseBar from '@/components/CourseBar';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import LoadingStatus from '@/components/LoadingStatus';
 import dynamic from 'next/dynamic';
 
 /**
@@ -15,8 +16,11 @@ import dynamic from 'next/dynamic';
  * pages, and there it was 63 KB over the budget for its group.
  */
 const VideoModal = dynamic(() => import('@/components/VideoModal'), { ssr: false });
-const QuestionPresenter = dynamic(() => import('@/components/Explorer/QuestionPresenter'), { ssr: false });
-const FocusMode = dynamic(() => import('@/components/Explorer/FocusMode'), { ssr: false });
+// React.lazy, so the frame Start Paper opens in can stand in for them while
+// they load (Suspense) and goes the moment they are drawn (card 5 of the
+// loading-states sheet). They are only ever drawn after a press, in the browser.
+const QuestionPresenter = lazy(() => import('@/components/Explorer/QuestionPresenter'));
+const FocusMode = lazy(() => import('@/components/Explorer/FocusMode'));
 import { n5PaperVideos, higherPaperVideos, ahPaperVideos, higherAppsPaperVideos, n5AppsPaperVideos, type PaperVideo } from '@/lib/past-paper-videos';
 import { getCourseTheme } from '@/lib/course-theme';
 import { getAllN5Questions, getAllHigherQuestions, getAllAHQuestions, getAllHigherAppsQuestions, getAllN5AppsQuestions, type QuestionWithMetadata } from '@/lib/data-loader';
@@ -52,7 +56,6 @@ const courseNames: Record<string, string> = {
 export default function CoursePage({ courseId }: CoursePageProps) {
   // Lazy question loading
   const [allQuestions, setAllQuestions] = useState<QuestionWithMetadata[] | null>(null);
-  const [loadingQuestions, setLoadingQuestions] = useState(false);
 
   // UI state
   const [expandedPaper, setExpandedPaper] = useState<string | null>(null);
@@ -60,6 +63,21 @@ export default function CoursePage({ courseId }: CoursePageProps) {
   const [presenterStartIndex, setPresenterStartIndex] = useState(0);
   const [focusQuestions, setFocusQuestions] = useState<QuestionWithMetadata[] | null>(null);
   const [activeVideo, setActiveVideo] = useState<{ videoId: string; timestamp: number; title: string } | null>(null);
+  /**
+   * **Start Paper and Focus Mode open their frame at once** (the owner,
+   * 2026-10-14, card 5 of the loading-states sheet: "Yes"). On a first press the
+   * paper's questions and the full-screen code both have to load. The page used
+   * to add "Loading questions..." at the top of the list (off screen if you had
+   * scrolled to the paper), then empty itself until full screen arrived: about
+   * a second of blank page on a slowed phone, 0.8 to 1.56 of layout shift. Now
+   * the frame opens on the press, named for the paper, and full screen draws
+   * over it when ready. `opening` is that frame's paper; `openRun` lets Cancel
+   * drop a press that is still loading.
+   */
+  const [opening, setOpening] = useState<string | null>(null);
+  const openRun = useRef(0);
+  /** The paper whose Browse Questions is loading, so that button says so. */
+  const [browsing, setBrowsing] = useState<string | null>(null);
 
   // Explorer and the Exam Hall both open on `preferredCourse`. Until now only
   // choosing a course inside one of those set it, so arriving from a course
@@ -93,10 +111,8 @@ export default function CoursePage({ courseId }: CoursePageProps) {
   const ensureQuestionsLoaded = useCallback(async (): Promise<QuestionWithMetadata[]> => {
     if (allQuestions) return allQuestions;
     if (!config) return [];
-    setLoadingQuestions(true);
     const questions = await config.loadQuestions();
     setAllQuestions(questions);
-    setLoadingQuestions(false);
     return questions;
   }, [allQuestions, config]);
 
@@ -107,21 +123,35 @@ export default function CoursePage({ courseId }: CoursePageProps) {
 
   // Action handlers
   const handleStartPaper = useCallback(async (year: number | string, paperNumber: number, startIndex = 0) => {
-    const questions = await ensureQuestionsLoaded();
+    const run = ++openRun.current;
+    setOpening(paperName(courseId, year, paperNumber));
+    // Fetched together with the questions, so full screen has nothing left to
+    // load when it is shown.
+    const [questions] = await Promise.all([ensureQuestionsLoaded(), import('@/components/Explorer/QuestionPresenter')]);
+    if (run !== openRun.current) return;   // cancelled while it loaded
     const paperQuestions = getQuestionsForPaper(questions, year, paperNumber);
     if (paperQuestions.length > 0) {
       setPresenterQuestions(paperQuestions);
       setPresenterStartIndex(startIndex);
+    } else {
+      setOpening(null);
     }
-  }, [ensureQuestionsLoaded, getQuestionsForPaper]);
+  }, [courseId, ensureQuestionsLoaded, getQuestionsForPaper]);
 
   const handleFocusMode = useCallback(async (year: number | string, paperNumber: number) => {
-    const questions = await ensureQuestionsLoaded();
+    const run = ++openRun.current;
+    setOpening(paperName(courseId, year, paperNumber));
+    const [questions] = await Promise.all([ensureQuestionsLoaded(), import('@/components/Explorer/FocusMode')]);
+    if (run !== openRun.current) return;
     const paperQuestions = getQuestionsForPaper(questions, year, paperNumber);
     if (paperQuestions.length > 0) {
       setFocusQuestions(paperQuestions);
+    } else {
+      setOpening(null);
     }
-  }, [ensureQuestionsLoaded, getQuestionsForPaper]);
+  }, [courseId, ensureQuestionsLoaded, getQuestionsForPaper]);
+
+  const cancelOpening = () => { openRun.current++; setOpening(null); };
 
   const handleExpandPaper = useCallback(async (year: number | string, paperNumber: number) => {
     const key = `${year}-${paperNumber}`;
@@ -129,38 +159,70 @@ export default function CoursePage({ courseId }: CoursePageProps) {
       setExpandedPaper(null);
       return;
     }
-    await ensureQuestionsLoaded();
+    // The press shows on its own button (card 5): it used to add a
+    // "Loading questions..." line at the top of the list, pushing every paper
+    // down (0.27 of shift).
+    if (!allQuestions) setBrowsing(key);
+    try {
+      await ensureQuestionsLoaded();
+    } finally {
+      setBrowsing(null);
+    }
     setExpandedPaper(key);
-  }, [expandedPaper, ensureQuestionsLoaded]);
+  }, [expandedPaper, ensureQuestionsLoaded, allQuestions]);
+
+  /** The frame Start Paper and Focus Mode open in at once; full screen takes its place when ready. */
+  const openingFrame = opening && (
+    <div className="fixed inset-0 z-40 bg-background flex flex-col" aria-busy="true">
+      <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border">
+        <p className="font-semibold text-foreground truncate">{courseName} {opening}</p>
+        <button
+          onClick={cancelOpening}
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-colors"
+        >
+          <X className="h-4 w-4" />
+          Cancel
+        </button>
+      </div>
+      <div className="mx-auto w-full max-w-xl p-4 pt-10">
+        <LoadingStatus label={`Opening ${opening}`} barClass={theme.progress} />
+      </div>
+    </div>
+  );
 
   // Full-screen modes take priority over page content
   if (presenterQuestions) {
     return (
-      <QuestionPresenter
-        theme={theme}
-        courseId={courseId}
-        hasDataBooklet={courseId === 'higher-apps'}
-        questions={presenterQuestions}
-        startIndex={presenterStartIndex}
-        onClose={() => setPresenterQuestions(null)}
-      />
+      <Suspense fallback={openingFrame}>
+        <QuestionPresenter
+          theme={theme}
+          courseId={courseId}
+          hasDataBooklet={courseId === 'higher-apps'}
+          questions={presenterQuestions}
+          startIndex={presenterStartIndex}
+          onClose={() => { setPresenterQuestions(null); setOpening(null); }}
+        />
+      </Suspense>
     );
   }
 
   if (focusQuestions) {
     return (
-      <FocusMode
-        theme={theme}
-        courseId={courseId}
-        hasDataBooklet={courseId === 'higher-apps'}
-        questions={focusQuestions}
-        onClose={() => setFocusQuestions(null)}
-      />
+      <Suspense fallback={openingFrame}>
+        <FocusMode
+          theme={theme}
+          courseId={courseId}
+          hasDataBooklet={courseId === 'higher-apps'}
+          questions={focusQuestions}
+          onClose={() => { setFocusQuestions(null); setOpening(null); }}
+        />
+      </Suspense>
     );
   }
 
   return (
     <>
+      {openingFrame}
       <CourseBar courseId={courseId} active="papers" />
       <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -183,14 +245,6 @@ export default function CoursePage({ courseId }: CoursePageProps) {
           {/* Content */}
           {config ? (
             <div className="space-y-6">
-              {/* Loading overlay */}
-              {loadingQuestions && (
-                <div className="flex items-center justify-center py-8">
-                  <div className={`h-8 w-8 border-4 ${theme.border} border-t-transparent rounded-full animate-spin mr-3`} />
-                  <p className="text-muted-foreground">Loading questions...</p>
-                </div>
-              )}
-
               {papersByYear.map(({ year, papers }, yearRow) => (
                 <div key={year}>
                   <h3 className="text-xl font-bold mb-4">{year}</h3>
@@ -327,9 +381,15 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                                 )}
                                 <button
                                   onClick={() => handleExpandPaper(paper.year, paper.paperNumber)}
-                                  className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 text-sm font-medium rounded-lg transition-colors ml-auto"
+                                  disabled={browsing !== null}
+                                  className="flex items-center gap-1.5 px-3 py-2 bg-muted hover:bg-muted-hover text-foreground-2 text-sm font-medium rounded-lg transition-colors ml-auto disabled:opacity-70"
                                 >
-                                  {isExpanded ? (
+                                  {browsing === paperKey ? (
+                                    <>
+                                      <Loader2 className="h-4 w-4 animate-spin" />
+                                      <span>Loading…</span>
+                                    </>
+                                  ) : isExpanded ? (
                                     // The label at every width. It was `hidden
                                     // sm:inline`, and `sm:` is 640px, so no phone
                                     // in portrait ever saw more than a chevron.
@@ -398,12 +458,6 @@ export default function CoursePage({ courseId }: CoursePageProps) {
                             </div>
                           )}
 
-                          {/* Loading state for expanded */}
-                          {isExpanded && paperQuestions.length === 0 && loadingQuestions && (
-                            <div className="border-t border-border p-4 text-center">
-                              <div className={`h-6 w-6 border-3 ${theme.border} border-t-transparent rounded-full animate-spin mx-auto`} />
-                            </div>
-                          )}
                         </div>
                       );
                     })}

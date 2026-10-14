@@ -5,7 +5,7 @@ import { Filter, X, BookOpen, ClipboardList, Search, Printer, Maximize2, Play, T
 import DataBookletModal from '@/components/Explorer/DataBookletModal';
 import MarkschemeModal from '@/components/Explorer/MarkschemeModal';
 import { hasMarkscheme } from '@/lib/ah-markschemes';
-import { ClipboardCheck } from 'lucide-react';
+import { ClipboardCheck, AlertCircle } from 'lucide-react';
 import FilterSidebar from '@/components/Explorer/FilterSidebar';
 import { calculatorLabel } from '@/lib/calculator';
 import QuestionCard from '@/components/Explorer/QuestionCard';
@@ -112,6 +112,13 @@ function ExplorerContent({ course }: { course: Course }) {
   const [generating, setGenerating] = useState(false);
   const [genNote, setGenNote] = useState<string | null>(null);
   const [rerolling, setRerolling] = useState<string | null>(null);
+  /**
+   * The item whose new numbers could not be made (the owner, 2026-10-14, card 9
+   * of the loading-states sheet: "Yes"). A failure used to stop the spinner and
+   * say nothing; now that button says so, in its icon, its label and to a
+   * screen reader, until it is pressed again.
+   */
+  const [rerollFailed, setRerollFailed] = useState<string | null>(null);
   const [selectedYears, setSelectedYears] = useState<(number | string)[]>([]);
   const [selectedPapers, setSelectedPapers] = useState<number[]>([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -144,6 +151,15 @@ function ExplorerContent({ course }: { course: Course }) {
   // The markscheme table is fetched on demand; holding it here keeps the
   // portal mounted for the print and lets a second press reuse it.
   const [markschemeBusy, setMarkschemeBusy] = useState(false);
+  /**
+   * **Never fails silently** (the owner, 2026-10-14, card 8 of the
+   * loading-states sheet: "Yes"). `printMarkscheme` waits at most 1.5 s for the
+   * sheet, because an iPhone only opens the print dialog soon after the tap;
+   * if the sheet is not there by then it does not print. That used to put the
+   * button back to "Markscheme" with no word. Now the button says so, and the
+   * second press prints at once: by then everything it needs has loaded.
+   */
+  const [markschemeAgain, setMarkschemeAgain] = useState(false);
   const [schemes, setSchemes] = useState<CourseSchemes | null>(null);
 
   const { items: worksheetItems, addItem, removeItem, replaceItem, clearAll, reorderItems, isInWorksheet } = useWorksheet();
@@ -391,9 +407,10 @@ function ExplorerContent({ course }: { course: Course }) {
   const handlePrintMarkscheme = async () => {
     if (markschemeBusy || !worksheetItems.length) return;
     setMarkschemeBusy(true);
+    setMarkschemeAgain(false);
     try {
       setSchemes(await loadCourseSchemes(course));
-      await printMarkscheme();
+      if (!(await printMarkscheme())) setMarkschemeAgain(true);
     } finally {
       setMarkschemeBusy(false);
     }
@@ -404,6 +421,7 @@ function ExplorerContent({ course }: { course: Course }) {
     const gen = parseGeneratedRef(questionRef(q));
     if (!gen || rerolling) return;
     setRerolling(q.uid ?? null);
+    setRerollFailed(null);
     try {
       const { questionFromCode, newSeed } = await import('@/lib/generated-question');
       /**
@@ -425,6 +443,9 @@ function ExplorerContent({ course }: { course: Course }) {
       // In place: a teacher re-rolling question 3 expects a new question 3, not
       // the sheet reordered.
       if (fresh) replaceItem(q, fresh);
+      else setRerollFailed(q.uid ?? null);
+    } catch {
+      setRerollFailed(q.uid ?? null);
     } finally {
       setRerolling(null);
     }
@@ -1049,9 +1070,13 @@ function ExplorerContent({ course }: { course: Course }) {
                 </div>
               )}
 
-              {genNote && (
-                <p className="mb-4 text-sm text-muted-foreground">{genNote}</p>
-              )}
+              {/* In a status region that is always there, so a screen reader
+                  hears "Added 12 new questions" when it appears (card 10). */}
+              <div role="status">
+                {genNote && (
+                  <p className="mb-4 text-sm text-muted-foreground">{genNote}</p>
+                )}
+              </div>
 
               {/* Questions Grid - Only Show When Filters Active.
                   Column count follows a minimum card width rather than a set of
@@ -1217,11 +1242,12 @@ function ExplorerContent({ course }: { course: Course }) {
                         <button
                           onClick={handlePrintMarkscheme}
                           disabled={markschemeBusy}
+                          aria-live="polite"
                           className="flex items-center gap-2 px-3 py-1.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                           title="Print the marking instructions for this worksheet"
                         >
                           <ClipboardCheck className="h-4 w-4" />
-                          {markschemeBusy ? 'Preparing…' : 'Markscheme'}
+                          {markschemeBusy ? 'Preparing…' : markschemeAgain ? 'Ready: press again to print' : 'Markscheme'}
                         </button>
                         <button
                           onClick={() => printWorksheet()}
@@ -1279,6 +1305,10 @@ function ExplorerContent({ course }: { course: Course }) {
                       <DataBookletSheet questions={worksheetItems} />
                     )}
                   </div>
+
+                  <p className="sr-only" role="status">
+                    {rerollFailed ? 'Could not make new numbers for that question just now.' : ''}
+                  </p>
 
                   {/* Worksheet Questions - Linear List View */}
                   <div data-course={course} className="space-y-6 max-w-4xl worksheet-container pb-20 lg:pb-0">
@@ -1435,13 +1465,15 @@ function ExplorerContent({ course }: { course: Course }) {
                             <button
                               onClick={() => handleReroll(q)}
                               disabled={rerolling !== null}
-                              className="no-print shrink-0 p-1.5 text-muted-dim hover:text-foreground rounded-lg hover:bg-muted transition-colors disabled:opacity-40"
-                              title="New numbers for this question"
-                              aria-label="New numbers for this question"
+                              className={`no-print shrink-0 p-1.5 ${rerollFailed === q.uid ? 'text-amber-700 dark:text-amber-400' : 'text-muted-dim'} hover:text-foreground rounded-lg hover:bg-muted transition-colors disabled:opacity-40`}
+                              title={rerollFailed === q.uid ? 'Could not make new numbers just now. Press to try again.' : 'New numbers for this question'}
+                              aria-label={rerollFailed === q.uid ? 'Could not make new numbers just now. Press to try again.' : 'New numbers for this question'}
                             >
                               {rerolling === q.uid
                                 ? <Loader2 className="h-4 w-4 animate-spin" />
-                                : <Dices className="h-4 w-4" />}
+                                : rerollFailed === q.uid
+                                  ? <AlertCircle className="h-4 w-4" />
+                                  : <Dices className="h-4 w-4" />}
                             </button>
                           )}
                           {/* Remove button */}
@@ -1678,11 +1710,12 @@ function ExplorerContent({ course }: { course: Course }) {
                       <button
                         onClick={handlePrintMarkscheme}
                         disabled={markschemeBusy}
+                        aria-live="polite"
                         className="flex items-center gap-2 px-3 py-2.5 bg-muted hover:bg-muted-hover disabled:opacity-60 text-foreground-2 rounded-lg text-sm font-medium transition-colors"
                         title="Print the marking instructions for this worksheet"
                       >
                         <ClipboardCheck className="h-4 w-4" />
-                        {markschemeBusy ? 'Preparing…' : 'Markscheme'}
+                        {markschemeBusy ? 'Preparing…' : markschemeAgain ? 'Ready: press again to print' : 'Markscheme'}
                       </button>
                       <button
                         onClick={() => printWorksheet()}

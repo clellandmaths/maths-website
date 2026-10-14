@@ -64,7 +64,8 @@
     "check:stopsshown": "node scripts/check-stops-shown.mjs",
     "audit:contrast": "node scripts/check-contrast.mjs --all",
     "audit:responsive": "node scripts/check-responsive.mjs --all",
-    "check:sheetloading": "node scripts/check-sheet-loading.mjs"
+    "check:sheetloading": "node scripts/check-sheet-loading.mjs",
+    "check:loadingmore": "node scripts/check-loading-more.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",

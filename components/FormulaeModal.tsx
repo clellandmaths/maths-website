@@ -46,7 +46,11 @@ export default function FormulaeModal({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    // **Top-anchored** (card 9 of the loading-states sheet): centred, the box
+    // re-centred as the list filled it, moving everything in it (0.3 of layout
+    // shift on a slowed phone). From the top it only grows downward. A long
+    // list sits where it did, since 85vh centred is 7.5vh from the top.
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-[7.5vh]">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
       <div className="relative bg-card border border-border rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden">
         <div className={`h-1 shrink-0 bg-gradient-to-r ${theme.gradient}`} />
@@ -65,7 +69,7 @@ export default function FormulaeModal({
         </div>
 
         <div className="overflow-y-auto p-5 space-y-6">
-          {loading && <p className="text-muted-foreground text-sm">Loading…</p>}
+          {loading && <p className="text-muted-foreground text-sm" role="status">Loading the formulae&hellip;</p>}
           {!loading && !list && (
             <p className="text-muted-foreground text-sm">
               No formulae list is issued for this course.

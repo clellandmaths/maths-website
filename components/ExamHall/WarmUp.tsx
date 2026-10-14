@@ -261,16 +261,21 @@ export default function WarmUp({ course, onBack }: WarmUpProps) {
                 One modelled on each of the five you just did — same methods,
                 different numbers. Tomorrow&apos;s warm up is still waiting.
               </p>
-              {more === 'none' && (
-                <p className="text-muted-foreground text-sm">
-                  No new questions could be made from today&apos;s five.
-                </p>
-              )}
-              {more === 'failed' && (
-                <p className="text-amber-800 dark:text-amber-300/90 text-sm">
-                  Could not build them just now. Try again in a moment.
-                </p>
-              )}
+              {/* Always there, so a screen reader hears either line when it
+                  appears (card 10 of the loading-states sheet); `contents`
+                  keeps the column's spacing as it was. */}
+              <div role="status" className="contents">
+                {more === 'none' && (
+                  <p className="text-muted-foreground text-sm">
+                    No new questions could be made from today&apos;s five.
+                  </p>
+                )}
+                {more === 'failed' && (
+                  <p className="text-amber-800 dark:text-amber-300/90 text-sm">
+                    Could not build them just now. Try again in a moment.
+                  </p>
+                )}
+              </div>
             </div>
           )}
 

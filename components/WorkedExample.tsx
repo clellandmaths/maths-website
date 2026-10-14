@@ -81,16 +81,19 @@ export default function WorkedExample({ question, theme, courseId, label: given 
             : <BookOpen className="h-4 w-4" />}
           {draw.state === 'drawing' ? 'Working one out…' : 'Still stuck? See one worked right through'}
         </button>
-        {draw.state === 'failed' && (
-          <p className="mt-1 text-xs text-muted-foreground">
-            That did not work. {elsewhere.charAt(0).toUpperCase() + elsewhere.slice(1)}
-          </p>
-        )}
-        {draw.state === 'exhausted' && (
-          <p className="mt-1 text-xs text-muted-foreground">
-            There is no other question like this one to work through — {elsewhere}
-          </p>
-        )}
+        {/* Always there, so a screen reader hears the line (card 10). */}
+        <div role="status" className="contents">
+          {draw.state === 'failed' && (
+            <p className="mt-1 text-xs text-muted-foreground">
+              That did not work. {elsewhere.charAt(0).toUpperCase() + elsewhere.slice(1)}
+            </p>
+          )}
+          {draw.state === 'exhausted' && (
+            <p className="mt-1 text-xs text-muted-foreground">
+              There is no other question like this one to work through — {elsewhere}
+            </p>
+          )}
+        </div>
       </div>
     );
   }

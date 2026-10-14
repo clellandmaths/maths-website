@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { moreLikeThis } from '@/lib/similar-questions';
 import AnotherLikeThis from '@/components/AnotherLikeThis';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
@@ -15,7 +14,13 @@ import type { CourseTheme } from '@/lib/course-theme';
  * button has to be there on arrival, so it stays eager. Measured: moving the
  * card out took the practice templates back under their budget.
  */
-const DrawnQuestion = dynamic(() => import('@/components/DrawnQuestion'), { ssr: false });
+const DrawnQuestion = lazy(() => import('@/components/DrawnQuestion'));
+// **React.lazy, with the button as its fallback** (card 7 of the loading-states
+// sheet, the owner 2026-10-14: "Yes"). Through next/dynamic the button went the
+// moment a question was drawn and the card's file loaded after, so for a moment
+// there was neither (20 frames on a slowed phone). Now the button, still busy,
+// stands in until the card is drawn, and the card's file is fetched before the
+// question is handed over (below), so the stand-in is brief.
 
 /**
  * "Another like this one", opening below the question rather than replacing it.
@@ -135,7 +140,13 @@ export default function MoreLikeThis({
       label={label}
       showing={!!question}
       alsoExclude={alsoExclude ? [...drawn, ...alsoExclude] : drawn}
-      onDrawn={(made) => { setQuestion(made); setDrawn(d => [...d, made]); onDrawn?.(made); }}
+      onDrawn={async (made) => {
+        // The card's code first (card 7 of the loading-states sheet): shown
+        // before it had loaded, the button vanished and nothing took its place
+        // for half a second. The button stays busy while this loads.
+        await import('@/components/DrawnQuestion');
+        setQuestion(made); setDrawn(d => [...d, made]); onDrawn?.(made);
+      }}
       className={paint.button}
       noticeClassName={paint.notice}
     />
@@ -149,16 +160,18 @@ export default function MoreLikeThis({
         <div ref={cardRef}>
           {/* Remounted per question, which is what resets its answer and its
               video without this component tracking either. */}
-          <DrawnQuestion
-            key={question.uid}
-            question={question}
-            theme={theme}
-            courseId={courseId}
-            onClose={() => setQuestion(null)}
-            shell={paint.shell}
-          >
-            {button}
-          </DrawnQuestion>
+          <Suspense fallback={button}>
+            <DrawnQuestion
+              key={question.uid}
+              question={question}
+              theme={theme}
+              courseId={courseId}
+              onClose={() => setQuestion(null)}
+              shell={paint.shell}
+            >
+              {button}
+            </DrawnQuestion>
+          </Suspense>
         </div>
       )}
     </div>

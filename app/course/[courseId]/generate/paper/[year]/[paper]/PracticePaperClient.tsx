@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Loader2, Printer, Share2, Dices, ArrowLeft, ClipboardCheck } from 'lucide-react';
+import { Printer, Share2, Dices, ArrowLeft, ClipboardCheck, Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { byPaperLabel, withParentVideo } from '@/lib/similar-questions';
 import { printMarkscheme, printWorksheet } from '@/lib/print-worksheet';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer, { warmMathRenderer } from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import CalculatorMark from '@/components/CalculatorMark';
 import { calculatorFor } from '@/lib/calculator';
@@ -113,10 +113,20 @@ export default function PracticePaperClient({
    */
   const [schemes, setSchemes] = useState<CourseSchemes | null>(null);
   const [markschemeBusy, setMarkschemeBusy] = useState(false);
+  /**
+   * **Never fails silently** (the owner, 2026-10-14, card 8 of the
+   * loading-states sheet: "Yes"). `printMarkscheme` waits at most 1.5 s for the
+   * sheet, because an iPhone only opens the print dialog soon after the tap;
+   * if the sheet is not there by then it does not print. That used to put the
+   * button back to "Markscheme" with no word. Now the button says so, and the
+   * second press prints at once: by then everything it needs has loaded.
+   */
+  const [markschemeAgain, setMarkschemeAgain] = useState(false);
 
   const handlePrintMarkscheme = async () => {
     if (markschemeBusy || !drawn.length) return;
     setMarkschemeBusy(true);
+    setMarkschemeAgain(false);
     try {
       // The sheet's component loads on demand too, so fetch it alongside the
       // table rather than after it; `printMarkscheme` then waits for it to be
@@ -127,7 +137,7 @@ export default function PracticePaperClient({
         import('@/components/Explorer/MarkschemeSheet'),
       ]);
       setSchemes(table);
-      await printMarkscheme();
+      if (!(await printMarkscheme())) setMarkschemeAgain(true);
     } finally {
       setMarkschemeBusy(false);
     }
@@ -135,11 +145,22 @@ export default function PracticePaperClient({
 
   /** Bumped to draw the whole paper again, with new numbers throughout. */
   const [round, setRound] = useState(0);
-  const again = () => { setMade([]); setDone(0); setFailed(false); setRound(n => n + 1); };
+  /**
+   * **"Another practice paper" keeps the old paper's height until the new one
+   * is in** (the owner, 2026-10-14, card 4 of the loading-states sheet: "Yes").
+   * It emptied the page first, so the page collapsed and regrew: 0.69 of layout
+   * shift on a slowed phone.
+   */
+  const [hold, setHold] = useState<number | null>(null);
+  const again = () => {
+    setHold(sheetRef.current?.offsetHeight ?? null);
+    setMade([]); setDone(0); setFailed(false); setRound(n => n + 1);
+  };
 
   const total = plan.length;
   const originalMarks = plan.reduce((a, r) => a + r.marks, 0);
   const drawing = done < total && !failed;
+  useEffect(() => { if (!drawing) setHold(null); }, [drawing]);
 
   useEffect(() => {
     let cancelled = false;
@@ -151,6 +172,10 @@ export default function PracticePaperClient({
         // The course's own papers: labels collide across courses.
         const { getAllN5Questions, getAllAHQuestions } = await import('@/lib/data-loader');
         const byLabel = byPaperLabel(await (courseId === 'ah' ? getAllAHQuestions() : getAllN5Questions()));
+        // KaTeX and its fonts before the first question, so each card is drawn
+        // with its maths in (MathRenderer `immediate`) rather than empty and
+        // then filled: the cards grew as their maths arrived, 0.11 of shift.
+        await warmMathRenderer();
 
         const out: (QuestionWithMetadata | null)[] = [];
         for (const row of plan) {
@@ -185,6 +210,17 @@ export default function PracticePaperClient({
   const missing = made.filter(q => !q).length;
   const newMarks = drawn.reduce((a, q) => a + (q.marks ?? []).reduce((x, y) => x + y, 0), 0);
 
+  /** Pressed, and on its way (card 9 of the loading-states sheet): it took 2 s
+   *  on a slowed phone to reach the sheet, with no sign on the button. */
+  const [openingSheet, setOpeningSheet] = useState(false);
+  // Back from the sheet, the browser can restore this page as it was left:
+  // "Opening…" on a button that is not opening anything.
+  useEffect(() => {
+    const back = (e: PageTransitionEvent) => { if (e.persisted) setOpeningSheet(false); };
+    window.addEventListener('pageshow', back);
+    return () => window.removeEventListener('pageshow', back);
+  }, []);
+
   /**
    * Open it as a worksheet, with everything switched on.
    *
@@ -196,6 +232,7 @@ export default function PracticePaperClient({
    * flags go on — answers, hints, the worked-example video and its QR code.
    */
   const share = () => {
+    setOpeningSheet(true);
     const origin = window.location.origin;
     import('@/lib/worksheet-share').then(({ shareLinks }) => {
       const { locked } = shareLinks(
@@ -207,8 +244,11 @@ export default function PracticePaperClient({
     });
   };
 
+  // **A screen's height while it builds** (card 4): questions arrive one by one
+  // below the header, and held, the footer stays below the fold rather than
+  // being pushed down by each one (0.11 of shift). Not on paper.
   return (
-    <>
+    <div className="min-h-[100svh] print:min-h-0">
       <div className="mb-8 no-print">
         <p className={`font-mono text-xs uppercase tracking-widest ${theme.text} mb-2`}>
           {courseName} · practice paper
@@ -253,11 +293,21 @@ export default function PracticePaperClient({
           Back to {backTo.label}
         </Link>
 
-        {!drawing && drawn.length > 0 && (
+        {/* For a screen reader: there from the start, so "ready" is announced. */}
+        <p className="sr-only" role="status">
+          {drawing ? '' : failed ? 'Something went wrong drawing this paper.' : `Paper ready: ${drawn.length} question${drawn.length === 1 ? '' : 's'}`}
+        </p>
+
+        {/* **The buttons from the start, waiting** (card 4). They used to appear
+            only when the paper was done, replacing a "Building your paper" line
+            of a different height, and everything below moved down 98 px. The
+            count above says how far it has got. */}
+        {(drawing || drawn.length > 0) && (
           <div className="flex flex-wrap items-center gap-2 mt-5">
             <button
               onClick={() => printWorksheet(sheetRef.current ?? document)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium hover:bg-foreground/10 transition-colors`}
+              disabled={drawing}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium hover:bg-foreground/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               <Printer className="h-3.5 w-3.5" />
               Print / Save PDF
@@ -268,19 +318,21 @@ export default function PracticePaperClient({
                 without the answers behind it. */}
             <button
               onClick={handlePrintMarkscheme}
-              disabled={markschemeBusy}
+              disabled={markschemeBusy || drawing}
+              aria-live="polite"
               title="Print the marking instructions for this paper"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 disabled:opacity-60 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <ClipboardCheck className="h-3.5 w-3.5" />
-              {markschemeBusy ? 'Preparing…' : 'Markscheme'}
+              {markschemeBusy ? 'Preparing…' : markschemeAgain ? 'Ready: press again to print' : 'Markscheme'}
             </button>
             <button
               onClick={share}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
+              disabled={drawing || openingSheet}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <Share2 className="h-3.5 w-3.5" />
-              Open as a worksheet
+              {openingSheet ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Share2 className="h-3.5 w-3.5" />}
+              {openingSheet ? 'Opening…' : 'Open as a worksheet'}
             </button>
             {/* **A whole new set, rather than "add all to my sheet".** The
                 sheet is a teacher's staging area; someone who came here wanted
@@ -288,7 +340,8 @@ export default function PracticePaperClient({
                 offer is another one — same shapes, same marks, new numbers. */}
             <button
               onClick={again}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors"
+              disabled={drawing}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <Dices className="h-3.5 w-3.5" />
               Another practice paper
@@ -296,12 +349,6 @@ export default function PracticePaperClient({
           </div>
         )}
 
-        {drawing && (
-          <div className="flex items-center gap-2 mt-5 text-sm text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Building your paper…
-          </div>
-        )}
       </div>
 
       {/* Portaled to the body, so it is a second document rather than part of
@@ -316,7 +363,7 @@ export default function PracticePaperClient({
         />
       )}
 
-      <div ref={sheetRef} data-course={courseId} className="worksheet-container space-y-6">
+      <div ref={sheetRef} data-course={courseId} className="worksheet-container space-y-6" style={drawing && hold ? { minHeight: hold } : undefined}>
         {made.map((q, i) => (
           /* `worksheet-question` is what the print stylesheet keys on for a
              white card with black text and a sensible page break. Without it
@@ -360,7 +407,7 @@ export default function PracticePaperClient({
             </div>
 
             {q ? (
-              <MathRenderer html={q.question} className="question-content text-foreground" />
+              <MathRenderer immediate html={q.question} className="question-content text-foreground" />
             ) : (
               /* The slot is kept and named rather than silently dropped, so a
                  teacher can see which question it was and go and get the
@@ -385,6 +432,6 @@ export default function PracticePaperClient({
           The real {paperName(courseId, year, paperNumber)}
         </Link>
       </div>
-    </>
+    </div>
   );
 }

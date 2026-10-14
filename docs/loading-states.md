@@ -40,9 +40,39 @@ on the code before this change, run against live with `SITE=https://clellandmath
 half-finished frames and reports shifts a real visit never has (the AH sheet read 0.34 with polling, 0 without).
 The check measures shift in a run of its own that only waits.
 
-## Still to build (answered yes on the sheet)
+## The second batch (cards 2, 4, 5, 7, 8, 9, 10; the owner, "Go", 2026-10-14)
 
-2 the KaTeX fonts asked for early; 3 diagram sizes (its own job); 4 the practice paper holds its height; 5 Start
-Paper and Focus Mode open their frame at once; 7 Another like this one keeps its button until the question is in;
-8 the markscheme print never gives up silently; 9 three buttons that say nothing; 10 screen readers and reduce motion
-for those. Then 13: the speed of a shared sheet's question maker, measured read-only first.
+- **Card 2, the maths fonts** (`components/MathRenderer.tsx`): the three faces nearly every formula uses (KaTeX_Main,
+  KaTeX_Math italic, KaTeX_Main bold) are asked for by name (`document.fonts.load`) whenever KaTeX is fetched, rather
+  than after the first formula is laid out. `warmMathRenderer` waits for them (at most 3 s), so the shared sheet shows
+  its maths with every letter. The shared sheet now fetches KaTeX after its questions are made, not alongside: at the
+  same time it took bandwidth from the question maker (a 5-question sheet finished 0.3 s later).
+- **Card 4, the practice paper** (`PracticePaperClient.tsx`): a screen's height held while it builds; the buttons
+  there from the start, disabled, where the "Building your paper" line used to be swapped for them; KaTeX before the
+  first card and the cards `immediate`; "Another practice paper" holds the old paper's height until the new one is in.
+- **Card 5, Start Paper and Focus Mode** (`CoursePageClient.tsx`): a frame opens on the press (the paper's name, a
+  Cancel button, then `LoadingStatus`), full screen draws over it; the page is never emptied. Browse Questions shows
+  "Loading…" on its own button; the "Loading questions..." line at the top of the list is gone.
+- **Card 7, Another like this one** (`AnotherLikeThis.tsx`, `MoreLikeThis.tsx`, `PracticeGenerate.tsx`): busy until
+  the question is placed (`onDrawn` may return a promise); the drawn card is `React.lazy` with the button as its
+  Suspense fallback (next/dynamic left 20 frames with neither); "Making a new question…" after a second
+  (`lib/use-slow.ts`); "Add 10 to a worksheet" spins itself.
+- **Card 8, the markscheme print**: `printMarkscheme` keeps its 1.5 s limit, **because an iPhone only opens the print
+  dialog soon after the tap** (the sheet's "up to 8 s" would have made iPhones ignore the print). When it gives up,
+  the button says "Ready: press again to print" (`aria-live`), and the second press prints at once.
+- **Card 9**: Formulae is `React.lazy` with a frame (`FormulaeFrame`) as its fallback, drawn on the press; the list is
+  top-anchored, so it grows downward instead of re-centring (it moved 292 px); "Open as a worksheet" says "Opening…"
+  (reset if the page comes back from the browser's back cache); the dice say when new numbers could not be made.
+- **Card 10**: every result and error line named on the sheet sits in a status region that is always there
+  (`role="status"`, `contents` where the parent is a flex row), so a screen reader hears it when it appears.
+
+Held by `npm run check:loadingmore` (16 points; fails 15 of 16 on the code before this batch, run against live).
+
+**Found, not built, asked first:** the practice paper's 20 px jump as it starts is the site's typewriter font
+(JetBrains Mono) swapping in: its stand-in is wider, so the trail of links wraps to two lines, then one. It comes
+from how the whole site loads that font (`app/layout.tsx`), so any page whose small mono text wraps differently can
+jump the same way. A fix would change every page's first visit.
+
+## Still to do
+
+3 diagram sizes (its own job, its own sheet); 13 the speed of a shared sheet's question maker, read-only first.

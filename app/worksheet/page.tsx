@@ -89,20 +89,21 @@ function SharedWorksheet() {
     setTitle(shared.title);
     setOptions(shared.options);
     setExpected(shared.refs.length);
-    // **The maths drawer, fetched with the questions rather than after them.**
-    // Each question's maths box (MathRenderer) stays empty until KaTeX is
-    // here. Fetched only once the sheet was on screen, the boxes could be drawn
-    // empty, then filled, pushing every card below down: 0.34 of layout shift
-    // on a slowed phone (the loading-states work, 2026-10-14). Asked for now,
-    // and waited for, it is ready the moment the questions are; and the boxes
-    // below are `immediate`, so they are drawn before the browser paints them
-    // (fetching early alone still let 1 run in 3 paint them empty first).
-    const drawer = warmMathRenderer();
+    // **The maths drawer, waited for before the sheet is shown.** Each
+    // question's maths box (MathRenderer) stays empty until KaTeX is here.
+    // Shown first, the boxes were drawn empty, then filled, pushing every card
+    // below down: 0.34 of layout shift on a slowed phone (the loading-states
+    // work, 2026-10-14). So the sheet waits for it, and the boxes below are
+    // `immediate`, drawn before the browser paints them (waiting alone still
+    // let 1 run in 3 paint them empty first). **Fetched after the questions are
+    // made, not alongside:** fetched at once, it took bandwidth from the
+    // question maker on a slow connection, and a 5-question N5 sheet finished
+    // 0.3 s later than before.
     LOADERS[shared.courseId]()
       // A handout opens with the maker it was made with, so a sheet already
       // set as homework is exactly what the teacher shared (lib/link-engines.ts).
       .then(all => resolveWorksheet(shared.refs, all, shared.version, setSettled))
-      .then(async made => { await drawer; return made; })
+      .then(async made => { await warmMathRenderer(); return made; })
       .then(({ questions: qs, missing: m }) => {
         setQuestions(qs);
         setMissing(m);

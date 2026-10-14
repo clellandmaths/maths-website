@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { Dices, Eye, Loader2, ArrowRight } from 'lucide-react';
 import { useGeneratedDraw } from '@/lib/use-generated-draw';
+import { useSlow } from '@/lib/use-slow';
 import MathRenderer from '@/components/MathRenderer';
 import Marks from '@/components/Marks';
 import { calculatorLabel } from '@/lib/calculator';
@@ -48,6 +49,8 @@ export default function PracticeGenerate({ courseId, topicId, generates, subtopi
   const [question, setQuestion] = useState<QuestionWithMetadata | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [added, setAdded] = useState(0);
+  /** Which button was pressed, so that one spins (card 7: "Add 10" spun the other). */
+  const [pressed, setPressed] = useState<'one' | 'ten'>('one');
 
   // The hook attaches the video of the paper question behind whatever it draws,
   // so this only has to say what to draw.
@@ -58,17 +61,22 @@ export default function PracticeGenerate({ courseId, topicId, generates, subtopi
     return made ?? null;
   });
 
+  // Every hook before the early return below (a hook after it crashed the
+  // practice pages once, React #310, 2026-10-13).
+  const busy = draw.state === 'drawing';
+  const slow = useSlow(busy);
+
   // Nothing to offer: say nothing. See the note above.
   if (!generates) return null;
 
-  const busy = draw.state === 'drawing';
-
   const next = async () => {
+    setPressed('one');
     const made = await draw.one();
     if (made) { setQuestion(made); setShowAnswer(false); }
   };
 
   const addSome = async (want: number) => {
+    setPressed('ten');
     const n = await draw.toSheet(want);
     setAdded(a => a + n);
   };
@@ -92,15 +100,16 @@ export default function PracticeGenerate({ courseId, topicId, generates, subtopi
           disabled={busy}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border ${theme.border} ${theme.tint} ${theme.text} text-sm font-medium transition-colors hover:bg-foreground/10 disabled:opacity-60`}
         >
-          {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Dices className="h-3.5 w-3.5" />}
-          {question ? 'Another question' : 'Give me a question'}
+          {busy && pressed === 'one' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Dices className="h-3.5 w-3.5" />}
+          {slow && pressed === 'one' ? 'Making a new question…' : question ? 'Another question' : 'Give me a question'}
         </button>
         <button
           onClick={() => addSome(10)}
           disabled={busy}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:text-foreground hover:bg-foreground/5 transition-colors disabled:opacity-60"
         >
-          Add 10 to a worksheet
+          {busy && pressed === 'ten' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+          {slow && pressed === 'ten' ? 'Making 10 questions…' : 'Add 10 to a worksheet'}
         </button>
         {added > 0 && (
           <a
@@ -114,19 +123,23 @@ export default function PracticeGenerate({ courseId, topicId, generates, subtopi
       </div>
 
       {/* Running out is a fact about how many different questions this topic can
-          make, not a fault. A pupil who has taken all of them has been served. */}
-      {draw.state === 'exhausted' && (
-        <p className="mt-3 text-sm text-muted-foreground">
-          {draw.seen > 0
-            ? 'No more new questions on this topic: you have had them all.'
-            : 'No new question could be made for this topic just now.'}
-        </p>
-      )}
-      {draw.state === 'failed' && (
-        <p className="mt-3 text-sm text-amber-800 dark:text-amber-300/90">
-          Could not make a question just now. Try again in a moment.
-        </p>
-      )}
+          make, not a fault. A pupil who has taken all of them has been served.
+          In a status region that is always there, so a screen reader hears the
+          line when it appears (card 10 of the loading-states sheet). */}
+      <div role="status">
+        {draw.state === 'exhausted' && (
+          <p className="mt-3 text-sm text-muted-foreground">
+            {draw.seen > 0
+              ? 'No more new questions on this topic: you have had them all.'
+              : 'No new question could be made for this topic just now.'}
+          </p>
+        )}
+        {draw.state === 'failed' && (
+          <p className="mt-3 text-sm text-amber-800 dark:text-amber-300/90">
+            Could not make a question just now. Try again in a moment.
+          </p>
+        )}
+      </div>
 
       {question && (
         <div key={question.uid} className="card-face mt-5 border border-border rounded-xl p-5 bg-card/40">

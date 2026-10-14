@@ -11,16 +11,40 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 type RenderMath = typeof import('@/lib/render-math');
 /** KaTeX, once it is here: lets `immediate` boxes draw before the first paint. */
 let loaded: RenderMath | null = null;
-const fetchRenderMath = () => import('@/lib/render-math').then(m => (loaded = m));
+
+/**
+ * **The maths fonts, asked for with KaTeX rather than after it** (the owner,
+ * 2026-10-14, card 2 of the loading-states sheet: "Yes"). KaTeX holds a letter
+ * back until its font is here (`font-display: block`), and the browser only
+ * asks for a font once text needing it is laid out, so every formula's letters
+ * were gaps for about a second after the maths was drawn (7.6 to 8.6 s on a
+ * 20-question AH sheet, first visit, older phone). These are the faces nearly
+ * every formula uses; the rarer ones (big brackets, script letters) still come
+ * when they are needed. Asked for by name, so no hashed file path is copied.
+ */
+const FACES = ['400 1em KaTeX_Main', 'italic 400 1em KaTeX_Math', '700 1em KaTeX_Main'];
+let fonts: Promise<void> | null = null;
+const askForFonts = (): Promise<void> => {
+  fonts ??= (async () => {
+    try { await Promise.all(FACES.map(f => document.fonts.load(f))); } catch { /* the page still draws */ }
+  })();
+  return fonts;
+};
+const fetchRenderMath = () => {
+  askForFonts();
+  return import('@/lib/render-math').then(m => (loaded = m));
+};
 
 /**
  * **Fetch the maths drawer ahead of the maths** (the shared sheet, 2026-10-14).
- * A page that knows maths is coming calls this as soon as it starts loading,
- * waits for it, and gives its boxes `immediate`, so they are drawn full rather
- * than empty and then filled.
+ * A page that knows maths is coming calls this before it shows any, waits for
+ * it, and gives its boxes `immediate`, so they are drawn full rather than
+ * empty and then filled, with their letters showing. The fonts are waited for
+ * at most 3 s: a font that never arrives must not hold the sheet back.
  */
 export function warmMathRenderer(): Promise<void> {
-  return fetchRenderMath().then(() => undefined);
+  const fontsOrGiveUp = Promise.race([askForFonts(), new Promise<void>(r => setTimeout(r, 3000))]);
+  return Promise.all([fetchRenderMath(), fontsOrGiveUp]).then(() => undefined);
 }
 
 // Layout effects do not run while the page is rendered ahead of time.

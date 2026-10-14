@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Dices, Loader2 } from 'lucide-react';
 import { moreLikeThis } from '@/lib/similar-questions';
 import { useGeneratedDraw } from '@/lib/use-generated-draw';
+import { useSlow } from '@/lib/use-slow';
 import type { QuestionWithMetadata } from '@/lib/data-loader';
 
 /**
@@ -50,7 +51,12 @@ interface Props {
    * set at all: six byte-identical repeats.
    */
   alsoExclude?: readonly QuestionWithMetadata[];
-  onDrawn: (q: QuestionWithMetadata) => void;
+  /**
+   * Where the drawn question goes. **It may take a moment** (a surface can
+   * fetch the card it shows the question in): the button stays busy until it
+   * is done, so there is never a gap with neither button nor question.
+   */
+  onDrawn: (q: QuestionWithMetadata) => void | Promise<void>;
   className?: string;
   /** Where the "that is all of them" line goes. */
   noticeClassName?: string;
@@ -98,10 +104,18 @@ export default function AnotherLikeThis({
     if (card) import('@/lib/warm-generator').then(w => w.warmGenerator(courseId, card)).catch(() => {});
   }, [courseId, card]);
 
+  // **Busy until the question is in place** (the owner, 2026-10-14, card 7 of the
+  // loading-states sheet: "Yes"). On a paper page the button went as soon as
+  // the question was drawn, and the card it opens in loaded after: half a
+  // second with neither on screen. `placing` covers that wait. And a press
+  // that runs past a second says what it is doing (a press straight after the
+  // page opens can take 2 to 4 s on an older phone).
+  const [placing, setPlacing] = useState(false);
+  const busy = draw.state === 'drawing' || placing;
+  const slow = useSlow(busy);
+
   // Nothing modelled on this question: render nothing.
   if (!offer) return null;
-
-  const busy = draw.state === 'drawing';
   // Had one already: drawn by this button, or by the page before this button was mounted. Below a drawn question the
   // button is a new one with a count of 0, so running out read "could not be made just now" where it meant "you have
   // had them all" (the audit, 2026-10-12, the owner "Yes").
@@ -117,31 +131,41 @@ export default function AnotherLikeThis({
   return (
     <>
       <button
-        onClick={async () => { const made = await draw.one(); if (made) onDrawn(made); }}
+        onClick={async () => {
+          const made = await draw.one();
+          if (!made) return;
+          setPlacing(true);
+          try { await onDrawn(made); } finally { setPlacing(false); }
+        }}
         disabled={busy}
         className={className}
       >
         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Dices className="h-3.5 w-3.5" />}
-        {showing ? 'Another one' : 'Another like this one'}
+        {slow ? 'Making a new question…' : showing ? 'Another one' : 'Another like this one'}
       </button>
 
       {/* Running out is a fact about how many different questions this one can
           make, not a fault. **No number** (the owner, 2026-10-06): `hadOne`
           counts what this page has drawn this visit, not what the card can make,
-          so "That is all 3" could name a count the card does not have. */}
-      {draw.state === 'exhausted' && (
-        <p className={noticeClassName}>
-          {hadOne
-            ? <>No more new questions like this one: you have had them all.{' '}
-                <button type="button" onClick={startAgain} className="underline underline-offset-2 font-medium hover:text-foreground">
-                  Start again
-                </button></>
-            : 'No new question could be made just now.'}
-        </p>
-      )}
-      {draw.state === 'failed' && (
-        <p className={noticeClassName}>Could not make one just now. Try again in a moment.</p>
-      )}
+          so "That is all 3" could name a count the card does not have.
+          In a status region that is always there, so a screen reader hears the
+          line when it appears (card 10). `contents`, so the line is laid out
+          as it was, a child of the caller's row (full screen centres it). */}
+      <div role="status" className="contents">
+        {draw.state === 'exhausted' && (
+          <p className={noticeClassName}>
+            {hadOne
+              ? <>No more new questions like this one: you have had them all.{' '}
+                  <button type="button" onClick={startAgain} className="underline underline-offset-2 font-medium hover:text-foreground">
+                    Start again
+                  </button></>
+              : 'No new question could be made just now.'}
+          </p>
+        )}
+        {draw.state === 'failed' && (
+          <p className={noticeClassName}>Could not make one just now. Try again in a moment.</p>
+        )}
+      </div>
     </>
   );
 }
