@@ -19,7 +19,7 @@ questions in the 500 recorded test links (113 links, 1 to 3 questions each).
 
 - **Every link carries a version.** `LINK_VERSION` in `lib/worksheet-refs.mjs` is the version new links are
   made with. A short link marks it with one character straight after its leading "." (`VERSION_MARKS`:
-  version 2 is "y", version 3 is "-", version 4 is "K"). The older formats, never written now, carry `v=`. A
+  version 2 is "y", version 3 is "-", version 4 is "K", version 5 is "R"). The older formats, never written now, carry `v=`. A
   link with no mark is **version 1**, which covers every link made before 2026-10-09.
 - **Each older version's maker is kept, frozen, byte for byte.** Version 1 is `lib/generator-v1/`, the
   generator exactly as it was live at website 767a87c (live 2026-10-06 to 2026-10-09). Version 2 is
@@ -27,9 +27,14 @@ questions in the 500 recorded test links (113 links, 1 to 3 questions each).
   own question"). Version 3 is `lib/generator-v3/`, exactly as live at website 3e570a3 (from 2026-10-10:
   Advanced Higher's six cards widened, never any AH paper's own question word for word, no twins on an AH
   sheet, 2025 P1 Q8 no longer giving up); made because it moved 24 of the 1,108 generated questions in the
-  200 recorded version 2 links, every one an AH question. Version 4, the current maker (2026-10-11): AH never
-  the paper's own question in any wording (one "same question" test for the guard and for twins), sheets
-  that take distinct questions first, and ten widened cards, every moved card confirmed by the owner.
+  200 recorded version 2 links, every one an AH question. Version 4 is `lib/generator-v4/`, exactly as live
+  from 2026-10-13 (website ee23fd2 to 4e0ff64, `lib/generator` unchanged between): AH never the paper's own
+  question in any wording (one "same question" test for the guard and for twins), sheets that take distinct
+  questions first, and ten widened cards. Version 5, the current maker (2026-10-16): National 5 to AH's
+  design (never any N5 paper's own question in any wording, by the owner's rulings, P2 across cards; N5
+  sheets with the same twin test, the "feels distinct" preference and a family of cards as one card on a
+  topic sheet), 30 moved cards confirmed by the owner. Frozen because it moved 1 of the 1,656 generated
+  questions in the 250 recorded version 4 links.
 - **One routing point:** `lib/link-engines.ts` (`engineForVersion`). Each maker is loaded with
   `await import()`, so an old maker is fetched only when a link made with it is opened, never for a new link
   or by any other page.
@@ -69,9 +74,10 @@ version** (now 3) fail, the change moves what shared links open. Then, with N th
 **Never edit a frozen copy** to make something pass, and never re-record a fixture. If the site's question
 shape changes, adapt it in the version's door file (`lib/generated-question-v<n>.ts`).
 
-Done twice so far: for version 3 (2026-10-10, Advanced Higher's "never the paper's own question"), version 2
-frozen from a794574, 209 files byte-exact; and for version 4 (2026-10-11, AH never the paper in any wording
-and sheets that feel distinct), version 3 frozen from 3e570a3, 216 files byte-exact, mark "K".
+Done three times so far: for version 3 (2026-10-10, Advanced Higher's "never the paper's own question"), version 2
+frozen from a794574, 209 files byte-exact; for version 4 (2026-10-11, AH never the paper in any wording
+and sheets that feel distinct), version 3 frozen from 3e570a3, 216 files byte-exact, mark "K"; and for version 5
+(2026-10-16, National 5 to AH's design), version 4 frozen from 4e0ff64, 218 files byte-exact, mark "R".
 
 **A version is changed freely until it is live, never after.** Version 4's maker changed on the preview
 (2026-10-12, the independent audit's answers: the guard keeps out a paper's own parts wherever the change is),

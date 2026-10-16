@@ -1,8 +1,8 @@
 {
-  "recorded": "2026-10-11",
+  "recorded": "2026-10-16",
   "headroomBytes": 65536,
   "note": "Total bytes of every out/_next/static/chunks/*.js carrying a variation id. Lazy — on no page — but it is what the first press of Variation fetches.",
-  "acceptedGrowth": "Link version 4, 2026-10-11 (Advanced Higher never the paper in any wording, sheets that feel distinct, ten widened cards): lib/generator-v3 (website 3e570a3's maker, frozen byte for byte, check:frozen) opens version 3 handout links. Its N5-id chunks are 854 KB in 2 (593 + 261), as version 2's, since National 5 did not change between them; fetched only when a version 3 handout with a generated question is opened (check:linkversions). Version 1's copy stays 841 KB (582 + 259), version 2's 854 KB (593 + 261). The current maker's N5-id chunks are 1,281 KB (593 + 350 + 248 + 50 + 40), the same as at the 2026-10-10 recording: National 5 is unchanged. The copies never change, so growth after this recording is the current maker's.",
-  "chunks": 11,
-  "bytes": 3921547
+  "acceptedGrowth": "Link version 5, 2026-10-16 (National 5 to AH's design: never any N5 paper's own question in any wording, the owner's rulings, P2 across cards; N5 sheets with the same twin test): lib/generator-v4 (website 4e0ff64's maker, frozen byte for byte, check:frozen) opens version 4 handout links. Its N5-id chunks are 854 KB in 2 (593 + 261), as versions 2 and 3; fetched only when a version 4 handout with a generated question is opened. The current maker's N5-id chunks are 1,295 KB (593 + 350 + 261 + 50 + 41), 13 KB more than at the 2026-10-11 recording: N5's own same-question layer and the paper table (n5-same-keys.ts, n5-paper-same.ts). The copies never change, so growth after this recording is the current maker's.",
+  "chunks": 13,
+  "bytes": 4809814
 }

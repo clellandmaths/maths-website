@@ -21,10 +21,16 @@ import type { QuestionWithMetadata } from './data-loader';
  *              3e570a3), byte for byte: Advanced Higher's six widened cards, never
  *              any AH paper's own question word for word, no twins on an AH sheet,
  *              2025 P1 Q8 no longer giving up. Locked the same way.
- *   version 4  `lib/generator/`, the current one: Advanced Higher never the
+ *   version 4  `lib/generator-v4/`, the maker live from 2026-10-13 (website
+ *              ee23fd2 to 4e0ff64), byte for byte: Advanced Higher never the
  *              paper's own question in any wording (one "same question" test for
  *              the guard and for twins), sheets that take distinct questions
- *              first, and ten widened cards (2026-10-11).
+ *              first, and ten widened cards. Locked the same way.
+ *   version 5  `lib/generator/`, the current one: National 5 to AH's design
+ *              (2026-10-16): never any N5 paper's own question in any wording,
+ *              by the owner's rulings, P2 across cards; N5 sheets with the same
+ *              twin test, the "feels distinct" preference, and a family of cards
+ *              as one card on a topic sheet. 30 moved cards, each confirmed.
  *
  * Each maker is reached only through `await import()`, so a version costs
  * nothing until a link made with it is opened, and an old maker is never
@@ -32,7 +38,10 @@ import type { QuestionWithMetadata } from './data-loader';
  */
 export interface LinkEngine {
   questionFromCode(code: string, seed: string, index: number, parentIndex?: number): Promise<QuestionWithMetadata | null>;
-  /** Fetch every file a link's codes will need, at once (the current maker only: the frozen ones load as they did). */
+  /**
+   * Fetch every file a link's codes will need, at once: the current maker, and version 4's (its links were opened
+   * that way on the live site, card 13a). Versions 1 to 3 load as they did.
+   */
   warmForCodes?(codes: readonly string[]): Promise<void>;
 }
 
@@ -40,6 +49,7 @@ export async function engineForVersion(version: number): Promise<LinkEngine> {
   if (version === 1) return import('./generated-question-v1');
   if (version === 2) return import('./generated-question-v2');
   if (version === 3) return import('./generated-question-v3');
+  if (version === 4) return import('./generated-question-v4');
   // The current version, and any version newer than this site knows (a link
   // from a later deploy): the newest maker here is the nearest it has.
   return import('./generated-question');

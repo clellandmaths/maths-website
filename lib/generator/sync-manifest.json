@@ -1,8 +1,8 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "618584c20646f3b504bbe7d75c369fa6b98b8218",
+  "sourceCommit": "2af35f76a8ff65172a9fdf8c093b0f2da2585a71",
   "sourceDirty": false,
-  "count": 217,
+  "count": 219,
   "files": {
     "diagrams/render.ts": "2f0be7df2264fc93",
     "diagrams/scene.ts": "3c4d3d252e8c0ce5",
@@ -39,7 +39,7 @@
     "diagrams/shapes/vector-figure.ts": "6df852be8fe485b8",
     "diagrams/shapes/vector-grid.ts": "f172ca16f9bc344e",
     "diagrams/verify.ts": "ce69a0bc126f0855",
-    "generator.ts": "e7702800ba3188e5",
+    "generator.ts": "2a5174bf3a625c4a",
     "generators/ah/card-twins.ts": "821a8796f55f5951",
     "generators/ah/cards.ts": "8d5bebe5cfa4504e",
     "generators/ah/codes.ts": "18598928c357177c",
@@ -172,12 +172,14 @@
     "generators/n5-line-graph.ts": "8196438b9c4328ba",
     "generators/n5-linear-equations.ts": "062673dab0f37621",
     "generators/n5-measure.ts": "5971e7a321f5388b",
+    "generators/n5-paper-same.ts": "c50d52d751828169",
     "generators/n5-parabola-graph.ts": "bfd0fc2f6c9461d0",
     "generators/n5-percentages.ts": "2f29a98f8fbef2f6",
     "generators/n5-pythagoras.ts": "3e526a4850b74081",
     "generators/n5-quadratic-context.ts": "6859cf0591edf1ec",
     "generators/n5-quadratics.ts": "d95a6e600748183f",
     "generators/n5-rounding.ts": "8faa901ae0a33ef5",
+    "generators/n5-same-keys.ts": "a87577bae90845fb",
     "generators/n5-scinot.ts": "f6e6e732c5f1ae1d",
     "generators/n5-sector.ts": "8a74bee74c1af59f",
     "generators/n5-simeq.ts": "742e1e33b0e5bb78",
@@ -195,7 +197,7 @@
     "generators/n5-volume.ts": "7253dadc7dce323f",
     "generators/n5.ts": "be3402e3e4c42e72",
     "generators/paper-guard-keys.ts": "cf678384b7f1aae2",
-    "generators/paper-guard.ts": "69858e25f951f248",
+    "generators/paper-guard.ts": "a2ddfe0b148a1dab",
     "generators/paper-hints.ts": "6e8a09ee2b02802d",
     "generators/paper-markscheme-ah.ts": "a86a32191fcdf27d",
     "generators/paper-markscheme-higher.ts": "9d9426d2191c68d1",
@@ -220,6 +222,6 @@
     "question-key.ts": "6d6a73d7c3341b93",
     "same-question.ts": "433437ab893c4781",
     "sheet-plan.ts": "4a8117b129446b3b",
-    "worksheet-question.ts": "753dc1cdb4e092e3"
+    "worksheet-question.ts": "a826015c9f488081"
   }
 }

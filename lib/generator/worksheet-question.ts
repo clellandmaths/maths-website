@@ -1,10 +1,11 @@
 import { generateQuestion, withSeed } from './generator';
 import {
-  N5_VARIATIONS, variationsBasedOn, variationsForSubtopic,
+  N5_VARIATIONS, variationsBasedOn, variationsForSubtopic, aliasTarget,
 } from './generators/n5-variations';
 import { VARIATION_BY_CODE, VARIATION_CODES } from './generators/variation-codes';
 import { questionKey, storyFreeKey } from './question-key';
 import { sameQuestionKey, sameWorkingKey, shortHash } from './same-question';
+import { n5TwinKeys, n5PartsKeyOf, n5PartsFromKey, sharesHalf, N5_PARTS_PREFIX } from './generators/n5-same-keys';
 import type { GeneratedQuestion, Topic } from './generators/types';
 
 /**
@@ -70,8 +71,18 @@ export interface WorksheetQuestion {
    * questions sharing either (the owner, 2026-10-07: "(x - 3)(x + 5) = 0 and (x + 5)(x - 3) = 0 ...");
    * `keysOfQuestion` hands them on, so "Another like this one" does not offer a twin of a question already on
    * the sheet. Absent on a paper question.
+   *
+   * For National 5, since 2026-10-16, the one "same question" test the guard uses (`generators/n5-same-keys.ts`
+   * `n5TwinKeys`): those two, the maths keys and the owner's look-alike rulings, and L9 (the same quadratic to 2 d.p.
+   * and to 2 s.f., twins on a sheet only).
    */
   twinKeys?: string[];
+  /**
+   * A National 5 question's parts (`n5parts:…`, `n5PartsKeyOf`), for questions of two parts or more: a sheet takes a
+   * question sharing parts worth half its marks with one it holds only once nothing fresh comes (`drawFrom`). The
+   * website's `worksheetKeys` hands it back on every press, as it does an AH question's `parts:` key.
+   */
+  partsKey?: string;
 }
 
 /**
@@ -502,6 +513,7 @@ export function toWorksheetQuestion(
   // not. Never the per-step split, which is a third thing — see `partMarks`.
   const total = q.stepMarks?.reduce((a, b) => a + b, 0);
   const parts = partMarks(q);
+  const partsKey = n5PartsKeyOf({ ...q, solutionSteps: q.solutionSteps ?? [] });
 
   return {
     question,
@@ -548,11 +560,15 @@ export function toWorksheetQuestion(
       : {}),
 
     uid: generatedUid(q.code, seed, parentIndex),
-    twinKeys: twinKeysOf(q),
+    twinKeys: n5TwinKeys({ ...q, solutionSteps: q.solutionSteps ?? [] }),
+    ...(partsKey ? { partsKey } : {}),
   };
 }
 
-/** The question's identities by the owner's "same question" test, hashed small (see `twinKeys`). */
+/**
+ * The question's identities by the owner's "same question" test, hashed small (see `twinKeys`). Advanced Higher's
+ * sheets use this (`generators/ah/site.ts`); National 5's use `n5TwinKeys`, which holds these two and more.
+ */
 export function twinKeysOf(q: Pick<GeneratedQuestion, 'questionLines' | 'finalAnswer' | 'solutionSteps'>): string[] {
   const lines = q.questionLines ?? [], answer = q.finalAnswer ?? '';
   const w = sameWorkingKey(lines, answer, q.solutionSteps ?? []);
@@ -655,7 +671,29 @@ export async function generateForSubtopics(
     }
     if (!anyLeft) break;
   }
-  return drawFrom(ids, count, makeSeed, undefined, exclude);
+  return drawFrom(familiesOnce(ids), count, makeSeed, undefined, exclude);
+}
+
+/**
+ * **A family counts as one card** on a topic sheet (the owner, 2026-10-16, "Ok go with B", as AH's families are): the
+ * cards that run one routine (an alias and its target, `aliasTarget`) set the same question on different papers, so a
+ * routine with seven aliases took seven turns of a sheet of ten (7 of the 11 "Appreciation and Depreciation" cards are
+ * one question). The order goes round the routines, in the order their first card comes, and round each routine's
+ * cards in turn. No question stops being made: every card still comes, a family's other wordings later (all 11
+ * Appreciation cards by question 31, not 11; tools/never-the-paper `n5d-families.mts`).
+ */
+function familiesOnce(ids: readonly string[]): string[] {
+  const groups = new Map<string, string[]>();
+  for (const id of ids) {
+    const r = aliasTarget(id) ?? id;
+    groups.set(r, [...(groups.get(r) ?? []), id]);
+  }
+  const gs = [...groups.values()];
+  if (gs.length === ids.length) return [...ids];
+  const turns = Math.max(...gs.map(g => g.length));
+  const out: string[] = [];
+  for (let k = 0; k < turns; k++) for (const g of gs) out.push(g[k % g.length]);
+  return out;
 }
 
 /**
@@ -785,6 +823,9 @@ async function drawFrom(
   // questions and six byte-identical repeats.
   const seen = new Set<string>(exclude);
   const out: WorksheetQuestion[] = [];
+  // the parts of every question on the sheet (theirs from `exclude`, once each however often a page passes them)
+  const onSheet = [...new Set(exclude.filter(k => k.startsWith(N5_PARTS_PREFIX)))].map(n5PartsFromKey);
+  const aside: WorksheetQuestion[] = [];
   // Bounded the way `questionsLike` is: a thin variation returns short rather
   // than spinning after a question that does not exist.
   //
@@ -794,7 +835,8 @@ async function drawFrom(
   // three of them held is found with p = 1/4 a draw, so 40 tries miss it once
   // in 100,000 - and at **0.4ms a draw, measured**, even a 20-variation filter
   // spends 340ms to conclude it is spent. Cheap enough to buy the certainty.
-  const budget = Math.max(ids.length, 1) * 40 + count * 8;
+  // per CARD: a topic sheet's order names a family's cards more than once (`generateForSubtopics`)
+  const budget = Math.max(new Set(ids).size, 1) * 40 + count * 8;
   for (let draw = 0; draw < budget && out.length < count; draw++) {
     // Round-robin rather than random, so asking for three across two variations
     // gives both rather than the same one three times by chance.
@@ -827,12 +869,30 @@ async function drawFrom(
     // were two questions to them.
     const twins = made.twinKeys ?? [];
     if (twins.some(k => seen.has(k))) continue;
-    seen.add(key);
-    seen.add(sum);
-    for (const k of twins) seen.add(k);
-    out.push(made);
+    // **Sheets that feel distinct** (point 9; for N5 the owner's "Yes" to AH's design, 2026-10-16): a question sharing
+    // parts worth half its marks or more with one on the sheet is put aside, and taken only once the budget has found
+    // nothing fresh, so no sheet is shorter for it (measured 2026-10-14 one click at a time, as the site makes sheets:
+    // 50 of 1,160 sheets of 10 repeated parts, 0 with this, none shorter; tools/never-the-paper `n5d-sheets.mts`).
+    const ps = made.partsKey ? n5PartsFromKey(made.partsKey) : null;
+    if (ps && onSheet.some(o => sharesHalf(o, ps))) { aside.push(made); continue; }
+    take(made);
+  }
+  // nothing fresh came: the questions put aside, in the order they came, each still no twin of what was taken
+  for (const made of aside) {
+    if (out.length >= count) break;
+    const ks = [questionKey({ questionLines: [made.question], finalAnswer: made.answer }), storyFreeKey(made.question, made.answer), ...(made.twinKeys ?? [])];
+    if (ks.some(k => seen.has(k))) continue;
+    take(made);
   }
   return out;
+
+  function take(made: WorksheetQuestion) {
+    seen.add(questionKey({ questionLines: [made.question], finalAnswer: made.answer }));
+    seen.add(storyFreeKey(made.question, made.answer));
+    for (const k of made.twinKeys ?? []) seen.add(k);
+    if (made.partsKey) onSheet.push(n5PartsFromKey(made.partsKey));
+    out.push(made);
+  }
 }
 
 /**

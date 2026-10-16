@@ -44,6 +44,12 @@ export interface GenerateOptions {
    * alias first having to be turned into a full variation.
    */
   askedId?: string;
+  /**
+   * Internal, for checks and the paper table's emitter only: draw as if there were no guard ("never the paper's own
+   * question", generators/paper-guard.ts), so a paper's own question can be built from its seed and its card proven
+   * still to build it (`scripts/emit-n5-paper-same.mts`). Never set by the site.
+   */
+  unguarded?: boolean;
 }
 
 /**
@@ -139,7 +145,7 @@ export async function generateQuestion(
 
     for (let draw = 0; draw < DRAW_LIMIT; draw++) {
       DREW = draw + 1;
-      const q = await generateQuestion(topics, { makeId, askedId });
+      const q = await generateQuestion(topics, { makeId, askedId, unguarded: options.unguarded });
       if (q.variationId && wanted.has(q.variationId)) return q;
       const alias = q.variationId && stampAs.get(q.variationId);
       // The code travels with the id: the website builds a question's uid from
@@ -176,10 +182,16 @@ export async function generateQuestion(
      * returned as it was, with no extra randomness used, so a seed that never met a paper question gives
      * exactly the question it always gave.
      */
-    const { paperQuestionOf, GUARD_LIMIT } = await import('./generators/paper-guard');
+    const { paperQuestionOf, harvestedPaperOf, GUARD_LIMIT } = await import('./generators/paper-guard');
     for (let tries = 0; ; tries++) {
       q = generateN5Question(selected, options.makeId, options.askedId);
-      if (!paperQuestionOf(q)) break;
+      if (options.unguarded) break;
+      // A sibling drawn on the way to the card asked for (the request passes over it) gets the live table's check
+      // only, as it always has: so no card's draws move because a sibling's draw is redrawn. The card the draw is:
+      // the id asked for when this draw is its routine's (an alias's own papers are its own), else the id made.
+      const passedOver = !!options.makeId && q.variationId !== options.makeId;
+      const card = options.askedId && q.variationId && aliasTarget(options.askedId) === q.variationId ? options.askedId : q.variationId;
+      if (!(passedOver ? harvestedPaperOf(q) : paperQuestionOf(q, card))) break;
       if (tries >= GUARD_LIMIT) {
         throw new Error(`generateQuestion: ${selected} drew a past paper question ${GUARD_LIMIT} times running`);
       }
