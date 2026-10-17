@@ -1,6 +1,6 @@
 {
   "note": "Written by scripts/sync-generator.mjs. Do not edit lib/generator by hand.",
-  "sourceCommit": "3c380fada7d10dd625bda016c6ad5488f2221d0b",
+  "sourceCommit": "ffc58b63593ccb6c63adb2bcb31e415a77775062",
   "sourceDirty": false,
   "count": 219,
   "files": {
@@ -222,6 +222,6 @@
     "question-key.ts": "6d6a73d7c3341b93",
     "same-question.ts": "433437ab893c4781",
     "sheet-plan.ts": "4a8117b129446b3b",
-    "worksheet-question.ts": "9444237e59c45bf1"
+    "worksheet-question.ts": "b1cce53eef1f897b"
   }
 }

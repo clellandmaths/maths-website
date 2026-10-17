@@ -686,9 +686,12 @@ export async function generateForSubtopics(
 function fewestHeldFirst(order: readonly string[], held: readonly string[]): string[] {
   if (!held.length) return [...order];
   const fam = (id: string) => aliasTarget(id) ?? id;
-  const uses = new Map<string, number>();
-  for (const h of held) uses.set(fam(h), (uses.get(fam(h)) ?? 0) + 1);
-  return order.map((id, i) => ({ id, i, n: uses.get(fam(id)) ?? 0 })).sort((a, b) => a.n - b.n || a.i - b.i).map(x => x.id);
+  const uses = new Map<string, number>(), own = new Map<string, number>();
+  for (const h of held) { uses.set(fam(h), (uses.get(fam(h)) ?? 0) + 1); own.set(h, (own.get(h) ?? 0) + 1); }
+  // within a family, the wording held fewest of: every card still comes, a family's other wordings later (the owner's
+  // families ruling, 2026-10-16), where the family's first card alone came every time (measured 2026-10-17)
+  return order.map((id, i) => ({ id, i, n: uses.get(fam(id)) ?? 0, m: own.get(id) ?? 0 }))
+    .sort((a, b) => a.n - b.n || a.m - b.m || a.i - b.i).map(x => x.id);
 }
 
 /**
