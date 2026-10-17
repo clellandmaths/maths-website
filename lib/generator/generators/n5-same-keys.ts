@@ -639,8 +639,20 @@ export function sheetPartsOf(b: Q, withStem = true, figure = false): SheetPart[]
  * an N5 question's parts, nor N5's an AH question's.
  */
 export const N5_PARTS_PREFIX = 'n5parts:';
+/**
+ * Parts compared WITHOUT the opening lines, by card: a part that reads only some of the given facts is the same part
+ * whatever the others say. 2026 P1 Q11 (the owner's "Yes", 2026-10-17, https://claude.ai/artifact/4z24ErrSJkuGJaNxAxXXQy
+ * card 2): (a) G takes its x from H and its y from B, so B's height can change and (a) is still G(16, 18, 0); keyed by its
+ * working and answer alone, a second one waits aside while fresh questions remain. Sheets only, never the guard.
+ */
+const PARTS_WITHOUT_STEM: Record<string, string[]> = { 'coords.lettered-cuboid': ['a'] };
 export const n5PartsKeyOf = (b: Q): string | undefined => {
-  const ps = sheetPartsOf(b);
+  let ps = sheetPartsOf(b);
+  const bare = PARTS_WITHOUT_STEM[b.variationId ?? ''];
+  if (bare) {
+    const free = new Map(sheetPartsOf(b, false).map(p => [p.letter, p.key]));
+    ps = ps.map(p => (bare.includes(p.letter) && free.has(p.letter) ? { ...p, key: free.get(p.letter)! } : p));
+  }
   return ps.length > 1 ? `${N5_PARTS_PREFIX}${ps.map(p => `${p.key}*${p.marks}`).join(',')}` : undefined;
 };
 export const n5PartsFromKey = (k: string): { key: string; marks: number }[] =>

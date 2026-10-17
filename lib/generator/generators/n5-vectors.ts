@@ -654,8 +654,15 @@ function magnitudeSurd(): Q {
      *
      * It costs nothing: 400 draws gave 374 different questions before the cap,
      * against `pool`'s floor of twenty.
+     *
+     * **Raised to 100** (the owner, 2026-10-17: "Raise cap to 100", on
+     * https://claude.ai/artifact/4z24ErrSJkuGJaNxAxXXQy). The 374 were 21 once
+     * signs and order moved count as the same question (their C2 and (b)), so
+     * "Another like this one" stopped at 19. Every number to factorise still
+     * has two digits, as the paper's 90 does; it adds 96, 98 and 99 (4 root 6,
+     * 7 root 2 and 3 root 11), giving 27 questions, measured the site's way.
      */
-    if (sq > 90) continue;
+    if (sq > 100) continue;
     const root = Math.sqrt(sq);
     if (Number.isInteger(root)) continue;        // this one is the surd shape
     let k = 1, rest = sq;
