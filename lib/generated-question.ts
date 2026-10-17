@@ -208,7 +208,21 @@ export async function generateForSubtopics(
   // each question is still made from its code and seed.
   if (courseId === 'ah') return (await ah()).ahForSubtopics(subtopics, count, newSeed, Math.random, exclude, heldCards(held));
   await readyN5();
-  return fromSubtopics(subtopics, count, newSeed, exclude);
+  // One at a time (a practice page's "Another question" and "Add 10", one per topic in the Builder), the card the page
+  // holds fewest of goes first (B1, the owner's "Yes", 2026-10-17); a sheet made in one request is unchanged.
+  return fromSubtopics(subtopics, count, newSeed, exclude, count === 1 ? heldVariations(held) : []);
+}
+
+/**
+ * The National 5 variations behind the generated questions a page holds, read from their uids (`g:<code>:<seed>:…`).
+ * Past paper questions are left out: the rotation is between the generated cards.
+ */
+function heldVariations(held: readonly QuestionWithMetadata[]): string[] {
+  return held.flatMap(q => {
+    const code = q.uid?.startsWith(`${GENERATED_UID_PREFIX}:`) ? q.uid.split(':')[1] : undefined;
+    const id = code ? VARIATION_BY_CODE[code] : undefined;
+    return id ? [id] : [];
+  });
 }
 
 /**

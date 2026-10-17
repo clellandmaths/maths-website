@@ -238,7 +238,9 @@ function givenNumbers(b: Q): number[] {
  * three numbers as a set, and its answer.
  */
 function threeSquaresKey(b: Q): string {
-  const ns = givenNumbers(b);
+  // a component's sign is squared away: the owner's C2 "Same" (2026-10-17), a magnitude with its signs moved, so a vector
+  // (-6, -8, -24) is the cuboid's 24, 6, 8 too
+  const ns = givenNumbers(b).map(Math.abs);
   if (ns.length !== 3 || ns.some(n => n <= 0)) return '';
   const ans = (b.finalAnswer.replace(/<[^>]+>/g, ' ').replace(/(\d),(\d{3})(?!\d)/g, '$1$2').match(/-?\d+(?:\.\d+)?/g) ?? []);
   const a = ans[0];
@@ -248,13 +250,229 @@ function threeSquaresKey(b: Q): string {
   return shortHash(`L7:${[...ns].sort((x, y) => x - y).join(',')}#${+a}`);
 }
 
+// ── the owner's answers on the audit's findings sheet (2026-10-17, https://claude.ai/artifact/TSw6UWy4n6RhKMVmQgEHL5) ──
+// The independent audit (tools/n5-audit/report.md) found these "same" kinds drawn past the guard and sitting together on
+// sheets. N1, N2, N10, N11, N12 and N14 are the same question, for the guard and for a sheet; N13, N14g, N15 and N16 are a
+// paper with one part changed whose kept parts carry half its marks or more (P2), so for the guard only: on a sheet one
+// part changed is still a different question (S1).
+
+/**
+ * N1, B2 "Yes" (L1 with negative numbers): (x + 5)² at −3 beside (x + 3)² at −5, both (±2)² = 4. f(x) = (x + a)² at b
+ * is its a and b as a set, up to the sign of both (−a − b squared is a + b squared): L1's swap and its negative.
+ */
+function squareAtKey(b: Q): string {
+  const ms = questionMaths(b);
+  if (ms.length !== 2) return '';
+  const def = ms.map(m => /^([a-zA-Z])\(x\)=\(x([+-]\d+(?:\.\d+)?)\)\^\{?2\}?$/.exec(m)).find(Boolean);
+  if (!def) return '';
+  const at = ms.map(m => new RegExp(`^${def[1]}\\((-?\\d+(?:\\.\\d+)?)\\)$`).exec(m)).find(Boolean);
+  if (!at) return '';
+  const a = Number(def[2]), v = Number(at[1]);
+  const s1 = [a, v].sort((x, y) => x - y).join(','), s2 = [-a, -v].sort((x, y) => x - y).join(',');
+  return shortHash(`N1:${s1 < s2 ? s1 : s2}#${proseNumbers(allText(b)).join(',')}#${answerOrNumbers(b.finalAnswer).join('|')}`);
+}
+
+/**
+ * N2, B2 "Yes" (a power of a power with its powers swapped, with negative numbers): (x⁻³)² × x⁻⁸ beside (m⁻²)³ × m⁻⁸,
+ * both x⁻⁶ × x⁻⁸. (v^a)^b is its powers' sizes as a set and the sign of their product.
+ */
+const POWER_OF_POWER = /\(([a-zA-Z])\^\{?(-?\d+)\}?\)\^\{?(-?\d+)\}?/g;
+function powerOfPowerKey(b: Q): string {
+  if (!/\)\^\{?-?\d+\}?/.test(allText(b))) return '';
+  let found = false;
+  const canon = (l: string) => l.replace(POWER_OF_POWER, (_m: string, v: string, p: string, q: string) => {
+    found = true;
+    const [lo, hi] = [Math.abs(+p), Math.abs(+q)].sort((x, y) => x - y);
+    return `(${v}^{${lo}})^{${hi}}${+p * +q < 0 ? '^{-}' : ''}`;
+  });
+  const lines = b.questionLines.map(l => (l.startsWith('<svg') ? l : canon(l)));
+  return found ? shortHash(`N2:${sameQuestionKey(lines, b.finalAnswer)}`) : '';
+}
+
+/**
+ * N10, A4 "Yes" (the owner's L10 of 2026-10-16, built by structure): a vector pathway with EVERY arrow reversed is the
+ * same question (2024 P2 Q14's ZW = a, ZX = b, find WX, against WZ = r, XZ = s, find XW: the same answer). The owner's
+ * test of the question as written and of it with every named vector turned round, the smaller kept. Reversing only the
+ * target, or only the given vectors, changes the answer's sign, so stays different (C3 "Different").
+ */
+const NAMED_VECTOR = /\\(?:overrightarrow|vec)\{([A-Z])([A-Z])\}/g;
+// a relation between two named vectors, ED = 2AB, says the same with both turned round (DE = 2BA): written one way only
+const RELATION = /\\(overrightarrow|vec)\{([A-Z])([A-Z])\}(\s*=\s*(?:\d+(?:\.\d+)?|\\frac\{\d+\}\{\d+\})?\s*)\\(overrightarrow|vec)\{([A-Z])([A-Z])\}/g;
+function pathwayKey(b: Q): string {
+  if ((allText(b).match(NAMED_VECTOR) ?? []).length < 2) return '';
+  const turn = (l: string) => l.replace(NAMED_VECTOR, (m: string, p: string, q: string) => m.replace(`{${p}${q}}`, `{${q}${p}}`));
+  const oneWay = (l: string) => l.replace(RELATION, (m: string, c1: string, p: string, q: string, mid: string, c2: string, r: string, s: string) =>
+    (p < q ? m : `\\${c1}{${q}${p}}${mid}\\${c2}{${s}${r}}`));
+  const text = (ls: string[]) => ls.map(l => (l.startsWith('<svg') ? l : oneWay(l)));
+  const k1 = sameQuestionKey(text(b.questionLines), b.finalAnswer);
+  const k2 = sameQuestionKey(text(b.questionLines.map(l => (l.startsWith('<svg') ? l : turn(l)))), b.finalAnswer);
+  return shortHash(`N10:${k1 < k2 ? k1 : k2}`);
+}
+
+/**
+ * N11, C1 "Yes same": 2016 P2 Q14's 2 tan x + 5 = −4 against 2 tan x + 4 = −5, both 2 tan x = −9. A trig equation
+ * k f(x) ± p = q whose two numbers have opposite signs is the same with their sizes swapped and each sign left in place
+ * (with like signs the swap changes the answer, and a sign change stays different: 7 sin x + 2 = 3 against
+ * 7 sin x − 3 = −2, the owner's ruling of 2026-10-07). Its domain is in its answer.
+ */
+function trigSwapKey(b: Q): string {
+  const ms = questionMaths(b);
+  for (const m of ms) {
+    const x = /^(\d*(?:\.\d+)?)\\(sin|cos|tan)x\^\{?\\circ\}?([+-])(\d+(?:\.\d+)?)=(-?\d+(?:\.\d+)?)$/.exec(m);
+    if (!x) continue;
+    const p = (x[3] === '-' ? -1 : 1) * Number(x[4]), q = Number(x[5]);
+    if (!p || !q || Math.sign(p) === Math.sign(q)) return '';
+    const sizes = [Math.abs(p), Math.abs(q)].sort((u, v) => u - v).join(',');
+    // the domain's numbers count (one changed is a real change); < or ≤ at 360 does not (2026 P2 Q8's card says < 360,
+    // 2016 P2 Q14 ≤ 360, the same two answers)
+    const rest = ms.filter(o => o !== m).map(o => o.replace(/\\l[et]/g, '≤'));
+    return shortHash(`N11:${x[1]}|${x[2]}|${sizes}|${Math.sign(p)}#${rest.join('|')}#${answerOrNumbers(b.finalAnswer).join('|')}`);
+  }
+  return '';
+}
+
+/**
+ * N12, C2 "Same": a magnitude with its components' signs moved (2015 P2 Q4's (6, −13, 18) against (−6, 13, 18): every line
+ * of working and the answer the same). A magnitude asked of one vector is its components' sizes as a set and its answer
+ * (a surd answer too: 2026 P1 Q7's 3√10, which L7's numbers cannot read).
+ */
+function magnitudeKey(b: Q): string {
+  if (!/magnitude/i.test(flat(allText(b)))) return '';
+  const vs = [...allText(b).matchAll(/\\begin\{pmatrix\}(.*?)\\end\{pmatrix\}/g)];
+  if (vs.length !== 1) return '';
+  const comps = vs[0][1].split(/\\\\/).map(s => Math.abs(Number(s.trim().replace(/[−–]/g, '-'))));
+  if (comps.length < 2 || comps.some(Number.isNaN)) return '';
+  return shortHash(`N12:${comps.sort((x, y) => x - y).join(',')}#${flat(b.finalAnswer).replace(/\s+/g, '')}`);
+}
+
+/** A straight line written ax + by = c, as a, b and c, or null. */
+function lineOf(m: string): [number, number, number] | null {
+  const x = /^(-?\d*)x([+-])(\d*)y=(-?\d+(?:\.\d+)?)$/.exec(m);
+  if (!x) return null;
+  const num = (s: string) => (s === '' ? 1 : s === '-' ? -1 : Number(s));
+  return [num(x[1]), (x[2] === '-' ? -1 : 1) * num(x[3]), Number(x[4])];
+}
+
+/**
+ * N13, C4 "Same" (guard only): 2014 P1 Q11 on its own card with its 12 made −12, 4x + 3y = −12: (a)'s gradient, half the
+ * marks, is the paper's. A line's gradient question is its x and y coefficients, its constant's size, and its answers'
+ * sizes.
+ */
+function lineConstantKey(b: Q): string {
+  if (!/gradient/i.test(flat(allText(b)))) return '';
+  const lines = questionMaths(b).map(lineOf).filter(Boolean) as [number, number, number][];
+  if (lines.length !== 1) return '';
+  const [a, bb, c] = lines[0];
+  const ans = (flat(b.finalAnswer).match(/\d+(?:\.\d+)?/g) ?? []).sort();
+  return shortHash(`N13:${a}|${bb}|${Math.abs(c)}#${ans.join(',')}`);
+}
+
+/**
+ * N14, C5 "Same": a line's x and y swapped (3x + 4y = 12 to the y-axis, (0, 3), against 2014 P1 Q11 (b)'s 4x + 3y = 12 to
+ * the x-axis, (3, 0)). Where a line crosses an axis is that axis's coefficient, the other one, the constant and the value.
+ * A one-part question is the same question (N14); a question with parts holding it has that part kept (N14g, guard only).
+ */
+function interceptKey(b: Q): [string, string] | null {
+  const axis = /crosses the \$?([xy])\$?-axis/.exec(flat(allText(b)));
+  if (!axis) return null;
+  const lines = questionMaths(b).map(lineOf).filter(Boolean) as [number, number, number][];
+  if (lines.length !== 1) return null;
+  const [a, bb, c] = lines[0];
+  const [on, other] = axis[1] === 'x' ? [a, bb] : [bb, a];
+  if (!on) return null;
+  return [letters(b).length >= 2 ? 'N14g' : 'N14', shortHash(`N14:${on}|${other}|${c}|${c / on}`)];
+}
+
+/** Each step's part letter (one part: ''), and each letter's marks with the total. */
+function partMarksOf(b: Q): { of: string[]; marks: Map<string, number>; total: number } {
+  const of = stepParts(b) ?? b.solutionSteps.map(() => '');
+  const marks = new Map<string, number>();
+  b.solutionSteps.forEach((_, i) => marks.set(of[i], (marks.get(of[i]) ?? 0) + (b.stepMarks?.[i] ?? 0)));
+  return { of, marks, total: [...marks.values()].reduce((t, m) => t + m, 0) };
+}
+
+/**
+ * N15, C6 "Same" (guard only): 2016 P1 Q7 (b), AV from A(2, 0, 0) and V(5, 2, 6), √(3² + 2² + 6²) = 7, 3 of its 4 marks:
+ * its own card moves A and V together (the same 3, 2 and 6), and 2025 P2 Q8's cuboid card reaches √(2² + 3² + 6²) = 7.
+ * A length worked as the root of three squares, in a part carrying half the question's marks or more, is those three
+ * sizes as a set.
+ */
+function threeSquaresPartKey(b: Q): string {
+  const { of, marks, total } = partMarksOf(b);
+  if (!total) return '';
+  for (let i = 0; i < b.solutionSteps.length; i++) {
+    for (const m of mathsOf(b.solutionSteps[i])) {
+      const x = /^[A-Z]{1,2}\^\{?2\}?=(.+?)(?:=\d+)?$/.exec(m);
+      if (!x) continue;
+      const terms = x[1].split('+');
+      if (terms.length !== 3) continue;
+      const sizes = terms.map(t => {
+        const sq = /^\(?(-?\d+(?:\.\d+)?)\)?\^\{?2\}?$/.exec(t);
+        if (sq) return Math.abs(Number(sq[1]));
+        const r = Math.sqrt(Number(t));
+        return /^\d+$/.test(t) && Number.isInteger(r) ? r : NaN;
+      });
+      if (sizes.some(Number.isNaN) || 2 * (marks.get(of[i]) ?? 0) < total) continue;
+      // in any order: a cuboid's 2, 3, 6 against the pyramid's 3, 2, 6 is "same" (the owner, 2026-10-17, contact sheet
+      // KEb5ZTCZhAm9LPxc5R7YqT), which also makes L6's pair (2025 P2 Q8's cuboid with two lengths swapped, "Different" on
+      // 2026-10-16) the same question: the owner was told so on the card and answered "same"
+      return shortHash(`N15:${sizes.sort((u, v) => u - v).join(',')}`);
+    }
+  }
+  return '';
+}
+
+/**
+ * N16, A8 "Yes" (guard only): 2024 P1 Q9's line D = −2T + 32 from its stated points, or with point B moved along it, or in
+ * another story ("the paper's line, not just its points"), its (a) 3 of 4 marks. A line of best fit through points the
+ * question STATES, in a part carrying half the marks or more, is that line's gradient and intercept. A line read off a
+ * graph is left to the owner's B (the same line off another scattergraph is not the paper's part).
+ */
+function statedLineKey(b: Q): string {
+  const t = flat(allText(b));
+  if (!/line of best fit/i.test(t) || !/Point \$?[A-Z]\$? represents/.test(t)) return '';
+  const { marks, total } = partMarksOf(b);
+  const a = answerByPart(b).get('a')?.flatMap(answerMaths) ?? [];
+  const line = a.map(m => /^[A-Za-z]=(-?(?:\\frac\{\d+\}\{\d+\}|\d+(?:\.\d+)?)?)[A-Za-z]([+-]\d+(?:\.\d+)?)?$/.exec(m)).find(Boolean);
+  if (!line || !total || 2 * (marks.get('a') ?? 0) < total) return '';
+  return shortHash(`N16:${line[1]}|${line[2] ?? '+0'}`);
+}
+
+/**
+ * N17, A7 "Yes" (guard only): 2025 P1 Q15 shows x² − x − 6 = 0 and solves it to "length 9 cm, breadth 4 cm" (5 of its 6
+ * marks); 2016 P1 Q12's card reaches the same equation and answers from a rectangle and a triangle, its area working
+ * different and its (b) and (c) the paper's. A quadratic a part shows (= 0), with the answers of the parts from there on,
+ * those parts carrying half the marks or more, is that equation and those answers.
+ */
+function shownQuadraticKey(b: Q): string {
+  const ls = letters(b);
+  if (ls.length < 2) return '';
+  let cur = '', shown = '', eq = '';
+  for (const l of textLines(b)) {
+    const m = PART.exec(l);
+    if (m) cur = m[1];
+    const q = cur && /show that/i.test(flat(l)) ? mathsOf(l).find(x => /x\^\{?2\}?.*=0$/.test(x)) : undefined;
+    if (q) { shown = cur; eq = q; }
+  }
+  if (!eq) return '';
+  const { marks, total } = partMarksOf(b);
+  const from = ls.slice(ls.indexOf(shown));
+  if (!total || 2 * from.reduce((t, l) => t + (marks.get(l) ?? 0), 0) < total) return '';
+  const ans = answerByPart(b);
+  const nums = from.slice(1).flatMap(l => (ans.get(l) ?? []).flatMap(a => flat(a.replace(PART, '')).match(/-?\d+(?:\.\d+)?/g) ?? [])).sort();
+  return nums.length ? shortHash(`N17:${sameQuestionKey([`$${eq}$`], '')}#${nums.join(',')}`) : '';
+}
+
 /** The ruling keys of a question (all but L9, which is for sheets only: `sheetOnlyKeys`). */
 export function rulingKeys(b: Q): [string, string][] {
   const out: [string, string][] = [];
-  for (const [tag, f] of [['L1', substitutedKey], ['L2', mixedNumbersKey], ['L3', swappedComponentsKey], ['L4', vectorSumKey], ['L5', discriminantKey], ['L7', threeSquaresKey]] as const) {
+  for (const [tag, f] of [['L1', substitutedKey], ['L2', mixedNumbersKey], ['L3', swappedComponentsKey], ['L4', vectorSumKey], ['L5', discriminantKey], ['L7', threeSquaresKey],
+    ['N1', squareAtKey], ['N2', powerOfPowerKey], ['N10', pathwayKey], ['N11', trigSwapKey], ['N12', magnitudeKey], ['N13', lineConstantKey], ['N15', threeSquaresPartKey], ['N16', statedLineKey], ['N17', shownQuadraticKey]] as const) {
     const k = f(b);
     if (k) out.push([tag, k]);
   }
+  const ik = interceptKey(b);
+  if (ik) out.push(ik);
   return out;
 }
 
@@ -274,7 +492,8 @@ export function sheetOnlyKeys(b: Q): [string, string][] {
  * the working, as before), the maths keys, the ruling keys, and the sheet-only L9. The question key and the story-free
  * key a sheet already takes from the site question itself (`keysOfQuestion`).
  */
-const TWIN_TAGS = new Set(['SQ', 'SW', 'MK', 'MN', 'L1', 'L2', 'L3', 'L4', 'L5', 'L7']);
+// N13, N14g, N15 and N16 are one part changed (guard only, P2): on a sheet that is still a different question (S1)
+const TWIN_TAGS = new Set(['SQ', 'SW', 'MK', 'MN', 'L1', 'L2', 'L3', 'L4', 'L5', 'L7', 'N1', 'N2', 'N10', 'N11', 'N12', 'N14']);
 export function n5TwinKeys(b: Q): string[] {
   return [...identities(b).filter(([t]) => TWIN_TAGS.has(t)), ...sheetOnlyKeys(b)].map(([, k]) => k);
 }
@@ -334,6 +553,27 @@ export interface SheetPart { letter: string; key: string; marks: number }
 // a line, a step or an answer as its maths and its numbers, not its words: the same numbers in another story are the same
 // question (2014 P1 Q13's flare draws hold the paper's (a) by working)
 const mn = (s: string) => `${mathsOf(s).join('|')}#${proseNumbers(s).join(',')}`;
+// A part's maths CANONICAL (A0's audit, 2026-10-17: the literal pieces let the paper's part through written another way:
+// 2014 P2 Q10 (a)'s cos K = (11² + 8² − 13²)/(2 × 11 × 8) as cos S = (8² + 11² − 13²)/(2 × 8 × 11), 2025 P1 Q7 (b) with
+// f(a) for f(p)). Each piece by the owner's test (a sum's terms and a product's factors in any order, letters renamed); a
+// name standing alone on one side of "=" (an angle JKL, a side AV², cos K) is a name; working is its equations and
+// expressions, a lone label or number (an explanation's "the angle at S, opposite 13") dropped.
+const NAME_SIDE = /^(?:\\(?:sin|cos|tan))?[A-Z]{1,3}(?:\^\{?2\}?)?$/;
+const canonPiece = (m: string) => m.split('=').map(side => (NAME_SIDE.test(side) ? 'N' : sameQuestionKey([`$${side}$`], ''))).join('=');
+// a LIST of numbers in the step's words counts too (four or more: a data question's sorted list; 2023 P1 Q9's card drew
+// other data with the paper's median and IQR, 1 in 400, and was taken for the paper without it); an explanation's one
+// or two ("between the sides of 8 and 11 metres") does not
+const workOf = (s: string) => {
+  const ms = mathsOf(s).filter(m => /[=+\-\\^×]/.test(m) && !/^-?\d+(?:\.\d+)?$/.test(m)).map(canonPiece);
+  const all = proseNumbers(s.replace(/&nbsp;/g, ' '));
+  const ws = all.length >= 4 ? all : [];
+  return ms.length || ws.length ? `${ms.join('|')}#${ws.join(',')}` : '';
+};
+const answerOf = (s: string) => {
+  const ms = mathsOf(s);
+  return (ms.length ? ms.map(canonPiece) : (flat(s).replace(/(\d),(\d{3})/g, '$1$2').match(/-?\d+(?:\.\d+)?/g) ?? [])).join('|');
+};
+const lineOfPart = (s: string) => `${mathsOf(s).filter(m => !/^[A-Za-z]{1,3}$/.test(m)).map(canonPiece).join('|')}#${proseNumbers(s).join(',')}`;
 /**
  * A question's parts. `withStem` (a sheet): each part under the question's opening lines. Without it (the guard's own-paper
  * rule): a part as its working and answer alone, whatever the lines say, and with `figure` under the question's figure:
@@ -372,23 +612,23 @@ export function sheetPartsOf(b: Q, withStem = true, figure = false): SheetPart[]
     if (m) { letter = m[1]; add(letter, figs); figs = []; }
     // the figure whole, as AH (a graph whose curve is the data differs when the curve does, whatever its labels)
     const fig = l.startsWith('<svg') ? `svg:${shortHash(l)}` : '';
-    if (!letter) stem.push(fig || mn(l));
+    if (!letter) stem.push(fig || lineOfPart(l));
     else if (fig) figs.push(fig);
-    else add(letter, [mn(l.replace(PART, ''))]);
+    else add(letter, [lineOfPart(l.replace(PART, ''))]);
   }
   if (letter) add(letter, figs);
   const ans = answerByPart(b);
   const work = new Map<string, string[]>(), marks = new Map<string, number>();
   b.solutionSteps.forEach((s, i) => {
     const l = sp[i];
-    work.set(l, [...(work.get(l) ?? []), mn(stepNo(s).replace(/^\s*(?:<\/strong>)?\s*(?:\([a-h]\))?(?:\((?:i{1,3}|iv|v)\))?(?:<\/strong>)?/, ''))]);
+    work.set(l, [...(work.get(l) ?? []), workOf(stepNo(s).replace(/^\s*(?:<\/strong>)?\s*(?:\([a-h]\))?(?:\((?:i{1,3}|iv|v)\))?(?:<\/strong>)?/, ''))]);
     marks.set(l, (marks.get(l) ?? 0) + (b.stepMarks?.[i] ?? 0));
   });
   const st = withStem ? stem.join('§') : figure ? figureKey(b) : '';
   const own = (l: string) => (withStem ? (lines.get(l) ?? []).join('§') : '');
   return [...ans.keys()].map(l => ({
     letter: l,
-    key: shortHash(`${st}¶${own(l)}¶${(work.get(l) ?? []).join('§')}¶${(ans.get(l) ?? []).map(a => mn(a.replace(PART, ''))).join('§')}`),
+    key: shortHash(`${st}¶${own(l)}¶${(work.get(l) ?? []).filter(Boolean).join('§')}¶${(ans.get(l) ?? []).map(a => answerOf(a.replace(PART, ''))).join('§')}`),
     marks: marks.get(l) ?? 0,
   }));
 }
@@ -414,8 +654,8 @@ export const n5PartsFromKey = (k: string): { key: string; marks: number }[] =>
 export function wholeAsPart(b: Q, figure = false): { key: string; marks: number } | null {
   if (letters(b).length >= 2) return null;
   const st = figure ? figureKey(b) : '';
-  const work = b.solutionSteps.map(s => mn(stepNo(s).replace(/^\s*(?:<\/strong>)?\s*(?:\([a-h]\))?(?:\((?:i{1,3}|iv|v)\))?(?:<\/strong>)?/, '')));
-  return { key: shortHash(`${st}¶¶${work.join('§')}¶${mn(b.finalAnswer.replace(PART, ''))}`), marks: (b.stepMarks ?? []).reduce((t, m) => t + m, 0) };
+  const work = b.solutionSteps.map(s => workOf(stepNo(s).replace(/^\s*(?:<\/strong>)?\s*(?:\([a-h]\))?(?:\((?:i{1,3}|iv|v)\))?(?:<\/strong>)?/, ''))).filter(Boolean);
+  return { key: shortHash(`${st}¶¶${work.join('§')}¶${answerOf(b.finalAnswer.replace(PART, ''))}`), marks: (b.stepMarks ?? []).reduce((t, m) => t + m, 0) };
 }
 /** Do two questions share parts worth half the marks of either, or more? */
 export function sharesHalf(x: readonly { key: string; marks: number }[], y: readonly { key: string; marks: number }[]): boolean {

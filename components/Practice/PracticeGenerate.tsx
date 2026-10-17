@@ -57,7 +57,8 @@ export default function PracticeGenerate({ courseId, topicId, generates, subtopi
   const draw = useGeneratedDraw(courseId, async (engine, exclude) => {
     const [made] = courseId === 'ah'
       ? await engine.generateForPracticeTopic(topicId, 1, engine.worksheetKeys(exclude), exclude)
-      : await engine.generateForSubtopics(subtopics, 1, engine.worksheetKeys(exclude));
+      // what the page holds, so the card it holds fewest of comes next (B1, 2026-10-17)
+      : await engine.generateForSubtopics(subtopics, 1, engine.worksheetKeys(exclude), courseId, exclude);
     return made ?? null;
   });
 

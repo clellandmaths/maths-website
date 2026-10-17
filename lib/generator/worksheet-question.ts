@@ -651,6 +651,7 @@ export async function generateForSubtopics(
   count: number,
   makeSeed: () => string,
   exclude: readonly string[] = [],
+  held: readonly string[] = [],
 ): Promise<WorksheetQuestion[]> {
   // Interleaved, not concatenated. `drawFrom` walks its candidates in order, so
   // a flat list of "everything under the first subtopic, then everything under
@@ -671,7 +672,23 @@ export async function generateForSubtopics(
     }
     if (!anyLeft) break;
   }
-  return drawFrom(familiesOnce(ids), count, makeSeed, undefined, exclude);
+  return drawFrom(fewestHeldFirst(familiesOnce(ids), held), count, makeSeed, undefined, exclude);
+}
+
+/**
+ * **The card the sheet holds fewest of goes first** (B1, the owner's "Yes", 2026-10-17, sheet TSw6UWy4n6RhKMVmQgEHL5).
+ * `drawFrom` takes its candidates in order and the first card nearly always has a fresh question, so a page asking for
+ * one question at a time ("Another question", "Add 10") drew the topic's first card every time: 150 presses on
+ * simultaneous equations, 150 from one card of 11 (tools/n5-audit/report.md R1, live too). `held` is the variations of
+ * the generated questions the page already holds (a family, an alias and its target, counted as one card). With none
+ * held the order is as it was, so a sheet made in one request is unchanged.
+ */
+function fewestHeldFirst(order: readonly string[], held: readonly string[]): string[] {
+  if (!held.length) return [...order];
+  const fam = (id: string) => aliasTarget(id) ?? id;
+  const uses = new Map<string, number>();
+  for (const h of held) uses.set(fam(h), (uses.get(fam(h)) ?? 0) + 1);
+  return order.map((id, i) => ({ id, i, n: uses.get(fam(id)) ?? 0 })).sort((a, b) => a.n - b.n || a.i - b.i).map(x => x.id);
 }
 
 /**
@@ -837,7 +854,11 @@ async function drawFrom(
   // spends 340ms to conclude it is spent. Cheap enough to buy the certainty.
   // per CARD: a topic sheet's order names a family's cards more than once (`generateForSubtopics`)
   const budget = Math.max(new Set(ids).size, 1) * 40 + count * 8;
-  for (let draw = 0; draw < budget && out.length < count; draw++) {
+  // **While a question waits aside, try on for a fresh one** (B3, the owner's "Yes", 2026-10-17): with the bare budget a
+  // sheet took the same line or the same Moon at questions 6 and 7 and a fresh question came later on the same sheet
+  // (tools/n5-audit/report.md R3). AH's sheets try 200 before a card is spent; so does a sheet holding one aside here.
+  const ASIDE_MORE = 200;
+  for (let draw = 0; out.length < count && (draw < budget || (aside.length > 0 && draw < budget + ASIDE_MORE)); draw++) {
     // Round-robin rather than random, so asking for three across two variations
     // gives both rather than the same one three times by chance.
     const id = ids[draw % ids.length];
